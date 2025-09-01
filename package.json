@@ -18,6 +18,10 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@tailwindcss/vite": "^4.1.12",
+    "sass": "^1.91.0",
+    "tailwindcss": "^4.1.12",
+    "vite-svg-loader": "^5.1.0",
     "vue": "^3.5.18"
   },
   "devDependencies": {
