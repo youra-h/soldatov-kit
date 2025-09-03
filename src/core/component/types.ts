@@ -5,7 +5,11 @@ export interface IComponent {
 }
 
 export type TComponentEventsMap = {
-	'show': () => void
-	'hide': () => void
-	'visible': (visible: boolean) => void
+	show: () => void
+	hide: () => void
+	beforeShow: () => boolean
+	afterShow: () => void
+	beforeHide: () => boolean
+	afterHide: () => void
+	visible: (visible: boolean) => void
 }

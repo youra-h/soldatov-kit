@@ -1,5 +1,11 @@
-import { TObject } from '../object/object.class'
+import { TObject, type TObjectProps } from '../object'
 import type { IComponent, TComponentEventsMap } from './types'
+
+export const defaultValues: Partial<IComponent> = {
+	id: '',
+	visible: true,
+	hidden: false,
+}
 
 export default class TComponent<TEvents extends TComponentEventsMap>
 	extends TObject<TEvents>
@@ -12,9 +18,9 @@ export default class TComponent<TEvents extends TComponentEventsMap>
 	constructor(props: Partial<IComponent> = {}) {
 		super()
 
-		this._id = props.id ?? ''
-		this._visible = props.visible ?? true
-		this._hidden = props.hidden ?? false
+		this._id = props.id ?? defaultValues.id!
+		this._visible = props.visible ?? defaultValues.visible!
+		this._hidden = props.hidden ?? defaultValues.hidden!
 	}
 
 	get id(): string | number {
@@ -30,7 +36,11 @@ export default class TComponent<TEvents extends TComponentEventsMap>
 	}
 
 	set visible(value: boolean) {
-		this._visible = value
+		if (value) {
+			this.show()
+		} else {
+			this.hide()
+		}
 	}
 
 	get hidden(): boolean {
@@ -41,11 +51,25 @@ export default class TComponent<TEvents extends TComponentEventsMap>
 		this._hidden = value
 	}
 
+	getProps(): TObjectProps {
+		return {
+			...super.getProps(),
+			id: this._id,
+			visible: this._visible,
+			hidden: this._hidden,
+		}
+	}
+
 	/**
 	 * Показать компонент
 	 */
 	show(): void {
 		if (!this.beforeShow()) {
+			return
+		}
+
+		const canShow = this.emitWithResult('beforeShow')
+		if (!canShow) {
 			return
 		}
 
@@ -62,6 +86,11 @@ export default class TComponent<TEvents extends TComponentEventsMap>
 	 */
 	hide(): void {
 		if (!this.beforeHide()) {
+			return
+		}
+
+		const canShow = this.emitWithResult('beforeHide')
+		if (!canShow) {
 			return
 		}
 

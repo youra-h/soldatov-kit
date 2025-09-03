@@ -1,5 +1,5 @@
 // Тип обработчика события
-export type TEventHandler = (...args: any[]) => void
+export type TEventHandler = (...args: any[]) => any
 // Тип карты событий
 export type TEventMap = Record<string, TEventHandler[]>
 
@@ -20,13 +20,43 @@ export class TEventEmitter {
 	}
 
 	off(event: string, handler: TEventHandler): void {
-		if (!this._events[event]) return
+		if (!this._events[event]) {
+			return
+		}
+
 		this._events[event] = this._events[event].filter((h) => h !== handler)
 	}
 
 	emit(event: string, ...args: any[]): void {
-		if (!this._events[event]) return
+		if (!this._events[event]) {
+			return
+		}
+
 		this._events[event].forEach((handler) => handler(...args))
+	}
+
+	/**
+	 * Выполняет событие и возвращает результат выполнения обработчиков
+	 * @param event
+	 * @param args
+	 * @returns {boolean}
+	 */
+	emitWithResult(event: string, ...args: any[]): boolean {
+		if (!this._events[event]) {
+			return true
+		}
+
+		let result = true
+
+		for (const handler of this._events[event]) {
+			const res = handler(...args)
+
+			if (res === false) {
+				result = false
+			}
+		}
+
+		return result
 	}
 
 	remove(event?: string): void {

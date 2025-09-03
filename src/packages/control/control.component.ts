@@ -1,24 +1,19 @@
 import { type PropType } from 'vue'
-import type { IButton } from '../../core/button'
-import { KBaseControl, controlEmits } from '../control'
+import type { IControl } from '../../core/control'
+import { KBaseComponent, componentEmits } from '../component'
 
-export const buttonEmits = [
-	...controlEmits,
+export const controlEmits = [
+	...componentEmits,
 	'update:text',
 	'update:disabled',
 	'update:focused',
 ] as const
 
 export default {
-	name: 'KBaseButton',
-	extends: KBaseControl,
-	emits: buttonEmits,
+	name: 'KBaseControl',
+	extends: KBaseComponent,
+	emits: controlEmits,
 	props: {
-		variant: {
-			type: String as PropType<IButton['variant']>,
-			default: 'default',
-		},
-
 		text: {
 			type: String as PropType<IControl['text']>,
 			default: '',

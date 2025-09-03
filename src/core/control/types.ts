@@ -7,6 +7,8 @@ export interface IControl extends IComponent {
 }
 
 export type TControlEventsMap = TComponentEventsMap & {
-	'focus': () => void
-	'change': (value: string) => void
+	focus: () => void
+	changeText: (value: string) => void
+	click: () => void
+	enabled: (value: boolean) => void
 }
