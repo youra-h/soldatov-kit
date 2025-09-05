@@ -12,6 +12,7 @@ export const defaultValues: Partial<IButton> = {
 export default class TButton extends TControl<TButtonEventsMap> implements IButton {
 	private _variant: TVariant
 	private _appearance: TButtonAppearance
+	private _tag: string = 'button'
 
 	constructor(props: Partial<IButton> = {}) {
 		super(props)
@@ -33,7 +34,15 @@ export default class TButton extends TControl<TButtonEventsMap> implements IButt
 	}
 
 	set appearance(value: TButtonAppearance) {
-		this._appearance = value
+		if (value && this._appearance !== value) {
+			this._appearance = value
+			// Изменяем тег в зависимости от внешнего вида
+			this._tag = value === 'label' ? 'label' : 'button'
+		}
+	}
+
+	get tag(): string {
+		return this._tag
 	}
 
 	getProps(): TObjectProps {

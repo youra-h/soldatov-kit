@@ -19,8 +19,8 @@ export default class TComponent<TEvents extends TComponentEventsMap>
 		super()
 
 		this._id = props.id ?? defaultValues.id!
-		this._visible = props.visible ?? defaultValues.visible!
-		this._hidden = props.hidden ?? defaultValues.hidden!
+		this._visible = typeof props.visible === 'boolean' ? props.visible : defaultValues.visible!
+		this._hidden = typeof props.hidden === 'boolean' ? props.hidden : defaultValues.hidden!
 	}
 
 	get id(): string | number {
