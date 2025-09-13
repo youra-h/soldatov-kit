@@ -1,7 +1,6 @@
-import { type PropType } from 'vue'
+import { type PropType, watch } from 'vue'
 import { type IComponent, defaultComponentValues } from '../../../core/component'
 import type { TEmits, TProps } from '../../core/types'
-import { useManagedInstance } from '../../core/useManagedInstance'
 
 export const componentEmits: TEmits = [
 	'update:visible',
@@ -36,15 +35,22 @@ export default {
 	props: componentProps,
 }
 
-/**
- * Use a managed instance of a component.
- * @param Ctor The constructor of the component.
- * @param props The props to pass to the component.
- * @param key The key to use for the component instance in the props.
- * @returns The managed instance of the component.
- */
-export function baseSetup<T>(Ctor: new (props: any) => T, props: any, key: string = 'component') {
-	const instance = useManagedInstance(Ctor, props, key)
+export function useComponentWatchers(props: TProps, instance: IComponent) {
+	watch<boolean | undefined>(
+		() => props.visible,
+		(value) => {
+			if (value !== instance.visible) {
+				instance.visible = value
+			}
+		},
+	)
 
-	return { component: instance }
+	watch<boolean | undefined>(
+		() => props.hidden,
+		(value) => {
+			if (value !== instance.hidden) {
+				instance.hidden = value
+			}
+		},
+	)
 }

@@ -1,6 +1,7 @@
-import { type PropType } from 'vue'
-import { type IButton, defaultButtonValues } from '../../../core/button'
-import { BaseControl, controlEmits, controlProps } from '../control'
+import { type PropType, watch } from 'vue'
+import { type IButton, type TButtonAppearance, defaultButtonValues } from '../../../core/button'
+import { type TVariant } from '../../../core/utils/types'
+import { Control, controlEmits, controlProps, useControlWatchers } from '../control'
 import type { TEmits, TProps } from '../../core/types'
 
 export const buttonEmits: TEmits = [
@@ -24,7 +25,33 @@ export const buttonProps: TProps = {
 
 export default {
 	name: 'BaseButton',
-	extends: BaseControl,
+	extends: Control,
 	emits: buttonEmits,
 	props: buttonProps,
+}
+
+/**
+ * Bind props to instance properties.
+ * @param props
+ * @param instance
+ */
+export function useButtonWatchers(props: TProps, instance: IButton) {
+	useControlWatchers(props, instance)
+
+	watch<TVariant | undefined>(
+		() => props.variant,
+		(value) => {
+			if (value && value !== instance.variant) {
+				instance.variant = value
+			}
+		},
+	)
+	watch<TButtonAppearance | undefined>(
+		() => props.appearance,
+		(value) => {
+			if (value && value !== instance.appearance) {
+				instance.appearance = value
+			}
+		},
+	)
 }

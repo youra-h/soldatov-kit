@@ -1,6 +1,6 @@
-import { type PropType } from 'vue'
+import { type PropType, watch } from 'vue'
 import { type IControl, defaultControlValues } from '../../../core/control'
-import { BaseComponent, componentEmits, componentProps } from '../component'
+import { BaseComponent, componentEmits, componentProps, useComponentWatchers } from '../component'
 import type { TEmits, TProps } from '../../core/types'
 
 export const controlEmits: TEmits = [
@@ -31,4 +31,40 @@ export default {
 	extends: BaseComponent,
 	emits: controlEmits,
 	props: controlProps,
+}
+
+/**
+ * Bind props to instance properties.
+ * @param props
+ * @param instance
+ */
+export function useControlWatchers(props: TProps, instance: IControl) {
+	useComponentWatchers(props, instance)
+
+	watch<boolean | undefined>(
+		() => props.disabled,
+		(value) => {
+			if (value !== instance.disabled) {
+				instance.disabled = value
+			}
+		},
+	)
+
+	watch<boolean | undefined>(
+		() => props.focused,
+		(value) => {
+			if (value !== instance.focused) {
+				instance.focused = value
+			}
+		},
+	)
+
+	watch<string>(
+		() => props.text,
+		(value) => {
+			if (value !== instance.text) {
+				instance.text = value
+			}
+		},
+	)
 }

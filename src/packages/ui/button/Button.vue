@@ -1,42 +1,51 @@
 <script lang="ts">
-import { defineComponent, watch } from 'vue'
-import { TButton, type IButton, type TButtonAppearance } from '../../../core/button'
-import { type TVariant } from '../../../core/utils/types'
-import { baseSetup } from '../component'
-import BaseButton from './base.component'
+import { TButton, type IButton } from '../../../core/button'
+import { useBaseSetup } from './../../core/useBaseSetup'
+import BaseButton, { useButtonWatchers } from './base.component'
 
-export default defineComponent({
+// function createSyncPropsToComponent<T extends object>(component: T) {
+// 	const prev: Record<string, any> = {}
+
+// 	return (props: Record<string, any>) => {
+// 		for (const key in props) {
+// 			const newVal = props[key]
+// 			const oldVal = prev[key]
+
+// 			if (!Object.is(newVal, oldVal)) {
+// 				prev[key] = newVal
+// 				if (key in component) {
+// 					;(component as any)[key] = newVal
+// 				}
+// 			}
+// 		}
+// 	}
+// }
+
+// const sync = createSyncPropsToComponent(component)
+// sync(props)
+
+// onUpdated(() => {
+// 	sync(props)
+// })
+
+export default {
 	name: '_Button',
 	extends: BaseButton,
 	setup(props: IButton) {
-		const { component } = baseSetup(TButton, props)
+		const { component } = useBaseSetup(TButton, props)
 
-		watch<TVariant | undefined>(
-			() => props.variant,
-			(value) => {
-				if (value && value !== component.variant) {
-					component.variant = value
-				}
-			},
-		)
-		watch<TButtonAppearance | undefined>(
-			() => props.appearance,
-			(value) => {
-				if (value && value !== component.appearance) {
-					component.appearance = value
-				}
-			},
-		)
+		useButtonWatchers(props, component)
 
 		return {
 			component,
 		}
 	},
-})
+}
 </script>
 
 <template>
+	{{ component.variant }} - {{ component.appearance }}
 	<component :is="component.tag" @click="component.emit('click', $event)">
-		<slot />
+		<slot>{{ component.text }}</slot>
 	</component>
 </template>

@@ -48,4 +48,8 @@ export abstract class TObject<TEvents extends Record<string, TEventHandler>> {
 	getProps(): TObjectProps {
 		return {}
 	}
+
+	setProps(props: Partial<TObjectProps>): void {
+		Object.assign(this, props)
+	}
 }

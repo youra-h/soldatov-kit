@@ -1,13 +1,17 @@
 <script lang="ts">
 import { TControl, type IControl } from '../../../core/control'
-import BaseControl from './base.component'
-import { baseSetup } from './../component'
+import BaseControl, { useControlWatchers } from './base.component'
+import { useBaseSetup } from './../../core/useBaseSetup'
 
 export default {
 	name: '_Control',
 	extends: BaseControl,
 	setup(props: IControl) {
-		return baseSetup(TControl, props)
+		const { component } = useBaseSetup(TControl, props)
+
+		useControlWatchers(props, component)
+
+		return { component }
 	},
 }
 </script>
