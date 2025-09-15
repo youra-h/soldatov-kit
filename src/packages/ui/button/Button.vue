@@ -30,8 +30,8 @@ export default {
 	</component>
 </template>
 
-<style>
-/* @reference "tailwindcss"; */
+<style lang="scss">
+@reference "tailwindcss";
 
 .s-button {
 	@apply flex items-center justify-center gap-1;
