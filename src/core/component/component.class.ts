@@ -15,6 +15,11 @@ export default class TComponent<TEvents extends TComponentEventsMap>
 	private _visible: boolean
 	private _hidden: boolean
 
+	// Base class name
+	protected _baseClass: string = 's-component'
+	// Array of dynamic CSS classes
+	protected _classes: string[] = []
+
 	constructor(props: Partial<IComponent> = {}) {
 		super()
 
@@ -49,6 +54,10 @@ export default class TComponent<TEvents extends TComponentEventsMap>
 
 	set hidden(value: boolean) {
 		this._hidden = value
+	}
+
+	get classes(): string[] {
+		return [this._baseClass, ...this._classes]
 	}
 
 	getProps(): TObjectProps {

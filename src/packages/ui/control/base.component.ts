@@ -1,6 +1,6 @@
 import { type PropType, watch } from 'vue'
 import { type IControl, defaultControlValues } from '../../../core/control'
-import { BaseComponent, componentEmits, componentProps, useComponentWatchers } from '../component'
+import { BaseComponent, componentEmits, componentProps, syncComponent } from '../component'
 import type { TEmits, TProps } from '../../core/types'
 
 export const controlEmits: TEmits = [
@@ -38,8 +38,8 @@ export default {
  * @param props
  * @param instance
  */
-export function useControlWatchers(props: TProps, instance: IControl) {
-	useComponentWatchers(props, instance)
+export function syncControl(props: TProps, instance: IControl) {
+	syncComponent(props, instance)
 
 	watch<boolean | undefined>(
 		() => props.disabled,

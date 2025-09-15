@@ -35,7 +35,7 @@ export default {
 	props: componentProps,
 }
 
-export function useComponentWatchers(props: TProps, instance: IComponent) {
+export function syncComponent(props: TProps, instance: IComponent) {
 	watch<boolean | undefined>(
 		() => props.visible,
 		(value) => {

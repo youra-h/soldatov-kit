@@ -12,16 +12,16 @@ const variant = ref('primary')
 const appearance = ref('filled')
 const text = ref('Click Me')
 
-setTimeout(() => {
-	// variant.value = 'danger'
-	// appearance.value = 'label'
-	button.variant = 'danger'
-	console.log('Variant changed to:', button.variant)
-	// button.appearance = 'label'
-	appearance.value = 'label'
+// setTimeout(() => {
+// 	// variant.value = 'danger'
+// 	// appearance.value = 'label'
+// 	button.variant = 'danger'
+// 	console.log('Variant changed to:', button.variant)
+// 	// button.appearance = 'label'
+// 	appearance.value = 'label'
 
-	text.value = 'Updated Text'
-}, 1000)
+// 	text.value = 'Updated Text'
+// }, 1000)
 
 const onClick = () => {
 	button.emit('click')

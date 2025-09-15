@@ -1,32 +1,7 @@
 <script lang="ts">
 import { TButton, type IButton } from '../../../core/button'
 import { useBaseSetup } from './../../core/useBaseSetup'
-import BaseButton, { useButtonWatchers } from './base.component'
-
-// function createSyncPropsToComponent<T extends object>(component: T) {
-// 	const prev: Record<string, any> = {}
-
-// 	return (props: Record<string, any>) => {
-// 		for (const key in props) {
-// 			const newVal = props[key]
-// 			const oldVal = prev[key]
-
-// 			if (!Object.is(newVal, oldVal)) {
-// 				prev[key] = newVal
-// 				if (key in component) {
-// 					;(component as any)[key] = newVal
-// 				}
-// 			}
-// 		}
-// 	}
-// }
-
-// const sync = createSyncPropsToComponent(component)
-// sync(props)
-
-// onUpdated(() => {
-// 	sync(props)
-// })
+import BaseButton, { syncButton } from './base.component'
 
 export default {
 	name: '_Button',
@@ -34,7 +9,7 @@ export default {
 	setup(props: IButton) {
 		const { component } = useBaseSetup(TButton, props)
 
-		useButtonWatchers(props, component)
+		syncButton(props, component)
 
 		return {
 			component,
@@ -44,8 +19,44 @@ export default {
 </script>
 
 <template>
-	{{ component.variant }} - {{ component.appearance }}
-	<component :is="component.tag" @click="component.emit('click', $event)">
+	<component
+		:is="component.tag"
+		:class="component.classes"
+		@click="component.emit('click', $event)"
+	>
+		<slot name="before"></slot>
 		<slot>{{ component.text }}</slot>
+		<slot name="after"></slot>
 	</component>
 </template>
+
+<style>
+/* @reference "tailwindcss"; */
+
+.s-button {
+	@apply flex items-center justify-center gap-1;
+	@apply rounded-md cursor-pointer;
+	@apply relative transition-colors duration-200;
+	@apply truncate;
+
+	svg {
+		fill: currentColor;
+	}
+
+	&--primary {
+		@apply bg-blue-600 text-white;
+
+		&:hover {
+			@apply bg-blue-700;
+		}
+
+		&:active {
+			@apply bg-blue-800;
+		}
+
+		&:disabled {
+			@apply bg-blue-300 cursor-not-allowed;
+		}
+	}
+}
+</style>

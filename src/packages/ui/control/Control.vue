@@ -1,6 +1,6 @@
 <script lang="ts">
 import { TControl, type IControl } from '../../../core/control'
-import BaseControl, { useControlWatchers } from './base.component'
+import BaseControl, { syncControl } from './base.component'
 import { useBaseSetup } from './../../core/useBaseSetup'
 
 export default {
@@ -9,7 +9,7 @@ export default {
 	setup(props: IControl) {
 		const { component } = useBaseSetup(TControl, props)
 
-		useControlWatchers(props, component)
+		syncControl(props, component)
 
 		return { component }
 	},

@@ -17,6 +17,8 @@ export default class TButton extends TControl<TButtonEventsMap> implements IButt
 	constructor(props: Partial<IButton> = {}) {
 		super(props)
 
+		this._baseClass = 's-button'
+
 		this._variant = props.variant ?? defaultValues.variant!
 		this._appearance = props.appearance ?? defaultValues.appearance!
 	}
@@ -39,6 +41,27 @@ export default class TButton extends TControl<TButtonEventsMap> implements IButt
 			// Изменяем тег в зависимости от внешнего вида
 			this._tag = value === 'label' ? 'label' : 'button'
 		}
+	}
+
+	get classes(): string[] {
+		const classes = [this._baseClass]
+
+		// Добавляем класс для варианта, если он задан
+		if (this._variant) {
+			classes.push(`${this._baseClass}--${this._variant}`)
+		}
+
+		// Добавляем класс для внешнего вида, если он задан
+		if (this._appearance) {
+			classes.push(`${this._baseClass}--${this._appearance}`)
+		}
+
+		// Добавляем класс для размера
+		if (this.size) {
+			classes.push(`${this._baseClass}--size-${this.size}`)
+		}
+
+		return classes
 	}
 
 	get tag(): string {

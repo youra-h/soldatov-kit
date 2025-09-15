@@ -1,7 +1,7 @@
 import { type PropType, watch } from 'vue'
 import { type IButton, type TButtonAppearance, defaultButtonValues } from '../../../core/button'
 import { type TVariant } from '../../../core/utils/types'
-import { Control, controlEmits, controlProps, useControlWatchers } from '../control'
+import { Control, controlEmits, controlProps, syncControl } from '../control'
 import type { TEmits, TProps } from '../../core/types'
 
 export const buttonEmits: TEmits = [
@@ -35,8 +35,8 @@ export default {
  * @param props
  * @param instance
  */
-export function useButtonWatchers(props: TProps, instance: IButton) {
-	useControlWatchers(props, instance)
+export function syncButton(props: TProps, instance: IButton) {
+	syncControl(props, instance)
 
 	watch<TVariant | undefined>(
 		() => props.variant,
