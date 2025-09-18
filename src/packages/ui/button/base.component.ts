@@ -45,6 +45,7 @@ export function syncButton(props: TProps, instance: IButton) {
 				instance.variant = value
 			}
 		},
+		{ immediate: true },
 	)
 	watch<TButtonAppearance | undefined>(
 		() => props.appearance,
@@ -53,5 +54,6 @@ export function syncButton(props: TProps, instance: IButton) {
 				instance.appearance = value
 			}
 		},
+		{ immediate: true },
 	)
 }

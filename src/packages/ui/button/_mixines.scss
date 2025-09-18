@@ -1,0 +1,41 @@
+@mixin button-variant(
+	$color,
+	$bg-idx: null,
+	$text-idx: null,
+	$hover-bg-idx: null,
+	$active-bg-idx: null,
+	$border-idx: null,
+	$hover-border-idx: null
+) {
+	@if $bg-idx != null {
+		@apply #{'bg-' + $color + '-' + $bg-idx};
+	}
+
+	@if $text-idx != null {
+		@apply #{'text-' + $color + '-' + $text-idx};
+	}
+
+	@if $border-idx != null {
+		@apply #{'border-' + $color + '-' + $border-idx};
+	}
+
+	// Вычисляем индексы для состояний наведения и нажатия
+	$hover-bg: if($hover-bg-idx != null, $hover-bg-idx, if($bg-idx != null, $bg-idx + 100, null));
+	// Если hover-bg-idx не задан, увеличиваем bg-idx на 100
+	$active-bg: if($active-bg-idx != null, $active-bg-idx, $hover-bg + 100);
+
+	&:hover:not([disabled]),
+	&:focus:not([disabled]),
+	&:focus-visible:not([disabled]) {
+		@apply #{'bg-' + $color + '-' + $hover-bg};
+
+		@if $border-idx != null or $hover-border-idx != null {
+			$brd-idx: if($hover-border-idx != null, $hover-border-idx, $border-idx + 100);
+			@apply #{'border-' + $color + '-' + $brd-idx};
+		}
+	}
+
+	&:active:not([disabled]) {
+		@apply #{'bg-' + $color + '-' + $active-bg};
+	}
+}

@@ -23,6 +23,7 @@ export default {
 		:is="component.tag"
 		:class="component.classes"
 		@click="component.emit('click', $event)"
+		:disabled="component.disabled"
 	>
 		<slot name="before"></slot>
 		<slot>{{ component.text }}</slot>
@@ -31,31 +32,160 @@ export default {
 </template>
 
 <style lang="scss">
+@use './mixines' as mixines;
 @reference "tailwindcss";
 
 .s-button {
+	$this: &;
+
 	@apply flex items-center justify-center gap-1;
-	@apply rounded-md cursor-pointer;
+	@apply px-2.5 py-1.5 rounded-md cursor-pointer;
 	@apply relative transition-colors duration-200;
 	@apply truncate;
+	@apply outline-transparent;
+	@apply text-gray-800;
 
-	svg {
-		fill: currentColor;
+	&[disabled] {
+		@apply opacity-50 cursor-not-allowed;
 	}
 
-	&--primary {
-		@apply bg-blue-600 text-white;
+	&:focus,
+	&:focus-visible {
+		@apply duration-150;
+		@apply outline-2 outline-offset-2 outline-blue-400;
+		@apply bg-gray-200;
+	}
 
-		&:hover {
-			@apply bg-blue-700;
+	&:hover:not([disabled]) {
+		@apply bg-gray-200;
+	}
+
+	&--normal {
+		@apply bg-gray-100;
+
+		&:active:not([disabled]) {
+			@apply bg-gray-300;
 		}
 
-		&:active {
-			@apply bg-blue-800;
+		&.s-button--primary,
+		&.s-button--secondary,
+		&.s-button--success,
+		&.s-button--danger,
+		&.s-button--warning {
+			@apply text-white;
 		}
 
-		&:disabled {
-			@apply bg-blue-300 cursor-not-allowed;
+		&.s-button--primary {
+			@include mixines.button-variant($color: 'sky', $bg-idx: 600);
+		}
+
+		&.s-button--secondary {
+			@include mixines.button-variant($color: 'gray', $bg-idx: 700);
+		}
+
+		&.s-button--success {
+			@include mixines.button-variant($color: 'emerald', $bg-idx: 600);
+		}
+
+		&.s-button--danger {
+			@include mixines.button-variant($color: 'rose', $bg-idx: 600);
+		}
+
+		&.s-button--warning {
+			@include mixines.button-variant($color: 'orange', $bg-idx: 600);
+		}
+	}
+
+	&--plain {
+		@apply bg-transparent;
+
+		@include mixines.button-variant($color: 'gray', $hover-bg-idx: 100, $text-idx: 700);
+
+		&.s-button--primary {
+			@include mixines.button-variant(
+				$color: 'sky',
+				$hover-bg-idx: 50,
+				$text-idx: 700,
+				$active-bg-idx: 100
+			);
+		}
+
+		&.s-button--success {
+			@include mixines.button-variant(
+				$color: 'emerald',
+				$hover-bg-idx: 50,
+				$text-idx: 700,
+				$active-bg-idx: 100
+			);
+		}
+
+		&.s-button--danger {
+			@include mixines.button-variant(
+				$color: 'rose',
+				$hover-bg-idx: 50,
+				$text-idx: 700,
+				$active-bg-idx: 100
+			);
+		}
+
+		&.s-button--warning {
+			@include mixines.button-variant(
+				$color: 'orange',
+				$hover-bg-idx: 50,
+				$text-idx: 700,
+				$active-bg-idx: 100
+			);
+		}
+	}
+
+	&--outlined {
+		@apply bg-transparent border;
+
+		@include mixines.button-variant(
+			$color: 'gray',
+			$hover-bg-idx: 100,
+			$text-idx: 700,
+			$border-idx: 200
+		);
+
+		&.s-button--primary {
+			@include mixines.button-variant(
+				$color: 'sky',
+				$hover-bg-idx: 50,
+				$text-idx: 600,
+				$active-bg-idx: 100,
+				$border-idx: 200
+			);
+		}
+
+		&.s-button--success {
+			@include mixines.button-variant(
+				$color: 'emerald',
+				$hover-bg-idx: 50,
+				$text-idx: 600,
+				$active-bg-idx: 100,
+				$border-idx: 200
+			);
+		}
+
+		&.s-button--danger {
+			@include mixines.button-variant(
+				$color: 'rose',
+				$hover-bg-idx: 50,
+				$text-idx: 600,
+				$active-bg-idx: 100,
+				$border-idx: 200
+			);
+		}
+
+		&.s-button--warning {
+			@include mixines.button-variant(
+				$color: 'orange',
+				$hover-bg-idx: 50,
+				$text-idx: 600,
+				$active-bg-idx: 100,
+				$border-idx: 200
+			);
 		}
 	}
 }

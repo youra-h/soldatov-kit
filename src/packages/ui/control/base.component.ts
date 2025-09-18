@@ -41,22 +41,24 @@ export default {
 export function syncControl(props: TProps, instance: IControl) {
 	syncComponent(props, instance)
 
-	watch<boolean | undefined>(
+	watch<boolean>(
 		() => props.disabled,
 		(value) => {
 			if (value !== instance.disabled) {
 				instance.disabled = value
 			}
 		},
+		{ immediate: true },
 	)
 
-	watch<boolean | undefined>(
+	watch<boolean>(
 		() => props.focused,
 		(value) => {
 			if (value !== instance.focused) {
 				instance.focused = value
 			}
 		},
+		{ immediate: true },
 	)
 
 	watch<string>(

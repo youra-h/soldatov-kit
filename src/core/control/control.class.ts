@@ -8,7 +8,7 @@ export const defaultValues: Partial<IControl> = {
 	text: '',
 	disabled: false,
 	focused: false,
-	size: 'medium',
+	size: 'normal',
 }
 
 export default class TControl<TEvents extends TControlEventsMap> extends TComponent<TEvents> implements IControl {

@@ -5,8 +5,8 @@ import type { TObjectProps } from '../object'
 
 export const defaultValues: Partial<IButton> = {
 	...defaultControlValues,
-	variant: 'primary',
-	appearance: 'filled',
+	variant: 'normal',
+	appearance: 'normal',
 }
 
 export default class TButton extends TControl<TButtonEventsMap> implements IButton {
@@ -46,18 +46,18 @@ export default class TButton extends TControl<TButtonEventsMap> implements IButt
 	get classes(): string[] {
 		const classes = [this._baseClass]
 
-		// Добавляем класс для варианта, если он задан
-		if (this._variant) {
-			classes.push(`${this._baseClass}--${this._variant}`)
-		}
-
 		// Добавляем класс для внешнего вида, если он задан
 		if (this._appearance) {
 			classes.push(`${this._baseClass}--${this._appearance}`)
 		}
 
+		// Добавляем класс для варианта, если он задан
+		if (this._variant && this._variant !== 'normal') {
+			classes.push(`${this._baseClass}--${this._variant}`)
+		}
+
 		// Добавляем класс для размера
-		if (this.size) {
+		if (this.size && this.size !== 'normal') {
 			classes.push(`${this._baseClass}--size-${this.size}`)
 		}
 

@@ -36,16 +36,17 @@ export default {
 }
 
 export function syncComponent(props: TProps, instance: IComponent) {
-	watch<boolean | undefined>(
+	watch<boolean>(
 		() => props.visible,
 		(value) => {
 			if (value !== instance.visible) {
 				instance.visible = value
 			}
 		},
+		{ immediate: true },
 	)
 
-	watch<boolean | undefined>(
+	watch<boolean>(
 		() => props.hidden,
 		(value) => {
 			if (value !== instance.hidden) {
