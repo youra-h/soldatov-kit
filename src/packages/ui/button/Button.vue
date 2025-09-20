@@ -33,7 +33,7 @@ export default {
 
 <style lang="scss">
 @use './mixines' as mixines;
-@reference "tailwindcss";
+@reference "./../../theme";
 
 .s-button {
 	$this: &;
@@ -62,6 +62,7 @@ export default {
 
 	&--normal {
 		@apply bg-gray-100;
+		@apply dark:bg-gray-900;
 
 		&:active:not([disabled]) {
 			@apply bg-gray-300;
