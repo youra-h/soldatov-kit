@@ -1,9 +1,14 @@
 import type { IComponent, TComponentEventsMap } from '../component'
-import type { TControlSize } from '../../common/types'
+import type { TComponentSize } from '../../common/types'
+
+export type TIconSize = Exclude<TComponentSize, 'xl' | '2xl'>
 
 export interface IIcon extends IComponent {
-	size?: TControlSize
+	// Размер иконки
+	size?: TIconSize
+	// Ширина иконки
 	width?: number | string
+	// Высота иконки
 	height?: number | string
 }
 

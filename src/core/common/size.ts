@@ -1,26 +1,24 @@
-import type { TControlSize } from './types'
-
-export interface TSizeOptions {
+export interface TSizeOptions<T extends string = string> {
 	baseClass?: string
-	exclude?: TControlSize[]
-	defaultValue?: TControlSize
+	exclude?: T[]
+	defaultValue?: T
 }
 
-export class TSize {
+export class TSize<T extends string = string> {
 	private _baseClass: string
-	private _value: TControlSize = 'normal'
-	private _exclude: TControlSize[]
+	private _value: T = 'normal' as T
+	private _exclude: T[]
 
-	constructor(options: TSizeOptions = {}) {
+	constructor(options: TSizeOptions<T> = {}) {
 		this._baseClass = options.baseClass ?? 's-control'
-		this._exclude = options.exclude ?? ['normal']
-		this._value = options.defaultValue ?? 'normal'
+		this._exclude = options.exclude ?? ['normal' as T]
+		this._value = options.defaultValue !== undefined ? options.defaultValue : ('normal' as T)
 	}
 
-	get value(): TControlSize {
+	get value(): T {
 		return this._value
 	}
-	set value(newValue: TControlSize) {
+	set value(newValue: T) {
 		this._value = newValue
 	}
 

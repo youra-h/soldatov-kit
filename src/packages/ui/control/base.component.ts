@@ -1,5 +1,5 @@
 import { type PropType, watch } from 'vue'
-import { type IControl, type TControlSize, defaultControlValues } from '../../../core'
+import { type IControl, type TComponentSize, defaultControlValues } from '../../../core'
 import { BaseComponent, componentEmits, componentProps, syncComponent } from '../component'
 import type { TEmits, TProps } from '../../common/types'
 
@@ -74,7 +74,7 @@ export function syncControl(props: TProps, instance: IControl) {
 		},
 	)
 
-	watch<TControlSize | undefined>(
+	watch<TComponentSize | undefined>(
 		() => props.size,
 		(value) => {
 			if (value && value !== instance.size) {

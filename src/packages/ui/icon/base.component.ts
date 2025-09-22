@@ -1,5 +1,5 @@
 import { type PropType, watch } from 'vue'
-import { type IIcon, defaultIconValues, type TControlSize } from '../../../core'
+import { type IIcon, defaultIconValues, type TIconSize } from '../../../core'
 import { Component, componentEmits, componentProps, syncComponent } from '../component'
 import type { TEmits, TProps } from '../../common/types'
 
@@ -36,7 +36,7 @@ export default {
 export function syncIcon(props: TProps, instance: IIcon) {
 	syncComponent(props, instance)
 
-	watch<TControlSize | undefined>(
+	watch<TIconSize>(
 		() => props.size,
 		(value) => {
 			if (value && value !== instance.size) {

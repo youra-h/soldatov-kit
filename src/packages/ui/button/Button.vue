@@ -31,7 +31,9 @@ export default {
 			<Icon v-if="component.icon" :tag="component.icon.tag" :size="component.icon.size" />
 		</slot>
 		<slot>{{ component.text }}</slot>
-		<slot name="after"></slot>
+		<slot name="after">
+			<Spinner :size="component.spinnerSize" :border-width="component.spinnerBorderWidth" />
+		</slot>
 	</component>
 </template>
 
@@ -43,7 +45,7 @@ export default {
 	$this: &;
 
 	@apply flex items-center justify-center gap-1;
-	@apply px-2.5 py-1 rounded-md cursor-pointer;
+	@apply w-fit px-2.5 py-1 rounded-md cursor-pointer;
 	@apply relative transition-colors duration-200;
 	@apply truncate;
 	@apply outline-transparent;
@@ -68,12 +70,12 @@ export default {
 		fill: currentColor;
 	}
 
-	&--size-small {
+	&--size-sm {
 		@apply text-sm;
 		@apply px-1.5 py-0.5;
 	}
 
-	&--size-large {
+	&--size-lg {
 		@apply text-lg;
 		@apply px-3.5 py-1.5;
 	}
@@ -111,7 +113,7 @@ export default {
 		}
 
 		&.s-button--warning {
-			@include mixines.button-variant($color: 'orange', $bg-idx: 600);
+			@include mixines.button-variant($color: 'amber', $bg-idx: 600);
 		}
 	}
 
@@ -149,7 +151,7 @@ export default {
 
 		&.s-button--warning {
 			@include mixines.button-variant(
-				$color: 'orange',
+				$color: 'amber',
 				$hover-bg-idx: 50,
 				$text-idx: 700,
 				$active-bg-idx: 100
@@ -199,7 +201,7 @@ export default {
 
 		&.s-button--warning {
 			@include mixines.button-variant(
-				$color: 'orange',
+				$color: 'amber',
 				$hover-bg-idx: 50,
 				$text-idx: 600,
 				$active-bg-idx: 100,

@@ -1,8 +1,9 @@
 import { TControl, defaultControlValues } from '../control'
-import type { TVariant } from '../../common/types'
+import type { TComponentVariant } from '../../common/types'
 import type { IButton, TButtonAppearance, TButtonEventsMap } from './types'
 import type { TObjectProps } from '../object'
 import { TIcon } from '../icon'
+import { TVariant } from '../../common/variant'
 
 export const defaultValues: Partial<IButton> = {
 	...defaultControlValues,
@@ -13,7 +14,7 @@ export const defaultValues: Partial<IButton> = {
 }
 
 export default class TButton extends TControl<TButtonEventsMap> implements IButton {
-	private _variant: TVariant
+	private _variantHelper: TVariant
 	private _appearance: TButtonAppearance
 	private _icon?: TIcon
 
@@ -21,17 +22,24 @@ export default class TButton extends TControl<TButtonEventsMap> implements IButt
 		super(props, baseClass)
 
 		this._tag = props.tag ?? defaultValues.tag!
-		this._variant = props.variant ?? defaultValues.variant!
+
+		this._variantHelper = new TVariant({
+			baseClass: this._baseClass,
+			defaultValue: props.variant ?? defaultValues.variant!,
+		})
+
 		this._appearance = props.appearance ?? defaultValues.appearance!
 		this._icon = props.icon ?? defaultValues.icon!
 	}
 
-	get variant(): TVariant {
-		return this._variant
+	get variant(): TComponentVariant {
+		return this._variantHelper.value
 	}
 
-	set variant(value: TVariant) {
-		this._variant = value
+	set variant(value: TComponentVariant) {
+		if (this._variantHelper.value !== value) {
+			this._variantHelper.value = value
+		}
 	}
 
 	get appearance(): TButtonAppearance {
@@ -63,9 +71,7 @@ export default class TButton extends TControl<TButtonEventsMap> implements IButt
 		}
 
 		// Добавляем класс для варианта, если он задан
-		if (this._variant && this._variant !== 'normal') {
-			classes.push(`${this._baseClass}--${this._variant}`)
-		}
+		classes.push(...this._variantHelper.getClass())
 
 		return classes
 	}
@@ -73,7 +79,7 @@ export default class TButton extends TControl<TButtonEventsMap> implements IButt
 	getProps(): TObjectProps {
 		return {
 			...super.getProps(),
-			variant: this._variant,
+			variant: this._variantHelper.value,
 			appearance: this._appearance,
 			icon: this._icon,
 		}

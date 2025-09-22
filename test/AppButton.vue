@@ -12,7 +12,7 @@ const variant = ref('primary')
 const appearance = ref('filled')
 const text = ref('Button 1')
 const visible = ref(true)
-const size = ref('large')
+const size = ref('lg')
 
 // setTimeout(() => {
 // 	// variant.value = 'danger'
@@ -34,12 +34,12 @@ const onClick = () => {
 <template>
 	<div class="flex flex-col gap-4">
 		<div class="flex gap-4">
-			<Button :text @click="onClick" size="small"></Button>
-			<Button :text variant="secondary" :visible size="small"></Button>
-			<Button :text variant="primary" size="small"></Button>
-			<Button :text variant="success" size="small"></Button>
-			<Button :text variant="danger" size="small"></Button>
-			<Button :text variant="warning" size="small"></Button>
+			<Button :text @click="onClick" size="sm"></Button>
+			<Button :text variant="secondary" :visible size="sm"></Button>
+			<Button :text variant="primary" size="sm"></Button>
+			<Button :text variant="success" size="sm"></Button>
+			<Button :text variant="danger" size="sm"></Button>
+			<Button :text variant="warning" size="sm"></Button>
 		</div>
 		<div class="flex gap-4">
 			<Button :text @click="onClick"></Button>

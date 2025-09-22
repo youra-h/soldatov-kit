@@ -1,9 +1,10 @@
 import { type PropType, watch } from 'vue'
 import { type IButton, type TButtonAppearance, defaultButtonValues } from '../../../core'
-import { type TVariant, TIcon } from '../../../core'
+import { type TComponentVariant, TIcon } from '../../../core'
 import { Control, controlEmits, controlProps, syncControl } from '../control'
 import type { TEmits, TProps } from '../../common/types'
 import { Icon } from '../icon'
+import { Spinner } from '../spinner'
 
 export const buttonEmits: TEmits = [...controlEmits] as const
 
@@ -27,12 +28,10 @@ export const buttonProps: TProps = {
 	},
 }
 
-console.log(buttonProps)
-
 export default {
 	name: 'BaseButton',
 	extends: Control,
-	components: { Icon },
+	components: { Icon, Spinner },
 	emits: buttonEmits,
 	props: buttonProps,
 }
@@ -55,7 +54,7 @@ export function syncButton(props: TProps, instance: IButton) {
 		{ immediate: true },
 	)
 
-	watch<TVariant | undefined>(
+	watch<TComponentVariant>(
 		() => props.variant,
 		(value) => {
 			if (value && value !== instance.variant) {
@@ -64,7 +63,8 @@ export function syncButton(props: TProps, instance: IButton) {
 		},
 		{ immediate: true },
 	)
-	watch<TButtonAppearance | undefined>(
+
+	watch<TButtonAppearance>(
 		() => props.appearance,
 		(value) => {
 			if (value && value !== instance.appearance) {

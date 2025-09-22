@@ -17,8 +17,8 @@ console.log(icon);
 		<Button class="w-34" :icon variant="primary"> Button 1 </Button>
 		<Icon :tag="IconHome" />
 		<Icon :tag="IconHome" size="auto" />
-		<Icon :tag="IconHome" size="small" />
-		<Icon :tag="IconHome" size="large" />
+		<Icon :tag="IconHome" size="sm" />
+		<Icon :tag="IconHome" size="lg" />
 	</div>
 </template>
 
