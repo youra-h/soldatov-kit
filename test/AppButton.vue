@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
 import { Button } from '@ui/button'
-import { TButton } from '@core/button'
+import { TButton } from '@core'
 
 const button = reactive(new TButton({ text: 'Button 1' }))
 button.on('click', () => {

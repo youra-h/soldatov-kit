@@ -13,10 +13,8 @@ export default class TButton extends TControl<TButtonEventsMap> implements IButt
 	private _variant: TVariant
 	private _appearance: TButtonAppearance
 
-	constructor(props: Partial<IButton> = {}) {
-		super(props)
-
-		this._baseClass = 's-button'
+	constructor(props: Partial<IButton> = {}, baseClass: string = 's-button') {
+		super(props, baseClass)
 
 		this._variant = props.variant ?? defaultValues.variant!
 		this._appearance = props.appearance ?? defaultValues.appearance!

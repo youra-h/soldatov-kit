@@ -19,12 +19,14 @@ export default class TComponent<TEvents extends TComponentEventsMap>
 	protected _tag: string | Object
 
 	// Base class name
-	protected _baseClass: string = 's-component'
+	protected _baseClass: string
 	// Array of dynamic CSS classes
 	protected _classes: string[] = []
 
-	constructor(props: Partial<IComponent> = {}) {
+	constructor(props: Partial<IComponent> = {}, baseClass: string = 's-component') {
 		super()
+
+		this._baseClass = baseClass
 
 		this._id = props.id ?? defaultValues.id!
 		this._visible = typeof props.visible === 'boolean' ? props.visible : defaultValues.visible!

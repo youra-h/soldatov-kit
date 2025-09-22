@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { reactive, defineAsyncComponent } from 'vue'
 import { Icon } from '@ui/icon'
-import { TIcon } from '@core/icon'
+import { TIcon } from '@core'
 
 const icon = reactive(new TIcon({ icon: 'home', size: 'normal' }))
 

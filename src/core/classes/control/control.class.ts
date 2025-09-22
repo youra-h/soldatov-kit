@@ -21,11 +21,10 @@ export default class TControl<TEvents extends TControlEventsMap>
 	private _focused: boolean
 	private _sizeHelper: TSize
 
-	constructor(props: Partial<IControl> = {}) {
-		super(props)
+	constructor(props: Partial<IControl> = {}, baseClass: string = 's-control') {
+		super(props, baseClass)
 
-		this._baseClass = 's-control'
-		this._sizeHelper = new TSize(this._baseClass)
+		this._sizeHelper = new TSize(baseClass)
 
 		this._text = props.text ?? defaultValues.text!
 		this._disabled = props.disabled ?? defaultValues.disabled!
