@@ -1,0 +1,68 @@
+import { type PropType, watch } from 'vue'
+import { type IIcon, defaultIconValues, type TControlSize } from '../../../core'
+import { Component, componentEmits, componentProps, syncComponent } from '../component'
+import type { TEmits, TProps } from '../../common/types'
+
+export const iconEmits: TEmits = [...componentEmits] as const
+
+export const iconProps: TProps = {
+	...componentProps,
+	size: {
+		type: String as PropType<IIcon['size']>,
+		default: defaultIconValues.size,
+	},
+	width: {
+		type: [Number, String] as PropType<IIcon['width']>,
+		default: defaultIconValues.width,
+	},
+	height: {
+		type: [Number, String] as PropType<IIcon['height']>,
+		default: defaultIconValues.height,
+	},
+}
+
+export default {
+	name: 'BaseIcon',
+	extends: Component,
+	emits: iconEmits,
+	props: iconProps,
+}
+
+/**
+ * Bind props to instance properties.
+ * @param props
+ * @param instance
+ */
+export function syncIcon(props: TProps, instance: IIcon) {
+	syncComponent(props, instance)
+
+	watch<TControlSize | undefined>(
+		() => props.size,
+		(value) => {
+			if (value && value !== instance.size) {
+				instance.size = value
+			}
+		},
+		{ immediate: true },
+	)
+
+	watch<number | string | undefined>(
+		() => props.width,
+		(value) => {
+			if (value && value !== instance.width) {
+				instance.width = value
+			}
+		},
+		{ immediate: true },
+	)
+
+	watch<number | string | undefined>(
+		() => props.height,
+		(value) => {
+			if (value && value !== instance.height) {
+				instance.height = value
+			}
+		},
+		{ immediate: true },
+	)
+}

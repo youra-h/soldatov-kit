@@ -1,7 +1,7 @@
 <script lang="ts">
-import { TControl, type IControl } from '../../../core/control'
+import { TControl, type IControl } from '../../../core'
 import BaseControl, { syncControl } from './base.component'
-import { useBaseSetup } from './../../core/useBaseSetup'
+import { useBaseSetup } from '../../common/useBaseSetup'
 
 export default {
 	name: '_Control',

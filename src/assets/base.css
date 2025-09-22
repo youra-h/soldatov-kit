@@ -6,6 +6,9 @@
 		font-weight: normal;
 }
 
+* {
+	font-size: 14px;
+}
 body {
 	min-height: 100vh;
 	line-height: 1.6;

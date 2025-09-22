@@ -1,5 +1,6 @@
 export interface IComponent {
 	id?: string | number
+	tag?: string | Object
 	visible?: boolean
 	hidden?: boolean
 }

@@ -1,6 +1,6 @@
 <script lang="ts">
-import { TButton, type IButton } from '../../../core/button'
-import { useBaseSetup } from './../../core/useBaseSetup'
+import { TButton, type IButton } from '../../../core'
+import { useBaseSetup } from '../../common/useBaseSetup'
 import BaseButton, { syncButton } from './base.component'
 
 export default {
@@ -21,9 +21,11 @@ export default {
 <template>
 	<component
 		:is="component.tag"
+		v-if="component.isHidden"
+		v-show="component.isVisibility"
 		:class="component.classes"
+		:disabled="component.disabled || undefined"
 		@click="component.emit('click', $event)"
-		:disabled="component.disabled"
 	>
 		<slot name="before"></slot>
 		<slot>{{ component.text }}</slot>
@@ -39,7 +41,7 @@ export default {
 	$this: &;
 
 	@apply flex items-center justify-center gap-1;
-	@apply px-2.5 py-1.5 rounded-md cursor-pointer;
+	@apply px-2.5 py-1 rounded-md cursor-pointer;
 	@apply relative transition-colors duration-200;
 	@apply truncate;
 	@apply outline-transparent;
@@ -58,6 +60,16 @@ export default {
 
 	&:hover:not([disabled]) {
 		@apply bg-gray-200;
+	}
+
+	&--size-small {
+		@apply text-sm;
+		@apply px-1.5 py-0.5;
+	}
+
+	&--size-large {
+		@apply text-lg;
+		@apply px-3.5 py-1.5;
 	}
 
 	&--normal {

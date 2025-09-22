@@ -1,4 +1,4 @@
-import { TEventEmitter, type TEventHandler } from '../utils/event-emitter'
+import { TEventEmitter, type TEventHandler } from '../../common/event-emitter'
 import type { TObjectProps } from './types'
 
 export abstract class TObject<TEvents extends Record<string, TEventHandler>> {

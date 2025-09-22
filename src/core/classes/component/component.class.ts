@@ -3,6 +3,7 @@ import type { IComponent, TComponentEventsMap } from './types'
 
 export const defaultValues: Partial<IComponent> = {
 	id: '',
+	tag: 'div',
 	visible: true,
 	hidden: false,
 }
@@ -15,6 +16,8 @@ export default class TComponent<TEvents extends TComponentEventsMap>
 	private _visible: boolean
 	private _hidden: boolean
 
+	protected _tag: string | Object
+
 	// Base class name
 	protected _baseClass: string = 's-component'
 	// Array of dynamic CSS classes
@@ -26,6 +29,7 @@ export default class TComponent<TEvents extends TComponentEventsMap>
 		this._id = props.id ?? defaultValues.id!
 		this._visible = typeof props.visible === 'boolean' ? props.visible : defaultValues.visible!
 		this._hidden = typeof props.hidden === 'boolean' ? props.hidden : defaultValues.hidden!
+		this._tag = props.tag ?? defaultValues.tag!
 	}
 
 	get id(): string | number {
@@ -33,7 +37,9 @@ export default class TComponent<TEvents extends TComponentEventsMap>
 	}
 
 	set id(value: string | number) {
-		this._id = value
+		if (this._id !== value) {
+			this._id = value
+		}
 	}
 
 	get visible(): boolean {
@@ -53,7 +59,19 @@ export default class TComponent<TEvents extends TComponentEventsMap>
 	}
 
 	set hidden(value: boolean) {
-		this._hidden = value
+		if (this._hidden !== value) {
+			this._hidden = value
+		}
+	}
+
+	get tag(): string | Object {
+		return this._tag
+	}
+
+	set tag(value: string | Object) {
+		if (this._tag !== value) {
+			this._tag = value
+		}
 	}
 
 	get classes(): string[] {
@@ -126,14 +144,14 @@ export default class TComponent<TEvents extends TComponentEventsMap>
 	/**
 	 * Компонент скрыт и удален из Dom
 	 */
-	isHidden(): boolean {
+	get isHidden(): boolean {
 		return this._hidden ? this._visible : true
 	}
 
 	/**
 	 * Компонент видим и не удален из Dom
 	 */
-	isVisibility(): boolean {
+	get isVisibility(): boolean {
 		return this._hidden ? true : this._visible
 	}
 }

@@ -11,6 +11,8 @@ button.on('click', () => {
 const variant = ref('primary')
 const appearance = ref('filled')
 const text = ref('Button 1')
+const visible = ref(true)
+const size = ref('large')
 
 // setTimeout(() => {
 // 	// variant.value = 'danger'
@@ -24,60 +26,76 @@ const text = ref('Button 1')
 // }, 1000)
 
 const onClick = () => {
-	button.emit('click')
 	console.log('Button clicked!')
+	visible.value = !visible.value
 }
 </script>
 
 <template>
 	<div class="flex flex-col gap-4">
 		<div class="flex gap-4">
-			<Button :text disabled></Button>
-			<Button :text variant="secondary" disabled></Button>
-			<Button :text variant="primary" disabled></Button>
-			<Button :text variant="success" disabled></Button>
-			<Button :text variant="danger" disabled></Button>
-			<Button :text variant="warning" disabled></Button>
+			<Button :text @click="onClick" size="small"></Button>
+			<Button :text variant="secondary" :visible size="small"></Button>
+			<Button :text variant="primary" size="small"></Button>
+			<Button :text variant="success" size="small"></Button>
+			<Button :text variant="danger" size="small"></Button>
+			<Button :text variant="warning" size="small"></Button>
 		</div>
 		<div class="flex gap-4">
-			<Button :text></Button>
-			<Button :text variant="secondary"></Button>
+			<Button :text @click="onClick"></Button>
+			<Button :text variant="secondary" :visible></Button>
 			<Button :text variant="primary"></Button>
 			<Button :text variant="success"></Button>
 			<Button :text variant="danger"></Button>
 			<Button :text variant="warning"></Button>
 		</div>
 		<div class="flex gap-4">
-			<Button :text appearance="plain"></Button>
-			<Button :text appearance="plain" variant="secondary"></Button>
-			<Button :text appearance="plain" variant="primary"></Button>
-			<Button :text appearance="plain" variant="success"></Button>
-			<Button :text appearance="plain" variant="danger"></Button>
-			<Button :text appearance="plain" variant="warning"></Button>
+			<Button :text disabled :size></Button>
+			<Button :text variant="secondary" disabled :size></Button>
+			<Button :text variant="primary" disabled :size></Button>
+			<Button :text variant="success" disabled :size></Button>
+			<Button :text variant="danger" disabled :size></Button>
+			<Button :text variant="warning" disabled :size></Button>
 		</div>
 		<div class="flex gap-4">
-			<Button :text appearance="plain" disabled></Button>
-			<Button :text appearance="plain" variant="secondary" disabled></Button>
-			<Button :text appearance="plain" variant="primary" disabled></Button>
-			<Button :text appearance="plain" variant="success" disabled></Button>
-			<Button :text appearance="plain" variant="danger" disabled></Button>
-			<Button :text appearance="plain" variant="warning" disabled></Button>
+			<Button :text @click="onClick" :size></Button>
+			<Button :text variant="secondary" :visible :size></Button>
+			<Button :text variant="primary" :size></Button>
+			<Button :text variant="success" :size></Button>
+			<Button :text variant="danger" :size></Button>
+			<Button :text variant="warning" :size></Button>
 		</div>
 		<div class="flex gap-4">
-			<Button :text appearance="outlined"></Button>
-			<Button :text appearance="outlined" variant="secondary"></Button>
-			<Button :text appearance="outlined" variant="primary"></Button>
-			<Button :text appearance="outlined" variant="success"></Button>
-			<Button :text appearance="outlined" variant="danger"></Button>
-			<Button :text appearance="outlined" variant="warning"></Button>
+			<Button :text appearance="plain" :size></Button>
+			<Button :text appearance="plain" variant="secondary" :size></Button>
+			<Button :text appearance="plain" variant="primary" :size></Button>
+			<Button :text appearance="plain" variant="success" :size></Button>
+			<Button :text appearance="plain" variant="danger" :size></Button>
+			<Button :text appearance="plain" variant="warning" :size></Button>
 		</div>
 		<div class="flex gap-4">
-			<Button :text appearance="outlined" disabled></Button>
-			<Button :text appearance="outlined" variant="secondary" disabled></Button>
-			<Button :text appearance="outlined" variant="primary" disabled></Button>
-			<Button :text appearance="outlined" variant="success" disabled></Button>
-			<Button :text appearance="outlined" variant="danger" disabled></Button>
-			<Button :text appearance="outlined" variant="warning" disabled></Button>
+			<Button :text appearance="plain" disabled :size></Button>
+			<Button :text appearance="plain" variant="secondary" disabled :size></Button>
+			<Button :text appearance="plain" variant="primary" disabled :size></Button>
+			<Button :text appearance="plain" variant="success" disabled :size></Button>
+			<Button :text appearance="plain" variant="danger" disabled :size></Button>
+			<Button :text appearance="plain" variant="warning" disabled :size></Button>
+		</div>
+		<div class="flex gap-4">
+			<Button :text appearance="outlined" :size></Button>
+			<Button :text appearance="outlined" variant="secondary" :size></Button>
+			<Button :text appearance="outlined" variant="primary" :size></Button>
+			<Button :text appearance="outlined" variant="success" :size></Button>
+			<Button :text appearance="outlined" variant="danger" :size></Button>
+			<Button :text appearance="outlined" variant="warning" :size></Button>
+		</div>
+		<div class="flex gap-4">
+			<Button :text appearance="outlined" disabled :size></Button>
+			<Button :text appearance="outlined" variant="secondary" disabled :size></Button>
+			<Button :text appearance="outlined" variant="primary" disabled :size></Button>
+			<Button :text appearance="outlined" variant="success" disabled :size></Button>
+			<Button :text appearance="outlined" variant="danger" disabled :size></Button>
+			<Button :text appearance="outlined" variant="warning" disabled :size></Button>
 		</div>
 	</div>
 </template>

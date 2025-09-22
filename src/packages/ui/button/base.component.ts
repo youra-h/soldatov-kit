@@ -1,15 +1,10 @@
 import { type PropType, watch } from 'vue'
-import { type IButton, type TButtonAppearance, defaultButtonValues } from '../../../core/button'
-import { type TVariant } from '../../../core/utils/types'
+import { type IButton, type TButtonAppearance, defaultButtonValues } from '../../../core'
+import { type TVariant } from '../../../core'
 import { Control, controlEmits, controlProps, syncControl } from '../control'
-import type { TEmits, TProps } from '../../core/types'
+import type { TEmits, TProps } from '../../common/types'
 
-export const buttonEmits: TEmits = [
-	...controlEmits,
-	'update:text',
-	'update:disabled',
-	'update:focused',
-] as const
+export const buttonEmits: TEmits = [...controlEmits] as const
 
 export const buttonProps: TProps = {
 	...controlProps,

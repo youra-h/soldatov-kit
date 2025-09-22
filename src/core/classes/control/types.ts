@@ -1,5 +1,5 @@
-import type { IComponent, TComponentEventsMap } from "../component"
-import type { TControlSize } from '../utils/types'
+import type { IComponent, TComponentEventsMap } from './../component'
+import type { TControlSize } from '../../common/types'
 
 export interface IControl extends IComponent {
 	text: string

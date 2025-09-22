@@ -1,6 +1,6 @@
 import { type PropType, watch } from 'vue'
-import { type IComponent, defaultComponentValues } from '../../../core/component'
-import type { TEmits, TProps } from '../../core/types'
+import { type IComponent, defaultComponentValues } from '../../../core'
+import type { TEmits, TProps } from '../../common/types'
 
 export const componentEmits: TEmits = [
 	'update:visible',
@@ -19,6 +19,10 @@ export const componentProps: TProps = {
 		type: [String, Number] as PropType<IComponent['id']>,
 		default: defaultComponentValues.id,
 	},
+	tag: {
+		type: [Object, String] as PropType<IComponent['tag']>,
+		default: defaultComponentValues.tag,
+	},
 	visible: {
 		type: Boolean as PropType<IComponent['visible']>,
 		default: defaultComponentValues.visible,
@@ -36,6 +40,16 @@ export default {
 }
 
 export function syncComponent(props: TProps, instance: IComponent) {
+	watch<Object | string>(
+		() => props.tag,
+		(value) => {
+			if (value !== instance.tag) {
+				instance.tag = value
+			}
+		},
+		{ immediate: true },
+	)
+
 	watch<boolean>(
 		() => props.visible,
 		(value) => {
