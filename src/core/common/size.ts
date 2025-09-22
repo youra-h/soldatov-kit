@@ -1,16 +1,23 @@
 import type { TControlSize } from './types'
 
-export class SizeHelper {
-	protected _size: TControlSize = 'normal'
+export class TSize {
+	private _baseClass: string
+	private _value: TControlSize = 'normal'
 
-	get size(): TControlSize {
-		return this._size
-	}
-	set size(value: TControlSize) {
-		this._size = value
+	constructor(baseClass: string) {
+		this._baseClass = baseClass
 	}
 
-	getSizeClass(baseClass: string): string[] {
-		return this._size && this._size !== 'normal' ? [`${baseClass}--size-${this._size}`] : []
+	get value(): TControlSize {
+		return this._value
+	}
+	set value(newValue: TControlSize) {
+		this._value = newValue
+	}
+
+	getClass(): string[] {
+		return this._value && this._value !== 'normal'
+			? [`${this._baseClass}--size-${this._value}`]
+			: []
 	}
 }

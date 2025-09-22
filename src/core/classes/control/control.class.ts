@@ -2,6 +2,7 @@ import { TComponent, defaultComponentValues } from './../component'
 import type { IControl, TControlEventsMap } from './types'
 import type { TObjectProps } from '../object'
 import type { TControlSize } from '../../common/types'
+import { TSize } from '../../common/size'
 
 export const defaultValues: Partial<IControl> = {
 	...defaultComponentValues,
@@ -18,17 +19,19 @@ export default class TControl<TEvents extends TControlEventsMap>
 	private _text: string
 	private _disabled: boolean
 	private _focused: boolean
-	private _size: TControlSize
+	private _sizeHelper: TSize
 
 	constructor(props: Partial<IControl> = {}) {
 		super(props)
 
 		this._baseClass = 's-control'
+		this._sizeHelper = new TSize(this._baseClass)
 
 		this._text = props.text ?? defaultValues.text!
 		this._disabled = props.disabled ?? defaultValues.disabled!
 		this._focused = props.focused ?? defaultValues.focused!
-		this._size = props.size ?? defaultValues.size!
+
+		this.size = props.size ?? defaultValues.size!
 	}
 
 	get text(): string {
@@ -65,12 +68,12 @@ export default class TControl<TEvents extends TControlEventsMap>
 	}
 
 	get size(): TControlSize {
-		return this._size
+		return this._sizeHelper.value
 	}
 
 	set size(value: TControlSize) {
-		if (this._size !== value) {
-			this._size = value
+		if (this._sizeHelper.value !== value) {
+			this._sizeHelper.value = value
 		}
 	}
 
@@ -78,9 +81,7 @@ export default class TControl<TEvents extends TControlEventsMap>
 		const classes = []
 
 		// Добавляем класс для размера
-		if (this.size && this.size !== 'normal') {
-			classes.push(`${this._baseClass}--size-${this.size}`)
-		}
+		classes.push(...this._sizeHelper.getClass())
 
 		return classes
 	}
@@ -91,7 +92,7 @@ export default class TControl<TEvents extends TControlEventsMap>
 			text: this._text,
 			disabled: this._disabled,
 			focused: this._focused,
-			size: this._size,
+			size: this._sizeHelper.value,
 		}
 	}
 

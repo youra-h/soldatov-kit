@@ -2,6 +2,7 @@ import { TComponent, defaultComponentValues } from '../component'
 import type { TControlSize } from '../../common/types'
 import type { IIcon, TIconEventsMap } from './types'
 import type { TObjectProps } from '../object'
+import { TSize } from '@/core/common/size'
 
 export const defaultValues: Partial<IIcon> = {
 	...defaultComponentValues,
@@ -9,18 +10,19 @@ export const defaultValues: Partial<IIcon> = {
 }
 
 export default class TIcon extends TComponent<TIconEventsMap> implements IIcon {
-	private _size: TControlSize
 	private _width: string | number | undefined
 	private _height: string | number | undefined
+	private _sizeHelper: TSize
 
 	constructor(props: Partial<IIcon> = {}) {
 		super(props)
 
 		this._baseClass = 's-icon'
+		this._sizeHelper = new TSize(this._baseClass)
 
 		this._tag = 'svg'
 
-		this._size = props.size ?? defaultValues.size!
+		this.size = props.size ?? defaultValues.size!
 		this._width = props.width
 		this._height = props.height
 	}
@@ -46,12 +48,12 @@ export default class TIcon extends TComponent<TIconEventsMap> implements IIcon {
 	}
 
 	get size(): TControlSize {
-		return this._size
+		return this._sizeHelper.value
 	}
 
 	set size(value: TControlSize) {
-		if (this._size !== value) {
-			this._size = value
+		if (this._sizeHelper.value !== value) {
+			this._sizeHelper.value = value
 		}
 	}
 
@@ -59,9 +61,7 @@ export default class TIcon extends TComponent<TIconEventsMap> implements IIcon {
 		const classes = []
 
 		// Добавляем класс для размера
-		if (this.size && this.size !== 'normal') {
-			classes.push(`${this._baseClass}--size-${this.size}`)
-		}
+		classes.push(...this._sizeHelper.getClass())
 
 		return classes
 	}
@@ -69,7 +69,7 @@ export default class TIcon extends TComponent<TIconEventsMap> implements IIcon {
 	getProps(): TObjectProps {
 		return {
 			...super.getProps(),
-			size: this._size,
+			size: this._sizeHelper.value,
 			width: this._width,
 			height: this._height,
 		}
