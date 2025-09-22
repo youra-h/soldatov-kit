@@ -7,6 +7,7 @@ import { TSize } from '@/core/common/size'
 export const defaultValues: Partial<IIcon> = {
 	...defaultComponentValues,
 	size: 'normal',
+	tag: 'error',
 }
 
 export default class TIcon extends TComponent<TIconEventsMap> implements IIcon {
@@ -17,10 +18,13 @@ export default class TIcon extends TComponent<TIconEventsMap> implements IIcon {
 	constructor(props: Partial<IIcon> = {}, baseClass: string = 's-icon') {
 		super(props, baseClass)
 
-		this._sizeHelper = new TSize(baseClass)
+		this._sizeHelper = new TSize({
+			baseClass: this._baseClass,
+			exclude: ['auto'],
+			defaultValue: defaultValues.size!,
+		})
 
-		this._tag = 'svg'
-
+		this._tag = props.tag ?? defaultValues.tag!
 		this.size = props.size ?? defaultValues.size!
 		this._width = props.width
 		this._height = props.height
@@ -57,7 +61,7 @@ export default class TIcon extends TComponent<TIconEventsMap> implements IIcon {
 	}
 
 	get classes(): string[] {
-		const classes = []
+		const classes = [this._baseClass]
 
 		// Добавляем класс для размера
 		classes.push(...this._sizeHelper.getClass())

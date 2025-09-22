@@ -24,7 +24,10 @@ export default class TControl<TEvents extends TControlEventsMap>
 	constructor(props: Partial<IControl> = {}, baseClass: string = 's-control') {
 		super(props, baseClass)
 
-		this._sizeHelper = new TSize(baseClass)
+		this._sizeHelper = new TSize({
+			baseClass: this._baseClass,
+			defaultValue: defaultValues.size!,
+		})
 
 		this._text = props.text ?? defaultValues.text!
 		this._disabled = props.disabled ?? defaultValues.disabled!

@@ -27,7 +27,9 @@ export default {
 		:disabled="component.disabled || undefined"
 		@click="component.emit('click', $event)"
 	>
-		<slot name="before"></slot>
+		<slot name="before">
+			<Icon v-if="component.icon" :tag="component.icon.tag" :size="component.icon.size" />
+		</slot>
 		<slot>{{ component.text }}</slot>
 		<slot name="after"></slot>
 	</component>
@@ -53,13 +55,17 @@ export default {
 
 	&:focus,
 	&:focus-visible {
-		@apply duration-150;
+		@apply duration-100;
 		@apply outline-2 outline-offset-2 outline-blue-400;
 		@apply bg-gray-200;
 	}
 
 	&:hover:not([disabled]) {
 		@apply bg-gray-200;
+	}
+
+	svg {
+		fill: currentColor;
 	}
 
 	&--size-small {

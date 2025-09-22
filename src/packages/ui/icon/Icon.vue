@@ -32,5 +32,16 @@ export default {
 @reference "./../../theme";
 
 .s-icon {
+	&--size-normal {
+		@apply w-[1em] h-[1em];
+	}
+
+	&--size-large {
+		@apply w-[1.35em] h-[1.35em];
+	}
+
+	&--size-small {
+		@apply w-[.875em] h-[.875em];
+	}
 }
 </style>
