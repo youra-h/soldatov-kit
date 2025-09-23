@@ -27,7 +27,7 @@ export default class TButton extends TControl<TButtonEventsMap> implements IButt
 
 		this._tag = props.tag ?? defaultValues.tag!
 
-		this.loading = props.loading ?? defaultValues.loading!
+		this._loading = props.loading ?? defaultValues.loading!
 		this._spinner = props.spinner ?? defaultValues.spinner!
 
 		this._variantHelper = new TVariant({
@@ -36,8 +36,8 @@ export default class TButton extends TControl<TButtonEventsMap> implements IButt
 
 		this._variantHelper.onChange((value) => {
 			// Если есть спиннер, синхронизируем его вариант с кнопкой
-			if (this._loading && this._spinner) {
-				this._spinner.variant = value
+			if (this._loading) {
+				this.spinner!.variant = value
 			}
 		})
 
@@ -84,18 +84,18 @@ export default class TButton extends TControl<TButtonEventsMap> implements IButt
 	set loading(value: boolean) {
 		if (this._loading !== value) {
 			this._loading = value
-
-			// Если включается режим загрузки и не задан спиннер, создаем его
-			if (this._loading && !this._spinner) {
-				this._spinner = new TSpinner({
-					size: 'normal',
-					variant: this._variantHelper.value,
-				})
-			}
 		}
 	}
 
 	get spinner(): TSpinner | undefined {
+		// Если включается режим загрузки и не задан спиннер, создаем его
+		if (this._loading && !this._spinner) {
+			this._spinner = new TSpinner({
+				size: 'normal',
+				variant: this._variantHelper.value,
+			})
+		}
+
 		return this._spinner
 	}
 
