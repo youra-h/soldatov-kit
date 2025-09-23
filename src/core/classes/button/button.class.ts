@@ -42,7 +42,7 @@ export default class TButton extends TControl<TButtonEventsMap> implements IButt
 			this.spinner!.variant = value
 		})
 
-		// Инициализируем значение варианта
+		// Инициализируем значение отображения компонента
 		this._variantHelper.value = props.variant ?? defaultValues.variant!
 
 		this._appearance = props.appearance ?? defaultValues.appearance!
@@ -81,11 +81,7 @@ export default class TButton extends TControl<TButtonEventsMap> implements IButt
 	set icon(value: TIcon | undefined) {
 		if (this._icon !== value) {
 			// Если value не типа TIcon, создаем новый экземпляр
-			if (value && !(value instanceof TIcon)) {
-				this._icon = new TIcon({ tag: value })
-			} else {
-				this._icon = value
-			}
+			this._icon = value ? TIcon.getInstance(value) : undefined
 		}
 	}
 
@@ -103,8 +99,10 @@ export default class TButton extends TControl<TButtonEventsMap> implements IButt
 		// Если включается режим загрузки и не задан спиннер, создаем его
 		if (!this._spinner) {
 			this._spinner = new TSpinner({
-				size: 'normal',
-				variant: this._variantHelper.value,
+				props: {
+					size: 'normal',
+					variant: this._variantHelper.value,
+				},
 			})
 		}
 

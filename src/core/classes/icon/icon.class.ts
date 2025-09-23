@@ -69,6 +69,19 @@ export default class TIcon extends TComponent<TIconEventsMap> implements IIcon {
 		return classes
 	}
 
+	/**
+	 * Получает экземпляр иконки.
+	 * @param value Значение, по которому нужно получить иконку, если это уже экземпляр TIcon, он будет возвращен как есть, иначе будет создан новый экземпляр.
+	 * @returns Экземпляр иконки.
+	 */
+	static getInstance(value: TIcon | Object): TIcon {
+		if (value instanceof TIcon) {
+			return value
+		}
+
+		return new TIcon({ props: { tag: value } })
+	}
+
 	getProps(): TObjectProps {
 		return {
 			...super.getProps(),
