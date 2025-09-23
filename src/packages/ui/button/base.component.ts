@@ -69,7 +69,6 @@ export function syncButton(props: TProps, instance: IButton) {
 				instance.variant = value
 			}
 		},
-		{ immediate: true },
 	)
 
 	watch<TButtonAppearance>(
@@ -79,7 +78,6 @@ export function syncButton(props: TProps, instance: IButton) {
 				instance.appearance = value
 			}
 		},
-		{ immediate: true },
 	)
 
 	watch<TSpinner | undefined>(
@@ -89,7 +87,6 @@ export function syncButton(props: TProps, instance: IButton) {
 				instance.spinner = value
 			}
 		},
-		{ immediate: true },
 	)
 
 	watch<boolean>(
@@ -99,6 +96,5 @@ export function syncButton(props: TProps, instance: IButton) {
 				instance.loading = value
 			}
 		},
-		{ immediate: true },
 	)
 }

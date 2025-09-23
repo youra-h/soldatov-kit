@@ -5,17 +5,23 @@ import { Button } from '@ui/button'
 import { TSpinner, TButton } from '@core'
 
 const spinner = new TSpinner({ tag: Spinner })
+const button = new TButton({ variant: 'danger', spinner, loading: true })
+
 const loading = ref(false)
 const variant = ref('normal')
+const size = ref('normal')
 
 setTimeout(() => {
 	loading.value = true
-}, 2000);
+	variant.value = 'primary'
+	size.value = 'lg'
+}, 2000)
 </script>
 
 <template>
 	<div class="flex flex-col gap-4">
-		<Button :variant :loading> Button 1 </Button>
+		<Button :variant :loading :size> Button 1 </Button>
+		<Button :component="button">Button 2</Button>
 		<Spinner size="sm" variant="normal" />
 		<Spinner variant="primary" />
 		<Spinner size="lg" variant="secondary" />
