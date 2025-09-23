@@ -1,30 +1,15 @@
-export interface TSizeOptions<T extends string = string> {
-	baseClass?: string
-	exclude?: T[]
-	defaultValue?: T
-}
+import { TBaseClassValue, type IBaseClassValueOptions } from './base-class-value'
 
-export class TSize<T extends string = string> {
-	private _baseClass: string
-	private _value: T = 'normal' as T
-	private _exclude: T[]
+export type TSizeOptions<T extends string = string> = IBaseClassValueOptions<T>
 
+export class TSize<T extends string = string> extends TBaseClassValue<T> {
 	constructor(options: TSizeOptions<T> = {}) {
-		this._baseClass = options.baseClass ?? 's-control'
-		this._exclude = options.exclude ?? ['normal' as T]
-		this._value = options.defaultValue !== undefined ? options.defaultValue : ('normal' as T)
-	}
-
-	get value(): T {
-		return this._value
-	}
-	set value(newValue: T) {
-		this._value = newValue
+		super(options)
 	}
 
 	getClass(): string[] {
-		return this._value && !this._exclude.includes(this._value)
-			? [`${this._baseClass}--size-${this._value}`]
+		return this.value && !this._exclude.includes(this.value)
+			? [`${this._baseClass}--size-${this.value}`]
 			: []
 	}
 }
