@@ -7,8 +7,8 @@ import { useManagedInstance } from './useManagedInstance'
  * @param key The key to use for the component instance in the props.
  * @returns The managed instance of the component.
  */
-export function useBaseSetup<T>(Ctor: new (props: any) => T, props: any, key: string = 'component') {
+export function useBaseSetup<T>(Ctor: new (props: any) => T, props: any, key: string = 'is') {
 	const instance = useManagedInstance(Ctor, props, key)
 
-	return { component: instance }
+	return { is: instance }
 }

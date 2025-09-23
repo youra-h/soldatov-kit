@@ -12,7 +12,7 @@ export const componentEmits: TEmits = [
 ] as const
 
 export const componentProps: TProps = {
-	component: {
+	is: {
 		type: Object as PropType<IComponent>,
 	},
 	id: {

@@ -7,7 +7,7 @@ export default {
 	name: '_Spinner',
 	extends: BaseSpinner,
 	setup(props: ISpinner) {
-		const { component } = useBaseSetup(TSpinner, props)
+		const { is: component } = useBaseSetup(TSpinner, props)
 
 		syncSpinner(props, component)
 

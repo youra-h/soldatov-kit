@@ -1,4 +1,6 @@
 export interface IComponent {
+	// Управляющий объект компонента
+	is?: Object
 	// Id компонента
 	id?: string | number
 	// HTML-тег компонента

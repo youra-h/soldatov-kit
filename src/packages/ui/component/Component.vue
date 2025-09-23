@@ -7,7 +7,7 @@ export default {
 	name: '_Component',
 	extends: BaseComponent,
 	setup(props: IComponent) {
-		const { component } = useBaseSetup(TComponent, props)
+		const { is: component } = useBaseSetup(TComponent, props)
 
 		return { component }
 	},

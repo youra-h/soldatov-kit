@@ -7,7 +7,7 @@ export default {
 	name: '_Control',
 	extends: BaseControl,
 	setup(props: IControl) {
-		const { component } = useBaseSetup(TControl, props)
+		const { is: component } = useBaseSetup(TControl, props)
 
 		syncControl(props, component)
 

@@ -7,7 +7,7 @@ export default {
 	name: '_Icon',
 	extends: BaseIcon,
 	setup(props: IIcon) {
-		const { component } = useBaseSetup(TIcon, props)
+		const { is: component } = useBaseSetup(TIcon, props)
 
 		syncIcon(props, component)
 

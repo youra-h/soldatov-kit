@@ -7,7 +7,7 @@ export default {
 	name: '_Button',
 	extends: BaseButton,
 	setup(props: IButton) {
-		const { component } = useBaseSetup(TButton, props)
+		const { is: component } = useBaseSetup(TButton, props)
 
 		syncButton(props, component)
 
@@ -28,11 +28,11 @@ export default {
 		@click="component.emit('click', $event)"
 	>
 		<slot name="before">
-			<Icon v-if="component.icon" :component="component.icon" />
+			<Icon v-if="component.icon" :is="component.icon" />
 		</slot>
 		<slot>{{ component.text }}</slot>
 		<slot name="after">
-			<Spinner v-if="component.loading" :component="component.spinner" />
+			<Spinner v-if="component.loading" :is="component.spinner" />
 		</slot>
 	</component>
 </template>

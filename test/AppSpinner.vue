@@ -21,7 +21,7 @@ setTimeout(() => {
 <template>
 	<div class="flex gap-4">
 		<Button :variant :loading :size> Button 1 </Button>
-		<Button :component="button">Button 2</Button>
+		<Button :is="button">Button 2</Button>
 		<Spinner size="sm" variant="normal" />
 		<Spinner variant="primary" />
 		<Spinner size="lg" variant="secondary" />

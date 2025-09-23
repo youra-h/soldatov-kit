@@ -8,7 +8,7 @@
 export function useManagedInstance<T>(
 	Ctor: new (props: any) => T,
 	props: any,
-	key: string = 'component',
+	key: string = 'is',
 ): T {
 	if (props[key] && props[key] instanceof Ctor) {
 		return props[key]
