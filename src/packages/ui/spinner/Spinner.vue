@@ -31,18 +31,20 @@ export default {
 </template>
 
 <style lang="scss">
+@use './mixines' as mixines;
 @reference "./../../theme";
 
 .s-spinner {
 	@apply w-4 h-4;
 	@apply inline-flex rounded-full animate-spin;
 	@apply border-[length:var(--spinner-border-width,1px)];
-	@apply border-t-sky-100 border-r-sky-100 border-b-sky-100 border-l-sky-600;
 	@apply opacity-100;
 	animation-duration: 1.1s;
 	animation-iteration-count: infinite;
 	animation-timing-function: cubic-bezier(0.53, 0.21, 0.29, 0.67);
 	transition: opacity 170ms cubic-bezier(0.53, 0.21, 0.29, 0.67);
+
+	@include mixines.spinner-variant(sky, 100, 600);
 
 	&--size-sm {
 		@apply w-3 h-3;
@@ -61,19 +63,19 @@ export default {
 	}
 
 	&--secondary {
-		@apply border-t-gray-200 border-r-gray-200 border-b-gray-200 border-l-gray-700;
+		@include mixines.spinner-variant(gray, 200, 700);
 	}
 
 	&--success {
-		@apply border-t-emerald-100 border-r-emerald-100 border-b-emerald-100 border-l-emerald-600;
+		@include mixines.spinner-variant(emerald, 100, 600);
 	}
 
 	&--danger {
-		@apply border-t-rose-100 border-r-rose-100 border-b-rose-100 border-l-rose-600;
+		@include mixines.spinner-variant(rose, 100, 600);
 	}
 
 	&--warning {
-		@apply border-t-amber-100 border-r-amber-100 border-b-amber-100 border-l-amber-600;
+		@include mixines.spinner-variant(amber, 100, 600);
 	}
 }
 </style>

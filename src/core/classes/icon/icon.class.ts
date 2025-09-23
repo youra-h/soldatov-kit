@@ -1,5 +1,4 @@
 import { TComponent, defaultComponentValues } from '../component'
-import type { TComponentSize } from '../../common/types'
 import type { IIcon, TIconEventsMap, TIconSize } from './types'
 import type { TObjectProps } from '../object'
 import { TSize } from '@/core/common/size'
@@ -21,7 +20,7 @@ export default class TIcon extends TComponent<TIconEventsMap> implements IIcon {
 		this._sizeHelper = new TSize<TIconSize>({
 			baseClass: this._baseClass,
 			exclude: ['auto'],
-			defaultValue: props.size ?? defaultValues.size!,
+			value: props.size ?? defaultValues.size!,
 		})
 
 		this._tag = props.tag ?? defaultValues.tag!
