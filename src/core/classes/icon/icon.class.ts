@@ -11,9 +11,9 @@ export const defaultValues: Partial<IIcon> = {
 }
 
 export default class TIcon extends TComponent<TIconEventsMap> implements IIcon {
-	private _width: string | number | undefined
-	private _height: string | number | undefined
-	private _sizeHelper: TSize<TIconSize>
+	protected _width: string | number | undefined
+	protected _height: string | number | undefined
+	protected _sizeHelper: TSize<TIconSize>
 
 	constructor(props: Partial<IIcon> = {}, baseClass: string = 's-icon') {
 		super(props, baseClass)

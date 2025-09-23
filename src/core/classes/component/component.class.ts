@@ -12,9 +12,9 @@ export default class TComponent<TEvents extends TComponentEventsMap>
 	extends TObject<TEvents>
 	implements IComponent
 {
-	private _id: string | number
-	private _visible: boolean
-	private _hidden: boolean
+	protected _id: string | number
+	protected _visible: boolean
+	protected _hidden: boolean
 
 	protected _tag: string | Object
 

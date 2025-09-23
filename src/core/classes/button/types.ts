@@ -1,6 +1,7 @@
 import type { IControl, TControlEventsMap } from '../control'
 import type { TComponentVariant } from '../../common/types'
 import { TIcon } from '../icon'
+import { TSpinner } from '../spinner'
 
 export type TButtonAppearance = 'normal' | 'plain' | 'outlined'
 
@@ -11,6 +12,10 @@ export interface IButton extends IControl {
 	appearance?: TButtonAppearance
 	// Иконка кнопки
 	icon?: TIcon
+	// Показать индикатор загрузки
+	loading?: boolean
+	// Индикатор загрузки
+	spinner?: TSpinner
 }
 
 export type TButtonEventsMap = TControlEventsMap & {}

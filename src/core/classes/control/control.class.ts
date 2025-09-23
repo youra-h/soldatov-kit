@@ -13,10 +13,10 @@ export const defaultValues: Partial<IControl> = {
 }
 
 export default class TControl<TEvents extends TControlEventsMap> extends TComponent<TEvents> implements IControl {
-	private _text: string
-	private _disabled: boolean
-	private _focused: boolean
-	private _sizeHelper: TSize<TComponentSize>
+	protected _text: string
+	protected _disabled: boolean
+	protected _focused: boolean
+	protected _sizeHelper: TSize<TComponentSize>
 
 	constructor(props: Partial<IControl> = {}, baseClass: string = 's-control') {
 		super(props, baseClass)

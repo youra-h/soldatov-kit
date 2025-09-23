@@ -14,9 +14,9 @@ export const defaultValues: Partial<ISpinner> = {
 }
 
 export default class TSpinner extends TComponent<TSpinnerEventsMap> implements ISpinner {
-	private _sizeHelper: TSize<TComponentSize>
-	private _variantHelper: TVariant
-	private _borderWidth: number | 'auto'
+	protected _sizeHelper: TSize<TComponentSize>
+	protected _variantHelper: TVariant
+	protected _borderWidth: number | 'auto'
 
 	constructor(props: Partial<ISpinner> = {}, baseClass: string = 's-spinner') {
 		super(props, baseClass)
