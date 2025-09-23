@@ -65,7 +65,6 @@ export function syncSpinner(props: TProps, instance: ISpinner) {
 			if (value !== instance.borderWidth) {
 				instance.borderWidth = value
 			}
-		},
-		{ immediate: true },
+		}
 	)
 }

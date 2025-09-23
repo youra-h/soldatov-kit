@@ -47,7 +47,6 @@ export function syncIcon(props: TProps, instance: IIcon) {
 				instance.size = value
 			}
 		},
-		{ immediate: true },
 	)
 
 	watch<number | string | undefined>(
@@ -57,7 +56,6 @@ export function syncIcon(props: TProps, instance: IIcon) {
 				instance.width = value
 			}
 		},
-		{ immediate: true },
 	)
 
 	watch<number | string | undefined>(
@@ -66,7 +64,6 @@ export function syncIcon(props: TProps, instance: IIcon) {
 			if (value && value !== instance.height) {
 				instance.height = value
 			}
-		},
-		{ immediate: true },
+		}
 	)
 }

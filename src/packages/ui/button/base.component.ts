@@ -58,8 +58,7 @@ export function syncButton(props: TProps, instance: IButton) {
 			if (value && value !== instance.icon) {
 				instance.icon = value
 			}
-		},
-		{ immediate: true },
+		}
 	)
 
 	watch<TComponentVariant>(

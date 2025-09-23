@@ -55,8 +55,7 @@ export function syncComponent(props: TProps, instance: IComponent) {
 			if (value !== instance.visible) {
 				instance.visible = value
 			}
-		},
-		{ immediate: true },
+		}
 	)
 
 	watch<boolean>(

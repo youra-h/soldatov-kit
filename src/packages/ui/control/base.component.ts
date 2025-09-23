@@ -52,7 +52,6 @@ export function syncControl(props: TProps, instance: IControl) {
 				instance.disabled = value
 			}
 		},
-		{ immediate: true },
 	)
 
 	watch<boolean>(
@@ -62,7 +61,6 @@ export function syncControl(props: TProps, instance: IControl) {
 				instance.focused = value
 			}
 		},
-		{ immediate: true },
 	)
 
 	watch<string>(
@@ -80,7 +78,6 @@ export function syncControl(props: TProps, instance: IControl) {
 			if (value && value !== instance.size) {
 				instance.size = value
 			}
-		},
-		{ immediate: true },
+		}
 	)
 }
