@@ -11,6 +11,11 @@ export interface IComponent {
 	hidden?: boolean
 }
 
+export interface IComponentOptions<T> {
+	props: Partial<T>
+	baseClass?: string
+}
+
 export type TComponentEventsMap = {
 	show: () => void
 	hide: () => void

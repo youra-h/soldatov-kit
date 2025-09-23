@@ -1,3 +1,4 @@
+import { type IComponentOptions } from './../component'
 import { TControl, defaultControlValues } from '../control'
 import type { TComponentVariant } from '../../common/types'
 import type { IButton, TButtonAppearance, TButtonEventsMap } from './types'
@@ -22,8 +23,10 @@ export default class TButton extends TControl<TButtonEventsMap> implements IButt
 	protected _loading: boolean
 	protected _spinner?: TSpinner
 
-	constructor(props: Partial<IButton> = {}, baseClass: string = 's-button') {
-		super(props, baseClass)
+	constructor(options: IComponentOptions<IButton> = { props: {}, baseClass: 's-button' }) {
+		super(options)
+
+		const { props = {} } = options
 
 		this._tag = props.tag ?? defaultValues.tag!
 

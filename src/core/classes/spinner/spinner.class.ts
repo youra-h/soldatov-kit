@@ -1,4 +1,4 @@
-import { TComponent, defaultComponentValues } from '../component'
+import { TComponent, defaultComponentValues, type IComponentOptions } from '../component'
 import type { TComponentSize, TComponentVariant } from '../../common/types'
 import type { ISpinner, TSpinnerEventsMap } from './types'
 import type { TObjectProps } from '../object'
@@ -18,8 +18,10 @@ export default class TSpinner extends TComponent<TSpinnerEventsMap> implements I
 	protected _variantHelper: TVariant
 	protected _borderWidth: number | 'auto'
 
-	constructor(props: Partial<ISpinner> = {}, baseClass: string = 's-spinner') {
-		super(props, baseClass)
+	constructor(options: IComponentOptions<ISpinner> = { props: {}, baseClass: 's-spinner' }) {
+		super(options)
+
+		const { props = {} } = options
 
 		this._sizeHelper = new TSize<TComponentSize>({
 			baseClass: this._baseClass,

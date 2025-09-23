@@ -1,5 +1,5 @@
 import { TObject, type TObjectProps } from '../object'
-import type { IComponent, TComponentEventsMap } from './types'
+import type { IComponent, TComponentEventsMap, IComponentOptions } from './types'
 
 export const defaultValues: Partial<IComponent> = {
 	id: '',
@@ -23,10 +23,12 @@ export default class TComponent<TEvents extends TComponentEventsMap>
 	// Array of dynamic CSS classes
 	protected _classes: string[] = []
 
-	constructor(props: Partial<IComponent> = {}, baseClass: string = 's-component') {
+	constructor(options: IComponentOptions<IComponent>) {
 		super()
 
-		this._baseClass = baseClass
+		const { props = {}, baseClass } = options
+
+		this._baseClass = baseClass ?? 's-component'
 
 		this._id = props.id ?? defaultValues.id!
 		this._tag = props.tag ?? defaultValues.tag!
