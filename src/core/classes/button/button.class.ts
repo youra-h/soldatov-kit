@@ -27,15 +27,24 @@ export default class TButton extends TControl<TButtonEventsMap> implements IButt
 
 		this._tag = props.tag ?? defaultValues.tag!
 
+		this.loading = props.loading ?? defaultValues.loading!
+		this._spinner = props.spinner ?? defaultValues.spinner!
+
 		this._variantHelper = new TVariant({
 			baseClass: this._baseClass,
-			defaultValue: props.variant ?? defaultValues.variant!,
 		})
+
+		this._variantHelper.onChange((value) => {
+			// Если есть спиннер, синхронизируем его вариант с кнопкой
+			if (this._loading && this._spinner) {
+				this._spinner.variant = value
+			}
+		})
+
+		this._variantHelper.value = props.variant ?? defaultValues.variant!
 
 		this._appearance = props.appearance ?? defaultValues.appearance!
 		this._icon = props.icon ?? defaultValues.icon!
-		this.loading = props.loading ?? defaultValues.loading!
-		this._spinner = props.spinner ?? defaultValues.spinner!
 	}
 
 	get variant(): TComponentVariant {
@@ -45,11 +54,6 @@ export default class TButton extends TControl<TButtonEventsMap> implements IButt
 	set variant(value: TComponentVariant) {
 		if (this._variantHelper.value !== value) {
 			this._variantHelper.value = value
-
-			// Если есть спиннер, синхронизируем его вариант с кнопкой
-			if (this._loading && this._spinner) {
-				this._spinner.variant = value
-			}
 		}
 	}
 

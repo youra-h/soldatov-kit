@@ -24,13 +24,13 @@ export default class TSpinner extends TComponent<TSpinnerEventsMap> implements I
 		this._sizeHelper = new TSize<TComponentSize>({
 			baseClass: this._baseClass,
 			exclude: ['normal'],
-			defaultValue: defaultValues.size!,
+			value: defaultValues.size!,
 		})
 
 		this._variantHelper = new TVariant({
 			baseClass: this._baseClass,
 			exclude: ['normal', 'primary'],
-			defaultValue: props.variant ?? defaultValues.variant!,
+			value: props.variant ?? defaultValues.variant!,
 		})
 
 		this._tag = props.tag ?? defaultValues.tag!

@@ -1,7 +1,7 @@
 export interface IBaseClassValueOptions<T extends string = string> {
 	baseClass?: string
 	exclude?: T[]
-	defaultValue?: T
+	value?: T
 }
 
 export abstract class TBaseClassValue<T extends string = string> {
@@ -13,7 +13,7 @@ export abstract class TBaseClassValue<T extends string = string> {
 	constructor(options: IBaseClassValueOptions<T> = {}) {
 		this._baseClass = options.baseClass ?? 's-control'
 		this._exclude = options.exclude ?? []
-		this._value = options.defaultValue ?? ('normal' as T)
+		this._value = options.value ?? ('normal' as T)
 	}
 
 	get value(): T {

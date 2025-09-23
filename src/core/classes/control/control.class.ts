@@ -12,7 +12,10 @@ export const defaultValues: Partial<IControl> = {
 	size: 'normal',
 }
 
-export default class TControl<TEvents extends TControlEventsMap> extends TComponent<TEvents> implements IControl {
+export default class TControl<TEvents extends TControlEventsMap>
+	extends TComponent<TEvents>
+	implements IControl
+{
 	protected _text: string
 	protected _disabled: boolean
 	protected _focused: boolean
@@ -23,7 +26,7 @@ export default class TControl<TEvents extends TControlEventsMap> extends TCompon
 
 		this._sizeHelper = new TSize<TComponentSize>({
 			baseClass: this._baseClass,
-			defaultValue: props.size ?? defaultValues.size!,
+			value: props.size ?? defaultValues.size!,
 		})
 
 		this._text = props.text ?? defaultValues.text!
