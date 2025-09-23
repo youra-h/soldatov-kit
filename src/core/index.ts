@@ -1,6 +1,7 @@
 export * from './common/types'
 export * from './common/event-emitter'
 export * from './classes/object'
+export * from './classes/check-box'
 export * from './classes/component'
 export * from './classes/control'
 export * from './classes/control-value'

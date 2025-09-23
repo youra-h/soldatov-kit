@@ -1,0 +1,17 @@
+<script lang="ts">
+import { TControlValue, type IControlValue } from '../../../core'
+import BaseControlValue, { syncControlValue } from './base.component'
+import { useBaseSetup } from '../../common/useBaseSetup'
+
+export default {
+	name: '_ControlValue',
+	extends: BaseControlValue,
+	setup(props: IControlValue) {
+		const { is: component } = useBaseSetup(TControlValue, props)
+
+		syncControlValue(props, component)
+
+		return { component }
+	},
+}
+</script>
