@@ -41,10 +41,18 @@ export default class TButton extends TControl<TButtonEventsMap> implements IButt
 			}
 		})
 
+		// Инициализируем значение варианта
 		this._variantHelper.value = props.variant ?? defaultValues.variant!
 
 		this._appearance = props.appearance ?? defaultValues.appearance!
 		this._icon = props.icon ?? defaultValues.icon!
+
+		this._sizeHelper.onChange((value) => {
+			// Если есть спиннер, синхронизируем его размер с кнопкой
+			if (this._loading) {
+				this.spinner!.size = value
+			}
+		})
 	}
 
 	get variant(): TComponentVariant {

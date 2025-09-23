@@ -28,11 +28,11 @@ export default {
 		@click="component.emit('click', $event)"
 	>
 		<slot name="before">
-			<Icon v-if="component.icon" :tag="component.icon.tag" :size="component.icon.size" />
+			<Icon v-if="component.icon" :component="component.icon" />
 		</slot>
 		<slot>{{ component.text }}</slot>
 		<slot name="after">
-			<Spinner :size="component.spinnerSize" :border-width="component.spinnerBorderWidth" />
+			<Spinner v-if="component.loading" :component="component.spinner" />
 		</slot>
 	</component>
 </template>
@@ -44,7 +44,7 @@ export default {
 .s-button {
 	$this: &;
 
-	@apply flex items-center justify-center gap-1;
+	@apply flex items-center justify-center gap-1.5;
 	@apply w-fit px-2.5 py-1 rounded-md cursor-pointer;
 	@apply relative transition-colors duration-200;
 	@apply truncate;
@@ -73,11 +73,13 @@ export default {
 	&--size-sm {
 		@apply text-sm;
 		@apply px-1.5 py-0.5;
+		@apply gap-1;
 	}
 
 	&--size-lg {
 		@apply text-lg;
 		@apply px-3.5 py-1.5;
+		@apply gap-2;
 	}
 
 	&--normal {

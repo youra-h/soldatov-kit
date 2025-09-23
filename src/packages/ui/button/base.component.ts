@@ -1,5 +1,5 @@
 import { type PropType, watch } from 'vue'
-import { type IButton, type TButtonAppearance, defaultButtonValues } from '../../../core'
+import { type IButton, type TButtonAppearance, TSpinner, defaultButtonValues } from '../../../core'
 import { type TComponentVariant, TIcon } from '../../../core'
 import { Control, controlEmits, controlProps, syncControl } from '../control'
 import type { TEmits, TProps } from '../../common/types'
@@ -25,6 +25,14 @@ export const buttonProps: TProps = {
 	icon: {
 		type: Object as PropType<IButton['icon']>,
 		default: defaultButtonValues.icon,
+	},
+	loading: {
+		type: Boolean as PropType<IButton['loading']>,
+		default: defaultButtonValues.loading,
+	},
+	spinner: {
+		type: Object as PropType<IButton['spinner']>,
+		default: defaultButtonValues.spinner,
 	},
 }
 
@@ -69,6 +77,26 @@ export function syncButton(props: TProps, instance: IButton) {
 		(value) => {
 			if (value && value !== instance.appearance) {
 				instance.appearance = value
+			}
+		},
+		{ immediate: true },
+	)
+
+	watch<TSpinner | undefined>(
+		() => props.spinner,
+		(value) => {
+			if (value && value !== instance.spinner) {
+				instance.spinner = value
+			}
+		},
+		{ immediate: true },
+	)
+
+	watch<boolean>(
+		() => props.loading,
+		(value) => {
+			if (value !== instance.loading) {
+				instance.loading = value
 			}
 		},
 		{ immediate: true },
