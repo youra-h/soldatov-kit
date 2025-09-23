@@ -9,7 +9,12 @@ const IconHome = defineAsyncComponent(() => import('./../src/packages/icons/home
 const icon = new TIcon({ tag: IconHome })
 
 const button1 = new TButton({ text: 'Button 3', icon })
-const button2 = new TButton({ text: 'Button 4', icon: IconHome })
+const button2 = reactive(new TButton({ text: 'Button 4', icon: IconHome }))
+
+setTimeout(() => {
+	button2.loading = true
+	button2.disabled = true
+}, 1000);
 
 console.log('qwe', icon)
 </script>

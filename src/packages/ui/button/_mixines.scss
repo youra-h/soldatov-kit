@@ -24,11 +24,13 @@
 	// Если hover-bg-idx не задан, увеличиваем bg-idx на 100
 	$active-bg: if($active-bg-idx != null, $active-bg-idx, $hover-bg + 100);
 
+	&:hover:not([disabled]) {
+		@apply #{'bg-' + $color + '-' + $hover-bg};
+	}
+
 	&:hover:not([disabled]),
 	&:focus:not([disabled]),
 	&:focus-visible:not([disabled]) {
-		@apply #{'bg-' + $color + '-' + $hover-bg};
-
 		@if $border-idx != null or $hover-border-idx != null {
 			$brd-idx: if($hover-border-idx != null, $hover-border-idx, $border-idx + 100);
 			@apply #{'border-' + $color + '-' + $brd-idx};
