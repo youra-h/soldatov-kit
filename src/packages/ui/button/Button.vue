@@ -45,7 +45,7 @@ export default {
 	$this: &;
 
 	@apply flex items-center justify-center gap-1.5;
-	@apply w-fit px-2.5 py-1 rounded-md cursor-pointer;
+	@apply px-2.5 py-1 rounded-md cursor-pointer;
 	@apply relative transition-colors duration-200;
 	@apply truncate;
 	@apply outline-transparent;

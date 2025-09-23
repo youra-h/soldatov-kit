@@ -46,8 +46,7 @@ export function syncComponent(props: TProps, instance: IComponent) {
 			if (value !== instance.tag) {
 				instance.tag = value
 			}
-		},
-		{ immediate: true },
+		}
 	)
 
 	watch<boolean>(

@@ -19,7 +19,7 @@ setTimeout(() => {
 </script>
 
 <template>
-	<div class="flex flex-col gap-4">
+	<div class="flex gap-4">
 		<Button :variant :loading :size> Button 1 </Button>
 		<Button :component="button">Button 2</Button>
 		<Spinner size="sm" variant="normal" />

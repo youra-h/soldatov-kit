@@ -7,6 +7,10 @@ export const iconEmits: TEmits = [...componentEmits] as const
 
 export const iconProps: TProps = {
 	...componentProps,
+	tag: {
+		type: [String, Object] as PropType<IIcon['tag']>,
+		default: defaultIconValues.tag,
+	},
 	size: {
 		type: String as PropType<IIcon['size']>,
 		default: defaultIconValues.size,
