@@ -48,7 +48,6 @@ export function syncSpinner(props: TProps, instance: ISpinner) {
 				instance.variant = value
 			}
 		},
-		{ immediate: true },
 	)
 
 	watch<TComponentSize>(
@@ -58,7 +57,6 @@ export function syncSpinner(props: TProps, instance: ISpinner) {
 				instance.size = value
 			}
 		},
-		{ immediate: true },
 	)
 
 	watch<'auto' | number>(

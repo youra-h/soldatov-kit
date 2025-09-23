@@ -29,7 +29,7 @@ export default class TSpinner extends TComponent<TSpinnerEventsMap> implements I
 
 		this._variantHelper = new TVariant({
 			baseClass: this._baseClass,
-			exclude: ['normal', 'primary'],
+			exclude: ['normal'],
 			value: props.variant ?? defaultValues.variant!,
 		})
 

@@ -6,6 +6,7 @@ import { TSpinner, TButton } from '@core'
 
 const spinner = new TSpinner({ tag: Spinner })
 const loading = ref(false)
+const variant = ref('normal')
 
 setTimeout(() => {
 	loading.value = true
@@ -14,7 +15,7 @@ setTimeout(() => {
 
 <template>
 	<div class="flex flex-col gap-4">
-		<Button variant="primary" :loading> Button 1 </Button>
+		<Button :variant :loading> Button 1 </Button>
 		<Spinner size="sm" variant="normal" />
 		<Spinner variant="primary" />
 		<Spinner size="lg" variant="secondary" />

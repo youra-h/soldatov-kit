@@ -36,9 +36,7 @@ export default class TButton extends TControl<TButtonEventsMap> implements IButt
 
 		this._variantHelper.on('change', (value) => {
 			// Если есть спиннер, синхронизируем его вариант с кнопкой
-			if (this._loading) {
-				this.spinner!.variant = value
-			}
+			this.spinner!.variant = value
 		})
 
 		// Инициализируем значение варианта
@@ -49,9 +47,7 @@ export default class TButton extends TControl<TButtonEventsMap> implements IButt
 
 		this._sizeHelper.on('change', (value) => {
 			// Если есть спиннер, синхронизируем его размер с кнопкой
-			if (this._loading) {
-				this.spinner!.size = value
-			}
+			this.spinner!.size = value
 		})
 	}
 
@@ -97,7 +93,7 @@ export default class TButton extends TControl<TButtonEventsMap> implements IButt
 
 	get spinner(): TSpinner | undefined {
 		// Если включается режим загрузки и не задан спиннер, создаем его
-		if (this._loading && !this._spinner) {
+		if (!this._spinner) {
 			this._spinner = new TSpinner({
 				size: 'normal',
 				variant: this._variantHelper.value,
