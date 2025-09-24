@@ -1,17 +1,17 @@
 import { type PropType, watch } from 'vue'
 import { type IControl, type TComponentSize, defaultValuesControl } from '../../../core'
-import { BaseComponent, componentEmits, componentProps, syncComponent } from '../component'
+import { BaseComponent, emitsComponent, propsComponent, syncComponent } from '../component'
 import type { TEmits, TProps } from '../../common/types'
 
-export const controlEmits: TEmits = [
-	...componentEmits,
+export const emitsControl: TEmits = [
+	...emitsComponent,
 	'update:text',
 	'update:disabled',
 	'update:focused',
 ] as const
 
-export const controlProps: TProps = {
-	...componentProps,
+export const propsControl: TProps = {
+	...propsComponent,
 	text: {
 		type: String as PropType<IControl['text']>,
 		default: defaultValuesControl.text,
@@ -33,8 +33,8 @@ export const controlProps: TProps = {
 export default {
 	name: 'BaseControl',
 	extends: BaseComponent,
-	emits: controlEmits,
-	props: controlProps,
+	emits: emitsControl,
+	props: propsControl,
 }
 
 /**

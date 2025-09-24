@@ -1,7 +1,7 @@
 export {
 	default as BaseControlValue,
-	controlValueEmits,
-	controlValueProps,
+	emitsControlValue,
+	propsControlValue,
 	syncControlValue,
 } from './base.component'
 export { default as ControlValue } from './ControlValue.vue'

@@ -1,12 +1,12 @@
 import { type PropType, watch } from 'vue'
 import { type IIcon, defaultValuesIcon, type TIconSize } from '../../../core'
-import { Component, componentEmits, componentProps, syncComponent } from '../component'
+import { Component, emitsComponent, propsComponent, syncComponent } from '../component'
 import type { TEmits, TProps } from '../../common/types'
 
-export const iconEmits: TEmits = [...componentEmits] as const
+export const emitsIcon: TEmits = [...emitsComponent] as const
 
-export const iconProps: TProps = {
-	...componentProps,
+export const propsIcon: TProps = {
+	...propsComponent,
 	tag: {
 		type: [String, Object] as PropType<IIcon['tag']>,
 		default: defaultValuesIcon.tag,
@@ -28,8 +28,8 @@ export const iconProps: TProps = {
 export default {
 	name: 'BaseIcon',
 	extends: Component,
-	emits: iconEmits,
-	props: iconProps,
+	emits: emitsIcon,
+	props: propsIcon,
 }
 
 /**

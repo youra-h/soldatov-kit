@@ -1,15 +1,15 @@
 import { type PropType, watch } from 'vue'
 import { type IButton, type TButtonAppearance, TSpinner, defaultValuesButton } from '../../../core'
 import { type TComponentVariant, TIcon } from '../../../core'
-import { Control, controlEmits, controlProps, syncControl } from '../control'
+import { Control, emitsControl, propsControl, syncControl } from '../control'
 import type { TEmits, TProps } from '../../common/types'
 import { Icon } from '../icon'
 import { Spinner } from '../spinner'
 
-export const buttonEmits: TEmits = [...controlEmits] as const
+export const emitsButton: TEmits = [...emitsControl] as const
 
-export const buttonProps: TProps = {
-	...controlProps,
+export const propsButton: TProps = {
+	...propsControl,
 	tag: {
 		type: [String, Object] as PropType<IButton['tag']>,
 		default: defaultValuesButton.tag,
@@ -40,8 +40,8 @@ export default {
 	name: 'BaseButton',
 	extends: Control,
 	components: { Icon, Spinner },
-	emits: buttonEmits,
-	props: buttonProps,
+	emits: emitsButton,
+	props: propsButton,
 }
 
 /**

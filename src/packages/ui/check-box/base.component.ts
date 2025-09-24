@@ -2,16 +2,16 @@ import { type PropType, watch } from 'vue'
 import { type ICheckBox, defaultValuesCheckBox } from '../../../core'
 import {
 	BaseControlValue,
-	controlValueEmits,
-	controlValueProps,
+	emitsControlValue,
+	propsControlValue,
 	syncControlValue,
 } from '../control-value'
 import type { TEmits, TProps } from '../../common/types'
 
-export const checkBoxEmits: TEmits = [...controlValueEmits, 'update:value'] as const
+export const emitsCheckBox: TEmits = [...emitsControlValue, 'update:value'] as const
 
-export const checkBoxProps: TProps = {
-	...controlValueProps,
+export const propsCheckBox: TProps = {
+	...propsControlValue,
 	value: {
 		type: String as PropType<ICheckBox['value']>,
 		default: defaultValuesCheckBox.value,
@@ -21,8 +21,8 @@ export const checkBoxProps: TProps = {
 export default {
 	name: 'BaseCheckBox',
 	extends: BaseControlValue,
-	emits: checkBoxEmits,
-	props: checkBoxProps,
+	emits: emitsCheckBox,
+	props: propsCheckBox,
 }
 
 /**

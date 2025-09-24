@@ -2,7 +2,7 @@ import { type PropType, watch } from 'vue'
 import { type IComponent, defaultValuesComponent } from '../../../core'
 import type { TEmits, TProps } from '../../common/types'
 
-export const componentEmits: TEmits = [
+export const emitsComponent: TEmits = [
 	'update:visible',
 	'hide',
 	'show',
@@ -11,7 +11,7 @@ export const componentEmits: TEmits = [
 	'created',
 ] as const
 
-export const componentProps: TProps = {
+export const propsComponent: TProps = {
 	is: {
 		type: Object as PropType<IComponent>,
 	},
@@ -35,8 +35,8 @@ export const componentProps: TProps = {
 
 export default {
 	name: 'BaseComponent',
-	emits: componentEmits,
-	props: componentProps,
+	emits: emitsComponent,
+	props: propsComponent,
 }
 
 export function syncComponent(props: TProps, instance: IComponent) {

@@ -5,13 +5,13 @@ import {
 	type TComponentSize,
 	type TComponentVariant,
 } from '../../../core'
-import { Component, componentEmits, componentProps, syncComponent } from '../component'
+import { Component, emitsComponent, propsComponent, syncComponent } from '../component'
 import type { TEmits, TProps } from '../../common/types'
 
-export const spinnerEmits: TEmits = [...componentEmits] as const
+export const emitsSpinner: TEmits = [...emitsComponent] as const
 
-export const spinnerProps: TProps = {
-	...componentProps,
+export const propsSpinner: TProps = {
+	...propsComponent,
 	variant: {
 		type: String as PropType<ISpinner['variant']>,
 		default: defaultValuesSpinner.variant,
@@ -29,8 +29,8 @@ export const spinnerProps: TProps = {
 export default {
 	name: 'BaseSpinner',
 	extends: Component,
-	emits: spinnerEmits,
-	props: spinnerProps,
+	emits: emitsSpinner,
+	props: propsSpinner,
 }
 
 /**

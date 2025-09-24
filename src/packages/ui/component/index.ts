@@ -1,7 +1,7 @@
 export {
 	default as BaseComponent,
-	componentEmits,
-	componentProps,
+	emitsComponent,
+	propsComponent,
 	syncComponent,
 } from './base.component'
 export { default as Component } from './Component.vue'

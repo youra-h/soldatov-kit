@@ -1,3 +1,3 @@
-export { default as BaseSpinner, spinnerEmits, syncSpinner } from './base.component'
+export { default as BaseSpinner, emitsSpinner, syncSpinner } from './base.component'
 import Spinner from './Spinner.vue'
 export { Spinner }
