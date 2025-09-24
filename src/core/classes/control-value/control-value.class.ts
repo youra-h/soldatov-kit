@@ -14,12 +14,10 @@ export default class TControlValue<TEvents extends TControlValueEventsMap>
 {
 	protected _value: any
 
-	constructor(
-		options: IComponentOptions<IControlValue> = { props: {}, baseClass: 's-control-value' },
-	) {
-		super(options)
+	constructor(options: IComponentOptions<IControlValue>) {
+		const { props = {}, baseClass = 's-control-value' } = options
 
-		const { props = {} } = options
+		super({ props, baseClass })
 
 		this._value = props.value ?? defaultValues.value!
 	}

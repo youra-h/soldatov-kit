@@ -14,10 +14,10 @@ export default class TIcon extends TComponent<TIconEventsMap> implements IIcon {
 	protected _height: string | number | undefined
 	protected _sizeHelper: TSize<TIconSize>
 
-	constructor(options: IComponentOptions<IIcon> = { props: {}, baseClass: 's-icon' }) {
-		super(options)
+	constructor(options: IComponentOptions<IIcon>) {
+		const { props = {}, baseClass = 's-icon' } = options
 
-		const { props = {} } = options
+		super({ props, baseClass })
 
 		this._sizeHelper = new TSize<TIconSize>({
 			baseClass: this._baseClass,

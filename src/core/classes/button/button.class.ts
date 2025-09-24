@@ -23,10 +23,10 @@ export default class TButton extends TControl<TButtonEventsMap> implements IButt
 	protected _loading: boolean
 	protected _spinner?: TSpinner
 
-	constructor(options: IComponentOptions<IButton> = { props: {}, baseClass: 's-button' }) {
-		super(options)
+	constructor(options: IComponentOptions<IButton>) {
+		const { props = {}, baseClass = 's-button' } = options
 
-		const { props = {} } = options
+		super({ props, baseClass })
 
 		this._tag = props.tag ?? defaultValues.tag!
 

@@ -23,10 +23,10 @@ export default class TCheckBox<TEvents extends TCheckBoxEventsMap>
 	protected _icon?: TIcon
 	protected _indeterminateIcon?: TIcon
 
-	constructor(options: IComponentOptions<ICheckBox> = { props: {}, baseClass: 's-check-box' }) {
-		super(options)
+	constructor(options: IComponentOptions<ICheckBox>) {
+		const { props = {}, baseClass = 's-check-box' } = options
 
-		const { props = {} } = options
+		super({ props, baseClass })
 
 		this._variantHelper = new TVariant({
 			baseClass: this._baseClass,

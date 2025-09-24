@@ -1,3 +1,5 @@
+import { type IComponentOptions } from '@core'
+
 /**
  * Use a managed instance of a component.
  * @param Ctor The constructor of the component.
@@ -6,7 +8,7 @@
  * @returns The managed instance of the component.
  */
 export function useManagedInstance<T>(
-	Ctor: new (props: any) => T,
+	Ctor: new (options: IComponentOptions<any>) => T,
 	props: any,
 	key: string = 'is',
 ): T {
@@ -14,5 +16,7 @@ export function useManagedInstance<T>(
 		return props[key]
 	}
 
-	return new Ctor(props)
+	return new Ctor({
+		props,
+	})
 }
