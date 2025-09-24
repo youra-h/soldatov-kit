@@ -1,5 +1,5 @@
 import { type PropType, watch } from 'vue'
-import { type ICheckBox, defaultValuesCheckBox } from '../../../core'
+import { type ICheckBox, defaultValuesCheckBox, type TComponentVariant, TIcon } from '../../../core'
 import {
 	BaseControlValue,
 	emitsControlValue,
@@ -12,9 +12,25 @@ export const emitsCheckBox: TEmits = [...emitsControlValue, 'update:value'] as c
 
 export const propsCheckBox: TProps = {
 	...propsControlValue,
-	value: {
-		type: String as PropType<ICheckBox['value']>,
-		default: defaultValuesCheckBox.value,
+	indeterminate: {
+		type: Boolean as PropType<ICheckBox['indeterminate']>,
+		default: defaultValuesCheckBox.indeterminate,
+	},
+	plain: {
+		type: Boolean as PropType<ICheckBox['plain']>,
+		default: defaultValuesCheckBox.plain,
+	},
+	variant: {
+		type: String as PropType<ICheckBox['variant']>,
+		default: defaultValuesCheckBox.variant,
+	},
+	icon: {
+		type: Object as PropType<ICheckBox['icon']>,
+		default: defaultValuesCheckBox.icon,
+	},
+	indeterminateIcon: {
+		type: Object as PropType<ICheckBox['indeterminateIcon']>,
+		default: defaultValuesCheckBox.indeterminateIcon,
 	},
 }
 
@@ -33,11 +49,47 @@ export default {
 export function syncCheckBox(props: TProps, instance: ICheckBox): void {
 	syncControlValue(props, instance)
 
-	watch<any>(
-		() => props.value,
+	watch<boolean>(
+		() => props.indeterminate,
 		(value) => {
-			if (value !== instance.value) {
-				instance.value = value
+			if (value !== instance.indeterminate) {
+				instance.indeterminate = value
+			}
+		},
+	)
+
+	watch<boolean>(
+		() => props.plain,
+		(value) => {
+			if (value !== instance.plain) {
+				instance.plain = value
+			}
+		},
+	)
+
+	watch<TComponentVariant>(
+		() => props.variant,
+		(value) => {
+			if (value !== instance.variant) {
+				instance.variant = value
+			}
+		},
+	)
+
+	watch<TIcon | undefined>(
+		() => props.icon,
+		(value) => {
+			if (value !== instance.icon) {
+				instance.icon = value
+			}
+		},
+	)
+
+	watch<TIcon | undefined>(
+		() => props.indeterminateIcon,
+		(value) => {
+			if (value !== instance.indeterminateIcon) {
+				instance.indeterminateIcon = value
 			}
 		},
 	)
