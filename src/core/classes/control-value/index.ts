@@ -1,2 +1,5 @@
 export * from './types'
-export { default as TControlValue, defaultValues as defaultControlValueValues } from './control-value.class'
+export {
+	default as TControlValue,
+	defaultValues as defaultValuesControlValue,
+} from './control-value.class'

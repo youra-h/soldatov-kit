@@ -1,5 +1,5 @@
 import { type PropType, watch } from 'vue'
-import { type IButton, type TButtonAppearance, TSpinner, defaultButtonValues } from '../../../core'
+import { type IButton, type TButtonAppearance, TSpinner, defaultValuesButton } from '../../../core'
 import { type TComponentVariant, TIcon } from '../../../core'
 import { Control, controlEmits, controlProps, syncControl } from '../control'
 import type { TEmits, TProps } from '../../common/types'
@@ -12,27 +12,27 @@ export const buttonProps: TProps = {
 	...controlProps,
 	tag: {
 		type: [String, Object] as PropType<IButton['tag']>,
-		default: defaultButtonValues.tag,
+		default: defaultValuesButton.tag,
 	},
 	variant: {
 		type: String as PropType<IButton['variant']>,
-		default: defaultButtonValues.variant,
+		default: defaultValuesButton.variant,
 	},
 	appearance: {
 		type: String as PropType<IButton['appearance']>,
-		default: defaultButtonValues.appearance,
+		default: defaultValuesButton.appearance,
 	},
 	icon: {
 		type: Object as PropType<IButton['icon']>,
-		default: defaultButtonValues.icon,
+		default: defaultValuesButton.icon,
 	},
 	loading: {
 		type: Boolean as PropType<IButton['loading']>,
-		default: defaultButtonValues.loading,
+		default: defaultValuesButton.loading,
 	},
 	spinner: {
 		type: Object as PropType<IButton['spinner']>,
-		default: defaultButtonValues.spinner,
+		default: defaultValuesButton.spinner,
 	},
 }
 

@@ -1,4 +1,4 @@
-import { TComponent, defaultComponentValues, type IComponentOptions } from '../component'
+import { TComponent, defaultValuesComponent, type IComponentOptions } from '../component'
 import type { TComponentSize, TComponentVariant } from '../../common/types'
 import type { ISpinner, TSpinnerEventsMap } from './types'
 import type { TObjectProps } from '../object'
@@ -6,7 +6,7 @@ import { TSize } from '@/core/common/size'
 import { TVariant } from '../../common/variant'
 
 export const defaultValues: Partial<ISpinner> = {
-	...defaultComponentValues,
+	...defaultValuesComponent,
 	variant: 'primary',
 	size: 'normal',
 	tag: 'span',

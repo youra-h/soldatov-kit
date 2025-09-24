@@ -1,2 +1,2 @@
 export * from './types'
-export { default as TComponent, defaultValues as defaultComponentValues } from './component.class'
+export { default as TComponent, defaultValues as defaultValuesComponent } from './component.class'

@@ -1,5 +1,5 @@
 import { type PropType, watch } from 'vue'
-import { type IControl, type TComponentSize, defaultControlValues } from '../../../core'
+import { type IControl, type TComponentSize, defaultValuesControl } from '../../../core'
 import { BaseComponent, componentEmits, componentProps, syncComponent } from '../component'
 import type { TEmits, TProps } from '../../common/types'
 
@@ -14,19 +14,19 @@ export const controlProps: TProps = {
 	...componentProps,
 	text: {
 		type: String as PropType<IControl['text']>,
-		default: defaultControlValues.text,
+		default: defaultValuesControl.text,
 	},
 	disabled: {
 		type: Boolean as PropType<IControl['disabled']>,
-		default: defaultControlValues.disabled,
+		default: defaultValuesControl.disabled,
 	},
 	focused: {
 		type: Boolean as PropType<IControl['focused']>,
-		default: defaultControlValues.focused,
+		default: defaultValuesControl.focused,
 	},
 	size: {
 		type: String as PropType<IControl['size']>,
-		default: defaultControlValues.size,
+		default: defaultValuesControl.size,
 	},
 }
 

@@ -1,5 +1,5 @@
 import { type IComponentOptions } from '../component'
-import { TControlValue, defaultControlValueValues } from '../control-value'
+import { TControlValue, defaultValuesControlValue } from '../control-value'
 import type { ICheckBox, TCheckBoxEventsMap } from './types'
 import type { TObjectProps } from '../object'
 import { TIcon } from '../icon'
@@ -7,7 +7,7 @@ import { TVariant } from '../../common/variant'
 import type { TComponentVariant } from '../../common/types'
 
 export const defaultValues: Partial<ICheckBox> = {
-	...defaultControlValueValues,
+	...defaultValuesControlValue,
 	indeterminate: false,
 	plain: false,
 	variant: 'normal',

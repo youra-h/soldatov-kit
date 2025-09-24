@@ -1,5 +1,5 @@
 import { type IComponentOptions } from './../component'
-import { TControl, defaultControlValues } from '../control'
+import { TControl, defaultValuesControl } from '../control'
 import type { TComponentVariant } from '../../common/types'
 import type { IButton, TButtonAppearance, TButtonEventsMap } from './types'
 import type { TObjectProps } from '../object'
@@ -8,7 +8,7 @@ import { TVariant } from '../../common/variant'
 import { TSpinner } from '../spinner'
 
 export const defaultValues: Partial<IButton> = {
-	...defaultControlValues,
+	...defaultValuesControl,
 	variant: 'normal',
 	appearance: 'normal',
 	icon: undefined,

@@ -1,7 +1,7 @@
 import { type PropType, watch } from 'vue'
 import {
 	type ISpinner,
-	defaultSpinnerValues,
+	defaultValuesSpinner,
 	type TComponentSize,
 	type TComponentVariant,
 } from '../../../core'
@@ -14,15 +14,15 @@ export const spinnerProps: TProps = {
 	...componentProps,
 	variant: {
 		type: String as PropType<ISpinner['variant']>,
-		default: defaultSpinnerValues.variant,
+		default: defaultValuesSpinner.variant,
 	},
 	size: {
 		type: String as PropType<ISpinner['size']>,
-		default: defaultSpinnerValues.size,
+		default: defaultValuesSpinner.size,
 	},
 	borderWidth: {
 		type: [String, Number] as PropType<ISpinner['borderWidth']>,
-		default: defaultSpinnerValues.borderWidth,
+		default: defaultValuesSpinner.borderWidth,
 	},
 }
 
