@@ -6,6 +6,7 @@ import { TIcon } from '../icon'
 
 export const defaultValues: Partial<ICheckBox> = {
 	...defaultValuesControlInput,
+	value: false,
 	indeterminate: false,
 	plain: false,
 	variant: 'normal',
@@ -15,6 +16,7 @@ export default class TCheckBox<TEvents extends TCheckBoxEventsMap>
 	extends TControlInput<TEvents>
 	implements ICheckBox
 {
+	protected _value: boolean | null
 	protected _indeterminate: boolean
 	protected _plain: boolean
 	protected _icon?: TIcon
@@ -25,10 +27,22 @@ export default class TCheckBox<TEvents extends TCheckBoxEventsMap>
 
 		super({ props, baseClass })
 
+		this._value = props.value ?? defaultValues.value!
 		this._indeterminate = props.indeterminate ?? defaultValues.indeterminate!
 		this._plain = props.plain ?? defaultValues.plain!
 		this._icon = props.icon ?? defaultValues.icon!
 		this._indeterminateIcon = props.indeterminateIcon ?? defaultValues.indeterminateIcon!
+	}
+
+	get value(): boolean | null {
+		return this._value
+	}
+
+	set value(value: boolean | null) {
+		if (this._value !== value) {
+			this._value = value
+			this.emit('changeValue', value)
+		}
 	}
 
 	get indeterminate(): boolean {
@@ -85,6 +99,42 @@ export default class TCheckBox<TEvents extends TCheckBoxEventsMap>
 		}
 
 		return classes
+	}
+
+	/**
+	 * Переключает состояние чекбокса
+	 * Если был indeterminate, то станет true
+	 * Если было true, то станет false
+	 */
+	change(event?: Event) {
+		console.log('change', this._value, this.indeterminate)
+		const oldValue = this._value
+
+		if (this.indeterminate) {
+			this.indeterminate = false
+			this.value = true
+		} else {
+			this.value = this.value === true ? false : true
+		}
+
+		if (oldValue !== this._value) {
+			this.emit('change', {
+				event,
+				value: this._value,
+			})
+		}
+	}
+
+	/**
+	 * Возвращает значение для aria-атрибута checked
+	 * @returns 'true' | 'false' | 'mixed'
+	 */
+	getAriaChecked(): 'true' | 'false' | 'mixed' {
+		if (this.indeterminate) {
+			return 'mixed'
+		}
+
+		return String(!!this.value) as 'true' | 'false'
 	}
 
 	getProps(): TObjectProps {

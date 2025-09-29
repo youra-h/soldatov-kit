@@ -2,7 +2,7 @@ import type { IControl, TControlEventsMap } from '../control'
 
 export interface IControlValue extends IControl {
 	// Значение контрола
-	value: any
+	value?: any
 }
 
 export type TControlValueEventsMap = TControlEventsMap & {

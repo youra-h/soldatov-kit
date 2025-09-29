@@ -12,7 +12,7 @@ export default class TControlValue<TEvents extends TControlValueEventsMap>
 	extends TControl<TEvents>
 	implements IControlValue
 {
-	protected _value: any
+	protected _value?: any
 
 	constructor(options: IComponentOptions<IControlValue>) {
 		options = TComponent.prepareOptions(options, 's-control-value')
