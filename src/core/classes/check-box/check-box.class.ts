@@ -72,6 +72,21 @@ export default class TCheckBox<TEvents extends TCheckBoxEventsMap>
 		}
 	}
 
+	get classes(): string[] {
+		const classes = [...super.classes]
+
+		// Добавляем класс для внешнего вида, если он задан
+		if (this._indeterminate) {
+			classes.push(`${this._baseClass}--indeterminate`)
+		}
+
+		if (this._plain) {
+			classes.push(`${this._baseClass}--plain`)
+		}
+
+		return classes
+	}
+
 	getProps(): TObjectProps {
 		return {
 			...super.getProps(),

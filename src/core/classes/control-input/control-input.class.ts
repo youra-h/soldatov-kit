@@ -99,6 +99,15 @@ export default class TControlInput<TEvents extends TControlInputEventsMap>
 		}
 	}
 
+	get classes(): string[] {
+		const classes = [this._baseClass, ...super.classes]
+
+		// Добавляем класс для варианта, если он задан
+		classes.push(...this._variantHelper.getClass())
+
+		return classes
+	}
+
 	getProps(): TObjectProps {
 		return {
 			...super.getProps(),
