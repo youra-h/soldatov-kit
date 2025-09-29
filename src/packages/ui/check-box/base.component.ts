@@ -1,21 +1,21 @@
 import { type PropType, watch } from 'vue'
-import { type ICheckBox, defaultValuesCheckBox, type TComponentVariant, TIcon } from '../../../core'
+import { type ICheckBox, defaultValuesCheckBox, TIcon } from '../../../core'
 import {
-	BaseControlValue,
-	emitsControlValue,
-	propsControlValue,
-	syncControlValue,
-} from '../control-value'
+	BaseControlInput,
+	emitsControlInput,
+	propsControlInput,
+	syncControlInput,
+} from '../control-input'
 import type { TEmits, TProps, ISyncComponentOptions } from '../../common/types'
 
 export const emitsCheckBox: TEmits = [
-	...emitsControlValue,
+	...emitsControlInput,
 	'update:indeterminate',
 	'changeIndeterminate',
 ] as const
 
 export const propsCheckBox: TProps = {
-	...propsControlValue,
+	...propsControlInput,
 	indeterminate: {
 		type: Boolean as PropType<ICheckBox['indeterminate']>,
 		default: defaultValuesCheckBox.indeterminate,
@@ -23,10 +23,6 @@ export const propsCheckBox: TProps = {
 	plain: {
 		type: Boolean as PropType<ICheckBox['plain']>,
 		default: defaultValuesCheckBox.plain,
-	},
-	variant: {
-		type: String as PropType<ICheckBox['variant']>,
-		default: defaultValuesCheckBox.variant,
 	},
 	icon: {
 		type: Object as PropType<ICheckBox['icon']>,
@@ -40,7 +36,7 @@ export const propsCheckBox: TProps = {
 
 export default {
 	name: 'BaseCheckBox',
-	extends: BaseControlValue,
+	extends: BaseControlInput,
 	emits: emitsCheckBox,
 	props: propsCheckBox,
 }
@@ -51,7 +47,7 @@ export default {
  * @param instance
  */
 export function syncCheckBox(options: ISyncComponentOptions<ICheckBox>): void {
-	syncControlValue(options)
+	syncControlInput(options)
 
 	const { instance, props, emit } = options
 
@@ -72,15 +68,6 @@ export function syncCheckBox(options: ISyncComponentOptions<ICheckBox>): void {
 		(value) => {
 			if (value !== instance.plain) {
 				instance.plain = value
-			}
-		},
-	)
-
-	watch<TComponentVariant>(
-		() => props.variant,
-		(value) => {
-			if (value !== instance.variant) {
-				instance.variant = value
 			}
 		},
 	)
