@@ -1,5 +1,5 @@
 export * from './types'
 export {
-	default as TControlValue,
-	defaultValues as defaultValuesControlValue,
+	default as TControlInput,
+	defaultValues as defaultValuesControlInput,
 } from './control-input.class'

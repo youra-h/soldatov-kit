@@ -1,25 +1,22 @@
 import { type IComponentOptions } from '../component'
-import { TControlValue, defaultValuesControlValue } from '../control-value'
+import { TControlInput, defaultValuesControlInput } from '../control-input'
 import type { ICheckBox, TCheckBoxEventsMap } from './types'
 import type { TObjectProps } from '../object'
 import { TIcon } from '../icon'
-import { TVariant } from '../../common/variant'
-import type { TComponentVariant } from '../../common/types'
 
 export const defaultValues: Partial<ICheckBox> = {
-	...defaultValuesControlValue,
+	...defaultValuesControlInput,
 	indeterminate: false,
 	plain: false,
 	variant: 'normal',
 }
 
 export default class TCheckBox<TEvents extends TCheckBoxEventsMap>
-	extends TControlValue<TEvents>
+	extends TControlInput<TEvents>
 	implements ICheckBox
 {
 	protected _indeterminate: boolean
 	protected _plain: boolean
-	protected _variantHelper: TVariant
 	protected _icon?: TIcon
 	protected _indeterminateIcon?: TIcon
 
@@ -28,27 +25,10 @@ export default class TCheckBox<TEvents extends TCheckBoxEventsMap>
 
 		super({ props, baseClass })
 
-		this._variantHelper = new TVariant({
-			baseClass: this._baseClass,
-		})
-
-		// Инициализируем значение отображения компонента
-		this._variantHelper.value = props.variant ?? defaultValues.variant!
-
 		this._indeterminate = props.indeterminate ?? defaultValues.indeterminate!
 		this._plain = props.plain ?? defaultValues.plain!
 		this._icon = props.icon ?? defaultValues.icon!
 		this._indeterminateIcon = props.indeterminateIcon ?? defaultValues.indeterminateIcon!
-	}
-
-	get variant(): TComponentVariant {
-		return this._variantHelper.value
-	}
-
-	set variant(value: TComponentVariant) {
-		if (this._variantHelper.value !== value) {
-			this._variantHelper.value = value
-		}
 	}
 
 	get indeterminate(): boolean {
@@ -95,7 +75,10 @@ export default class TCheckBox<TEvents extends TCheckBoxEventsMap>
 	getProps(): TObjectProps {
 		return {
 			...super.getProps(),
-			value: this._value,
+			indeterminate: this.indeterminate,
+			plain: this.plain,
+			icon: this.icon,
+			indeterminateIcon: this.indeterminateIcon,
 		}
 	}
 }

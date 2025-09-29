@@ -1,7 +1,7 @@
-import type { IControlValue, TControlValueEventsMap } from '../control-value'
+import type { IControlInput, TControlInputEventsMap } from '../control-input'
 import type { TIcon } from '../icon'
 
-export interface ICheckBox extends IControlValue {
+export interface ICheckBox extends IControlInput {
 	// Отображать ли состояние "не определено"
 	indeterminate?: boolean
 	// Только отображать значение, без анимации и бордеров
@@ -12,6 +12,6 @@ export interface ICheckBox extends IControlValue {
 	indeterminateIcon?: TIcon
 }
 
-export type TCheckBoxEventsMap = TControlValueEventsMap & {
+export type TCheckBoxEventsMap = TControlInputEventsMap & {
 	changeIndeterminate: (value: boolean) => void
 }

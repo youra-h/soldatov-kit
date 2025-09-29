@@ -1,10 +1,13 @@
 import { TComponent, type IComponentOptions } from '../component'
-import { TControl, defaultValuesControl } from '../control'
+import type { TComponentVariant } from '../../common/types'
+import { TControlValue, defaultValuesControlValue } from '../control-value'
 import type { IControlInput, TControlInputEventsMap, TControlInputState } from './types'
 import type { TObjectProps } from '../object'
+import { TVariant } from '../../common/variant'
 
 export const defaultValues: Partial<IControlInput> = {
-	...defaultValuesControl,
+	...defaultValuesControlValue,
+	variant: 'normal',
 	readonly: false,
 	required: false,
 	invalid: false,
@@ -12,9 +15,11 @@ export const defaultValues: Partial<IControlInput> = {
 }
 
 export default class TControlInput<TEvents extends TControlInputEventsMap>
-	extends TControl<TEvents>
+	extends TControlValue<TEvents>
 	implements IControlInput
 {
+	protected _variantHelper: TVariant
+
 	protected _readonly: boolean
 	protected _required: boolean
 	protected _invalid: boolean
@@ -27,13 +32,28 @@ export default class TControlInput<TEvents extends TControlInputEventsMap>
 
 		const { props = {} } = options
 
+		this._variantHelper = new TVariant({
+			baseClass: this._baseClass,
+		})
+
+		// Инициализируем значение отображения компонента
+		this._variantHelper.value = props.variant ?? defaultValues.variant!
+
 		this._readonly = props.readonly ?? defaultValues.readonly!
 		this._required = props.required ?? defaultValues.required!
 		this._invalid = props.invalid ?? defaultValues.invalid!
 		this._state = props.state ?? defaultValues.state!
 	}
-	value: any
-	is?: Object | undefined
+
+	get variant(): TComponentVariant {
+		return this._variantHelper.value
+	}
+
+	set variant(value: TComponentVariant) {
+		if (this._variantHelper.value !== value) {
+			this._variantHelper.value = value
+		}
+	}
 
 	get readonly(): boolean {
 		return this._readonly
