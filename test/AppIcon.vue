@@ -8,17 +8,24 @@ const IconHome = useIconImport('/src/packages/icons/home.svg')
 const icon = TIcon.create({ tag: IconHome })
 // const icon = new TIcon({ tag: IconHome }) // просто props
 
-
 const button1 = new TButton({ text: 'Button 3', icon })
-const button2 = reactive(new TButton({ text: 'Button 4', icon: IconHome }))
+const button2 = TButton.create({ text: 'Button 4', icon: IconHome })
+
+button1.on('created', (component) => {
+	console.log('button1 created', component)
+})
+
+button2.on('created', (component) => {
+	console.log('button2 created', component)
+})
 
 setTimeout(() => {
 	button2.loading = true
 	button2.disabled = true
-}, 1000);
+}, 1000)
 
-const onCreated = () => {
-	console.log('onCreated')
+const onCreated = (component) => {
+	console.log('onCreated', component)
 }
 </script>
 

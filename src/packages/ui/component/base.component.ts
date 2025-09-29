@@ -36,6 +36,11 @@ export default {
 	name: 'BaseComponent',
 	emits: emitsComponent,
 	props: propsComponent,
+	created() {
+		// Emit 'created' event when component is created
+		// @ts-ignore
+		this.$emit('created', this.component)
+	},
 }
 
 export function syncComponent(options: ISyncComponentOptions<IComponent>) {

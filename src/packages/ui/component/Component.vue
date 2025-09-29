@@ -16,11 +16,7 @@ export default {
 		})
 
 		return { component }
-	},
-	created() {
-		console.log('Component created', this.component)
-		this.$emit('created', this.component)
-	},
+	}
 }
 </script>
 

@@ -35,7 +35,8 @@ export default class TComponent<TEvents extends TComponentEventsMap>
 		this._visible = typeof props.visible === 'boolean' ? props.visible : defaultValues.visible!
 		this._hidden = typeof props.hidden === 'boolean' ? props.hidden : defaultValues.hidden!
 
-		this.emit('created')
+		// Emit 'created' event after the current call stack is cleared
+		setTimeout(() => this.emit('created', this), 0)
 	}
 
 	static prepareOptions<T>(
