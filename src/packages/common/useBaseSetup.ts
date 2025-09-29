@@ -1,3 +1,4 @@
+import { reactive } from 'vue'
 import { useManagedInstance } from './useManagedInstance'
 
 /**
@@ -7,8 +8,14 @@ import { useManagedInstance } from './useManagedInstance'
  * @param key The key to use for the component instance in the props.
  * @returns The managed instance of the component.
  */
-export function useBaseSetup<T>(Ctor: new (props: any) => T, props: any, key: string = 'is') {
+export function useBaseSetup<T extends object>(
+	Ctor: new (props: any) => T,
+	props: any,
+	key: string = 'is',
+) {
 	const instance = useManagedInstance(Ctor, props, key)
 
-	return { is: instance }
+	const reactiveInstance = reactive(instance)
+
+	return { is: reactiveInstance }
 }

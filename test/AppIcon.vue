@@ -9,7 +9,7 @@ const icon = TIcon.create({ tag: IconHome })
 // const icon = new TIcon({ tag: IconHome }) // просто props
 
 const button1 = new TButton({ text: 'Button 3', icon })
-const button2 = TButton.create({ text: 'Button 4', icon: IconHome })
+const button2 = reactive(TButton.create({ text: 'Button 4', icon: IconHome }))
 
 button1.on('created', (component) => {
 	console.log('button1 created', component)
