@@ -6,10 +6,14 @@ import BaseSpinner, { syncSpinner } from './base.component'
 export default {
 	name: '_Spinner',
 	extends: BaseSpinner,
-	setup(props: ISpinner) {
+	setup(props: ISpinner, { emit }) {
 		const { is: component } = useBaseSetup(TSpinner, props)
 
-		syncSpinner(props, component)
+		syncSpinner({
+			props,
+			instance: component,
+			emit,
+		})
 
 		return {
 			component,

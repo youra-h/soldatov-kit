@@ -17,7 +17,8 @@ export interface IComponentOptions<T> {
 }
 
 export type TComponentEventsMap = {
-	show: () => void
+	created: (component: IComponent) => void
+	show: (component: IComponent) => void
 	hide: () => void
 	beforeShow: () => boolean
 	afterShow: () => void

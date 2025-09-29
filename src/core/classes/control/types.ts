@@ -14,7 +14,7 @@ export interface IControl extends IComponent {
 
 export type TControlEventsMap = TComponentEventsMap & {
 	// Событие изменения фокуса
-	focus: () => void
+	focused: () => void
 	// Событие изменения текста
 	changeText: (value: string) => void
 	// Событие клика по контролу

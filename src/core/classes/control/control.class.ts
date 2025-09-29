@@ -64,7 +64,7 @@ export default class TControl<TEvents extends TControlEventsMap> extends TCompon
 	set focused(value: boolean) {
 		if (this._focused !== value) {
 			this._focused = value
-			this.emit('focus', value)
+			this.emit('focused', value)
 		}
 	}
 

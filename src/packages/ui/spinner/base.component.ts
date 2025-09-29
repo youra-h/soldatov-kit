@@ -6,7 +6,7 @@ import {
 	type TComponentVariant,
 } from '../../../core'
 import { Component, emitsComponent, propsComponent, syncComponent } from '../component'
-import type { TEmits, TProps } from '../../common/types'
+import type { TEmits, TProps, ISyncComponentOptions } from '../../common/types'
 
 export const emitsSpinner: TEmits = [...emitsComponent] as const
 
@@ -38,8 +38,10 @@ export default {
  * @param props
  * @param instance
  */
-export function syncSpinner(props: TProps, instance: ISpinner) {
-	syncComponent(props, instance)
+export function syncSpinner(options: ISyncComponentOptions<ISpinner>) {
+	syncComponent(options)
+
+	const { instance, props } = options
 
 	watch<TComponentVariant>(
 		() => props.variant,
@@ -65,6 +67,6 @@ export function syncSpinner(props: TProps, instance: ISpinner) {
 			if (value !== instance.borderWidth) {
 				instance.borderWidth = value
 			}
-		}
+		},
 	)
 }

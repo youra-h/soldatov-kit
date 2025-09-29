@@ -6,7 +6,7 @@ import {
 	propsControlValue,
 	syncControlValue,
 } from '../control-value'
-import type { TEmits, TProps } from '../../common/types'
+import type { TEmits, TProps, ISyncComponentOptions } from '../../common/types'
 
 export const emitsCheckBox: TEmits = [...emitsControlValue, 'update:value'] as const
 
@@ -46,8 +46,10 @@ export default {
  * @param props
  * @param instance
  */
-export function syncCheckBox(props: TProps, instance: ICheckBox): void {
-	syncControlValue(props, instance)
+export function syncCheckBox(options: ISyncComponentOptions<ICheckBox>): void {
+	syncControlValue(options)
+
+	const { instance, props } = options
 
 	watch<boolean>(
 		() => props.indeterminate,

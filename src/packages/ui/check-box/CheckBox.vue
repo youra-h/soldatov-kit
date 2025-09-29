@@ -6,10 +6,14 @@ import { useBaseSetup } from '../../common/useBaseSetup'
 export default {
 	name: '_CheckBox',
 	extends: BaseCheckBox,
-	setup(props: ICheckBox) {
+	setup(props: ICheckBox, { emit }) {
 		const { is: component } = useBaseSetup(TCheckBox, props)
 
-		syncCheckBox(props, component)
+		syncCheckBox({
+			props,
+			instance: component,
+			emit,
+		})
 
 		return { component }
 	},

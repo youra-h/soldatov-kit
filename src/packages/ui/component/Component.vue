@@ -1,15 +1,25 @@
 <script lang="ts">
 import { TComponent, type IComponent } from '../../../core'
-import BaseComponent from './base.component'
+import BaseComponent, { syncComponent } from './base.component'
 import { useBaseSetup } from '../../common/useBaseSetup'
 
 export default {
 	name: '_Component',
 	extends: BaseComponent,
-	setup(props: IComponent) {
+	setup(props: IComponent, { emit }) {
 		const { is: component } = useBaseSetup(TComponent, props)
 
+		syncComponent({
+			instance: component,
+			props,
+			emit,
+		})
+
 		return { component }
+	},
+	created() {
+		console.log('Component created', this.component)
+		this.$emit('created', this.component)
 	},
 }
 </script>

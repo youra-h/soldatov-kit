@@ -6,10 +6,14 @@ import { useBaseSetup } from '../../common/useBaseSetup'
 export default {
 	name: '_ControlValue',
 	extends: BaseControlValue,
-	setup(props: IControlValue) {
+	setup(props: IControlValue, { emit }) {
 		const { is: component } = useBaseSetup(TControlValue, props)
 
-		syncControlValue(props, component)
+		syncControlValue({
+			props,
+			instance: component,
+			emit,
+		})
 
 		return { component }
 	},

@@ -1,7 +1,7 @@
 import { type PropType, watch } from 'vue'
 import { type IIcon, defaultValuesIcon, type TIconSize } from '../../../core'
 import { Component, emitsComponent, propsComponent, syncComponent } from '../component'
-import type { TEmits, TProps } from '../../common/types'
+import type { TEmits, TProps, ISyncComponentOptions } from '../../common/types'
 
 export const emitsIcon: TEmits = [...emitsComponent] as const
 
@@ -37,8 +37,10 @@ export default {
  * @param props
  * @param instance
  */
-export function syncIcon(props: TProps, instance: IIcon) {
-	syncComponent(props, instance)
+export function syncIcon(options: ISyncComponentOptions<IIcon>) {
+	syncComponent(options)
+
+	const { instance, props } = options
 
 	watch<TIconSize>(
 		() => props.size,
@@ -64,6 +66,6 @@ export function syncIcon(props: TProps, instance: IIcon) {
 			if (value && value !== instance.height) {
 				instance.height = value
 			}
-		}
+		},
 	)
 }

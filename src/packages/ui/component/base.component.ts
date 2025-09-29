@@ -1,13 +1,12 @@
 import { type PropType, watch } from 'vue'
 import { type IComponent, defaultValuesComponent } from '../../../core'
-import type { TEmits, TProps } from '../../common/types'
+import type { TEmits, TProps, ISyncComponentOptions } from '../../common/types'
 
 export const emitsComponent: TEmits = [
 	'update:visible',
 	'hide',
 	'show',
 	'visible',
-	'mounted',
 	'created',
 ] as const
 
@@ -39,14 +38,16 @@ export default {
 	props: propsComponent,
 }
 
-export function syncComponent(props: TProps, instance: IComponent) {
+export function syncComponent(options: ISyncComponentOptions<IComponent>) {
+	const { instance, props, emit } = options
+
 	watch<Object | string>(
 		() => props.tag,
 		(value) => {
 			if (value !== instance.tag) {
 				instance.tag = value
 			}
-		}
+		},
 	)
 
 	watch<boolean>(
@@ -54,8 +55,17 @@ export function syncComponent(props: TProps, instance: IComponent) {
 		(value) => {
 			if (value !== instance.visible) {
 				instance.visible = value
+
+				emit?.('visible', value)
+				emit?.('update:visible', value)
+
+				if (value) {
+					emit?.('show', instance)
+				} else {
+					emit?.('hide')
+				}
 			}
-		}
+		},
 	)
 
 	watch<boolean>(

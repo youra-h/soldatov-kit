@@ -6,10 +6,14 @@ import BaseButton, { syncButton } from './base.component'
 export default {
 	name: '_Button',
 	extends: BaseButton,
-	setup(props: IButton) {
+	setup(props: IButton, { emit }) {
 		const { is: component } = useBaseSetup(TButton, props)
 
-		syncButton(props, component)
+		syncButton({
+			props,
+			instance: component,
+			emit,
+		})
 
 		return {
 			component,

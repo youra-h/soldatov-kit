@@ -6,10 +6,14 @@ import BaseIcon, { syncIcon } from './base.component'
 export default {
 	name: '_Icon',
 	extends: BaseIcon,
-	setup(props: IIcon) {
+	setup(props: IIcon, { emit }) {
 		const { is: component } = useBaseSetup(TIcon, props)
 
-		syncIcon(props, component)
+		syncIcon({
+			props,
+			instance: component,
+			emit,
+		})
 
 		return {
 			component,

@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { reactive, defineAsyncComponent } from 'vue'
-import { Icon } from '@ui/icon'
+import { reactive } from 'vue'
+import { Icon, useIconImport } from '@ui/icon'
 import { Button } from '@ui/button'
 import { TIcon, TButton } from '@core'
 
-const IconHome = defineAsyncComponent(() => import('./../src/packages/icons/home.svg'))
+const IconHome = useIconImport('/src/packages/icons/home.svg')
 const icon = TIcon.create({ tag: IconHome })
 // const icon = new TIcon({ tag: IconHome }) // просто props
 
@@ -16,11 +16,15 @@ setTimeout(() => {
 	button2.loading = true
 	button2.disabled = true
 }, 1000);
+
+const onCreated = () => {
+	console.log('onCreated')
+}
 </script>
 
 <template>
 	<div class="flex gap-4">
-		<Button :icon variant="primary"> Button 1 </Button>
+		<Button :icon variant="primary" @created="onCreated"> Button 1 </Button>
 		<Button :icon="IconHome" variant="primary" loading> Button 2 </Button>
 		<Button :is="button1"> Button 3 </Button>
 		<Button :is="button2"> Button 4 </Button>

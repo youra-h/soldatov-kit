@@ -34,6 +34,8 @@ export default class TComponent<TEvents extends TComponentEventsMap>
 		this._tag = props.tag ?? defaultValues.tag!
 		this._visible = typeof props.visible === 'boolean' ? props.visible : defaultValues.visible!
 		this._hidden = typeof props.hidden === 'boolean' ? props.hidden : defaultValues.hidden!
+
+		this.emit('created')
 	}
 
 	static prepareOptions<T>(

@@ -1,13 +1,16 @@
 import { type PropType, watch } from 'vue'
 import { type IControl, type TComponentSize, defaultValuesControl } from '../../../core'
 import { BaseComponent, emitsComponent, propsComponent, syncComponent } from '../component'
-import type { TEmits, TProps } from '../../common/types'
+import type { TEmits, TProps, ISyncComponentOptions } from '../../common/types'
 
 export const emitsControl: TEmits = [
 	...emitsComponent,
 	'update:text',
 	'update:disabled',
 	'update:focused',
+	'changeText',
+	'disabled',
+	'focused',
 ] as const
 
 export const propsControl: TProps = {
@@ -42,14 +45,19 @@ export default {
  * @param props
  * @param instance
  */
-export function syncControl(props: TProps, instance: IControl) {
-	syncComponent(props, instance)
+export function syncControl(options: ISyncComponentOptions<IControl>) {
+	syncComponent(options)
+
+	const { instance, props, emit } = options
 
 	watch<boolean>(
 		() => props.disabled,
 		(value) => {
 			if (value !== instance.disabled) {
 				instance.disabled = value
+
+				emit?.('disabled', value)
+				emit?.('update:disabled', value)
 			}
 		},
 	)
@@ -59,6 +67,9 @@ export function syncControl(props: TProps, instance: IControl) {
 		(value) => {
 			if (value !== instance.focused) {
 				instance.focused = value
+
+				emit?.('focused', value)
+				emit?.('update:focused', value)
 			}
 		},
 	)
@@ -68,6 +79,9 @@ export function syncControl(props: TProps, instance: IControl) {
 		(value) => {
 			if (value !== instance.text) {
 				instance.text = value
+
+				emit?.('changeText', value)
+				emit?.('update:text', value)
 			}
 		},
 	)
@@ -78,6 +92,6 @@ export function syncControl(props: TProps, instance: IControl) {
 			if (value && value !== instance.size) {
 				instance.size = value
 			}
-		}
+		},
 	)
 }
