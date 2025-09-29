@@ -2,6 +2,8 @@ import type { IComponent, TComponentEventsMap } from './../component'
 import type { TComponentSize } from '../../common/types'
 
 export interface IControl extends IComponent {
+	// Наименование контрола
+	name: string
 	// Текстовое значение контрола
 	text: string
 	// Заблокирован ли контрол

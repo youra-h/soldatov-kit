@@ -19,3 +19,9 @@ export default {
 	},
 }
 </script>
+
+<template>
+	<div :class="component.classes">
+		<input type="checkbox" :id="component.id.toString()" :name="component.name" :disabled="component.disabled" />
+	</div>
+</template>

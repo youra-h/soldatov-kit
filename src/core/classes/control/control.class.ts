@@ -13,6 +13,7 @@ export const defaultValues: Partial<IControl> = {
 }
 
 export default class TControl<TEvents extends TControlEventsMap> extends TComponent<TEvents> implements IControl {
+	protected _name: string
 	protected _text: string
 	protected _disabled: boolean
 	protected _focused: boolean
@@ -30,9 +31,20 @@ export default class TControl<TEvents extends TControlEventsMap> extends TCompon
 			value: props.size ?? defaultValues.size!,
 		})
 
+		this._name = props.name ?? ''
 		this._text = props.text ?? defaultValues.text!
 		this._disabled = props.disabled ?? defaultValues.disabled!
 		this._focused = props.focused ?? defaultValues.focused!
+	}
+
+	get name(): string {
+		return this._name ?? this._id.toString()
+	}
+
+	set name(value: string) {
+		if (this._name !== value) {
+			this._name = value
+		}
 	}
 
 	get text(): string {

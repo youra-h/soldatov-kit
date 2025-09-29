@@ -8,7 +8,11 @@ import {
 } from '../control-value'
 import type { TEmits, TProps, ISyncComponentOptions } from '../../common/types'
 
-export const emitsCheckBox: TEmits = [...emitsControlValue, 'update:value'] as const
+export const emitsCheckBox: TEmits = [
+	...emitsControlValue,
+	'update:indeterminate',
+	'changeIndeterminate',
+] as const
 
 export const propsCheckBox: TProps = {
 	...propsControlValue,
@@ -49,13 +53,16 @@ export default {
 export function syncCheckBox(options: ISyncComponentOptions<ICheckBox>): void {
 	syncControlValue(options)
 
-	const { instance, props } = options
+	const { instance, props, emit } = options
 
 	watch<boolean>(
 		() => props.indeterminate,
 		(value) => {
 			if (value !== instance.indeterminate) {
 				instance.indeterminate = value
+
+				emit?.('update:indeterminate', value)
+				emit?.('changeIndeterminate', value)
 			}
 		},
 	)
