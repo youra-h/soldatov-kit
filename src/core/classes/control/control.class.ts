@@ -19,9 +19,11 @@ export default class TControl<TEvents extends TControlEventsMap> extends TCompon
 	protected _sizeHelper: TSize<TComponentSize>
 
 	constructor(options: IComponentOptions<IControl>) {
-		const { props = {}, baseClass = 's-control' } = options
+		options = TComponent.prepareOptions(options, 's-control')
 
-		super({ props, baseClass })
+		super(options)
+
+		const { props = {} } = options
 
 		this._sizeHelper = new TSize<TComponentSize>({
 			baseClass: this._baseClass,

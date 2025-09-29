@@ -5,8 +5,9 @@ import { Button } from '@ui/button'
 import { TIcon, TButton } from '@core'
 
 const IconHome = defineAsyncComponent(() => import('./../src/packages/icons/home.svg'))
+const icon = TIcon.create({ tag: IconHome })
+// const icon = new TIcon({ tag: IconHome }) // просто props
 
-const icon = new TIcon({ tag: IconHome })
 
 const button1 = new TButton({ text: 'Button 3', icon })
 const button2 = reactive(new TButton({ text: 'Button 4', icon: IconHome }))
@@ -15,8 +16,6 @@ setTimeout(() => {
 	button2.loading = true
 	button2.disabled = true
 }, 1000);
-
-console.log('qwe', icon)
 </script>
 
 <template>

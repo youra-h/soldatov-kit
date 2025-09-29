@@ -19,9 +19,11 @@ export default class TSpinner extends TComponent<TSpinnerEventsMap> implements I
 	protected _borderWidth: number | 'auto'
 
 	constructor(options: IComponentOptions<ISpinner>) {
-		const { props = {}, baseClass = 's-spinner' } = options
+		options = TComponent.prepareOptions(options, 's-spinner')
 
-		super({ props, baseClass })
+		super(options)
+
+		const { props = {} } = options
 
 		this._sizeHelper = new TSize<TComponentSize>({
 			baseClass: this._baseClass,

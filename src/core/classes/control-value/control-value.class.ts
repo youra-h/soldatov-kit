@@ -1,4 +1,4 @@
-import { type IComponentOptions } from './../component'
+import { TComponent, type IComponentOptions } from './../component'
 import { TControl, defaultValuesControl } from '../control'
 import type { IControlValue, TControlValueEventsMap } from './types'
 import type { TObjectProps } from '../object'
@@ -15,9 +15,11 @@ export default class TControlValue<TEvents extends TControlValueEventsMap>
 	protected _value: any
 
 	constructor(options: IComponentOptions<IControlValue>) {
-		const { props = {}, baseClass = 's-control-value' } = options
+		options = TComponent.prepareOptions(options, 's-control-value')
 
-		super({ props, baseClass })
+		super(options)
+
+		const { props = {} } = options
 
 		this._value = props.value ?? defaultValues.value!
 	}

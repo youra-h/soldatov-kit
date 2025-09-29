@@ -36,6 +36,16 @@ export default class TComponent<TEvents extends TComponentEventsMap>
 		this._hidden = typeof props.hidden === 'boolean' ? props.hidden : defaultValues.hidden!
 	}
 
+	static prepareOptions<T>(
+		options: IComponentOptions<T> | Partial<T>,
+		defaultBaseClass: string,
+	): IComponentOptions<T> {
+		if (options && 'props' in options) {
+			return { ...options, baseClass: options.baseClass ?? defaultBaseClass }
+		}
+		return { props: options as Partial<T>, baseClass: defaultBaseClass }
+	}
+
 	get id(): string | number {
 		return this._id
 	}
