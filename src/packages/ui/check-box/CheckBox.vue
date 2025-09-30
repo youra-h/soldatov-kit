@@ -22,7 +22,6 @@ export default {
 
 <template>
 	<div :class="component.classes">
-		{{ console.log(component.value) }}
 		<input
 			type="checkbox"
 			:id="component.id.toString()"
@@ -32,34 +31,18 @@ export default {
 			:readonly="component.readonly"
 			:required="component.required"
 			:aria-checked="component.getAriaChecked()"
-			@click="component.change($event)"
+			@change="component.change($event)"
 		/>
 		<div class="s-check-box__container">
-			<Icon v-if="component.icon" :is="component.icon" />
-			<svg
-				v-else
-				class="s-check-box__icon"
-				viewBox="0 0 24 24"
-				fill="none"
-				xmlns="http://www.w3.org/2000/svg"
-			>
-				<path
-					v-if="component.indeterminate"
-					d="M5 12H19"
-					stroke="currentColor"
-					stroke-width="2"
-					stroke-linecap="round"
-					stroke-linejoin="round"
+			<slot name="icon" :value="component.value" :indeterminate="component.indeterminate">
+				<Icon v-if="component.icon && component.value" :is="component.icon" />
+				<Icon
+					v-else-if="
+						component.indeterminate && component.indeterminateIcon && !!!component.value
+					"
+					:is="component.indeterminateIcon"
 				/>
-				<path
-					v-else-if="component.value"
-					d="M20 6L9 17L4 12"
-					stroke="currentColor"
-					stroke-width="2"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-				/>
-			</svg>
+			</slot>
 		</div>
 	</div>
 </template>
@@ -70,53 +53,44 @@ export default {
 .s-check-box {
 	$this: &;
 
-	@apply inline-flex items-center gap-2 cursor-pointer select-none;
-	@apply relative;
+	@apply inline-flex items-center;
+	@apply relative select-none;
 
 	input {
-		@apply absolute top-0 left-0 w-full h-full opacity-0 m-0 p-0;
+		@apply absolute inset-0 opacity-0;
+		@apply w-5 h-5 m-0 p-0;
 		@apply cursor-pointer;
 		@apply z-10;
 
-		&:disabled + .s-check-box__container {
-			@apply cursor-not-allowed opacity-50;
+		&:disabled {
+			@apply cursor-default pointer-events-none;
+		}
+
+		&:disabled + #{$this}__container {
+			@apply border-gray-200 bg-gray-50;
+		}
+
+		&:focus + #{$this}__container {
+			@apply outline-2 outline-offset-2 outline-blue-400;
 		}
 	}
 
-	.s-check-box__container {
+	&__container {
 		@apply flex items-center justify-center;
-		@apply w-5 h-5 rounded-sm border border-gray-400;
+		@apply w-5 h-5 rounded-md border border-gray-400;
 		@apply bg-white;
-		@apply transition-colors duration-200;
-		@apply shrink-0;
-
-		svg.s-check-box__icon {
-			@apply w-3.5 h-3.5 text-transparent;
-			@apply transition-colors duration-200;
-		}
+		@apply transition-colors duration-150;
 	}
 
-	&.s-check-box--checked .s-check-box__container {
-		@apply bg-blue-600 border-blue-600;
-
-		svg.s-check-box__icon {
-			@apply text-white;
+	&--plain {
+		input {
+			&:focus + #{$this}__container {
+				@apply outline-0;
+			}
 		}
-	}
 
-	&.s-check-box--indeterminate .s-check-box__container {
-		@apply bg-blue-600 border-blue-600;
-
-		svg.s-check-box__icon {
-			@apply text-white;
-		}
-	}
-
-	&.s-check-box--plain .s-check-box__container {
-		@apply border-gray-300 bg-gray-100;
-
-		svg.s-check-box__icon {
-			@apply text-gray-600;
+		#{$this}__container {
+			@apply border-0;
 		}
 	}
 }

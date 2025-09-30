@@ -37,6 +37,8 @@ export default {
 	emits: emitsComponent,
 	props: propsComponent,
 	created() {
+		// @ts-ignore
+		;(this.component! as IComponent).id = this.$.uid
 		// Emit 'created' event when component is created
 		// @ts-ignore
 		this.$emit('created', this.component)

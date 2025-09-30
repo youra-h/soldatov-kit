@@ -12,7 +12,10 @@ export const defaultValues: Partial<IControl> = {
 	size: 'normal',
 }
 
-export default class TControl<TEvents extends TControlEventsMap> extends TComponent<TEvents> implements IControl {
+export default class TControl<TEvents extends TControlEventsMap>
+	extends TComponent<TEvents>
+	implements IControl
+{
 	protected _name: string
 	protected _text: string
 	protected _disabled: boolean
@@ -38,7 +41,7 @@ export default class TControl<TEvents extends TControlEventsMap> extends TCompon
 	}
 
 	get name(): string {
-		return this._name ?? this._id.toString()
+		return this._name && this._name !== '' ? this._name : this._id.toString()
 	}
 
 	set name(value: string) {

@@ -107,7 +107,6 @@ export default class TCheckBox<TEvents extends TCheckBoxEventsMap>
 	 * Если было true, то станет false
 	 */
 	change(event?: Event) {
-		console.log('change', this._value, this.indeterminate)
 		const oldValue = this._value
 
 		if (this.indeterminate) {
