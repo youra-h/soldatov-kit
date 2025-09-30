@@ -53,12 +53,13 @@ export default {
 .s-check-box {
 	$this: &;
 
+	@apply w-5 h-5;
 	@apply inline-flex items-center;
 	@apply relative select-none;
 
 	input {
 		@apply absolute inset-0 opacity-0;
-		@apply w-5 h-5 m-0 p-0;
+		@apply w-full h-full m-0 p-0;
 		@apply cursor-pointer;
 		@apply z-10;
 
@@ -77,7 +78,7 @@ export default {
 
 	&__container {
 		@apply flex items-center justify-center;
-		@apply w-5 h-5 rounded-md border border-gray-400;
+		@apply w-full h-full rounded-md border border-gray-400;
 		@apply bg-white;
 		@apply transition-colors duration-150;
 	}
@@ -92,6 +93,22 @@ export default {
 		#{$this}__container {
 			@apply border-0;
 		}
+	}
+
+	&--size-sm {
+		@apply w-4 h-4;
+	}
+
+	&--size-lg {
+		@apply w-6 h-6;
+	}
+
+	&--size-xl {
+		@apply w-7 h-7;
+	}
+
+	&--size-2xl {
+		@apply w-8 h-8;
 	}
 }
 </style>

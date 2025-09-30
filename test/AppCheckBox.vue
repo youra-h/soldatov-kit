@@ -11,6 +11,11 @@ import { TCheckBox, TButton } from '@core'
 		<CheckBox indeterminate />
 		<CheckBox indeterminate disabled />
 		<CheckBox indeterminate plain />
+
+		<CheckBox :value="true" size="sm" />
+		<CheckBox :value="true" size="lg" />
+		<CheckBox :value="true" size="xl" />
+		<CheckBox :value="true" size="2xl" />
 	</div>
 </template>
 

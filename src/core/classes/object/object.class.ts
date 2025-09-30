@@ -53,7 +53,10 @@ export abstract class TObject<TEvents extends Record<string, TEventHandler>> {
 		Object.assign(this, props)
 	}
 
-	static create(props: Partial<TObjectProps>): TObject<any> {
-		return new (this as any)({ props })
+	static create<T extends TObject<any>>(
+		this: new (options: any) => T,
+		props: Partial<any> = {},
+	): T {
+		return new this({ props })
 	}
 }

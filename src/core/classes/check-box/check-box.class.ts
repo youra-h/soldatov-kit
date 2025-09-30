@@ -30,8 +30,8 @@ export default class TCheckBox<TEvents extends TCheckBoxEventsMap>
 		this._value = props.value ?? defaultValues.value!
 		this._indeterminate = props.indeterminate ?? defaultValues.indeterminate!
 		this._plain = props.plain ?? defaultValues.plain!
-		this._icon = props.icon ?? defaultValues.icon!
-		this._indeterminateIcon = props.indeterminateIcon ?? defaultValues.indeterminateIcon!
+		this._icon = props.icon ?? TIcon.create()
+		this._indeterminateIcon = props.indeterminateIcon ?? TIcon.create()
 	}
 
 	get value(): boolean | null {
