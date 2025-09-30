@@ -8,7 +8,6 @@ import {
 } from '../control-input'
 import type { TEmits, TProps, ISyncComponentOptions } from '../../common/types'
 import { Icon } from '../icon'
-import { Value } from 'sass'
 
 export const emitsCheckBox: TEmits = [
 	...emitsControlInput,

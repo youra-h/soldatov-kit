@@ -1,5 +1,6 @@
 import type { TComponentVariant } from '../../common/types'
 import type { IControlValue, TControlValueEventsMap } from '../control-value'
+import { TSpinner } from '../spinner'
 
 export type TControlInputState = 'normal' | 'success' | 'warning' | 'error'
 
@@ -14,6 +15,10 @@ export interface IControlInput extends IControlValue {
 	invalid?: boolean
 	// Состояние контрола
 	state?: TControlInputState
+	// Показать индикатор загрузки
+	loading?: boolean
+	// Индикатор загрузки
+	spinner?: TSpinner
 }
 
 export type TControlInputEventsMap = TControlValueEventsMap & {}
