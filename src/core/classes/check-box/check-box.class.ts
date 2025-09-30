@@ -30,8 +30,8 @@ export default class TCheckBox<TEvents extends TCheckBoxEventsMap>
 		this._value = props.value ?? defaultValues.value!
 		this._indeterminate = props.indeterminate ?? defaultValues.indeterminate!
 		this._plain = props.plain ?? defaultValues.plain!
-		this._icon = props.icon ?? TIcon.create()
-		this._indeterminateIcon = props.indeterminateIcon ?? TIcon.create()
+		this._icon = props.icon ?? defaultValues.icon!
+		this._indeterminateIcon = props.indeterminateIcon ?? defaultValues.indeterminateIcon!
 	}
 
 	get value(): boolean | null {
@@ -73,6 +73,10 @@ export default class TCheckBox<TEvents extends TCheckBoxEventsMap>
 	set icon(value: TIcon | undefined) {
 		if (this._icon !== value) {
 			this._icon = value ? TIcon.getInstance(value) : undefined
+
+			if (this._icon) {
+				this._icon.size = this.size
+			}
 		}
 	}
 
@@ -83,6 +87,10 @@ export default class TCheckBox<TEvents extends TCheckBoxEventsMap>
 	set indeterminateIcon(value: TIcon | undefined) {
 		if (this._indeterminateIcon !== value) {
 			this._indeterminateIcon = value ? TIcon.getInstance(value) : undefined
+
+			if (this._indeterminateIcon) {
+				this._indeterminateIcon.size = this.size
+			}
 		}
 	}
 

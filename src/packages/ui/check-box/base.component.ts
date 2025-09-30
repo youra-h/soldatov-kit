@@ -7,7 +7,8 @@ import {
 	syncControlInput,
 } from '../control-input'
 import type { TEmits, TProps, ISyncComponentOptions } from '../../common/types'
-import { Icon, useIconImport } from '../icon'
+import { Icon } from '../icon'
+import { Value } from 'sass'
 
 export const emitsCheckBox: TEmits = [
 	...emitsControlInput,
@@ -15,13 +16,12 @@ export const emitsCheckBox: TEmits = [
 	'changeIndeterminate',
 ] as const
 
-const icon = TIcon.create({ tag: useIconImport('/src/packages/icons/check.svg') })
-const indeterminateIcon = TIcon.create({
-	tag: useIconImport('/src/packages/icons/check_indeterminate.svg'),
-})
-
 export const propsCheckBox: TProps = {
 	...propsControlInput,
+	value: {
+		type: [Boolean, Number] as PropType<ICheckBox['value']>,
+		default: defaultValuesCheckBox.value,
+	},
 	indeterminate: {
 		type: Boolean as PropType<ICheckBox['indeterminate']>,
 		default: defaultValuesCheckBox.indeterminate,
@@ -32,11 +32,11 @@ export const propsCheckBox: TProps = {
 	},
 	icon: {
 		type: Object as PropType<ICheckBox['icon']>,
-		default: icon,
+		default: defaultValuesCheckBox.icon,
 	},
 	indeterminateIcon: {
 		type: Object as PropType<ICheckBox['indeterminateIcon']>,
-		default: indeterminateIcon,
+		default: defaultValuesCheckBox.indeterminateIcon,
 	},
 }
 

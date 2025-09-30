@@ -1,7 +1,7 @@
 import type { IComponent, TComponentEventsMap } from '../component'
 import type { TComponentSize } from '../../common/types'
 
-export type TIconSize = Exclude<TComponentSize, 'xl' | '2xl'>
+export type TIconSize = TComponentSize
 
 export interface IIcon extends IComponent {
 	// Размер иконки
