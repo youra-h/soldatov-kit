@@ -43,7 +43,7 @@ export default {
 		/>
 		<div class="s-switch__track">
 			<div class="s-switch__thumb">
-				<Icon v-if="component.icon" :icon="component.icon" class="s-switch__icon" />
+				<Spinner v-if="component.loading" :is="component.spinner" />
 			</div>
 		</div>
 	</div>
