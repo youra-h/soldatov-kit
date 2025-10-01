@@ -1,17 +1,26 @@
 <script setup lang="ts">
-import { reactive, defineAsyncComponent } from 'vue'
+import { ref } from 'vue'
 import { Switch } from '@ui/switch'
 import { Button } from '@ui/button'
 import { Icon, useIconImport } from '@ui/icon'
 import { TIcon, TSwitch, TButton } from '@core'
 
 const icon = TIcon.create({ tag: useIconImport('/src/packages/icons/home.svg') })
+const loading = ref(false)
+
+setTimeout(() => {
+	loading.value = true
+
+	setTimeout(() => {
+		loading.value = false
+	}, 1500)
+}, 1500)
 </script>
 
 <template>
 	<div class="flex flex-col gap-4">
 		<div class="flex gap-4">
-			<Switch :icon />
+			<Switch :icon :loading />
 			<Switch disabled />
 			<Switch />
 		</div>

@@ -53,6 +53,10 @@ export default class TButton extends TControl<TButtonEventsMap> implements IButt
 		this._sizeHelper.on('change', (value) => {
 			// Если есть спиннер, синхронизируем его размер с кнопкой
 			this.spinner!.size = value
+
+			if (this._icon) {
+				this._icon.size = value
+			}
 		})
 	}
 
@@ -84,6 +88,10 @@ export default class TButton extends TControl<TButtonEventsMap> implements IButt
 		if (this._icon !== value) {
 			// Если value не типа TIcon, создаем новый экземпляр
 			this._icon = value ? TIcon.getInstance(value) : undefined
+
+			if (this._icon) {
+				this._icon.size = this.size
+			}
 		}
 	}
 

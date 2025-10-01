@@ -1,0 +1,14 @@
+@mixin fade-transition($name: 'fade', $duration: 200ms, $timing: ease) {
+	.#{$name}-enter-active,
+	.#{$name}-leave-active {
+		transition: opacity $duration $timing;
+	}
+	.#{$name}-enter-from,
+	.#{$name}-leave-to {
+		opacity: 0;
+	}
+	.#{$name}-enter-to,
+	.#{$name}-leave-from {
+		opacity: 1;
+	}
+}

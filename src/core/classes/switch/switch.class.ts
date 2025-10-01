@@ -24,6 +24,15 @@ export default class TSwitch<TEvents extends TSwitchEventsMap>
 
 		this._value = props.value ?? defaultValues.value!
 		this._icon = props.icon ?? defaultValues.icon!
+
+		this._sizeHelper.on('change', (value) => {
+			// Если есть спиннер, синхронизируем его размер с кнопкой
+			this.spinner!.size = value
+
+			if (this._icon) {
+				this._icon.size = value
+			}
+		})
 	}
 
 	get value(): boolean {

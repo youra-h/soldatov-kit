@@ -17,12 +17,6 @@ export default {
 			emit,
 		})
 
-		if (!component.icon) {
-			component.icon = TIcon.create({
-				tag: useIconImport('/src/packages/icons/check.svg'),
-			})
-		}
-
 		return { component }
 	},
 }
@@ -43,7 +37,10 @@ export default {
 		/>
 		<div class="s-switch__track">
 			<div class="s-switch__track--thumb">
-				<Spinner v-if="component.loading" :is="component.spinner" />
+				<transition name="fade" mode="out-in">
+					<Spinner v-if="component.loading" :is="component.spinner" />
+					<Icon v-else-if="component.icon" :is="component.icon" />
+				</transition>
 			</div>
 		</div>
 	</div>
@@ -51,10 +48,13 @@ export default {
 
 <style lang="scss">
 @use './mixines' as mixines;
+@use './../../common/mixines' as common;
 @reference "./../../theme";
 
 .s-switch {
 	$this: &;
+
+	@include common.fade-transition();
 
 	@apply relative select-none;
 	@apply inline-flex items-center;

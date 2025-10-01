@@ -31,7 +31,7 @@ const onCreated = (component) => {
 
 <template>
 	<div class="flex gap-4">
-		<Button :icon variant="primary" @created="onCreated"> Button 1 </Button>
+		<Button :icon variant="primary" @created="onCreated" size="lg"> Button 1 </Button>
 		<Button :icon="IconHome" variant="primary" loading> Button 2 </Button>
 		<Button :is="button1"> Button 3 </Button>
 		<Button :is="button2"> Button 4 </Button>
