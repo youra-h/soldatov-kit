@@ -6,13 +6,13 @@ export interface IBaseClassValueOptions<T extends string = string> {
 	value?: T
 }
 
-export type TBaseClassValueEventsMap<T extends string = string> = {
+export type TBaseClassValueEvents<T extends string = string> = {
 	change: (newValue: T, oldValue: T) => void
 }
 
 export abstract class TBaseClassValue<
 	T extends string = string,
-	E extends TBaseClassValueEventsMap<T> = TBaseClassValueEventsMap<T>,
+	E extends TBaseClassValueEvents<T> = TBaseClassValueEvents<T>,
 > extends TObject<E> {
 	protected _baseClass: string
 	protected _value: T

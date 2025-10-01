@@ -1,4 +1,4 @@
-import type { IComponent, TComponentEventsMap } from '../component'
+import type { IComponent, TComponentEvents } from '../component'
 import type { TComponentSize, TComponentVariant } from '../../common/types'
 
 export interface ISpinner extends IComponent {
@@ -10,4 +10,4 @@ export interface ISpinner extends IComponent {
 	borderWidth?: number | 'auto'
 }
 
-export type TSpinnerEventsMap = TComponentEventsMap & {}
+export type TSpinnerEvents = TComponentEvents & {}

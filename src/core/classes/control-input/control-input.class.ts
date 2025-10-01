@@ -1,7 +1,7 @@
 import { TComponent, type IComponentOptions } from '../component'
 import type { TComponentVariant } from '../../common/types'
 import { TControlValue, defaultValuesControlValue } from '../control-value'
-import type { IControlInput, TControlInputEventsMap, TControlInputState } from './types'
+import type { IControlInput, TControlInputEvents, TControlInputState } from './types'
 import type { TObjectProps } from '../object'
 import { TVariant } from '../../common/variant'
 import { TSpinner } from '../spinner'
@@ -16,7 +16,7 @@ export const defaultValues: Partial<IControlInput> = {
 	loading: false,
 }
 
-export default class TControlInput<TEvents extends TControlInputEventsMap>
+export default class TControlInput<TEvents extends TControlInputEvents>
 	extends TControlValue<TEvents>
 	implements IControlInput
 {

@@ -1,5 +1,5 @@
 import { TComponent, defaultValuesComponent, type IComponentOptions } from './../component'
-import type { IControl, TControlEventsMap } from './types'
+import type { IControl, TControlEvents } from './types'
 import type { TObjectProps } from '../object'
 import type { TComponentSize } from '../../common/types'
 import { TSize } from '../../common/size'
@@ -12,7 +12,7 @@ export const defaultValues: Partial<IControl> = {
 	size: 'normal',
 }
 
-export default class TControl<TEvents extends TControlEventsMap>
+export default class TControl<TEvents extends TControlEvents>
 	extends TComponent<TEvents>
 	implements IControl
 {

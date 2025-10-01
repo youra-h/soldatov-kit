@@ -1,4 +1,4 @@
-import type { IComponent, TComponentEventsMap } from '../component'
+import type { IComponent, TComponentEvents } from '../component'
 import type { TComponentSize } from '../../common/types'
 
 export type TIconSize = TComponentSize
@@ -12,4 +12,4 @@ export interface IIcon extends IComponent {
 	height?: number | string
 }
 
-export type TIconEventsMap = TComponentEventsMap & {}
+export type TIconEvents = TComponentEvents & {}

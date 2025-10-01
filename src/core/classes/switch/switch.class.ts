@@ -1,6 +1,6 @@
 import { type IComponentOptions } from '../component'
 import { TControlInput, defaultValuesControlInput } from '../control-input'
-import type { ISwitch, TSwitchEventsMap } from './types'
+import type { ISwitch, TSwitchEvents } from './types'
 import type { TObjectProps } from '../object'
 import { TIcon } from '../icon'
 
@@ -10,7 +10,7 @@ export const defaultValues: Partial<ISwitch> = {
 	variant: 'normal',
 }
 
-export default class TSwitch<TEvents extends TSwitchEventsMap>
+export default class TSwitch<TEvents extends TSwitchEvents>
 	extends TControlInput<TEvents>
 	implements ISwitch
 {

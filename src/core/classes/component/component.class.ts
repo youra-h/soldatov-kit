@@ -1,6 +1,6 @@
 import { type TObjectProps } from '../object'
 import { TEvented } from '../evented'
-import type { IComponent, TComponentEventsMap, IComponentOptions } from './types'
+import type { IComponent, TComponentEvents, IComponentOptions } from './types'
 
 export const defaultValues: Partial<IComponent> = {
 	id: '',
@@ -9,7 +9,7 @@ export const defaultValues: Partial<IComponent> = {
 	hidden: false,
 }
 
-export default class TComponent<TEvents extends TComponentEventsMap>
+export default class TComponent<TEvents extends TComponentEvents>
 	extends TEvented<TEvents>
 	implements IComponent
 {

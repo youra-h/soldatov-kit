@@ -1,4 +1,4 @@
-import type { IControlInput, TControlInputEventsMap } from '../control-input'
+import type { IControlInput, TControlInputEvents } from '../control-input'
 import type { TIcon } from '../icon'
 
 export interface ISwitch extends IControlInput {
@@ -7,6 +7,6 @@ export interface ISwitch extends IControlInput {
 	icon?: TIcon
 }
 
-export type TSwitchEventsMap = TControlInputEventsMap & {
+export type TSwitchEvents = TControlInputEvents & {
 	change: (value: boolean) => void
 }

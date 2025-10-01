@@ -1,5 +1,5 @@
 import { TComponent, defaultValuesComponent, type IComponentOptions } from '../component'
-import type { IIcon, TIconEventsMap, TIconSize } from './types'
+import type { IIcon, TIconEvents, TIconSize } from './types'
 import type { TObjectProps } from '../object'
 import { TSize } from '@/core/common/size'
 
@@ -9,7 +9,7 @@ export const defaultValues: Partial<IIcon> = {
 	tag: 'error',
 }
 
-export default class TIcon extends TComponent<TIconEventsMap> implements IIcon {
+export default class TIcon extends TComponent<TIconEvents> implements IIcon {
 	protected _width: string | number | undefined
 	protected _height: string | number | undefined
 	protected _sizeHelper: TSize<TIconSize>

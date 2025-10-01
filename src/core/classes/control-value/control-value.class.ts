@@ -1,6 +1,6 @@
 import { TComponent, type IComponentOptions } from './../component'
 import { TControl, defaultValuesControl } from '../control'
-import type { IControlValue, TControlValueEventsMap } from './types'
+import type { IControlValue, TControlValueEvents } from './types'
 import type { TObjectProps } from '../object'
 
 export const defaultValues: Partial<IControlValue> = {
@@ -8,7 +8,7 @@ export const defaultValues: Partial<IControlValue> = {
 	value: null,
 }
 
-export default class TControlValue<TEvents extends TControlValueEventsMap>
+export default class TControlValue<TEvents extends TControlValueEvents>
 	extends TControl<TEvents>
 	implements IControlValue
 {

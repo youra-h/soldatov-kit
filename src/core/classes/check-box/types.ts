@@ -1,4 +1,4 @@
-import type { IControlInput, TControlInputEventsMap } from '../control-input'
+import type { IControlInput, TControlInputEvents } from '../control-input'
 import type { TIcon } from '../icon'
 
 export interface ICheckBox extends IControlInput {
@@ -13,7 +13,7 @@ export interface ICheckBox extends IControlInput {
 	indeterminateIcon?: TIcon
 }
 
-export type TCheckBoxEventsMap = TControlInputEventsMap & {
+export type TCheckBoxEvents = TControlInputEvents & {
 	change: (value: boolean | null) => void
 	changeIndeterminate: (value: boolean) => void
 }

@@ -1,6 +1,6 @@
 import { TComponent, defaultValuesComponent, type IComponentOptions } from '../component'
 import type { TComponentSize, TComponentVariant } from '../../common/types'
-import type { ISpinner, TSpinnerEventsMap } from './types'
+import type { ISpinner, TSpinnerEvents } from './types'
 import type { TObjectProps } from '../object'
 import { TSize } from '@/core/common/size'
 import { TVariant } from '../../common/variant'
@@ -13,7 +13,7 @@ export const defaultValues: Partial<ISpinner> = {
 	borderWidth: 'auto',
 }
 
-export default class TSpinner extends TComponent<TSpinnerEventsMap> implements ISpinner {
+export default class TSpinner extends TComponent<TSpinnerEvents> implements ISpinner {
 	protected _sizeHelper: TSize<TComponentSize>
 	protected _variantHelper: TVariant
 	protected _borderWidth: number | 'auto'

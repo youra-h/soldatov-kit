@@ -1,4 +1,4 @@
-import type { IComponent, TComponentEventsMap } from './../component'
+import type { IComponent, TComponentEvents } from './../component'
 import type { TComponentSize } from '../../common/types'
 
 export interface IControl extends IComponent {
@@ -14,7 +14,7 @@ export interface IControl extends IComponent {
 	size?: TComponentSize
 }
 
-export type TControlEventsMap = TComponentEventsMap & {
+export type TControlEvents = TComponentEvents & {
 	// Событие изменения фокуса
 	focused: () => void
 	// Событие изменения текста

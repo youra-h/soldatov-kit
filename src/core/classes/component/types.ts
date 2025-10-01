@@ -16,7 +16,7 @@ export interface IComponentOptions<T> {
 	baseClass?: string
 }
 
-export type TComponentEventsMap = {
+export type TComponentEvents = {
 	created: (component: IComponent) => void
 	show: (component: IComponent) => void
 	hide: () => void

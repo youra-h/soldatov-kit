@@ -1,5 +1,5 @@
 import type { TComponentVariant } from '../../common/types'
-import type { IControlValue, TControlValueEventsMap } from '../control-value'
+import type { IControlValue, TControlValueEvents } from '../control-value'
 import { TSpinner } from '../spinner'
 
 export type TControlInputState = 'normal' | 'success' | 'warning' | 'error'
@@ -21,4 +21,4 @@ export interface IControlInput extends IControlValue {
 	spinner?: TSpinner
 }
 
-export type TControlInputEventsMap = TControlValueEventsMap & {}
+export type TControlInputEvents = TControlValueEvents & {}

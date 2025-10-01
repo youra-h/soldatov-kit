@@ -1,7 +1,7 @@
 import { TComponent, type IComponentOptions } from './../component'
 import { TControl, defaultValuesControl } from '../control'
 import type { TComponentVariant } from '../../common/types'
-import type { IButton, TButtonAppearance, TButtonEventsMap } from './types'
+import type { IButton, TButtonAppearance, TButtonEvents } from './types'
 import type { TObjectProps } from '../object'
 import { TIcon } from '../icon'
 import { TVariant } from '../../common/variant'
@@ -16,7 +16,7 @@ export const defaultValues: Partial<IButton> = {
 	loading: false,
 }
 
-export default class TButton extends TControl<TButtonEventsMap> implements IButton {
+export default class TButton extends TControl<TButtonEvents> implements IButton {
 	protected _variantHelper: TVariant
 	protected _appearance: TButtonAppearance
 	protected _icon?: TIcon

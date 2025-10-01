@@ -1,4 +1,4 @@
-import type { IControl, TControlEventsMap } from '../control'
+import type { IControl, TControlEvents } from '../control'
 import type { TComponentVariant } from '../../common/types'
 import { TIcon } from '../icon'
 import { TSpinner } from '../spinner'
@@ -18,4 +18,4 @@ export interface IButton extends IControl {
 	spinner?: TSpinner
 }
 
-export type TButtonEventsMap = TControlEventsMap & {}
+export type TButtonEvents = TControlEvents & {}
