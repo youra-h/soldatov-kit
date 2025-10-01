@@ -1,4 +1,5 @@
-import { TObject, type TObjectProps } from '../object'
+import { type TObjectProps } from '../object'
+import { TEvented } from '../evented'
 import type { IComponent, TComponentEventsMap, IComponentOptions } from './types'
 
 export const defaultValues: Partial<IComponent> = {
@@ -9,7 +10,7 @@ export const defaultValues: Partial<IComponent> = {
 }
 
 export default class TComponent<TEvents extends TComponentEventsMap>
-	extends TObject<TEvents>
+	extends TEvented<TEvents>
 	implements IComponent
 {
 	protected _id: string | number
@@ -157,6 +158,13 @@ export default class TComponent<TEvents extends TComponentEventsMap>
 	}
 
 	afterHide(): void {}
+
+	static create<T extends TComponent<any>>(
+		this: new (options: any) => T,
+		props: Partial<any> = {},
+	): T {
+		return new this({ props })
+	}
 
 	/**
 	 * Компонент скрыт и удален из Dom
