@@ -11,15 +11,15 @@ const icon = TIcon.create({ tag: useIconImport('/src/packages/icons/home.svg') }
 <template>
 	<div class="flex flex-col gap-4">
 		<div class="flex gap-4">
-			<!-- <Button variant="primary"> Button 1 </Button> -->
 			<Switch :icon />
 			<Switch disabled />
 			<Switch />
-
-			<Switch :value="true" size="sm" />
-			<Switch :value="true" size="lg" />
-			<Switch :value="true" size="xl" />
-			<Switch :value="true" size="2xl" />
+		</div>
+		<div class="flex gap-4">
+			<Switch :value="true" size="sm" loading />
+			<Switch :value="true" size="lg" loading />
+			<Switch :value="true" size="xl" loading />
+			<Switch :value="true" size="2xl" loading />
 		</div>
 		<div class="flex gap-4">
 			<Switch :value="true" variant="secondary" />
@@ -29,11 +29,25 @@ const icon = TIcon.create({ tag: useIconImport('/src/packages/icons/home.svg') }
 			<Switch :value="true" variant="warning" />
 		</div>
 		<div class="flex gap-4">
+			<Switch :value="true" variant="secondary" loading />
+			<Switch :value="true" variant="primary" loading />
+			<Switch :value="true" variant="success" loading />
+			<Switch :value="true" variant="danger" loading />
+			<Switch :value="true" variant="warning" loading />
+		</div>
+		<div class="flex gap-4">
 			<Switch :value="true" variant="secondary" disabled />
 			<Switch :value="true" variant="primary" disabled />
 			<Switch :value="true" variant="success" disabled />
 			<Switch :value="true" variant="danger" disabled />
 			<Switch :value="true" variant="warning" disabled />
+		</div>
+		<div class="flex gap-4">
+			<Switch variant="secondary" disabled />
+			<Switch variant="primary" disabled />
+			<Switch variant="success" disabled />
+			<Switch variant="danger" disabled />
+			<Switch variant="warning" disabled />
 		</div>
 	</div>
 </template>

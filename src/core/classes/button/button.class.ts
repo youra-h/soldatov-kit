@@ -102,7 +102,7 @@ export default class TButton extends TControl<TButtonEventsMap> implements IButt
 		if (!this._spinner) {
 			this._spinner = new TSpinner({
 				props: {
-					size: 'normal',
+					size: this.size,
 					variant: this._variantHelper.value,
 				},
 			})

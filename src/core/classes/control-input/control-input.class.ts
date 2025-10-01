@@ -36,8 +36,16 @@ export default class TControlInput<TEvents extends TControlInputEventsMap>
 
 		const { props = {} } = options
 
+		this._loading = props.loading ?? defaultValues.loading!
+		this._spinner = props.spinner ?? defaultValues.spinner!
+
 		this._variantHelper = new TVariant({
 			baseClass: this._baseClass,
+		})
+
+		this._variantHelper.on('change', (value) => {
+			// Если есть спиннер, синхронизируем его вариант с кнопкой
+			this.spinner!.variant = value
 		})
 
 		// Инициализируем значение отображения компонента
@@ -48,8 +56,11 @@ export default class TControlInput<TEvents extends TControlInputEventsMap>
 		this._invalid = props.invalid ?? defaultValues.invalid!
 		this._state = props.state ?? defaultValues.state!
 
-		this._loading = props.loading ?? defaultValues.loading!
-		this._spinner = props.spinner ?? defaultValues.spinner!
+		this._sizeHelper.on('change', (value) => {
+			debugger
+			// Если есть спиннер, синхронизируем его размер с кнопкой
+			this.spinner!.size = value
+		})
 	}
 
 	get variant(): TComponentVariant {
@@ -121,7 +132,7 @@ export default class TControlInput<TEvents extends TControlInputEventsMap>
 		if (!this._spinner) {
 			this._spinner = new TSpinner({
 				props: {
-					size: 'normal',
+					size: this.size,
 					variant: this._variantHelper.value,
 				},
 			})

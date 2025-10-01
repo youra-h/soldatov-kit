@@ -1,2 +1,51 @@
-@mixin switch-variant() {
+@mixin switch-size($this, $track-width, $track-height, $thumb-size, $translate-x) {
+	#{$this}__track {
+		@apply w-#{$track-width} h-#{$track-height};
+
+		&--thumb {
+			@apply w-#{$thumb-size} h-#{$thumb-size};
+			@apply top-0.5 left-0.5;
+		}
+	}
+
+	input:checked + #{$this}__track #{$this}__track--thumb {
+		@apply translate-x-#{$translate-x};
+	}
+}
+
+@mixin switch-variant(
+	$this,
+	$color: 'gray',
+	$bg-checked: 600,
+	$bg-hover: 200,
+	$bg-track: 100,
+	$bg-checked-custom: null,
+	$bg-hover-custom: null,
+	$bg-track-custom: null
+) {
+	input {
+		&:checked + #{$this}__track {
+			@if $bg-checked-custom != null {
+				@apply #{$bg-checked-custom};
+			} @else {
+				@apply #{'bg-' + $color + '-' + $bg-checked};
+			}
+		}
+
+		&:hover:not(:disabled):not(:checked) + #{$this}__track {
+			@if $bg-hover-custom != null {
+				@apply #{$bg-hover-custom};
+			} @else {
+				@apply #{'bg-' + $color + '-' + $bg-hover};
+			}
+		}
+	}
+
+	#{$this}__track {
+		@if $bg-track-custom != null {
+			@apply #{$bg-track-custom};
+		} @else {
+			@apply #{'bg-' + $color + '-' + $bg-track};
+		}
+	}
 }

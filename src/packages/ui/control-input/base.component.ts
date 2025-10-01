@@ -4,6 +4,7 @@ import {
 	defaultValuesControlInput,
 	type TComponentVariant,
 	type TControlInputState,
+	TSpinner,
 } from '../../../core'
 import {
 	BaseControlValue,
@@ -36,6 +37,14 @@ export const propsControlInput: TProps = {
 	state: {
 		type: String as PropType<IControlInput['state']>,
 		default: defaultValuesControlInput.state,
+	},
+	loading: {
+		type: Boolean as PropType<IControlInput['loading']>,
+		default: defaultValuesControlInput.loading,
+	},
+	spinner: {
+		type: Object as PropType<IControlInput['spinner']>,
+		default: defaultValuesControlInput.spinner,
 	},
 }
 
@@ -97,6 +106,24 @@ export function syncControlInput(options: ISyncComponentOptions<IControlInput>):
 		(value) => {
 			if (value !== instance.state) {
 				instance.state = value
+			}
+		},
+	)
+
+	watch<boolean>(
+		() => props.loading,
+		(value) => {
+			if (value !== instance.loading) {
+				instance.loading = value
+			}
+		},
+	)
+
+	watch<TSpinner | undefined>(
+		() => props.spinner,
+		(value) => {
+			if (value && value !== instance.spinner) {
+				instance.spinner = value
 			}
 		},
 	)
