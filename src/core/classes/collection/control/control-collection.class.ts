@@ -1,13 +1,16 @@
 import { TCollectionOwned } from '../collection-owned.class'
 import type { TConstructor } from '../../../common/types'
 import { AbstractControlItem } from './control-item.class'
+import { TControl } from '../../control'
+import { TCollectionItem } from '../collection-item.class'
 
 /**
- * Абстрактная коллекция для UI-контролов.
- * Предоставляет фабричный метод addControl и типобезопасные toArray/forEach.
+ * Универсальная коллекция для любых UI-контролов.
+ * Поддерживает типобезопасное создание и перебор элементов.
  */
-export abstract class AbstractControlCollection<
-	TItem extends AbstractControlItem,
+export class ControlCollection<
+	TItem extends AbstractControlItem<TControlType>,
+	TControlType extends TControl<any> = TControl<any>,
 > extends TCollectionOwned {
 	protected _itemCtor: TConstructor<TItem>
 
@@ -20,22 +23,32 @@ export abstract class AbstractControlCollection<
 	 * Создаёт и добавляет элемент в коллекцию.
 	 * @returns созданный элемент типа TItem
 	 */
-	addControl(): TItem {
+	addItem(): TItem {
 		return this.add() as TItem
+	}
+
+	/**
+	 * Создаёт элемент и задаёт свойства.
+	 * @param props Частичный набор свойств элемента
+	 */
+	addItemWith(props: Partial<TItem>): TItem {
+		const item = this.addItem()
+		item.assign(Object.assign(new this._itemCtor(), props))
+		return item
 	}
 
 	/**
 	 * Пробегает элементы с типом TItem.
 	 * @param fn функция-обработчик
 	 */
-	forEachControl(fn: (item: TItem, idx: number) => void): void {
+	forEachItem(fn: (item: TItem, idx: number) => void): void {
 		this.forEach(fn as any)
 	}
 
 	/**
 	 * Возвращает массив элементов с корректным типом.
 	 */
-	toArrayControls(): TItem[] {
-		return this.toArray<TItem>()
+	toArray<T extends TCollectionItem = TItem>(): T[] {
+		return super.toArray<T>()
 	}
 }
