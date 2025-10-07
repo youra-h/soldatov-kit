@@ -20,13 +20,20 @@ export default class TControlInput<TEvents extends TControlInputEvents>
 	extends TControlValue<TEvents>
 	implements IControlInput
 {
+	/** Вспомогательный класс для работы с вариантом */
 	protected _variantHelper: TVariant
 
+	/** Значение недоступно для редактирования */
 	protected _readonly: boolean
+	/** Значение обязательно для заполнения */
 	protected _required: boolean
+	/** Значение не валидно */
 	protected _invalid: boolean
+	/** Состояние контрола */
 	protected _state: TControlInputState
+	/** Показать индикатор загрузки */
 	protected _loading: boolean
+	/** Индикатор загрузки */
 	protected _spinner?: TSpinner
 
 	constructor(options: IComponentOptions<IControlInput>) {
@@ -57,7 +64,6 @@ export default class TControlInput<TEvents extends TControlInputEvents>
 		this._state = props.state ?? defaultValues.state!
 
 		this._sizeHelper.on('change', (value) => {
-			debugger
 			// Если есть спиннер, синхронизируем его размер с кнопкой
 			this.spinner!.size = value
 		})
@@ -159,10 +165,13 @@ export default class TControlInput<TEvents extends TControlInputEvents>
 	getProps(): TObjectProps {
 		return {
 			...super.getProps(),
+			variant: this.variant,
 			readonly: this.readonly,
 			required: this.required,
 			invalid: this.invalid,
 			state: this.state,
+			loading: this.loading,
+			spinner: this.spinner,
 		}
 	}
 }

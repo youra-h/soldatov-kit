@@ -5,7 +5,14 @@ export abstract class TObject {
 		return {}
 	}
 
-	setProps(props: Partial<TObjectProps>): void {
-		Object.assign(this, props)
+	assign(props: Partial<TObjectProps>): void {
+		const keys = Object.keys(this.getProps()) as (keyof TObjectProps)[]
+
+		for (const key of keys) {
+			if (props[key] !== undefined) {
+				// @ts-expect-error: динамическое присваивание через сеттеры
+				this[key] = props[key]
+			}
+		}
 	}
 }

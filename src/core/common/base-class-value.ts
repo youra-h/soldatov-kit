@@ -1,4 +1,4 @@
-import { TObject } from '../classes/object'
+import { TEvented } from '../classes/evented'
 
 export interface IBaseClassValueOptions<T extends string = string> {
 	baseClass?: string
@@ -13,7 +13,7 @@ export type TBaseClassValueEvents<T extends string = string> = {
 export abstract class TBaseClassValue<
 	T extends string = string,
 	E extends TBaseClassValueEvents<T> = TBaseClassValueEvents<T>,
-> extends TObject<E> {
+> extends TEvented<E> {
 	protected _baseClass: string
 	protected _value: T
 	protected _exclude: T[]
@@ -35,6 +35,14 @@ export abstract class TBaseClassValue<
 			this._value = newValue
 			this.emit('change', newValue, oldValue)
 		}
+	}
+
+	get baseClass(): string {
+		return this._baseClass
+	}
+
+	set baseClass(value: string) {
+		this._baseClass = value
 	}
 
 	abstract getClass(): string[]

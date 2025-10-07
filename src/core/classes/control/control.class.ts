@@ -12,14 +12,16 @@ export const defaultValues: Partial<IControl> = {
 	size: 'normal',
 }
 
-export default class TControl<TEvents extends TControlEvents>
-	extends TComponent<TEvents>
-	implements IControl
-{
+export default class TControl<TEvents extends TControlEvents> extends TComponent<TEvents> implements IControl {
+	/** Имя контрола */
 	protected _name: string
+	/** Текстовое представление контрола */
 	protected _text: string
+	/** Заблокирован ли контрол */
 	protected _disabled: boolean
+	/** В фокусе ли контрол */
 	protected _focused: boolean
+	/** Размер контрола */
 	protected _sizeHelper: TSize<TComponentSize>
 
 	constructor(options: IComponentOptions<IControl>) {

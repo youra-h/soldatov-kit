@@ -12,6 +12,7 @@ export default class TControlValue<TEvents extends TControlValueEvents>
 	extends TControl<TEvents>
 	implements IControlValue
 {
+	/** Значение контрола */
 	protected _value?: any
 
 	constructor(options: IComponentOptions<IControlValue>) {
