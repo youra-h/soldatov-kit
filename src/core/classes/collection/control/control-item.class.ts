@@ -1,20 +1,21 @@
 import { TCollectionItem } from './../collection-item.class'
-import { type IControl, TControl, defaultValuesControl } from './../../control'
-import { defaultValuesComponent } from '../../component'
+import { type IControl, TControl } from './../../control'
 import type { TComponentSize } from '../../../common/types'
-import { TSize } from '../../../common/size'
 
 /**
  * Абстрактный элемент коллекции для UI-контролов.
  * Наследники должны расширять assign и могут добавлять свои поля.
  */
-export abstract class AbstractControlItem extends TCollectionItem implements IControl {
-	private _control: TControl<any>
+export abstract class AbstractControlItem<TControlType extends TControl<any> = TControl<any>>
+	extends TCollectionItem
+	implements IControl
+{
+	protected _control: TControlType
 
-	constructor() {
+	constructor(control?: TControlType) {
 		super()
 
-		this._control = new TControl<any>({ props: defaultValuesControl })
+		this._control = control ?? (TControl.create() as TControlType)
 	}
 
 	/**
@@ -22,99 +23,76 @@ export abstract class AbstractControlItem extends TCollectionItem implements ICo
 	 * Наследники должны вызывать super.assign(source) и копировать свои поля.
 	 * @param source Источник данных
 	 */
-	assign(source: AbstractControlItem): void {
+	assign(source: AbstractControlItem<TControlType>): void {
 		super.assign(source)
 
 		if (!source) return
 
-		this._control
+		this._control.assign(source)
 	}
 
 	get tag(): string | Object {
-		return this._tag
+		return this._control.tag
 	}
+
 	set tag(value: string | Object) {
-		if (this._tag !== value) {
-			this._tag = value
-			this.changed()
-		}
+		this._control.tag = value
 	}
 
 	get visible(): boolean {
-		return this._visible
+		return this._control.visible
 	}
 
 	set visible(value: boolean) {
-		if (this._visible !== value) {
-			this._visible = value
-			this.changed()
-		}
+		this._control.visible = value
 	}
 
 	get hidden(): boolean {
-		return this._hidden
+		return this._control.hidden
 	}
 
 	set hidden(value: boolean) {
-		if (this._hidden !== value) {
-			this._hidden = value
-			this.changed()
-		}
+		this._control.hidden = value
 	}
 
 	get name(): string {
-		return this._name
+		return this._control.name
 	}
 
 	set name(value: string) {
-		if (this._name !== value) {
-			this._name = value
-			this.changed()
-		}
+		this._control.name = value
 	}
 
 	get text(): string {
-		return this._text
+		return this._control.text
 	}
 
 	set text(value: string) {
-		if (this._text !== value) {
-			this._text = value
-			this.changed()
-		}
+		this._control.text = value
 	}
 
 	get disabled(): boolean {
-		return this._disabled
+		return this._control.disabled
 	}
 
 	set disabled(value: boolean) {
-		if (this._disabled !== value) {
-			this._disabled = value
-			this.changed()
-		}
+		this._control.disabled = value
 	}
 
 	get focused(): boolean {
-		return this._focused
+		return this._control.focused
 	}
 
 	set focused(value: boolean) {
-		if (this._focused !== value) {
-			this._focused = value
-			this.changed()
-		}
+		this._control.focused = value
 	}
 
 	get size(): TComponentSize {
-		return this._sizeHelper.value
+		return this._control.size
 	}
 
 	set size(value: TComponentSize) {
-		if (this._sizeHelper.value !== value) {
-			this._sizeHelper.value = value
-			this.changed()
-		}
+		this._control.size = value
 	}
 
 	/**
