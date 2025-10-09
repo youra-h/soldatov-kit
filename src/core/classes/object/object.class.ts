@@ -1,6 +1,6 @@
-import type { TObjectProps } from './types'
+import type { TObjectProps, IObject } from './types'
 
-export abstract class TObject {
+export abstract class TObject implements IObject {
 	getProps(): TObjectProps {
 		return {}
 	}
