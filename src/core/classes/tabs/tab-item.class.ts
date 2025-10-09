@@ -5,7 +5,7 @@ import type { ISelectable } from '../collection/selectable/types'
  * Элемент вкладки.
  * Наследует поведение контрола через AbstractControlItem и добавляет флаг selected.
  */
-export class TabItem extends AbstractControlItem implements ISelectable {
+export class TTabItem extends AbstractControlItem implements ISelectable {
 	private _selected = false
 
 	constructor(control?: any) {
@@ -27,10 +27,10 @@ export class TabItem extends AbstractControlItem implements ISelectable {
 	}
 
 	/**
-	 * Копирует данные из другого TabItem.
+	 * Копирует данные из другого TTabItem.
 	 * @param source Источник данных
 	 */
-	assign(source: TabItem): void {
+	assign(source: TTabItem): void {
 		super.assign(source)
 		if (!source) return
 		this._selected = !!source.selected

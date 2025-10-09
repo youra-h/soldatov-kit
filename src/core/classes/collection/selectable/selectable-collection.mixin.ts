@@ -3,6 +3,8 @@ import type { TCollectionOwned } from '../collection-owned.class'
 import type { TCollectionItem } from '../collection-item.class'
 import type { ISelectableCollection, TIndexOrItem } from './types'
 
+type BaseCtorArgs = [owner?: any, itemClass?: any, opts?: { multi?: boolean }]
+
 /**
  * Mixin, который добавляет в коллекцию поведение выбора элементов.
  * Base должен быть классом коллекции, реализующим базовые методы:
@@ -20,10 +22,15 @@ export function SelectableCollectionMixin<
 		protected _selectedItems: TItem[] = []
 		protected _selected: boolean = false // для совместимости с ISelectable
 
-		constructor(...args: any[]) {
-			// args: (owner?, itemClass?) — передаём дальше
-			super(...args)
-			const opts = (args && args[2]) || {}
+		constructor(...args: BaseCtorArgs) {
+			// Вызов базового конструктора с ожидаемыми аргументами: owner, itemClass
+			const owner = args[0]
+			const itemClass = args[1]
+
+			super(owner, itemClass)
+
+			// opts может идти третьим аргументом
+			const opts = args[2] || {}
 			this._multiSelect = !!opts.multi
 		}
 
