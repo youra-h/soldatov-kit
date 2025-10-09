@@ -2,6 +2,11 @@ import type { TCollectionItem } from '../collection-item.class'
 
 export type TIndexOrItem<T> = T | number
 
+export interface ISelectable {
+	// Выбран ли элемент
+	selected: boolean
+}
+
 export interface ISelectableCollection<TItem extends TCollectionItem> {
 	/**
 	 * Выделение нескольких элементов одновременно.

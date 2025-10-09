@@ -12,12 +12,13 @@ export function SelectableCollectionMixin<
 	TBase extends TConstructor<TCollectionOwned>,
 	TItem extends TCollectionItem = TCollectionItem,
 >(Base: TBase) {
-	return class SelectableCollection
+	return class TSelectableCollection
 		extends (Base as any)
 		implements ISelectableCollection<TItem>
 	{
 		protected _multiSelect: boolean
 		protected _selectedItems: TItem[] = []
+		protected _selected: boolean = false // для совместимости с ISelectable
 
 		constructor(...args: any[]) {
 			// args: (owner?, itemClass?) — передаём дальше

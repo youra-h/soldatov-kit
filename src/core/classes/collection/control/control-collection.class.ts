@@ -8,7 +8,7 @@ import { TCollectionItem } from '../collection-item.class'
  * Универсальная коллекция для любых UI-контролов.
  * Поддерживает типобезопасное создание и перебор элементов.
  */
-export class ControlCollection<
+export class TControlCollection<
 	TItem extends AbstractControlItem<TControlType>,
 	TControlType extends TControl<any> = TControl<any>,
 > extends TCollectionOwned {

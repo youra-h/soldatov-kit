@@ -1,6 +1,7 @@
 import { TCollectionItem } from './../collection-item.class'
 import { type IControl, TControl } from './../../control'
 import type { TComponentSize } from '../../../common/types'
+import type { TObjectProps } from '../../object'
 
 /**
  * Абстрактный элемент коллекции для UI-контролов.
@@ -100,5 +101,33 @@ export abstract class AbstractControlItem<TControlType extends TControl<any> = T
 	 */
 	changed(): void {
 		super.changed()
+	}
+
+	getProps(): TObjectProps {
+		return this._control.getProps()
+	}
+
+	show(): void {
+		this._control.show()
+	}
+
+	hide(): void {
+		this._control.hide()
+	}
+
+	beforeShow(): boolean {
+		return this._control.beforeShow()
+	}
+
+	beforeHide(): boolean {
+		return this._control.beforeHide()
+	}
+
+	afterShow(): void {
+		this._control.afterShow()
+	}
+
+	afterHide(): void {
+		this._control.afterHide()
 	}
 }

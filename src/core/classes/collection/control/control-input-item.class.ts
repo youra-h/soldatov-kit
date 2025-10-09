@@ -2,6 +2,7 @@ import { AbstractControlValueItem } from './control-value-item.class'
 import { type IControlInput, type TControlInputState, TControlInput } from '../../control-input'
 import type { TComponentVariant } from '../../../common/types'
 import { TSpinner } from '../../spinner'
+import type { TObjectProps } from '../../object'
 
 /**
  * Абстрактный элемент коллекции для UI-контролов.
@@ -15,6 +16,29 @@ export abstract class AbstractControlInputItem<
 {
 	constructor(control?: TControlType) {
 		super(control ?? (TControlInput.create() as TControlType))
+	}
+	is?: Object | undefined
+	show(): void {
+		throw new Error('Method not implemented.')
+	}
+	beforeShow(): boolean {
+		throw new Error('Method not implemented.')
+	}
+	afterShow(): void {
+		throw new Error('Method not implemented.')
+	}
+	hide(): void {
+		throw new Error('Method not implemented.')
+	}
+	beforeHide(): boolean {
+		throw new Error('Method not implemented.')
+	}
+	afterHide(): void {
+		throw new Error('Method not implemented.')
+	}
+	classes?: string[] | undefined
+	getProps(): TObjectProps {
+		throw new Error('Method not implemented.')
 	}
 
 	get variant(): TComponentVariant {
