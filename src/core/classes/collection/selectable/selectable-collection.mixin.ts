@@ -47,6 +47,31 @@ export function SelectableCollectionMixin<
 			this._multiSelect = !!opts.multi
 		}
 
+		get multiSelect(): boolean {
+			return this._multiSelect
+		}
+
+		set multiSelect(value: boolean) {
+			if (this._multiSelect === !!value) return
+
+			this._multiSelect = !!value
+
+			if (!value && this._selectedItems.length > 1) {
+				// Переход в single-select — оставляем выбранным только первый
+				const first = this._selectedItems[0]
+
+				for (const it of this._selectedItems.slice(1)) {
+					;(it as any).selected = false
+				}
+
+				this._selectedItems.length = 0
+
+				if (first) {
+					this._selectedItems.push(first)
+				}
+			}
+		}
+
 		/**
 		 * Возвращает массив выбранных элементов.
 		 * @returns массив выбранных элементов
