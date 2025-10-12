@@ -8,5 +8,7 @@
         "paths": {
             "@/*": ["./src/*"]
         }
-    }
+    },
+    "sourceMap": true, // Add this line to enable source maps
+    "inlineSources": true // Add this line to include original source code in the source maps
 }

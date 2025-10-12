@@ -4,7 +4,7 @@ import { createSelectableControlCollection } from '../collection'
 /**
  * Коллекция вкладок. single-select по умолчанию.
  */
-export class TabItems extends createSelectableControlCollection<TTabItem>() {
+export class Tabs extends createSelectableControlCollection<TTabItem>() {
 	constructor(owner?: any) {
 		// передаём opts { multi: false } как третий аргумент
 		super(owner, TTabItem, { multi: false })

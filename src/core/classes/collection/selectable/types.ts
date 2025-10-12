@@ -22,7 +22,7 @@ export interface ISelectableCollection<TItem extends TCollectionItem> {
 	/** Снять выделение со всех элементов */
 	clearSelection(): void
 	/** Получить массив выделенных элементов */
-	getSelected(): TItem[]
+	getSelected(): TItem[] | TItem | undefined
 	/** Проверить, выделен ли элемент */
 	isSelected(itemOrIndex: TIndexOrItem<TItem>): boolean
 	/** Массив выделенных элементов */

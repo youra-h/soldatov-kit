@@ -12,6 +12,8 @@
     "preview": "vite preview",
     "test:unit": "vitest",
     "test:e2e": "playwright test",
+    "test:core": "vitest --config vitest.config.core.ts",
+    "test:ui": "vitest --config vitest.config.ui.ts",
     "build-only": "vite build",
     "type-check": "vue-tsc --build",
     "lint": "eslint . --fix",
