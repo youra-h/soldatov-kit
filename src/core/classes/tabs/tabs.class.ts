@@ -1,35 +1,37 @@
 import { TTabItem } from './tab-item.class'
-import { SelectableControlCollection } from '../collection'
+import { createSelectableControlCollection } from '../collection'
 
 /**
  * Коллекция вкладок. single-select по умолчанию.
  */
-export class TabItems extends SelectableControlCollection<TTabItem> {
+export class TabItems extends createSelectableControlCollection<TTabItem>() {
 	constructor(owner?: any) {
 		// передаём opts { multi: false } как третий аргумент
 		super(owner, TTabItem, { multi: false })
 	}
 
 	/**
-	 * Удобный метод: выбирает вкладку по индексу.
+	 * Выбирает вкладку по индексу.
+	 * @param index
 	 */
 	selectByIndex(index: number): void {
 		this.select(index)
 	}
 
 	/**
-	 * Удобный метод: выбирает вкладку по имени (name).
+	 * Выбирает вкладку по имени.
+	 * @param name
+	 * @return true если вкладка с таким именем найдена и выбрана, иначе false.
 	 */
-	selectByName(name: string): void {
+	selectByName(name: string): boolean {
 		const arr = this.toArray() as TTabItem[]
-		const found = arr.find((it) => it.name === name)
-		if (found) this.select(found)
-	}
 
-	/**
-	 * Возвращает первую выбранную вкладку (или undefined).
-	 */
-	getSelected(): TTabItem | undefined {
-		return this.selectedItems[0]
+		const found = arr.find((it) => it.name === name)
+
+		if (!found) return false
+
+		this.select(found)
+
+		return true
 	}
 }

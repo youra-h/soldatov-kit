@@ -1,4 +1,3 @@
-// collection-item.class.ts
 import { TCollection } from './collections.class'
 
 /**
