@@ -22,7 +22,9 @@ export class TTabItem extends AbstractControlItem implements ISelectable {
 
 	set selected(value: boolean) {
 		if (this._selected === value) return
+
 		this._selected = value
+
 		this.changed()
 	}
 
@@ -32,7 +34,9 @@ export class TTabItem extends AbstractControlItem implements ISelectable {
 	 */
 	assign(source: TTabItem): void {
 		super.assign(source)
+
 		if (!source) return
+
 		this._selected = !!source.selected
 	}
 }
