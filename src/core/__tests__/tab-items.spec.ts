@@ -25,8 +25,6 @@ describe('Tabs (Tabs / TTabItem)', () => {
 
 		const arr = tabs.toArray()
 
-		console.log('qwe', arr)
-
 		// проверяем, что массив имеет правильную длину
 		expect(arr.length).toBe(3)
 		// проверяем, что массив содержит добавленные элементы
