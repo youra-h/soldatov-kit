@@ -9,7 +9,7 @@ export class TCollectionItem implements ICollectionItem {
 	 * Ссылка на коллекцию-владелец.
 	 * @readonly
 	 */
-	collection: TCollection | null = null
+	private _collection: TCollection | null = null
 
 	/**
 	 * Уникальный идентификатор элемента внутри коллекции.
@@ -20,8 +20,12 @@ export class TCollectionItem implements ICollectionItem {
 
 	constructor(collection?: TCollection) {
 		if (collection) {
-			this.collection = collection
+			this._collection = collection
 		}
+	}
+
+	get collection(): TCollection | null {
+		return this._collection
 	}
 
 	/**
@@ -38,8 +42,8 @@ export class TCollectionItem implements ICollectionItem {
 	 * @param value Новый индекс элемента.
 	 */
 	set index(value: number) {
-		if (this.collection) {
-			this.collection.setItemIndex(this, value)
+		if (this._collection) {
+			this._collection.setItemIndex(this, value)
 		} else {
 			this._index = value
 		}
@@ -71,8 +75,8 @@ export class TCollectionItem implements ICollectionItem {
 	 * Коллекция обработает это событие и при необходимости эмитит общую нотификацию.
 	 */
 	changed(): void {
-		if (this.collection) {
-			this.collection.itemChanged(this)
+		if (this._collection) {
+			this._collection.itemChanged(this)
 		}
 	}
 }

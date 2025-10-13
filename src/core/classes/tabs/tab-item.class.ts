@@ -8,10 +8,6 @@ import type { ISelectable } from '../collection/selectable/types'
 export class TTabItem extends AbstractControlItem implements ISelectable {
 	private _selected = false
 
-	constructor(control?: any) {
-		super(control)
-	}
-
 	/**
 	 * Флаг выбранности вкладки.
 	 * При изменении вызывает changed() для нотификации коллекции/владельца.
