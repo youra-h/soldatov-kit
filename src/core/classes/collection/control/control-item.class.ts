@@ -1,3 +1,4 @@
+import { TCollection } from './../collection.class'
 import { TCollectionItem } from './../collection-item.class'
 import { type IControl, TControl } from './../../control'
 import type { TComponentSize } from '../../../common/types'
@@ -13,10 +14,10 @@ export abstract class AbstractControlItem<TControlType extends TControl<any> = T
 {
 	protected _control: TControlType
 
-	constructor(control?: TControlType) {
-		super()
+	constructor(collection?: TCollection) {
+		super(collection)
 
-		this._control = control ?? (TControl.create() as TControlType)
+		this._control = TControl.create() as TControlType
 	}
 
 	/**

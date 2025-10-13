@@ -1,5 +1,5 @@
 // collection-owned.class.ts
-import { TCollection } from './collections.class'
+import { TCollection } from './collection.class'
 import type { TConstructor } from '../../common/types'
 import { TCollectionItem } from './collection-item.class'
 

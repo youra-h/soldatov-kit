@@ -1,4 +1,4 @@
-import { TCollection } from './collections.class'
+import { TCollection } from './collection.class'
 import type { ICollectionItem } from './types'
 
 /**
