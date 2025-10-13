@@ -1,9 +1,10 @@
 import { TCollection } from './collections.class'
+import type { ICollectionItem } from './types'
 
 /**
  * Элемент коллекции.
  */
-export class TCollectionItem {
+export class TCollectionItem implements ICollectionItem {
 	/**
 	 * Ссылка на коллекцию-владелец.
 	 * @readonly
@@ -13,7 +14,7 @@ export class TCollectionItem {
 	/**
 	 * Уникальный идентификатор элемента внутри коллекции.
 	 */
-	id: number = 0
+	id?: number
 
 	private _index: number = -1
 

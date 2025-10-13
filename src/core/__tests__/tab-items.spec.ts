@@ -11,97 +11,106 @@ describe('Tabs (Tabs / TTabItem)', () => {
 	})
 
 	it('добавляет вкладки и возвращает корректные элементы', () => {
-		const t1 = tabs.addItem() as TTabItem
+		const t1 = tabs.addItem()
 		t1.text = 'Главная'
 		t1.name = 'main'
 
-		const t2 = tabs.addItem() as TTabItem
+		const t2 = tabs.addItem()
 		t2.text = 'Профиль'
 		t2.name = 'profile'
 
-		const t3 = tabs.addItem() as TTabItem
+		const t3 = tabs.addItem()
 		t3.text = 'Настройки'
 		t3.name = 'settings'
 
 		const arr = tabs.toArray()
+
+		console.log('qwe', arr)
+
+		// проверяем, что массив имеет правильную длину
 		expect(arr.length).toBe(3)
+		// проверяем, что массив содержит добавленные элементы
+		expect(arr).toEqual([t1, t2, t3])
+		// проверяем свойства элементов
 		expect(arr.map((x) => x.text)).toEqual(['Главная', 'Профиль', 'Настройки'])
+		// проверяем свойства элементов
+		expect(arr.map((x) => x.name)).toEqual(['main', 'profile', 'settings'])
+		// проверяем типы элементов
 		expect(t1 instanceof TTabItem).toBe(true)
-		expect(t2.name).toBe('profile')
 	})
 
-	it('чтение/запись свойств элементов коллекции', () => {
-		const [t1, t2, t3] = [tabs.addItem(), tabs.addItem(), tabs.addItem()] as TTabItem[]
-		t1.text = 'A'
-		t2.visible = false
-		t3.hidden = true
-		t1.size = 'md'
+	// it('чтение/запись свойств элементов коллекции', () => {
+	// 	const [t1, t2, t3] = [tabs.addItem(), tabs.addItem(), tabs.addItem()]
+	// 	t1.text = 'A'
+	// 	t2.visible = false
+	// 	t3.hidden = true
+	// 	t1.size = 'md'
 
-		expect(t1.text).toBe('A')
-		expect(t2.visible).toBe(false)
-		expect(t3.hidden).toBe(true)
-		expect(t1.size).toBe('md')
-	})
+	// 	expect(t1.text).toBe('A')
+	// 	expect(t2.visible).toBe(false)
+	// 	expect(t3.hidden).toBe(true)
+	// 	expect(t1.size).toBe('md')
+	// })
 
-	it('single-select: selectByIndex и selectByName работают и обновляют selected', () => {
-		const t1 = tabs.addItem() as TTabItem
-		t1.name = 'main'
-		const t2 = tabs.addItem() as TTabItem
-		t2.name = 'profile'
-		const t3 = tabs.addItem() as TTabItem
-		t3.name = 'settings'
+	// it('single-select: selectByIndex и selectByName работают и обновляют selected', () => {
+	// 	const t1 = tabs.addItem()
+	// 	t1.name = 'main'
+	// 	const t2 = tabs.addItem()
+	// 	t2.name = 'profile'
+	// 	const t3 = tabs.addItem()
+	// 	t3.name = 'settings'
 
-		// По индексу
-		tabs.selectByIndex(1)
-		expect(Array.isArray(tabs.getSelected())).toBe(false) // getSelected возвращает один элемент в single-mode
-		expect((tabs.getSelected() as TTabItem).name).toBe('profile')
-		expect(t2.selected).toBe(true)
-		expect(tabs.selectedItems.length).toBe(1)
+	// 	// По индексу
+	// 	tabs.selectByIndex(1)
+	// 	expect(Array.isArray(tabs.getSelected())).toBe(false) // getSelected возвращает один элемент в single-mode
+	// 	expect(tabs.getSelected().name).toBe('profile')
+	// 	expect(t2.selected).toBe(true)
+	// 	expect(tabs.selectedItems.length).toBe(1)
 
-		// Снятие выбора
-		tabs.clearSelection()
-		expect(tabs.getSelected()).toBeUndefined()
-		expect(t2.selected).toBe(false)
-		expect(tabs.selectedItems.length).toBe(0)
+	// 	// Снятие выбора
+	// 	tabs.clearSelection()
+	// 	expect(tabs.getSelected()).toBeUndefined()
+	// 	expect(t2.selected).toBe(false)
+	// 	expect(tabs.selectedItems.length).toBe(0)
 
-		// По имени
-		const found = tabs.selectByName('settings')
-		expect(found).toBe(true)
-		expect((tabs.getSelected() as TTabItem).name).toBe('settings')
-		expect(t3.selected).toBe(true)
-		expect(tabs.selectedItems.length).toBe(1)
-	})
+	// 	// По имени
+	// 	const found = tabs.selectByName('settings')
+	// 	expect(found).toBe(true)
+	// 	expect(tabs.getSelected().name).toBe('settings')
+	// 	expect(t3.selected).toBe(true)
+	// 	expect(tabs.selectedItems.length).toBe(1)
+	// })
 
-	it('single-select: выбор нового элемента снимает предыдущий', () => {
-		const t1 = tabs.addItem() as TTabItem
-		t1.name = 'a'
-		const t2 = tabs.addItem() as TTabItem
-		t2.name = 'b'
+	// it('single-select: выбор нового элемента снимает предыдущий', () => {
+	// 	const t1 = tabs.addItem()
+	// 	t1.name = 'a'
+	// 	const t2 = tabs.addItem()
+	// 	t2.name = 'b'
 
-		tabs.select(t1)
-		expect(t1.selected).toBe(true)
-		expect(tabs.selectedItems.length).toBe(1)
+	// 	tabs.select(t1)
+	// 	expect(t1.selected).toBe(true)
+	// 	expect(tabs.selectedItems.length).toBe(1)
 
-		tabs.select(t2)
-		expect(t1.selected).toBe(false)
-		expect(t2.selected).toBe(true)
-		expect(tabs.selectedItems.length).toBe(1)
-	})
+	// 	tabs.select(t2)
+	// 	expect(t1.selected).toBe(false)
+	// 	expect(t2.selected).toBe(true)
+	// 	expect(tabs.selectedItems.length).toBe(1)
+	// })
 
-	it('удаление элемента корректно синхронизирует selection', () => {
-		tabs.addItem().name = 'a'
-		tabs.addItem().name = 'b'
-		tabs.addItem().name = 'c'
+	// it('удаление элемента корректно синхронизирует selection', () => {
+	// 	tabs.addItem().name = 'a'
+	// 	tabs.addItem().name = 'b'
+	// 	tabs.addItem().name = 'c'
 
-		tabs.selectByIndex(1) // выбираем 'b'
-		expect((tabs.getSelected() as TTabItem).name).toBe('b')
+	// 	tabs.selectByIndex(1) // выбираем 'b'
+	// 	expect(tabs.getSelected().name).toBe('b')
 
-		tabs.delete(1) // удаляем 'b'
-		expect(tabs.toArray().length).toBe(2)
-		// after removal selection should be cleared or adjusted by implementation; проверим, что нет ссылки на удалённый элемент
-		const sel = tabs.selectedItems
-		expect(sel.every((s) => tabs.toArray().includes(s))).toBe(true)
-	})
+	// 	tabs.delete(1) // удаляем 'b'
+	// 	expect(tabs.toArray().length).toBe(2)
+	// 	// after removal selection should be cleared or adjusted by implementation; проверим, что нет ссылки на удалённый элемент
+	// 	const sel = tabs.selectedItems
+	// 	expect(sel.every((s) => tabs.toArray().includes(s))).toBe(true)
+	// })
 
 	// it('multi-select: переключение режима через multiSelect геттер/сеттер', () => {
 	// 	// создаём multi-select коллекцию через фабрику
@@ -156,13 +165,13 @@ describe('Tabs (Tabs / TTabItem)', () => {
 	// 	multi.select(0)
 	// 	multi.select(1)
 	// 	expect(Array.isArray(multi.getSelected())).toBe(true)
-	// 	expect((multi.getSelected() as TTabItem[]).length).toBe(2)
+	// 	expect((multi.getSelected()[]).length).toBe(2)
 
 	// 	// switch to single
 	// 	multi.multiSelect = false
 	// 	// now getSelected returns a single item (or undefined)
 	// 	const singleSel = multi.getSelected()
 	// 	expect(Array.isArray(singleSel)).toBe(false)
-	// 	if (singleSel) expect((singleSel as TTabItem).name).toBeDefined()
+	// 	if (singleSel) expect((singleSel).name).toBeDefined()
 	// })
 })

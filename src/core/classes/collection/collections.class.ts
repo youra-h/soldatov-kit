@@ -63,7 +63,7 @@ export class TCollection extends TEvented<TCollectionEvents> {
 		item.id = item.id ?? this._nextId++
 
 		this._items.push(item)
-		item._updateIndex(this._items.length - 1)
+		// item._updateIndex(this._items.length - 1)
 
 		this.reindex()
 		this.notifyChange(item)
