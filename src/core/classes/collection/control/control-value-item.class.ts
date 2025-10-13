@@ -11,10 +11,6 @@ export abstract class AbstractControlValueItem<
 	extends AbstractControlItem<TControlType>
 	implements IControlValue
 {
-	constructor(control?: TControlType) {
-		super(control ?? (TControlValue.create() as TControlType))
-	}
-
 	get value(): any {
 		return this._control.value
 	}

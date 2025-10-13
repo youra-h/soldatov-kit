@@ -13,10 +13,6 @@ export abstract class AbstractControlInputItem<
 	extends AbstractControlValueItem<TControlType>
 	implements IControlInput
 {
-	constructor(control?: TControlType) {
-		super(control ?? (TControlInput.create() as TControlType))
-	}
-
 	get variant(): TComponentVariant {
 		return this._control.variant
 	}
