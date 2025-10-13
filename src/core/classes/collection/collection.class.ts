@@ -98,7 +98,7 @@ export class TCollection extends TEvented<TCollectionEvents> {
 		if (index < 0 || index >= this._items.length) return
 
 		const removed = this._items.splice(index, 1)[0]
-		removed.collection = null
+		removed.free()
 
 		this.reindex()
 		this.notifyChange(removed)
@@ -108,7 +108,7 @@ export class TCollection extends TEvented<TCollectionEvents> {
 	 * Полностью очищает коллекцию. Все элементы будут отсоединены.
 	 */
 	clear(): void {
-		this._items.forEach((it) => (it.collection = null))
+		this._items.forEach((it) => it.free())
 		this._items = []
 
 		this.reindex()

@@ -12,9 +12,9 @@ export abstract class AbstractControlValueItem<
 	implements IControlValue
 {
 	get value(): any {
-		return this._control.value
+		return this._control!.value
 	}
 	set value(value: any) {
-		this._control.value = value
+		this._control!.value = value
 	}
 }

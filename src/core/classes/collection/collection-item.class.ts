@@ -79,4 +79,12 @@ export class TCollectionItem implements ICollectionItem {
 			this._collection.itemChanged(this)
 		}
 	}
+
+	/**
+	 * Освобождает ресурсы, отписывается от событий и т.д.
+	 * Вызывается перед удалением элемента из коллекции или при явном освобождении.
+	 */
+	free(): void {
+		this._collection = null
+	}
 }

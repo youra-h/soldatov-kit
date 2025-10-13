@@ -14,58 +14,58 @@ export abstract class AbstractControlInputItem<
 	implements IControlInput
 {
 	get variant(): TComponentVariant {
-		return this._control.variant
+		return this._control!.variant
 	}
 
 	set variant(value: TComponentVariant) {
-		this._control.variant = value
+		this._control!.variant = value
 	}
 
 	get readonly(): boolean {
-		return this._control.readonly
+		return this._control!.readonly
 	}
 
 	set readonly(value: boolean) {
-		this._control.readonly = value
+		this._control!.readonly = value
 	}
 
 	get required(): boolean {
-		return this._control.required
+		return this._control!.required
 	}
 
 	set required(value: boolean) {
-		this._control.required = value
+		this._control!.required = value
 	}
 
 	get invalid(): boolean {
-		return this._control.invalid
+		return this._control!.invalid
 	}
 
 	set invalid(value: boolean) {
-		this._control.invalid = value
+		this._control!.invalid = value
 	}
 
 	get state(): TControlInputState {
-		return this._control.state
+		return this._control!.state
 	}
 
 	set state(value: TControlInputState) {
-		this._control.state = value
+		this._control!.state = value
 	}
 
 	get loading(): boolean {
-		return this._control.loading
+		return this._control!.loading
 	}
 
 	set loading(value: boolean) {
-		this._control.loading = value
+		this._control!.loading = value
 	}
 
 	get spinner(): TSpinner | undefined {
-		return this._control.spinner
+		return this._control!.spinner
 	}
 
 	set spinner(value: TSpinner | undefined) {
-		this._control.spinner = value
+		this._control!.spinner = value
 	}
 }

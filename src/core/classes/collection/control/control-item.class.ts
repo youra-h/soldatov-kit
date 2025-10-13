@@ -12,7 +12,7 @@ export abstract class AbstractControlItem<TControlType extends TControl<any> = T
 	extends TCollectionItem
 	implements IControl
 {
-	protected _control: TControlType
+	protected _control: TControlType | null
 
 	constructor(collection?: TCollection) {
 		super(collection)
@@ -30,71 +30,77 @@ export abstract class AbstractControlItem<TControlType extends TControl<any> = T
 
 		if (!source) return
 
-		this._control.assign(source)
+		this._control!.assign(source)
+	}
+
+	free(): void {
+		super.free()
+
+		this._control = null
 	}
 
 	get tag(): string | Object {
-		return this._control.tag
+		return this._control!.tag
 	}
 
 	set tag(value: string | Object) {
-		this._control.tag = value
+		this._control!.tag = value
 	}
 
 	get visible(): boolean {
-		return this._control.visible
+		return this._control!.visible
 	}
 
 	set visible(value: boolean) {
-		this._control.visible = value
+		this._control!.visible = value
 	}
 
 	get hidden(): boolean {
-		return this._control.hidden
+		return this._control!.hidden
 	}
 
 	set hidden(value: boolean) {
-		this._control.hidden = value
+		this._control!.hidden = value
 	}
 
 	get name(): string {
-		return this._control.name
+		return this._control!.name
 	}
 
 	set name(value: string) {
-		this._control.name = value
+		this._control!.name = value
 	}
 
 	get text(): string {
-		return this._control.text
+		return this._control!.text
 	}
 
 	set text(value: string) {
-		this._control.text = value
+		this._control!.text = value
 	}
 
 	get disabled(): boolean {
-		return this._control.disabled
+		return this._control!.disabled
 	}
 
 	set disabled(value: boolean) {
-		this._control.disabled = value
+		this._control!.disabled = value
 	}
 
 	get focused(): boolean {
-		return this._control.focused
+		return this._control!.focused
 	}
 
 	set focused(value: boolean) {
-		this._control.focused = value
+		this._control!.focused = value
 	}
 
 	get size(): TComponentSize {
-		return this._control.size
+		return this._control!.size
 	}
 
 	set size(value: TComponentSize) {
-		this._control.size = value
+		this._control!.size = value
 	}
 
 	/**
@@ -105,30 +111,30 @@ export abstract class AbstractControlItem<TControlType extends TControl<any> = T
 	}
 
 	getProps(): TObjectProps {
-		return this._control.getProps()
+		return this._control!.getProps()
 	}
 
 	show(): void {
-		this._control.show()
+		this._control!.show()
 	}
 
 	hide(): void {
-		this._control.hide()
+		this._control!.hide()
 	}
 
 	beforeShow(): boolean {
-		return this._control.beforeShow()
+		return this._control!.beforeShow()
 	}
 
 	beforeHide(): boolean {
-		return this._control.beforeHide()
+		return this._control!.beforeHide()
 	}
 
 	afterShow(): void {
-		this._control.afterShow()
+		this._control!.afterShow()
 	}
 
 	afterHide(): void {
-		this._control.afterHide()
+		this._control!.afterHide()
 	}
 }

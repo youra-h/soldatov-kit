@@ -13,6 +13,8 @@ export interface ICollectionItem {
 	assign(source: ICollectionItem): void
 	// Вызывает changed() для нотификации коллекции/владельца.
 	changed(): void
+	// Освобождает ресурсы, отписывается от событий и т.д.
+	free(): void
 }
 
 export type TCollectionEvents = {
