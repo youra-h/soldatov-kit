@@ -22,7 +22,7 @@ export default class TControl<TEvents extends TControlEvents> extends TComponent
 	/** В фокусе ли контрол */
 	protected _focused: boolean
 	/** Размер контрола */
-	protected _sizeHelper: TSize<TComponentSize>
+	protected _sizeHelper: TSize
 
 	constructor(options: IComponentOptions<IControl>) {
 		options = TComponent.prepareOptions(options, 's-control')
@@ -31,7 +31,7 @@ export default class TControl<TEvents extends TControlEvents> extends TComponent
 
 		const { props = {} } = options
 
-		this._sizeHelper = new TSize<TComponentSize>({
+		this._sizeHelper = new TSize({
 			baseClass: this._baseClass,
 			value: props.size ?? defaultValues.size!,
 		})

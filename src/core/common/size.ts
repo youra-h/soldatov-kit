@@ -1,9 +1,10 @@
 import { TBaseClassValue, type IBaseClassValueOptions } from './base-class-value'
+import type { TComponentSize } from './types'
 
-export type TSizeOptions<T extends string = string> = IBaseClassValueOptions<T>
+export type TSizeOptions = IBaseClassValueOptions<TComponentSize>
 
-export class TSize<T extends string = string> extends TBaseClassValue<T> {
-	constructor(options: TSizeOptions<T> = {}) {
+export class TSize extends TBaseClassValue<TComponentSize> {
+	constructor(options: TSizeOptions = {}) {
 		super(options)
 	}
 

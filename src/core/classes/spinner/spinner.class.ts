@@ -14,7 +14,7 @@ export const defaultValues: Partial<ISpinner> = {
 }
 
 export default class TSpinner extends TComponent<TSpinnerEvents> implements ISpinner {
-	protected _sizeHelper: TSize<TComponentSize>
+	protected _sizeHelper: TSize
 	protected _variantHelper: TVariant
 	protected _borderWidth: number | 'auto'
 
@@ -25,7 +25,7 @@ export default class TSpinner extends TComponent<TSpinnerEvents> implements ISpi
 
 		const { props = {} } = options
 
-		this._sizeHelper = new TSize<TComponentSize>({
+		this._sizeHelper = new TSize({
 			baseClass: this._baseClass,
 			exclude: ['normal'],
 			value: defaultValues.size!,
