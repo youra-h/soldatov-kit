@@ -28,6 +28,10 @@ export class TCollectionItem implements ICollectionItem {
 		return this._collection
 	}
 
+	set collection(value: TCollection | null) {
+		this._collection = value
+	}
+
 	/**
 	 * Текущее положение элемента в коллекции.
 	 */

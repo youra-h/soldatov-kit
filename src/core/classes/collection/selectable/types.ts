@@ -8,6 +8,8 @@ export interface ISelectable {
 }
 
 export interface ISelectableCollection<TItem extends TCollectionItem> {
+	// Разрешён ли множественный выбор
+	multiSelect: boolean
 	/**
 	 * Выделение нескольких элементов одновременно.
 	 * @param itemOrIndex Элемент или его индекс

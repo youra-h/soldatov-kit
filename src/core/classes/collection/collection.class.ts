@@ -90,18 +90,49 @@ export class TCollection extends TEvented<TCollectionEvents> {
 	}
 
 	/**
+	 * Вставляет элемент по индексу.
+	 * @param index Индекс, по которому нужно вставить элемент
+	 * @param item Элемент, который нужно вставить
+	 * @returns true, если элемент был успешно вставлен, false если не удалось
+	 */
+	insertAt(index: number, item: TCollectionItem): boolean {
+		if (index < 0 || index > this._items.length) {
+			return false
+		}
+
+		if (item.collection) {
+			// Элемент уже в другой коллекции
+			return false
+		}
+
+		this._items.splice(index, 0, item)
+		item.collection = this
+		item.id = item.id ?? this._nextId++
+
+		this.reindex()
+		this.notifyChange(item)
+
+		return true
+	}
+
+	/**
 	 * Удаляет элемент по индексу, если он существует.
 	 * Удалённый элемент отсоединяется от коллекции.
 	 * @param index Индекс удаляемого элемента.
+	 * @return true, если элемент был удалён, false если индекс вне диапазона.
 	 */
-	delete(index: number): void {
-		if (index < 0 || index >= this._items.length) return
+	delete(index: number): boolean {
+		if (index < 0 || index >= this._items.length) {
+			return false
+		}
 
 		const removed = this._items.splice(index, 1)[0]
 		removed.free()
 
 		this.reindex()
 		this.notifyChange(removed)
+
+		return true
 	}
 
 	/**
@@ -166,6 +197,20 @@ export class TCollection extends TEvented<TCollectionEvents> {
 	}
 
 	/**
+	 * Перемещает элемент fromItem в позицию toIndex.
+	 * @param fromItem Элемент, который нужно переместить.
+	 * @param toIndex Новая позиция элемента.
+	 * @returns void
+	 */
+	moveItem(fromItem: TCollectionItem, toIndex: number): void {
+		const fromIndex = this._items.indexOf(fromItem)
+
+		if (fromIndex === -1) return
+
+		this.move(fromIndex, toIndex)
+	}
+
+	/**
 	 * Начало пакетного обновления. Увеличивает счётчик обновления.
 	 * Во время пакетного обновления уведомления откладываются до вызова endUpdate.
 	 */
@@ -194,7 +239,7 @@ export class TCollection extends TEvented<TCollectionEvents> {
 	 */
 	protected reindex(): void {
 		for (let i = 0; i < this._items.length; i++) {
-			;(this._items[i] as any)._updateIndex(i)
+			;(this._items[i] as TCollectionItem)._updateIndex(i)
 		}
 	}
 

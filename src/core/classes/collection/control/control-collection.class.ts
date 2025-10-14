@@ -33,8 +33,32 @@ export class TControlCollection<
 	 */
 	addItemWith(props: Partial<TItem>): TItem {
 		const item = this.addItem()
+
 		item.assign(Object.assign(new this._itemCtor(), props))
+
 		return item
+	}
+
+	/**
+	 * Вставляет элемент по индексу.
+	 * @param index Индекс, по которому нужно вставить элемент
+	 * @returns Вставленный элемент типа TItem
+	 */
+	insertItem(index: number): TItem {
+		return this.insert(index) as TItem
+	}
+
+	/**
+	 * Удаляет элемент по имени, если он существует.
+	 * @param name имя элемента
+	 * @returns true, если элемент был удалён, false если не найдено
+	 */
+	deleteByName(name: string): boolean {
+		const idx = this._items.findIndex((it) => (it as TItem).name === name)
+
+		if (idx === -1) return false
+
+		return this.delete(idx)
 	}
 
 	/**

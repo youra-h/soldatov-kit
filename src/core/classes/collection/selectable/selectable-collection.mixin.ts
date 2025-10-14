@@ -29,9 +29,6 @@ export function SelectableCollectionMixin<
 		/** Массив выбранных элементов (ссылки на сами элементы) */
 		protected _selectedItems: TItem[] = []
 
-		/** Для совместимости с ISelectable — не используется напрямую */
-		protected _selected: boolean = false
-
 		/**
 		 * Конструктор коллекции с поддержкой выбора.
 		 * @param args[0] owner - владелец коллекции
@@ -221,15 +218,18 @@ export function SelectableCollectionMixin<
 		/**
 		 * Удаляет элемент по индексу и синхронизирует выбор.
 		 * @param index - индекс элемента
+		 * @return true, если элемент был удалён, false если индекс вне диапазона
 		 */
-		delete(index: number): void {
+		delete(index: number): boolean {
 			const item = (this as any).getItem(index) as TItem | undefined
 
-			super.delete(index)
+			const result = super.delete(index)
 
 			if (item) {
 				this._onItemRemovedHook(item)
 			}
+
+			return result
 		}
 
 		/**
