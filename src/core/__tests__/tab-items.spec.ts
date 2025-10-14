@@ -102,22 +102,30 @@ describe('Tabs (Tabs / TTabItem)', () => {
 
 		// По индексу
 		tabs.selectByIndex(1)
-		expect(Array.isArray(tabs.getSelected())).toBe(false) // getSelected возвращает один элемент в single-mode
-		const tabProfile = tabs.getSelected() as TTabItem
+		expect(Array.isArray(tabs.getSelected())).toBe(true) // getSelected возвращает один элемент в single-mode
+		expect(tabs.getSelected()!.length).toBe(1) // getSelected возвращает один элемент в single-mode
+		const tab = tabs.getSingleSelected() as TTabItem | undefined
+		expect(tab).toBeDefined()
+		if (tab) expect(tab.name).toBe('profile')
+		expect(t2.selected).toBe(true)
+		expect(tabs.selectedItems.length).toBe(1)
+
+		const tabProfile = tabs.getSingleSelected() as TTabItem
 		expect(tabProfile.name).toBe('profile')
 		expect(t2.selected).toBe(true)
 		expect(tabs.selectedItems.length).toBe(1)
 
 		// Снятие выбора
 		tabs.clearSelection()
-		expect(tabs.getSelected()).toBeUndefined()
+		expect(tabs.getSingleSelected()).toBeUndefined()
 		expect(t2.selected).toBe(false)
 		expect(tabs.selectedItems.length).toBe(0)
 
 		// По имени
 		const found = tabs.selectByName('settings')
 		expect(found).toBe(true)
-		const tabSettings = tabs.getSelected() as TTabItem
+
+		const tabSettings = tabs.getSingleSelected() as TTabItem
 		expect(tabSettings.name).toBe('settings')
 		expect(t3.selected).toBe(true)
 		expect(tabs.selectedItems.length).toBe(1)
@@ -145,7 +153,7 @@ describe('Tabs (Tabs / TTabItem)', () => {
 		tabs.addItem().name = 'c'
 
 		tabs.selectByIndex(1) // выбираем 'b'
-		const tab = tabs.getSelected() as TTabItem
+		const tab = tabs.getSingleSelected() as TTabItem
 		expect(tab.name).toBe('b')
 
 		tabs.delete(1) // удаляем 'b'
@@ -160,6 +168,8 @@ describe('Tabs (Tabs / TTabItem)', () => {
 		// const SelectableCtor = createSelectableControlCollection<TTabItem>()
 		// const multi = new (SelectableCtor as any)(null, TTabItem, { multi: true }) as any
 		// const multi = tabs;
+		// Включить режим multi-select
+		tabs.multiSelect = true
 
 		// добавляем элементы
 		tabs.addItem().name = 'a'
@@ -172,7 +182,7 @@ describe('Tabs (Tabs / TTabItem)', () => {
 		// выбор нескольких
 		tabs.select(0)
 		tabs.select(2)
-		expect(tabs.selectedItems.map((x: TTabItem) => x.name)).toEqual(['a', 'c'])
+		expect(tabs.getSelected().map((x: TTabItem) => x.name)).toEqual(['a', 'c'])
 
 		// снять первый
 		tabs.deselect(0)
@@ -198,24 +208,27 @@ describe('Tabs (Tabs / TTabItem)', () => {
 		expect(tabs.selectedItems.length).toBe(1)
 	})
 
-	// it('getSelected возвращает массив в multi и первый элемент в single', () => {
-	// 	const SelectableCtor = createSelectableControlCollection<TTabItem>()
-	// 	const multi = new (SelectableCtor as any)(null, TTabItem, { multi: true }) as any
+	it('getSelected возвращает массив в multi и первый элемент в single', () => {
+		// const SelectableCtor = createSelectableControlCollection<TTabItem>()
+		// const multi = new (SelectableCtor as any)(null, TTabItem, { multi: true }) as any
+		// Включить режим multi-select
+		tabs.multiSelect = true
 
-	// 	multi.addItem().name = 'a'
-	// 	multi.addItem().name = 'b'
+		tabs.addItem().name = 'a'
+		tabs.addItem().name = 'b'
 
-	// 	// multi mode
-	// 	multi.select(0)
-	// 	multi.select(1)
-	// 	expect(Array.isArray(multi.getSelected())).toBe(true)
-	// 	expect((multi.getSelected()[]).length).toBe(2)
+		// multi mode
+		tabs.select(0)
+		tabs.select(1)
+		expect(Array.isArray(tabs.getSelected())).toBe(true)
+		expect(tabs.getSelected().length).toBe(2)
 
-	// 	// switch to single
-	// 	multi.multiSelect = false
-	// 	// now getSelected returns a single item (or undefined)
-	// 	const singleSel = multi.getSelected()
-	// 	expect(Array.isArray(singleSel)).toBe(false)
-	// 	if (singleSel) expect((singleSel).name).toBeDefined()
-	// })
+		// switch to single
+		tabs.multiSelect = false
+		// now getSelected returns a single item (or undefined)
+		const singleSel = tabs.getSingleSelected() as TTabItem | undefined
+		expect(Array.isArray(singleSel)).toBe(false)
+
+		if (singleSel) expect(singleSel.name).toBeDefined()
+	})
 })

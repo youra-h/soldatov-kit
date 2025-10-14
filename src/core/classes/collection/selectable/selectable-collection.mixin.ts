@@ -78,13 +78,21 @@ export function SelectableCollectionMixin<
 		}
 
 		/**
-		 * Синоним selectedItems — возвращает текущие выбранные элементы.
-		 * @returns массив выбранных элементов или первый элемент (если multiSelect = false) или undefined, если ничего не выбрано
+		 * Возвращает массив выбранных элементов
+		 * @returns массив выбранных элементов
 		 */
-		getSelected(): TItem[] | TItem | undefined {
-			if (this._selectedItems.length === 0) return undefined
+		getSelected(): TItem[] {
+			return this._selectedItems
+		}
 
-			return this._multiSelect ? this._selectedItems : this._selectedItems[0]
+		/**
+		 * Возвращает единственный выбранный элемент (если multiSelect = false), иначе undefined.
+		 * @returns выбранный элемент или undefined
+		 */
+		getSingleSelected(): TItem | undefined {
+			if (this._multiSelect) return undefined
+
+			return this._selectedItems[0]
 		}
 
 		/**
