@@ -102,6 +102,7 @@ export default class TComponent<TEvents extends TComponentEvents>
 			id: this._id,
 			visible: this._visible,
 			hidden: this._hidden,
+			tag: this._tag,
 		}
 	}
 
