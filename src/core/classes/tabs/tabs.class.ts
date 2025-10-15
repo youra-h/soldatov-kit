@@ -1,5 +1,14 @@
 import { TTabItem } from './tab-item.class'
 import { createSelectableControlCollection } from '../collection'
+import { defaultValuesControl } from '../control'
+
+export const defaultValues: Partial<ITabs> = {
+	...defaultValuesControl,
+	variant: 'primary',
+	size: 'normal',
+	tag: 'span',
+	borderWidth: 'auto',
+}
 
 /**
  * Коллекция вкладок. single-select по умолчанию.

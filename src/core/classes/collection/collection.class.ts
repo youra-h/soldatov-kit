@@ -1,4 +1,3 @@
-// collection.class.ts
 import { TEvented } from '../evented'
 import type { TCollectionEvents } from './types'
 import { TCollectionItem } from './collection-item.class'
@@ -58,14 +57,17 @@ export class TCollection extends TEvented<TCollectionEvents> {
 	 * Создаёт и добавляет новый элемент в конец коллекции.
 	 * Возвращает созданный элемент.
 	 */
-	add(): TCollectionItem {
+	add(): TCollectionItem | undefined {
+		if (this.emitWithResult('beforeAdd', { collection: this }) === false) return
+
 		const item = new this._itemClass(this)
 		item.id = item.id ?? this._nextId++
 
 		this._items.push(item)
 		// item._updateIndex(this._items.length - 1)
-
 		this.reindex()
+
+		this.emit('afterAdd', { collection: this, item })
 		this.notifyChange(item)
 
 		return item
@@ -76,14 +78,17 @@ export class TCollection extends TEvented<TCollectionEvents> {
 	 * корректируется к границам коллекции). Возвращает созданный элемент.
 	 * @param index Позиция вставки.
 	 */
-	insert(index: number): TCollectionItem {
+	insert(index: number): TCollectionItem | undefined {
+		if (this.emitWithResult('beforeInsert', { collection: this, index }) === false) return
+
 		const item = new this._itemClass(this)
 		item.id = this._nextId++
 
 		const i = Math.max(0, Math.min(index, this._items.length))
 		this._items.splice(i, 0, item)
-
 		this.reindex()
+
+		this.emit('afterInsert', { collection: this, item })
 		this.notifyChange(item)
 
 		return item
@@ -100,6 +105,10 @@ export class TCollection extends TEvented<TCollectionEvents> {
 			return false
 		}
 
+		if (this.emitWithResult('beforeInsert', { collection: this, index }) === false) {
+			return false
+		}
+
 		if (item.collection) {
 			// Элемент уже в другой коллекции
 			return false
@@ -110,6 +119,8 @@ export class TCollection extends TEvented<TCollectionEvents> {
 		item.id = item.id ?? this._nextId++
 
 		this.reindex()
+
+		this.emit('afterInsert', { collection: this, item })
 		this.notifyChange(item)
 
 		return true
@@ -126,10 +137,18 @@ export class TCollection extends TEvented<TCollectionEvents> {
 			return false
 		}
 
+		const item = this._items[index]
+
+		if (this.emitWithResult('beforeDelete', { collection: this, index, item }) === false) {
+			return false
+		}
+
 		const removed = this._items.splice(index, 1)[0]
 		removed.free()
 
 		this.reindex()
+
+		this.emit('afterDelete', { collection: this, index, item })
 		this.notifyChange(removed)
 
 		return true
@@ -139,10 +158,14 @@ export class TCollection extends TEvented<TCollectionEvents> {
 	 * Полностью очищает коллекцию. Все элементы будут отсоединены.
 	 */
 	clear(): void {
+		if (this.emitWithResult('beforeClear', { collection: this }) === false) return
+
 		this._items.forEach((it) => it.free())
 		this._items = []
 
 		this.reindex()
+
+		this.emit('afterClear', { collection: this })
 		this.notifyChange(undefined)
 	}
 
@@ -161,18 +184,23 @@ export class TCollection extends TEvented<TCollectionEvents> {
 	 * @param newIndex Новая позиция элемента.
 	 */
 	setItemIndex(item: TCollectionItem, newIndex: number): void {
-		const old = this._items.indexOf(item)
+		const oldIndex = this._items.indexOf(item)
 
-		if (old === -1) return
+		if (oldIndex === -1 || oldIndex === newIndex) return
+
+		if (this.emitWithResult('beforeMove', { collection: this, oldIndex, newIndex }) === false)
+			return
 
 		const ni = Math.max(0, Math.min(newIndex, this._items.length - 1))
 
-		if (old === ni) return
+		if (oldIndex === ni) return
 
-		this._items.splice(old, 1)
+		this._items.splice(oldIndex, 1)
 		this._items.splice(ni, 0, item)
 
 		this.reindex()
+
+		this.emit('afterMove', { collection: this, item, oldIndex, newIndex })
 		this.notifyChange(item)
 	}
 
@@ -183,17 +211,8 @@ export class TCollection extends TEvented<TCollectionEvents> {
 	 * @param toIndex Целевой индекс.
 	 */
 	move(fromIndex: number, toIndex: number): void {
-		if (fromIndex === toIndex) return
-
-		const item = this._items.splice(fromIndex, 1)[0]
-
-		if (!item) return
-
-		const ti = Math.max(0, Math.min(toIndex, this._items.length))
-		this._items.splice(ti, 0, item)
-
-		this.reindex()
-		this.notifyChange(item)
+		const item = this._items[fromIndex]
+		this.setItemIndex(item, toIndex)
 	}
 
 	/**
@@ -252,7 +271,7 @@ export class TCollection extends TEvented<TCollectionEvents> {
 	protected notifyChange(item?: TCollectionItem): void {
 		if (this._updateCount > 0) return
 
-		this.emit('changed', this, item)
+		this.emit('changed', { collection: this, item })
 	}
 
 	/**
