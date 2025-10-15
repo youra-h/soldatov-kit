@@ -120,3 +120,84 @@ describe('TCollectionOwned', () => {
 		expect(col.getOwner()).toBe(owner)
 	})
 })
+
+describe('TCollection events', () => {
+	it('emits "added" and "changed" on add', () => {
+		const col = new TCollection(TCollectionItem)
+		const added = vi.fn()
+		const changed = vi.fn()
+		col.on('added', added)
+		col.on('changed', changed)
+		const item = col.add()
+		expect(added).toHaveBeenCalledWith({ collection: col, item })
+		expect(changed).toHaveBeenCalledWith({ collection: col, item })
+	})
+
+	it('emits beforeDelete/afterDelete/changed on delete', () => {
+		const col = new TCollection(TCollectionItem)
+		const item = col.add()
+		const beforeDelete = vi.fn(() => true)
+		const afterDelete = vi.fn()
+		const changed = vi.fn()
+		col.on('beforeDelete', beforeDelete)
+		col.on('afterDelete', afterDelete)
+		col.on('changed', changed)
+		const ok = col.delete(0)
+		expect(ok).toBe(true)
+		expect(beforeDelete).toHaveBeenCalledWith({ collection: col, index: 0, item })
+		expect(afterDelete).toHaveBeenCalledWith({ collection: col, index: 0, item })
+		expect(changed).toHaveBeenCalledWith({ collection: col, item })
+	})
+
+	it('can cancel delete via beforeDelete', () => {
+		const col = new TCollection(TCollectionItem)
+		col.add()
+		col.on('beforeDelete', () => false)
+		const ok = col.delete(0)
+		expect(ok).toBe(false)
+	})
+
+	it('emits cleared and changed on clear', () => {
+		const col = new TCollection(TCollectionItem)
+		col.add()
+		const cleared = vi.fn()
+		const changed = vi.fn()
+		col.on('cleared', cleared)
+		col.on('changed', changed)
+		col.clear()
+		expect(cleared).toHaveBeenCalledWith({ collection: col })
+		expect(changed).toHaveBeenCalledWith({ collection: col, item: undefined })
+	})
+
+	it('emits beforeMove/afterMove/changed on move', () => {
+		const col = new TCollection(TCollectionItem)
+		const a = col.add()
+		const b = col.add()
+		const beforeMove = vi.fn(() => true)
+		const afterMove = vi.fn()
+		const changed = vi.fn()
+		col.on('beforeMove', beforeMove)
+		col.on('afterMove', afterMove)
+		col.on('changed', changed)
+		col.move(0, 1)
+		expect(beforeMove).toHaveBeenCalledWith({ collection: col, oldIndex: 0, newIndex: 1 })
+		expect(afterMove).toHaveBeenCalledWith({
+			collection: col,
+			item: a,
+			oldIndex: 0,
+			newIndex: 1,
+		})
+		expect(changed).toHaveBeenCalledWith({ collection: col, item: a })
+	})
+
+	it('can cancel move via beforeMove', () => {
+		const col = new TCollection(TCollectionItem)
+		col.add()
+		col.add()
+		col.on('beforeMove', () => false)
+		col.move(0, 1)
+		// порядок не изменился
+		expect(col.getItem(0)?.index).toBe(0)
+		expect(col.getItem(1)?.index).toBe(1)
+	})
+})
