@@ -5,6 +5,13 @@ import type { TConstructor } from '../../common/types'
 
 /**
  * Коллекция элементов с поддержкой событий и пакетного обновления.
+ * @fires changed - Коллекция изменилась (элемент добавлен, удалён, перемещён, обновлён)
+ * @fires added - Элемент был добавлен
+ * @fires beforeDelete - Элемент будет удалён (можно отменить)
+ * @fires afterDelete - Элемент был удалён
+ * @fires cleared - Коллекция была очищена
+ * @fires beforeMove - Элемент будет перемещён (можно отменить)
+ * @fires afterMove - Элемент был перемещён
  */
 export class TCollection extends TEvented<TCollectionEvents> {
 	/**
@@ -57,17 +64,14 @@ export class TCollection extends TEvented<TCollectionEvents> {
 	 * Создаёт и добавляет новый элемент в конец коллекции.
 	 * Возвращает созданный элемент.
 	 */
-	add(): TCollectionItem | undefined {
-		if (this.emitWithResult('beforeAdd', { collection: this }) === false) return
-
+	add(): TCollectionItem {
 		const item = new this._itemClass(this)
 		item.id = item.id ?? this._nextId++
 
 		this._items.push(item)
-		// item._updateIndex(this._items.length - 1)
 		this.reindex()
 
-		this.emit('afterAdd', { collection: this, item })
+		this.emit('added', { collection: this, item })
 		this.notifyChange(item)
 
 		return item
@@ -79,17 +83,12 @@ export class TCollection extends TEvented<TCollectionEvents> {
 	 * @param index Позиция вставки.
 	 */
 	insert(index: number): TCollectionItem | undefined {
-		if (this.emitWithResult('beforeInsert', { collection: this, index }) === false) return
-
 		const item = new this._itemClass(this)
 		item.id = this._nextId++
 
-		const i = Math.max(0, Math.min(index, this._items.length))
-		this._items.splice(i, 0, item)
-		this.reindex()
+		index = Math.max(0, Math.min(index, this._items.length))
 
-		this.emit('afterInsert', { collection: this, item })
-		this.notifyChange(item)
+		this.insertAt(index, item)
 
 		return item
 	}
@@ -105,10 +104,6 @@ export class TCollection extends TEvented<TCollectionEvents> {
 			return false
 		}
 
-		if (this.emitWithResult('beforeInsert', { collection: this, index }) === false) {
-			return false
-		}
-
 		if (item.collection) {
 			// Элемент уже в другой коллекции
 			return false
@@ -120,7 +115,7 @@ export class TCollection extends TEvented<TCollectionEvents> {
 
 		this.reindex()
 
-		this.emit('afterInsert', { collection: this, item })
+		this.emit('added', { collection: this, item })
 		this.notifyChange(item)
 
 		return true
@@ -158,14 +153,12 @@ export class TCollection extends TEvented<TCollectionEvents> {
 	 * Полностью очищает коллекцию. Все элементы будут отсоединены.
 	 */
 	clear(): void {
-		if (this.emitWithResult('beforeClear', { collection: this }) === false) return
-
 		this._items.forEach((it) => it.free())
 		this._items = []
 
 		this.reindex()
 
-		this.emit('afterClear', { collection: this })
+		this.emit('cleared', { collection: this })
 		this.notifyChange(undefined)
 	}
 
@@ -188,8 +181,9 @@ export class TCollection extends TEvented<TCollectionEvents> {
 
 		if (oldIndex === -1 || oldIndex === newIndex) return
 
-		if (this.emitWithResult('beforeMove', { collection: this, oldIndex, newIndex }) === false)
+		if (this.emitWithResult('beforeMove', { collection: this, oldIndex, newIndex }) === false) {
 			return
+		}
 
 		const ni = Math.max(0, Math.min(newIndex, this._items.length - 1))
 

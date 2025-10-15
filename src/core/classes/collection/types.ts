@@ -31,44 +31,12 @@ export type TCollectionEvents = {
 	changed: (payload: { collection: TCollection; item?: TCollectionItem }) => void
 
 	/**
-	 * Перед добавлением нового элемента.
-	 * Если хоть один обработчик вернёт false — добавление отменится.
-	 *
-	 * @param payload.collection  Коллекция, в которую собираются добавить элемент.
-	 * @returns                   false для отмены операции, иначе продолжить.
-	 */
-	beforeAdd: (payload: { collection: TCollection }) => boolean | void
-
-	/**
 	 * После успешного добавления нового элемента.
 	 *
 	 * @param payload.collection  Коллекция, в которую добавлен элемент.
 	 * @param payload.item        Добавленный элемент.
 	 */
-	afterAdd: (payload: { collection: TCollection; item: TCollectionItem }) => void
-
-	/**
-	 * Перед вставкой элемента по индексу.
-	 * Если хоть один обработчик вернёт false — вставка отменится.
-	 *
-	 * @param payload.collection  Коллекция, в которую будет вставлен элемент.
-	 * @param payload.index       Индекс, на который будет вставлен элемент.
-	 * @returns                   false для отмены операции, иначе продолжить.
-	 */
-	beforeInsert: (payload: { collection: TCollection; index: number }) => boolean | void
-
-	/**
-	 * После успешной вставки элемента по индексу.
-	 *
-	 * @param payload.collection  Коллекция, в которую вставлен элемент.
-	 * @param payload.item        Вставленный элемент.
-	 * @param payload.index       Индекс, на котором элемент оказался после вставки.
-	 */
-	afterInsert: (payload: {
-		collection: TCollection
-		item: TCollectionItem
-		index: number
-	}) => void
+	added: (payload: { collection: TCollection; item: TCollectionItem }) => void
 
 	/**
 	 * Перед удалением элемента.
@@ -99,20 +67,11 @@ export type TCollectionEvents = {
 	}) => void
 
 	/**
-	 * Перед очисткой всей коллекции.
-	 * Если хоть один обработчик вернёт false — очистка отменится.
-	 *
-	 * @param payload.collection  Коллекция, которую собираются очистить.
-	 * @returns                   false для отмены операции, иначе продолжить.
-	 */
-	beforeClear: (payload: { collection: TCollection }) => boolean | void
-
-	/**
 	 * После очистки коллекции.
 	 *
 	 * @param payload.collection  Коллекция, которая была очищена.
 	 */
-	afterClear: (payload: { collection: TCollection }) => void
+	cleared: (payload: { collection: TCollection }) => void
 
 	/**
 	 * Перед перемещением элемента.
