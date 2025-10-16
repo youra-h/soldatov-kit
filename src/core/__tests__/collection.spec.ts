@@ -55,11 +55,23 @@ describe('TCollection', () => {
 		expect(col.count).toBe(1)
 		const item2 = col.insert(0)
 		expect(col.count).toBe(2)
+		// insertAt
 		const item3 = new TCollectionItem()
-		const ok = col.insertAt(1, item3)
+		const ok = col.insertAt(item3, 1)
 		expect(ok).toBe(true)
 		expect(col.count).toBe(3)
 		expect(col.getItem(1)).toBe(item3)
+		// insertAt out of bounds
+		const item4 = new TCollectionItem()
+		const ok2 = col.insertAt(item4, 10)
+		expect(ok2).toBe(false)
+		expect(col.count).toBe(3)
+		// insertAt без указания индекса
+		const item5 = new TCollectionItem()
+		const ok3 = col.insertAt(item5)
+		expect(ok3).toBe(true)
+		expect(col.count).toBe(4)
+		expect(col.getItem(3)).toBe(item5)
 	})
 
 	it('delete удаляет элемент по индексу', () => {
@@ -91,15 +103,29 @@ describe('TCollection', () => {
 		expect(col.getItem(1)).toBe(a)
 	})
 
-	it('beginUpdate/endUpdate откладывают notifyChange', () => {
+	it('beginUpdate/endUpdate откладывают notifyChange (changed), но не другие события', () => {
 		const col = new TCollection(TCollectionItem)
-		const spy = vi.spyOn(col, 'emit')
+		const changed = vi.fn()
+		const added = vi.fn()
+		col.on('changed', changed)
+		col.on('added', added)
+
 		col.beginUpdate()
-		col.add()
-		col.add()
-		expect(spy).not.toHaveBeenCalled()
+		const item1 = col.add()
+		const item2 = col.add()
+
+		// Событие changed не должно быть вызвано до endUpdate
+		expect(changed).not.toHaveBeenCalled()
+		// Но событие added вызывается сразу для каждого add
+		expect(added).toHaveBeenCalledTimes(2)
+		expect(added).toHaveBeenNthCalledWith(1, { collection: col, item: item1 })
+		expect(added).toHaveBeenNthCalledWith(2, { collection: col, item: item2 })
+
 		col.endUpdate()
-		expect(spy).toHaveBeenCalledWith('changed', col, undefined)
+
+		// После endUpdate должно быть вызвано changed с последним элементом (или с undefined, если notifyChange(undefined))
+		expect(changed).toHaveBeenCalledTimes(1)
+		expect(changed).toHaveBeenCalledWith({ collection: col, item: undefined })
 	})
 
 	it('forEach и toArray работают', () => {

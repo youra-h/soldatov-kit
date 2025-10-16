@@ -1,5 +1,5 @@
 import { TEvented } from '../evented'
-import type { TCollectionEvents } from './types'
+import type { IEventedCollection, TCollectionEvents } from './types'
 import { TCollectionItem } from './collection-item.class'
 import type { TConstructor } from '../../common/types'
 
@@ -13,7 +13,10 @@ import type { TConstructor } from '../../common/types'
  * @fires beforeMove - Элемент будет перемещён (можно отменить)
  * @fires afterMove - Элемент был перемещён
  */
-export class TCollection extends TEvented<TCollectionEvents> {
+export class TCollection
+	extends TEvented<TCollectionEvents>
+	implements IEventedCollection<TCollectionItem>
+{
 	/**
 	 * Внутренний массив элементов.
 	 * @protected
@@ -88,23 +91,27 @@ export class TCollection extends TEvented<TCollectionEvents> {
 
 		index = Math.max(0, Math.min(index, this._items.length))
 
-		this.insertAt(index, item)
+		this.insertAt(item, index)
 
 		return item
 	}
 
 	/**
 	 * Вставляет элемент по индексу.
-	 * @param index Индекс, по которому нужно вставить элемент
 	 * @param item Элемент, который нужно вставить
+	 * @param index Индекс, по которому нужно вставить элемент
 	 * @returns true, если элемент был успешно вставлен, false если не удалось
 	 */
-	insertAt(index: number, item: TCollectionItem): boolean {
+	insertAt(item: TCollectionItem, index?: number): boolean {
+		if (typeof index === 'undefined') {
+			index = this._items.length
+		}
+
 		if (index < 0 || index > this._items.length) {
 			return false
 		}
 
-		if (item.collection) {
+		if (item.collection && item.collection !== this) {
 			// Элемент уже в другой коллекции
 			return false
 		}

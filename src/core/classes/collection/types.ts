@@ -103,3 +103,74 @@ export type TCollectionEvents = {
 		newIndex: number
 	}) => void
 }
+
+/**
+ * Базовый интерфейс коллекции элементов.
+ * Определяет контракт, который должны реализовывать все коллекции.
+ */
+export interface ICollection<TItem extends TCollectionItem = TCollectionItem> {
+	/** Количество элементов в коллекции */
+	readonly count: number
+
+	/** Добавляет новый элемент и возвращает его */
+	add(): TItem | undefined
+
+	/**
+	 * Вставляет новый элемент по индексу
+	 * @param index Индекс вставки
+	 */
+	insert(index: number): TItem | undefined
+
+	/**
+	 * Вставляет существующий элемент по индексу
+	 * @param item Элемент для вставки
+	 * @param index Индекс вставки
+	 */
+	insertAt(item: TItem, index?: number): boolean
+
+	/**
+	 * Удаляет элемент по индексу
+	 * @param index Индекс удаляемого элемента
+	 * @returns true, если удаление прошло успешно
+	 */
+	delete(index: number): boolean
+
+	/** Полностью очищает коллекцию */
+	clear(): void
+
+	/**
+	 * Возвращает элемент по индексу
+	 * @param index Индекс элемента
+	 */
+	getItem(index: number): TItem | undefined
+
+	/**
+	 * Перемещает элемент в новую позицию
+	 * @param item Элемент
+	 * @param newIndex Новый индекс
+	 */
+	setItemIndex(item: TItem, newIndex: number): void
+
+	/**
+	 * Перемещает элемент из позиции fromIndex в позицию toIndex
+	 */
+	move(fromIndex: number, toIndex: number): void
+
+	/** Начало пакетного обновления */
+	beginUpdate(): void
+
+	/** Конец пакетного обновления */
+	endUpdate(): void
+
+	/** Перебор элементов */
+	forEach(fn: (item: TItem, idx: number) => void): void
+
+	/** Возвращает массив элементов */
+	toArray(): TItem[]
+}
+
+export interface IEventedCollection<TItem extends TCollectionItem> extends ICollection<TItem> {
+	on<K extends keyof TCollectionEvents>(event: K, handler: TCollectionEvents[K]): void
+
+	off<K extends keyof TCollectionEvents>(event: K, handler: TCollectionEvents[K]): void
+}
