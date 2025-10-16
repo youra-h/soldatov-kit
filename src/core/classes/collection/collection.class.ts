@@ -13,10 +13,7 @@ import type { TConstructor } from '../../common/types'
  * @fires beforeMove - Элемент будет перемещён (можно отменить)
  * @fires afterMove - Элемент был перемещён
  */
-export class TCollection
-	extends TEvented<TCollectionEvents>
-	implements IEventedCollection<TCollectionItem>
-{
+export class TCollection extends TEvented<TCollectionEvents> {
 	/**
 	 * Внутренний массив элементов.
 	 * @protected

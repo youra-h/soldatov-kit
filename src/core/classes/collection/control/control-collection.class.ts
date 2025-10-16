@@ -4,6 +4,10 @@ import type { TConstructor } from '../../../common/types'
 import { AbstractControlItem } from './control-item.class'
 import { TControl } from '../../control'
 
+export const defaultValues = {
+	disabled: false,
+}
+
 /**
  * Универсальная коллекция для любых UI-контролов.
  * Поддерживает типобезопасное создание и перебор элементов.
@@ -14,9 +18,33 @@ export class TControlCollection<
 > extends TCollectionOwned {
 	protected _itemCtor: TConstructor<TItem>
 
+	/** Внутреннее состояние disabled */
+	private _disabled: boolean
+
 	constructor(owner: any, itemClass: TConstructor<TItem>) {
 		super(owner, itemClass)
+
 		this._itemCtor = itemClass
+		this._disabled = defaultValues.disabled
+	}
+
+	/**
+	 * Флаг отключения всей коллекции.
+	 * При установке значения обновляет все элементы.
+	 */
+	get disabled(): boolean {
+		return this._disabled
+	}
+
+	set disabled(value: boolean) {
+		if (this._disabled === value) return
+
+		this._disabled = value
+
+		// Применяем ко всем элементам
+		this.forEach((item) => {
+			;(item as TItem).disabled = value
+		})
 	}
 
 	/**

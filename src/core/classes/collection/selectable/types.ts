@@ -1,4 +1,5 @@
 import type { TCollectionItem } from '../collection-item.class'
+import type { ICollection } from '../types'
 
 export type TIndexOrItem<T> = T | number
 
@@ -7,6 +8,7 @@ export interface ISelectable {
 	selected: boolean
 }
 
+// export interface ISelectableCollection<TItem extends TCollectionItem> extends ICollection<TItem>
 export interface ISelectableCollection<TItem extends TCollectionItem> {
 	// Разрешён ли множественный выбор
 	multiSelect: boolean
