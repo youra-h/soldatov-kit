@@ -21,11 +21,12 @@ export class TControlCollection<
 	/** Внутреннее состояние disabled */
 	private _disabled: boolean
 
-	constructor(owner: any, itemClass: TConstructor<TItem>) {
+	constructor(owner: any, itemClass: TConstructor<TItem>, opts?: { disabled?: boolean }) {
 		super(owner, itemClass)
 
 		this._itemCtor = itemClass
-		this._disabled = defaultValues.disabled
+
+		this._disabled = opts?.disabled ?? defaultValues.disabled
 	}
 
 	/**

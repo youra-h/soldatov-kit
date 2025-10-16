@@ -33,14 +33,15 @@ export function SelectableCollectionMixin<
 		 * Конструктор коллекции с поддержкой выбора.
 		 * @param args[0] owner - владелец коллекции
 		 * @param args[1] itemClass - класс элемента
-		 * @param args[2] opts - настройки (multi: boolean)
+		 * @param args[2] opts - настройки (multi: boolean, disabled: boolean)
 		 */
 		constructor(...args: BaseCtorArgs) {
 			const owner = args[0]
 			const itemClass = args[1]
-			super(owner, itemClass)
-
 			const opts = args[2] || {}
+
+			super(owner, itemClass, opts)
+
 			this._multiSelect = !!opts.multi
 		}
 
