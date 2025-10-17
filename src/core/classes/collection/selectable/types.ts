@@ -8,10 +8,14 @@ export interface ISelectable {
 	selected: boolean
 }
 
-// export interface ISelectableCollection<TItem extends TCollectionItem> extends ICollection<TItem>
-export interface ISelectableCollection<TItem extends TCollectionItem> {
+export interface ISelectableCollectionProps {
 	// Разрешён ли множественный выбор
 	multiSelect: boolean
+}
+
+// export interface ISelectableCollection<TItem extends TCollectionItem> extends ICollection<TItem>
+export interface ISelectableCollection<TItem extends TCollectionItem>
+	extends ISelectableCollectionProps {
 	/**
 	 * Выделение нескольких элементов одновременно.
 	 * @param itemOrIndex Элемент или его индекс

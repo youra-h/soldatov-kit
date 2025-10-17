@@ -1,9 +1,15 @@
 import type { TConstructor } from '../../../common/types'
 import type { TCollectionOwned } from '../collection-owned.class'
 import type { TCollectionItem } from '../collection-item.class'
-import type { ISelectableCollection, TIndexOrItem } from './types'
+import type { ISelectableCollection, TIndexOrItem, ISelectableCollectionProps } from './types'
+import { TControlCollection } from '../control/control-collection.class'
+import type { AbstractControlItem } from '../control/control-item.class'
 
-type BaseCtorArgs = [owner?: any, itemClass?: any, opts?: { multi?: boolean }]
+type BaseCtorArgs = [owner?: any, itemClass?: any, opts?: { multiSelect?: boolean }]
+
+export const defaultValues: ISelectableCollectionProps = {
+	multiSelect: false,
+}
 
 /**
  * Mixin, который добавляет в коллекцию поведение выбора элементов.
@@ -33,7 +39,7 @@ export function SelectableCollectionMixin<
 		 * Конструктор коллекции с поддержкой выбора.
 		 * @param args[0] owner - владелец коллекции
 		 * @param args[1] itemClass - класс элемента
-		 * @param args[2] opts - настройки (multi: boolean, disabled: boolean)
+		 * @param args[2] opts - настройки (multiSelect: boolean, disabled: boolean)
 		 */
 		constructor(...args: BaseCtorArgs) {
 			const owner = args[0]
@@ -42,7 +48,7 @@ export function SelectableCollectionMixin<
 
 			super(owner, itemClass, opts)
 
-			this._multiSelect = !!opts.multi
+			this._multiSelect = !!opts.multiSelect
 		}
 
 		get multiSelect(): boolean {
@@ -178,7 +184,7 @@ export function SelectableCollectionMixin<
 		}
 
 		/**
-		 * Выбирает все элементы коллекции (только в режиме multi-select).
+		 * Выбирает все элементы коллекции (только в режиме multiSelect).
 		 * В режиме single-select выбирает только первый.
 		 */
 		selectAll(): void {
@@ -260,4 +266,14 @@ export function SelectableCollectionMixin<
 			return it
 		}
 	}
+}
+
+export function SelectableControlCollection<TItem extends AbstractControlItem<any>>() {
+	const Mixed = SelectableCollectionMixin(TControlCollection)
+
+	return Mixed as unknown as new (
+		owner?: any,
+		itemClass?: TConstructor<TItem>,
+		opts?: { multiSelect?: boolean },
+	) => ISelectableCollection<TItem> & TControlCollection<TItem, any>
 }

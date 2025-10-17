@@ -1,7 +1,7 @@
 // src/core/__tests__/tab-items.spec.ts
 import { describe, it, expect, beforeEach } from 'vitest'
 import { Tabs, TTabItem } from '../classes/tabs' // путь подкорректируй под свой проект
-import { createSelectableControlCollection } from '../classes/collection' // путь подкорректируй под свой проект
+import { SelectableControlCollection } from '../classes/collection' // путь подкорректируй под свой проект
 
 describe('Tabs (Tabs / TTabItem)', () => {
 	let tabs: Tabs
@@ -165,8 +165,8 @@ describe('Tabs (Tabs / TTabItem)', () => {
 
 	it('multi-select: переключение режима через multiSelect геттер/сеттер', () => {
 		// создаём multi-select коллекцию через фабрику
-		// const SelectableCtor = createSelectableControlCollection<TTabItem>()
-		// const multi = new (SelectableCtor as any)(null, TTabItem, { multi: true }) as any
+		// const SelectableCtor = SelectableControlCollection<TTabItem>()
+		// const multi = new (SelectableCtor as any)(null, TTabItem, { multiSelect: true }) as any
 		// const multi = tabs;
 		// Включить режим multi-select
 		tabs.multiSelect = true
@@ -176,7 +176,7 @@ describe('Tabs (Tabs / TTabItem)', () => {
 		tabs.addItem().name = 'b'
 		tabs.addItem().name = 'c'
 
-		// убедимся, что режим multi включён и доступен через геттер
+		// убедимся, что режим multiSelect включён и доступен через геттер
 		expect(tabs.multiSelect).toBe(true)
 
 		// выбор нескольких
@@ -208,16 +208,16 @@ describe('Tabs (Tabs / TTabItem)', () => {
 		expect(tabs.selectedItems.length).toBe(1)
 	})
 
-	it('getSelected возвращает массив в multi и первый элемент в single', () => {
-		// const SelectableCtor = createSelectableControlCollection<TTabItem>()
-		// const multi = new (SelectableCtor as any)(null, TTabItem, { multi: true }) as any
-		// Включить режим multi-select
+	it('getSelected возвращает массив в multiSelect и первый элемент в single', () => {
+		// const SelectableCtor = SelectableControlCollection<TTabItem>()
+		// const multi = new (SelectableCtor as any)(null, TTabItem, { multiSelect: true }) as any
+		// Включить режим multiSelect
 		tabs.multiSelect = true
 
 		tabs.addItem().name = 'a'
 		tabs.addItem().name = 'b'
 
-		// multi mode
+		// multiSelect mode
 		tabs.select(0)
 		tabs.select(1)
 		expect(Array.isArray(tabs.getSelected())).toBe(true)
