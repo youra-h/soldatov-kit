@@ -15,7 +15,7 @@ export default class TControlValue<TEvents extends TControlValueEvents>
 	/** Значение контрола */
 	protected _value?: any
 
-	constructor(options: IComponentOptions<IControlValue>) {
+	constructor(options: IComponentOptions<IControlValue> = {}) {
 		options = TComponent.prepareOptions(options, 's-control-value')
 
 		super(options)

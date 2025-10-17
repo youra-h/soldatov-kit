@@ -28,7 +28,7 @@ export interface IComponent extends IObject {
 }
 
 export interface IComponentOptions<T> {
-	props: Partial<T>
+	props?: Partial<T>
 	baseClass?: string
 }
 

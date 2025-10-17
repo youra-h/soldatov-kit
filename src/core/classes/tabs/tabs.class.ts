@@ -1,17 +1,12 @@
 import { TTabItem } from './tab-item.class'
 import { SelectableControlCollection } from '../collection'
 
-export const defaultValues: Partial<ITabs> = {
-	disabled: false,
-}
-
 /**
  * Коллекция вкладок. single-select по умолчанию.
  */
 export class Tabs extends SelectableControlCollection<TTabItem>() {
 	constructor(owner?: any) {
-		// передаём opts { multiSelect: false } как третий аргумент
-		super(owner, TTabItem, { multiSelect: false })
+		super(owner, TTabItem)
 	}
 
 	/**

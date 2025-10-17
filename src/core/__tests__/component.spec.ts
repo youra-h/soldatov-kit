@@ -4,7 +4,7 @@ import TComponent, { defaultValues } from '../classes/component/component.class'
 describe('TComponent', () => {
 	let comp: TComponent<any>
 	beforeEach(() => {
-		comp = TComponent.create()
+		comp = new TComponent()
 	})
 
 	it('устанавливает значения по умолчанию', () => {

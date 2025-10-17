@@ -22,7 +22,7 @@ export default class TCheckBox<TEvents extends TCheckBoxEvents>
 	protected _icon?: TIcon
 	protected _indeterminateIcon?: TIcon
 
-	constructor(options: IComponentOptions<ICheckBox>) {
+	constructor(options: IComponentOptions<ICheckBox> = {}) {
 		const { props = {}, baseClass = 's-check-box' } = options
 
 		super({ props, baseClass })

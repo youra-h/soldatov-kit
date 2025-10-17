@@ -36,7 +36,7 @@ export default class TControlInput<TEvents extends TControlInputEvents>
 	/** Индикатор загрузки */
 	protected _spinner?: TSpinner
 
-	constructor(options: IComponentOptions<IControlInput>) {
+	constructor(options: IComponentOptions<IControlInput> = {}) {
 		options = TComponent.prepareOptions(options, 's-control-input')
 
 		super(options)

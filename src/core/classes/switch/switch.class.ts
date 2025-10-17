@@ -10,14 +10,11 @@ export const defaultValues: Partial<ISwitch> = {
 	variant: 'normal',
 }
 
-export default class TSwitch<TEvents extends TSwitchEvents>
-	extends TControlInput<TEvents>
-	implements ISwitch
-{
+export default class TSwitch<TEvents extends TSwitchEvents> extends TControlInput<TEvents> implements ISwitch {
 	protected _value: boolean
 	protected _icon?: TIcon
 
-	constructor(options: IComponentOptions<ISwitch>) {
+	constructor(options: IComponentOptions<ISwitch> = {}) {
 		const { props = {}, baseClass = 's-switch' } = options
 
 		super({ props, baseClass })

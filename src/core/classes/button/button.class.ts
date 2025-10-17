@@ -23,7 +23,7 @@ export default class TButton extends TControl<TButtonEvents> implements IButton 
 	protected _loading: boolean
 	protected _spinner?: TSpinner
 
-	constructor(options: IComponentOptions<IButton>) {
+	constructor(options: IComponentOptions<IButton> = {}) {
 		options = TComponent.prepareOptions(options, 's-button')
 
 		super(options)

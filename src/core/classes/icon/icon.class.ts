@@ -15,7 +15,7 @@ export default class TIcon extends TComponent<TIconEvents> implements IIcon {
 	protected _height: string | number | undefined
 	protected _sizeHelper: TSize
 
-	constructor(options: IComponentOptions<IIcon> | Partial<IIcon>) {
+	constructor(options: IComponentOptions<IIcon> | Partial<IIcon> = {}) {
 		options = TComponent.prepareOptions(options, 's-icon')
 
 		super(options)

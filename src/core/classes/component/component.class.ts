@@ -9,10 +9,7 @@ export const defaultValues: Partial<IComponent> = {
 	hidden: false,
 }
 
-export default class TComponent<TEvents extends TComponentEvents>
-	extends TEvented<TEvents>
-	implements IComponent
-{
+export default class TComponent<TEvents extends TComponentEvents> extends TEvented<TEvents> implements IComponent {
 	protected _id: string | number
 	protected _visible: boolean
 	protected _hidden: boolean
@@ -24,7 +21,7 @@ export default class TComponent<TEvents extends TComponentEvents>
 	// Array of dynamic CSS classes
 	protected _classes: string[] = []
 
-	constructor(options: IComponentOptions<IComponent>) {
+	constructor(options: IComponentOptions<IComponent> = {}) {
 		super()
 
 		const { props = {}, baseClass } = options

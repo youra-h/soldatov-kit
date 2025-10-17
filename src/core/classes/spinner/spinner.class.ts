@@ -18,7 +18,7 @@ export default class TSpinner extends TComponent<TSpinnerEvents> implements ISpi
 	protected _variantHelper: TVariant
 	protected _borderWidth: number | 'auto'
 
-	constructor(options: IComponentOptions<ISpinner>) {
+	constructor(options: IComponentOptions<ISpinner> = {}) {
 		options = TComponent.prepareOptions(options, 's-spinner')
 
 		super(options)

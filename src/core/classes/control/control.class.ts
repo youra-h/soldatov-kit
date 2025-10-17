@@ -24,7 +24,7 @@ export default class TControl<TEvents extends TControlEvents> extends TComponent
 	/** Размер контрола */
 	protected _sizeHelper: TSize
 
-	constructor(options: IComponentOptions<IControl>) {
+	constructor(options: IComponentOptions<IControl> = {}) {
 		options = TComponent.prepareOptions(options, 's-control')
 
 		super(options)
