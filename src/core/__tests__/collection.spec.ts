@@ -51,10 +51,13 @@ describe('TCollectionItem', () => {
 describe('TCollection', () => {
 	it('add/insert/insertAt добавляют элементы', () => {
 		const col = new TCollection(TCollectionItem)
-		const item1 = col.add()
+		const item1 = col.add({ id: 'item1' })
 		expect(col.count).toBe(1)
+		expect(item1.id).toBe('item1')
+
 		const item2 = col.insert(0)
 		expect(col.count).toBe(2)
+
 		// insertAt
 		const item3 = new TCollectionItem()
 		const ok = col.insertAt(item3, 1)

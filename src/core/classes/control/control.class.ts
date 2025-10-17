@@ -107,6 +107,7 @@ export default class TControl<TEvents extends TControlEvents> extends TComponent
 	getProps(): TObjectProps {
 		return {
 			...super.getProps(),
+			name: this._name,
 			text: this._text,
 			disabled: this._disabled,
 			focused: this._focused,

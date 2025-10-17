@@ -50,22 +50,11 @@ export class TControlCollection<
 
 	/**
 	 * Создаёт и добавляет элемент в коллекцию.
+	 * @param source Частичный набор свойств элемента
 	 * @returns созданный элемент типа TItem
 	 */
-	addItem(): TItem {
-		return this.add() as TItem
-	}
-
-	/**
-	 * Создаёт элемент и задаёт свойства.
-	 * @param props Частичный набор свойств элемента
-	 */
-	addItemWith(props: Partial<TItem>): TItem {
-		const item = this.addItem()
-
-		item.assign(Object.assign(new this._itemCtor(), props))
-
-		return item
+	addItem(source: Partial<TItem> = {}): TItem {
+		return this.add(source) as TItem
 	}
 
 	/**

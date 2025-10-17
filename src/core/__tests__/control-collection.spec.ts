@@ -80,17 +80,25 @@ describe('AbstractControlInputItem', () => {
 })
 
 describe('TControlCollection', () => {
-	it('addItem, addItemWith, insertItem, deleteByName, forEachItem, toArray работают', () => {
+	it('addItem, insertItem, deleteByName, forEachItem, toArray работают', () => {
 		const owner = { name: 'owner' }
 		const col = new TControlCollection<TestControlItem>(owner, TestControlItem)
-		const item1 = col.addItem()
+
+		const item1 = col.addItem({
+			id: 'item1',
+			name: 'control1',
+			text: 'Control 1',
+		})
 		expect(item1).toBeInstanceOf(TestControlItem)
-		const item2 = col.addItemWith({ text: 'abc' })
-		expect(item2.text).toBe('abc')
+		expect(item1.id).toBe('item1')
+		expect(item1.name).toBe('control1')
+		expect(item1.text).toBe('Control 1')
+
 		const item3 = col.insertItem(0)
 		expect(item3).toBeInstanceOf(TestControlItem)
 		item3.name = 'delme'
 		expect(col.deleteByName('delme')).toBe(true)
+
 		let count = 0
 		col.forEachItem(() => count++)
 		expect(count).toBe(col.count)

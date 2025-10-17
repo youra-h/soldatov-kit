@@ -14,7 +14,7 @@ export class TCollectionItem implements ICollectionItem {
 	/**
 	 * Уникальный идентификатор элемента внутри коллекции.
 	 */
-	id?: number
+	id?: number | string
 
 	private _index: number = -1
 

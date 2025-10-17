@@ -1,5 +1,5 @@
 import { TEvented } from '../evented'
-import type { IEventedCollection, TCollectionEvents } from './types'
+import type { TCollectionEvents } from './types'
 import { TCollectionItem } from './collection-item.class'
 import type { TConstructor } from '../../common/types'
 
@@ -64,9 +64,12 @@ export class TCollection extends TEvented<TCollectionEvents> {
 	 * Создаёт и добавляет новый элемент в конец коллекции.
 	 * Возвращает созданный элемент.
 	 */
-	add(): TCollectionItem {
+	add(source: Partial<TCollectionItem> = {}): TCollectionItem {
 		const item = new this._itemClass(this)
-		item.id = item.id ?? this._nextId++
+
+		source.id = source.id ?? this._nextId++
+
+		item.assign(source as TCollectionItem)
 
 		this._items.push(item)
 		this.reindex()

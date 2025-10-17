@@ -5,7 +5,7 @@ export interface ICollectionItem {
 	// Ссылка на коллекцию-владелец.
 	collection: TCollection | null
 	// Уникальный идентификатор элемента внутри коллекции.
-	id?: number
+	id?: number | string
 	// Текущее положение элемента в коллекции.
 	index: number
 	// Копирует данные из другого элемента.
