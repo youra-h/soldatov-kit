@@ -268,6 +268,11 @@ export function SelectableCollectionMixin<
 	}
 }
 
+/**
+ * Фабрика создания коллекции с поддержкой выбора и контролов.
+ * @template TItem - тип элемента коллекции
+ * @returns Класс коллекции с поддержкой выбора и контролов
+ */
 export function SelectableControlCollection<TItem extends AbstractControlItem<any>>() {
 	const Mixed = SelectableCollectionMixin(TControlCollection)
 
