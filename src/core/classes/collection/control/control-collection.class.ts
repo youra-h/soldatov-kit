@@ -15,7 +15,7 @@ export const defaultValues = {
 export class TControlCollection<
 	TItem extends AbstractControlItem<TControlType>,
 	TControlType extends TControl<any> = TControl<any>,
-> extends TCollectionOwned {
+> extends TCollectionOwned<TItem> {
 	protected _itemCtor: TConstructor<TItem>
 
 	/** Внутреннее состояние disabled */
@@ -46,6 +46,13 @@ export class TControlCollection<
 		this.forEach((item) => {
 			;(item as TItem).disabled = value
 		})
+	}
+
+	override add(source: Partial<TItem> = {}): TItem {
+		// Применяем текущее состояние disabled к новому элементу
+		source.disabled = this._disabled
+
+		return super.add(source) as TItem
 	}
 
 	/**
@@ -90,7 +97,7 @@ export class TControlCollection<
 	/**
 	 * Возвращает массив элементов с корректным типом.
 	 */
-	toArray<T extends TCollectionItem = TItem>(): T[] {
+	toArray<T extends TItem = TItem>(): T[] {
 		return super.toArray<T>()
 	}
 }

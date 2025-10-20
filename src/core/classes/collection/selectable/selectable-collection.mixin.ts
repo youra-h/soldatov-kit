@@ -22,8 +22,8 @@ export const defaultValues: ISelectableCollectionProps = {
  * @returns Класс, расширяющий базу поведением выбора
  */
 export function SelectableCollectionMixin<
-	TBase extends TConstructor<TCollectionOwned>,
-	TItem extends TCollectionItem = TCollectionItem,
+	TItem extends TCollectionItem,
+	TBase extends TConstructor<TCollectionOwned<TItem>>,
 >(Base: TBase) {
 	return class TSelectableCollection
 		extends (Base as any)
@@ -146,6 +146,23 @@ export function SelectableCollectionMixin<
 
 			;(it as any).selected = true
 			this._selectedItems.push(it)
+		}
+
+		/**
+		 * Выбирает элемент по идентификатору.
+		 * @param id - идентификатор элемента
+		 * @returns true, если элемент с таким идентификатором найден и выбран, иначе false
+		 */
+		selectById(id: number | string): TItem | undefined {
+			const arr = (this as any).toArray() as TItem[]
+
+			const found = arr.find((it) => it.id === id)
+
+			if (!found) return undefined
+
+			this.select(found)
+
+			return found
 		}
 
 		/**
@@ -274,11 +291,11 @@ export function SelectableCollectionMixin<
  * @returns Класс коллекции с поддержкой выбора и контролов
  */
 export function SelectableControlCollection<TItem extends AbstractControlItem<any>>() {
-	const Mixed = SelectableCollectionMixin(TControlCollection)
+	const Mixed = SelectableCollectionMixin<TItem, typeof TControlCollection>(TControlCollection)
 
 	return Mixed as unknown as new (
-		owner?: any,
-		itemClass?: TConstructor<TItem>,
+		owner: any,
+		itemClass: TConstructor<TItem>,
 		opts?: { multiSelect?: boolean },
 	) => ISelectableCollection<TItem> & TControlCollection<TItem, any>
 }

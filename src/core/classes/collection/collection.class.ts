@@ -13,18 +13,20 @@ import type { TConstructor } from '../../common/types'
  * @fires beforeMove - Элемент будет перемещён (можно отменить)
  * @fires afterMove - Элемент был перемещён
  */
-export class TCollection extends TEvented<TCollectionEvents> {
+export class TCollection<
+	TItem extends TCollectionItem = TCollectionItem,
+> extends TEvented<TCollectionEvents> {
 	/**
 	 * Внутренний массив элементов.
 	 * @protected
 	 */
-	protected _items: TCollectionItem[] = []
+	protected _items: TItem[] = []
 
 	/**
 	 * Конструктор класса элементов, используемый при создании новых элементов.
 	 * @protected
 	 */
-	protected _itemClass: TConstructor<TCollectionItem>
+	protected _itemClass: TConstructor<TItem>
 
 	/**
 	 * Счётчик вложенных вызовов beginUpdate/endUpdate.
@@ -47,7 +49,7 @@ export class TCollection extends TEvented<TCollectionEvents> {
 	 * Создаёт коллекцию, которая будет создавать элементы типа itemClass.
 	 * @param itemClass Класс элементов коллекции.
 	 */
-	constructor(itemClass: TConstructor<TCollectionItem>) {
+	constructor(itemClass: TConstructor<TItem>) {
 		super()
 
 		this._itemClass = itemClass
@@ -64,12 +66,12 @@ export class TCollection extends TEvented<TCollectionEvents> {
 	 * Создаёт и добавляет новый элемент в конец коллекции.
 	 * Возвращает созданный элемент.
 	 */
-	add(source: Partial<TCollectionItem> = {}): TCollectionItem {
+	add(source: Partial<TItem> = {}): TItem {
 		const item = new this._itemClass(this)
 
 		source.id = source.id ?? this._nextId++
 
-		item.assign(source as TCollectionItem)
+		item.assign(source as TItem)
 
 		this._items.push(item)
 		this.reindex()
@@ -85,7 +87,7 @@ export class TCollection extends TEvented<TCollectionEvents> {
 	 * корректируется к границам коллекции). Возвращает созданный элемент.
 	 * @param index Позиция вставки.
 	 */
-	insert(index: number): TCollectionItem | undefined {
+	insert(index: number): TItem | undefined {
 		const item = new this._itemClass(this)
 		item.id = this._nextId++
 
@@ -102,7 +104,7 @@ export class TCollection extends TEvented<TCollectionEvents> {
 	 * @param index Индекс, по которому нужно вставить элемент
 	 * @returns true, если элемент был успешно вставлен, false если не удалось
 	 */
-	insertAt(item: TCollectionItem, index?: number): boolean {
+	insertAt(item: TItem, index?: number): boolean {
 		if (typeof index === 'undefined') {
 			index = this._items.length
 		}
@@ -173,7 +175,7 @@ export class TCollection extends TEvented<TCollectionEvents> {
 	 * Возвращает элемент по индексу или undefined, если индекс вне диапазона.
 	 * @param index Индекс запрашиваемого элемента.
 	 */
-	getItem(index: number): TCollectionItem | undefined {
+	getItem(index: number): TItem | undefined {
 		return this._items[index]
 	}
 
@@ -183,7 +185,7 @@ export class TCollection extends TEvented<TCollectionEvents> {
 	 * @param item Элемент, который нужно переместить.
 	 * @param newIndex Новая позиция элемента.
 	 */
-	setItemIndex(item: TCollectionItem, newIndex: number): void {
+	setItemIndex(item: TItem, newIndex: number): void {
 		const oldIndex = this._items.indexOf(item)
 
 		if (oldIndex === -1 || oldIndex === newIndex) return
@@ -222,7 +224,7 @@ export class TCollection extends TEvented<TCollectionEvents> {
 	 * @param toIndex Новая позиция элемента.
 	 * @returns void
 	 */
-	moveItem(fromItem: TCollectionItem, toIndex: number): void {
+	moveItem(fromItem: TItem, toIndex: number): void {
 		const fromIndex = this._items.indexOf(fromItem)
 
 		if (fromIndex === -1) return
@@ -259,7 +261,7 @@ export class TCollection extends TEvented<TCollectionEvents> {
 	 */
 	protected reindex(): void {
 		for (let i = 0; i < this._items.length; i++) {
-			;(this._items[i] as TCollectionItem)._updateIndex(i)
+			;(this._items[i] as TItem)._updateIndex(i)
 		}
 	}
 
@@ -269,7 +271,7 @@ export class TCollection extends TEvented<TCollectionEvents> {
 	 * @param item Опционально: элемент, который изменился.
 	 * @protected
 	 */
-	protected notifyChange(item?: TCollectionItem): void {
+	protected notifyChange(item?: TItem): void {
 		if (this._updateCount > 0) return
 
 		this.emit('changed', { collection: this, item })
@@ -280,7 +282,7 @@ export class TCollection extends TEvented<TCollectionEvents> {
 	 * Коллекция обработает событие и при необходимости эметит внешнее уведомление.
 	 * @param item Элемент, который изменился.
 	 */
-	itemChanged(item: TCollectionItem): void {
+	itemChanged(item: TItem): void {
 		this.notifyChange(item)
 	}
 
@@ -288,7 +290,7 @@ export class TCollection extends TEvented<TCollectionEvents> {
 	 * Выполняет функцию fn для каждого элемента коллекции.
 	 * @param fn Функция, принимающая элемент и его индекс.
 	 */
-	forEach(fn: (item: TCollectionItem, idx: number) => void): void {
+	forEach(fn: (item: TItem, idx: number) => void): void {
 		this._items.forEach(fn)
 	}
 
@@ -296,7 +298,7 @@ export class TCollection extends TEvented<TCollectionEvents> {
 	 * Возвращает массив элементов коллекции.
 	 * Возвращаемый тип параметризуется типом элементов.
 	 */
-	toArray<T extends TCollectionItem>(): T[] {
+	toArray<T extends TItem>(): T[] {
 		return this._items as T[]
 	}
 }

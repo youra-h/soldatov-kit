@@ -21,6 +21,8 @@ export interface ISelectableCollection<TItem extends TCollectionItem>
 	 * @param itemOrIndex Элемент или его индекс
 	 */
 	select(itemOrIndex: TIndexOrItem<TItem>): void
+	/** Выделить элемент по его id */
+	selectById(id: number | string): TItem | undefined
 	/** Снять выделение с элемента */
 	deselect(itemOrIndex: TIndexOrItem<TItem>): void
 	/** Переключить выделение элемента */
