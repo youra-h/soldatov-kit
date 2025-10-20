@@ -11,7 +11,7 @@ describe('Tabs (Tabs / TTabItem)', () => {
 	})
 
 	it('добавляет вкладки и возвращает корректные элементы', () => {
-		const t1 = tabs.addItem()
+		const t1 = tabs.add()
 		t1.text = 'Главная'
 		t1.name = 'main'
 
