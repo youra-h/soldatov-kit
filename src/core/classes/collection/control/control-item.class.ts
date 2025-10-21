@@ -3,6 +3,7 @@ import { TCollectionItem } from './../collection-item.class'
 import { type IControl, TControl } from './../../control'
 import type { TComponentSize } from '../../../common/types'
 import type { TObjectProps } from '../../object'
+import type { TEventEmitter } from '../../../common/event-emitter'
 
 /**
  * Абстрактный элемент коллекции для UI-контролов.
@@ -37,6 +38,10 @@ export abstract class AbstractControlItem<TControlType extends TControl<any> = T
 		super.free()
 
 		this._control = null
+	}
+
+	get events(): TEventEmitter {
+		return this._control!.events
 	}
 
 	get tag(): string | Object {

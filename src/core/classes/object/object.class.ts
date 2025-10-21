@@ -5,13 +5,13 @@ export abstract class TObject implements IObject {
 		return {}
 	}
 
-	assign(props: Partial<TObjectProps>): void {
+	assign(source: Partial<TObjectProps>): void {
 		const keys = Object.keys(this.getProps()) as (keyof TObjectProps)[]
 
 		for (const key of keys) {
-			if (props[key] !== undefined) {
+			if (source[key] !== undefined) {
 				// @ts-expect-error: динамическое присваивание через сеттеры
-				this[key] = props[key]
+				this[key] = source[key]
 			}
 		}
 	}

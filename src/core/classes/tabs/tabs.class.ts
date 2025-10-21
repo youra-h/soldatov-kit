@@ -1,4 +1,4 @@
-import { TTabItem } from './tab-item.class'
+import { TTabItem } from './tab-item/tab-item.class'
 import { SelectableControlCollection } from '../collection'
 
 /**

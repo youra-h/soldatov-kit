@@ -1,5 +1,4 @@
 import type { TCollectionItem } from '../collection-item.class'
-import type { ICollection } from '../types'
 
 export type TIndexOrItem<T> = T | number
 
