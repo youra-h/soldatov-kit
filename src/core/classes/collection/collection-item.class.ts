@@ -1,10 +1,11 @@
 import { TCollection } from './collection.class'
-import type { ICollectionItem } from './types'
+import type { ICollectionItem, ICollectionItemProps } from './types'
+import { TObject } from '../object'
 
 /**
  * Элемент коллекции.
  */
-export class TCollectionItem implements ICollectionItem {
+export class TCollectionItem extends TObject<ICollectionItemProps> implements ICollectionItem {
 	/**
 	 * Ссылка на коллекцию-владелец.
 	 * @readonly
@@ -19,6 +20,8 @@ export class TCollectionItem implements ICollectionItem {
 	private _index: number = -1
 
 	constructor(collection?: TCollection) {
+		super()
+
 		if (collection) {
 			this._collection = collection
 		}
@@ -61,6 +64,15 @@ export class TCollectionItem implements ICollectionItem {
 	 */
 	_updateIndex(value: number): void {
 		this._index = value
+	}
+
+	getProps(): ICollectionItemProps {
+		return {
+			...super.getProps(),
+			id: this.id,
+			index: this.index,
+			collection: this._collection,
+		}
 	}
 
 	/**

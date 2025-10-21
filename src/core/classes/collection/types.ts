@@ -1,6 +1,6 @@
 import { TCollection } from './collection.class'
 import { TCollectionItem } from './collection-item.class'
-import type { IAssignable } from '../../common/types'
+import type { IObject } from '../object'
 
 export interface ICollectionItemProps {
 	// Ссылка на коллекцию-владелец.
@@ -11,7 +11,7 @@ export interface ICollectionItemProps {
 	index: number
 }
 
-export interface ICollectionItem extends IAssignable<ICollectionItemProps>, ICollectionItemProps {
+export interface ICollectionItem extends IObject<ICollectionItemProps> {
 	// Вызывает changed() для нотификации коллекции/владельца.
 	changed(): void
 	// Освобождает ресурсы, отписывается от событий и т.д.
