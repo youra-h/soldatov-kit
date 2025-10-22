@@ -9,6 +9,7 @@ export {
 export * from './control/control-input-item.class'
 export * from './control/control-item.class'
 export * from './control/control-value-item.class'
+export * from './control/types'
 export {
 	SelectableCollectionMixin,
 	defaultValues as defaultValuesSelectableCollection,
