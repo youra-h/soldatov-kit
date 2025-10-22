@@ -1,5 +1,6 @@
 import { AbstractControlItem } from './control-item.class'
 import { type IControlValue, TControlValue } from '../../control-value'
+import type { IControlValueItem } from './types'
 
 /**
  * Абстрактный элемент коллекции для UI-контролов.
@@ -7,8 +8,9 @@ import { type IControlValue, TControlValue } from '../../control-value'
  */
 export abstract class AbstractControlValueItem<
 		TControlType extends TControlValue<any> = TControlValue<any>,
+		TProps extends IControlValueItem = IControlValueItem,
 	>
-	extends AbstractControlItem<TControlType>
+	extends AbstractControlItem<TControlType, TProps>
 	implements IControlValue
 {
 	get value(): any {
