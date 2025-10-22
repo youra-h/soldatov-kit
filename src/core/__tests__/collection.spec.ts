@@ -3,46 +3,48 @@ import { TCollectionItem } from '../classes/collection/collection-item.class'
 import { TCollection } from '../classes/collection/collection.class'
 import { TCollectionOwned } from '../classes/collection/collection-owned.class'
 
-describe('TCollectionItem', () => {
+class TestItem extends TCollectionItem {}
+
+describe('TestItem', () => {
 	it('создается без коллекции и с коллекцией', () => {
-		const item1 = new TCollectionItem()
+		const item1 = new TestItem()
 		expect(item1.collection).toBeNull()
-		const col = new TCollection(TCollectionItem)
-		const item2 = new TCollectionItem(col)
+		const col = new TCollection(TestItem)
+		const item2 = new TestItem(col)
 		expect(item2.collection).toBe(col)
 	})
 
 	it('index геттер/сеттер работает и делегирует коллекции', () => {
-		const col = new TCollection(TCollectionItem)
-		const item = new TCollectionItem(col)
+		const col = new TCollection(TestItem)
+		const item = new TestItem(col)
 		const spy = vi.spyOn(col, 'setItemIndex')
 		item.index = 2
 		expect(spy).toHaveBeenCalledWith(item, 2)
 		spy.mockRestore()
-		const item2 = new TCollectionItem()
+		const item2 = new TestItem()
 		item2.index = 5
 		expect(item2.index).toBe(5)
 	})
 
 	it('assign копирует id', () => {
-		const a = new TCollectionItem()
-		const b = new TCollectionItem()
+		const a = new TestItem()
+		const b = new TestItem()
 		a.id = 123
 		b.assign(a)
 		expect(b.id).toBe(123)
 	})
 
 	it('changed вызывает itemChanged у коллекции', () => {
-		const col = new TCollection(TCollectionItem)
-		const item = new TCollectionItem(col)
+		const col = new TCollection(TestItem)
+		const item = new TestItem(col)
 		const spy = vi.spyOn(col, 'itemChanged')
 		item.changed()
 		expect(spy).toHaveBeenCalledWith(item)
 	})
 
 	it('free отсоединяет от коллекции', () => {
-		const col = new TCollection(TCollectionItem)
-		const item = new TCollectionItem(col)
+		const col = new TCollection(TestItem)
+		const item = new TestItem(col)
 		item.free()
 		expect(item.collection).toBeNull()
 	})
@@ -50,7 +52,7 @@ describe('TCollectionItem', () => {
 
 describe('TCollection', () => {
 	it('add/insert/insertAt добавляют элементы', () => {
-		const col = new TCollection(TCollectionItem)
+		const col = new TCollection(TestItem)
 		const item1 = col.add({ id: 'item1' })
 		expect(col.count).toBe(1)
 		expect(item1.id).toBe('item1')
@@ -59,18 +61,18 @@ describe('TCollection', () => {
 		expect(col.count).toBe(2)
 
 		// insertAt
-		const item3 = new TCollectionItem()
+		const item3 = new TestItem()
 		const ok = col.insertAt(item3, 1)
 		expect(ok).toBe(true)
 		expect(col.count).toBe(3)
 		expect(col.getItem(1)).toBe(item3)
 		// insertAt out of bounds
-		const item4 = new TCollectionItem()
+		const item4 = new TestItem()
 		const ok2 = col.insertAt(item4, 10)
 		expect(ok2).toBe(false)
 		expect(col.count).toBe(3)
 		// insertAt без указания индекса
-		const item5 = new TCollectionItem()
+		const item5 = new TestItem()
 		const ok3 = col.insertAt(item5)
 		expect(ok3).toBe(true)
 		expect(col.count).toBe(4)
@@ -78,7 +80,7 @@ describe('TCollection', () => {
 	})
 
 	it('delete удаляет элемент по индексу', () => {
-		const col = new TCollection(TCollectionItem)
+		const col = new TCollection(TestItem)
 		col.add()
 		expect(col.count).toBe(1)
 		const ok = col.delete(0)
@@ -87,7 +89,7 @@ describe('TCollection', () => {
 	})
 
 	it('clear очищает коллекцию', () => {
-		const col = new TCollection(TCollectionItem)
+		const col = new TCollection(TestItem)
 		col.add()
 		col.add()
 		col.clear()
@@ -95,7 +97,7 @@ describe('TCollection', () => {
 	})
 
 	it('setItemIndex/move/moveItem перемещают элементы', () => {
-		const col = new TCollection(TCollectionItem)
+		const col = new TCollection(TestItem)
 		const a = col.add()
 		const b = col.add()
 		col.setItemIndex(a, 1)
@@ -107,7 +109,7 @@ describe('TCollection', () => {
 	})
 
 	it('beginUpdate/endUpdate откладывают notifyChange (changed), но не другие события', () => {
-		const col = new TCollection(TCollectionItem)
+		const col = new TCollection(TestItem)
 		const changed = vi.fn()
 		const added = vi.fn()
 		col.on('changed', changed)
@@ -132,7 +134,7 @@ describe('TCollection', () => {
 	})
 
 	it('forEach и toArray работают', () => {
-		const col = new TCollection(TCollectionItem)
+		const col = new TCollection(TestItem)
 		col.add()
 		col.add()
 		let count = 0
@@ -145,14 +147,14 @@ describe('TCollection', () => {
 describe('TCollectionOwned', () => {
 	it('getOwner возвращает владельца', () => {
 		const owner = { name: 'test' }
-		const col = new TCollectionOwned(owner, TCollectionItem)
+		const col = new TCollectionOwned(owner, TestItem)
 		expect(col.getOwner()).toBe(owner)
 	})
 })
 
 describe('TCollection events', () => {
 	it('emits "added" and "changed" on add', () => {
-		const col = new TCollection(TCollectionItem)
+		const col = new TCollection(TestItem)
 		const added = vi.fn()
 		const changed = vi.fn()
 		col.on('added', added)
@@ -163,7 +165,7 @@ describe('TCollection events', () => {
 	})
 
 	it('emits beforeDelete/afterDelete/changed on delete', () => {
-		const col = new TCollection(TCollectionItem)
+		const col = new TCollection(TestItem)
 		const item = col.add()
 		const beforeDelete = vi.fn(() => true)
 		const afterDelete = vi.fn()
@@ -179,7 +181,7 @@ describe('TCollection events', () => {
 	})
 
 	it('can cancel delete via beforeDelete', () => {
-		const col = new TCollection(TCollectionItem)
+		const col = new TCollection(TestItem)
 		col.add()
 		col.on('beforeDelete', () => false)
 		const ok = col.delete(0)
@@ -187,7 +189,7 @@ describe('TCollection events', () => {
 	})
 
 	it('emits cleared and changed on clear', () => {
-		const col = new TCollection(TCollectionItem)
+		const col = new TCollection(TestItem)
 		col.add()
 		const cleared = vi.fn()
 		const changed = vi.fn()
@@ -199,7 +201,7 @@ describe('TCollection events', () => {
 	})
 
 	it('emits beforeMove/afterMove/changed on move', () => {
-		const col = new TCollection(TCollectionItem)
+		const col = new TCollection(TestItem)
 		const a = col.add()
 		const b = col.add()
 		const beforeMove = vi.fn(() => true)
@@ -220,7 +222,7 @@ describe('TCollection events', () => {
 	})
 
 	it('can cancel move via beforeMove', () => {
-		const col = new TCollection(TCollectionItem)
+		const col = new TCollection(TestItem)
 		col.add()
 		col.add()
 		col.on('beforeMove', () => false)

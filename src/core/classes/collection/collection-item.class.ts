@@ -5,7 +5,10 @@ import { TObject } from '../object'
 /**
  * Элемент коллекции.
  */
-export class TCollectionItem extends TObject<ICollectionItemProps> implements ICollectionItem {
+export abstract class TCollectionItem
+	extends TObject<ICollectionItemProps>
+	implements ICollectionItem
+{
 	/**
 	 * Ссылка на коллекцию-владелец.
 	 * @readonly
