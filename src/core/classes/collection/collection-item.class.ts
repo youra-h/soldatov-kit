@@ -5,8 +5,8 @@ import { TObject } from '../object'
 /**
  * Элемент коллекции.
  */
-export abstract class TCollectionItem
-	extends TObject<ICollectionItemProps>
+export abstract class TCollectionItem<TProps extends ICollectionItemProps = ICollectionItemProps>
+	extends TObject<TProps>
 	implements ICollectionItem
 {
 	/**
@@ -69,7 +69,7 @@ export abstract class TCollectionItem
 		this._index = value
 	}
 
-	getProps(): ICollectionItemProps {
+	getProps(): TProps {
 		return {
 			...super.getProps(),
 			id: this.id,
@@ -83,7 +83,7 @@ export abstract class TCollectionItem
 	 * По умолчанию копирует только id, наследники расширяют логику.
 	 * @param source Источник данных для копирования.
 	 */
-	assign(source: TCollectionItem): void {
+	assign(source: Partial<TProps>): void {
 		if (!source) return
 
 		this.id = source.id

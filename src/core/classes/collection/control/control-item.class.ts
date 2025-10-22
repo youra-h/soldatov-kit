@@ -4,13 +4,14 @@ import { type IControl, TControl } from './../../control'
 import type { TComponentSize } from '../../../common/types'
 import type { TObjectProps } from '../../object'
 import type { TEventEmitter } from '../../../common/event-emitter'
+import type { IControlItem } from './types'
 
 /**
  * Абстрактный элемент коллекции для UI-контролов.
  * Наследники должны расширять assign и могут добавлять свои поля.
  */
 export abstract class AbstractControlItem<TControlType extends TControl<any> = TControl<any>>
-	extends TCollectionItem
+	extends TCollectionItem<IControlItem>
 	implements IControl
 {
 	protected _control: TControlType | null
@@ -26,7 +27,7 @@ export abstract class AbstractControlItem<TControlType extends TControl<any> = T
 	 * Наследники должны вызывать super.assign(source) и копировать свои поля.
 	 * @param source Источник данных
 	 */
-	assign(source: AbstractControlItem<TControlType>): void {
+	assign(source: Partial<IControlItem>): void {
 		super.assign(source)
 
 		if (!source) return
@@ -115,8 +116,11 @@ export abstract class AbstractControlItem<TControlType extends TControl<any> = T
 		super.changed()
 	}
 
-	getProps(): TObjectProps {
-		return this._control!.getProps()
+	getProps(): IControlItem {
+		return {
+			...super.getProps(),
+			...this._control!.getProps(),
+		}
 	}
 
 	show(): void {
