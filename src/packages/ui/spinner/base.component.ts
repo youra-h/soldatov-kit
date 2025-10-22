@@ -1,10 +1,5 @@
 import { type PropType, watch } from 'vue'
-import {
-	type ISpinner,
-	defaultValuesSpinner,
-	type TComponentSize,
-	type TComponentVariant,
-} from '../../../core'
+import { type ISpinner, TSpinner, type TComponentSize, type TComponentVariant } from '../../../core'
 import { Component, emitsComponent, propsComponent, syncComponent } from '../component'
 import type { TEmits, TProps, ISyncComponentOptions } from '../../common/types'
 
@@ -14,15 +9,15 @@ export const propsSpinner: TProps = {
 	...propsComponent,
 	variant: {
 		type: String as PropType<ISpinner['variant']>,
-		default: defaultValuesSpinner.variant,
+		default: TSpinner.defaultValues.variant,
 	},
 	size: {
 		type: String as PropType<ISpinner['size']>,
-		default: defaultValuesSpinner.size,
+		default: TSpinner.defaultValues.size,
 	},
 	borderWidth: {
 		type: [String, Number] as PropType<ISpinner['borderWidth']>,
-		default: defaultValuesSpinner.borderWidth,
+		default: TSpinner.defaultValues.borderWidth,
 	},
 }
 

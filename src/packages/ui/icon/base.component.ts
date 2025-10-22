@@ -1,5 +1,5 @@
 import { type PropType, watch } from 'vue'
-import { type IIcon, defaultValuesIcon, type TComponentSize } from '../../../core'
+import { type IIcon, TIcon, type TComponentSize } from '../../../core'
 import { Component, emitsComponent, propsComponent, syncComponent } from '../component'
 import type { TEmits, TProps, ISyncComponentOptions } from '../../common/types'
 
@@ -9,19 +9,19 @@ export const propsIcon: TProps = {
 	...propsComponent,
 	tag: {
 		type: [String, Object] as PropType<IIcon['tag']>,
-		default: defaultValuesIcon.tag,
+		default: TIcon.defaultValues.tag,
 	},
 	size: {
 		type: String as PropType<IIcon['size']>,
-		default: defaultValuesIcon.size,
+		default: TIcon.defaultValues.size,
 	},
 	width: {
 		type: [Number, String] as PropType<IIcon['width']>,
-		default: defaultValuesIcon.width,
+		default: TIcon.defaultValues.width,
 	},
 	height: {
 		type: [Number, String] as PropType<IIcon['height']>,
-		default: defaultValuesIcon.height,
+		default: TIcon.defaultValues.height,
 	},
 }
 

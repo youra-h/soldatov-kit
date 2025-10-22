@@ -1,7 +1,7 @@
 import { type PropType, watch } from 'vue'
 import {
 	type IControlInput,
-	defaultValuesControlInput,
+	TControlInput,
 	type TComponentVariant,
 	type TControlInputState,
 	TSpinner,
@@ -20,31 +20,31 @@ export const propsControlInput: TProps = {
 	...propsControlValue,
 	variant: {
 		type: String as PropType<IControlInput['variant']>,
-		default: defaultValuesControlInput.variant,
+		default: TControlInput.defaultValues.variant,
 	},
 	readonly: {
 		type: Boolean as PropType<IControlInput['readonly']>,
-		default: defaultValuesControlInput.readonly,
+		default: TControlInput.defaultValues.readonly,
 	},
 	required: {
 		type: Boolean as PropType<IControlInput['required']>,
-		default: defaultValuesControlInput.required,
+		default: TControlInput.defaultValues.required,
 	},
 	invalid: {
 		type: Boolean as PropType<IControlInput['invalid']>,
-		default: defaultValuesControlInput.invalid,
+		default: TControlInput.defaultValues.invalid,
 	},
 	state: {
 		type: String as PropType<IControlInput['state']>,
-		default: defaultValuesControlInput.state,
+		default: TControlInput.defaultValues.state,
 	},
 	loading: {
 		type: Boolean as PropType<IControlInput['loading']>,
-		default: defaultValuesControlInput.loading,
+		default: TControlInput.defaultValues.loading,
 	},
 	spinner: {
 		type: Object as PropType<IControlInput['spinner']>,
-		default: defaultValuesControlInput.spinner,
+		default: TControlInput.defaultValues.spinner,
 	},
 }
 

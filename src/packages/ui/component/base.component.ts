@@ -1,5 +1,5 @@
 import { type PropType, watch } from 'vue'
-import { type IComponent, defaultValuesComponent } from '../../../core'
+import { type IComponent, TComponent } from '../../../core'
 import type { TEmits, TProps, ISyncComponentOptions } from '../../common/types'
 
 export const emitsComponent: TEmits = [
@@ -16,19 +16,19 @@ export const propsComponent: TProps = {
 	},
 	id: {
 		type: [String, Number] as PropType<IComponent['id']>,
-		default: defaultValuesComponent.id,
+		default: TComponent.defaultValues.id,
 	},
 	tag: {
 		type: [Object, String] as PropType<IComponent['tag']>,
-		default: defaultValuesComponent.tag,
+		default: TComponent.defaultValues.tag,
 	},
 	visible: {
 		type: Boolean as PropType<IComponent['visible']>,
-		default: defaultValuesComponent.visible,
+		default: TComponent.defaultValues.visible,
 	},
 	hidden: {
 		type: Boolean as PropType<IComponent['hidden']>,
-		default: defaultValuesComponent.hidden,
+		default: TComponent.defaultValues.hidden,
 	},
 }
 

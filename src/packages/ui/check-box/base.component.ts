@@ -1,5 +1,5 @@
 import { type PropType, watch } from 'vue'
-import { type ICheckBox, defaultValuesCheckBox, TIcon } from '../../../core'
+import { type ICheckBox, TCheckBox, TIcon } from '../../../core'
 import {
 	BaseControlInput,
 	emitsControlInput,
@@ -19,23 +19,23 @@ export const propsCheckBox: TProps = {
 	...propsControlInput,
 	value: {
 		type: [Boolean, Number] as PropType<ICheckBox['value']>,
-		default: defaultValuesCheckBox.value,
+		default: TCheckBox.defaultValues.value,
 	},
 	indeterminate: {
 		type: Boolean as PropType<ICheckBox['indeterminate']>,
-		default: defaultValuesCheckBox.indeterminate,
+		default: TCheckBox.defaultValues.indeterminate,
 	},
 	plain: {
 		type: Boolean as PropType<ICheckBox['plain']>,
-		default: defaultValuesCheckBox.plain,
+		default: TCheckBox.defaultValues.plain,
 	},
 	icon: {
 		type: Object as PropType<ICheckBox['icon']>,
-		default: defaultValuesCheckBox.icon,
+		default: TCheckBox.defaultValues.icon,
 	},
 	indeterminateIcon: {
 		type: Object as PropType<ICheckBox['indeterminateIcon']>,
-		default: defaultValuesCheckBox.indeterminateIcon,
+		default: TCheckBox.defaultValues.indeterminateIcon,
 	},
 }
 

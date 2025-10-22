@@ -1,5 +1,5 @@
 import { type PropType, watch } from 'vue'
-import { type IControlValue, defaultValuesControlValue } from '../../../core'
+import { type IControlValue, TControlValue } from '../../../core'
 import { BaseControl, emitsControl, propsControl, syncControl } from '../control'
 import type { TEmits, TProps, ISyncComponentOptions } from '../../common/types'
 
@@ -9,7 +9,7 @@ export const propsControlValue: TProps = {
 	...propsControl,
 	value: {
 		type: String as PropType<IControlValue['value']>,
-		default: defaultValuesControlValue.value,
+		default: TControlValue.defaultValues.value,
 	},
 }
 

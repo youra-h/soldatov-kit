@@ -5,7 +5,7 @@ import {
 	type IButton,
 	type TButtonAppearance,
 	TSpinner,
-	defaultValuesButton,
+	TButton,
 } from '../../../core'
 import { Control, emitsControl, propsControl, syncControl } from '../control'
 import type { TEmits, TProps, ISyncComponentOptions } from '../../common/types'
@@ -18,27 +18,27 @@ export const propsButton: TProps = {
 	...propsControl,
 	tag: {
 		type: [String, Object] as PropType<IButton['tag']>,
-		default: defaultValuesButton.tag,
+		default: TButton.defaultValues.tag,
 	},
 	variant: {
 		type: String as PropType<IButton['variant']>,
-		default: defaultValuesButton.variant,
+		default: TButton.defaultValues.variant,
 	},
 	appearance: {
 		type: String as PropType<IButton['appearance']>,
-		default: defaultValuesButton.appearance,
+		default: TButton.defaultValues.appearance,
 	},
 	icon: {
 		type: Object as PropType<IButton['icon']>,
-		default: defaultValuesButton.icon,
+		default: TButton.defaultValues.icon,
 	},
 	loading: {
 		type: Boolean as PropType<IButton['loading']>,
-		default: defaultValuesButton.loading,
+		default: TButton.defaultValues.loading,
 	},
 	spinner: {
 		type: Object as PropType<IButton['spinner']>,
-		default: defaultValuesButton.spinner,
+		default: TButton.defaultValues.spinner,
 	},
 }
 

@@ -1,5 +1,5 @@
 import { type PropType, watch } from 'vue'
-import { type ISwitch, defaultValuesSwitch, TIcon } from '../../../core'
+import { type ISwitch, TSwitch, TIcon } from '../../../core'
 import {
 	BaseControlInput,
 	emitsControlInput,
@@ -16,11 +16,11 @@ export const propsSwitch: TProps = {
 	...propsControlInput,
 	value: {
 		type: [Boolean] as PropType<ISwitch['value']>,
-		default: defaultValuesSwitch.value,
+		default: TSwitch.defaultValues.value,
 	},
 	icon: {
 		type: Object as PropType<ISwitch['icon']>,
-		default: defaultValuesSwitch.icon,
+		default: TSwitch.defaultValues.icon,
 	},
 }
 
