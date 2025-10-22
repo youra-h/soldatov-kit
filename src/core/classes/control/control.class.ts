@@ -4,15 +4,18 @@ import type { TObjectProps } from '../object'
 import type { TComponentSize } from '../../common/types'
 import { TSize } from '../../common/size'
 
-export const defaultValues: Partial<IControl> = {
-	...defaultValuesComponent,
-	text: '',
-	disabled: false,
-	focused: false,
-	size: 'normal',
-}
+export default class TControl<TEvents extends TControlEvents>
+	extends TComponent<TEvents>
+	implements IControl
+{
+	static defaultValues: Partial<IControl> = {
+		...TComponent.defaultValues,
+		text: '',
+		disabled: false,
+		focused: false,
+		size: 'normal',
+	}
 
-export default class TControl<TEvents extends TControlEvents> extends TComponent<TEvents> implements IControl {
 	/** Имя контрола */
 	protected _name: string
 	/** Текстовое представление контрола */
@@ -33,13 +36,13 @@ export default class TControl<TEvents extends TControlEvents> extends TComponent
 
 		this._sizeHelper = new TSize({
 			baseClass: this._baseClass,
-			value: props.size ?? defaultValues.size!,
+			value: props.size ?? TControl.defaultValues.size!,
 		})
 
 		this._name = props.name ?? ''
-		this._text = props.text ?? defaultValues.text!
-		this._disabled = props.disabled ?? defaultValues.disabled!
-		this._focused = props.focused ?? defaultValues.focused!
+		this._text = props.text ?? TControl.defaultValues.text!
+		this._disabled = props.disabled ?? TControl.defaultValues.disabled!
+		this._focused = props.focused ?? TControl.defaultValues.focused!
 	}
 
 	get name(): string {

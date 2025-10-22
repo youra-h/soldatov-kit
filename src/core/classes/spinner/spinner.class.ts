@@ -5,15 +5,15 @@ import type { TObjectProps } from '../object'
 import { TSize } from '@/core/common/size'
 import { TVariant } from '../../common/variant'
 
-export const defaultValues: Partial<ISpinner> = {
-	...defaultValuesComponent,
-	variant: 'primary',
-	size: 'normal',
-	tag: 'span',
-	borderWidth: 'auto',
-}
-
 export default class TSpinner extends TComponent<TSpinnerEvents> implements ISpinner {
+	static defaultValues: Partial<ISpinner> = {
+		...TComponent.defaultValues,
+		variant: 'primary',
+		size: 'normal',
+		tag: 'span',
+		borderWidth: 'auto',
+	}
+
 	protected _sizeHelper: TSize
 	protected _variantHelper: TVariant
 	protected _borderWidth: number | 'auto'
@@ -28,18 +28,18 @@ export default class TSpinner extends TComponent<TSpinnerEvents> implements ISpi
 		this._sizeHelper = new TSize({
 			baseClass: this._baseClass,
 			exclude: ['normal'],
-			value: defaultValues.size!,
+			value: TSpinner.defaultValues.size!,
 		})
 
 		this._variantHelper = new TVariant({
 			baseClass: this._baseClass,
 			exclude: ['normal'],
-			value: props.variant ?? defaultValues.variant!,
+			value: props.variant ?? TSpinner.defaultValues.variant!,
 		})
 
-		this._tag = props.tag ?? defaultValues.tag!
-		this._borderWidth = props.borderWidth ?? defaultValues.borderWidth!
-		this.size = props.size ?? defaultValues.size!
+		this._tag = props.tag ?? TSpinner.defaultValues.tag!
+		this._borderWidth = props.borderWidth ?? TSpinner.defaultValues.borderWidth!
+		this.size = props.size ?? TSpinner.defaultValues.size!
 	}
 
 	get variant(): TComponentVariant {

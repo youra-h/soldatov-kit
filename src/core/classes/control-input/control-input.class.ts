@@ -6,20 +6,20 @@ import type { TObjectProps } from '../object'
 import { TVariant } from '../../common/variant'
 import { TSpinner } from '../spinner'
 
-export const defaultValues: Partial<IControlInput> = {
-	...defaultValuesControlValue,
-	variant: 'normal',
-	readonly: false,
-	required: false,
-	invalid: false,
-	state: 'normal',
-	loading: false,
-}
-
 export default class TControlInput<TEvents extends TControlInputEvents>
 	extends TControlValue<TEvents>
 	implements IControlInput
 {
+	static defaultValues: Partial<IControlInput> = {
+		...TControlValue.defaultValues,
+		variant: 'normal',
+		readonly: false,
+		required: false,
+		invalid: false,
+		state: 'normal',
+		loading: false,
+	}
+
 	/** Вспомогательный класс для работы с вариантом */
 	protected _variantHelper: TVariant
 
@@ -43,8 +43,8 @@ export default class TControlInput<TEvents extends TControlInputEvents>
 
 		const { props = {} } = options
 
-		this._loading = props.loading ?? defaultValues.loading!
-		this._spinner = props.spinner ?? defaultValues.spinner!
+		this._loading = props.loading ?? TControlInput.defaultValues.loading!
+		this._spinner = props.spinner ?? TControlInput.defaultValues.spinner!
 
 		this._variantHelper = new TVariant({
 			baseClass: this._baseClass,
@@ -56,12 +56,12 @@ export default class TControlInput<TEvents extends TControlInputEvents>
 		})
 
 		// Инициализируем значение отображения компонента
-		this._variantHelper.value = props.variant ?? defaultValues.variant!
+		this._variantHelper.value = props.variant ?? TControlInput.defaultValues.variant!
 
-		this._readonly = props.readonly ?? defaultValues.readonly!
-		this._required = props.required ?? defaultValues.required!
-		this._invalid = props.invalid ?? defaultValues.invalid!
-		this._state = props.state ?? defaultValues.state!
+		this._readonly = props.readonly ?? TControlInput.defaultValues.readonly!
+		this._required = props.required ?? TControlInput.defaultValues.required!
+		this._invalid = props.invalid ?? TControlInput.defaultValues.invalid!
+		this._state = props.state ?? TControlInput.defaultValues.state!
 
 		this._sizeHelper.on('change', (value) => {
 			// Если есть спиннер, синхронизируем его размер с кнопкой

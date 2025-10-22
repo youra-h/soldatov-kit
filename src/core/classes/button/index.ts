@@ -1,2 +1,2 @@
 export * from './types'
-export { default as TButton, defaultValues as defaultValuesButton } from './button.class'
+export { default as TButton } from './button.class'

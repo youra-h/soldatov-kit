@@ -3,15 +3,15 @@ import { TControl, defaultValuesControl } from '../control'
 import type { IControlValue, TControlValueEvents } from './types'
 import type { TObjectProps } from '../object'
 
-export const defaultValues: Partial<IControlValue> = {
-	...defaultValuesControl,
-	value: null,
-}
-
 export default class TControlValue<TEvents extends TControlValueEvents>
 	extends TControl<TEvents>
 	implements IControlValue
 {
+	static defaultValues: Partial<IControlValue> = {
+		...TControl.defaultValues,
+		value: null,
+	}
+
 	/** Значение контрола */
 	protected _value?: any
 
@@ -22,7 +22,7 @@ export default class TControlValue<TEvents extends TControlValueEvents>
 
 		const { props = {} } = options
 
-		this._value = props.value ?? defaultValues.value!
+		this._value = props.value ?? TControlValue.defaultValues.value!
 	}
 
 	get value(): any {

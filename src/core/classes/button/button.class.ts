@@ -7,16 +7,16 @@ import { TIcon } from '../icon'
 import { TVariant } from '../../common/variant'
 import { TSpinner } from '../spinner'
 
-export const defaultValues: Partial<IButton> = {
-	...defaultValuesControl,
-	variant: 'normal',
-	appearance: 'normal',
-	icon: undefined,
-	tag: 'button',
-	loading: false,
-}
-
 export default class TButton extends TControl<TButtonEvents> implements IButton {
+	static defaultValues: Partial<IButton> = {
+		...TControl.defaultValues,
+		variant: 'normal',
+		appearance: 'normal',
+		icon: undefined,
+		tag: 'button',
+		loading: false,
+	}
+
 	protected _variantHelper: TVariant
 	protected _appearance: TButtonAppearance
 	protected _icon?: TIcon
@@ -30,10 +30,10 @@ export default class TButton extends TControl<TButtonEvents> implements IButton 
 
 		const { props = {} } = options
 
-		this._tag = props.tag ?? defaultValues.tag!
+		this._tag = props.tag ?? TButton.defaultValues.tag!
 
-		this._loading = props.loading ?? defaultValues.loading!
-		this._spinner = props.spinner ?? defaultValues.spinner!
+		this._loading = props.loading ?? TButton.defaultValues.loading!
+		this._spinner = props.spinner ?? TButton.defaultValues.spinner!
 
 		this._variantHelper = new TVariant({
 			baseClass: this._baseClass,
@@ -45,10 +45,10 @@ export default class TButton extends TControl<TButtonEvents> implements IButton 
 		})
 
 		// Инициализируем значение отображения компонента
-		this._variantHelper.value = props.variant ?? defaultValues.variant!
+		this._variantHelper.value = props.variant ?? TButton.defaultValues.variant!
 
-		this._appearance = props.appearance ?? defaultValues.appearance!
-		this.icon = props.icon ?? defaultValues.icon!
+		this._appearance = props.appearance ?? TButton.defaultValues.appearance!
+		this.icon = props.icon ?? TButton.defaultValues.icon!
 
 		this._sizeHelper.on('change', (value) => {
 			// Если есть спиннер, синхронизируем его размер с кнопкой

@@ -1,2 +1,2 @@
 export * from './types'
-export { default as TSpinner, defaultValues as defaultValuesSpinner } from './spinner.class'
+export { default as TSpinner } from './spinner.class'

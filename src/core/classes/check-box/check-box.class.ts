@@ -4,18 +4,18 @@ import type { ICheckBox, TCheckBoxEvents } from './types'
 import type { TObjectProps } from '../object'
 import { TIcon } from '../icon'
 
-export const defaultValues: Partial<ICheckBox> = {
-	...defaultValuesControlInput,
-	value: false,
-	indeterminate: false,
-	plain: false,
-	variant: 'normal',
-}
-
 export default class TCheckBox<TEvents extends TCheckBoxEvents>
 	extends TControlInput<TEvents>
 	implements ICheckBox
 {
+	static defaultValues: Partial<ICheckBox> = {
+		...TControlInput.defaultValues,
+		value: false,
+		indeterminate: false,
+		plain: false,
+		variant: 'normal',
+	}
+
 	protected _value: boolean | null
 	protected _indeterminate: boolean
 	protected _plain: boolean
@@ -27,11 +27,12 @@ export default class TCheckBox<TEvents extends TCheckBoxEvents>
 
 		super({ props, baseClass })
 
-		this._value = props.value ?? defaultValues.value!
-		this._indeterminate = props.indeterminate ?? defaultValues.indeterminate!
-		this._plain = props.plain ?? defaultValues.plain!
-		this._icon = props.icon ?? defaultValues.icon!
-		this._indeterminateIcon = props.indeterminateIcon ?? defaultValues.indeterminateIcon!
+		this._value = props.value ?? TCheckBox.defaultValues.value!
+		this._indeterminate = props.indeterminate ?? TCheckBox.defaultValues.indeterminate!
+		this._plain = props.plain ?? TCheckBox.defaultValues.plain!
+		this._icon = props.icon ?? TCheckBox.defaultValues.icon!
+		this._indeterminateIcon =
+			props.indeterminateIcon ?? TCheckBox.defaultValues.indeterminateIcon!
 	}
 
 	get value(): boolean | null {

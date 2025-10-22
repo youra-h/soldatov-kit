@@ -4,13 +4,16 @@ import type { ISwitch, TSwitchEvents } from './types'
 import type { TObjectProps } from '../object'
 import { TIcon } from '../icon'
 
-export const defaultValues: Partial<ISwitch> = {
-	...defaultValuesControlInput,
-	value: false,
-	variant: 'normal',
-}
+export default class TSwitch<TEvents extends TSwitchEvents>
+	extends TControlInput<TEvents>
+	implements ISwitch
+{
+	static defaultValues: Partial<ISwitch> = {
+		...TControlInput.defaultValues,
+		value: false,
+		variant: 'normal',
+	}
 
-export default class TSwitch<TEvents extends TSwitchEvents> extends TControlInput<TEvents> implements ISwitch {
 	protected _value: boolean
 	protected _icon?: TIcon
 
@@ -19,8 +22,8 @@ export default class TSwitch<TEvents extends TSwitchEvents> extends TControlInpu
 
 		super({ props, baseClass })
 
-		this._value = props.value ?? defaultValues.value!
-		this._icon = props.icon ?? defaultValues.icon!
+		this._value = props.value ?? TSwitch.defaultValues.value!
+		this._icon = props.icon ?? TSwitch.defaultValues.icon!
 
 		this._sizeHelper.on('change', (value) => {
 			// Если есть спиннер, синхронизируем его размер с кнопкой

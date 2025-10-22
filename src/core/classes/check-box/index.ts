@@ -1,2 +1,2 @@
 export * from './types'
-export { default as TCheckBox, defaultValues as defaultValuesCheckBox } from './check-box.class'
+export { default as TCheckBox } from './check-box.class'

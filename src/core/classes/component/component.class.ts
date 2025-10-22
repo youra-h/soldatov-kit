@@ -2,14 +2,17 @@ import { type TObjectProps } from '../object'
 import { TEvented } from '../evented'
 import type { IComponent, TComponentEvents, IComponentOptions } from './types'
 
-export const defaultValues: Partial<IComponent> = {
-	id: '',
-	tag: 'div',
-	visible: true,
-	hidden: false,
-}
+export default class TComponent<TEvents extends TComponentEvents>
+	extends TEvented<TEvents>
+	implements IComponent
+{
+	static defaultValues: Partial<IComponent> = {
+		id: '',
+		tag: 'div',
+		visible: true,
+		hidden: false,
+	}
 
-export default class TComponent<TEvents extends TComponentEvents> extends TEvented<TEvents> implements IComponent {
 	protected _id: string | number
 	protected _visible: boolean
 	protected _hidden: boolean
@@ -28,10 +31,12 @@ export default class TComponent<TEvents extends TComponentEvents> extends TEvent
 
 		this._baseClass = baseClass ?? 's-component'
 
-		this._id = props.id ?? defaultValues.id!
-		this._tag = props.tag ?? defaultValues.tag!
-		this._visible = typeof props.visible === 'boolean' ? props.visible : defaultValues.visible!
-		this._hidden = typeof props.hidden === 'boolean' ? props.hidden : defaultValues.hidden!
+		this._id = props.id ?? TComponent.defaultValues.id!
+		this._tag = props.tag ?? TComponent.defaultValues.tag!
+		this._visible =
+			typeof props.visible === 'boolean' ? props.visible : TComponent.defaultValues.visible!
+		this._hidden =
+			typeof props.hidden === 'boolean' ? props.hidden : TComponent.defaultValues.hidden!
 
 		// Emit 'created' event after the current call stack is cleared
 		setTimeout(() => this.emit('created', this), 0)
