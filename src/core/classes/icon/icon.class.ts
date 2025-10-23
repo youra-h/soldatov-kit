@@ -1,4 +1,4 @@
-import { TComponent, defaultValuesComponent, type IComponentOptions } from '../component'
+import { TComponent, type IComponentOptions } from '../component'
 import type { IIcon, TIconEvents } from './types'
 import type { TObjectProps } from '../object'
 import { TSize } from '../../common/size'

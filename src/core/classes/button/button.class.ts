@@ -1,5 +1,5 @@
 import { TComponent, type IComponentOptions } from './../component'
-import { TControl, defaultValuesControl } from '../control'
+import { TControl } from '../control'
 import type { TComponentVariant } from '../../common/types'
 import type { IButton, TButtonAppearance, TButtonEvents } from './types'
 import type { TObjectProps } from '../object'

@@ -19,7 +19,7 @@ export function SelectableItemMixin<B extends TAbstractConstructor<TCollectionIt
 // 3. Реализация (JS-часть, один вариант для обоих overload’ов)
 export function SelectableItemMixin(Base: any) {
 	return class TSelectableItem extends Base implements ISelectable {
-		protected _selected = false
+		protected _selected: boolean = false
 
 		get selected(): boolean {
 			return this._selected

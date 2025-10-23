@@ -1,4 +1,4 @@
-import { TComponent, defaultValuesComponent, type IComponentOptions } from '../component'
+import { TComponent, type IComponentOptions } from '../component'
 import type { TComponentSize, TComponentVariant } from '../../common/types'
 import type { ISpinner, TSpinnerEvents } from './types'
 import type { TObjectProps } from '../object'

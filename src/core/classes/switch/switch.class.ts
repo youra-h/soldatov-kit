@@ -1,5 +1,5 @@
 import { type IComponentOptions } from '../component'
-import { TControlInput, defaultValuesControlInput } from '../control-input'
+import { TControlInput } from '../control-input'
 import type { ISwitch, TSwitchEvents } from './types'
 import type { TObjectProps } from '../object'
 import { TIcon } from '../icon'

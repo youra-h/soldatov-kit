@@ -1,6 +1,6 @@
 import { TComponent, type IComponentOptions } from '../component'
 import type { TComponentVariant } from '../../common/types'
-import { TControlValue, defaultValuesControlValue } from '../control-value'
+import { TControlValue } from '../control-value'
 import type { IControlInput, TControlInputEvents, TControlInputState } from './types'
 import type { TObjectProps } from '../object'
 import { TVariant } from '../../common/variant'
