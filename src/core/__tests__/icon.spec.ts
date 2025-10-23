@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest'
-import TIcon, { defaultValues } from '../classes/icon/icon.class'
+import TIcon from '../classes/icon/icon.class'
 
 describe('TIcon', () => {
 	let icon: TIcon
@@ -8,8 +8,8 @@ describe('TIcon', () => {
 	})
 
 	it('устанавливает значения по умолчанию', () => {
-		expect(icon.size).toBe(defaultValues.size)
-		expect(icon.tag).toBe(defaultValues.tag)
+		expect(icon.size).toBe(TIcon.defaultValues.size)
+		expect(icon.tag).toBe(TIcon.defaultValues.tag)
 		expect(icon.width).toBeUndefined()
 		expect(icon.height).toBeUndefined()
 	})

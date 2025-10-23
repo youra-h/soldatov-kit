@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import TControl, { defaultValues } from '../classes/control/control.class'
+import TControl from '../classes/control/control.class'
 
 describe('TControl', () => {
 	let ctrl: TControl<any>
@@ -8,10 +8,10 @@ describe('TControl', () => {
 	})
 
 	it('устанавливает значения по умолчанию', () => {
-		expect(ctrl.text).toBe(defaultValues.text)
-		expect(ctrl.disabled).toBe(defaultValues.disabled)
-		expect(ctrl.focused).toBe(defaultValues.focused)
-		expect(ctrl.size).toBe(defaultValues.size)
+		expect(ctrl.text).toBe(TControl.defaultValues.text)
+		expect(ctrl.disabled).toBe(TControl.defaultValues.disabled)
+		expect(ctrl.focused).toBe(TControl.defaultValues.focused)
+		expect(ctrl.size).toBe(TControl.defaultValues.size)
 		expect(ctrl.name).toBe(ctrl.id.toString())
 	})
 

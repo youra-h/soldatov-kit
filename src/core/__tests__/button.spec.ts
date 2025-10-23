@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest'
-import TButton, { defaultValues } from '../classes/button/button.class'
+import TButton from '../classes/button/button.class'
 import { TIcon } from '../classes/icon'
 import { TSpinner } from '../classes/spinner'
 
@@ -10,11 +10,11 @@ describe('TButton', () => {
 	})
 
 	it('устанавливает значения по умолчанию', () => {
-		expect(btn.variant).toBe(defaultValues.variant)
-		expect(btn.appearance).toBe(defaultValues.appearance)
+		expect(btn.variant).toBe(TButton.defaultValues.variant)
+		expect(btn.appearance).toBe(TButton.defaultValues.appearance)
 		expect(btn.icon).toBeUndefined()
-		expect(btn.loading).toBe(defaultValues.loading)
-		expect(btn.tag).toBe(defaultValues.tag)
+		expect(btn.loading).toBe(TButton.defaultValues.loading)
+		expect(btn.tag).toBe(TButton.defaultValues.tag)
 	})
 
 	it('устанавливает значения через props', () => {

@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import TCheckBox, { defaultValues } from '../classes/check-box/check-box.class'
+import TCheckBox from '../classes/check-box/check-box.class'
 import { TIcon } from '../classes/icon'
 
 describe('TCheckBox', () => {
@@ -9,9 +9,9 @@ describe('TCheckBox', () => {
 	})
 
 	it('устанавливает значения по умолчанию', () => {
-		expect(cb.value).toBe(defaultValues.value)
-		expect(cb.indeterminate).toBe(defaultValues.indeterminate)
-		expect(cb.plain).toBe(defaultValues.plain)
+		expect(cb.value).toBe(TCheckBox.defaultValues.value)
+		expect(cb.indeterminate).toBe(TCheckBox.defaultValues.indeterminate)
+		expect(cb.plain).toBe(TCheckBox.defaultValues.plain)
 		expect(cb.icon).toBeUndefined()
 		expect(cb.indeterminateIcon).toBeUndefined()
 	})

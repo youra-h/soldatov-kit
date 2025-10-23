@@ -10,6 +10,11 @@ describe('Tabs (Tabs / TTabItem)', () => {
 		tabs = new Tabs()
 	})
 
+	it('устанавливает text по умолчанию', () => {
+		const tab = new TTabItem()
+		expect(tab.text).toBe('Tab item')
+	})
+
 	it('добавляет вкладки и возвращает корректные элементы', () => {
 		const t1 = tabs.add()
 		t1.text = 'Главная'

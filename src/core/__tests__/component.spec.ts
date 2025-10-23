@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import TComponent, { defaultValues } from '../classes/component/component.class'
+import TComponent from '../classes/component/component.class'
 
 describe('TComponent', () => {
 	let comp: TComponent<any>
@@ -8,10 +8,10 @@ describe('TComponent', () => {
 	})
 
 	it('устанавливает значения по умолчанию', () => {
-		expect(comp.id).toBe(defaultValues.id)
-		expect(comp.tag).toBe(defaultValues.tag)
-		expect(comp.visible).toBe(defaultValues.visible)
-		expect(comp.hidden).toBe(defaultValues.hidden)
+		expect(comp.id).toBe(TComponent.defaultValues.id)
+		expect(comp.tag).toBe(TComponent.defaultValues.tag)
+		expect(comp.visible).toBe(TComponent.defaultValues.visible)
+		expect(comp.hidden).toBe(TComponent.defaultValues.hidden)
 		expect(comp.classes).toContain('s-component')
 	})
 

@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import TControlInput, { defaultValues } from '../classes/control-input/control-input.class'
+import TControlInput from '../classes/control-input/control-input.class'
 import { TSpinner } from '../classes/spinner'
 
 describe('TControlInput', () => {
@@ -9,12 +9,12 @@ describe('TControlInput', () => {
 	})
 
 	it('устанавливает значения по умолчанию', () => {
-		expect(ctrl.variant).toBe(defaultValues.variant)
-		expect(ctrl.readonly).toBe(defaultValues.readonly)
-		expect(ctrl.required).toBe(defaultValues.required)
-		expect(ctrl.invalid).toBe(defaultValues.invalid)
-		expect(ctrl.state).toBe(defaultValues.state)
-		expect(ctrl.loading).toBe(defaultValues.loading)
+		expect(ctrl.variant).toBe(TControlInput.defaultValues.variant)
+		expect(ctrl.readonly).toBe(TControlInput.defaultValues.readonly)
+		expect(ctrl.required).toBe(TControlInput.defaultValues.required)
+		expect(ctrl.invalid).toBe(TControlInput.defaultValues.invalid)
+		expect(ctrl.state).toBe(TControlInput.defaultValues.state)
+		expect(ctrl.loading).toBe(TControlInput.defaultValues.loading)
 	})
 
 	it('устанавливает значения через props', () => {

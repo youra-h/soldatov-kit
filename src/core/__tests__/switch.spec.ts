@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import TSwitch, { defaultValues } from '../classes/switch/switch.class'
+import TSwitch from '../classes/switch/switch.class'
 import TIcon from '../classes/icon/icon.class'
 
 describe('TSwitch', () => {
@@ -9,7 +9,7 @@ describe('TSwitch', () => {
 	})
 
 	it('устанавливает значения по умолчанию', () => {
-		expect(sw.value).toBe(defaultValues.value)
+		expect(sw.value).toBe(TSwitch.defaultValues.value)
 		expect(sw.icon).toBeUndefined()
 	})
 

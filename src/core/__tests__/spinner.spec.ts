@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest'
-import TSpinner, { defaultValues } from '../classes/spinner/spinner.class'
+import TSpinner from '../classes/spinner/spinner.class'
 
 describe('TSpinner', () => {
 	let spinner: TSpinner
@@ -8,9 +8,9 @@ describe('TSpinner', () => {
 	})
 
 	it('устанавливает значения по умолчанию', () => {
-		expect(spinner.size).toBe(defaultValues.size)
-		expect(spinner.variant).toBe(defaultValues.variant)
-		expect(spinner.tag).toBe(defaultValues.tag)
+		expect(spinner.size).toBe(TSpinner.defaultValues.size)
+		expect(spinner.variant).toBe(TSpinner.defaultValues.variant)
+		expect(spinner.tag).toBe(TSpinner.defaultValues.tag)
 		expect(spinner.borderWidth).toBe(1)
 	})
 

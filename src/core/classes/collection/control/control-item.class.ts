@@ -22,6 +22,14 @@ export abstract class AbstractControlItem<
 		super(collection)
 
 		this._control = TControl.create() as TControlType
+
+		const ctor = this.constructor as any
+		const classDefaultValues = ctor.defaultValues as Partial<Record<string, any>> | undefined
+
+		if (classDefaultValues && this._control) {
+			// Применяем classDefaultValues поверх существующих значений control
+			this._control.assign(classDefaultValues)
+		}
 	}
 
 	/**

@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import TControlValue, { defaultValues } from '../classes/control-value/control-value.class'
+import TControlValue from '../classes/control-value/control-value.class'
 
 describe('TControlValue', () => {
 	let ctrl: TControlValue<any>
@@ -8,7 +8,7 @@ describe('TControlValue', () => {
 	})
 
 	it('устанавливает значения по умолчанию', () => {
-		expect(ctrl.value).toBe(defaultValues.value)
+		expect(ctrl.value).toBe(TControlValue.defaultValues.value)
 	})
 
 	it('устанавливает значения через props', () => {
