@@ -1,10 +1,5 @@
 import { type PropType, watch } from 'vue'
-import {
-	type ITabItem,
-	defaultValuesTabItem,
-	type TComponentSize,
-	type TComponentVariant,
-} from '../../../../core'
+import { type ITabItem, type TComponentSize, type TComponentVariant } from '../../../../core'
 import { Component, emitsComponent, propsComponent, syncComponent } from '../component'
 import type { TEmits, TProps, ISyncComponentOptions } from '../../common/types'
 
