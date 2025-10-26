@@ -1,6 +1,7 @@
 import type { TConstructor } from '../../../common/types'
 import type { TCollectionOwned } from '../collection-owned.class'
 import type { TCollectionItem } from '../collection-item.class'
+import type { ICollectionItemProps } from '../types'
 import type { ISelectableCollection, TIndexOrItem, ISelectableCollectionProps } from './types'
 import { TControlCollection } from '../control/control-collection.class'
 import type { AbstractControlItem } from '../control/control-item.class'
@@ -298,4 +299,71 @@ export function SelectableControlCollection<TItem extends AbstractControlItem<an
 		itemClass: TConstructor<TItem>,
 		opts?: { multiSelect?: boolean },
 	) => ISelectableCollection<TItem> & TControlCollection<TItem, any>
+}
+
+// Расширения коллекций с selectedByName и selectedByValue
+import type {
+	IHasName,
+	IHasValue,
+	TSelectableControlCtor,
+	TSelectableByNameCtor,
+	TSelectableByValueCtor,
+} from './types'
+
+/** Генератор класса с selectByName */
+export function makeSelectableByName<TItem extends AbstractControlItem<any> & IHasName>() {
+	const Base = SelectableControlCollection<TItem>() as unknown as TSelectableControlCtor<TItem>
+
+	/** Класс коллекции с поддержкой выбора по имени. */
+	class SelectableByName extends Base {
+		/**
+		 * Выбирает элемент по имени.
+		 * @param name - имя элемента
+		 * @returns выбранный элемент или undefined
+		 */
+		selectByName(name: string): TItem | undefined {
+			if (!name) return undefined
+
+			const arr = this.toArray() as TItem[]
+
+			const found = arr.find((it) => it.name === name)
+
+			if (!found) return undefined
+
+			this.select(found)
+
+			return found
+		}
+	}
+
+	return SelectableByName as unknown as TSelectableByNameCtor<TItem>
+}
+
+export function makeSelectableByValue<
+	TItem extends AbstractControlItem<any> & IHasName & IHasValue,
+>() {
+	// получаем типизированный конструктор с selectByName
+	const BaseByName = makeSelectableByName<TItem>() as unknown as TSelectableByNameCtor<TItem>
+
+	/** Класс коллекции с поддержкой выбора по значению. */
+	class SelectableByValue extends BaseByName {
+		/**
+		 * Выбирает элемент по значению.
+		 * @param value - значение элемента
+		 * @returns выбранный элемент или undefined
+		 */
+		selectByValue(value: any): TItem | undefined {
+			const arr = this.toArray() as TItem[]
+
+			const found = arr.find((it) => it.value === value)
+
+			if (!found) return undefined
+
+			this.select(found)
+
+			return found
+		}
+	}
+
+	return SelectableByValue as unknown as TSelectableByValueCtor<TItem>
 }

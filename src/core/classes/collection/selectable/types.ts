@@ -1,4 +1,7 @@
 import type { TCollectionItem } from '../collection-item.class'
+import type { TConstructor } from '../../../common/types'
+import { TControlCollection } from '../control/control-collection.class'
+import type { AbstractControlItem } from '../control/control-item.class'
 
 export type TIndexOrItem<T> = T | number
 
@@ -39,3 +42,49 @@ export interface ISelectableCollection<TItem extends TCollectionItem>
 	/** Массив выделенных элементов */
 	readonly selectedItems: TItem[]
 }
+
+// Элемент, имеющий имя
+export interface IHasName {
+	name?: string
+}
+
+// Элемент, имеющий значение
+export interface IHasValue {
+	value?: any
+}
+
+// Тип экземпляра базовой selectable коллекции (то, что реально должны иметь объекты)
+type TSelectableControlInstance<TItem extends AbstractControlItem<any>> =
+	ISelectableCollection<TItem> & TControlCollection<TItem, any>
+
+// Конструктор для базовой selectable коллекции
+export type TSelectableControlCtor<TItem extends AbstractControlItem<any>> = new (
+	owner?: any,
+	itemClass?: TConstructor<TItem>,
+	opts?: { multiSelect?: boolean },
+) => TSelectableControlInstance<TItem>
+
+// === makeSelectableByName: возвращаем конструктор, экземпляр которого имеет selectByName ===
+export interface ISelectableByNameInstance<TItem extends AbstractControlItem<any> & IHasName>
+	extends TSelectableControlInstance<TItem> {
+	selectByName(name: string): TItem | undefined
+}
+
+export type TSelectableByNameCtor<TItem extends AbstractControlItem<any> & IHasName> = new (
+	owner?: any,
+	itemClass?: TConstructor<TItem>,
+	opts?: { multiSelect?: boolean },
+) => ISelectableByNameInstance<TItem>
+
+export interface ISelectableByValueInstance<
+	TItem extends AbstractControlItem<any> & IHasName & IHasValue,
+> extends ISelectableByNameInstance<TItem> {
+	selectByValue(value: any): TItem | undefined
+}
+
+export type TSelectableByValueCtor<TItem extends AbstractControlItem<any> & IHasName & IHasValue> =
+	new (
+		owner?: any,
+		itemClass?: TConstructor<TItem>,
+		opts?: { multiSelect?: boolean },
+	) => ISelectableByValueInstance<TItem>

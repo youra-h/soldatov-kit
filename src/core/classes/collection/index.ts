@@ -14,5 +14,7 @@ export {
 	SelectableCollectionMixin,
 	defaultValues as defaultValuesSelectableCollection,
 	SelectableControlCollection,
+	makeSelectableByName,
+	makeSelectableByValue,
 } from './selectable/selectable-collection.mixin'
 export * from './selectable/types'

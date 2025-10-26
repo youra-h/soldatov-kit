@@ -1,13 +1,13 @@
 // src/core/__tests__/tab-items.spec.ts
 import { describe, it, expect, beforeEach } from 'vitest'
-import { Tabs, TTabItem } from '../classes/tabs' // путь подкорректируй под свой проект
+import { TTabs, TTabItem } from '../classes/tabs' // путь подкорректируй под свой проект
 import { SelectableControlCollection } from '../classes/collection' // путь подкорректируй под свой проект
 
-describe('Tabs (Tabs / TTabItem)', () => {
-	let tabs: Tabs
+describe('TTabs (TTabs / TTabItem)', () => {
+	let tabs: TTabs
 
 	beforeEach(() => {
-		tabs = new Tabs()
+		tabs = new TTabs()
 	})
 
 	it('устанавливает text по умолчанию', () => {
@@ -127,10 +127,10 @@ describe('Tabs (Tabs / TTabItem)', () => {
 		expect(tabs.selectedItems.length).toBe(0)
 
 		// По имени
-		const found = tabs.selectByName('settings')
-		expect(found).toBe(true)
+		let tabSettings = tabs.selectByName('settings')
+		expect(tabSettings).toBeDefined()
 
-		const tabSettings = tabs.getSingleSelected() as TTabItem
+		tabSettings = tabs.getSingleSelected() as TTabItem
 		expect(tabSettings.name).toBe('settings')
 		expect(t3.selected).toBe(true)
 		expect(tabs.selectedItems.length).toBe(1)
@@ -235,5 +235,31 @@ describe('Tabs (Tabs / TTabItem)', () => {
 		expect(Array.isArray(singleSel)).toBe(false)
 
 		if (singleSel) expect(singleSel.name).toBeDefined()
+	})
+
+	it('selectByValue выделяет вкладку по value', () => {
+		const t1 = tabs.addItem()
+		t1.value = 'main'
+		const t2 = tabs.addItem()
+		t2.value = 'profile'
+		const t3 = tabs.addItem()
+		t3.value = 'settings'
+
+		// Выделяем по value
+		const tabProfile = tabs.selectByValue('profile')
+		expect(tabProfile).toBeDefined()
+
+		const selected = tabs.getSingleSelected() as TTabItem
+		expect(selected.value).toBe('profile')
+		expect(selected.selected).toBe(true)
+		expect(t2.selected).toBe(true)
+		expect(tabs.selectedItems.length).toBe(1)
+		tabs.clearSelection()
+
+		// Попытка выделить несуществующее value
+		const tabNotFound = tabs.selectByValue('nonexistent')
+		expect(tabNotFound).toBeUndefined()
+
+		expect(tabs.selectedItems.length).toBe(0)
 	})
 })
