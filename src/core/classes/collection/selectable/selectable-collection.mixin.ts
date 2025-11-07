@@ -1,16 +1,11 @@
 import type { TConstructor } from '../../../common/types'
 import type { TCollectionOwned } from '../collection-owned.class'
 import type { TCollectionItem } from '../collection-item.class'
-import type { ICollectionItemProps } from '../types'
-import type { ISelectableCollection, TIndexOrItem, ISelectableCollectionProps } from './types'
+import type { ISelectableCollection, TIndexOrItem } from './types'
 import { TControlCollection } from '../control/control-collection.class'
 import type { AbstractControlItem } from '../control/control-item.class'
 
 type BaseCtorArgs = [owner?: any, itemClass?: any, opts?: { multiSelect?: boolean }]
-
-export const defaultValues: ISelectableCollectionProps = {
-	multiSelect: false,
-}
 
 /**
  * Mixin, который добавляет в коллекцию поведение выбора элементов.
@@ -272,17 +267,6 @@ export function SelectableCollectionMixin<
 			super.clear()
 			this._selectedItems.length = 0
 		}
-
-		/**
-		 * Вставляет элемент по индексу.
-		 * @param index - позиция вставки
-		 * @returns вставленный элемент
-		 */
-		insert(index: number): TItem {
-			const it = super.insert(index) as TItem
-
-			return it
-		}
 	}
 }
 
@@ -339,6 +323,7 @@ export function makeSelectableByName<TItem extends AbstractControlItem<any> & IH
 	return SelectableByName as unknown as TSelectableByNameCtor<TItem>
 }
 
+/** Генератор класса с selectByValue */
 export function makeSelectableByValue<
 	TItem extends AbstractControlItem<any> & IHasName & IHasValue,
 >() {

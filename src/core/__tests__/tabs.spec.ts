@@ -10,12 +10,12 @@ describe('TTabs (TTabs / TTabItem)', () => {
 		tabs = new TTabs()
 	})
 
-	it('устанавливает text по умолчанию', () => {
+	it('Устанавливает text по умолчанию', () => {
 		const tab = new TTabItem()
 		expect(tab.text).toBe('Tab item')
 	})
 
-	it('добавляет вкладки и возвращает корректные элементы', () => {
+	it('Добавляет вкладки и возвращает корректные элементы', () => {
 		const t1 = tabs.add()
 		t1.text = 'Главная'
 		t1.name = 'main'
@@ -42,7 +42,7 @@ describe('TTabs (TTabs / TTabItem)', () => {
 		expect(t1 instanceof TTabItem).toBe(true)
 	})
 
-	it('чтение/запись свойств элементов коллекции', () => {
+	it('Чтение/запись свойств элементов коллекции', () => {
 		const [t1, t2, t3] = [tabs.addItem(), tabs.addItem(), tabs.addItem()]
 		t1.text = 'A'
 		t2.visible = false
@@ -152,7 +152,7 @@ describe('TTabs (TTabs / TTabItem)', () => {
 		expect(tabs.selectedItems.length).toBe(1)
 	})
 
-	it('удаление элемента корректно синхронизирует selection', () => {
+	it('Удаление элемента корректно синхронизирует selection', () => {
 		tabs.addItem().name = 'a'
 		tabs.addItem().name = 'b'
 		tabs.addItem().name = 'c'
