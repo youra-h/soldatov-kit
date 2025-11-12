@@ -1,27 +1,20 @@
 import { TComponent, type IComponentOptions } from './../component'
+import { TBaseControl } from '../base-control'
 import type { IControl, TControlEvents } from './types'
 import type { TObjectProps } from '../object'
 import type { TComponentSize } from '../../common/types'
 import { TSize } from '../../common/size'
 
-export default class TControl<TEvents extends TControlEvents>
-	extends TComponent<TEvents>
-	implements IControl
-{
+export default class TControl<TEvents extends TControlEvents> extends TBaseControl<TEvents> implements IControl {
 	static defaultValues: Partial<IControl> = {
-		...TComponent.defaultValues,
+		...TBaseControl.defaultValues,
 		text: '',
-		disabled: false,
 		focused: false,
 		size: 'normal',
 	}
 
-	/** Имя контрола */
-	protected _name: string
 	/** Текстовое представление контрола */
 	protected _text: string
-	/** Заблокирован ли контрол */
-	protected _disabled: boolean
 	/** В фокусе ли контрол */
 	protected _focused: boolean
 	/** Размер контрола */
@@ -39,20 +32,8 @@ export default class TControl<TEvents extends TControlEvents>
 			value: props.size ?? TControl.defaultValues.size!,
 		})
 
-		this._name = props.name ?? ''
 		this._text = props.text ?? TControl.defaultValues.text!
-		this._disabled = props.disabled ?? TControl.defaultValues.disabled!
 		this._focused = props.focused ?? TControl.defaultValues.focused!
-	}
-
-	get name(): string {
-		return this._name && this._name !== '' ? this._name : this._id.toString()
-	}
-
-	set name(value: string) {
-		if (this._name !== value) {
-			this._name = value
-		}
 	}
 
 	get text(): string {
@@ -63,17 +44,6 @@ export default class TControl<TEvents extends TControlEvents>
 		if (this._text !== value) {
 			this._text = value
 			this.emit('changeText', value)
-		}
-	}
-
-	get disabled(): boolean {
-		return this._disabled
-	}
-
-	set disabled(value: boolean) {
-		if (this._disabled !== value) {
-			this._disabled = value
-			this.emit('disabled', value)
 		}
 	}
 

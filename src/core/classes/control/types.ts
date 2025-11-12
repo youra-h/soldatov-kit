@@ -1,26 +1,20 @@
-import type { IComponent, TComponentEvents } from './../component'
+import type { IBaseControl, TBaseControlEvents } from './../base-control'
 import type { TComponentSize } from '../../common/types'
 
-export interface IControl extends IComponent {
-	// Наименование контрола
-	name: string
+export interface IControl extends IBaseControl {
 	// Текстовое значение контрола
 	text: string
-	// Заблокирован ли контрол
-	disabled?: boolean
 	// В фокусе ли контрол
 	focused?: boolean
 	// Размер контрола
 	size?: TComponentSize
 }
 
-export type TControlEvents = TComponentEvents & {
+export type TControlEvents = TBaseControlEvents & {
 	// Событие изменения фокуса
 	focused: () => void
 	// Событие изменения текста
 	changeText: (value: string) => void
 	// Событие клика по контролу
 	click: () => void
-	// Событие изменения состояния disabled
-	disabled: (value: boolean) => void
 }
