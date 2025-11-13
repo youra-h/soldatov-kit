@@ -113,7 +113,7 @@ export interface ICollection<TItem extends TCollectionItem = TCollectionItem> {
 	readonly count: number
 
 	/** Добавляет новый элемент и возвращает его */
-	add(): TItem | undefined
+	add(source?: Partial<TItem>): TItem
 
 	/**
 	 * Вставляет новый элемент по индексу
@@ -163,7 +163,7 @@ export interface ICollection<TItem extends TCollectionItem = TCollectionItem> {
 	endUpdate(): void
 
 	/** Перебор элементов */
-	forEach(fn: (item: TItem, idx: number) => void): void
+	forEach(fn: (item: TItem, index: number) => void): void
 
 	/** Возвращает массив элементов */
 	toArray(): TItem[]

@@ -1,5 +1,5 @@
 import { TEvented } from '../evented'
-import type { TCollectionEvents } from './types'
+import type { TCollectionEvents, ICollection } from './types'
 import { TCollectionItem } from './collection-item.class'
 import type { TConstructor } from '../../common/types'
 
@@ -13,9 +13,10 @@ import type { TConstructor } from '../../common/types'
  * @fires beforeMove - Элемент будет перемещён (можно отменить)
  * @fires afterMove - Элемент был перемещён
  */
-export class TCollection<
-	TItem extends TCollectionItem = TCollectionItem,
-> extends TEvented<TCollectionEvents> {
+export class TCollection<TItem extends TCollectionItem = TCollectionItem>
+	extends TEvented<TCollectionEvents>
+	implements ICollection<TItem>
+{
 	/**
 	 * Внутренний массив элементов.
 	 * @protected
@@ -290,7 +291,7 @@ export class TCollection<
 	 * Выполняет функцию fn для каждого элемента коллекции.
 	 * @param fn Функция, принимающая элемент и его индекс.
 	 */
-	forEach(fn: (item: TItem, idx: number) => void): void {
+	forEach(fn: (item: TItem, index: number) => void): void {
 		this._items.forEach(fn)
 	}
 

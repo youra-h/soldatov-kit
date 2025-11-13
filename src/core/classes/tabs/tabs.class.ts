@@ -1,21 +1,36 @@
+import { TComponent, type IComponentOptions } from './../component'
+import { TBaseControl } from '../base-control'
 import { TTabItem } from './tab-item/tab-item.class'
 import { makeSelectableByValue } from '../collection'
-import type { ITabs } from './types'
-import type { TComponentSize } from '@/core/common/types'
+import type { ITabs, TTabsEvents } from './types'
 
 /**
  * Коллекция вкладок. single-select по умолчанию.
  */
-export class TTabs extends makeSelectableByValue<TTabItem>() implements ITabs {
-	constructor(owner?: any) {
-		super(owner, TTabItem)
+export class TTabs extends TBaseControl<TTabsEvents> implements ITabs {
+	static defaultValues: Partial<ITabs> = {
+		...TBaseControl.defaultValues,
 	}
 
-	/**
-	 * Выбирает вкладку по индексу.
-	 * @param index
-	 */
-	selectByIndex(index: number): void {
-		this.select(index)
+	constructor(options: IComponentOptions<ITabs> = {}) {
+		options = TComponent.prepareOptions(options, 's-tabs')
+
+		super(options)
+
+		const { props = {} } = options
 	}
 }
+
+// makeSelectableByValue<TTabItem>() implements ITabs {
+// 	constructor(owner?: any) {
+// 		super(owner, TTabItem)
+// 	}
+
+// 	/**
+// 	 * Выбирает вкладку по индексу.
+// 	 * @param index
+// 	 */
+// 	selectByIndex(index: number): void {
+// 		this.select(index)
+// 	}
+// }
