@@ -2,6 +2,9 @@ import type { TCollectionItem } from '../collection-item.class'
 import type { TConstructor } from '../../../common/types'
 import { TControlCollection } from '../control/control-collection.class'
 import type { AbstractControlItem } from '../control/control-item.class'
+import type { IHasName } from '../../base-control/types'
+import type { IHasValue } from '../../control-value/types'
+import type { ICollection } from '../types'
 
 export type TIndexOrItem<T> = T | number
 
@@ -17,7 +20,8 @@ export interface ISelectableCollectionProps {
 
 // export interface ISelectableCollection<TItem extends TCollectionItem> extends ICollection<TItem>
 export interface ISelectableCollection<TItem extends TCollectionItem>
-	extends ISelectableCollectionProps {
+	extends ICollection<TItem>,
+		ISelectableCollectionProps {
 	/**
 	 * Выделение нескольких элементов одновременно.
 	 * @param itemOrIndex Элемент или его индекс
@@ -41,16 +45,6 @@ export interface ISelectableCollection<TItem extends TCollectionItem>
 	isSelected(itemOrIndex: TIndexOrItem<TItem>): boolean
 	/** Массив выделенных элементов */
 	readonly selectedItems: TItem[]
-}
-
-// Элемент, имеющий имя
-export interface IHasName {
-	name?: string
-}
-
-// Элемент, имеющий значение
-export interface IHasValue {
-	value?: any
 }
 
 // Тип экземпляра базовой selectable коллекции (то, что реально должны иметь объекты)
@@ -88,3 +82,15 @@ export type TSelectableByValueCtor<TItem extends AbstractControlItem<any> & IHas
 		itemClass?: TConstructor<TItem>,
 		opts?: { multiSelect?: boolean },
 	) => ISelectableByValueInstance<TItem>
+
+// Коллекция с поддержкой выбора по имени
+export interface ISelectableByNameCollection<TItem extends AbstractControlItem<any> & IHasName>
+	extends ISelectableCollection<TItem> {
+	selectByName(name: string): TItem | undefined
+}
+
+export interface ISelectableByValueCollection<
+	TItem extends AbstractControlItem<any> & IHasName & IHasValue,
+> extends ISelectableByNameCollection<TItem> {
+	selectByValue(value: any): TItem | undefined
+}

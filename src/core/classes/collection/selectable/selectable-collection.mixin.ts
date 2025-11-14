@@ -4,8 +4,16 @@ import type { TCollectionItem } from '../collection-item.class'
 import type { ISelectableCollection, TIndexOrItem } from './types'
 import { TControlCollection } from '../control/control-collection.class'
 import type { AbstractControlItem } from '../control/control-item.class'
+import type { ICollection } from '../types'
 
 type BaseCtorArgs = [owner?: any, itemClass?: any, opts?: { multiSelect?: boolean }]
+
+// Конструктор базовой коллекции-владельца, который гарантирует методы ICollection
+type TCollectionOwnedCtor<TItem extends TCollectionItem> = new (
+	owner: any,
+	itemClass: TConstructor<TItem>,
+	opts?: any,
+) => TCollectionOwned<TItem> & ICollection<TItem>
 
 /**
  * Mixin, который добавляет в коллекцию поведение выбора элементов.
@@ -21,10 +29,7 @@ export function SelectableCollectionMixin<
 	TItem extends TCollectionItem,
 	TBase extends TConstructor<TCollectionOwned<TItem>>,
 >(Base: TBase) {
-	return class TSelectableCollection
-		extends (Base as any)
-		implements ISelectableCollection<TItem>
-	{
+	return class TSelectableCollection extends (Base as unknown as TCollectionOwnedCtor<TItem>) {
 		/** Флаг множественного выбора (true — можно выбрать несколько) */
 		protected _multiSelect: boolean
 

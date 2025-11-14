@@ -178,18 +178,23 @@ export interface IEventedCollection<TItem extends TCollectionItem> extends IColl
 import type { ISelectableCollection, ISelectableByNameCollection } from './selectable/types'
 import type { ISelectableByValueCollection } from './selectable/types'
 
+// Helper: извлечь тип элемента из интерфейса коллекции
+export type TCollectionItemOf<C> =
+	C extends ICollection<infer T>
+		? T
+		: C extends ISelectableCollection<infer T>
+			? T
+			: C extends ISelectableByNameCollection<infer T>
+				? T
+				: C extends ISelectableByValueCollection<infer T>
+					? T
+					: never
+
 /**
- * Универсальный контракт для контролов, которые содержат коллекцию элементов.
- * Позволяет типизировать свойство collection для разных вариантов коллекций.
+ * Элементы управления, содержащие коллекцию.
+ * Тип коллекции является основным; тип элемента — производным.
  */
-export interface IHasCollection<
-	TItem extends TCollectionItem,
-	TCollection extends
-		| ICollection<TItem>
-		| ISelectableCollection<TItem>
-		| ISelectableByNameCollection<TItem>
-		| ISelectableByValueCollection<TItem> = ICollection<TItem>,
-> {
+export interface IHasCollection<TCollection extends ICollection<any>> {
 	/** Внутренняя коллекция элементов */
 	readonly collection: TCollection
 }
