@@ -1,8 +1,11 @@
 import type { IComponent, TComponentEvents } from '../component'
 
-export interface IBaseControl extends IComponent {
-	// Наименование контрола
-	name: string
+// Элемент, имеющий имя
+export interface IHasName {
+	name?: string
+}
+
+export interface IBaseControl extends IComponent, IHasName {
 	// Заблокирован ли контрол
 	disabled?: boolean
 }

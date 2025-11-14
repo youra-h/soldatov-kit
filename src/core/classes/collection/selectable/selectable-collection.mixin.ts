@@ -285,14 +285,10 @@ export function SelectableControlCollection<TItem extends AbstractControlItem<an
 	) => ISelectableCollection<TItem> & TControlCollection<TItem, any>
 }
 
+import type { IHasName } from '../../base-control'
+import type { IHasValue } from '../../control-value/types'
 // Расширения коллекций с selectedByName и selectedByValue
-import type {
-	IHasName,
-	IHasValue,
-	TSelectableControlCtor,
-	TSelectableByNameCtor,
-	TSelectableByValueCtor,
-} from './types'
+import type { TSelectableControlCtor, TSelectableByNameCtor, TSelectableByValueCtor } from './types'
 
 /** Генератор класса с selectByName */
 export function makeSelectableByName<TItem extends AbstractControlItem<any> & IHasName>() {

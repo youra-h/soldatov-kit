@@ -1,9 +1,11 @@
 import type { IControl, TControlEvents } from '../control'
 
-export interface IControlValue extends IControl {
-	// Значение контрола
+// Элемент, имеющий значение
+export interface IHasValue {
 	value?: any
 }
+
+export interface IControlValue extends IControl, IHasValue {}
 
 export type TControlValueEvents = TControlEvents & {
 	// Событие изменения текста

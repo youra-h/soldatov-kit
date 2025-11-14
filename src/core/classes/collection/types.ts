@@ -174,3 +174,22 @@ export interface IEventedCollection<TItem extends TCollectionItem> extends IColl
 
 	off<K extends keyof TCollectionEvents>(event: K, handler: TCollectionEvents[K]): void
 }
+
+import type { ISelectableCollection, ISelectableByNameCollection } from './selectable/types'
+import type { ISelectableByValueCollection } from './selectable/types'
+
+/**
+ * Универсальный контракт для контролов, которые содержат коллекцию элементов.
+ * Позволяет типизировать свойство collection для разных вариантов коллекций.
+ */
+export interface IHasCollection<
+	TItem extends TCollectionItem,
+	TCollection extends
+		| ICollection<TItem>
+		| ISelectableCollection<TItem>
+		| ISelectableByNameCollection<TItem>
+		| ISelectableByValueCollection<TItem> = ICollection<TItem>,
+> {
+	/** Внутренняя коллекция элементов */
+	readonly collection: TCollection
+}
