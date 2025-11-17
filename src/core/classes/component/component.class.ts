@@ -1,5 +1,5 @@
 import { TObject } from '../object'
-import { TEvented } from '../evented'
+import { TEvented } from '../../common/evented'
 import type { IComponent, IComponentProps, IComponentOptions, TComponentEvents } from './types'
 
 /**
