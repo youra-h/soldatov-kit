@@ -1,13 +1,13 @@
 import { TComponent, type IComponentOptions } from './../component'
 import { TControl } from '../control'
-import type { IControlValueProps, TControlValueEvents } from './types'
+import type { IControlValue, IControlValueProps, TControlValueEvents } from './types'
 
 export default class TControlValue<
 		TProps extends IControlValueProps = IControlValueProps,
 		TEvents extends TControlValueEvents = TControlValueEvents,
 	>
 	extends TControl<TProps, TEvents>
-	implements IControlValueProps
+	implements IControlValue
 {
 	static defaultValues: Partial<IControlValueProps> = {
 		...TControl.defaultValues,
