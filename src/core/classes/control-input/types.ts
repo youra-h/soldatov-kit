@@ -4,7 +4,7 @@ import { TSpinner } from '../spinner'
 
 export type TControlInputState = 'normal' | 'success' | 'warning' | 'error'
 
-export interface IControlInput extends IControlValueProps {
+export interface IControlInputProps extends IControlValueProps {
 	// Вариант отображения чекбокса
 	variant?: TComponentVariant
 	// Значение недоступно для редактирования

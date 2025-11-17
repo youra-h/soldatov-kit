@@ -1,7 +1,7 @@
-import type { IControlInput, TControlInputEvents } from '../control-input'
+import type { IControlInputProps, TControlInputEvents } from '../control-input'
 import type { TIcon } from '../icon'
 
-export interface ICheckBox extends IControlInput {
+export interface ICheckBox extends IControlInputProps {
 	value: boolean | null
 	// Отображать ли состояние "не определено"
 	indeterminate?: boolean

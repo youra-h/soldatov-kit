@@ -145,7 +145,7 @@ export default class TCheckBox<TEvents extends TCheckBoxEvents>
 		return String(!!this.value) as 'true' | 'false'
 	}
 
-	getProps(): TObjectProps {
+	getProps(): TProps {
 		return {
 			...super.getProps(),
 			indeterminate: this.indeterminate,

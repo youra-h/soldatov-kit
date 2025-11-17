@@ -139,7 +139,7 @@ export default class TButton extends TControl<TButtonEvents> implements IButton 
 		return classes
 	}
 
-	getProps(): TObjectProps {
+	getProps(): TProps {
 		return {
 			...super.getProps(),
 			variant: this._variantHelper.value,

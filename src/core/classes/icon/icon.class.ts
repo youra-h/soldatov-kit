@@ -91,7 +91,7 @@ export default class TIcon extends TComponent<TIconEvents> implements IIcon {
 		return new TIcon({ props: { tag: value } })
 	}
 
-	getProps(): TObjectProps {
+	getProps(): TProps {
 		return {
 			...super.getProps(),
 			size: this._sizeHelper.value,

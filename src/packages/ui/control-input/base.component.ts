@@ -1,6 +1,6 @@
 import { type PropType, watch } from 'vue'
 import {
-	type IControlInput,
+	type IControlInputProps,
 	TControlInput,
 	type TComponentVariant,
 	type TControlInputState,
@@ -19,31 +19,31 @@ export const emitsControlInput: TEmits = [...emitsControlValue] as const
 export const propsControlInput: TProps = {
 	...propsControlValue,
 	variant: {
-		type: String as PropType<IControlInput['variant']>,
+		type: String as PropType<IControlInputProps['variant']>,
 		default: TControlInput.defaultValues.variant,
 	},
 	readonly: {
-		type: Boolean as PropType<IControlInput['readonly']>,
+		type: Boolean as PropType<IControlInputProps['readonly']>,
 		default: TControlInput.defaultValues.readonly,
 	},
 	required: {
-		type: Boolean as PropType<IControlInput['required']>,
+		type: Boolean as PropType<IControlInputProps['required']>,
 		default: TControlInput.defaultValues.required,
 	},
 	invalid: {
-		type: Boolean as PropType<IControlInput['invalid']>,
+		type: Boolean as PropType<IControlInputProps['invalid']>,
 		default: TControlInput.defaultValues.invalid,
 	},
 	state: {
-		type: String as PropType<IControlInput['state']>,
+		type: String as PropType<IControlInputProps['state']>,
 		default: TControlInput.defaultValues.state,
 	},
 	loading: {
-		type: Boolean as PropType<IControlInput['loading']>,
+		type: Boolean as PropType<IControlInputProps['loading']>,
 		default: TControlInput.defaultValues.loading,
 	},
 	spinner: {
-		type: Object as PropType<IControlInput['spinner']>,
+		type: Object as PropType<IControlInputProps['spinner']>,
 		default: TControlInput.defaultValues.spinner,
 	},
 }
@@ -60,7 +60,7 @@ export default {
  * @param props
  * @param instance
  */
-export function syncControlInput(options: ISyncComponentOptions<IControlInput>): void {
+export function syncControlInput(options: ISyncComponentOptions<IControlInputProps>): void {
 	syncControlValue(options)
 
 	const { instance, props, emit } = options

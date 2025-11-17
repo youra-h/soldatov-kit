@@ -1,16 +1,18 @@
 import { TComponent, type IComponentOptions } from '../component'
 import type { TComponentVariant } from '../../common/types'
 import { TControlValue } from '../control-value'
-import type { IControlInput, TControlInputEvents, TControlInputState } from './types'
-import type { TObjectProps } from '../object'
+import type { IControlInputProps, TControlInputEvents, TControlInputState } from './types'
 import { TVariant } from '../../common/variant'
 import { TSpinner } from '../spinner'
 
-export default class TControlInput<TEvents extends TControlInputEvents>
-	extends TControlValue<TEvents>
-	implements IControlInput
+export default class TControlInput<
+		TProps extends IControlInputProps = IControlInputProps,
+		TEvents extends TControlInputEvents = TControlInputEvents,
+	>
+	extends TControlValue<TProps, TEvents>
+	implements IControlInputProps
 {
-	static defaultValues: Partial<IControlInput> = {
+	static defaultValues: Partial<IControlInputProps> = {
 		...TControlValue.defaultValues,
 		variant: 'normal',
 		readonly: false,
@@ -36,7 +38,7 @@ export default class TControlInput<TEvents extends TControlInputEvents>
 	/** Индикатор загрузки */
 	protected _spinner?: TSpinner
 
-	constructor(options: IComponentOptions<IControlInput> = {}) {
+	constructor(options: IComponentOptions<IControlInputProps> = {}) {
 		options = TComponent.prepareOptions(options, 's-control-input')
 
 		super(options)
@@ -162,7 +164,7 @@ export default class TControlInput<TEvents extends TControlInputEvents>
 		return classes
 	}
 
-	getProps(): TObjectProps {
+	getProps(): TProps {
 		return {
 			...super.getProps(),
 			variant: this.variant,

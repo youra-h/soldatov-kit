@@ -1,12 +1,12 @@
 <script lang="ts">
-import { TControlInput, type IControlInput } from '../../../core'
+import { TControlInput, type IControlInputProps } from '../../../core'
 import BaseControlInput, { syncControlInput } from './base.component'
 import { useBaseSetup } from '../../common/useBaseSetup'
 
 export default {
 	name: '_ControlInput',
 	extends: BaseControlInput,
-	setup(props: IControlInput, { emit }) {
+	setup(props: IControlInputProps, { emit }) {
 		const { is: component } = useBaseSetup(TControlInput, props)
 
 		syncControlInput({

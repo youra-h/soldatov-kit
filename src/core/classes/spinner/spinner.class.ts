@@ -113,7 +113,7 @@ export default class TSpinner extends TComponent<TSpinnerEvents> implements ISpi
 		}
 	}
 
-	getProps(): TObjectProps {
+	getProps(): TProps {
 		return {
 			...super.getProps(),
 			size: this._sizeHelper.value,

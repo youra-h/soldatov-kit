@@ -1,7 +1,7 @@
-import type { IControlInput, TControlInputEvents } from '../control-input'
+import type { IControlInputProps, TControlInputEvents } from '../control-input'
 import type { TIcon } from '../icon'
 
-export interface ISwitch extends IControlInput {
+export interface ISwitch extends IControlInputProps {
 	value: boolean
 	// Иконка для состояния "включено"
 	icon?: TIcon

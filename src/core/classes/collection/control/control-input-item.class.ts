@@ -1,5 +1,9 @@
 import { AbstractControlValueItem } from './control-value-item.class'
-import { type IControlInput, type TControlInputState, TControlInput } from '../../control-input'
+import {
+	type IControlInputProps,
+	type TControlInputState,
+	TControlInput,
+} from '../../control-input'
 import type { TComponentVariant } from '../../../common/types'
 import { TSpinner } from '../../spinner'
 import type { IControlInputItem } from './types'
@@ -13,7 +17,7 @@ export abstract class AbstractControlInputItem<
 		TProps extends IControlInputItem = IControlInputItem,
 	>
 	extends AbstractControlValueItem<TControlType, TProps>
-	implements IControlInput
+	implements IControlInputProps
 {
 	get variant(): TComponentVariant {
 		return this._control!.variant

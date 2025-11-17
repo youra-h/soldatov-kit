@@ -4,10 +4,7 @@ import type { ISwitch, TSwitchEvents } from './types'
 import type { TObjectProps } from '../object'
 import { TIcon } from '../icon'
 
-export default class TSwitch<TEvents extends TSwitchEvents>
-	extends TControlInput<TEvents>
-	implements ISwitch
-{
+export default class TSwitch<TEvents extends TSwitchEvents> extends TControlInput<TEvents> implements ISwitch {
 	static defaultValues: Partial<ISwitch> = {
 		...TControlInput.defaultValues,
 		value: false,
@@ -83,7 +80,7 @@ export default class TSwitch<TEvents extends TSwitchEvents>
 		}
 	}
 
-	getProps(): TObjectProps {
+	getProps(): TProps {
 		return {
 			...super.getProps(),
 			icon: this.icon,
