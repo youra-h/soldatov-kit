@@ -1,7 +1,5 @@
-// src/core/__tests__/tab-items.spec.ts
 import { describe, it, expect, beforeEach } from 'vitest'
-import { TTabs, TTabItem } from '../classes/tabs' // путь подкорректируй под свой проект
-import { SelectableControlCollection } from '../classes/collection' // путь подкорректируй под свой проект
+import { TTabs, TTabItem } from '../classes/tabs'
 
 describe('TTabs (TTabs / TTabItem)', () => {
 	let tabs: TTabs
@@ -16,19 +14,19 @@ describe('TTabs (TTabs / TTabItem)', () => {
 	})
 
 	it('Добавляет вкладки и возвращает корректные элементы', () => {
-		const t1 = tabs.add()
+		const t1 = tabs.collection.add()
 		t1.text = 'Главная'
 		t1.name = 'main'
 
-		const t2 = tabs.addItem()
+		const t2 = tabs.addTab()
 		t2.text = 'Профиль'
 		t2.name = 'profile'
 
-		const t3 = tabs.addItem()
+		const t3 = tabs.addTab()
 		t3.text = 'Настройки'
 		t3.name = 'settings'
 
-		const arr = tabs.toArray()
+		const arr = tabs.getTabs()
 
 		// проверяем, что массив имеет правильную длину
 		expect(arr.length).toBe(3)
@@ -43,7 +41,7 @@ describe('TTabs (TTabs / TTabItem)', () => {
 	})
 
 	it('Чтение/запись свойств элементов коллекции', () => {
-		const [t1, t2, t3] = [tabs.addItem(), tabs.addItem(), tabs.addItem()]
+		const [t1, t2, t3] = [tabs.addTab(), tabs.addTab(), tabs.addTab()]
 		t1.text = 'A'
 		t2.visible = false
 		t3.hidden = true
@@ -57,17 +55,17 @@ describe('TTabs (TTabs / TTabItem)', () => {
 
 	it('Добавление / Вставка / Установка нового индекса / Перенос вкладки на новое место / Удаление', () => {
 		// Создание табов
-		const t1 = tabs.addItem()
+		const t1 = tabs.collection.add()
 		t1.name = 'a'
-		const t2 = tabs.addItem()
+		const t2 = tabs.collection.add()
 		t2.name = 'b'
-		const t3 = tabs.addItem()
+		const t3 = tabs.collection.add()
 		t3.name = 'c'
 
 		// Вставка таба по индексу
-		const t1_5 = tabs.insertItem(1)
+		const t1_5 = tabs.collection.insertItem(1)
 		t1_5.name = 'a.5'
-		expect(tabs.toArray().map((x) => x.name)).toEqual(['a', 'a.5', 'b', 'c'])
+		expect(tabs.collection.toArray().map((x) => x.name)).toEqual(['a', 'a.5', 'b', 'c'])
 
 		// Установка нового индекса таба
 		tabs.setItemIndex(t1_5, 2)
