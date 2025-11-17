@@ -1,12 +1,12 @@
 import { TComponent, type IComponentOptions } from './../component'
 import { TControl } from '../control'
 import type { TComponentVariant } from '../../common/types'
-import type { IButtonProps, TButtonAppearance, TButtonEvents } from './types'
+import type { IButton, IButtonProps, TButtonAppearance, TButtonEvents } from './types'
 import { TIcon } from '../icon'
 import { TVariant } from '../../common/variant'
 import { TSpinner } from '../spinner'
 
-export default class TButton extends TControl<IButtonProps, TButtonEvents> implements IButtonProps {
+export default class TButton extends TControl<IButtonProps, TButtonEvents> implements IButton {
 	static defaultValues: Partial<IButtonProps> = {
 		...TControl.defaultValues,
 		variant: 'normal',

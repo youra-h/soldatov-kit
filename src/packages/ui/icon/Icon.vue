@@ -1,12 +1,12 @@
 <script lang="ts">
-import { TIcon, type IIcon } from '../../../core'
+import { TIcon, type IIconProps } from '../../../core'
 import { useBaseSetup } from '../../common/useBaseSetup'
 import BaseIcon, { syncIcon } from './base.component'
 
 export default {
 	name: '_Icon',
 	extends: BaseIcon,
-	setup(props: IIcon, { emit }) {
+	setup(props: IIconProps, { emit }) {
 		const { is: component } = useBaseSetup(TIcon, props)
 
 		syncIcon({

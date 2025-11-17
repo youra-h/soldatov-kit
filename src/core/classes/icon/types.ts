@@ -1,7 +1,7 @@
-import type { IComponent, TComponentEvents } from '../component'
+import type { IComponent, IComponentProps, TComponentEvents } from '../component'
 import type { TComponentSize } from '../../common/types'
 
-export interface IIcon extends IComponent {
+export interface IIconProps extends IComponentProps {
 	// Размер иконки
 	size?: TComponentSize
 	// Ширина иконки
@@ -11,3 +11,5 @@ export interface IIcon extends IComponent {
 }
 
 export type TIconEvents = TComponentEvents & {}
+
+export interface IIcon extends IComponent<IIconProps, TIconEvents> {}

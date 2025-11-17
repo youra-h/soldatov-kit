@@ -1,5 +1,5 @@
 import { type PropType, watch } from 'vue'
-import { type IIcon, TIcon, type TComponentSize } from '../../../core'
+import { type IIconProps, TIcon, type TComponentSize } from '../../../core'
 import { Component, emitsComponent, propsComponent, syncComponent } from '../component'
 import type { TEmits, TProps, ISyncComponentOptions } from '../../common/types'
 
@@ -8,19 +8,19 @@ export const emitsIcon: TEmits = [...emitsComponent] as const
 export const propsIcon: TProps = {
 	...propsComponent,
 	tag: {
-		type: [String, Object] as PropType<IIcon['tag']>,
+		type: [String, Object] as PropType<IIconProps['tag']>,
 		default: TIcon.defaultValues.tag,
 	},
 	size: {
-		type: String as PropType<IIcon['size']>,
+		type: String as PropType<IIconProps['size']>,
 		default: TIcon.defaultValues.size,
 	},
 	width: {
-		type: [Number, String] as PropType<IIcon['width']>,
+		type: [Number, String] as PropType<IIconProps['width']>,
 		default: TIcon.defaultValues.width,
 	},
 	height: {
-		type: [Number, String] as PropType<IIcon['height']>,
+		type: [Number, String] as PropType<IIconProps['height']>,
 		default: TIcon.defaultValues.height,
 	},
 }
@@ -37,7 +37,7 @@ export default {
  * @param props
  * @param instance
  */
-export function syncIcon(options: ISyncComponentOptions<IIcon>) {
+export function syncIcon(options: ISyncComponentOptions<IIconProps>) {
 	syncComponent(options)
 
 	const { instance, props } = options
