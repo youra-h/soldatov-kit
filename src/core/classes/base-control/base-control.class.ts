@@ -51,6 +51,14 @@ export default class TBaseControl<
 		}
 	}
 
+	disable(): void {
+		this.disabled = true
+	}
+
+	enable(): void {
+		this.disabled = false
+	}
+
 	getProps(): TProps {
 		return {
 			...super.getProps(),

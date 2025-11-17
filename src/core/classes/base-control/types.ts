@@ -10,6 +10,13 @@ export interface IBaseControlProps extends IComponentProps, IHasName {
 	disabled?: boolean
 }
 
+export interface IBaseControlMethods {
+	// Заблокировать контрол
+	disable(): void
+	// Разблокировать контрол
+	enable(): void
+}
+
 export type TBaseControlEvents = TComponentEvents & {
 	// Событие изменения состояния disabled
 	disabled: (value: boolean) => void
@@ -18,4 +25,5 @@ export type TBaseControlEvents = TComponentEvents & {
 export interface IBaseControl<
 	TProps extends IBaseControlProps = IBaseControlProps,
 	TEvents = TBaseControlEvents,
-> extends IComponent<TProps, TEvents> {}
+> extends IComponent<TProps, TEvents>,
+		IBaseControlMethods {}

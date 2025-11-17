@@ -1,6 +1,6 @@
 import { TComponent, type IComponentOptions } from './../component'
 import { TBaseControl } from '../base-control'
-import type { IControlProps, TControlEvents } from './types'
+import type { IControl, IControlProps, TControlEvents } from './types'
 import type { TComponentSize } from '../../common/types'
 import { TSize } from '../../common/size'
 
@@ -9,7 +9,7 @@ export default class TControl<
 		TEvents extends TControlEvents = TControlEvents,
 	>
 	extends TBaseControl<TProps, TEvents>
-	implements IControlProps
+	implements IControl
 {
 	static defaultValues: Partial<IControlProps> = {
 		...TBaseControl.defaultValues,

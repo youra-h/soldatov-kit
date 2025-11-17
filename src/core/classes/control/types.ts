@@ -1,4 +1,4 @@
-import type { IBaseControlProps, TBaseControlEvents } from './../base-control'
+import type { IBaseControl, IBaseControlProps, TBaseControlEvents } from './../base-control'
 import type { TComponentSize } from '../../common/types'
 
 export interface IControlProps extends IBaseControlProps {
@@ -10,8 +10,6 @@ export interface IControlProps extends IBaseControlProps {
 	size?: TComponentSize
 }
 
-export interface IControl extends IControlProps {}
-
 export type TControlEvents = TBaseControlEvents & {
 	// Событие изменения фокуса
 	focused: () => void
@@ -20,3 +18,6 @@ export type TControlEvents = TBaseControlEvents & {
 	// Событие клика по контролу
 	click: () => void
 }
+
+export interface IControl<TProps extends IControlProps = IControlProps, TEvents = TControlEvents>
+	extends IBaseControl<TProps, TEvents> {}
