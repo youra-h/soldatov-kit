@@ -1,5 +1,5 @@
 import type { TComponentVariant } from '../../common/types'
-import type { IControlValueProps, TControlValueEvents } from '../control-value'
+import type { IControlValue, IControlValueProps, TControlValueEvents } from '../control-value'
 import { TSpinner } from '../spinner'
 
 export type TControlInputState = 'normal' | 'success' | 'warning' | 'error'
@@ -22,3 +22,8 @@ export interface IControlInputProps extends IControlValueProps {
 }
 
 export type TControlInputEvents = TControlValueEvents & {}
+
+export interface IControlInput<
+	TProps extends IControlInputProps = IControlInputProps,
+	TEvents = TControlInputEvents,
+> extends IControlValue<TProps, TEvents> {}
