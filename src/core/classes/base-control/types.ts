@@ -1,11 +1,11 @@
-import type { IComponent, TComponentEvents } from '../component'
+import type { IComponentProps, TComponentEvents } from '../component'
 
 // Элемент, имеющий имя
 export interface IHasName {
 	name?: string
 }
 
-export interface IBaseControl extends IComponent, IHasName {
+export interface IBaseControlProps extends IComponentProps, IHasName {
 	// Заблокирован ли контрол
 	disabled?: boolean
 }

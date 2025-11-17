@@ -1,12 +1,11 @@
 import { TComponent, type IComponentOptions } from '../component'
-import type { IBaseControl, TBaseControlEvents } from './types'
-import type { TObjectProps } from '../object'
+import type { IBaseControlProps, TBaseControlEvents } from './types'
 
-export default class TBaseControl<TEvents extends TBaseControlEvents>
-	extends TComponent<TEvents>
-	implements IBaseControl
+export default class TBaseControl
+	extends TComponent<IBaseControlProps, TBaseControlEvents>
+	implements IBaseControlProps
 {
-	static defaultValues: Partial<IBaseControl> = {
+	static defaultValues: Partial<IBaseControlProps> = {
 		...TComponent.defaultValues,
 		name: '',
 		disabled: false,
@@ -17,7 +16,7 @@ export default class TBaseControl<TEvents extends TBaseControlEvents>
 	/** Заблокирован ли контрол */
 	protected _disabled: boolean
 
-	constructor(options: IComponentOptions<IBaseControl> = {}) {
+	constructor(options: IComponentOptions<IBaseControlProps> = {}) {
 		options = TComponent.prepareOptions(options, 's-base-control')
 
 		super(options)
@@ -45,11 +44,11 @@ export default class TBaseControl<TEvents extends TBaseControlEvents>
 	set disabled(value: boolean) {
 		if (this._disabled !== value) {
 			this._disabled = value
-			this.emit('disabled', value)
+			this.events.emit('disabled', value)
 		}
 	}
 
-	getProps(): TObjectProps {
+	getProps(): IBaseControlProps {
 		return {
 			...super.getProps(),
 			name: this._name,

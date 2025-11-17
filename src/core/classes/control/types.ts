@@ -1,7 +1,7 @@
-import type { IBaseControl, TBaseControlEvents } from './../base-control'
+import type { IBaseControlProps, TBaseControlEvents } from './../base-control'
 import type { TComponentSize } from '../../common/types'
 
-export interface IControl extends IBaseControl {
+export interface IControl extends IBaseControlProps {
 	// Текстовое значение контрола
 	text: string
 	// В фокусе ли контрол

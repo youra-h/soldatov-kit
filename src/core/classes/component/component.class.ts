@@ -6,7 +6,13 @@ import type { IComponent, IComponentProps, IComponentOptions, TComponentEvents }
  * Базовый класс для всех UI-компонентов.
  * Использует композицию для событий (events).
  */
-export default class TComponent extends TObject<IComponentProps> implements IComponent {
+export default class TComponent<
+		TProps extends IComponentProps = IComponentProps,
+		TEvents extends TComponentEvents = TComponentEvents,
+	>
+	extends TObject<TProps>
+	implements IComponent
+{
 	static defaultValues: Partial<IComponent> = {
 		id: '',
 		tag: 'div',
@@ -15,7 +21,7 @@ export default class TComponent extends TObject<IComponentProps> implements ICom
 	}
 
 	// События через композицию
-	public events = new TEvented<TComponentEvents>()
+	public events: TEvented<TEvents>
 
 	protected _id: string | number
 	protected _visible: boolean
@@ -28,12 +34,14 @@ export default class TComponent extends TObject<IComponentProps> implements ICom
 	// Array of dynamic CSS classes
 	protected _classes: string[] = []
 
-	constructor(options: IComponentOptions<IComponent> = {}) {
+	constructor(options: IComponentOptions<IComponentProps> = {}) {
 		super()
 
 		const { props = {}, baseClass } = options
 
 		this._baseClass = baseClass ?? 's-component'
+
+		this.events = new TEvented<TEvents>()
 
 		this._id = props.id ?? TComponent.defaultValues.id!
 		this._tag = props.tag ?? TComponent.defaultValues.tag!
@@ -102,7 +110,7 @@ export default class TComponent extends TObject<IComponentProps> implements ICom
 		return [this._baseClass, ...this._classes]
 	}
 
-	getProps(): IComponentProps {
+	getProps(): TProps {
 		return {
 			...super.getProps(),
 			id: this._id,
