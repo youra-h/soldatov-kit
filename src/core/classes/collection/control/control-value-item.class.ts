@@ -1,5 +1,5 @@
 import { AbstractControlItem } from './control-item.class'
-import { type IControlValue, TControlValue } from '../../control-value'
+import { type IControlValueProps, TControlValue } from '../../control-value'
 import type { IControlValueItem } from './types'
 
 /**
@@ -11,7 +11,7 @@ export abstract class AbstractControlValueItem<
 		TProps extends IControlValueItem = IControlValueItem,
 	>
 	extends AbstractControlItem<TControlType, TProps>
-	implements IControlValue
+	implements IControlValueProps
 {
 	get value(): any {
 		return this._control!.value

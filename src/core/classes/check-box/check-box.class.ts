@@ -42,7 +42,7 @@ export default class TCheckBox<TEvents extends TCheckBoxEvents>
 	set value(value: boolean | null) {
 		if (this._value !== value) {
 			this._value = value
-			this.emit('changeValue', value)
+			this.events.emit('changeValue', value)
 		}
 	}
 
@@ -53,7 +53,7 @@ export default class TCheckBox<TEvents extends TCheckBoxEvents>
 	set indeterminate(value: boolean) {
 		if (this._indeterminate !== value) {
 			this._indeterminate = value
-			this.emit('changeIndeterminate', value)
+			this.events.emit('changeIndeterminate', value)
 		}
 	}
 
@@ -126,7 +126,7 @@ export default class TCheckBox<TEvents extends TCheckBoxEvents>
 		}
 
 		if (oldValue !== this._value) {
-			this.emit('change', {
+			this.events.emit('change', {
 				event,
 				value: this._value,
 			})

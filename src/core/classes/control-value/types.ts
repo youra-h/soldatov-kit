@@ -5,7 +5,7 @@ export interface IHasValue {
 	value?: any
 }
 
-export interface IControlValue extends IControlProps, IHasValue {}
+export interface IControlValueProps extends IControlProps, IHasValue {}
 
 export type TControlValueEvents = TControlEvents & {
 	// Событие изменения текста

@@ -1,13 +1,15 @@
 import { TComponent, type IComponentOptions } from './../component'
 import { TControl } from '../control'
-import type { IControlValue, TControlValueEvents } from './types'
-import type { TObjectProps } from '../object'
+import type { IControlValueProps, TControlValueEvents } from './types'
 
-export default class TControlValue<TEvents extends TControlValueEvents>
-	extends TControl<TEvents>
-	implements IControlValue
+export default class TControlValue<
+		TProps extends IControlValueProps = IControlValueProps,
+		TEvents extends TControlValueEvents = TControlValueEvents,
+	>
+	extends TControl<TProps, TEvents>
+	implements IControlValueProps
 {
-	static defaultValues: Partial<IControlValue> = {
+	static defaultValues: Partial<IControlValueProps> = {
 		...TControl.defaultValues,
 		value: null,
 	}
@@ -15,7 +17,7 @@ export default class TControlValue<TEvents extends TControlValueEvents>
 	/** Значение контрола */
 	protected _value?: any
 
-	constructor(options: IComponentOptions<IControlValue> = {}) {
+	constructor(options: IComponentOptions<IControlValueProps> = {}) {
 		options = TComponent.prepareOptions(options, 's-control-value')
 
 		super(options)
@@ -32,11 +34,11 @@ export default class TControlValue<TEvents extends TControlValueEvents>
 	set value(newValue: any) {
 		if (this._value !== newValue) {
 			this._value = newValue
-			this.emit('changeValue', newValue)
+			this.events.emit('changeValue', newValue)
 		}
 	}
 
-	getProps(): TObjectProps {
+	getProps(): TProps {
 		return {
 			...super.getProps(),
 			value: this._value,

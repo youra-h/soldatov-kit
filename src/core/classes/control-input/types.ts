@@ -1,10 +1,10 @@
 import type { TComponentVariant } from '../../common/types'
-import type { IControlValue, TControlValueEvents } from '../control-value'
+import type { IControlValueProps, TControlValueEvents } from '../control-value'
 import { TSpinner } from '../spinner'
 
 export type TControlInputState = 'normal' | 'success' | 'warning' | 'error'
 
-export interface IControlInput extends IControlValue {
+export interface IControlInput extends IControlValueProps {
 	// Вариант отображения чекбокса
 	variant?: TComponentVariant
 	// Значение недоступно для редактирования

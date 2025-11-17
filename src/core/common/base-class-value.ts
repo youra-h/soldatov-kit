@@ -33,7 +33,7 @@ export abstract class TBaseClassValue<
 		if (this._value !== newValue) {
 			const oldValue = this._value
 			this._value = newValue
-			this.emit('change', newValue, oldValue)
+			this.events.emit('change', newValue, oldValue)
 		}
 	}
 

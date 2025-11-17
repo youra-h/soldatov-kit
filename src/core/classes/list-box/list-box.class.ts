@@ -9,7 +9,7 @@ export class TListBox extends TComponent<any> {
   constructor(options: any = {}) {
     super(options)
     this.items = new TListItems(this)
-    this.items.onChange = () => this.emit('itemsChanged')
+    this.items.onChange = () => this.events.emit('itemsChanged')
   }
 
   add(text: string) {

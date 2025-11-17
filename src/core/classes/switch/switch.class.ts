@@ -42,7 +42,7 @@ export default class TSwitch<TEvents extends TSwitchEvents>
 	set value(value: boolean) {
 		if (this._value !== value) {
 			this._value = value
-			this.emit('changeValue', value)
+			this.events.emit('changeValue', value)
 		}
 	}
 
@@ -76,7 +76,7 @@ export default class TSwitch<TEvents extends TSwitchEvents>
 		this.value = this.value === true ? false : true
 
 		if (oldValue !== this._value) {
-			this.emit('change', {
+			this.events.emit('change', {
 				event,
 				value: this._value,
 			})
