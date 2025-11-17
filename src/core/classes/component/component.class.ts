@@ -13,7 +13,7 @@ export default class TComponent<
 	extends TObject<TProps>
 	implements IComponent
 {
-	static defaultValues: Partial<IComponent> = {
+	static defaultValues: Partial<IComponentProps> = {
 		id: '',
 		tag: 'div',
 		visible: true,

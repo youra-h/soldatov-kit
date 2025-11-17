@@ -10,6 +10,8 @@ export interface IControlProps extends IBaseControlProps {
 	size?: TComponentSize
 }
 
+export interface IControl extends IControlProps {}
+
 export type TControlEvents = TBaseControlEvents & {
 	// Событие изменения фокуса
 	focused: () => void

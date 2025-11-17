@@ -1,4 +1,4 @@
-import type { IObject, TObjectProps } from '../object'
+import type { IObject } from '../object'
 
 /**
  * Свойства компонента (состояние).
@@ -39,21 +39,6 @@ export interface IComponentMethods {
 }
 
 /**
- * Объединённый интерфейс компонента.
- * Наследует контракт IObject для работы с props.
- */
-export interface IComponent extends IObject<IComponentProps>, IComponentProps, IComponentMethods {}
-
-/**
- * Опции для создания компонента.
- * props — начальные свойства, baseClass — базовый CSS-класс.
- */
-export interface IComponentOptions<T> {
-	props?: Partial<T>
-	baseClass?: string
-}
-
-/**
  * События компонента.
  * Используются через TEvented.
  */
@@ -66,4 +51,22 @@ export type TComponentEvents = {
 	beforeHide: () => boolean
 	afterHide: () => void
 	visible: (visible: boolean) => void
+}
+
+// Универсальный IComponent с дженериками:
+// TProps — props, обязательно содержит базовые IComponentProps
+// TEvents — события, по умолчанию TComponentEvents
+export interface IComponent<
+	TProps extends IComponentProps = IComponentProps,
+	TEvents = TComponentEvents,
+> extends IObject<TProps>,
+		IComponentMethods {}
+
+/**
+ * Опции для создания компонента.
+ * props — начальные свойства, baseClass — базовый CSS-класс.
+ */
+export interface IComponentOptions<T> {
+	props?: Partial<T>
+	baseClass?: string
 }
