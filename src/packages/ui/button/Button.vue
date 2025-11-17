@@ -1,12 +1,12 @@
 <script lang="ts">
-import { TButton, type IButton } from '../../../core'
+import { TButton, type IButtonProps } from '../../../core'
 import { useBaseSetup } from '../../common/useBaseSetup'
 import BaseButton, { syncButton } from './base.component'
 
 export default {
 	name: '_Button',
 	extends: BaseButton,
-	setup(props: IButton, { emit }) {
+	setup(props: IButtonProps, { emit }) {
 		const { is: component } = useBaseSetup(TButton, props)
 
 		syncButton({

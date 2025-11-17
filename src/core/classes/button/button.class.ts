@@ -1,14 +1,13 @@
 import { TComponent, type IComponentOptions } from './../component'
 import { TControl } from '../control'
 import type { TComponentVariant } from '../../common/types'
-import type { IButton, TButtonAppearance, TButtonEvents } from './types'
-import type { TObjectProps } from '../object'
+import type { IButtonProps, TButtonAppearance, TButtonEvents } from './types'
 import { TIcon } from '../icon'
 import { TVariant } from '../../common/variant'
 import { TSpinner } from '../spinner'
 
-export default class TButton extends TControl<TButtonEvents> implements IButton {
-	static defaultValues: Partial<IButton> = {
+export default class TButton extends TControl<IButtonProps, TButtonEvents> implements IButtonProps {
+	static defaultValues: Partial<IButtonProps> = {
 		...TControl.defaultValues,
 		variant: 'normal',
 		appearance: 'normal',
@@ -23,7 +22,7 @@ export default class TButton extends TControl<TButtonEvents> implements IButton 
 	protected _loading: boolean
 	protected _spinner?: TSpinner
 
-	constructor(options: IComponentOptions<IButton> = {}) {
+	constructor(options: IComponentOptions<IButtonProps> = {}) {
 		options = TComponent.prepareOptions(options, 's-button')
 
 		super(options)

@@ -2,7 +2,7 @@ import { type PropType, watch } from 'vue'
 import {
 	type TComponentVariant,
 	TIcon,
-	type IButton,
+	type IButtonProps,
 	type TButtonAppearance,
 	TSpinner,
 	TButton,
@@ -17,27 +17,27 @@ export const emitsButton: TEmits = [...emitsControl] as const
 export const propsButton: TProps = {
 	...propsControl,
 	tag: {
-		type: [String, Object] as PropType<IButton['tag']>,
+		type: [String, Object] as PropType<IButtonProps['tag']>,
 		default: TButton.defaultValues.tag,
 	},
 	variant: {
-		type: String as PropType<IButton['variant']>,
+		type: String as PropType<IButtonProps['variant']>,
 		default: TButton.defaultValues.variant,
 	},
 	appearance: {
-		type: String as PropType<IButton['appearance']>,
+		type: String as PropType<IButtonProps['appearance']>,
 		default: TButton.defaultValues.appearance,
 	},
 	icon: {
-		type: Object as PropType<IButton['icon']>,
+		type: Object as PropType<IButtonProps['icon']>,
 		default: TButton.defaultValues.icon,
 	},
 	loading: {
-		type: Boolean as PropType<IButton['loading']>,
+		type: Boolean as PropType<IButtonProps['loading']>,
 		default: TButton.defaultValues.loading,
 	},
 	spinner: {
-		type: Object as PropType<IButton['spinner']>,
+		type: Object as PropType<IButtonProps['spinner']>,
 		default: TButton.defaultValues.spinner,
 	},
 }
@@ -55,7 +55,7 @@ export default {
  * @param props
  * @param instance
  */
-export function syncButton(options: ISyncComponentOptions<IButton>) {
+export function syncButton(options: ISyncComponentOptions<IButtonProps>) {
 	syncControl(options)
 
 	const { instance, props } = options
