@@ -1,12 +1,12 @@
 import { TComponent, type IComponentOptions } from '../component'
-import type { IBaseControlProps, TBaseControlEvents } from './types'
+import type { IBaseControl, IBaseControlProps, TBaseControlEvents } from './types'
 
 export default class TBaseControl<
 		TProps extends IBaseControlProps = IBaseControlProps,
 		TEvents extends TBaseControlEvents = TBaseControlEvents,
 	>
 	extends TComponent<TProps, TEvents>
-	implements IBaseControlProps
+	implements IBaseControl
 {
 	static defaultValues: Partial<IBaseControlProps> = {
 		...TComponent.defaultValues,
