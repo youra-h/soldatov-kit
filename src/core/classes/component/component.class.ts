@@ -1,17 +1,21 @@
-import { type TObjectProps } from '../object'
+import { TObject } from '../object'
 import { TEvented } from '../evented'
-import type { IComponent, TComponentEvents, IComponentOptions } from './types'
+import type { IComponent, IComponentProps, IComponentOptions, TComponentEvents } from './types'
 
-export default class TComponent<TEvents extends TComponentEvents>
-	extends TEvented<TEvents>
-	implements IComponent
-{
+/**
+ * Базовый класс для всех UI-компонентов.
+ * Использует композицию для событий (events).
+ */
+export default class TComponent extends TObject<IComponentProps> implements IComponent {
 	static defaultValues: Partial<IComponent> = {
 		id: '',
 		tag: 'div',
 		visible: true,
 		hidden: false,
 	}
+
+	// События через композицию
+	public events = new TEvented<TComponentEvents>()
 
 	protected _id: string | number
 	protected _visible: boolean
@@ -39,7 +43,7 @@ export default class TComponent<TEvents extends TComponentEvents>
 			typeof props.hidden === 'boolean' ? props.hidden : TComponent.defaultValues.hidden!
 
 		// Emit 'created' event after the current call stack is cleared
-		setTimeout(() => this.emit('created', this), 0)
+		setTimeout(() => this.events.emit('created', this), 0)
 	}
 
 	static prepareOptions<T>(
@@ -98,7 +102,7 @@ export default class TComponent<TEvents extends TComponentEvents>
 		return [this._baseClass, ...this._classes]
 	}
 
-	getProps(): TObjectProps {
+	getProps(): IComponentProps {
 		return {
 			...super.getProps(),
 			id: this._id,
@@ -116,15 +120,15 @@ export default class TComponent<TEvents extends TComponentEvents>
 			return
 		}
 
-		const canShow = this.emitWithResult('beforeShow')
+		const canShow = this.events.emitWithResult('beforeShow')
 		if (!canShow) {
 			return
 		}
 
 		this._visible = true
 
-		this.emit('show')
-		this.emit('visible', true)
+		this.events.emit('show')
+		this.events.emit('visible', true)
 
 		this.afterShow()
 	}
@@ -137,15 +141,15 @@ export default class TComponent<TEvents extends TComponentEvents>
 			return
 		}
 
-		const canShow = this.emitWithResult('beforeHide')
+		const canShow = this.events.emitWithResult('beforeHide')
 		if (!canShow) {
 			return
 		}
 
 		this._visible = false
 
-		this.emit('hide')
-		this.emit('visible', false)
+		this.events.emit('hide')
+		this.events.emit('visible', false)
 
 		this.afterHide()
 	}
@@ -162,9 +166,12 @@ export default class TComponent<TEvents extends TComponentEvents>
 
 	afterHide(): void {}
 
-	static create<T extends TComponent<any>>(
+	/**
+	 * Фабричный метод для создания компонента.
+	 */
+	static create<T extends TComponent>(
 		this: new (options: any) => T,
-		props: Partial<any> = {},
+		props: Partial<IComponentProps> = {},
 	): T {
 		return new this({ props })
 	}

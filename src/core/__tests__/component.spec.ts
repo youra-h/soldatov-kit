@@ -2,7 +2,8 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 import TComponent from '../classes/component/component.class'
 
 describe('TComponent', () => {
-	let comp: TComponent<any>
+	let comp: TComponent
+
 	beforeEach(() => {
 		comp = new TComponent()
 	})
@@ -40,11 +41,11 @@ describe('TComponent', () => {
 
 	it('show вызывает beforeShow, emitWithResult, меняет visible и вызывает события', () => {
 		const beforeShow = vi.spyOn(comp, 'beforeShow').mockReturnValue(true)
-		const emitWithResult = vi.spyOn(comp, 'emitWithResult').mockReturnValue(true)
+		const emitWithResult = vi.spyOn(comp.events, 'emitWithResult').mockReturnValue(true)
 		const showHandler = vi.fn()
 		const visibleHandler = vi.fn()
-		comp.on('show', showHandler)
-		comp.on('visible', visibleHandler)
+		comp.events.on('show', showHandler)
+		comp.events.on('visible', visibleHandler)
 		comp.show()
 		expect(beforeShow).toHaveBeenCalled()
 		expect(emitWithResult).toHaveBeenCalledWith('beforeShow')
@@ -55,11 +56,11 @@ describe('TComponent', () => {
 
 	it('hide вызывает beforeHide, emitWithResult, меняет visible и вызывает события', () => {
 		const beforeHide = vi.spyOn(comp, 'beforeHide').mockReturnValue(true)
-		const emitWithResult = vi.spyOn(comp, 'emitWithResult').mockReturnValue(true)
+		const emitWithResult = vi.spyOn(comp.events, 'emitWithResult').mockReturnValue(true)
 		const hideHandler = vi.fn()
 		const visibleHandler = vi.fn()
-		comp.on('hide', hideHandler)
-		comp.on('visible', visibleHandler)
+		comp.events.on('hide', hideHandler)
+		comp.events.on('visible', visibleHandler)
 		comp.hide()
 		expect(beforeHide).toHaveBeenCalled()
 		expect(emitWithResult).toHaveBeenCalledWith('beforeHide')

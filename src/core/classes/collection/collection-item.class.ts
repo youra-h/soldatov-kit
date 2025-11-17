@@ -15,11 +15,6 @@ export abstract class TCollectionItem<TProps extends ICollectionItemProps = ICol
 	 */
 	private _collection: TCollection | null = null
 
-	/**
-	 * Уникальный идентификатор элемента внутри коллекции.
-	 */
-	id?: number | string
-
 	private _index: number = -1
 
 	constructor(collection?: TCollection) {
@@ -59,20 +54,9 @@ export abstract class TCollectionItem<TProps extends ICollectionItemProps = ICol
 		}
 	}
 
-	/**
-	 * @internal
-	 * Внутренний метод: прямая установка индекса без вызова логики перемещения.
-	 * Используется коллекцией для реиндексации элементов.
-	 * @param value Новый индекс.
-	 */
-	_updateIndex(value: number): void {
-		this._index = value
-	}
-
 	getProps(): TProps {
 		return {
 			...super.getProps(),
-			id: this.id,
 			index: this.index,
 			collection: this._collection,
 		}
@@ -85,8 +69,6 @@ export abstract class TCollectionItem<TProps extends ICollectionItemProps = ICol
 	 */
 	assign(source: Partial<TProps>): void {
 		if (!source) return
-
-		this.id = source.id
 	}
 
 	/**

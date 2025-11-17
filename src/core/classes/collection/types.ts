@@ -156,12 +156,6 @@ export interface ICollection<TItem extends TCollectionItem = TCollectionItem> {
 	 */
 	move(fromIndex: number, toIndex: number): void
 
-	/** Начало пакетного обновления */
-	beginUpdate(): void
-
-	/** Конец пакетного обновления */
-	endUpdate(): void
-
 	/** Перебор элементов */
 	forEach(fn: (item: TItem, index: number) => void): void
 

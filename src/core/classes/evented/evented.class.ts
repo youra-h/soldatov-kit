@@ -1,10 +1,8 @@
 import { TEventEmitter, type TEventHandler } from '../../common/event-emitter'
 import { TObject } from '../object'
 
-export abstract class TEvented<
-	TEvents extends Record<string, (...args: any) => any>,
-> extends TObject {
-	public events: TEventEmitter = new TEventEmitter()
+export class TEvented<TEvents extends Record<string, (...args: any) => any>> extends TObject {
+	private _items: TEventEmitter = new TEventEmitter()
 
 	/**
 	 * Подписка на событие
@@ -12,7 +10,7 @@ export abstract class TEvented<
 	 * @param handler - обработчик события
 	 */
 	on(event: string, handler: TEventHandler): void {
-		this.events.on(event, handler)
+		this._items.on(event, handler)
 	}
 
 	/**
@@ -21,7 +19,7 @@ export abstract class TEvented<
 	 * @param handler - обработчик события
 	 */
 	off<K extends keyof TEvents>(event: K, handler: TEventHandler): void {
-		this.events.off(event as string, handler)
+		this._items.off(event as string, handler)
 	}
 
 	/**
@@ -30,7 +28,7 @@ export abstract class TEvented<
 	 * @param args - аргументы события
 	 */
 	emit<K extends keyof TEvents>(event: K, ...args: Parameters<TEventHandler>): void {
-		this.events.emit(event as string, ...args)
+		this._items.emit(event as string, ...args)
 	}
 
 	/**
@@ -40,6 +38,6 @@ export abstract class TEvented<
 	 * @returns {boolean}
 	 */
 	emitWithResult<K extends keyof TEvents>(event: K, ...args: Parameters<TEventHandler>): boolean {
-		return this.events.emitWithResult(event as string, ...args)
+		return this._items.emitWithResult(event as string, ...args)
 	}
 }

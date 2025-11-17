@@ -1,7 +1,7 @@
 import type { TObjectProps, IObject } from './types'
 
 export abstract class TObject<TProps extends TObjectProps = TObjectProps> implements IObject<TProps> {
-	getProps(): TProps {
+	getProps(): Readonly<TProps> {
 		return {} as TProps
 	}
 
@@ -14,5 +14,13 @@ export abstract class TObject<TProps extends TObjectProps = TObjectProps> implem
 				this[key] = source[key]
 			}
 		}
+	}
+
+	/**
+	 * Сериализация объекта в JSON.
+	 * Возвращает копию props, пригодную для сохранения или передачи.
+	 */
+	toJSON(): TProps {
+		return { ...this.getProps() } as TProps
 	}
 }
