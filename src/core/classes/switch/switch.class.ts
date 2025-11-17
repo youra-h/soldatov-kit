@@ -22,7 +22,7 @@ export default class TSwitch<TEvents extends TSwitchEvents> extends TControlInpu
 		this._value = props.value ?? TSwitch.defaultValues.value!
 		this._icon = props.icon ?? TSwitch.defaultValues.icon!
 
-		this._sizeHelper.on('change', (value) => {
+		this._sizeHelper.events.on('change', (value) => {
 			// Если есть спиннер, синхронизируем его размер с кнопкой
 			this.spinner!.size = value
 

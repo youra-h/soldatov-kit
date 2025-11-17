@@ -38,7 +38,7 @@ export default class TButton extends TControl<IButtonProps, TButtonEvents> imple
 			baseClass: this._baseClass,
 		})
 
-		this._variantHelper.on('change', (value) => {
+		this._variantHelper.events.on('change', (value) => {
 			// Если есть спиннер, синхронизируем его вариант с кнопкой
 			this.spinner!.variant = value
 		})
@@ -49,7 +49,7 @@ export default class TButton extends TControl<IButtonProps, TButtonEvents> imple
 		this._appearance = props.appearance ?? TButton.defaultValues.appearance!
 		this.icon = props.icon ?? TButton.defaultValues.icon!
 
-		this._sizeHelper.on('change', (value) => {
+		this._sizeHelper.events.on('change', (value) => {
 			// Если есть спиннер, синхронизируем его размер с кнопкой
 			this.spinner!.size = value
 
@@ -138,7 +138,7 @@ export default class TButton extends TControl<IButtonProps, TButtonEvents> imple
 		return classes
 	}
 
-	getProps(): TProps {
+	getProps(): IButtonProps {
 		return {
 			...super.getProps(),
 			variant: this._variantHelper.value,

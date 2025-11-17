@@ -57,7 +57,7 @@ export default class TControlInput<
 			baseClass: this._baseClass,
 		})
 
-		this._variantHelper.on('change', (value) => {
+		this._variantHelper.events.on('change', (value) => {
 			// Если есть спиннер, синхронизируем его вариант с кнопкой
 			this.spinner!.variant = value
 		})
@@ -70,7 +70,7 @@ export default class TControlInput<
 		this._invalid = props.invalid ?? TControlInput.defaultValues.invalid!
 		this._state = props.state ?? TControlInput.defaultValues.state!
 
-		this._sizeHelper.on('change', (value) => {
+		this._sizeHelper.events.on('change', (value) => {
 			// Если есть спиннер, синхронизируем его размер с кнопкой
 			this.spinner!.size = value
 		})

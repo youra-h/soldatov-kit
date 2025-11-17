@@ -1,4 +1,4 @@
-import { TEvented } from '../classes/evented'
+import { TEvented } from './evented'
 
 export interface IBaseClassValueOptions<T extends string = string> {
 	baseClass?: string
@@ -12,14 +12,16 @@ export type TBaseClassValueEvents<T extends string = string> = {
 
 export abstract class TBaseClassValue<
 	T extends string = string,
-	E extends TBaseClassValueEvents<T> = TBaseClassValueEvents<T>,
-> extends TEvented<E> {
+	TEvents extends TBaseClassValueEvents<T> = TBaseClassValueEvents<T>,
+> {
+	public readonly events: TEvented<TEvents>
+
 	protected _baseClass: string
 	protected _value: T
 	protected _exclude: T[]
 
 	constructor(options: IBaseClassValueOptions<T> = {}) {
-		super()
+		this.events = new TEvented<TEvents>()
 
 		this._baseClass = options.baseClass ?? 's-control'
 		this._exclude = options.exclude ?? []

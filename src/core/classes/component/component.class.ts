@@ -21,7 +21,7 @@ export default class TComponent<
 	}
 
 	// События через композицию
-	public events: TEvented<TEvents>
+	public readonly events: TEvented<TEvents>
 
 	protected _id: string | number
 	protected _visible: boolean
