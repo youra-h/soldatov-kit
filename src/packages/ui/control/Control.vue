@@ -1,12 +1,12 @@
 <script lang="ts">
-import { TControl, type IControl } from '../../../core'
+import { TControl, type IControlProps } from '../../../core'
 import BaseControl, { syncControl } from './base.component'
 import { useBaseSetup } from '../../common/useBaseSetup'
 
 export default {
 	name: '_Control',
 	extends: BaseControl,
-	setup(props: IControl, { emit }) {
+	setup(props: IControlProps, { emit }) {
 		const { is: component } = useBaseSetup(TControl, props)
 
 		syncControl({

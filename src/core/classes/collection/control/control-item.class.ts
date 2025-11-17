@@ -1,6 +1,6 @@
 import { TCollection } from './../collection.class'
 import { TCollectionItem } from './../collection-item.class'
-import { type IControl, TControl } from './../../control'
+import { type IControlProps, TControl } from './../../control'
 import type { TComponentSize } from '../../../common/types'
 import type { TEventEmitter } from '../../../common/event-emitter'
 import type { IControlItem } from './types'
@@ -14,7 +14,7 @@ export abstract class AbstractControlItem<
 		TProps extends IControlItem = IControlItem,
 	>
 	extends TCollectionItem<TProps>
-	implements IControl
+	implements IControlProps
 {
 	protected _control: TControlType | null
 

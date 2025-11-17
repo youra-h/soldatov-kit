@@ -1,8 +1,11 @@
 import { TComponent, type IComponentOptions } from '../component'
 import type { IBaseControlProps, TBaseControlEvents } from './types'
 
-export default class TBaseControl
-	extends TComponent<IBaseControlProps, TBaseControlEvents>
+export default class TBaseControl<
+		TProps extends IBaseControlProps = IBaseControlProps,
+		TEvents extends TBaseControlEvents = TBaseControlEvents,
+	>
+	extends TComponent<TProps, TEvents>
 	implements IBaseControlProps
 {
 	static defaultValues: Partial<IBaseControlProps> = {
@@ -48,7 +51,7 @@ export default class TBaseControl
 		}
 	}
 
-	getProps(): IBaseControlProps {
+	getProps(): TProps {
 		return {
 			...super.getProps(),
 			name: this._name,

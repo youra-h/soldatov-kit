@@ -1,12 +1,17 @@
 import { TComponent, type IComponentOptions } from './../component'
 import { TBaseControl } from '../base-control'
-import type { IControl, TControlEvents } from './types'
-import type { TObjectProps } from '../object'
+import type { IControlProps, TControlEvents } from './types'
 import type { TComponentSize } from '../../common/types'
 import { TSize } from '../../common/size'
 
-export default class TControl<TEvents extends TControlEvents> extends TBaseControl<TEvents> implements IControl {
-	static defaultValues: Partial<IControl> = {
+export default class TControl<
+		TProps extends IControlProps = IControlProps,
+		TEvents extends TControlEvents = TControlEvents,
+	>
+	extends TBaseControl<TProps, TEvents>
+	implements IControlProps
+{
+	static defaultValues: Partial<IControlProps> = {
 		...TBaseControl.defaultValues,
 		text: '',
 		focused: false,
@@ -20,7 +25,7 @@ export default class TControl<TEvents extends TControlEvents> extends TBaseContr
 	/** Размер контрола */
 	protected _sizeHelper: TSize
 
-	constructor(options: IComponentOptions<IControl> = {}) {
+	constructor(options: IComponentOptions<IControlProps> = {}) {
 		options = TComponent.prepareOptions(options, 's-control')
 
 		super(options)
@@ -43,7 +48,7 @@ export default class TControl<TEvents extends TControlEvents> extends TBaseContr
 	set text(value: string) {
 		if (this._text !== value) {
 			this._text = value
-			this.emit('changeText', value)
+			this.events.emit('changeText', value)
 		}
 	}
 
@@ -54,7 +59,7 @@ export default class TControl<TEvents extends TControlEvents> extends TBaseContr
 	set focused(value: boolean) {
 		if (this._focused !== value) {
 			this._focused = value
-			this.emit('focused', value)
+			this.events.emit('focused', value)
 		}
 	}
 
@@ -77,7 +82,7 @@ export default class TControl<TEvents extends TControlEvents> extends TBaseContr
 		return classes
 	}
 
-	getProps(): TObjectProps {
+	getProps(): TProps {
 		return {
 			...super.getProps(),
 			name: this._name,
