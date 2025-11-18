@@ -2,14 +2,14 @@ import type { IControl, IControlProps, TControlEvents } from '../control'
 
 // Элемент, имеющий значение
 export interface IHasValue {
-	value?: any
+	value?: unknown
 }
 
 export interface IControlValueProps extends IControlProps, IHasValue {}
 
 export type TControlValueEvents = TControlEvents & {
 	// Событие изменения текста
-	changeValue: (value: any) => void
+	changeValue: (value: unknown) => void
 }
 
 export interface IControlValue<

@@ -38,6 +38,7 @@ export default class TCheckBox extends TControlInput<ICheckBoxProps, TCheckBoxEv
 	set value(value: boolean | null) {
 		if (this._value !== value) {
 			this._value = value
+
 			this.events.emit('changeValue', value)
 		}
 	}

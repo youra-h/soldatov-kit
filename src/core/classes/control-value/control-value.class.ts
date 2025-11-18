@@ -15,7 +15,7 @@ export default class TControlValue<
 	}
 
 	/** Значение контрола */
-	protected _value?: any
+	protected _value?: unknown
 
 	constructor(options: IComponentOptions<IControlValueProps> = {}) {
 		options = TComponent.prepareOptions(options, 's-control-value')
@@ -27,13 +27,14 @@ export default class TControlValue<
 		this._value = props.value ?? TControlValue.defaultValues.value!
 	}
 
-	get value(): any {
+	get value(): unknown {
 		return this._value
 	}
 
-	set value(newValue: any) {
+	set value(newValue: unknown) {
 		if (this._value !== newValue) {
 			this._value = newValue
+
 			this.events.emit('changeValue', newValue)
 		}
 	}

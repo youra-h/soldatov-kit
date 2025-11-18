@@ -14,7 +14,7 @@ export interface ICheckBoxProps extends IControlInputProps {
 }
 
 export type TCheckBoxEvents = TControlInputEvents & {
-	change: (value: boolean | null) => void
+	change: ({ event, value }: { event: Event; value: boolean | null }) => void
 	changeIndeterminate: (value: boolean) => void
 }
 

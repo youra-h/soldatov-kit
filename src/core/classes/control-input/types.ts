@@ -21,9 +21,17 @@ export interface IControlInputProps extends IControlValueProps {
 	spinner?: TSpinner
 }
 
-export type TControlInputEvents = TControlValueEvents & {}
+export type TControlInputEvents = TControlValueEvents & {
+	// Событие изменения значения
+	change({ event, value }: { event: Event; value: unknown }): void
+}
+
+export interface IControlInputMethods {
+	change(event: Event): void
+}
 
 export interface IControlInput<
 	TProps extends IControlInputProps = IControlInputProps,
 	TEvents = TControlInputEvents,
-> extends IControlValue<TProps, TEvents> {}
+> extends IControlValue<TProps, TEvents>,
+		IControlInputMethods {}

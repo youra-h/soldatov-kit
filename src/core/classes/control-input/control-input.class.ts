@@ -181,4 +181,9 @@ export default class TControlInput<
 			spinner: this.spinner,
 		}
 	}
+
+	change(event: Event): void {
+		// Метод-заглушка, должен быть переопределен в наследниках
+		this.events.emit('change', { event, value: this.value })
+	}
 }
