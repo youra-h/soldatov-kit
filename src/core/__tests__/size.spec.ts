@@ -27,7 +27,7 @@ describe('TSize', () => {
 	it('событие change вызывается при изменении value', () => {
 		const size = new TSize({ value: 'sm' })
 		const handler = vi.fn()
-		size.on('change', handler)
+		size.events.on('change', handler)
 		size.value = 'lg'
 		expect(handler).toHaveBeenCalledWith('lg', 'sm')
 	})
@@ -35,7 +35,7 @@ describe('TSize', () => {
 	it('событие change не вызывается если value не меняется', () => {
 		const size = new TSize({ value: 'sm' })
 		const handler = vi.fn()
-		size.on('change', handler)
+		size.events.on('change', handler)
 		size.value = 'sm'
 		expect(handler).not.toHaveBeenCalled()
 	})

@@ -29,7 +29,7 @@ describe('TBaseClassValue', () => {
 	it('событие change вызывается при изменении value', () => {
 		const inst = new TestClass({ value: 'a' })
 		const handler = vi.fn()
-		inst.on('change', handler)
+		inst.events.on('change', handler)
 		inst.value = 'b'
 		expect(handler).toHaveBeenCalledWith('b', 'a')
 	})
@@ -37,7 +37,7 @@ describe('TBaseClassValue', () => {
 	it('событие change не вызывается если value не меняется', () => {
 		const inst = new TestClass({ value: 'a' })
 		const handler = vi.fn()
-		inst.on('change', handler)
+		inst.events.on('change', handler)
 		inst.value = 'a'
 		expect(handler).not.toHaveBeenCalled()
 	})

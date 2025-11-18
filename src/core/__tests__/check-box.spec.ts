@@ -48,14 +48,14 @@ describe('TCheckBox', () => {
 
 	it('value сеттер вызывает событие changeValue', () => {
 		const handler = vi.fn()
-		cb.on('changeValue', handler)
+		cb.events.on('changeValue', handler)
 		cb.value = true
 		expect(handler).toHaveBeenCalledWith(true)
 	})
 
 	it('indeterminate сеттер вызывает событие changeIndeterminate', () => {
 		const handler = vi.fn()
-		cb.on('changeIndeterminate', handler)
+		cb.events.on('changeIndeterminate', handler)
 		cb.indeterminate = true
 		expect(handler).toHaveBeenCalledWith(true)
 	})
@@ -82,7 +82,7 @@ describe('TCheckBox', () => {
 
 	it('change переключает состояние чекбокса и вызывает событие change', () => {
 		const handler = vi.fn()
-		cb.on('change', handler)
+		cb.events.on('change', handler)
 		cb.value = false
 		cb.change()
 		expect(cb.value).toBe(true)

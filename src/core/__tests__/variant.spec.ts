@@ -28,7 +28,7 @@ describe('TVariant', () => {
 	it('событие change вызывается при изменении value', () => {
 		const variant = new TVariant({ value: 'normal' })
 		const handler = vi.fn()
-		variant.on('change', handler)
+		variant.events.on('change', handler)
 		variant.value = 'success'
 		expect(handler).toHaveBeenCalledWith('success', 'normal')
 	})
@@ -36,7 +36,7 @@ describe('TVariant', () => {
 	it('событие change не вызывается если value не меняется', () => {
 		const variant = new TVariant({ value: 'primary' })
 		const handler = vi.fn()
-		variant.on('change', handler)
+		variant.events.on('change', handler)
 		variant.value = 'primary'
 		expect(handler).not.toHaveBeenCalled()
 	})

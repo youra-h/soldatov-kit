@@ -24,14 +24,14 @@ describe('TControlValue', () => {
 
 	it('value сеттер вызывает событие changeValue', () => {
 		const handler = vi.fn()
-		ctrl.on('changeValue', handler)
+		ctrl.events.on('changeValue', handler)
 		ctrl.value = 'new value'
 		expect(handler).toHaveBeenCalledWith('new value')
 	})
 
 	it('value сеттер не вызывает событие если значение не меняется', () => {
 		const handler = vi.fn()
-		ctrl.on('changeValue', handler)
+		ctrl.events.on('changeValue', handler)
 		ctrl.value = ctrl.value
 		expect(handler).not.toHaveBeenCalled()
 	})

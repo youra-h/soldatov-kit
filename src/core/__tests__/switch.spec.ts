@@ -29,7 +29,7 @@ describe('TSwitch', () => {
 
 	it('value сеттер вызывает событие changeValue', () => {
 		const handler = vi.fn()
-		sw.on('changeValue', handler)
+		sw.events.on('changeValue', handler)
 		sw.value = true
 		expect(handler).toHaveBeenCalledWith(true)
 	})
@@ -47,7 +47,7 @@ describe('TSwitch', () => {
 
 	it('change переключает состояние и вызывает событие change', () => {
 		const handler = vi.fn()
-		sw.on('change', handler)
+		sw.events.on('change', handler)
 		sw.value = false
 		sw.change()
 		expect(sw.value).toBe(true)

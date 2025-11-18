@@ -40,21 +40,21 @@ describe('TControl', () => {
 
 	it('text сеттер вызывает событие changeText', () => {
 		const handler = vi.fn()
-		ctrl.on('changeText', handler)
+		ctrl.events.on('changeText', handler)
 		ctrl.text = 'new text'
 		expect(handler).toHaveBeenCalledWith('new text')
 	})
 
 	it('disabled сеттер вызывает событие disabled', () => {
 		const handler = vi.fn()
-		ctrl.on('disabled', handler)
+		ctrl.events.on('disabled', handler)
 		ctrl.disabled = true
 		expect(handler).toHaveBeenCalledWith(true)
 	})
 
 	it('focused сеттер вызывает событие focused', () => {
 		const handler = vi.fn()
-		ctrl.on('focused', handler)
+		ctrl.events.on('focused', handler)
 		ctrl.focused = true
 		expect(handler).toHaveBeenCalledWith(true)
 	})
