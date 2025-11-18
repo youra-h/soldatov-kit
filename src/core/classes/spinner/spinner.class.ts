@@ -1,12 +1,11 @@
 import { TComponent, type IComponentOptions } from '../component'
 import type { TComponentSize, TComponentVariant } from '../../common/types'
-import type { ISpinner, TSpinnerEvents } from './types'
-import type { TObjectProps } from '../object'
+import type { ISpinner, ISpinnerProps, TSpinnerEvents } from './types'
 import { TSize } from '@/core/common/size'
 import { TVariant } from '../../common/variant'
 
-export default class TSpinner extends TComponent<TSpinnerEvents> implements ISpinner {
-	static defaultValues: Partial<ISpinner> = {
+export default class TSpinner extends TComponent<ISpinnerProps, TSpinnerEvents> implements ISpinner {
+	static defaultValues: Partial<ISpinnerProps> = {
 		...TComponent.defaultValues,
 		variant: 'primary',
 		size: 'normal',
@@ -18,7 +17,7 @@ export default class TSpinner extends TComponent<TSpinnerEvents> implements ISpi
 	protected _variantHelper: TVariant
 	protected _borderWidth: number | 'auto'
 
-	constructor(options: IComponentOptions<ISpinner> = {}) {
+	constructor(options: IComponentOptions<ISpinnerProps> = {}) {
 		options = TComponent.prepareOptions(options, 's-spinner')
 
 		super(options)
@@ -113,7 +112,7 @@ export default class TSpinner extends TComponent<TSpinnerEvents> implements ISpi
 		}
 	}
 
-	getProps(): TProps {
+	getProps(): ISpinnerProps {
 		return {
 			...super.getProps(),
 			size: this._sizeHelper.value,

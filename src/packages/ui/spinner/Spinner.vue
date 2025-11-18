@@ -1,12 +1,12 @@
 <script lang="ts">
-import { TSpinner, type ISpinner } from '../../../core'
+import { TSpinner, type ISpinnerProps } from '../../../core'
 import { useBaseSetup } from '../../common/useBaseSetup'
 import BaseSpinner, { syncSpinner } from './base.component'
 
 export default {
 	name: '_Spinner',
 	extends: BaseSpinner,
-	setup(props: ISpinner, { emit }) {
+	setup(props: ISpinnerProps, { emit }) {
 		const { is: component } = useBaseSetup(TSpinner, props)
 
 		syncSpinner({

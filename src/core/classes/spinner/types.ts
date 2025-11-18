@@ -1,7 +1,7 @@
-import type { IComponent, TComponentEvents } from '../component'
+import type { IComponent, IComponentProps, TComponentEvents } from '../component'
 import type { TComponentSize, TComponentVariant } from '../../common/types'
 
-export interface ISpinner extends IComponent {
+export interface ISpinnerProps extends IComponentProps {
 	// Размер компонента
 	size?: TComponentSize
 	// Вариант отображения компонента
@@ -11,3 +11,5 @@ export interface ISpinner extends IComponent {
 }
 
 export type TSpinnerEvents = TComponentEvents & {}
+
+export interface ISpinner extends IComponent<ISpinnerProps, TSpinnerEvents> {}
