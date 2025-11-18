@@ -1,5 +1,5 @@
 import { type PropType, watch } from 'vue'
-import { type ISwitch, TSwitch, TIcon } from '../../../core'
+import { type ISwitchProps, TSwitch, TIcon } from '../../../core'
 import {
 	BaseControlInput,
 	emitsControlInput,
@@ -15,11 +15,11 @@ export const emitsSwitch: TEmits = [...emitsControlInput] as const
 export const propsSwitch: TProps = {
 	...propsControlInput,
 	value: {
-		type: [Boolean] as PropType<ISwitch['value']>,
+		type: [Boolean] as PropType<ISwitchProps['value']>,
 		default: TSwitch.defaultValues.value,
 	},
 	icon: {
-		type: Object as PropType<ISwitch['icon']>,
+		type: Object as PropType<ISwitchProps['icon']>,
 		default: TSwitch.defaultValues.icon,
 	},
 }
@@ -37,7 +37,7 @@ export default {
  * @param props
  * @param instance
  */
-export function syncSwitch(options: ISyncComponentOptions<ISwitch>): void {
+export function syncSwitch(options: ISyncComponentOptions<ISwitchProps>): void {
 	syncControlInput(options)
 
 	const { instance, props } = options

@@ -1,5 +1,5 @@
 <script lang="ts">
-import { TSwitch, type ISwitch } from '../../../core'
+import { TSwitch, type ISwitchProps } from '../../../core'
 import BaseSwitch, { syncSwitch } from './base.component'
 import { useBaseSetup } from '../../common/useBaseSetup'
 import { Icon, useIconImport } from '../icon'
@@ -8,7 +8,7 @@ import { TIcon } from '../../../core'
 export default {
 	name: '_Switch',
 	extends: BaseSwitch,
-	setup(props: ISwitch, { emit }) {
+	setup(props: ISwitchProps, { emit }) {
 		const { is: component } = useBaseSetup(TSwitch, props)
 
 		syncSwitch({

@@ -1,11 +1,10 @@
 import { type IComponentOptions } from '../component'
 import { TControlInput } from '../control-input'
-import type { ISwitch, TSwitchEvents } from './types'
-import type { TObjectProps } from '../object'
+import type { ISwitch, ISwitchProps, TSwitchEvents } from './types'
 import { TIcon } from '../icon'
 
-export default class TSwitch<TEvents extends TSwitchEvents> extends TControlInput<TEvents> implements ISwitch {
-	static defaultValues: Partial<ISwitch> = {
+export default class TSwitch extends TControlInput<ISwitchProps, TSwitchEvents> implements ISwitch {
+	static defaultValues: Partial<ISwitchProps> = {
 		...TControlInput.defaultValues,
 		value: false,
 		variant: 'normal',
@@ -14,7 +13,7 @@ export default class TSwitch<TEvents extends TSwitchEvents> extends TControlInpu
 	protected _value: boolean
 	protected _icon?: TIcon
 
-	constructor(options: IComponentOptions<ISwitch> = {}) {
+	constructor(options: IComponentOptions<ISwitchProps> = {}) {
 		const { props = {}, baseClass = 's-switch' } = options
 
 		super({ props, baseClass })
@@ -80,7 +79,7 @@ export default class TSwitch<TEvents extends TSwitchEvents> extends TControlInpu
 		}
 	}
 
-	getProps(): TProps {
+	getProps(): ISwitchProps {
 		return {
 			...super.getProps(),
 			icon: this.icon,
