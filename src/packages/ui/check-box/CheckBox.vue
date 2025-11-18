@@ -1,5 +1,5 @@
 <script lang="ts">
-import { TCheckBox, type ICheckBox } from '../../../core'
+import { TCheckBox, type ICheckBoxProps } from '../../../core'
 import BaseCheckBox, { syncCheckBox } from './base.component'
 import { useBaseSetup } from '../../common/useBaseSetup'
 import { Icon, useIconImport } from '../icon'
@@ -8,7 +8,7 @@ import { TIcon } from '../../../core'
 export default {
 	name: '_CheckBox',
 	extends: BaseCheckBox,
-	setup(props: ICheckBox, { emit }) {
+	setup(props: ICheckBoxProps, { emit }) {
 		const { is: component } = useBaseSetup(TCheckBox, props)
 
 		syncCheckBox({

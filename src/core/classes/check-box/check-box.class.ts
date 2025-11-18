@@ -1,14 +1,10 @@
 import { type IComponentOptions } from '../component'
 import { TControlInput } from '../control-input'
-import type { ICheckBox, TCheckBoxEvents } from './types'
-import type { TObjectProps } from '../object'
+import type { ICheckBox, ICheckBoxProps, TCheckBoxEvents } from './types'
 import { TIcon } from '../icon'
 
-export default class TCheckBox<TEvents extends TCheckBoxEvents>
-	extends TControlInput<TEvents>
-	implements ICheckBox
-{
-	static defaultValues: Partial<ICheckBox> = {
+export default class TCheckBox extends TControlInput<ICheckBoxProps, TCheckBoxEvents> implements ICheckBox {
+	static defaultValues: Partial<ICheckBoxProps> = {
 		...TControlInput.defaultValues,
 		value: false,
 		indeterminate: false,
@@ -22,7 +18,7 @@ export default class TCheckBox<TEvents extends TCheckBoxEvents>
 	protected _icon?: TIcon
 	protected _indeterminateIcon?: TIcon
 
-	constructor(options: IComponentOptions<ICheckBox> = {}) {
+	constructor(options: IComponentOptions<ICheckBoxProps> = {}) {
 		const { props = {}, baseClass = 's-check-box' } = options
 
 		super({ props, baseClass })
@@ -145,7 +141,7 @@ export default class TCheckBox<TEvents extends TCheckBoxEvents>
 		return String(!!this.value) as 'true' | 'false'
 	}
 
-	getProps(): TProps {
+	getProps(): ICheckBoxProps {
 		return {
 			...super.getProps(),
 			indeterminate: this.indeterminate,

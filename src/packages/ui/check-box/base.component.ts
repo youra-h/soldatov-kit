@@ -1,5 +1,5 @@
 import { type PropType, watch } from 'vue'
-import { type ICheckBox, TCheckBox, TIcon } from '../../../core'
+import { type ICheckBoxProps, TCheckBox, TIcon } from '../../../core'
 import {
 	BaseControlInput,
 	emitsControlInput,
@@ -18,23 +18,23 @@ export const emitsCheckBox: TEmits = [
 export const propsCheckBox: TProps = {
 	...propsControlInput,
 	value: {
-		type: [Boolean, Number] as PropType<ICheckBox['value']>,
+		type: [Boolean, Number] as PropType<ICheckBoxProps['value']>,
 		default: TCheckBox.defaultValues.value,
 	},
 	indeterminate: {
-		type: Boolean as PropType<ICheckBox['indeterminate']>,
+		type: Boolean as PropType<ICheckBoxProps['indeterminate']>,
 		default: TCheckBox.defaultValues.indeterminate,
 	},
 	plain: {
-		type: Boolean as PropType<ICheckBox['plain']>,
+		type: Boolean as PropType<ICheckBoxProps['plain']>,
 		default: TCheckBox.defaultValues.plain,
 	},
 	icon: {
-		type: Object as PropType<ICheckBox['icon']>,
+		type: Object as PropType<ICheckBoxProps['icon']>,
 		default: TCheckBox.defaultValues.icon,
 	},
 	indeterminateIcon: {
-		type: Object as PropType<ICheckBox['indeterminateIcon']>,
+		type: Object as PropType<ICheckBoxProps['indeterminateIcon']>,
 		default: TCheckBox.defaultValues.indeterminateIcon,
 	},
 }
@@ -52,7 +52,7 @@ export default {
  * @param props
  * @param instance
  */
-export function syncCheckBox(options: ISyncComponentOptions<ICheckBox>): void {
+export function syncCheckBox(options: ISyncComponentOptions<ICheckBoxProps>): void {
 	syncControlInput(options)
 
 	const { instance, props, emit } = options
