@@ -1,5 +1,5 @@
 // Тип обработчика события
-export type TEventHandler = (...args: any[]) => any
+export type TEventHandler = (...args: unknown[]) => unknown
 // Тип карты событий
 export type TEventMap = Record<string, TEventHandler[]>
 
@@ -10,29 +10,30 @@ export type TEventMap = Record<string, TEventHandler[]>
  * emitter.on('event', (data) => console.log(data))
  */
 export class TEventEmitter {
-	private _events: TEventMap = {}
+	private _items: TEventMap = {}
 
 	on(event: string, handler: TEventHandler): void {
-		if (!this._events[event]) {
-			this._events[event] = []
+		if (!this._items[event]) {
+			this._items[event] = []
 		}
-		this._events[event].push(handler)
+
+		this._items[event].push(handler)
 	}
 
 	off(event: string, handler: TEventHandler): void {
-		if (!this._events[event]) {
+		if (!this._items[event]) {
 			return
 		}
 
-		this._events[event] = this._events[event].filter((h) => h !== handler)
+		this._items[event] = this._items[event].filter((h) => h !== handler)
 	}
 
-	emit(event: string, ...args: any[]): void {
-		if (!this._events[event]) {
+	emit(event: string, ...args: unknown[]): void {
+		if (!this._items[event]) {
 			return
 		}
 
-		this._events[event].forEach((handler) => handler(...args))
+		this._items[event].forEach((handler) => handler(...args))
 	}
 
 	/**
@@ -41,14 +42,14 @@ export class TEventEmitter {
 	 * @param args
 	 * @returns {boolean}
 	 */
-	emitWithResult(event: string, ...args: any[]): boolean {
-		if (!this._events[event]) {
+	emitWithResult(event: string, ...args: unknown[]): boolean {
+		if (!this._items[event]) {
 			return true
 		}
 
 		let result = true
 
-		for (const handler of this._events[event]) {
+		for (const handler of this._items[event]) {
 			const res = handler(...args)
 
 			if (res === false) {
@@ -61,9 +62,9 @@ export class TEventEmitter {
 
 	remove(event?: string): void {
 		if (event) {
-			delete this._events[event]
+			delete this._items[event]
 		} else {
-			this._events = {}
+			this._items = {}
 		}
 	}
 }

@@ -9,8 +9,8 @@ export class TEvented<TEvents extends Record<string, (...args: any) => any>> ext
 	 * @param event - имя события
 	 * @param handler - обработчик события
 	 */
-	on<K extends keyof TEvents>(event: K, handler: TEvents[K]): void {
-		this._items.on(event as string, handler as TEventHandler)
+	on(event: string, handler: TEventHandler): void {
+		this._items.on(event, handler)
 	}
 
 	/**
