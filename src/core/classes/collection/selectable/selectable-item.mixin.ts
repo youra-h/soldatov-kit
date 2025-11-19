@@ -1,4 +1,4 @@
-import { TCollectionItem } from '../collection-item.class'
+import { TCollectionItem } from '../item/collection-item.class'
 import type { ISelectable, ISelectableCollection } from './types'
 import type { TConstructor, TAbstractConstructor } from '../../../common/types'
 

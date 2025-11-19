@@ -1,4 +1,4 @@
-import type { TCollectionItem } from '../collection-item.class'
+import type { TCollectionItem } from '../item/collection-item.class'
 import type { TConstructor } from '../../../common/types'
 import { TControlCollection } from '../control/control-collection.class'
 import type { AbstractControlItem } from '../control/control-item.class'

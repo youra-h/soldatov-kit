@@ -1,12 +1,26 @@
 import type { IObject } from '../object'
+import { TEvented } from '../../common/evented'
+
+/**
+ * События компонента.
+ * Используются через TEvented.
+ */
+export type TComponentEvents = {
+	created: (component: IComponent) => void
+	show: (component: IComponent) => void
+	hide: () => void
+	beforeShow: () => boolean
+	afterShow: () => void
+	beforeHide: () => boolean
+	afterHide: () => void
+	visible: (visible: boolean) => void
+}
 
 /**
  * Свойства компонента (состояние).
  * Здесь описываются только данные, без методов.
  */
 export interface IComponentProps {
-	// Управляющий объект компонента (например, ссылка на контроллер)
-	is?: Object
 	// Id компонента
 	id?: string | number
 	// HTML-тег компонента
@@ -15,8 +29,6 @@ export interface IComponentProps {
 	visible?: boolean
 	// Скрытие компонента / удаление из dom
 	hidden?: boolean
-	// CSS-классы компонента
-	readonly classes?: string[]
 }
 
 /**
@@ -38,29 +50,19 @@ export interface IComponentMethods {
 	afterHide(): void
 }
 
-/**
- * События компонента.
- * Используются через TEvented.
- */
-export type TComponentEvents = {
-	created: (component: IComponent) => void
-	show: (component: IComponent) => void
-	hide: () => void
-	beforeShow: () => boolean
-	afterShow: () => void
-	beforeHide: () => boolean
-	afterHide: () => void
-	visible: (visible: boolean) => void
-}
-
 // Универсальный IComponent с дженериками:
 // TProps — props, обязательно содержит базовые IComponentProps
 // TEvents — события, по умолчанию TComponentEvents
 export interface IComponent<
 	TProps extends IComponentProps = IComponentProps,
-	TEvents = TComponentEvents,
+	TEvents extends Record<string, (...args: any) => any> = TComponentEvents,
 > extends IObject<TProps>,
-		IComponentMethods {}
+		IComponentMethods {
+	// CSS-классы компонента
+	readonly classes?: string[]
+	// События компонента
+	readonly events?: TEvented<TEvents>
+}
 
 /**
  * Опции для создания компонента.

@@ -1,5 +1,5 @@
 import { TCollection } from './../collection.class'
-import { TCollectionItem } from './../collection-item.class'
+import { TCollectionItem } from '../item/collection-item.class'
 import { type IControlProps, TControl } from './../../control'
 import type { TComponentSize } from '../../../common/types'
 import type { TEventEmitter } from '../../../common/event-emitter'

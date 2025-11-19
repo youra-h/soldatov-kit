@@ -1,5 +1,5 @@
 export * from './types'
-export * from './collection-item.class'
+export * from './item/collection-item.class'
 export * from './collection-owned.class'
 export * from './collection.class'
 export {

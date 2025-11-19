@@ -1,5 +1,5 @@
 import { TCollectionOwned } from '../collection-owned.class'
-import { TCollectionItem } from '../collection-item.class'
+import { TCollectionItem } from '../item/collection-item.class'
 import type { TConstructor } from '../../../common/types'
 import { AbstractControlItem } from './control-item.class'
 import { TControl } from '../../control'

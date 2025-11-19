@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import { TCollectionItem } from '../classes/collection/collection-item.class'
+import { TCollectionItem } from '../classes/collection/item/collection-item.class'
 import { TCollection } from '../classes/collection/collection.class'
 import { TCollectionOwned } from '../classes/collection/collection-owned.class'
 

@@ -1,6 +1,6 @@
-import { TEvented } from '../evented'
-import type { TCollectionEvents, ICollection } from './types'
-import { TCollectionItem } from './collection-item.class'
+import { TEvented } from '../../common/evented'
+import type { TCollectionEvents, ICollection, ICollectionProps } from './types'
+import { TCollectionItem } from './item/collection-item.class'
 import type { TConstructor } from '../../common/types'
 import { TObject } from '../object'
 
@@ -14,8 +14,11 @@ import { TObject } from '../object'
  * @fires beforeMove - Элемент будет перемещён (можно отменить)
  * @fires afterMove - Элемент был перемещён
  */
-export class TCollection<TItem extends TCollectionItem<TProps>, TProps extends object = {}>
-	extends TObject<TProps>
+export class TCollection<
+		TItem extends TCollectionItem = TCollectionItem,
+		TEvents extends TCollectionEvents = TCollectionEvents,
+	>
+	extends TObject<ICollectionProps>
 	implements ICollection<TItem>
 {
 	/**
@@ -29,9 +32,8 @@ export class TCollection<TItem extends TCollectionItem<TProps>, TProps extends o
 	 * @protected
 	 */
 	protected _itemClass: TConstructor<TItem>
-
-	// события через композицию
-	public events: TEvented<TCollectionEvents>
+	// События
+	public readonly events: TEvented<TEvents>
 
 	/**
 	 * Создаёт коллекцию, которая будет создавать элементы типа itemClass.
@@ -41,7 +43,8 @@ export class TCollection<TItem extends TCollectionItem<TProps>, TProps extends o
 		super()
 
 		this._itemClass = itemClass
-		this.events = new TEvented<TCollectionEvents>()
+
+		this.events = new TEvented<TEvents>()
 	}
 
 	/**
@@ -61,12 +64,27 @@ export class TCollection<TItem extends TCollectionItem<TProps>, TProps extends o
 		item.assign(source as TItem)
 
 		this._items.push(item)
-		this.reindex()
 
 		this.events.emit('added', { collection: this, item })
-		this.notifyChange(item)
 
 		return item
+	}
+
+	/**
+	 * Возвращает элемент по индексу или undefined, если индекс вне диапазона.
+	 * @param index Индекс запрашиваемого элемента.
+	 */
+	getItem(index: number): TItem | undefined {
+		return this._items[index]
+	}
+
+	/**
+	 * Возвращает индекс элемента в коллекции.
+	 * @param item Элемент коллекции
+	 * @returns Индекс элемента или -1, если элемент не найден.
+	 */
+	indexOf(item: TItem): number {
+		return this._items.indexOf(item)
 	}
 
 	/**
@@ -107,10 +125,7 @@ export class TCollection<TItem extends TCollectionItem<TProps>, TProps extends o
 		this._items.splice(index, 0, item)
 		item.collection = this
 
-		this.reindex()
-
 		this.events.emit('added', { collection: this, item })
-		this.notifyChange(item)
 
 		return true
 	}
@@ -137,12 +152,24 @@ export class TCollection<TItem extends TCollectionItem<TProps>, TProps extends o
 		const removed = this._items.splice(index, 1)[0]
 		removed.free()
 
-		this.reindex()
-
 		this.events.emit('afterDelete', { collection: this, index, item })
-		this.notifyChange(removed)
 
 		return true
+	}
+
+	/**
+	 * Удаляет элемент из коллекции.
+	 * @param item Элемент для удаления
+	 * @returns true, если удаление прошло успешно, иначе false
+	 */
+	deleteItem(item: TItem): boolean {
+		const index = this._items.indexOf(item)
+
+		if (index === -1) {
+			return false
+		}
+
+		return this.delete(index)
 	}
 
 	/**
@@ -152,18 +179,7 @@ export class TCollection<TItem extends TCollectionItem<TProps>, TProps extends o
 		this._items.forEach((it) => it.free())
 		this._items = []
 
-		this.reindex()
-
 		this.events.emit('cleared', { collection: this })
-		this.notifyChange(undefined)
-	}
-
-	/**
-	 * Возвращает элемент по индексу или undefined, если индекс вне диапазона.
-	 * @param index Индекс запрашиваемого элемента.
-	 */
-	getItem(index: number): TItem | undefined {
-		return this._items[index]
 	}
 
 	/**
@@ -191,10 +207,7 @@ export class TCollection<TItem extends TCollectionItem<TProps>, TProps extends o
 		this._items.splice(oldIndex, 1)
 		this._items.splice(ni, 0, item)
 
-		this.reindex()
-
 		this.events.emit('afterMove', { collection: this, item, oldIndex, newIndex })
-		this.notifyChange(item)
 	}
 
 	/**
@@ -220,38 +233,6 @@ export class TCollection<TItem extends TCollectionItem<TProps>, TProps extends o
 		if (fromIndex === -1) return
 
 		this.move(fromIndex, toIndex)
-	}
-
-	/**
-	 * Пересчитывает индексы всех элементов коллекции.
-	 * Этот метод вызывается автоматически после изменений структуры коллекции.
-	 * @protected
-	 */
-	protected reindex(): void {
-		for (let i = 0; i < this._items.length; i++) {
-			;(this._items[i] as TItem)._updateIndex(i)
-		}
-	}
-
-	/**
-	 * Отправляет событие изменения коллекции, если пакетное обновление не активно.
-	 * Эмитит событие 'changed' с коллекцией и опционально с конкретным элементом.
-	 * @param item Опционально: элемент, который изменился.
-	 * @protected
-	 */
-	protected notifyChange(item?: TItem): void {
-		if (this._updateCount > 0) return
-
-		this.events.emit('changed', { collection: this, item })
-	}
-
-	/**
-	 * Вызывается элементом коллекции, чтобы сообщить о локальном изменении.
-	 * Коллекция обработает событие и при необходимости эметит внешнее уведомление.
-	 * @param item Элемент, который изменился.
-	 */
-	itemChanged(item: TItem): void {
-		this.notifyChange(item)
 	}
 
 	/**

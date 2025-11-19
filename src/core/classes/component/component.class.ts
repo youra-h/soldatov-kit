@@ -20,9 +20,6 @@ export default class TComponent<
 		hidden: false,
 	}
 
-	// События через композицию
-	public readonly events: TEvented<TEvents>
-
 	protected _id: string | number
 	protected _visible: boolean
 	protected _hidden: boolean
@@ -33,6 +30,8 @@ export default class TComponent<
 	protected _baseClass: string
 	// Array of dynamic CSS classes
 	protected _classes: string[] = []
+	// События
+	public readonly events: TEvented<TEvents>
 
 	constructor(options: IComponentOptions<IComponentProps> = {}) {
 		super()

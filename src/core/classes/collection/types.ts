@@ -1,21 +1,14 @@
 import { TCollection } from './collection.class'
-import { TCollectionItem } from './collection-item.class'
+import { TCollectionItem } from './item/collection-item.class'
 import type { IObject } from '../object'
 
-export interface ICollectionItemProps {
-	// Ссылка на коллекцию-владелец.
-	collection: TCollection | null
-	// Уникальный идентификатор элемента внутри коллекции.
-	id?: number | string
-	// Текущее положение элемента в коллекции.
-	index: number
-}
-
-export interface ICollectionItem extends IObject<ICollectionItemProps> {
-	// Вызывает changed() для нотификации коллекции/владельца.
-	changed(): void
-	// Освобождает ресурсы, отписывается от событий и т.д.
-	free(): void
+/**
+ * Базовый интерфейс коллекции элементов.
+ * Определяет контракт, который должны реализовывать все коллекции.
+ */
+export interface ICollectionProps {
+	/** Количество элементов в коллекции */
+	readonly count: number
 }
 
 /**
@@ -104,16 +97,21 @@ export type TCollectionEvents = {
 	}) => void
 }
 
-/**
- * Базовый интерфейс коллекции элементов.
- * Определяет контракт, который должны реализовывать все коллекции.
- */
-export interface ICollection<TItem extends TCollectionItem = TCollectionItem> {
-	/** Количество элементов в коллекции */
-	readonly count: number
-
+export interface ICollectionMethods<TItem extends TCollectionItem = TCollectionItem> {
 	/** Добавляет новый элемент и возвращает его */
 	add(source?: Partial<TItem>): TItem
+
+	/**
+	 * Вернуть индекс элемента
+	 * @param item Элемент коллекции
+	 */
+	indexOf(item: TItem): number
+
+	/**
+	 * Возвращает элемент по индексу
+	 * @param index Индекс элемента
+	 */
+	getItem(index: number): TItem | undefined
 
 	/**
 	 * Вставляет новый элемент по индексу
@@ -135,14 +133,15 @@ export interface ICollection<TItem extends TCollectionItem = TCollectionItem> {
 	 */
 	delete(index: number): boolean
 
+	/**
+	 * Удаляет элемент
+	 * @param item Элемент для удаления
+	 * @returns true, если удаление прошло успешно
+	 */
+	deleteItem(item: TItem): boolean
+
 	/** Полностью очищает коллекцию */
 	clear(): void
-
-	/**
-	 * Возвращает элемент по индексу
-	 * @param index Индекс элемента
-	 */
-	getItem(index: number): TItem | undefined
 
 	/**
 	 * Перемещает элемент в новую позицию
@@ -163,32 +162,6 @@ export interface ICollection<TItem extends TCollectionItem = TCollectionItem> {
 	toArray(): TItem[]
 }
 
-export interface IEventedCollection<TItem extends TCollectionItem> extends ICollection<TItem> {
-	on<K extends keyof TCollectionEvents>(event: K, handler: TCollectionEvents[K]): void
-
-	off<K extends keyof TCollectionEvents>(event: K, handler: TCollectionEvents[K]): void
-}
-
-import type { ISelectableCollection, ISelectableByNameCollection } from './selectable/types'
-import type { ISelectableByValueCollection } from './selectable/types'
-
-// Helper: извлечь тип элемента из интерфейса коллекции
-export type TCollectionItemOf<C> =
-	C extends ICollection<infer T>
-		? T
-		: C extends ISelectableCollection<infer T>
-			? T
-			: C extends ISelectableByNameCollection<infer T>
-				? T
-				: C extends ISelectableByValueCollection<infer T>
-					? T
-					: never
-
-/**
- * Элементы управления, содержащие коллекцию.
- * Тип коллекции является основным; тип элемента — производным.
- */
-export interface IHasCollection<TCollection extends ICollection<any>> {
-	/** Внутренняя коллекция элементов */
-	readonly collection: TCollection
-}
+export interface ICollection<TItem extends TCollectionItem = TCollectionItem>
+	extends ICollectionProps,
+		ICollectionMethods<TItem> {}
