@@ -1,6 +1,7 @@
 import { TCollection } from './collection.class'
-import { TCollectionItem } from './item/collection-item.class'
+import { type ICollectionItem } from './item/types'
 import type { IObject } from '../object'
+import { TEvented } from '../../common/evented'
 
 /**
  * Базовый интерфейс коллекции элементов.
@@ -21,7 +22,7 @@ export type TCollectionEvents = {
 	 * @param payload.collection  Коллекция, в которой произошло изменение.
 	 * @param payload.item        Опционально: элемент, который был добавлен, удалён или перемещён.
 	 */
-	changed: (payload: { collection: TCollection; item?: TCollectionItem }) => void
+	changed: (payload: { collection: TCollection; item?: ICollectionItem }) => void
 
 	/**
 	 * После успешного добавления нового элемента.
@@ -29,7 +30,7 @@ export type TCollectionEvents = {
 	 * @param payload.collection  Коллекция, в которую добавлен элемент.
 	 * @param payload.item        Добавленный элемент.
 	 */
-	added: (payload: { collection: TCollection; item: TCollectionItem }) => void
+	added: (payload: { collection: TCollection; item: ICollectionItem }) => void
 
 	/**
 	 * Перед удалением элемента.
@@ -43,7 +44,7 @@ export type TCollectionEvents = {
 	beforeDelete: (payload: {
 		collection: TCollection
 		index: number
-		item: TCollectionItem
+		item: ICollectionItem
 	}) => boolean | void
 
 	/**
@@ -56,7 +57,7 @@ export type TCollectionEvents = {
 	afterDelete: (payload: {
 		collection: TCollection
 		index: number
-		item: TCollectionItem
+		item: ICollectionItem
 	}) => void
 
 	/**
@@ -91,13 +92,13 @@ export type TCollectionEvents = {
 	 */
 	afterMove: (payload: {
 		collection: TCollection
-		item: TCollectionItem
+		item: ICollectionItem
 		oldIndex: number
 		newIndex: number
 	}) => void
 }
 
-export interface ICollectionMethods<TItem extends TCollectionItem = TCollectionItem> {
+export interface ICollectionMethods<TItem extends ICollectionItem = ICollectionItem> {
 	/** Добавляет новый элемент и возвращает его */
 	add(source?: Partial<TItem>): TItem
 
@@ -162,6 +163,11 @@ export interface ICollectionMethods<TItem extends TCollectionItem = TCollectionI
 	toArray(): TItem[]
 }
 
-export interface ICollection<TItem extends TCollectionItem = TCollectionItem>
-	extends ICollectionProps,
-		ICollectionMethods<TItem> {}
+export interface ICollection<
+	TProps extends ICollectionProps = ICollectionProps,
+	TEvents extends TCollectionEvents = TCollectionEvents,
+	TItem extends ICollectionItem = ICollectionItem,
+> extends IObject<TProps>,
+		ICollectionMethods<TItem> {
+	readonly events: TEvented<TEvents>
+}

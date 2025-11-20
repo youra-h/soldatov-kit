@@ -22,5 +22,5 @@ export interface ICollectionItem<
 	// Ссылка на коллекцию-владелец.
 	collection: TCollection | null
 	// События компонента
-	readonly events?: TEvented<TEvents>
+	readonly events: TEvented<TEvents>
 }

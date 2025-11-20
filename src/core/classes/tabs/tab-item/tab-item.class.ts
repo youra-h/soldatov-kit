@@ -1,7 +1,15 @@
-import { AbstractControlValueItem } from '../../collection'
-import { SelectableItemMixin } from '../../collection/selectable/selectable-item.mixin'
+import { TCollectionItem } from '../../collection'
+import {
+	TControlValue,
+	type IControlValueProps,
+	type TControlValueEvents,
+} from '../../control-value'
 
-export class TTabItem extends SelectableItemMixin(AbstractControlValueItem) {
+interface Props extends IControlValueProps {}
+
+type TEvents = TControlValueEvents
+
+export class TTabItem extends TControlValue<Props, TEvents> implements TCollectionItem {
 	static defaultValues = {
 		text: 'Tab item',
 	}

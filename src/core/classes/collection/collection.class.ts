@@ -1,6 +1,6 @@
 import { TEvented } from '../../common/evented'
 import type { TCollectionEvents, ICollection, ICollectionProps } from './types'
-import { TCollectionItem } from './item/collection-item.class'
+import { type ICollectionItem } from './item/types'
 import type { TConstructor } from '../../common/types'
 import { TObject } from '../object'
 
@@ -15,11 +15,12 @@ import { TObject } from '../object'
  * @fires afterMove - Элемент был перемещён
  */
 export class TCollection<
-		TItem extends TCollectionItem = TCollectionItem,
+		TProps extends ICollectionProps = ICollectionProps,
 		TEvents extends TCollectionEvents = TCollectionEvents,
+		TItem extends ICollectionItem = ICollectionItem,
 	>
-	extends TObject<ICollectionProps>
-	implements ICollection<TItem>
+	extends TObject<TProps>
+	implements ICollection<TProps, TEvents, TItem>
 {
 	/**
 	 * Внутренний массив элементов.
@@ -37,16 +38,15 @@ export class TCollection<
 
 	/**
 	 * Создаёт коллекцию, которая будет создавать элементы типа itemClass.
-	 * @param itemClass Класс элементов коллекции.
+	 * @param options Опции коллекции
 	 */
-	constructor(itemClass: TConstructor<TItem>) {
+	constructor(options: { itemClass: TConstructor<TItem> }) {
 		super()
 
-		this._itemClass = itemClass
+		this._itemClass = options.itemClass
 
 		this.events = new TEvented<TEvents>()
 	}
-
 	/**
 	 * Количество элементов в коллекции.
 	 */
