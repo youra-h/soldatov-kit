@@ -27,7 +27,7 @@ export interface ISelectableCollectionItem<
 > extends ICollectionItem<TProps, TEvents>,
 		ISelectableCollectionItemProps {}
 
-export type TSelectionMode = 'single' | 'multiple'
+export type TSelectionMode = 'none' | 'single' | 'multiple'
 
 /**
  * Свойства коллекции с поддержкой выбора.

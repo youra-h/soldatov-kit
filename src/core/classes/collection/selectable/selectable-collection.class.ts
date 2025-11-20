@@ -41,20 +41,20 @@ export class TSelectableCollection<
 		if (value === 'single' && this._selected.size > 1) {
 			// оставить выбранным только первый
 			const first = this._selected.values().next().value as TItem
-
 			this._selected.forEach((it) => {
-				if (it !== first) {
-					it.selected = false
-				}
+				if (it !== first) it.selected = false
 			})
-
 			this._selected.clear()
 			this._selected.add(first)
 		}
 
+		if (value === 'none') {
+			// полностью очистить выбор
+			this.clearSelection()
+		}
+
 		this._mode = value
 	}
-
 	get selected(): TItem[] {
 		return Array.from(this._selected)
 	}
@@ -84,6 +84,12 @@ export class TSelectableCollection<
 	 */
 	private _subscribeItem(item: TItem): void {
 		item.events.on('change', (changedItem: TItem) => {
+			if (this._mode === 'none') {
+				// в режиме none игнорируем выбор
+				changedItem.selected = false
+				return
+			}
+
 			if (changedItem.selected) {
 				if (!this.multiple) {
 					// снять выделение с предыдущего
