@@ -1,6 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import { TCollectionItem } from '../classes/collection/item/collection-item.class'
-import { TCollection } from '../classes/collection/collection.class'
+import { TCollection, TCollectionItem } from '../classes/collection'
 
 class TestItem extends TCollectionItem {}
 
