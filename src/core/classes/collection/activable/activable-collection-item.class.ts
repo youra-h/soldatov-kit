@@ -25,6 +25,7 @@ export class TActivatableCollectionItem<
 	set active(value: boolean) {
 		if (this._active !== value) {
 			this._active = value
+
 			this.events.emit('change', this)
 		}
 	}

@@ -50,7 +50,7 @@ export class TSelectableCollection<
 
 		if (value === 'none') {
 			// полностью очистить выбор
-			this.clearSelection()
+			this.clear()
 		}
 
 		this._mode = value
@@ -110,7 +110,7 @@ export class TSelectableCollection<
 		})
 	}
 
-	clearSelection(): void {
+	clear(): void {
 		this._selected.forEach((it) => (it.selected = false))
 
 		this._selected.clear()

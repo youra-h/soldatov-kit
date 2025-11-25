@@ -59,5 +59,5 @@ export interface ISelectableCollection<
 	/** Количество выбранных элементов */
 	readonly selectedCount: number
 	/** Очистить выбор */
-	clearSelection(): void
+	clear(): void
 }
