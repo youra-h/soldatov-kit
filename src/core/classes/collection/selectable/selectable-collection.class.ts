@@ -106,7 +106,11 @@ export class TSelectableCollection<
 				this._selected.delete(changedItem)
 			}
 
-			this.events.emit('change', { collection: this, items: this.selected })
+			this.events.emit('change', {
+				collection: this,
+				items: this.selected,
+				item: changedItem,
+			})
 		})
 	}
 

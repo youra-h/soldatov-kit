@@ -73,7 +73,7 @@ export class TActivatableCollection<
 	 * Подписываемся на события элемента
 	 * @param item Элемент коллекции
 	 */
-	private _subscribeItem(item: TItem): void {
+	protected _subscribeItem(item: TItem): void {
 		item.events.on('change', (changedItem: TItem) => {
 			if (changedItem.active) {
 				this.setActive(changedItem)
