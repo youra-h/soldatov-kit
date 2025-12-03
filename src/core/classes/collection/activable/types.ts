@@ -64,5 +64,5 @@ export interface IActivatableCollection<
 	/** Установить активный элемент */
 	setActive(item: TItem): void
 	/** Очистить активный элемент */
-	clearActive(): void
+	clear(): void
 }

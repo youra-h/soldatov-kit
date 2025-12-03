@@ -40,15 +40,19 @@ export class TActivatableCollection<
 			this._activeItem.active = false
 		}
 		this._activeItem = item
+
 		item.active = true
+
 		this.events.emit('change', { collection: this, item })
 	}
 
 	/** Очистить активный элемент */
-	clearActive(): void {
+	clear(): void {
 		if (this._activeItem) {
 			this._activeItem.active = false
+
 			this._activeItem = undefined
+
 			this.events.emit('change', { collection: this, item: undefined })
 		}
 	}
@@ -69,12 +73,12 @@ export class TActivatableCollection<
 	 * Подписываемся на события элемента
 	 * @param item Элемент коллекции
 	 */
-	private _subscribeItem(item: TItem): void {
+	protected _subscribeItem(item: TItem): void {
 		item.events.on('change', (changedItem: TItem) => {
 			if (changedItem.active) {
 				this.setActive(changedItem)
 			} else if (this._activeItem === changedItem) {
-				this.clearActive()
+				this.clear()
 			}
 		})
 	}

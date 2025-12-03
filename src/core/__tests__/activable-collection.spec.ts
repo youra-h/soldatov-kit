@@ -41,7 +41,7 @@ describe('TActivatableCollection', () => {
 		expect(col.activeItem).toBe(b)
 	})
 
-	it('clearActive clears active and emits change with undefined item', () => {
+	it('clear clears active and emits change with undefined item', () => {
 		const col = new TActivatableCollection({ itemClass: TActivatableCollectionItem })
 
 		const a = col.add({})
@@ -50,7 +50,7 @@ describe('TActivatableCollection', () => {
 		const spy = vi.fn()
 		col.events.on('change', spy)
 
-		col.clearActive()
+		col.clear()
 
 		expect(col.activeItem).toBeUndefined()
 		expect(a.active).toBe(false)

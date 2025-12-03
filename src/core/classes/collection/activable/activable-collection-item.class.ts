@@ -18,6 +18,16 @@ export class TActivatableCollectionItem<
 {
 	private _active = false
 
+	// TODO: testing
+	public value: any
+	// TODO: testing
+	getProps(): TProps {
+		return {
+			...super.getProps(),
+			value: this.value,
+		}
+	}
+
 	get active(): boolean {
 		return this._active
 	}
@@ -25,6 +35,7 @@ export class TActivatableCollectionItem<
 	set active(value: boolean) {
 		if (this._active !== value) {
 			this._active = value
+
 			this.events.emit('change', this)
 		}
 	}
