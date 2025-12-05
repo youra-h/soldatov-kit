@@ -150,7 +150,7 @@ export class TCollection<
 		}
 
 		const removed = this._items.splice(index, 1)[0]
-		removed.free()
+		removed?.free()
 
 		this.events.emit('afterDelete', { collection: this, index, item })
 
@@ -218,6 +218,9 @@ export class TCollection<
 	 */
 	move(fromIndex: number, toIndex: number): void {
 		const item = this._items[fromIndex]
+
+		if (!item) return
+
 		this.setItemIndex(item, toIndex)
 	}
 

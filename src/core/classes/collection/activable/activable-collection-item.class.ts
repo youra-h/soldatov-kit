@@ -18,13 +18,9 @@ export class TActivatableCollectionItem<
 {
 	private _active = false
 
-	// TODO: testing
-	public value: any
-	// TODO: testing
 	getProps(): TProps {
 		return {
-			...super.getProps(),
-			value: this.value,
+			...super.getProps()
 		}
 	}
 
