@@ -1,55 +1,63 @@
-import { TCollection } from '../collection/collection.class'
-import { TTreeItem } from './item/tree-item.class'
-import type { ITreeCollection, ITreeCollectionProps } from './types'
-import type { TCollectionEvents } from '../collection/types'
+import { TTreeCollection } from './tree-collection.class'
+import type { ITree, ITreeItem, TTreeEvents } from './types'
 import type { TConstructor } from '../../common/types'
+import { TEvented } from '../../common/evented'
 
-/**
- * Древовидная коллекция.
- * Может быть корневой или вложенной в TTreeItem.
- */
-export class TTree<TItem extends TTreeItem = TTreeItem>
-	extends TCollection<ITreeCollectionProps, TCollectionEvents, TItem>
-	implements ITreeCollection
+export class TTree<TItem extends ITreeItem = ITreeItem, TEvents extends TTreeEvents = TTreeEvents>
+	extends TTreeCollection<TItem>
+	implements ITree
 {
+	public readonly events: TEvented<TEvents>
+
+	constructor(options: { itemClass: TConstructor<TItem> }) {
+		super({ ...options, parentItem: null })
+
+		this.events = new TEvented<TEvents>()
+	}
+
+	get root(): ITree {
+		return this
+	}
+
 	/**
-	 * Ссылка на родительский элемент, который содержит эту коллекцию как child.
-	 * Если null, то это корневая коллекция.
-	 * @protected
+	 * 1. Метод для всплытия событий (Bubbling endpoint).
+	 * Сюда приходят события от всех элементов дерева.
 	 */
-	protected _parentItem: TTreeItem | null = null
+	public notifyItemChange(item: ITreeItem, event: string): void {
+		this.events.emit('itemChange', { item, event })
+	}
 
-	constructor(options: { itemClass: TConstructor<TItem>; parentItem?: TTreeItem }) {
-		super(options)
+	/**
+	 * 2. Универсальный поиск по дереву (DFS - поиск в глубину).
+	 * @param predicate Функция-условие
+	 */
+	public find(predicate: (item: TItem) => boolean): TItem | undefined {
+		// Ищем в текущем уровне и во вложенных
+		return this._findRecursive(this, predicate)
+	}
 
-		if (options.parentItem) {
-			this._parentItem = options.parentItem
+	private _findRecursive(
+		collection: TTreeCollection<TItem>,
+		predicate: (item: TItem) => boolean,
+	): TItem | undefined {
+		for (let i = 0; i < collection.count; i++) {
+			const item = collection.getItem(i)
+			if (!item) continue
+
+			// Проверяем сам элемент
+			if (predicate(item)) {
+				return item
+			}
+
+			// Если есть дети, ищем внутри
+			if (item.child && item.child.count > 0) {
+				const found = this._findRecursive(
+					item.child as unknown as TTreeCollection<TItem>,
+					predicate,
+				)
+				if (found) return found
+			}
 		}
-	}
-
-	/**
-	 * Возвращает родительский элемент.
-	 */
-	get parentItem(): TTreeItem | null {
-		return this._parentItem
-	}
-
-	/**
-	 * Устанавливает родительский элемент.
-	 * Используется при прикреплении коллекции к элементу.
-	 * @param item Элемент-родитель
-	 */
-	setParentItem(item: TTreeItem | null): void {
-		this._parentItem = item
-	}
-
-	/**
-	 * Получение свойств коллекции.
-	 */
-	getProps(): ITreeCollectionProps {
-		return {
-			...super.getProps(),
-			parentItem: this._parentItem,
-		}
+		return undefined
 	}
 }

@@ -1,11 +1,10 @@
 import { TCollectionItem } from '../../collection/item/collection-item.class'
-import { TTree } from '../tree.class'
-import type { ITreeItem, ITreeItemProps, TTreeItemEvents } from './types'
+import { TTreeCollection } from '../tree-collection.class'
+import type { ITreeItem, ITreeItemProps, TTreeItemEvents, ITreeCollection, ITree } from '../types'
 import type { TConstructor } from '../../../common/types'
 
 /**
- * Элемент дерева.
- * Может содержать вложенную коллекцию (child).
+ * Базовый элемент дерева.
  */
 export class TTreeItem<
 	TProps extends ITreeItemProps = ITreeItemProps,
@@ -14,83 +13,71 @@ export class TTreeItem<
 	extends TCollectionItem<TProps, TEvents>
 	implements ITreeItem
 {
-	/**
-	 * Внутренняя ссылка на дочернюю коллекцию.
-	 * @protected
-	 */
-	protected _child: TTree | null = null
+	protected _child: ITreeCollection | null = null
 
-	/**
-	 * Возвращает дочернюю коллекцию или null, если её нет.
-	 */
-	get child(): TTree | null {
+	get child(): ITreeCollection | null {
 		return this._child
 	}
 
+	get root(): ITree {
+		if (!this.collection) {
+			throw new Error('Item is not attached to any collection, cannot find root')
+		}
+		return (this.collection as unknown as ITreeCollection).root
+	}
+
 	/**
-	 * Создает новую дочернюю коллекцию и привязывает её к этому элементу.
-	 * @param itemClass Класс элементов, которые будут создаваться в дочерней коллекции.
-	 * @returns Созданная коллекция.
+	 * Реализация с дженериком.
 	 */
-	createChild<TChildItem extends TTreeItem>(
-		itemClass: TConstructor<TChildItem>,
-	): TTree<TChildItem> {
-		// Если уже есть коллекция, очищаем её или возвращаем существующую (зависит от логики, здесь создаем новую)
+	createChild<TChild extends ITreeItem>(
+		itemClass: TConstructor<TChild>,
+	): ITreeCollection<TChild> {
 		if (this._child) {
 			this._child.clear()
-			// Можно вернуть существующую, но для чистоты пересоздадим или просто вернем текущую
-			// В данном примере заменим старую, предварительно освободив
-			this.removeChild()
 		}
 
-		// Создаем новую коллекцию, указывая текущий элемент как родителя
-		const childCollection = new TTree<TChildItem>({
+		// Создаем коллекцию и приводим её к нужному типу
+		const childCollection = new TTreeCollection<TChild>({
 			itemClass: itemClass,
 			parentItem: this,
 		})
 
-		this._child = childCollection as unknown as TTree
+		// Сохраняем как ITreeCollection (общий тип), но возвращаем типизированную
+		this._child = childCollection as unknown as ITreeCollection
 
 		return childCollection
 	}
 
-	/**
-	 * Прикрепляет уже существующую коллекцию в качестве дочерней.
-	 * @param collection Коллекция для прикрепления.
-	 */
-	setChild(collection: TTree): void {
-		if (this._child === collection) return
-
-		if (this._child) {
-			this.removeChild()
-		}
-
-		this._child = collection
-		// Важно: сообщаем коллекции, кто её новый родитель
-		collection.setParentItem(this)
-	}
-
-	/**
-	 * Удаляет связь с дочерней коллекцией.
-	 * Сама коллекция не уничтожается (free не вызывается), только отвязывается.
-	 */
 	removeChild(): void {
 		if (this._child) {
-			this._child.setParentItem(null)
-			this._child = null
-		}
-	}
-
-	/**
-	 * Переопределение метода free для очистки вложенных ресурсов.
-	 */
-	free(): void {
-		if (this._child) {
-			// Рекурсивно очищаем дочернюю коллекцию
 			this._child.clear()
 			this._child = null
 		}
+	}
+
+	free(): void {
+		this.removeChild()
 		super.free()
+	}
+
+	/**
+	 * Реализация метода из интерфейса ITreeItem.
+	 * Получает событие от дочерней ветки (child) и передает его своей коллекции.
+	 */
+	public notifyChildChange(item: ITreeItem, event: string): void {
+		if (this.collection) {
+			;(this.collection as unknown as ITreeCollection).notifyItemChange(item, event)
+		}
+	}
+
+	/**
+	 * Защищенный метод для отправки собственных событий вверх по дереву.
+	 * Используется в наследниках (например, при изменении active).
+	 */
+	protected notifyChange(event: string = 'change'): void {
+		if (this.collection) {
+			;(this.collection as unknown as ITreeCollection).notifyItemChange(this, event)
+		}
 	}
 
 	getProps(): TProps {

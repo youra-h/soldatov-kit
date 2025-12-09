@@ -16,7 +16,7 @@ export class TActivatableCollectionItem<
 	extends TCollectionItem<TProps, TEvents>
 	implements IActivatableCollectionItem
 {
-	private _active = false
+	protected _active = false
 
 	getProps(): TProps {
 		return {
