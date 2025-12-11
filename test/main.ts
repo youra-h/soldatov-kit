@@ -1,170 +1,103 @@
-import { TActivatableCollection } from '../src/core/classes/collection/activable/activable-collection.class';
-import { TActivatableCollectionItem } from '../src/core/classes/collection/activable/activable-collection-item.class';
-import { asTreeCollection } from '../src/core/classes/tree/tree.class';
-import { asTreeItem } from '../src/core/classes/tree/item/mixins';
+import { TActivatableTree } from '../src/core/classes/tree/activable/activable-tree.class'
+import { TActivatableTreeItem } from '../src/core/classes/tree/activable/activable-tree-item.class'
+import type { TConstructor } from '../src/core/common/types'
 
-// --- 1. Определяем классы для Меню (как мы обсуждали) ---
+export class TMenuItem extends TActivatableTreeItem {
+	public label: string = ''
+	public icon: string = ''
+	public id: string = ''
+	// Можно добавить href, disabled и т.д.
 
-// Базовый класс коллекции с функционалом дерева и активности
-const TreeActivatableCollection = asTreeCollection(TActivatableCollection);
+	assign(source: Partial<TMenuItem>): void {
+		if (source.label) this.label = source.label
+		if (source.icon) this.icon = source.icon
+		if (source.id) this.id = source.id
 
-// Класс элемента меню
-class TMenuItem extends asTreeItem(TActivatableCollectionItem) {
-    public label: string = '';
-
-    assign(source: Partial<TMenuItem>): void {
-        if (source.label) this.label = source.label;
-        // Важно: передаем active в super.assign или устанавливаем вручную, если он есть в source
-        // TActivatableCollectionItem не имеет assign для active по умолчанию в базовой реализации TObject?
-        // Если нет, то лучше явно:
-        if (source.active !== undefined) this.active = source.active;
-
-        super.assign(source);
-    }
+		// Важно: вызываем super.assign, чтобы обработать active и другие базовые свойства
+		super.assign(source)
+	}
 }
 
-// Класс коллекции меню с логикой "Глобального Активного Элемента"
-class TMenuCollection extends TreeActivatableCollection {
-    // Хранилище глобально активного элемента (только для корневой коллекции)
-    private _globalActiveItem: TMenuItem | null = null;
+/**
+ * Класс Меню.
+ * Наследуется от TActivatableTree, но уже настроен на работу с TMenuItem.
+ */
+export class TMenu extends TActivatableTree<TMenuItem> {
+	constructor(options?: { itemClass?: TConstructor<TMenuItem> }) {
+		super({
+			// По умолчанию используем TMenuItem, но даем возможность переопределить
+			itemClass: options?.itemClass ?? TMenuItem,
+		})
+	}
 
-    constructor(options: any) {
-        super(options);
-    }
+	// Здесь можно добавить специфичные методы для меню.
+	// Например, поиск по ID или Label.
 
-    /**
-     * Перехватываем локальную активацию
-     */
-    setActive(item: TMenuItem): void {
-        super.setActive(item); // Локальная логика (в пределах одного списка)
-        this._bubbleActiveItem(item); // Всплытие
-    }
-
-    /**
-     * Всплытие события активации к корню
-     */
-    protected _bubbleActiveItem(item: TMenuItem): void {
-        if (this.parentItem) {
-            // Если есть родитель, передаем ему
-            const parentCollection = this.parentItem.collection as TMenuCollection;
-            if (parentCollection) {
-                parentCollection._onChildActive(item);
-            }
-        } else {
-            // Если родителя нет, значит мы - Корень
-            this._handleRootGlobalActive(item);
-        }
-    }
-
-    /**
-     * Обработка сигнала от дочерних элементов
-     */
-    public _onChildActive(activeItemInDeep: TMenuItem): void {
-        if (this.parentItem) {
-            const parentCollection = this.parentItem.collection as TMenuCollection;
-            parentCollection?._onChildActive(activeItemInDeep);
-        } else {
-            this._handleRootGlobalActive(activeItemInDeep);
-        }
-    }
-
-    /**
-     * Логика корня: выключаем предыдущий активный элемент
-     */
-    private _handleRootGlobalActive(newItem: TMenuItem): void {
-        // Если был другой активный элемент и это не тот же самый
-        if (this._globalActiveItem && this._globalActiveItem !== newItem) {
-            console.log(`[Root] Deactivating previous: ${this._globalActiveItem.label}`);
-            this._globalActiveItem.active = false;
-        }
-
-        this._globalActiveItem = newItem;
-        console.log(`[Root] New global active: ${newItem.label}`);
-    }
-
-    // Вспомогательный метод для теста
-    public getGlobalActiveLabel(): string | undefined {
-        return this._globalActiveItem?.label;
-    }
+	/**
+	 * Найти пункт меню по ID.
+	 */
+	findById(id: string): TMenuItem | undefined {
+		return this.find((item) => item.id === id)
+	}
 }
 
-
-// --- 2. Сценарий Тестирования ---
-
-console.log('--- START MENU TEST ---');
-
-// 1. Создаем корневое меню
-const rootMenu = new TMenuCollection({ itemClass: TMenuItem });
-
-// 2. Строим структуру
-// Root
-//  |- Файл
-//  |   |- Создать
-//  |   |- Открыть
-//  |- Правка
-//  |- Вид
-//      |- Инструменты
-//          |- Опция 1
-//          |- Опция 2
-
-const itemFile = rootMenu.add({ label: 'Файл' });
-const itemEdit = rootMenu.add({ label: 'Правка' });
-const itemView = rootMenu.add({ label: 'Вид' });
-
-// Подменю Файл
-const fileSubMenu = itemFile.createChild(TMenuCollection, TMenuItem);
-const itemCreate = fileSubMenu.add({ label: 'Создать' });
-const itemOpen = fileSubMenu.add({ label: 'Открыть' });
-
-// Подменю Вид
-const viewSubMenu = itemView.createChild(TMenuCollection, TMenuItem);
-const itemTools = viewSubMenu.add({ label: 'Инструменты' });
-
-// Подменю Инструменты (3-й уровень)
-const toolsSubMenu = itemTools.createChild(TMenuCollection, TMenuItem);
-const itemOpt1 = toolsSubMenu.add({ label: 'Опция 1' });
-const itemOpt2 = toolsSubMenu.add({ label: 'Опция 2' });
-
-
-// --- ТЕСТЫ ---
-
-function checkState(expectedActiveLabel: string | null) {
-    const actual = rootMenu.getGlobalActiveLabel();
-    const status = actual === expectedActiveLabel ? 'PASS' : `FAIL (Expected: ${expectedActiveLabel}, Got: ${actual})`;
-    console.log(`Check State: ${status}`);
-
-    // Дополнительная проверка: убедимся, что старые элементы реально выключены
-    if (expectedActiveLabel !== 'Файл' && itemFile.active) console.error('ERROR: File is still active!');
-    if (expectedActiveLabel !== 'Создать' && itemCreate.active) console.error('ERROR: Create is still active!');
-    if (expectedActiveLabel !== 'Опция 1' && itemOpt1.active) console.error('ERROR: Option 1 is still active!');
+// --- Simple sequential demo for browser console ---
+function _assert(name: string, cond: boolean) {
+    if (cond) console.log(`%cPASS: ${name}`, 'color:green')
+    else console.error(`%cFAIL: ${name}`, 'color:red')
 }
 
-console.log('\n1. Активируем элемент корневого уровня ("Файл")');
-itemFile.active = true;
-// Ожидаем: Файл активен
-checkState('Файл');
+// Build menu
+console.log('--- Building demo menu ---')
+const menu = new TMenu()
+console.log('menu instanceof TMenu ->', menu instanceof TMenu)
 
-console.log('\n2. Активируем элемент во вложенном меню ("Создать")');
-// Это должно деактивировать "Файл" (так как он был глобально активным)
-itemCreate.active = true;
-checkState('Создать');
+// Create structure
+const root = menu.add({ label: 'Root', id: 'root' })
+const sub = root.createChild(TMenuItem)
+const childA = sub.add({ label: 'Child A', id: 'child-a' })
+const childB = sub.add({ label: 'Child B', id: 'child-b' })
+const subSub = childB.createChild(TMenuItem)
+const grand = subSub.add({ label: 'Grand', id: 'grand-1' })
 
-console.log('\n3. Активируем соседний элемент в том же подменю ("Открыть")');
-// "Создать" должен погаснуть (логика TActivatableCollection), "Открыть" загореться
-itemOpen.active = true;
-checkState('Открыть');
-console.log(`Is Create active? ${itemCreate.active}`); // false
+console.log('Structure created:')
+console.log('root.label=', root.label)
+console.log('childA.label=', childA.label)
+console.log('grand.label=', grand.label)
 
-console.log('\n4. Активируем элемент в глубоком уровне другой ветки ("Опция 1")');
-// "Открыть" должен погаснуть.
-itemOpt1.active = true;
-checkState('Опция 1');
-console.log(`Is Open active? ${itemOpen.active}`); // false
+// Search test
+const found = menu.findById('grand-1')
+console.log('Search for id=grand-1 ->', found ? found.label : null)
+_assert('findById returns correct node', !!found && found.label === 'Grand')
 
-console.log('\n5. Активируем элемент в корне ("Правка")');
-// "Опция 1" должна погаснуть.
-itemEdit.active = true;
-checkState('Правка');
-console.log(`Is Option 1 active? ${itemOpt1.active}`); // false
+// Activation tests
+console.log('\n--- Activation tests ---')
+const r1 = menu.add({ label: 'R1', id: 'r1' })
+const r2 = menu.add({ label: 'R2', id: 'r2' })
+const s1 = r1.createChild(TMenuItem)
+const c11 = s1.add({ label: 'C1.1', id: 'c1.1' })
+const c12 = s1.add({ label: 'C1.2', id: 'c1.2' })
+const s12 = c12.createChild(TMenuItem)
+const g = s12.add({ label: 'G1', id: 'g1' })
 
-console.log('\n--- END MENU TEST ---');
+// Activate r1
+r1.active = true
+console.log('Activated r1 -> menu.activeItem id =', (menu as any).activeItem?.id)
+_assert('r1 becomes active', (menu as any).activeItem === r1 && r1.active === true)
+
+// Activate c11
+c11.active = true
+console.log('Activated c11 -> menu.activeItem id =', (menu as any).activeItem?.id)
+ _assert('c11 becomes active and r1 deactivated', (menu as any).activeItem === c11 && !r1.active)
+
+// Activate grandchild
+g.active = true
+console.log('Activated g -> menu.activeItem id =', (menu as any).activeItem?.id)
+ _assert('grand becomes active and c11 deactivated', (menu as any).activeItem === g && !c11.active)
+
+// Activate r2
+r2.active = true
+console.log('Activated r2 -> menu.activeItem id =', (menu as any).activeItem?.id)
+ _assert('r2 becomes active and grand deactivated', (menu as any).activeItem === r2 && !g.active)
+
+console.log('\nDemo finished')
