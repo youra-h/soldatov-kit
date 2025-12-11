@@ -2,45 +2,47 @@ import type {
 	ICollectionItem,
 	ICollectionItemProps,
 	TCollectionItemEvents,
-} from '../../collection'
-import { TTree } from './../tree.class'
+} from '../../collection/item/types'
+import type { TConstructor } from '../../../common/types'
+import type { ITreeCollection, ITree } from '../types'
 
 /**
  * Свойства элемента дерева.
  */
 export interface ITreeItemProps extends ICollectionItemProps {
-	/** Ссылка на дочернюю коллекцию (если есть) */
-	child: TTree | null
+	/** Ссылка на дочернюю коллекцию (ветку) */
+	child: ITreeCollection | null
 }
 
 /**
  * События элемента дерева.
  */
 export type TTreeItemEvents = TCollectionItemEvents & {
-	// Здесь можно добавить специфичные события, например, разворачивание/сворачивание ветки
+	// Здесь можно добавить специфичные события элемента (например, expand/collapse)
 }
 
 /**
- * Интерфейс элемента дерева.
+ * Интерфейс элемента дерева (Node).
  */
 export interface ITreeItem extends ICollectionItem<ITreeItemProps, TTreeItemEvents> {
-	/** Дочерняя коллекция элементов */
-	readonly child: TTree | null
+	/** Дочерняя ветка */
+	readonly child: ITreeCollection | null
+
+	/** Ссылка на корень дерева (вычисляемая) */
+	readonly root: ITree
 
 	/**
-	 * Создает новую дочернюю коллекцию для этого элемента.
-	 * @param itemClass Класс элементов, которые будут в дочерней коллекции.
+	 * Создает дочернюю ветку.
+	 * @param itemClass Класс элементов, которые будут в новой ветке.
 	 */
-	createChild(itemClass: any): TTree
+	createChild<TChild extends ITreeItem>(itemClass: TConstructor<TChild>): ITreeCollection<TChild>
 
-	/**
-	 * Прикрепляет существующую коллекцию в качестве дочерней.
-	 * @param collection Коллекция для прикрепления.
-	 */
-	setChild(collection: TTree): void
-
-	/**
-	 * Удаляет дочернюю коллекцию.
-	 */
+	/** Удаляет дочернюю ветку */
 	removeChild(): void
+
+	/**
+	 * Уведомить родителя о событии в дочерней ветке (для всплытия).
+	 * @internal
+	 */
+	notifyChildChange(item: ITreeItem, event: string): void
 }

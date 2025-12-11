@@ -1,5 +1,6 @@
 import { TCollection } from '../collection/collection.class'
-import type { ITreeCollection, ITreeCollectionProps, ITreeItem, ITree } from './types'
+import type { ITreeCollection, ITreeCollectionProps, ITree } from './types'
+import type { ITreeItem } from './item/types'
 import type { TCollectionEvents } from '../collection/types'
 import type { TConstructor } from '../../common/types'
 
