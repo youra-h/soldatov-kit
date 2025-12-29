@@ -4,8 +4,11 @@ import type { ITreeItem } from './item/types'
 import type { TCollectionEvents } from '../collection/types'
 import type { TConstructor } from '../../common/types'
 
-export class TTreeCollection<TItem extends ITreeItem = ITreeItem>
-	extends TCollection<ITreeCollectionProps, TCollectionEvents, TItem>
+export class TTreeCollection<
+	TItem extends ITreeItem = ITreeItem,
+	TEvents extends TCollectionEvents = TCollectionEvents,
+>
+	extends TCollection<ITreeCollectionProps, TEvents, TItem>
 	implements ITreeCollection
 {
 	protected _parentItem: ITreeItem | null = null

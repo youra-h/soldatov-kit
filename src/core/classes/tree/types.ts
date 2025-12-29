@@ -13,11 +13,10 @@ export interface ITreeCollectionProps extends ICollectionProps {
 /**
  * Интерфейс коллекции дерева (Branch).
  */
-export interface ITreeCollection<TItem extends ITreeItem = ITreeItem> extends ICollection<
-	ITreeCollectionProps,
-	TCollectionEvents,
-	TItem
-> {
+export interface ITreeCollection<
+	TItem extends ITreeItem = ITreeItem,
+	TEvents extends TCollectionEvents = TCollectionEvents,
+> extends ICollection<ITreeCollectionProps, TEvents, TItem> {
 	/** Родительский элемент */
 	readonly parentItem: ITreeItem | null
 
@@ -52,13 +51,10 @@ export type TTreeEvents = TCollectionEvents & {
  * Интерфейс корня дерева (Root).
  * Корень — это тоже коллекция, но с дополнительными возможностями.
  */
-export interface ITree<TItem extends ITreeItem = ITreeItem> extends ITreeCollection<TItem> {
-	/**
-	 * Система событий дерева.
-	 * Переопределяем тип событий на TTreeEvents.
-	 */
-	readonly events: TEvented<TTreeEvents>
-
+export interface ITree<
+	TItem extends ITreeItem = ITreeItem,
+	TEvents extends TTreeEvents = TTreeEvents,
+> extends ITreeCollection<TItem, TEvents> {
 	/**
 	 * Поиск элемента по условию (в глубину).
 	 * @param predicate Функция-условие

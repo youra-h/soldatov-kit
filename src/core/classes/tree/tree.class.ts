@@ -2,18 +2,13 @@ import { TTreeCollection } from './tree-collection.class'
 import type { ITree, TTreeEvents } from './types'
 import type { ITreeItem } from './item/types'
 import type { TConstructor } from '../../common/types'
-import { TEvented } from '../../common/evented'
 
 export class TTree<TItem extends ITreeItem = ITreeItem, TEvents extends TTreeEvents = TTreeEvents>
-	extends TTreeCollection<TItem>
+	extends TTreeCollection<TItem, TEvents>
 	implements ITree
 {
-	public readonly events: TEvented<TEvents>
-
 	constructor(options: { itemClass: TConstructor<TItem> }) {
 		super({ ...options, parentItem: null })
-
-		this.events = new TEvented<TEvents>()
 	}
 
 	get root(): ITree {
