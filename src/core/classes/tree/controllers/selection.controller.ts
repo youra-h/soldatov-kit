@@ -7,6 +7,19 @@ interface IItemWithSelectable {
 	behavior: TSelectableBehavior
 }
 
+/**
+ * Контроллер глобального выбора для дерева.
+ *
+ * Слушает всплывающие события `itemChange` от корня дерева и поддерживает
+ * актуальный набор выбранных элементов (включая вложенные уровни).
+ *
+ * Ожидаемый контракт:
+ * - элементы дерева должны эмитить в корень событие `behaviorChange`
+ *   (это делает `TBehaviorTreeItem` при изменении поведения)
+ * - у элемента должно быть поведение с булевым свойством `selected`
+ *
+ * Выбор хранится во внутреннем `Set`, чтобы операции add/delete были O(1).
+ */
 export class TreeSelectionController {
 	private _tree: TTree & { mode?: TSelectionMode }
 	private _selected: Set<ITreeItem & IItemWithSelectable> = new Set()
@@ -47,14 +60,21 @@ export class TreeSelectionController {
 		this._selected.delete(item)
 	}
 
+	/**
+	 * Текущий набор выбранных элементов.
+	 *
+	 * Порядок не гарантируется (это массив из `Set`).
+	 */
 	get selectedItems(): Array<ITreeItem & IItemWithSelectable> {
 		return Array.from(this._selected)
 	}
 
+	/** Количество выбранных элементов. */
 	get selectedCount(): number {
 		return this._selected.size
 	}
 
+	/** Снять выделение со всех элементов и очистить внутренний набор. */
 	clear(): void {
 		for (const item of Array.from(this._selected)) {
 			item.behavior.selected = false
