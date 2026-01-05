@@ -1,5 +1,5 @@
 import { TComponent, type IComponentOptions } from '../../base/component'
-import { TBaseControl } from '../base-control'
+import { TBaseControl } from '../../base/base-control'
 import type { IControl, IControlProps, TControlEvents } from './types'
 import type { TComponentSize } from '../../common/types'
 import { TSize } from '../../common/size'

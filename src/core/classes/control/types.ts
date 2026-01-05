@@ -1,4 +1,4 @@
-import type { IBaseControl, IBaseControlProps, TBaseControlEvents } from './../base-control'
+import type { IBaseControl, IBaseControlProps, TBaseControlEvents } from '../../base/base-control'
 import type { TComponentSize } from '../../common/types'
 
 export interface IControlProps extends IBaseControlProps {
