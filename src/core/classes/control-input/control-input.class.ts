@@ -1,4 +1,4 @@
-import { TComponent, type IComponentOptions } from '../component'
+import { TComponent, type IComponentOptions } from '../../base/component'
 import type { TComponentVariant } from '../../common/types'
 import { TControlValue } from '../control-value'
 import type {

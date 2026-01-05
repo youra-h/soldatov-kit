@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import TComponent from '../classes/component/component.class'
+import TComponent from '../base/component/component.class'
 
 describe('TComponent', () => {
 	let comp: TComponent

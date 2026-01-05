@@ -1,4 +1,4 @@
-import { TEntity } from '../../base/entity'
+import { TEntity } from '../entity'
 import { TEvented } from '../../common/evented'
 import type { IComponent, IComponentProps, IComponentOptions, TComponentEvents } from './types'
 

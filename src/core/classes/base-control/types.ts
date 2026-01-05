@@ -1,4 +1,4 @@
-import type { IComponent, IComponentProps, IComponentMethods, TComponentEvents } from '../component'
+import type { IComponent, IComponentProps, IComponentMethods, TComponentEvents } from '../../base/component'
 
 // Элемент, имеющий имя
 export interface IHasName {

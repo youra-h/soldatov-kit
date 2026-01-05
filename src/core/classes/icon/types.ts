@@ -1,4 +1,4 @@
-import type { IComponent, IComponentProps, TComponentEvents } from '../component'
+import type { IComponent, IComponentProps, TComponentEvents } from '../../base/component'
 import type { TComponentSize } from '../../common/types'
 
 export interface IIconProps extends IComponentProps {

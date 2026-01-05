@@ -1,4 +1,4 @@
-import { type IComponentOptions } from '../component'
+import { type IComponentOptions } from '../../base/component'
 import { TControlInput } from '../control-input'
 import type { ICheckBox, ICheckBoxProps, TCheckBoxEvents } from './types'
 import { TIcon } from '../icon'

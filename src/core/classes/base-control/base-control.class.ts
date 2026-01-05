@@ -1,4 +1,4 @@
-import { TComponent, type IComponentOptions } from '../component'
+import { TComponent, type IComponentOptions } from '../../base/component'
 import type { IBaseControl, IBaseControlProps, TBaseControlEvents } from './types'
 import { TDisableableBehavior } from '../behavior/disableable.behavior'
 

@@ -1,4 +1,4 @@
-import { TComponent, type IComponentOptions } from './../component'
+import { TComponent, type IComponentOptions } from '../../base/component'
 import { TBaseControl } from '../base-control'
 import { TTabItem } from './tab-item/tab-item.class'
 import {

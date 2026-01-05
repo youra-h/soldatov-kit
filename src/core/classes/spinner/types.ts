@@ -1,4 +1,4 @@
-import type { IComponent, IComponentProps, TComponentEvents } from '../component'
+import type { IComponent, IComponentProps, TComponentEvents } from '../../base/component'
 import type { TComponentSize, TComponentVariant } from '../../common/types'
 
 export interface ISpinnerProps extends IComponentProps {
