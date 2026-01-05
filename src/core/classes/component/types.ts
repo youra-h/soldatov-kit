@@ -24,7 +24,7 @@ export interface IComponentProps {
 	// Id компонента
 	id?: string | number
 	// HTML-тег компонента
-	tag?: string | Entity
+	tag?: string | Object
 	// Видимость компонента
 	visible?: boolean
 	// Скрытие компонента / удаление из dom

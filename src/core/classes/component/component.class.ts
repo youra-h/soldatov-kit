@@ -24,7 +24,7 @@ export default class TComponent<
 	protected _visible: boolean
 	protected _hidden: boolean
 
-	protected _tag: string | Entity
+	protected _tag: string | Object
 
 	// Base class name
 	protected _baseClass: string
@@ -95,11 +95,11 @@ export default class TComponent<
 		}
 	}
 
-	get tag(): string | Entity {
+	get tag(): string | Object {
 		return this._tag
 	}
 
-	set tag(value: string | Entity) {
+	set tag(value: string | Object) {
 		if (this._tag !== value) {
 			this._tag = value
 		}

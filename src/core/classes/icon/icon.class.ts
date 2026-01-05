@@ -76,13 +76,13 @@ export default class TIcon extends TComponent<IIconProps, TIconEvents> implement
 	 * @param value Значение, по которому нужно получить иконку, если это уже экземпляр TIcon, он будет возвращен как есть, иначе будет создан новый экземпляр.
 	 * @returns Экземпляр иконки.
 	 */
-	static getInstance(value: TIcon | Entity): TIcon {
+	static getInstance(value: TIcon | Object): TIcon {
 		if (value instanceof TIcon) {
 			return value
 		}
 
 		// Если value - объект, создаем новый экземпляр с его свойствами
-		if (value && value instanceof Entity && 'tag' in value) {
+		if (value && value instanceof Object && 'tag' in value) {
 			return new TIcon({ props: value as any })
 		}
 
