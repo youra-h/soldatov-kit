@@ -1,7 +1,8 @@
-import type { IComponent, IComponentProps, TComponentEvents } from '../../base/component'
+import type { IPresentable, IPresentableProps, TPresentableEvents } from '../../base/presentable'
 import type { TComponentSize } from '../../common/types'
 
-export interface IIconProps extends IComponentProps {
+
+export interface IIconProps extends IPresentableProps {
 	// Размер иконки
 	size?: TComponentSize
 	// Ширина иконки
@@ -10,6 +11,13 @@ export interface IIconProps extends IComponentProps {
 	height?: number | string
 }
 
-export type TIconEvents = TComponentEvents & {}
+export type TIconEvents = TPresentableEvents & {
+	/** change:size */
+	'change:size': (value: TComponentSize) => void
+}
 
-export interface IIcon extends IComponent<IIconProps, TIconEvents> {}
+export interface IIcon extends IPresentable<IIconProps, TIconEvents> {
+	size: TComponentSize
+	width?: number | string
+	height?: number | string
+}

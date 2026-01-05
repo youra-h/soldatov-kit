@@ -14,9 +14,9 @@ import type {
  * Хранит `id` и единый emitter `events`.
  */
 export default class TComponentModel<
-		TProps extends IComponentModelProps = IComponentModelProps,
-		TEvents extends TComponentModelEvents = TComponentModelEvents,
-	>
+	TProps extends IComponentModelProps = IComponentModelProps,
+	TEvents extends TComponentModelEvents = TComponentModelEvents,
+>
 	extends TEntity<TProps>
 	implements IComponentModel<TProps, TEvents>
 {
@@ -29,22 +29,23 @@ export default class TComponentModel<
 
 	constructor(options: IComponentModelOptions<IComponentModelProps> = {}) {
 		super()
+
 		const { props = {} } = options
 
+		const ctor = this.constructor as typeof TComponentModel
+
 		this.events = new TEvented<TEvents>()
-		this._id = props.id ?? TComponentModel.defaultValues.id!
+		this._id = props.id ?? ctor.defaultValues.id!
 
 		setTimeout(() => this.events.emit('created', this as any), 0)
 	}
 
 	static prepareOptions<T>(
 		options: IComponentModelOptions<T> | Partial<T>,
-		defaultBaseClass: string,
 	): IComponentModelOptions<T> {
-		if (options && 'props' in options) {
-			return { ...options, baseClass: options.baseClass ?? defaultBaseClass }
-		}
-		return { props: options as Partial<T>, baseClass: defaultBaseClass }
+		if (options && 'props' in options) return options
+
+		return { props: options as Partial<T> }
 	}
 
 	static create<T extends TComponentModel>(

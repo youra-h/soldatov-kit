@@ -24,9 +24,8 @@ export interface IComponentModel<
 
 /**
  * Опции для создания компонента.
- * props — начальные свойства, baseClass — базовый CSS-класс.
+ * props — начальные свойства.
  */
 export interface IComponentModelOptions<T> {
 	props?: Partial<T>
-	baseClass?: string
 }

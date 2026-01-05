@@ -38,19 +38,20 @@ export default class TPresentable<
 		super(options)
 
 		const { props = {} } = options
+		const ctor = this.constructor as typeof TPresentable
 
-		this._tag = props.tag ?? TPresentable.defaultValues.tag!
+		this._tag = props.tag ?? ctor.defaultValues.tag!
 
 		this._visibility = new TVisibilityStateImpl(
-			typeof props.visible === 'boolean' ? props.visible : (TPresentable.defaultValues.visible as boolean),
+			typeof props.visible === 'boolean' ? props.visible : (ctor.defaultValues.visible as boolean),
 		)
 		this._visibility.events.on('change', (value) => {
 			this.events.emit('change:visible', value)
 		})
 
-		this._baseClass = props.baseClass ?? TPresentable.defaultValues.baseClass!
-		this._classes = (props.classes ?? TPresentable.defaultValues.classes!) as string[]
-		this._attrs = (props.attrs ?? TPresentable.defaultValues.attrs!) as Record<string, unknown>
+		this._baseClass = props.baseClass ?? ctor.defaultValues.baseClass!
+		this._classes = (props.classes ?? ctor.defaultValues.classes!) as string[]
+		this._attrs = (props.attrs ?? ctor.defaultValues.attrs!) as Record<string, unknown>
 	}
 
 	get visible(): boolean {
