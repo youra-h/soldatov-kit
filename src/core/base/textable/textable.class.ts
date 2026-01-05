@@ -1,6 +1,5 @@
-import type { TTextState } from '../states'
-import { TTextState as TTextStateImpl } from '../states/text.state'
-import TInteractive from '../interactive/interactive.class'
+import { TTextState } from '../states'
+import { TControl } from '../control'
 import type { ITextableProps, TTextableEvents } from './types'
 
 /**
@@ -13,9 +12,9 @@ import type { ITextableProps, TTextableEvents } from './types'
 export default class TTextable<
 	TProps extends ITextableProps = ITextableProps,
 	TEvents extends TTextableEvents = TTextableEvents,
-> extends TInteractive<TProps, TEvents> {
+> extends TControl<TProps, TEvents> {
 	static defaultValues: Partial<ITextableProps> = {
-		...TInteractive.defaultValues,
+		...TControl.defaultValues,
 		text: '',
 	}
 
@@ -26,7 +25,7 @@ export default class TTextable<
 
 		const { props = {} } = options
 
-		this._textState = new TTextStateImpl(props.text ?? (TTextable.defaultValues.text as string))
+		this._textState = new TTextState(props.text ?? (TTextable.defaultValues.text as string))
 
 		this._textState.events.on('change', (value) => {
 			this.events.emit('change:text' as any, value)

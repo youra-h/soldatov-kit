@@ -1,6 +1,6 @@
-import type { IUiControl, IUiControlProps, TUiControlEvents } from '../ui-control'
+import type { IControl, IControlProps, TControlEvents } from '../control'
 
-export type TValueControlEvents<T> = TUiControlEvents & {
+export type TValueControlEvents<T> = TControlEvents & {
 	/** change:value */
 	'change:value': (value: T) => void
 	/** input:value (опционально) */
@@ -9,7 +9,7 @@ export type TValueControlEvents<T> = TUiControlEvents & {
 	'change:name': (value: string) => void
 }
 
-export interface IValueControlProps<T> extends IUiControlProps {
+export interface IValueControlProps<T> extends IControlProps {
 	value: T
 	name?: string
 }
@@ -18,7 +18,7 @@ export interface IValueControl<
 	T,
 	TProps extends IValueControlProps<T> = IValueControlProps<T>,
 	TEvents extends Record<string, (...args: any) => any> = TValueControlEvents<T>,
-> extends IUiControl<TProps, TEvents> {
+> extends IControl<TProps, TEvents> {
 	value: T
 	name: string
 	input(value: T): void

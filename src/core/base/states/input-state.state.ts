@@ -1,5 +1,6 @@
-import type { TControlInputState } from '../control-input/types'
 import { TStateUnit } from '../state-unit'
+
+export type TControlInputState = 'normal' | 'success' | 'warning' | 'error'
 
 /**
  * События `TInputState`.
@@ -9,15 +10,20 @@ export type TInputStateEvents = {
 	 * Срабатывает при любом изменении одного или нескольких полей.
 	 * Передаёт патч (частичный набор изменённых свойств).
 	 */
-	change: (patch: Partial<IInputStateBehaviorProps>) => void
+	change: (patch: Partial<IInputStateProps>) => void
 }
 
-export interface IInputStateBehaviorProps {
-	readonly: boolean
-	required: boolean
-	invalid: boolean
-	state: TControlInputState
-	loading: boolean
+export interface IInputStateProps {
+	// Значение недоступно для редактирования
+	readonly?: boolean
+	// Значение обязательно для заполнения
+	required?: boolean
+	// Значение не валидно
+	invalid?: boolean
+	// Состояние контрола
+	state?: TControlInputState
+	// Показать индикатор загрузки
+	loading?: boolean
 }
 
 /**
@@ -37,7 +43,7 @@ export class TInputState extends TStateUnit<TInputStateEvents> {
 	private _state: TControlInputState = 'normal'
 	private _loading = false
 
-	constructor(initial?: Partial<IInputStateBehaviorProps>) {
+	constructor(initial?: Partial<IInputStateProps>) {
 		super()
 		if (initial) {
 			if (initial.readonly !== undefined) this._readonly = initial.readonly

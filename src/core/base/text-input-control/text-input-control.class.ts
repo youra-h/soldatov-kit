@@ -1,8 +1,7 @@
-import { TEvented } from '../../common/evented'
-import { TInputState } from '../states/input-state.state'
-import TValueControl from '../value-control/value-control.class'
+import { TInputState } from '../states'
+import { TValueControl } from '../value-control'
 import type { ITextInputControlProps, TTextInputControlEvents } from './types'
-import type { TControlInputState } from '../control-input/types'
+import type { TControlInputState } from '../states'
 
 /**
  * База для текстовых инпутов.
@@ -15,11 +14,9 @@ import type { TControlInputState } from '../control-input/types'
  * Добавляет `TInputState` (readonly/required/invalid/state/loading).
  */
 export default class TTextInputControl<
-		TProps extends ITextInputControlProps = ITextInputControlProps,
-		TEvents extends TTextInputControlEvents = TTextInputControlEvents,
-	>
-	extends TValueControl<string, TProps, TEvents>
-{
+	TProps extends ITextInputControlProps = ITextInputControlProps,
+	TEvents extends TTextInputControlEvents = TTextInputControlEvents,
+> extends TValueControl<string, TProps, TEvents> {
 	static defaultValues: Partial<ITextInputControlProps> = {
 		...TValueControl.defaultValues,
 		readonly: false,
@@ -44,11 +41,15 @@ export default class TTextInputControl<
 		})
 
 		this._inputState.events.on('change', (patch) => {
-			if (patch.readonly !== undefined) this.events.emit('change:readonly' as any, patch.readonly)
-			if (patch.required !== undefined) this.events.emit('change:required' as any, patch.required)
-			if (patch.invalid !== undefined) this.events.emit('change:invalid' as any, patch.invalid)
+			if (patch.readonly !== undefined)
+				this.events.emit('change:readonly' as any, patch.readonly)
+			if (patch.required !== undefined)
+				this.events.emit('change:required' as any, patch.required)
+			if (patch.invalid !== undefined)
+				this.events.emit('change:invalid' as any, patch.invalid)
 			if (patch.state !== undefined) this.events.emit('change:state' as any, patch.state)
-			if (patch.loading !== undefined) this.events.emit('change:loading' as any, patch.loading)
+			if (patch.loading !== undefined)
+				this.events.emit('change:loading' as any, patch.loading)
 		})
 	}
 

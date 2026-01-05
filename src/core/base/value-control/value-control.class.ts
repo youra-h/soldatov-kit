@@ -1,6 +1,5 @@
-import { TEvented } from '../../common/evented'
-import { TValueState } from '../states/value.state'
-import TUiControl from '../ui-control/ui-control.class'
+import { TValueState } from '../states'
+import { TControl } from '../control'
 import type { IValueControlProps, TValueControlEvents } from './types'
 
 /**
@@ -10,17 +9,15 @@ import type { IValueControlProps, TValueControlEvents } from './types'
  * - `value` (commit) + `input(value)` (optional)
  * - `name` (form semantics)
  *
- * Интерактивность (disabled/focused) и stylable (size/variant) наследуются из `TUiControl`.
+ * Интерактивность (disabled/focused) и stylable (size/variant) наследуются из `TControl`.
  */
 export default class TValueControl<
-		T,
-		TProps extends IValueControlProps<T> = IValueControlProps<T>,
-		TEvents extends TValueControlEvents<T> = TValueControlEvents<T>,
-	>
-	extends TUiControl<TProps, TEvents>
-{
+	T,
+	TProps extends IValueControlProps<T> = IValueControlProps<T>,
+	TEvents extends TValueControlEvents<T> = TValueControlEvents<T>,
+> extends TControl<TProps, TEvents> {
 	static defaultValues: Partial<IValueControlProps<any>> = {
-		...TUiControl.defaultValues,
+		...TControl.defaultValues,
 		name: '',
 		value: null,
 	}

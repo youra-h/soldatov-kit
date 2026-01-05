@@ -1,5 +1,5 @@
 import type { IValueControl, IValueControlProps, TValueControlEvents } from '../value-control'
-import type { TControlInputState } from '../control-input/types'
+import type { TControlInputState } from '../states'
 
 export type TTextInputControlEvents = TValueControlEvents<string> & {
 	'change:readonly': (value: boolean) => void

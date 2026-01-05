@@ -1,23 +1,42 @@
-import type { IBaseControl, IBaseControlProps, TBaseControlEvents } from '../base-control'
-import type { TComponentSize } from '../../common/types'
+import type { IStylable, IStylableProps, TStylableEvents } from '../stylable'
 
-export interface IControlProps extends IBaseControlProps {
-	// Текстовое значение контрола
-	text: string
-	// В фокусе ли контрол
+export type TControlEvents = TStylableEvents & {
+	/** change:disabled */
+	'change:disabled': (value: boolean) => void
+	/** change:focused */
+	'change:focused': (value: boolean) => void
+	/** click proxy (-слой может дергать этот метод) */
+	click: (event: Event) => void
+}
+
+/**
+ * @deprecated Используйте `TControlEvents`.
+ */
+export type TStylableInteractiveEvents = TControlEvents
+
+export interface IControlProps extends IStylableProps {
+	disabled?: boolean
 	focused?: boolean
-	// Размер контрола
-	size?: TComponentSize
 }
 
-export type TControlEvents = TBaseControlEvents & {
-	// Событие изменения фокуса
-	focused: (value: boolean) => void
-	// Событие изменения текста
-	changeText: (value: string) => void
-	// Событие клика по контролу
-	click: () => void
+/**
+ * @deprecated Используйте `IControlProps`.
+ */
+export interface IStylableInteractiveProps extends IControlProps {}
+
+export interface IControl<
+	TProps extends IControlProps = IControlProps,
+	TEvents extends Record<string, (...args: any) => any> = TControlEvents,
+> extends IStylable<TProps, TEvents> {
+	disabled: boolean
+	focused: boolean
+	click(event: Event): void
 }
 
-export interface IControl<TProps extends IControlProps = IControlProps, TEvents = TControlEvents>
-	extends IBaseControl<TProps, TEvents> {}
+/**
+ * @deprecated Используйте `IControl`.
+ */
+export type IStylableInteractive<
+	TProps extends IStylableInteractiveProps = IStylableInteractiveProps,
+	TEvents extends Record<string, (...args: any) => any> = TStylableInteractiveEvents,
+> = IControl<TProps, TEvents>

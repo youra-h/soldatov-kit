@@ -1,102 +1,72 @@
-import { TComponent, type IComponentOptions } from '../component'
-import { TBaseControl } from '../base-control'
-import type { IControl, IControlProps, TControlEvents } from './types'
-import type { TComponentSize } from '../../common/types'
-import { TSize } from '../../common/size'
-import { TFocusableState } from '../states/focusable.state'
-import { TTextState } from '../states/text.state'
+import type { TDisableableState, TFocusableState } from '../states'
+import { TDisableableState as TDisableableStateImpl } from '../states/disableable.state'
+import { TFocusableState as TFocusableStateImpl } from '../states/focusable.state'
+import TStylable from '../stylable/stylable.class'
+import type { IControlProps, TControlEvents } from './types'
 
+/**
+ * База для Ui-контролов: stylable (size/variant) + интерактивность (disabled/focused/click).
+ *
+ * Зачем отдельный слой:
+ * - не все интерактивные элементы обязаны иметь size/variant
+ * - но все form-controls (input элементы) и кнопки обычно обязаны
+ */
 export default class TControl<
-		TProps extends IControlProps = IControlProps,
-		TEvents extends TControlEvents = TControlEvents,
-	>
-	extends TBaseControl<TProps, TEvents>
-	implements IControl
-{
+	TProps extends IControlProps = IControlProps,
+	TEvents extends TControlEvents = TControlEvents,
+> extends TStylable<TProps, TEvents> {
 	static defaultValues: Partial<IControlProps> = {
-		...TBaseControl.defaultValues,
-		text: '',
+		...TStylable.defaultValues,
+		disabled: false,
 		focused: false,
-		size: 'normal',
 	}
 
-	/** Текстовое представление контрола */
-	protected _textBehavior: TTextState
-	protected _focusBehavior: TFocusableState
-	/** Размер контрола */
-	protected _sizeHelper: TSize
+	protected _disableable: TDisableableState
+	protected _focusable: TFocusableState
 
-	constructor(options: IComponentOptions<IControlProps> = {}) {
-		options = TComponent.prepareOptions(options, 's-control')
-
+	constructor(options: any = {}) {
 		super(options)
 
 		const { props = {} } = options
 
-		this._sizeHelper = new TSize({
-			baseClass: this._baseClass,
-			value: props.size ?? TControl.defaultValues.size!,
+		this._disableable = new TDisableableStateImpl(
+			props.disabled ?? (TControl.defaultValues.disabled as boolean),
+		)
+		this._disableable.events.on('change', (value) => {
+			this.events.emit('change:disabled' as any, value)
 		})
 
-		this._textBehavior = new TTextState(props.text ?? TControl.defaultValues.text!)
-		this._textBehavior.events.on('change', (value) => {
-			this.events.emit('changeText', value)
-		})
-
-		this._focusBehavior = new TFocusableState(props.focused ?? TControl.defaultValues.focused!)
-		this._focusBehavior.events.on('change', (value) => {
-			this.events.emit('focused', value)
+		this._focusable = new TFocusableStateImpl(
+			props.focused ?? (TControl.defaultValues.focused as boolean),
+		)
+		this._focusable.events.on('change', (value) => {
+			this.events.emit('change:focused' as any, value)
 		})
 	}
 
-	get text(): string {
-		return this._textBehavior.text
+	get disabled(): boolean {
+		return this._disableable.disabled
 	}
-
-	set text(value: string) {
-		this._textBehavior.text = value
+	set disabled(value: boolean) {
+		this._disableable.disabled = value
 	}
 
 	get focused(): boolean {
-		return this._focusBehavior.focused
+		return this._focusable.focused
 	}
-
 	set focused(value: boolean) {
-		this._focusBehavior.focused = value
+		this._focusable.focused = value
 	}
 
-	get size(): TComponentSize {
-		return this._sizeHelper.value
-	}
-
-	set size(value: TComponentSize) {
-		if (this._sizeHelper.value !== value) {
-			this._sizeHelper.value = value
-		}
-	}
-
-	get classes(): string[] {
-		const classes = []
-
-		// Добавляем класс для размера
-		classes.push(...this._sizeHelper.getClass())
-
-		return classes
+	click(event: Event): void {
+		this.events.emit('click' as any, event)
 	}
 
 	getProps(): TProps {
 		return {
 			...super.getProps(),
-			name: this._name,
-			text: this._textBehavior.text,
 			disabled: this.disabled,
-			focused: this._focusBehavior.focused,
-			size: this._sizeHelper.value,
-		}
-	}
-
-	afterHide(): void {
-		super.afterHide()
-		this._focusBehavior.focused = false
+			focused: this.focused,
+		} as TProps
 	}
 }

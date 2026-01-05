@@ -1,11 +1,11 @@
-import type { IInteractive, IInteractiveProps, TInteractiveEvents } from '../interactive'
+import type { IControl, IControlProps, TControlEvents } from '../control'
 
-export type TTextableEvents = TInteractiveEvents & {
+export type TTextableEvents = TControlEvents & {
 	/** change:text */
 	'change:text': (value: string) => void
 }
 
-export interface ITextableProps extends IInteractiveProps {
+export interface ITextableProps extends IControlProps {
 	/** Отображаемый текст компонента (не путать с value у контролов). */
 	text?: string
 }
@@ -13,6 +13,6 @@ export interface ITextableProps extends IInteractiveProps {
 export interface ITextable<
 	TProps extends ITextableProps = ITextableProps,
 	TEvents extends Record<string, (...args: any) => any> = TTextableEvents,
-> extends IInteractive<TProps, TEvents> {
+> extends IControl<TProps, TEvents> {
 	text: string
 }
