@@ -4,21 +4,12 @@ export type TFocusableStateEvents = {
 	change: (value: boolean) => void
 }
 
-/**
- * Поведение фокуса без собственного event-emitter.
- *
- * Эмитит через `host.events`:
- * - `change:focused`
- * - `focused` (legacy)
- */
-
-
 export class TFocusableState extends TStateUnit<TFocusableStateEvents> {
 	private _focused = false
 
-	constructor(initialFocused: boolean = false) {
+	constructor(initial: boolean = false) {
 		super()
-		this._focused = initialFocused
+		this._focused = initial
 	}
 
 	get focused(): boolean {
@@ -29,6 +20,7 @@ export class TFocusableState extends TStateUnit<TFocusableStateEvents> {
 		if (this._focused === value) return
 
 		this._focused = value
+
 		this.events.emit('change', value)
 	}
 }

@@ -4,20 +4,13 @@ export type TDisableableStateEvents = {
 	change: (value: boolean) => void
 }
 
-/**
- * Поведение "disabled" без собственного event-emitter.
- *
- * Эмитит изменения через `host.events`:
- * - `change:disabled` (новый контракт)
- * - `disabled` (legacy, чтобы не ломать существующие обвязки)
- */
 
 export class TDisableableState extends TStateUnit<TDisableableStateEvents> {
 	private _disabled = false
 
-	constructor(initialDisabled: boolean = false) {
+	constructor(initial: boolean = false) {
 		super()
-		this._disabled = initialDisabled
+		this._disabled = initial
 	}
 
 	get disabled(): boolean {

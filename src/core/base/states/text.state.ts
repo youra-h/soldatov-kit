@@ -4,22 +4,13 @@ export type TTextStateEvents = {
 	change: (value: string) => void
 }
 
-/**
- * Поведение "text" без собственного event-emitter.
- *
- * Важно: в вебе `text` обычно означает подпись/контент (label), а не `value`.
- *
- * Эмитит через `host.events`:
- * - `change:text`
- * - `changeText` (legacy)
- */
 
 export class TTextState extends TStateUnit<TTextStateEvents> {
 	private _text = ''
 
-	constructor(initialText: string = '') {
+	constructor(initial: string = '') {
 		super()
-		this._text = initialText
+		this._text = initial
 	}
 
 	get text(): string {
@@ -30,6 +21,7 @@ export class TTextState extends TStateUnit<TTextStateEvents> {
 		if (this._text === value) return
 
 		this._text = value
+
 		this.events.emit('change', value)
 	}
 }

@@ -13,16 +13,6 @@ export interface IInputStateBehaviorProps {
 	loading: boolean
 }
 
-/**
- * Поведение состояния "ввода" (readonly/required/invalid/state/loading) без собственного emitter.
- *
- * Эмитит через `host.events` события вида `change:<prop>`:
- * - `change:readonly`
- * - `change:required`
- * - `change:invalid`
- * - `change:state`
- * - `change:loading`
- */
 export class TInputState extends TStateUnit<TInputStateEvents> {
 	private _readonly = false
 	private _required = false
@@ -46,7 +36,9 @@ export class TInputState extends TStateUnit<TInputStateEvents> {
 	}
 	set readonly(value: boolean) {
 		if (this._readonly === value) return
+
 		this._readonly = value
+
 		this.events.emit('change', { readonly: value })
 	}
 
@@ -55,7 +47,9 @@ export class TInputState extends TStateUnit<TInputStateEvents> {
 	}
 	set required(value: boolean) {
 		if (this._required === value) return
+
 		this._required = value
+
 		this.events.emit('change', { required: value })
 	}
 
@@ -64,10 +58,13 @@ export class TInputState extends TStateUnit<TInputStateEvents> {
 	}
 	set invalid(value: boolean) {
 		if (this._invalid === value) return
+
 		this._invalid = value
+
 		if (value) {
 			this._state = 'error'
 		}
+
 		this.events.emit('change', { invalid: value, state: this._state })
 	}
 
@@ -76,7 +73,9 @@ export class TInputState extends TStateUnit<TInputStateEvents> {
 	}
 	set state(value: TControlInputState) {
 		if (this._state === value) return
+
 		this._state = value
+
 		this.events.emit('change', { state: value })
 	}
 
@@ -85,17 +84,9 @@ export class TInputState extends TStateUnit<TInputStateEvents> {
 	}
 	set loading(value: boolean) {
 		if (this._loading === value) return
-		this._loading = value
-		this.events.emit('change', { loading: value })
-	}
 
-	getProps(): IInputStateBehaviorProps {
-		return {
-			readonly: this._readonly,
-			required: this._required,
-			invalid: this._invalid,
-			state: this._state,
-			loading: this._loading,
-		}
+		this._loading = value
+
+		this.events.emit('change', { loading: value })
 	}
 }

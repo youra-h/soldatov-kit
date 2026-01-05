@@ -5,20 +5,12 @@ export type TValueStateEvents<T> = {
 	input: (value: T) => void
 }
 
-/**
- * Поведение "value" без собственного event-emitter.
- *
- * Эмитит через `host.events`:
- * - `change:value`
- * - `changeValue` (legacy)
- */
-
 export class TValueState<T> extends TStateUnit<TValueStateEvents<T>> {
 	private _value: T
 
-	constructor(initialValue: T) {
+	constructor(initial: T) {
 		super()
-		this._value = initialValue
+		this._value = initial
 	}
 
 	get value(): T {
@@ -29,6 +21,7 @@ export class TValueState<T> extends TStateUnit<TValueStateEvents<T>> {
 		if (this._value === value) return
 
 		this._value = value
+
 		this.events.emit('change', value)
 	}
 
