@@ -23,16 +23,6 @@ export class TSelectableCollectionItem<
 {
 	private _selected = false
 
-	// TODO: testing
-	public name: any
-	// TODO: testing
-	getProps(): TProps {
-		return {
-			...super.getProps(),
-			name: this.name,
-		}
-	}
-
 	get selected(): boolean {
 		return this._selected
 	}
