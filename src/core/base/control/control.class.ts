@@ -3,8 +3,8 @@ import { TBaseControl } from '../base-control'
 import type { IControl, IControlProps, TControlEvents } from './types'
 import type { TComponentSize } from '../../common/types'
 import { TSize } from '../../common/size'
-import { TFocusableBehavior } from '../behaviors/focusable.behavior'
-import { TTextBehavior } from '../behaviors/text.behavior'
+import { TFocusableBehavior } from '../states/focusable.behavior'
+import { TTextBehavior } from '../states/text.behavior'
 
 export default class TControl<
 		TProps extends IControlProps = IControlProps,
