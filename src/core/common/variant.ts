@@ -1,16 +1,11 @@
+import { TVariantState } from '../base/states/variant.state'
+import type { TVariantStateOptions } from '../base/states/variant.state'
 import type { TComponentVariant } from './types'
-import { TBaseClassValue, type IBaseClassValueOptions } from './base-class-value'
 
-export type TVariantOptions = IBaseClassValueOptions<TComponentVariant>
+export type TVariantOptions = TVariantStateOptions
 
-export class TVariant extends TBaseClassValue<TComponentVariant> {
+export class TVariant extends TVariantState {
 	constructor(options: TVariantOptions = {}) {
 		super(options)
-	}
-
-	getClass(): string[] {
-		return this.value && !this._exclude.includes(this.value)
-			? [`${this._baseClass}--${this.value}`]
-			: []
 	}
 }
