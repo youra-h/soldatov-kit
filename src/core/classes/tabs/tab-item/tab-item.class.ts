@@ -3,7 +3,7 @@ import {
 	TControlValue,
 	type IControlValueProps,
 	type TControlValueEvents,
-} from '../../control-value'
+} from '../../../base/control-value'
 
 interface Props extends IControlValueProps {}
 

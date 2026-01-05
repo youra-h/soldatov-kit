@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import TControlValue from '../classes/control-value/control-value.class'
+import TControlValue from '../base/control-value/control-value.class'
 
 describe('TControlValue', () => {
 	let ctrl: TControlValue<any>

@@ -1,6 +1,6 @@
 import { TComponent, type IComponentOptions } from '../../base/component'
 import type { TComponentVariant } from '../../common/types'
-import { TControlValue } from '../control-value'
+import { TControlValue } from '../../base/control-value'
 import type {
 	IControlInput,
 	IControlInputProps,

@@ -1,5 +1,5 @@
 import type { TComponentVariant } from '../../common/types'
-import type { IControlValue, IControlValueProps, TControlValueEvents } from '../control-value'
+import type { IControlValue, IControlValueProps, TControlValueEvents } from '../../base/control-value'
 import { TSpinner } from '../spinner'
 
 export type TControlInputState = 'normal' | 'success' | 'warning' | 'error'

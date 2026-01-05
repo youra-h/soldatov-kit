@@ -1,4 +1,4 @@
-import type { IControl, IControlProps, TControlEvents } from '../../base/control'
+import type { IControl, IControlProps, TControlEvents } from '../control'
 
 // Элемент, имеющий значение
 export interface IHasValue {
