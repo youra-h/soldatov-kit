@@ -1,2 +1,7 @@
 export * from './activable.behavior'
 export * from './selectable.behavior'
+export * from './disableable.behavior'
+export * from './focusable.behavior'
+export * from './text.behavior'
+export * from './value.behavior'
+export * from './input-state.behavior'

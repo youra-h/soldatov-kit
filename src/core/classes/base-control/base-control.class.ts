@@ -1,5 +1,6 @@
 import { TComponent, type IComponentOptions } from '../component'
 import type { IBaseControl, IBaseControlProps, TBaseControlEvents } from './types'
+import { TDisableableBehavior } from '../behavior/disableable.behavior'
 
 export default class TBaseControl<
 		TProps extends IBaseControlProps = IBaseControlProps,
@@ -16,8 +17,7 @@ export default class TBaseControl<
 
 	/** Имя контрола */
 	protected _name: string
-	/** Заблокирован ли контрол */
-	protected _disabled: boolean
+	protected _disableable: TDisableableBehavior
 
 	constructor(options: IComponentOptions<IBaseControlProps> = {}) {
 		options = TComponent.prepareOptions(options, 's-base-control')
@@ -27,7 +27,11 @@ export default class TBaseControl<
 		const { props = {} } = options
 
 		this._name = props.name ?? TBaseControl.defaultValues.name!
-		this._disabled = props.disabled ?? TBaseControl.defaultValues.disabled!
+		this._disableable = new TDisableableBehavior()
+		this._disableable.disabled = props.disabled ?? TBaseControl.defaultValues.disabled!
+		this._disableable.events.on('change', (value) => {
+			this.events.emit('disabled', value)
+		})
 	}
 
 	get name(): string {
@@ -41,14 +45,11 @@ export default class TBaseControl<
 	}
 
 	get disabled(): boolean {
-		return this._disabled
+		return this._disableable.disabled
 	}
 
 	set disabled(value: boolean) {
-		if (this._disabled !== value) {
-			this._disabled = value
-			this.events.emit('disabled', value)
-		}
+		this._disableable.disabled = value
 	}
 
 	disable(): void {
@@ -63,7 +64,7 @@ export default class TBaseControl<
 		return {
 			...super.getProps(),
 			name: this._name,
-			disabled: this._disabled,
+			disabled: this._disableable.disabled,
 		}
 	}
 }

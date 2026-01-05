@@ -9,6 +9,7 @@ import type {
 } from './types'
 import { TVariant } from '../../common/variant'
 import { TSpinner } from '../spinner'
+import { TInputStateBehavior } from '../behavior/input-state.behavior'
 
 export default class TControlInput<
 		TProps extends IControlInputProps = IControlInputProps,
@@ -31,15 +32,7 @@ export default class TControlInput<
 	protected _variantHelper: TVariant
 
 	/** Значение недоступно для редактирования */
-	protected _readonly: boolean
-	/** Значение обязательно для заполнения */
-	protected _required: boolean
-	/** Значение не валидно */
-	protected _invalid: boolean
-	/** Состояние контрола */
-	protected _state: TControlInputState
-	/** Показать индикатор загрузки */
-	protected _loading: boolean
+	protected _inputState: TInputStateBehavior
 	/** Индикатор загрузки */
 	protected _spinner?: TSpinner
 
@@ -50,7 +43,6 @@ export default class TControlInput<
 
 		const { props = {} } = options
 
-		this._loading = props.loading ?? TControlInput.defaultValues.loading!
 		this._spinner = props.spinner ?? TControlInput.defaultValues.spinner!
 
 		this._variantHelper = new TVariant({
@@ -65,10 +57,12 @@ export default class TControlInput<
 		// Инициализируем значение отображения компонента
 		this._variantHelper.value = props.variant ?? TControlInput.defaultValues.variant!
 
-		this._readonly = props.readonly ?? TControlInput.defaultValues.readonly!
-		this._required = props.required ?? TControlInput.defaultValues.required!
-		this._invalid = props.invalid ?? TControlInput.defaultValues.invalid!
-		this._state = props.state ?? TControlInput.defaultValues.state!
+		this._inputState = new TInputStateBehavior()
+		this._inputState.readonly = props.readonly ?? TControlInput.defaultValues.readonly!
+		this._inputState.required = props.required ?? TControlInput.defaultValues.required!
+		this._inputState.invalid = props.invalid ?? TControlInput.defaultValues.invalid!
+		this._inputState.state = props.state ?? TControlInput.defaultValues.state!
+		this._inputState.loading = props.loading ?? TControlInput.defaultValues.loading!
 
 		this._sizeHelper.events.on('change', (value) => {
 			// Если есть спиннер, синхронизируем его размер с кнопкой
@@ -87,57 +81,43 @@ export default class TControlInput<
 	}
 
 	get readonly(): boolean {
-		return this._readonly
+		return this._inputState.readonly
 	}
 
 	set readonly(value: boolean) {
-		if (this._readonly !== value) {
-			this._readonly = value
-		}
+		this._inputState.readonly = value
 	}
 
 	get required(): boolean {
-		return this._required
+		return this._inputState.required
 	}
 
 	set required(value: boolean) {
-		if (this._required !== value) {
-			this._required = value
-		}
+		this._inputState.required = value
 	}
 
 	get invalid(): boolean {
-		return this._invalid
+		return this._inputState.invalid
 	}
 
 	set invalid(value: boolean) {
-		if (this._invalid !== value) {
-			this._invalid = value
-
-			if (value) {
-				this.state = 'error'
-			}
-		}
+		this._inputState.invalid = value
 	}
 
 	get state(): TControlInputState {
-		return this._state
+		return this._inputState.state
 	}
 
 	set state(value: TControlInputState) {
-		if (this._state !== value) {
-			this._state = value
-		}
+		this._inputState.state = value
 	}
 
 	get loading(): boolean {
-		return this._loading
+		return this._inputState.loading
 	}
 
 	set loading(value: boolean) {
-		if (this._loading !== value) {
-			this._loading = value
-		}
+		this._inputState.loading = value
 	}
 
 	get spinner(): TSpinner | undefined {
@@ -173,11 +153,11 @@ export default class TControlInput<
 		return {
 			...super.getProps(),
 			variant: this.variant,
-			readonly: this.readonly,
-			required: this.required,
-			invalid: this.invalid,
-			state: this.state,
-			loading: this.loading,
+			readonly: this._inputState.readonly,
+			required: this._inputState.required,
+			invalid: this._inputState.invalid,
+			state: this._inputState.state,
+			loading: this._inputState.loading,
 			spinner: this.spinner,
 		}
 	}

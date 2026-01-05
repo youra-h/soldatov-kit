@@ -3,6 +3,8 @@ import { TBaseControl } from '../base-control'
 import type { IControl, IControlProps, TControlEvents } from './types'
 import type { TComponentSize } from '../../common/types'
 import { TSize } from '../../common/size'
+import { TFocusableBehavior } from '../behavior/focusable.behavior'
+import { TTextBehavior } from '../behavior/text.behavior'
 
 export default class TControl<
 		TProps extends IControlProps = IControlProps,
@@ -19,9 +21,8 @@ export default class TControl<
 	}
 
 	/** Текстовое представление контрола */
-	protected _text: string
-	/** В фокусе ли контрол */
-	protected _focused: boolean
+	protected _textBehavior: TTextBehavior
+	protected _focusBehavior: TFocusableBehavior
 	/** Размер контрола */
 	protected _sizeHelper: TSize
 
@@ -37,30 +38,33 @@ export default class TControl<
 			value: props.size ?? TControl.defaultValues.size!,
 		})
 
-		this._text = props.text ?? TControl.defaultValues.text!
-		this._focused = props.focused ?? TControl.defaultValues.focused!
+		this._textBehavior = new TTextBehavior()
+		this._textBehavior.text = props.text ?? TControl.defaultValues.text!
+		this._textBehavior.events.on('change', (value) => {
+			this.events.emit('changeText', value)
+		})
+
+		this._focusBehavior = new TFocusableBehavior()
+		this._focusBehavior.focused = props.focused ?? TControl.defaultValues.focused!
+		this._focusBehavior.events.on('change', (value) => {
+			this.events.emit('focused', value)
+		})
 	}
 
 	get text(): string {
-		return this._text
+		return this._textBehavior.text
 	}
 
 	set text(value: string) {
-		if (this._text !== value) {
-			this._text = value
-			this.events.emit('changeText', value)
-		}
+		this._textBehavior.text = value
 	}
 
 	get focused(): boolean {
-		return this._focused
+		return this._focusBehavior.focused
 	}
 
 	set focused(value: boolean) {
-		if (this._focused !== value) {
-			this._focused = value
-			this.events.emit('focused', value)
-		}
+		this._focusBehavior.focused = value
 	}
 
 	get size(): TComponentSize {
@@ -86,15 +90,15 @@ export default class TControl<
 		return {
 			...super.getProps(),
 			name: this._name,
-			text: this._text,
-			disabled: this._disabled,
-			focused: this._focused,
+			text: this._textBehavior.text,
+			disabled: this.disabled,
+			focused: this._focusBehavior.focused,
 			size: this._sizeHelper.value,
 		}
 	}
 
 	afterHide(): void {
 		super.afterHide()
-		this._focused = false
+		this._focusBehavior.focused = false
 	}
 }

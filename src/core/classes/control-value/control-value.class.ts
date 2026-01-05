@@ -1,6 +1,7 @@
 import { TComponent, type IComponentOptions } from './../component'
 import { TControl } from '../control'
 import type { IControlValue, IControlValueProps, TControlValueEvents } from './types'
+import { TValueBehavior } from '../behavior/value.behavior'
 
 export default class TControlValue<
 		TProps extends IControlValueProps = IControlValueProps,
@@ -14,8 +15,7 @@ export default class TControlValue<
 		value: null,
 	}
 
-	/** Значение контрола */
-	protected _value?: unknown
+	protected _valueBehavior: TValueBehavior<unknown>
 
 	constructor(options: IComponentOptions<IControlValueProps> = {}) {
 		options = TComponent.prepareOptions(options, 's-control-value')
@@ -24,25 +24,26 @@ export default class TControlValue<
 
 		const { props = {} } = options
 
-		this._value = props.value ?? TControlValue.defaultValues.value!
+		this._valueBehavior = new TValueBehavior<unknown>(
+			(props.value ?? TControlValue.defaultValues.value!) as unknown,
+		)
+		this._valueBehavior.events.on('change', (value) => {
+			this.events.emit('changeValue', value)
+		})
 	}
 
 	get value(): unknown {
-		return this._value
+		return this._valueBehavior.value
 	}
 
 	set value(newValue: unknown) {
-		if (this._value !== newValue) {
-			this._value = newValue
-
-			this.events.emit('changeValue', newValue)
-		}
+		this._valueBehavior.value = newValue
 	}
 
 	getProps(): TProps {
 		return {
 			...super.getProps(),
-			value: this._value,
+			value: this._valueBehavior.value,
 		}
 	}
 }
