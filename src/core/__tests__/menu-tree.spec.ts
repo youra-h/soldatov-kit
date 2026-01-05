@@ -77,7 +77,7 @@ describe('TMenu (Real Implementation)', () => {
 		// createChild автоматически использует TMenuItem, если мы передадим класс,
 		// или нам нужно убедиться, что TMenuItem.createChild возвращает правильный тип.
 		// Так как TMenuItem наследует TActivatableTreeItem, он использует его createChild.
-		const subMenu = root.createChild(TMenuItem)
+		const subMenu = root.createChild()
 		const subItem = subMenu.add({ label: 'Sub Item' })
 
 		expect(subItem).toBeInstanceOf(TMenuItem)
@@ -87,7 +87,7 @@ describe('TMenu (Real Implementation)', () => {
 	it('should find item by id', () => {
 		const menu = new TMenu()
 		const root = menu.add({ label: 'Root' })
-		const subMenu = root.createChild(TMenuItem)
+		const subMenu = root.createChild()
 		subMenu.add({ label: 'Target', id: 'target-1' })
 
 		const found = menu.findById('target-1')
@@ -103,12 +103,12 @@ describe('TMenu (Real Implementation)', () => {
 		const root2 = menu.add({ label: 'Root 2', id: 'r2' })
 
 		// Level 2 (Children of Root 1)
-		const subMenu1 = root1.createChild(TMenuItem)
+		const subMenu1 = root1.createChild()
 		const child1_1 = subMenu1.add({ label: 'Child 1.1', id: 'c1.1' })
 		const child1_2 = subMenu1.add({ label: 'Child 1.2', id: 'c1.2' })
 
 		// Level 3 (Children of Child 1.2)
-		const subMenu1_2 = child1_2.createChild(TMenuItem)
+		const subMenu1_2 = child1_2.createChild()
 		const grandChild1_2_1 = subMenu1_2.add({ label: 'GrandChild 1.2.1', id: 'gc1.2.1' })
 
 		// 1. Activate Root 1

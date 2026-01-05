@@ -53,7 +53,7 @@ describe('TActivatableTree', () => {
 		const rootItem = tree.add()
 
 		// Создаем дочернюю коллекцию
-		const childCollection = rootItem.createChild(TActivatableTreeItem)
+		const childCollection = rootItem.createChild()
 		const childItem = childCollection.add()
 
 		// Активируем корневой элемент

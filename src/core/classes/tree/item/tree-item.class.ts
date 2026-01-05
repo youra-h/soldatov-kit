@@ -30,16 +30,19 @@ export class TTreeItem<
 	/**
 	 * Реализация с дженериком.
 	 */
-	createChild<TChild extends ITreeItem>(
-		itemClass: TConstructor<TChild>,
-	): ITreeCollection<TChild> {
+	createChild(): ITreeCollection<this>
+	createChild<TChild extends ITreeItem>(itemClass: TConstructor<TChild>): ITreeCollection<TChild>
+	createChild<TChild extends ITreeItem>(itemClass?: TConstructor<TChild>): ITreeCollection<TChild> {
 		if (this._child) {
 			this._child.clear()
 		}
 
+		const resolvedItemClass =
+			(itemClass ?? (this.constructor as unknown as TConstructor<TChild>))
+
 		// Создаем коллекцию и приводим её к нужному типу
 		const childCollection = new TTreeCollection<TChild>({
-			itemClass: itemClass,
+			itemClass: resolvedItemClass,
 			parentItem: this,
 		})
 

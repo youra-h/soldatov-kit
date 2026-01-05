@@ -35,6 +35,7 @@ export interface ITreeItem extends ICollectionItem<ITreeItemProps, TTreeItemEven
 	 * Создает дочернюю ветку.
 	 * @param itemClass Класс элементов, которые будут в новой ветке.
 	 */
+	createChild(): ITreeCollection<this>
 	createChild<TChild extends ITreeItem>(itemClass: TConstructor<TChild>): ITreeCollection<TChild>
 
 	/** Удаляет дочернюю ветку */
