@@ -1,5 +1,7 @@
 import { TActivatableTree } from '../src/core/classes/tree/activable/activable-tree.class'
 import { TActivatableTreeItem } from '../src/core/classes/tree/activable/activable-tree-item.class'
+import { TSelectableTree } from '../src/core/classes/tree/selectable/selectable-tree.class'
+import { TSelectableTreeItem } from '../src/core/classes/tree/selectable/selectable-tree-item.class'
 import type { TConstructor } from '../src/core/common/types'
 
 export class TMenuItem extends TActivatableTreeItem {
@@ -118,3 +120,97 @@ console.log('Activated r2 -> menu.activeItem id =', (menu as any).activeItem?.id
 _assert('r2 becomes active and grand deactivated', (menu as any).activeItem === r2 && !g.active)
 
 console.log('\nDemo finished')
+
+// --- Selectable Tree demo: File system ---
+type TFileKind = 'dir' | 'file'
+
+class TFileSystemItem extends TSelectableTreeItem {
+	public name: string = ''
+	public kind: TFileKind = 'file'
+	public path: string = ''
+
+	assign(source: Partial<TFileSystemItem>): void {
+		if (source.name !== undefined) this.name = source.name
+		if (source.kind !== undefined) this.kind = source.kind
+		if (source.path !== undefined) this.path = source.path
+
+		super.assign(source)
+	}
+}
+
+class TFileSystemTree extends TSelectableTree<TFileSystemItem> {
+	constructor() {
+		super({ itemClass: TFileSystemItem })
+	}
+}
+
+function printFsTree(item: TFileSystemItem, indent: number = 0): void {
+	const pad = '  '.repeat(indent)
+	const mark = item.selected ? '[x]' : '[ ]'
+	const icon = item.kind === 'dir' ? '📁' : '📄'
+	console.log(`${pad}${mark} ${icon} ${item.path || item.name}`)
+	if (item.child) {
+		item.child.forEach((c: any) => printFsTree(c as TFileSystemItem, indent + 1))
+	}
+}
+
+function selectedPaths(tree: TFileSystemTree): string[] {
+	return tree.selectedItems
+		.map((it) => it.path || it.name)
+		.slice()
+		.sort((a, b) => a.localeCompare(b))
+}
+
+console.log('\n--- Building selectable file system tree ---')
+const fsTree = new TFileSystemTree()
+
+// Root folders
+const srcDir = fsTree.add({ kind: 'dir', name: 'src', path: '/src' })
+const docsDir = fsTree.add({ kind: 'dir', name: 'docs', path: '/docs' })
+
+// /src
+const src = srcDir.createChild()
+const mainFile = src.add({ kind: 'file', name: 'main.ts', path: '/src/main.ts' })
+const appFile = src.add({ kind: 'file', name: 'App.vue', path: '/src/App.vue' })
+const componentsDir = src.add({ kind: 'dir', name: 'components', path: '/src/components' })
+
+// /src/components
+const comps = componentsDir.createChild()
+const buttonFile = comps.add({ kind: 'file', name: 'Button.vue', path: '/src/components/Button.vue' })
+const iconFile = comps.add({ kind: 'file', name: 'Icon.vue', path: '/src/components/Icon.vue' })
+
+// /docs
+const docs = docsDir.createChild()
+const readmeFile = docs.add({ kind: 'file', name: 'README.md', path: '/docs/README.md' })
+const apiFile = docs.add({ kind: 'file', name: 'api.md', path: '/docs/api.md' })
+
+console.log('Initial structure (no selection):')
+fsTree.forEach((it: any) => printFsTree(it as TFileSystemItem))
+
+// Multiple selection
+console.log('\n--- Selection mode: multiple (default) ---')
+mainFile.selected = true
+buttonFile.selected = true
+apiFile.selected = true
+
+console.log('Selected:', selectedPaths(fsTree))
+_assert('multiple selection allows 3 items', fsTree.selectedCount === 3)
+
+// Switch to single mode
+console.log('\n--- Switch mode to single ---')
+fsTree.mode = 'single'
+console.log('After switching to single:', selectedPaths(fsTree))
+_assert('single mode keeps only 1 selected', fsTree.selectedCount === 1)
+
+// Now select only one file at a time
+console.log('\nSelect /docs/README.md')
+readmeFile.selected = true
+console.log('Selected:', selectedPaths(fsTree))
+_assert('only README is selected', fsTree.selectedCount === 1 && readmeFile.selected)
+
+console.log('\nSelect /src/App.vue')
+appFile.selected = true
+console.log('Selected:', selectedPaths(fsTree))
+_assert('only App.vue is selected', fsTree.selectedCount === 1 && appFile.selected && !readmeFile.selected)
+
+console.log('\nSelectable FS demo finished')
