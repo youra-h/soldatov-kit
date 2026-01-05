@@ -9,7 +9,7 @@ import type {
 } from './types'
 import { TVariant } from '../../common/variant'
 import { TSpinner } from '../spinner'
-import { TInputStateBehavior } from '../states/input-state.state'
+import { TInputState } from '../states/input-state.state'
 
 export default class TControlInput<
 		TProps extends IControlInputProps = IControlInputProps,
@@ -32,7 +32,7 @@ export default class TControlInput<
 	protected _variantHelper: TVariant
 
 	/** Значение недоступно для редактирования */
-	protected _inputState: TInputStateBehavior
+	protected _inputState: TInputState
 	/** Индикатор загрузки */
 	protected _spinner?: TSpinner
 
@@ -57,7 +57,7 @@ export default class TControlInput<
 		// Инициализируем значение отображения компонента
 		this._variantHelper.value = props.variant ?? TControlInput.defaultValues.variant!
 
-		this._inputState = new TInputStateBehavior({
+		this._inputState = new TInputState({
 			readonly: props.readonly ?? TControlInput.defaultValues.readonly!,
 			required: props.required ?? TControlInput.defaultValues.required!,
 			invalid: props.invalid ?? TControlInput.defaultValues.invalid!,

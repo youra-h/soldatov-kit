@@ -3,8 +3,8 @@ import { TBaseControl } from '../base-control'
 import type { IControl, IControlProps, TControlEvents } from './types'
 import type { TComponentSize } from '../../common/types'
 import { TSize } from '../../common/size'
-import { TFocusableBehavior } from '../states/focusable.state'
-import { TTextBehavior } from '../states/text.state'
+import { TFocusableState } from '../states/focusable.state'
+import { TTextState } from '../states/text.state'
 
 export default class TControl<
 		TProps extends IControlProps = IControlProps,
@@ -21,8 +21,8 @@ export default class TControl<
 	}
 
 	/** Текстовое представление контрола */
-	protected _textBehavior: TTextBehavior
-	protected _focusBehavior: TFocusableBehavior
+	protected _textBehavior: TTextState
+	protected _focusBehavior: TFocusableState
 	/** Размер контрола */
 	protected _sizeHelper: TSize
 
@@ -38,12 +38,12 @@ export default class TControl<
 			value: props.size ?? TControl.defaultValues.size!,
 		})
 
-		this._textBehavior = new TTextBehavior(props.text ?? TControl.defaultValues.text!)
+		this._textBehavior = new TTextState(props.text ?? TControl.defaultValues.text!)
 		this._textBehavior.events.on('change', (value) => {
 			this.events.emit('changeText', value)
 		})
 
-		this._focusBehavior = new TFocusableBehavior(props.focused ?? TControl.defaultValues.focused!)
+		this._focusBehavior = new TFocusableState(props.focused ?? TControl.defaultValues.focused!)
 		this._focusBehavior.events.on('change', (value) => {
 			this.events.emit('focused', value)
 		})

@@ -1,7 +1,7 @@
 import { TComponent, type IComponentOptions } from '../component'
 import { TControl } from '../control'
 import type { IControlValue, IControlValueProps, TControlValueEvents } from './types'
-import { TValueBehavior } from '../states/value.state'
+import { TValueState } from '../states/value.state'
 
 export default class TControlValue<
 		TProps extends IControlValueProps = IControlValueProps,
@@ -15,7 +15,7 @@ export default class TControlValue<
 		value: null,
 	}
 
-	protected _valueBehavior: TValueBehavior<unknown>
+	protected _valueBehavior: TValueState<unknown>
 
 	constructor(options: IComponentOptions<IControlValueProps> = {}) {
 		options = TComponent.prepareOptions(options, 's-control-value')
@@ -24,7 +24,7 @@ export default class TControlValue<
 
 		const { props = {} } = options
 
-		this._valueBehavior = new TValueBehavior<unknown>(
+		this._valueBehavior = new TValueState<unknown>(
 			(props.value ?? TControlValue.defaultValues.value!) as unknown,
 		)
 		this._valueBehavior.events.on('change', (value) => {

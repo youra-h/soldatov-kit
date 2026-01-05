@@ -1,7 +1,7 @@
 import type { TControlInputState } from '../control-input/types'
 import { TStateUnit } from '../state-unit'
 
-export type TInputStateBehaviorEvents = {
+export type TInputStateEvents = {
 	change: (patch: Partial<IInputStateBehaviorProps>) => void
 }
 
@@ -23,7 +23,7 @@ export interface IInputStateBehaviorProps {
  * - `change:state`
  * - `change:loading`
  */
-export class TInputStateBehavior extends TStateUnit<TInputStateBehaviorEvents> {
+export class TInputState extends TStateUnit<TInputStateEvents> {
 	private _readonly = false
 	private _required = false
 	private _invalid = false

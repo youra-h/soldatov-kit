@@ -1,6 +1,6 @@
 import { TStateUnit } from '../state-unit'
 
-export type TDisableableBehaviorEvents = {
+export type TDisableableStateEvents = {
 	change: (value: boolean) => void
 }
 
@@ -12,7 +12,7 @@ export type TDisableableBehaviorEvents = {
  * - `disabled` (legacy, чтобы не ломать существующие обвязки)
  */
 
-export class TDisableableBehavior extends TStateUnit<TDisableableBehaviorEvents> {
+export class TDisableableState extends TStateUnit<TDisableableStateEvents> {
 	private _disabled = false
 
 	constructor(initialDisabled: boolean = false) {

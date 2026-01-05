@@ -1,6 +1,6 @@
 import { TStateUnit } from '../state-unit'
 
-export type TTextBehaviorEvents = {
+export type TTextStateEvents = {
 	change: (value: string) => void
 }
 
@@ -14,7 +14,7 @@ export type TTextBehaviorEvents = {
  * - `changeText` (legacy)
  */
 
-export class TTextBehavior extends TStateUnit<TTextBehaviorEvents> {
+export class TTextState extends TStateUnit<TTextStateEvents> {
 	private _text = ''
 
 	constructor(initialText: string = '') {

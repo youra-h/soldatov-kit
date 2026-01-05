@@ -1,6 +1,6 @@
 import { TStateUnit } from '../state-unit'
 
-export type TValueBehaviorEvents<T> = {
+export type TValueStateEvents<T> = {
 	change: (value: T) => void
 	input: (value: T) => void
 }
@@ -13,7 +13,7 @@ export type TValueBehaviorEvents<T> = {
  * - `changeValue` (legacy)
  */
 
-export class TValueBehavior<T> extends TStateUnit<TValueBehaviorEvents<T>> {
+export class TValueState<T> extends TStateUnit<TValueStateEvents<T>> {
 	private _value: T
 
 	constructor(initialValue: T) {

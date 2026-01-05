@@ -1,6 +1,6 @@
 import { TComponent, type IComponentOptions } from '../component'
 import type { IBaseControl, IBaseControlProps, TBaseControlEvents } from './types'
-import { TDisableableBehavior } from '../states/disableable.state'
+import { TDisableableState } from '../states/disableable.state'
 
 export default class TBaseControl<
 		TProps extends IBaseControlProps = IBaseControlProps,
@@ -17,7 +17,7 @@ export default class TBaseControl<
 
 	/** Имя контрола */
 	protected _name: string
-	protected _disableable: TDisableableBehavior
+	protected _disableable: TDisableableState
 
 	constructor(options: IComponentOptions<IBaseControlProps> = {}) {
 		options = TComponent.prepareOptions(options, 's-base-control')
@@ -27,7 +27,7 @@ export default class TBaseControl<
 		const { props = {} } = options
 
 		this._name = props.name ?? TBaseControl.defaultValues.name!
-		this._disableable = new TDisableableBehavior(props.disabled ?? TBaseControl.defaultValues.disabled!)
+		this._disableable = new TDisableableState(props.disabled ?? TBaseControl.defaultValues.disabled!)
 		this._disableable.events.on('change', (value) => {
 			this.events.emit('disabled', value)
 		})

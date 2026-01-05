@@ -1,6 +1,6 @@
 import { TStateUnit } from '../state-unit'
 
-export type TFocusableBehaviorEvents = {
+export type TFocusableStateEvents = {
 	change: (value: boolean) => void
 }
 
@@ -13,7 +13,7 @@ export type TFocusableBehaviorEvents = {
  */
 
 
-export class TFocusableBehavior extends TStateUnit<TFocusableBehaviorEvents> {
+export class TFocusableState extends TStateUnit<TFocusableStateEvents> {
 	private _focused = false
 
 	constructor(initialFocused: boolean = false) {
