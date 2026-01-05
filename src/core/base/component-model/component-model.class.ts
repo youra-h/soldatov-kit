@@ -37,9 +37,14 @@ export default class TComponentModel<
 		setTimeout(() => this.events.emit('created', this as any), 0)
 	}
 
-	static prepareOptions<T>(options: IComponentModelOptions<T> | Partial<T>): IComponentModelOptions<T> {
-		if (options && 'props' in options) return options
-		return { props: options as Partial<T> }
+	static prepareOptions<T>(
+		options: IComponentModelOptions<T> | Partial<T>,
+		defaultBaseClass: string,
+	): IComponentModelOptions<T> {
+		if (options && 'props' in options) {
+			return { ...options, baseClass: options.baseClass ?? defaultBaseClass }
+		}
+		return { props: options as Partial<T>, baseClass: defaultBaseClass }
 	}
 
 	static create<T extends TComponentModel>(

@@ -1,4 +1,5 @@
-import { TComponent, type IComponentModelOptions } from '../../base/component'
+import { type IComponentModelOptions } from '../../base/component-model'
+import { TPresentable } from '../../base/presentable'
 import { TControl } from '../../base/control'
 import type { TComponentVariant } from '../../common/types'
 import type { IButton, IButtonProps, TButtonAppearance, TButtonEvents } from './types'
@@ -23,7 +24,7 @@ export default class TButton extends TControl<IButtonProps, TButtonEvents> imple
 	protected _spinner?: TSpinner
 
 	constructor(options: IComponentModelOptions<IButtonProps> = {}) {
-		options = TComponent.prepareOptions(options, 's-button')
+		options = TPresentable.prepareOptions(options, 's-button')
 
 		super(options)
 
