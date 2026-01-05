@@ -1,7 +1,7 @@
 import { TComponent, type IComponentOptions } from '../component'
 import { TControl } from '../control'
 import type { IControlValue, IControlValueProps, TControlValueEvents } from './types'
-import { TValueBehavior } from '../states/value.behavior'
+import { TValueBehavior } from '../states/value.state'
 
 export default class TControlValue<
 		TProps extends IControlValueProps = IControlValueProps,

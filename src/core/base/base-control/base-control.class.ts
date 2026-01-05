@@ -1,6 +1,6 @@
 import { TComponent, type IComponentOptions } from '../component'
 import type { IBaseControl, IBaseControlProps, TBaseControlEvents } from './types'
-import { TDisableableBehavior } from '../states/disableable.behavior'
+import { TDisableableBehavior } from '../states/disableable.state'
 
 export default class TBaseControl<
 		TProps extends IBaseControlProps = IBaseControlProps,

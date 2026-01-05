@@ -9,7 +9,7 @@ import type {
 } from './types'
 import { TVariant } from '../../common/variant'
 import { TSpinner } from '../spinner'
-import { TInputStateBehavior } from '../states/input-state.behavior'
+import { TInputStateBehavior } from '../states/input-state.state'
 
 export default class TControlInput<
 		TProps extends IControlInputProps = IControlInputProps,
