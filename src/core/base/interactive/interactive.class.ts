@@ -1,4 +1,3 @@
-import { TEvented } from '../../common/evented'
 import type { TDisableableState, TFocusableState } from '../states'
 import { TDisableableState as TDisableableStateImpl } from '../states/disableable.state'
 import { TFocusableState as TFocusableStateImpl } from '../states/focusable.state'
@@ -26,8 +25,6 @@ export default class TInteractive<
 	protected _disableable: TDisableableState
 	protected _focusable: TFocusableState
 
-	declare public readonly events: TEvented<TEvents>
-
 	constructor(options: any = {}) {
 		super(options)
 		const { props = {} } = options
@@ -35,6 +32,7 @@ export default class TInteractive<
 		this._disableable = new TDisableableStateImpl(
 			props.disabled ?? (TInteractive.defaultValues.disabled as boolean),
 		)
+
 		this._disableable.events.on('change', (value) => {
 			this.events.emit('change:disabled' as any, value)
 		})
@@ -42,6 +40,7 @@ export default class TInteractive<
 		this._focusable = new TFocusableStateImpl(
 			props.focused ?? (TInteractive.defaultValues.focused as boolean),
 		)
+
 		this._focusable.events.on('change', (value) => {
 			this.events.emit('change:focused' as any, value)
 		})

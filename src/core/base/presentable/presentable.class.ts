@@ -29,14 +29,13 @@ export default class TPresentable<
 	protected _classes: string[]
 	protected _attrs: Record<string, unknown>
 
-	// переопределяем тип events, но инстанс создаётся в TComponentModel
-	declare public readonly events: TEvented<TEvents>
-
 	constructor(options: any = {}) {
 		options = TComponentModel.prepareOptions(options)
+
 		super(options)
 
 		const { props = {} } = options
+
 		this._tag = props.tag ?? TPresentable.defaultValues.tag!
 		this._baseClass = props.baseClass ?? TPresentable.defaultValues.baseClass!
 		this._classes = (props.classes ?? TPresentable.defaultValues.classes!) as string[]
@@ -48,7 +47,9 @@ export default class TPresentable<
 	}
 	set tag(value: string | object) {
 		if (this._tag === value) return
+
 		this._tag = value
+
 		this.events.emit('change:tag' as any, value)
 	}
 
@@ -57,7 +58,9 @@ export default class TPresentable<
 	}
 	set attrs(value: Record<string, unknown>) {
 		if (this._attrs === value) return
+
 		this._attrs = value
+
 		this.events.emit('change:attrs' as any, value)
 	}
 
@@ -67,7 +70,9 @@ export default class TPresentable<
 
 	setClasses(value: string[]): void {
 		if (this._classes === value) return
+
 		this._classes = value
+
 		this.events.emit('change:classes' as any, value)
 	}
 

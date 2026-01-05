@@ -31,8 +31,6 @@ export default class TTextInputControl<
 
 	protected _inputState: TInputState
 
-	declare public readonly events: TEvented<TEvents>
-
 	constructor(options: any = {}) {
 		super(options)
 		const { props = {} } = options

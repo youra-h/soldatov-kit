@@ -28,8 +28,6 @@ export default class TValueControl<
 	protected _valueState: TValueState<T>
 	protected _name: string
 
-	declare public readonly events: TEvented<TEvents>
-
 	constructor(options: any = {}) {
 		super(options)
 		const { props = {} } = options
@@ -37,9 +35,11 @@ export default class TValueControl<
 		this._name = props.name ?? (TValueControl.defaultValues.name as string)
 
 		this._valueState = new TValueState<T>(props.value as T)
+
 		this._valueState.events.on('change', (value) => {
 			this.events.emit('change:value' as any, value)
 		})
+
 		this._valueState.events.on('input', (value) => {
 			this.events.emit('input:value' as any, value)
 		})
@@ -50,7 +50,9 @@ export default class TValueControl<
 	}
 	set name(value: string) {
 		if (this._name === value) return
+
 		this._name = value
+
 		this.events.emit('change:name' as any, value)
 	}
 
