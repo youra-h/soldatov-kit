@@ -57,12 +57,13 @@ export default class TControlInput<
 		// Инициализируем значение отображения компонента
 		this._variantHelper.value = props.variant ?? TControlInput.defaultValues.variant!
 
-		this._inputState = new TInputStateBehavior()
-		this._inputState.readonly = props.readonly ?? TControlInput.defaultValues.readonly!
-		this._inputState.required = props.required ?? TControlInput.defaultValues.required!
-		this._inputState.invalid = props.invalid ?? TControlInput.defaultValues.invalid!
-		this._inputState.state = props.state ?? TControlInput.defaultValues.state!
-		this._inputState.loading = props.loading ?? TControlInput.defaultValues.loading!
+		this._inputState = new TInputStateBehavior(this, {
+			readonly: props.readonly ?? TControlInput.defaultValues.readonly!,
+			required: props.required ?? TControlInput.defaultValues.required!,
+			invalid: props.invalid ?? TControlInput.defaultValues.invalid!,
+			state: props.state ?? TControlInput.defaultValues.state!,
+			loading: props.loading ?? TControlInput.defaultValues.loading!,
+		})
 
 		this._sizeHelper.events.on('change', (value) => {
 			// Если есть спиннер, синхронизируем его размер с кнопкой

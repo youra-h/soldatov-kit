@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { TEntity } from '../classes/entity/entity.class'
+import { TEntity } from '../base/entity/entity.class'
 
 // Минимальный тест для базового класса TEntity
 

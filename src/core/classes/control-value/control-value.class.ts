@@ -25,11 +25,9 @@ export default class TControlValue<
 		const { props = {} } = options
 
 		this._valueBehavior = new TValueBehavior<unknown>(
+			this,
 			(props.value ?? TControlValue.defaultValues.value!) as unknown,
 		)
-		this._valueBehavior.events.on('change', (value) => {
-			this.events.emit('changeValue', value)
-		})
 	}
 
 	get value(): unknown {

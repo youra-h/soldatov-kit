@@ -1,6 +1,6 @@
 import { TCollection } from './collection.class'
 import { type ICollectionItem } from './item/types'
-import type { IEntity } from '../entity'
+import type { IEntity } from '../../base/entity'
 import { TEvented } from '../../common/evented'
 
 /**

@@ -1,27 +1,21 @@
-import { TEntity } from '../entity'
-import { TEvented } from '../../common/evented'
+import type { TEvented } from '../../common/evented'
 
-export type TValueBehaviorEvents<T> = {
-	change: (value: T) => void
-}
-
-export interface IValueBehaviorProps<T> {
-	value: T
-}
+type TValueHost = { events: TEvented<any> }
 
 /**
- * Общее поведение "value".
+ * Поведение "value" без собственного event-emitter.
  *
- * Используется для контролов, где есть внутреннее значение: checkbox, input и т.д.
+ * Эмитит через `host.events`:
+ * - `change:value`
+ * - `changeValue` (legacy)
  */
-export class TValueBehavior<T> extends TEntity<IValueBehaviorProps<T>> {
-	public readonly events: TEvented<TValueBehaviorEvents<T>>
+export class TValueBehavior<T> {
+	private _host: TValueHost
 	private _value: T
 
-	constructor(initialValue: T) {
-		super()
+	constructor(host: TValueHost, initialValue: T) {
+		this._host = host
 		this._value = initialValue
-		this.events = new TEvented<TValueBehaviorEvents<T>>()
 	}
 
 	get value(): T {
@@ -29,15 +23,19 @@ export class TValueBehavior<T> extends TEntity<IValueBehaviorProps<T>> {
 	}
 
 	set value(value: T) {
-		if (this._value !== value) {
-			this._value = value
-			this.events.emit('change', value)
-		}
+		if (this._value === value) return
+
+		this._value = value
+		;(this._host.events as any).emit('change:value', value)
+		;(this._host.events as any).emit('changeValue', value)
 	}
 
-	getProps(): IValueBehaviorProps<T> {
-		return {
-			value: this._value,
-		}
+	/**
+	 * Опционально: событие ввода (input) без коммита.
+	 * Может быть полезно для текстовых инпутов (input vs change).
+	 */
+	input(value: T): void {
+		this._value = value
+		;(this._host.events as any).emit('input:value', value)
 	}
 }

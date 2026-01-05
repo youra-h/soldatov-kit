@@ -1,5 +1,5 @@
 import { TEventEmitter, type TEventHandler } from './event-emitter'
-import { TEntity } from '../classes/entity'
+import { TEntity } from '../base/entity'
 
 export class TEvented<TEvents extends Record<string, (...args: any) => any>> extends TEntity {
 	private _items: TEventEmitter = new TEventEmitter()

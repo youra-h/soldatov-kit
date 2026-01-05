@@ -27,11 +27,10 @@ export default class TBaseControl<
 		const { props = {} } = options
 
 		this._name = props.name ?? TBaseControl.defaultValues.name!
-		this._disableable = new TDisableableBehavior()
-		this._disableable.disabled = props.disabled ?? TBaseControl.defaultValues.disabled!
-		this._disableable.events.on('change', (value) => {
-			this.events.emit('disabled', value)
-		})
+		this._disableable = new TDisableableBehavior(
+			this,
+			props.disabled ?? TBaseControl.defaultValues.disabled!,
+		)
 	}
 
 	get name(): string {

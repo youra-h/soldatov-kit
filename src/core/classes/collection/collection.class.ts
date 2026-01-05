@@ -2,7 +2,7 @@ import { TEvented } from '../../common/evented'
 import type { TCollectionEvents, ICollection, ICollectionProps } from './types'
 import { type ICollectionItem } from './item/types'
 import type { TConstructor } from '../../common/types'
-import { TEntity } from '../entity'
+import { TEntity } from '../../base/entity'
 
 /**
  * Коллекция элементов с поддержкой событий и пакетного обновления.

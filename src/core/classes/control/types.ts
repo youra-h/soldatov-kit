@@ -12,7 +12,7 @@ export interface IControlProps extends IBaseControlProps {
 
 export type TControlEvents = TBaseControlEvents & {
 	// Событие изменения фокуса
-	focused: () => void
+	focused: (value: boolean) => void
 	// Событие изменения текста
 	changeText: (value: string) => void
 	// Событие клика по контролу

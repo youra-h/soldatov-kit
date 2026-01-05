@@ -1,37 +1,34 @@
-import { TEntity } from '../entity'
-import { TEvented } from '../../common/evented'
+import type { TEvented } from '../../common/evented'
 
-export type TTextBehaviorEvents = {
-	change: (value: string) => void
-}
-
-export interface ITextBehaviorProps {
-	text: string
-}
+type TTextHost = { events: TEvented<any> }
 
 /**
- * Поведение текстового значения (label/content).
+ * Поведение "text" без собственного event-emitter.
  *
- * Для веба `text` обычно означает *текстовую подпись*, а не `value`.
+ * Важно: в вебе `text` обычно означает подпись/контент (label), а не `value`.
+ *
+ * Эмитит через `host.events`:
+ * - `change:text`
+ * - `changeText` (legacy)
  */
-export class TTextBehavior extends TEntity<ITextBehaviorProps> {
-	public readonly events = new TEvented<TTextBehaviorEvents>()
+export class TTextBehavior {
+	private _host: TTextHost
 	private _text = ''
+
+	constructor(host: TTextHost, initialText: string = '') {
+		this._host = host
+		this._text = initialText
+	}
 
 	get text(): string {
 		return this._text
 	}
 
 	set text(value: string) {
-		if (this._text !== value) {
-			this._text = value
-			this.events.emit('change', value)
-		}
-	}
+		if (this._text === value) return
 
-	getProps(): ITextBehaviorProps {
-		return {
-			text: this._text,
-		}
+		this._text = value
+		;(this._host.events as any).emit('change:text', value)
+		;(this._host.events as any).emit('changeText', value)
 	}
 }

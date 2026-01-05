@@ -1,38 +1,32 @@
-import { TEntity } from '../entity'
-import { TEvented } from '../../common/evented'
+import type { TEvented } from '../../common/evented'
 
-export type TDisableableBehaviorEvents = {
-	change: (value: boolean) => void
-}
-
-export interface IDisableableBehaviorProps {
-	disabled: boolean
-}
+type TDisableableHost = { events: TEvented<any> }
 
 /**
- * Поведение "disabled".
+ * Поведение "disabled" без собственного event-emitter.
  *
- * Используется для композиции: компонент хранит экземпляр поведения и
- * проксирует геттер/сеттер `disabled` наружу.
+ * Эмитит изменения через `host.events`:
+ * - `change:disabled` (новый контракт)
+ * - `disabled` (legacy, чтобы не ломать существующие обвязки)
  */
-export class TDisableableBehavior extends TEntity<IDisableableBehaviorProps> {
-	public readonly events = new TEvented<TDisableableBehaviorEvents>()
+export class TDisableableBehavior {
+	private _host: TDisableableHost
 	private _disabled = false
+
+	constructor(host: TDisableableHost, initialDisabled: boolean = false) {
+		this._host = host
+		this._disabled = initialDisabled
+	}
 
 	get disabled(): boolean {
 		return this._disabled
 	}
 
 	set disabled(value: boolean) {
-		if (this._disabled !== value) {
-			this._disabled = value
-			this.events.emit('change', value)
-		}
-	}
+		if (this._disabled === value) return
 
-	getProps(): IDisableableBehaviorProps {
-		return {
-			disabled: this._disabled,
-		}
+		this._disabled = value
+		;(this._host.events as any).emit('change:disabled', value)
+		;(this._host.events as any).emit('disabled', value)
 	}
 }

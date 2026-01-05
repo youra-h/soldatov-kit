@@ -1,38 +1,32 @@
-import { TEntity } from '../entity'
-import { TEvented } from '../../common/evented'
+import type { TEvented } from '../../common/evented'
 
-export type TFocusableBehaviorEvents = {
-	change: (value: boolean) => void
-}
-
-export interface IFocusableBehaviorProps {
-	focused: boolean
-}
+type TFocusableHost = { events: TEvented<any> }
 
 /**
- * Поведение фокуса.
+ * Поведение фокуса без собственного event-emitter.
  *
- * На вебе фокус часто привязан к DOM, но состояние может быть полезно хранить
- * и на уровне модели (например, для headless-компонентов и тестирования).
+ * Эмитит через `host.events`:
+ * - `change:focused`
+ * - `focused` (legacy)
  */
-export class TFocusableBehavior extends TEntity<IFocusableBehaviorProps> {
-	public readonly events = new TEvented<TFocusableBehaviorEvents>()
+export class TFocusableBehavior {
+	private _host: TFocusableHost
 	private _focused = false
+
+	constructor(host: TFocusableHost, initialFocused: boolean = false) {
+		this._host = host
+		this._focused = initialFocused
+	}
 
 	get focused(): boolean {
 		return this._focused
 	}
 
 	set focused(value: boolean) {
-		if (this._focused !== value) {
-			this._focused = value
-			this.events.emit('change', value)
-		}
-	}
+		if (this._focused === value) return
 
-	getProps(): IFocusableBehaviorProps {
-		return {
-			focused: this._focused,
-		}
+		this._focused = value
+		;(this._host.events as any).emit('change:focused', value)
+		;(this._host.events as any).emit('focused', value)
 	}
 }

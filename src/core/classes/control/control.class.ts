@@ -38,17 +38,15 @@ export default class TControl<
 			value: props.size ?? TControl.defaultValues.size!,
 		})
 
-		this._textBehavior = new TTextBehavior()
-		this._textBehavior.text = props.text ?? TControl.defaultValues.text!
-		this._textBehavior.events.on('change', (value) => {
-			this.events.emit('changeText', value)
-		})
+		this._textBehavior = new TTextBehavior(
+			this,
+			props.text ?? TControl.defaultValues.text!,
+		)
 
-		this._focusBehavior = new TFocusableBehavior()
-		this._focusBehavior.focused = props.focused ?? TControl.defaultValues.focused!
-		this._focusBehavior.events.on('change', (value) => {
-			this.events.emit('focused', value)
-		})
+		this._focusBehavior = new TFocusableBehavior(
+			this,
+			props.focused ?? TControl.defaultValues.focused!,
+		)
 	}
 
 	get text(): string {
