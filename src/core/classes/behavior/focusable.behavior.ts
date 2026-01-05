@@ -1,4 +1,4 @@
-import { TObject } from '../object'
+import { TEntity } from '../entity'
 import { TEvented } from '../../common/evented'
 
 export type TFocusableBehaviorEvents = {
@@ -15,7 +15,7 @@ export interface IFocusableBehaviorProps {
  * На вебе фокус часто привязан к DOM, но состояние может быть полезно хранить
  * и на уровне модели (например, для headless-компонентов и тестирования).
  */
-export class TFocusableBehavior extends TObject<IFocusableBehaviorProps> {
+export class TFocusableBehavior extends TEntity<IFocusableBehaviorProps> {
 	public readonly events = new TEvented<TFocusableBehaviorEvents>()
 	private _focused = false
 

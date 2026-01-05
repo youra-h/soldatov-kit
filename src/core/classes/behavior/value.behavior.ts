@@ -1,4 +1,4 @@
-import { TObject } from '../object'
+import { TEntity } from '../entity'
 import { TEvented } from '../../common/evented'
 
 export type TValueBehaviorEvents<T> = {
@@ -14,7 +14,7 @@ export interface IValueBehaviorProps<T> {
  *
  * Используется для контролов, где есть внутреннее значение: checkbox, input и т.д.
  */
-export class TValueBehavior<T> extends TObject<IValueBehaviorProps<T>> {
+export class TValueBehavior<T> extends TEntity<IValueBehaviorProps<T>> {
 	public readonly events: TEvented<TValueBehaviorEvents<T>>
 	private _value: T
 

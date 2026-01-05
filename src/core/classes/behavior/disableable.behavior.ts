@@ -1,4 +1,4 @@
-import { TObject } from '../object'
+import { TEntity } from '../entity'
 import { TEvented } from '../../common/evented'
 
 export type TDisableableBehaviorEvents = {
@@ -15,7 +15,7 @@ export interface IDisableableBehaviorProps {
  * Используется для композиции: компонент хранит экземпляр поведения и
  * проксирует геттер/сеттер `disabled` наружу.
  */
-export class TDisableableBehavior extends TObject<IDisableableBehaviorProps> {
+export class TDisableableBehavior extends TEntity<IDisableableBehaviorProps> {
 	public readonly events = new TEvented<TDisableableBehaviorEvents>()
 	private _disabled = false
 

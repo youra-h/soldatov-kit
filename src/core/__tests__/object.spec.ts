@@ -1,11 +1,11 @@
 import { describe, it, expect } from 'vitest'
-import { TObject } from '../classes/object/object.class'
+import { TEntity } from '../classes/entity/entity.class'
 
-// Минимальный тест для базового класса TObject
+// Минимальный тест для базового класса TEntity
 
-describe('TObject', () => {
+describe('TEntity', () => {
 	it('Создаёт экземпляр и работает assign/getProps', () => {
-		class TestObj extends TObject<{ a?: number; b?: string }> {
+		class TestObj extends TEntity<{ a?: number; b?: string }> {
 			a?: number
 			b?: string
 			getProps() {
@@ -23,7 +23,7 @@ describe('TObject', () => {
 	})
 
 	it('toJSON возвращает копию props', () => {
-		class TestObj extends TObject<{ a?: number; b?: string }> {
+		class TestObj extends TEntity<{ a?: number; b?: string }> {
 			a?: number
 			b?: string
 			getProps() {

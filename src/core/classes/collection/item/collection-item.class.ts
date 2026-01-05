@@ -1,6 +1,6 @@
 import { TCollection } from '../collection.class'
 import type { ICollectionItem, ICollectionItemProps, TCollectionItemEvents } from './types'
-import { TObject } from '../../object'
+import { TEntity } from '../../entity'
 import { TEvented } from '../../../common/evented'
 
 /**
@@ -10,7 +10,7 @@ export abstract class TCollectionItem<
 		TProps extends ICollectionItemProps = ICollectionItemProps,
 		TEvents extends TCollectionItemEvents = TCollectionItemEvents,
 	>
-	extends TObject<TProps>
+	extends TEntity<TProps>
 	implements ICollectionItem
 {
 	/**

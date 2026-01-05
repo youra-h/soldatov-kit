@@ -1,6 +1,6 @@
 import { TCollection } from './../collection.class'
 import { TCollectionItem } from './../item/collection-item.class'
-import type { IObject } from '../../object'
+import type { IEntity } from '../../entity'
 import { TEvented } from '../../../common/evented'
 
 export interface ICollectionItemProps {}
@@ -17,7 +17,7 @@ export type TCollectionItemEvents = {
 export interface ICollectionItem<
 	TProps extends ICollectionItemProps = ICollectionItemProps,
 	TEvents extends Record<string, (...args: any) => any> = TCollectionItemEvents,
-> extends IObject<TProps>,
+> extends IEntity<TProps>,
 		ICollectionItemMethods {
 	// Ссылка на коллекцию-владелец.
 	collection: TCollection | null

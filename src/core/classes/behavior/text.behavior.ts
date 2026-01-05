@@ -1,4 +1,4 @@
-import { TObject } from '../object'
+import { TEntity } from '../entity'
 import { TEvented } from '../../common/evented'
 
 export type TTextBehaviorEvents = {
@@ -14,7 +14,7 @@ export interface ITextBehaviorProps {
  *
  * Для веба `text` обычно означает *текстовую подпись*, а не `value`.
  */
-export class TTextBehavior extends TObject<ITextBehaviorProps> {
+export class TTextBehavior extends TEntity<ITextBehaviorProps> {
 	public readonly events = new TEvented<TTextBehaviorEvents>()
 	private _text = ''
 

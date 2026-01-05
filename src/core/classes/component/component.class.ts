@@ -1,4 +1,4 @@
-import { TObject } from '../object'
+import { TEntity } from '../entity'
 import { TEvented } from '../../common/evented'
 import type { IComponent, IComponentProps, IComponentOptions, TComponentEvents } from './types'
 
@@ -10,7 +10,7 @@ export default class TComponent<
 		TProps extends IComponentProps = IComponentProps,
 		TEvents extends TComponentEvents = TComponentEvents,
 	>
-	extends TObject<TProps>
+	extends TEntity<TProps>
 	implements IComponent
 {
 	static defaultValues: Partial<IComponentProps> = {
@@ -24,7 +24,7 @@ export default class TComponent<
 	protected _visible: boolean
 	protected _hidden: boolean
 
-	protected _tag: string | Object
+	protected _tag: string | Entity
 
 	// Base class name
 	protected _baseClass: string
@@ -95,11 +95,11 @@ export default class TComponent<
 		}
 	}
 
-	get tag(): string | Object {
+	get tag(): string | Entity {
 		return this._tag
 	}
 
-	set tag(value: string | Object) {
+	set tag(value: string | Entity) {
 		if (this._tag !== value) {
 			this._tag = value
 		}

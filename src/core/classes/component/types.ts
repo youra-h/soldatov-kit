@@ -1,4 +1,4 @@
-import type { IObject } from '../object'
+import type { IEntity } from '../entity'
 import { TEvented } from '../../common/evented'
 
 /**
@@ -24,7 +24,7 @@ export interface IComponentProps {
 	// Id компонента
 	id?: string | number
 	// HTML-тег компонента
-	tag?: string | Object
+	tag?: string | Entity
 	// Видимость компонента
 	visible?: boolean
 	// Скрытие компонента / удаление из dom
@@ -56,7 +56,7 @@ export interface IComponentMethods {
 export interface IComponent<
 	TProps extends IComponentProps = IComponentProps,
 	TEvents extends Record<string, (...args: any) => any> = TComponentEvents,
-> extends IObject<TProps>,
+> extends IEntity<TProps>,
 		IComponentMethods {
 	// CSS-классы компонента
 	readonly classes?: string[]

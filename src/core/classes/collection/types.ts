@@ -1,6 +1,6 @@
 import { TCollection } from './collection.class'
 import { type ICollectionItem } from './item/types'
-import type { IObject } from '../object'
+import type { IEntity } from '../entity'
 import { TEvented } from '../../common/evented'
 
 /**
@@ -167,7 +167,7 @@ export interface ICollection<
 	TProps extends ICollectionProps = ICollectionProps,
 	TEvents extends TCollectionEvents = TCollectionEvents,
 	TItem extends ICollectionItem = ICollectionItem,
-> extends IObject<TProps>,
+> extends IEntity<TProps>,
 		ICollectionMethods<TItem> {
 	readonly events: TEvented<TEvents>
 }

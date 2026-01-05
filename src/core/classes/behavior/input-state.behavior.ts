@@ -1,4 +1,4 @@
-import { TObject } from '../object'
+import { TEntity } from '../entity'
 import { TEvented } from '../../common/evented'
 import type { TControlInputState } from '../control-input/types'
 
@@ -20,7 +20,7 @@ export interface IInputStateBehaviorProps {
  * Это веб-специфичные атрибуты/состояния формы, которые часто нужны разным
  * инпутам и переключателям.
  */
-export class TInputStateBehavior extends TObject<IInputStateBehaviorProps> {
+export class TInputStateBehavior extends TEntity<IInputStateBehaviorProps> {
 	public readonly events = new TEvented<TInputStateBehaviorEvents>()
 
 	private _readonly = false

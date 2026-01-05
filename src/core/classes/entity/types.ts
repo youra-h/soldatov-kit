@@ -1,15 +1,15 @@
 // Общий тип props (универсальный, для базовых объектов)
 // Используется только там, где нужен "свободный словарь"
-// export type TObjectProps = Record<string, unknown>
-export type TObjectProps = {}
+// export type TEntityProps = Record<string, unknown>
+export type TEntityProps = {}
 
 // Интерфейс для объектов, поддерживающих присвоение свойств из другого объекта
-export interface IAssignable<T = TObjectProps> {
+export interface IAssignable<T = TEntityProps> {
 	assign(source: Partial<T>): void
 }
 
 // Параметризуемый базовый объект
-export interface IObject<TProps = TObjectProps> extends IAssignable<TProps> {
+export interface IEntity<TProps = TEntityProps> extends IAssignable<TProps> {
 	// Возвращает свойства объекта (только для чтения)
 	getProps(): Readonly<TProps>
 	// Сериализация объекта в JSON

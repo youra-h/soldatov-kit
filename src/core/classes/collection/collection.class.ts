@@ -2,7 +2,7 @@ import { TEvented } from '../../common/evented'
 import type { TCollectionEvents, ICollection, ICollectionProps } from './types'
 import { type ICollectionItem } from './item/types'
 import type { TConstructor } from '../../common/types'
-import { TObject } from '../object'
+import { TEntity } from '../entity'
 
 /**
  * Коллекция элементов с поддержкой событий и пакетного обновления.
@@ -19,7 +19,7 @@ export class TCollection<
 		TEvents extends TCollectionEvents = TCollectionEvents,
 		TItem extends ICollectionItem = ICollectionItem,
 	>
-	extends TObject<TProps>
+	extends TEntity<TProps>
 	implements ICollection<TProps, TEvents, TItem>
 {
 	/**
