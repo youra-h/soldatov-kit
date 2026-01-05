@@ -1,9 +1,23 @@
 import { TStateUnit } from '../state-unit'
 
+/**
+ * События `TFocusableState`.
+ */
 export type TFocusableStateEvents = {
+	/**
+	 * Срабатывает, когда `focused` изменился.
+	 */
 	change: (value: boolean) => void
 }
 
+/**
+ * Единица состояния "focused".
+ *
+ * Это headless-состояние фокуса (не DOM-фокус), полезно для:
+ * - тестов
+ * - навигации/управления фокусом на уровне модели
+ * - синхронизации с UI-обвязкой (Vue/React и т.п.)
+ */
 export class TFocusableState extends TStateUnit<TFocusableStateEvents> {
 	private _focused = false
 

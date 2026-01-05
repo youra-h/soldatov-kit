@@ -1,10 +1,26 @@
 import { TStateUnit } from '../state-unit'
 
+/**
+ * События `TValueState`.
+ */
 export type TValueStateEvents<T> = {
+	/**
+	 * Срабатывает при "коммите" значения через сеттер `value`.
+	 */
 	change: (value: T) => void
+	/**
+	 * Срабатывает при вводе (без коммита), см. `input()`.
+	 */
 	input: (value: T) => void
 }
 
+/**
+ * Единица состояния для значения контрола.
+ *
+ * Типичный сценарий:
+ * - `value` (setter) — финальное изменение (change/commit)
+ * - `input(value)` — промежуточное изменение (например, ввод в текстовом поле)
+ */
 export class TValueState<T> extends TStateUnit<TValueStateEvents<T>> {
 	private _value: T
 
@@ -26,8 +42,8 @@ export class TValueState<T> extends TStateUnit<TValueStateEvents<T>> {
 	}
 
 	/**
-	 * Опционально: событие ввода (input) без коммита.
-	 * Может быть полезно для текстовых инпутов (input vs change).
+	 * Промежуточное изменение значения без семантики "коммита".
+	 * Полезно для сценариев input vs change.
 	 */
 	input(value: T): void {
 		this._value = value

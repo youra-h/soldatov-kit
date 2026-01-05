@@ -1,7 +1,14 @@
 import type { TControlInputState } from '../control-input/types'
 import { TStateUnit } from '../state-unit'
 
+/**
+ * События `TInputState`.
+ */
 export type TInputStateEvents = {
+	/**
+	 * Срабатывает при любом изменении одного или нескольких полей.
+	 * Передаёт патч (частичный набор изменённых свойств).
+	 */
 	change: (patch: Partial<IInputStateBehaviorProps>) => void
 }
 
@@ -13,6 +20,16 @@ export interface IInputStateBehaviorProps {
 	loading: boolean
 }
 
+/**
+ * Единица состояния для атрибутов/состояний ввода.
+ *
+ * Зачем нужна:
+ * - держит "формовые" флаги (`readonly`, `required`, `invalid`) и UI-состояние (`state`, `loading`)
+ * - эмитит единое событие `change` с патчем, чтобы компонент-агрегат мог легко синхронизироваться
+ *
+ * Инварианты:
+ * - при `invalid = true` состояние `state` принудительно становится `'error'`.
+ */
 export class TInputState extends TStateUnit<TInputStateEvents> {
 	private _readonly = false
 	private _required = false

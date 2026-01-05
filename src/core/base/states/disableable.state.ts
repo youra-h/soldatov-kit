@@ -1,10 +1,21 @@
 import { TStateUnit } from '../state-unit'
 
+/**
+ * События `TDisableableState`.
+ */
 export type TDisableableStateEvents = {
+	/**
+	 * Срабатывает, когда `disabled` изменился.
+	 */
 	change: (value: boolean) => void
 }
 
-
+/**
+ * Единица состояния "disabled".
+ *
+ * Хранит флаг недоступности и эмитит локальное событие `change`.
+ * Компонент-агрегат может пробросить это наружу как `disabled`.
+ */
 export class TDisableableState extends TStateUnit<TDisableableStateEvents> {
 	private _disabled = false
 
