@@ -1,5 +1,6 @@
-import { TEvented } from '../../common/evented'
 import TComponentModel from '../component-model/component-model.class'
+import type { TVisibilityState } from '../states'
+import { TVisibilityState as TVisibilityStateImpl } from '../states/visibility.state'
 import type { IPresentableProps, TPresentableEvents } from './types'
 
 /**
@@ -19,12 +20,14 @@ export default class TPresentable<
 	static defaultValues: Partial<IPresentableProps> = {
 		id: '',
 		tag: 'div',
+		visible: true,
 		classes: [],
 		attrs: {},
 		baseClass: 's-presentable',
 	}
 
 	protected _tag: string | object
+	protected _visibility: TVisibilityState
 	protected _baseClass: string
 	protected _classes: string[]
 	protected _attrs: Record<string, unknown>
@@ -37,10 +40,71 @@ export default class TPresentable<
 		const { props = {} } = options
 
 		this._tag = props.tag ?? TPresentable.defaultValues.tag!
+
+		this._visibility = new TVisibilityStateImpl(
+			typeof props.visible === 'boolean' ? props.visible : (TPresentable.defaultValues.visible as boolean),
+		)
+		this._visibility.events.on('change', (value) => {
+			this.events.emit('change:visible', value)
+		})
+
 		this._baseClass = props.baseClass ?? TPresentable.defaultValues.baseClass!
 		this._classes = (props.classes ?? TPresentable.defaultValues.classes!) as string[]
 		this._attrs = (props.attrs ?? TPresentable.defaultValues.attrs!) as Record<string, unknown>
 	}
+
+	get visible(): boolean {
+		return this._visibility.visible
+	}
+	set visible(value: boolean) {
+		if (value) {
+			this.show()
+		} else {
+			this.hide()
+		}
+	}
+
+	show(): void {
+		if (!this.beforeShow()) return
+
+		const canShow = this.events.emitWithResult('beforeShow' as any)
+		if (!canShow) return
+
+		if (this.visible) return
+		this._visibility.show()
+
+		this.events.emit('show' as any)
+
+		this.afterShow()
+		this.events.emit('afterShow' as any)
+	}
+
+	hide(): void {
+		if (!this.beforeHide()) return
+
+		const canHide = this.events.emitWithResult('beforeHide' as any)
+		if (!canHide) return
+
+		if (!this.visible) return
+		this._visibility.hide()
+
+		this.events.emit('hide' as any)
+
+		this.afterHide()
+		this.events.emit('afterHide' as any)
+	}
+
+	protected beforeShow(): boolean {
+		return true
+	}
+
+	protected afterShow(): void {}
+
+	protected beforeHide(): boolean {
+		return true
+	}
+
+	protected afterHide(): void {}
 
 	get tag(): string | object {
 		return this._tag
@@ -80,6 +144,7 @@ export default class TPresentable<
 		return {
 			...super.getProps(),
 			tag: this._tag,
+			visible: this.visible,
 			baseClass: this._baseClass,
 			classes: this._classes,
 			attrs: this._attrs,
