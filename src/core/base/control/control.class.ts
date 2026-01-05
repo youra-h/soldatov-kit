@@ -3,8 +3,8 @@ import { TBaseControl } from '../base-control'
 import type { IControl, IControlProps, TControlEvents } from './types'
 import type { TComponentSize } from '../../common/types'
 import { TSize } from '../../common/size'
-import { TFocusableBehavior } from '../../classes/behavior/focusable.behavior'
-import { TTextBehavior } from '../../classes/behavior/text.behavior'
+import { TFocusableBehavior } from '../behaviors/focusable.behavior'
+import { TTextBehavior } from '../behaviors/text.behavior'
 
 export default class TControl<
 		TProps extends IControlProps = IControlProps,
@@ -38,15 +38,15 @@ export default class TControl<
 			value: props.size ?? TControl.defaultValues.size!,
 		})
 
-		this._textBehavior = new TTextBehavior(
-			this,
-			props.text ?? TControl.defaultValues.text!,
-		)
+		this._textBehavior = new TTextBehavior(props.text ?? TControl.defaultValues.text!)
+		this._textBehavior.events.on('change', (value) => {
+			this.events.emit('changeText', value)
+		})
 
-		this._focusBehavior = new TFocusableBehavior(
-			this,
-			props.focused ?? TControl.defaultValues.focused!,
-		)
+		this._focusBehavior = new TFocusableBehavior(props.focused ?? TControl.defaultValues.focused!)
+		this._focusBehavior.events.on('change', (value) => {
+			this.events.emit('focused', value)
+		})
 	}
 
 	get text(): string {

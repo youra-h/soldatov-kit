@@ -1,6 +1,8 @@
-import type { TEvented } from '../../common/evented'
+import { TStateUnit } from '../state-unit'
 
-type TDisableableHost = { events: TEvented<any> }
+export type TDisableableBehaviorEvents = {
+	change: (value: boolean) => void
+}
 
 /**
  * Поведение "disabled" без собственного event-emitter.
@@ -9,12 +11,12 @@ type TDisableableHost = { events: TEvented<any> }
  * - `change:disabled` (новый контракт)
  * - `disabled` (legacy, чтобы не ломать существующие обвязки)
  */
-export class TDisableableBehavior {
-	private _host: TDisableableHost
+
+export class TDisableableBehavior extends TStateUnit<TDisableableBehaviorEvents> {
 	private _disabled = false
 
-	constructor(host: TDisableableHost, initialDisabled: boolean = false) {
-		this._host = host
+	constructor(initialDisabled: boolean = false) {
+		super()
 		this._disabled = initialDisabled
 	}
 
@@ -26,7 +28,7 @@ export class TDisableableBehavior {
 		if (this._disabled === value) return
 
 		this._disabled = value
-		;(this._host.events as any).emit('change:disabled', value)
-		;(this._host.events as any).emit('disabled', value)
+
+		this.events.emit('change', value)
 	}
 }

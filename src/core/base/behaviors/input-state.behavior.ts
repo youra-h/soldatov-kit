@@ -1,7 +1,9 @@
-import type { TEvented } from '../../common/evented'
 import type { TControlInputState } from '../control-input/types'
+import { TStateUnit } from '../state-unit'
 
-type TInputStateHost = { events: TEvented<any> }
+export type TInputStateBehaviorEvents = {
+	change: (patch: Partial<IInputStateBehaviorProps>) => void
+}
 
 export interface IInputStateBehaviorProps {
 	readonly: boolean
@@ -21,20 +23,15 @@ export interface IInputStateBehaviorProps {
  * - `change:state`
  * - `change:loading`
  */
-export class TInputStateBehavior {
-	private _host: TInputStateHost
-
+export class TInputStateBehavior extends TStateUnit<TInputStateBehaviorEvents> {
 	private _readonly = false
 	private _required = false
 	private _invalid = false
 	private _state: TControlInputState = 'normal'
 	private _loading = false
 
-	constructor(
-		host: TInputStateHost,
-		initial?: Partial<IInputStateBehaviorProps>,
-	) {
-		this._host = host
+	constructor(initial?: Partial<IInputStateBehaviorProps>) {
+		super()
 		if (initial) {
 			if (initial.readonly !== undefined) this._readonly = initial.readonly
 			if (initial.required !== undefined) this._required = initial.required
@@ -50,7 +47,7 @@ export class TInputStateBehavior {
 	set readonly(value: boolean) {
 		if (this._readonly === value) return
 		this._readonly = value
-		;(this._host.events as any).emit('change:readonly', value)
+		this.events.emit('change', { readonly: value })
 	}
 
 	get required(): boolean {
@@ -59,7 +56,7 @@ export class TInputStateBehavior {
 	set required(value: boolean) {
 		if (this._required === value) return
 		this._required = value
-		;(this._host.events as any).emit('change:required', value)
+		this.events.emit('change', { required: value })
 	}
 
 	get invalid(): boolean {
@@ -71,8 +68,7 @@ export class TInputStateBehavior {
 		if (value) {
 			this._state = 'error'
 		}
-		;(this._host.events as any).emit('change:invalid', value)
-		;(this._host.events as any).emit('change:state', this._state)
+		this.events.emit('change', { invalid: value, state: this._state })
 	}
 
 	get state(): TControlInputState {
@@ -81,7 +77,7 @@ export class TInputStateBehavior {
 	set state(value: TControlInputState) {
 		if (this._state === value) return
 		this._state = value
-		;(this._host.events as any).emit('change:state', value)
+		this.events.emit('change', { state: value })
 	}
 
 	get loading(): boolean {
@@ -90,7 +86,7 @@ export class TInputStateBehavior {
 	set loading(value: boolean) {
 		if (this._loading === value) return
 		this._loading = value
-		;(this._host.events as any).emit('change:loading', value)
+		this.events.emit('change', { loading: value })
 	}
 
 	getProps(): IInputStateBehaviorProps {

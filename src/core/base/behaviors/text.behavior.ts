@@ -1,6 +1,8 @@
-import type { TEvented } from '../../common/evented'
+import { TStateUnit } from '../state-unit'
 
-type TTextHost = { events: TEvented<any> }
+export type TTextBehaviorEvents = {
+	change: (value: string) => void
+}
 
 /**
  * Поведение "text" без собственного event-emitter.
@@ -11,12 +13,12 @@ type TTextHost = { events: TEvented<any> }
  * - `change:text`
  * - `changeText` (legacy)
  */
-export class TTextBehavior {
-	private _host: TTextHost
+
+export class TTextBehavior extends TStateUnit<TTextBehaviorEvents> {
 	private _text = ''
 
-	constructor(host: TTextHost, initialText: string = '') {
-		this._host = host
+	constructor(initialText: string = '') {
+		super()
 		this._text = initialText
 	}
 
@@ -28,7 +30,6 @@ export class TTextBehavior {
 		if (this._text === value) return
 
 		this._text = value
-		;(this._host.events as any).emit('change:text', value)
-		;(this._host.events as any).emit('changeText', value)
+		this.events.emit('change', value)
 	}
 }

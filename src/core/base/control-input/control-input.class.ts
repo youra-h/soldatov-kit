@@ -57,7 +57,7 @@ export default class TControlInput<
 		// Инициализируем значение отображения компонента
 		this._variantHelper.value = props.variant ?? TControlInput.defaultValues.variant!
 
-		this._inputState = new TInputStateBehavior(this, {
+		this._inputState = new TInputStateBehavior({
 			readonly: props.readonly ?? TControlInput.defaultValues.readonly!,
 			required: props.required ?? TControlInput.defaultValues.required!,
 			invalid: props.invalid ?? TControlInput.defaultValues.invalid!,

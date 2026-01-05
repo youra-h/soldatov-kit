@@ -1,6 +1,9 @@
-import type { TEvented } from '../../common/evented'
+import { TStateUnit } from '../state-unit'
 
-type TValueHost = { events: TEvented<any> }
+export type TValueBehaviorEvents<T> = {
+	change: (value: T) => void
+	input: (value: T) => void
+}
 
 /**
  * Поведение "value" без собственного event-emitter.
@@ -9,12 +12,12 @@ type TValueHost = { events: TEvented<any> }
  * - `change:value`
  * - `changeValue` (legacy)
  */
-export class TValueBehavior<T> {
-	private _host: TValueHost
+
+export class TValueBehavior<T> extends TStateUnit<TValueBehaviorEvents<T>> {
 	private _value: T
 
-	constructor(host: TValueHost, initialValue: T) {
-		this._host = host
+	constructor(initialValue: T) {
+		super()
 		this._value = initialValue
 	}
 
@@ -26,8 +29,7 @@ export class TValueBehavior<T> {
 		if (this._value === value) return
 
 		this._value = value
-		;(this._host.events as any).emit('change:value', value)
-		;(this._host.events as any).emit('changeValue', value)
+		this.events.emit('change', value)
 	}
 
 	/**
@@ -36,6 +38,6 @@ export class TValueBehavior<T> {
 	 */
 	input(value: T): void {
 		this._value = value
-		;(this._host.events as any).emit('input:value', value)
+		this.events.emit('input', value)
 	}
 }

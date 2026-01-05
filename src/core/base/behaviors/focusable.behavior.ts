@@ -1,6 +1,8 @@
-import type { TEvented } from '../../common/evented'
+import { TStateUnit } from '../state-unit'
 
-type TFocusableHost = { events: TEvented<any> }
+export type TFocusableBehaviorEvents = {
+	change: (value: boolean) => void
+}
 
 /**
  * Поведение фокуса без собственного event-emitter.
@@ -9,12 +11,13 @@ type TFocusableHost = { events: TEvented<any> }
  * - `change:focused`
  * - `focused` (legacy)
  */
-export class TFocusableBehavior {
-	private _host: TFocusableHost
+
+
+export class TFocusableBehavior extends TStateUnit<TFocusableBehaviorEvents> {
 	private _focused = false
 
-	constructor(host: TFocusableHost, initialFocused: boolean = false) {
-		this._host = host
+	constructor(initialFocused: boolean = false) {
+		super()
 		this._focused = initialFocused
 	}
 
@@ -26,7 +29,6 @@ export class TFocusableBehavior {
 		if (this._focused === value) return
 
 		this._focused = value
-		;(this._host.events as any).emit('change:focused', value)
-		;(this._host.events as any).emit('focused', value)
+		this.events.emit('change', value)
 	}
 }
