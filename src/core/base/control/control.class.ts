@@ -1,10 +1,10 @@
-import { TComponent, type IComponentOptions } from '../../base/component'
-import { TBaseControl } from '../../base/base-control'
+import { TComponent, type IComponentOptions } from '../component'
+import { TBaseControl } from '../base-control'
 import type { IControl, IControlProps, TControlEvents } from './types'
 import type { TComponentSize } from '../../common/types'
 import { TSize } from '../../common/size'
-import { TFocusableBehavior } from '../behavior/focusable.behavior'
-import { TTextBehavior } from '../behavior/text.behavior'
+import { TFocusableBehavior } from '../../classes/behavior/focusable.behavior'
+import { TTextBehavior } from '../../classes/behavior/text.behavior'
 
 export default class TControl<
 		TProps extends IControlProps = IControlProps,

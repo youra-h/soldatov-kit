@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import TControl from '../classes/control/control.class'
+import TControl from '../base/control/control.class'
 
 describe('TControl', () => {
 	let ctrl: TControl<any>

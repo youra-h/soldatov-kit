@@ -1,5 +1,5 @@
 import { TComponent, type IComponentOptions } from '../../base/component'
-import { TControl } from '../control'
+import { TControl } from '../../base/control'
 import type { TComponentVariant } from '../../common/types'
 import type { IButton, IButtonProps, TButtonAppearance, TButtonEvents } from './types'
 import { TIcon } from '../icon'

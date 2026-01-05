@@ -1,5 +1,5 @@
 import { TComponent, type IComponentOptions } from '../../base/component'
-import { TControl } from '../control'
+import { TControl } from '../../base/control'
 import type { IControlValue, IControlValueProps, TControlValueEvents } from './types'
 import { TValueBehavior } from '../behavior/value.behavior'
 

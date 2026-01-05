@@ -1,4 +1,4 @@
-import type { IControl, IControlProps, TControlEvents } from '../control'
+import type { IControl, IControlProps, TControlEvents } from '../../base/control'
 import type { TComponentVariant } from '../../common/types'
 import { TIcon } from '../icon'
 import { TSpinner } from '../spinner'
