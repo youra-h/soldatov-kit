@@ -17,11 +17,16 @@ export interface IComponentModelMethods {
 export interface IComponentModel<
 	TProps extends IComponentModelProps = IComponentModelProps,
 	TEvents extends Record<string, (...args: any) => any> = TComponentModelEvents,
-> extends IEntity<TProps>,
-		IComponentModelMethods {
+>
+	extends IEntity<TProps>, IComponentModelMethods {
 	readonly events: TEvented<TEvents>
 }
 
+/**
+ * Опции для создания компонента.
+ * props — начальные свойства, baseClass — базовый CSS-класс.
+ */
 export interface IComponentModelOptions<T> {
 	props?: Partial<T>
+	baseClass?: string
 }

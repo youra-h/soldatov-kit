@@ -1,4 +1,4 @@
-import { TComponent, type IComponentOptions } from '../../base/component'
+import { TComponent, type IComponentModelOptions } from '../../base/component'
 import type { IIcon, IIconProps, TIconEvents } from './types'
 import { TSize } from '../../common/size'
 import type { TComponentSize } from '../../common/types'
@@ -14,7 +14,7 @@ export default class TIcon extends TComponent<IIconProps, TIconEvents> implement
 	protected _height: string | number | undefined
 	protected _sizeHelper: TSize
 
-	constructor(options: IComponentOptions<IIconProps> | Partial<IIconProps> = {}) {
+	constructor(options: IComponentModelOptions<IIconProps> | Partial<IIconProps> = {}) {
 		options = TComponent.prepareOptions(options, 's-icon')
 
 		super(options)

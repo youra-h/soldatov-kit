@@ -1,4 +1,4 @@
-import { type IComponentOptions } from '../../base/component'
+import { type IComponentModelOptions } from '../../base/component'
 import { TControlInput } from '../control-input'
 import type { ISwitch, ISwitchProps, TSwitchEvents } from './types'
 import { TIcon } from '../icon'
@@ -13,7 +13,7 @@ export default class TSwitch extends TControlInput<ISwitchProps, TSwitchEvents> 
 	protected _value: boolean
 	protected _icon?: TIcon
 
-	constructor(options: IComponentOptions<ISwitchProps> = {}) {
+	constructor(options: IComponentModelOptions<ISwitchProps> = {}) {
 		const { props = {}, baseClass = 's-switch' } = options
 
 		super({ props, baseClass })

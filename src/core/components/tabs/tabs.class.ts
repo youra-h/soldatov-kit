@@ -1,4 +1,4 @@
-import { TComponent, type IComponentOptions } from '../../base/component'
+import { TComponent, type IComponentModelOptions } from '../../base/component'
 import { TBaseControl } from '../../base/base-control'
 import { TTabItem } from './tab-item/tab-item.class'
 import {
@@ -17,7 +17,7 @@ export abstract class TTabsCustom
 {
 	protected _collection: ISelectableByValueCollection<TTabItem>
 
-	constructor(options: IComponentOptions<ITabs> = {}) {
+	constructor(options: IComponentModelOptions<ITabs> = {}) {
 		options = TComponent.prepareOptions(options, 's-tabs')
 
 		super(options)

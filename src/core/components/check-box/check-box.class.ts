@@ -1,4 +1,4 @@
-import { type IComponentOptions } from '../../base/component'
+import { type IComponentModelOptions } from '../../base/component'
 import { TControlInput } from '../control-input'
 import type { ICheckBox, ICheckBoxProps, TCheckBoxEvents } from './types'
 import { TIcon } from '../icon'
@@ -18,7 +18,7 @@ export default class TCheckBox extends TControlInput<ICheckBoxProps, TCheckBoxEv
 	protected _icon?: TIcon
 	protected _indeterminateIcon?: TIcon
 
-	constructor(options: IComponentOptions<ICheckBoxProps> = {}) {
+	constructor(options: IComponentModelOptions<ICheckBoxProps> = {}) {
 		const { props = {}, baseClass = 's-check-box' } = options
 
 		super({ props, baseClass })

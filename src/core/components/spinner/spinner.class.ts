@@ -1,4 +1,4 @@
-import { TComponent, type IComponentOptions } from '../../base/component'
+import { TComponent, type IComponentModelOptions } from '../../base/component'
 import type { TComponentSize, TComponentVariant } from '../../common/types'
 import type { ISpinner, ISpinnerProps, TSpinnerEvents } from './types'
 import { TSize } from '@/core/common/size'
@@ -17,7 +17,7 @@ export default class TSpinner extends TComponent<ISpinnerProps, TSpinnerEvents> 
 	protected _variantHelper: TVariant
 	protected _borderWidth: number | 'auto'
 
-	constructor(options: IComponentOptions<ISpinnerProps> = {}) {
+	constructor(options: IComponentModelOptions<ISpinnerProps> = {}) {
 		options = TComponent.prepareOptions(options, 's-spinner')
 
 		super(options)

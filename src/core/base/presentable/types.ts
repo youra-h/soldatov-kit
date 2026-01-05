@@ -1,4 +1,8 @@
-import type { IComponentModel, IComponentModelProps, TComponentModelEvents } from '../component-model'
+import type {
+	IComponentModel,
+	IComponentModelProps,
+	TComponentModelEvents,
+} from '../component-model'
 
 export type TPresentableEvents = TComponentModelEvents & {
 	/** beforeShow (можно отменить, вернув false) */
@@ -28,7 +32,7 @@ export interface IPresentableProps extends IComponentModelProps {
 	tag?: string | object
 	/** Виден ли компонент (логическая видимость) */
 	visible?: boolean
-	classes?: string[]	// dynamic classes (без baseClass)
+	classes?: string[] // dynamic classes (без baseClass)
 	attrs?: Record<string, unknown>
 	baseClass?: string
 }
