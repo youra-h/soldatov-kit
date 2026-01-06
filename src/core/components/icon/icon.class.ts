@@ -1,30 +1,32 @@
-import { TComponent, type IComponentModelOptions } from '../../base/component'
+import { type IComponentModelOptions } from '../../base/component-model'
+import { TPresentable } from '../../base/presentable'
 import type { IIcon, IIconProps, TIconEvents } from './types'
-import { TSize } from '../../common/size'
+import { TSizeState } from '../../base/states/size.state'
 import type { TComponentSize } from '../../common/types'
 
-export default class TIcon extends TComponent<IIconProps, TIconEvents> implements IIcon {
+export default class TIcon extends TPresentable<IIconProps, TIconEvents> implements IIcon {
 	static defaultValues: Partial<IIconProps> = {
-		...TComponent.defaultValues,
+		...TPresentable.defaultValues,
 		size: 'normal',
 		tag: 'error',
 	}
 
 	protected _width: string | number | undefined
 	protected _height: string | number | undefined
-	protected _sizeHelper: TSize
+	readonly sizeState: TSizeState
 
 	constructor(options: IComponentModelOptions<IIconProps> | Partial<IIconProps> = {}) {
-		options = TComponent.prepareOptions(options, 's-icon')
-
-		super(options)
+		super(options as any)
 
 		const { props = {} } = options
 
-		this._sizeHelper = new TSize({
+		this.sizeState = new TSizeState({
 			baseClass: this._baseClass,
 			exclude: ['auto'],
-			value: props.size ?? TIcon.defaultValues.size!,
+			value: (props.size ?? TIcon.defaultValues.size!) as TComponentSize,
+		})
+		this.sizeState.events.on('change', (value) => {
+			this.events.emit('change:size' as any, value)
 		})
 
 		this._tag = props.tag ?? TIcon.defaultValues.tag!
@@ -53,22 +55,15 @@ export default class TIcon extends TComponent<IIconProps, TIconEvents> implement
 	}
 
 	get size(): TComponentSize {
-		return this._sizeHelper.value
+		return this.sizeState.value
 	}
 
 	set size(value: TComponentSize) {
-		if (this._sizeHelper.value !== value) {
-			this._sizeHelper.value = value
-		}
+		this.sizeState.value = value
 	}
 
 	get classes(): string[] {
-		const classes = [this._baseClass]
-
-		// Добавляем класс для размера
-		classes.push(...this._sizeHelper.getClass())
-
-		return classes
+		return [...super.classes, ...this.sizeState.getClass()]
 	}
 
 	/**
@@ -93,7 +88,7 @@ export default class TIcon extends TComponent<IIconProps, TIconEvents> implement
 	getProps(): IIconProps {
 		return {
 			...super.getProps(),
-			size: this._sizeHelper.value,
+			size: this.sizeState.value,
 			width: this._width,
 			height: this._height,
 		}

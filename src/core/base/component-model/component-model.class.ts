@@ -32,10 +32,8 @@ export default class TComponentModel<
 
 		const { props = {} } = options
 
-		const ctor = this.constructor as typeof TComponentModel
-
 		this.events = new TEvented<TEvents>()
-		this._id = props.id ?? ctor.defaultValues.id!
+		this._id = props.id ?? TComponentModel.defaultValues.id!
 
 		setTimeout(() => this.events.emit('created', this as any), 0)
 	}
