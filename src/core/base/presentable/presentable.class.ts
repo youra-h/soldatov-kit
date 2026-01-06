@@ -49,7 +49,7 @@ export default class TPresentable<
 		defaultBaseClass?: string,
 	) {
 		if (options && typeof options === 'object' && 'props' in options) {
-			const normalized = options as IComponentModelOptions<T> & { baseClass?: string }
+			const normalized = options as IPresentableOptions<T>
 
 			return {
 				...normalized,
