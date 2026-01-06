@@ -1,7 +1,8 @@
 import TComponentModel from '../component-model/component-model.class'
+import type { IComponentModelOptions, IComponentModelProps } from '../component-model'
 import type { TVisibilityState } from '../states'
 import { TVisibilityState as TVisibilityStateImpl } from '../states/visibility.state'
-import type { IPresentableProps, TPresentableEvents } from './types'
+import type { IPresentableOptions, IPresentableProps, TPresentableEvents } from './types'
 
 /**
  * Web-presentable слой: tag/classes/attrs.
@@ -12,11 +13,12 @@ import type { IPresentableProps, TPresentableEvents } from './types'
  * - `attrs` (произвольные атрибуты)
  */
 export default class TPresentable<
-		TProps extends IPresentableProps = IPresentableProps,
-		TEvents extends TPresentableEvents = TPresentableEvents,
-	>
-	extends TComponentModel<TProps, TEvents>
-{
+	TProps extends IPresentableProps = IPresentableProps,
+	TEvents extends TPresentableEvents = TPresentableEvents,
+> extends TComponentModel<TProps, TEvents> {
+	/** Базовый CSS-класс по умолчанию (можно переопределить в наследниках). */
+	static baseClass = 's-presentable'
+
 	static defaultValues: Partial<IPresentableProps> = {
 		id: '',
 		tag: 'div',
@@ -32,12 +34,43 @@ export default class TPresentable<
 	protected _classes: string[]
 	protected _attrs: Record<string, unknown>
 
-	constructor(options: any = {}) {
-		options = TComponentModel.prepareOptions(options)
+	static prepareOptions<TP extends IPresentableProps>(
+		options: IPresentableOptions<TP> | Partial<TP>,
+		defaultBaseClass?: string,
+	): IPresentableOptions<TP>
 
-		super(options)
+	static prepareOptions<T extends IComponentModelProps>(
+		options: IComponentModelOptions<T> | Partial<T>,
+		defaultBaseClass?: string,
+	): IComponentModelOptions<T> & { baseClass?: string }
 
-		const { props = {} } = options
+	static override prepareOptions<T extends IComponentModelProps>(
+		options: IComponentModelOptions<T> | Partial<T> = {},
+		defaultBaseClass?: string,
+	) {
+		if (options && typeof options === 'object' && 'props' in options) {
+			const normalized = options as IComponentModelOptions<T> & { baseClass?: string }
+
+			return {
+				...normalized,
+				baseClass:
+					normalized.baseClass ??
+					defaultBaseClass ??
+					(this as typeof TPresentable).baseClass,
+			}
+		}
+
+		return {
+			props: options as Partial<T>,
+			baseClass: defaultBaseClass ?? (this as typeof TPresentable).baseClass,
+		}
+	}
+
+	constructor(options: IPresentableOptions<TProps> | Partial<TProps> = {}) {
+		const { props = {} as Partial<TProps>, baseClass } =
+			TPresentable.prepareOptions<TProps>(options)
+
+		super({ props })
 
 		this._tag = props.tag ?? TPresentable.defaultValues.tag!
 
@@ -50,7 +83,7 @@ export default class TPresentable<
 			this.events.emit('change:visible', value)
 		})
 
-		this._baseClass = props.baseClass ?? TPresentable.defaultValues.baseClass!
+		this._baseClass = baseClass ?? TPresentable.defaultValues.baseClass!
 		this._classes = (props.classes ?? TPresentable.defaultValues.classes!) as string[]
 		this._attrs = (props.attrs ?? TPresentable.defaultValues.attrs!) as Record<string, unknown>
 	}

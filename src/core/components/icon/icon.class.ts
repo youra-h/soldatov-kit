@@ -1,10 +1,12 @@
-import { type IComponentModelOptions } from '../../base/component-model'
 import { TPresentable } from '../../base/presentable'
 import type { IIcon, IIconProps, TIconEvents } from './types'
 import { TSizeState } from '../../base/states/size.state'
 import type { TComponentSize } from '../../common/types'
+import type { IPresentableOptions } from '../../base/presentable'
 
 export default class TIcon extends TPresentable<IIconProps, TIconEvents> implements IIcon {
+	static override baseClass = 's-icon'
+
 	static defaultValues: Partial<IIconProps> = {
 		...TPresentable.defaultValues,
 		size: 'normal',
@@ -15,10 +17,10 @@ export default class TIcon extends TPresentable<IIconProps, TIconEvents> impleme
 	protected _height: string | number | undefined
 	readonly sizeState: TSizeState
 
-	constructor(options: IComponentModelOptions<IIconProps> | Partial<IIconProps> = {}) {
-		super(options as any)
+	constructor(options: IPresentableOptions<IIconProps> | Partial<IIconProps> = {}) {
+		super(options)
 
-		const { props = {} } = options
+		const { props = {} } = TIcon.prepareOptions(options)
 
 		this.sizeState = new TSizeState({
 			baseClass: this._baseClass,

@@ -1,5 +1,6 @@
 import type {
 	IComponentModel,
+	IComponentModelOptions,
 	IComponentModelProps,
 	TComponentModelEvents,
 } from '../component-model'
@@ -34,6 +35,16 @@ export interface IPresentableProps extends IComponentModelProps {
 	visible?: boolean
 	classes?: string[] // dynamic classes (без baseClass)
 	attrs?: Record<string, unknown>
+	baseClass?: string
+}
+
+/**
+ * Опции для presentable-слоя.
+ * props — начальные свойства, baseClass — базовый CSS-класс (можно переопределить для конкретного инстанса).
+ */
+export interface IPresentableOptions<TProps extends IPresentableProps = IPresentableProps>
+	extends IComponentModelOptions<TProps>
+{
 	baseClass?: string
 }
 
