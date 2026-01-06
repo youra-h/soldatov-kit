@@ -1,12 +1,12 @@
-import { type IComponentModelOptions } from '../../base/component-model'
 import { TControl } from '../../base/control'
-import type { TComponentVariant } from '../../common/types'
 import type { IButton, IButtonProps, TButtonAppearance, TButtonEvents } from './types'
 import { TIcon } from '../icon'
-import { TVariant } from '../../common/variant'
 import { TSpinner } from '../spinner'
+import type { IPresentableOptions } from '../../base/presentable'
 
 export default class TButton extends TControl<IButtonProps, TButtonEvents> implements IButton {
+	static override baseClass = 's-button'
+
 	static defaultValues: Partial<IButtonProps> = {
 		...TControl.defaultValues,
 		variant: 'normal',
@@ -16,40 +16,32 @@ export default class TButton extends TControl<IButtonProps, TButtonEvents> imple
 		loading: false,
 	}
 
-	protected _variantHelper: TVariant
 	protected _appearance: TButtonAppearance
 	protected _icon?: TIcon
 	protected _loading: boolean
 	protected _spinner?: TSpinner
 
-	constructor(options: IComponentModelOptions<IButtonProps> = {}) {
-		options = TComponent.prepareOptions(options, 's-button')
+	constructor(options: IPresentableOptions<IButtonProps> | Partial<IButtonProps> = {}) {
+		const ctor = new.target as typeof TButton
+		const prepared = ctor.prepareOptions<IButtonProps>(options)
+		super(prepared)
 
-		super(options)
-
-		const { props = {} } = options
+		const { props = {} } = prepared
 
 		this._tag = props.tag ?? TButton.defaultValues.tag!
 
 		this._loading = props.loading ?? TButton.defaultValues.loading!
 		this._spinner = props.spinner ?? TButton.defaultValues.spinner!
 
-		this._variantHelper = new TVariant({
-			baseClass: this._baseClass,
-		})
+		this._appearance = props.appearance ?? TButton.defaultValues.appearance!
+		this.icon = props.icon ?? TButton.defaultValues.icon!
 
-		this._variantHelper.events.on('change', (value) => {
+		this.events.on('change:variant' as any, (value: any) => {
 			// Если есть спиннер, синхронизируем его вариант с кнопкой
 			this.spinner!.variant = value
 		})
 
-		// Инициализируем значение отображения компонента
-		this._variantHelper.value = props.variant ?? TButton.defaultValues.variant!
-
-		this._appearance = props.appearance ?? TButton.defaultValues.appearance!
-		this.icon = props.icon ?? TButton.defaultValues.icon!
-
-		this._sizeHelper.events.on('change', (value) => {
+		this.events.on('change:size' as any, (value: any) => {
 			// Если есть спиннер, синхронизируем его размер с кнопкой
 			this.spinner!.size = value
 
@@ -57,16 +49,6 @@ export default class TButton extends TControl<IButtonProps, TButtonEvents> imple
 				this._icon.size = value
 			}
 		})
-	}
-
-	get variant(): TComponentVariant {
-		return this._variantHelper.value
-	}
-
-	set variant(value: TComponentVariant) {
-		if (this._variantHelper.value !== value) {
-			this._variantHelper.value = value
-		}
 	}
 
 	get appearance(): TButtonAppearance {
@@ -110,7 +92,7 @@ export default class TButton extends TControl<IButtonProps, TButtonEvents> imple
 			this._spinner = new TSpinner({
 				props: {
 					size: this.size,
-					variant: this._variantHelper.value,
+					variant: this.variant,
 				},
 			})
 		}
@@ -125,15 +107,12 @@ export default class TButton extends TControl<IButtonProps, TButtonEvents> imple
 	}
 
 	get classes(): string[] {
-		const classes = [this._baseClass, ...super.classes]
+		const classes = [...super.classes]
 
 		// Добавляем класс для внешнего вида, если он задан
 		if (this._appearance) {
 			classes.push(`${this._baseClass}--${this._appearance}`)
 		}
-
-		// Добавляем класс для варианта, если он задан
-		classes.push(...this._variantHelper.getClass())
 
 		return classes
 	}
@@ -141,9 +120,10 @@ export default class TButton extends TControl<IButtonProps, TButtonEvents> imple
 	getProps(): IButtonProps {
 		return {
 			...super.getProps(),
-			variant: this._variantHelper.value,
 			appearance: this._appearance,
 			icon: this._icon,
+			loading: this._loading,
+			spinner: this._spinner,
 		}
 	}
 }

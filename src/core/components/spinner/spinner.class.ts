@@ -1,64 +1,65 @@
-import { TComponent, type IComponentModelOptions } from '../../base/component'
+import { TPresentable, type IPresentableOptions } from '../../base/presentable'
 import type { TComponentSize, TComponentVariant } from '../../common/types'
 import type { ISpinner, ISpinnerProps, TSpinnerEvents } from './types'
-import { TSize } from '@/core/common/size'
-import { TVariant } from '../../common/variant'
+import { TSizeState } from '../../base/states/size.state'
+import { TVariantState } from '../../base/states/variant.state'
 
-export default class TSpinner extends TComponent<ISpinnerProps, TSpinnerEvents> implements ISpinner {
+export default class TSpinner extends TPresentable<ISpinnerProps, TSpinnerEvents> implements ISpinner {
+	static override baseClass = 's-spinner'
+
 	static defaultValues: Partial<ISpinnerProps> = {
-		...TComponent.defaultValues,
+		...TPresentable.defaultValues,
 		variant: 'primary',
 		size: 'normal',
 		tag: 'span',
 		borderWidth: 'auto',
 	}
 
-	protected _sizeHelper: TSize
-	protected _variantHelper: TVariant
+	readonly sizeState: TSizeState
+	readonly variantState: TVariantState
 	protected _borderWidth: number | 'auto'
 
-	constructor(options: IComponentModelOptions<ISpinnerProps> = {}) {
-		options = TComponent.prepareOptions(options, 's-spinner')
-
+	constructor(options: IPresentableOptions<ISpinnerProps> | Partial<ISpinnerProps> = {}) {
 		super(options)
 
-		const { props = {} } = options
+		const { props = {} } = TPresentable.prepareOptions(options)
 
-		this._sizeHelper = new TSize({
+		this.sizeState = new TSizeState({
 			baseClass: this._baseClass,
 			exclude: ['normal'],
-			value: TSpinner.defaultValues.size!,
+			value: (props.size ?? TSpinner.defaultValues.size!) as TComponentSize,
+		})
+		this.sizeState.events.on('change', (value) => {
+			this.events.emit('change:size' as any, value)
 		})
 
-		this._variantHelper = new TVariant({
+		this.variantState = new TVariantState({
 			baseClass: this._baseClass,
 			exclude: ['normal'],
-			value: props.variant ?? TSpinner.defaultValues.variant!,
+			value: (props.variant ?? TSpinner.defaultValues.variant!) as TComponentVariant,
+		})
+		this.variantState.events.on('change', (value) => {
+			this.events.emit('change:variant' as any, value)
 		})
 
 		this._tag = props.tag ?? TSpinner.defaultValues.tag!
 		this._borderWidth = props.borderWidth ?? TSpinner.defaultValues.borderWidth!
-		this.size = props.size ?? TSpinner.defaultValues.size!
 	}
 
 	get variant(): TComponentVariant {
-		return this._variantHelper.value
+		return this.variantState.value as TComponentVariant
 	}
 
 	set variant(value: TComponentVariant) {
-		if (this._variantHelper.value !== value) {
-			this._variantHelper.value = value
-		}
+		this.variantState.value = value as any
 	}
 
 	get size(): TComponentSize {
-		return this._sizeHelper.value
+		return this.sizeState.value as TComponentSize
 	}
 
 	set size(value: TComponentSize) {
-		if (this._sizeHelper.value !== value) {
-			this._sizeHelper.value = value
-		}
+		this.sizeState.value = value as any
 	}
 
 	get borderWidth(): number | 'auto' {
@@ -87,14 +88,7 @@ export default class TSpinner extends TComponent<ISpinnerProps, TSpinnerEvents> 
 	}
 
 	get classes(): string[] {
-		const classes = [this._baseClass]
-
-		// Добавляем класс для размера
-		classes.push(...this._sizeHelper.getClass())
-		// Добавляем класс для варианта, если он задан
-		classes.push(...this._variantHelper.getClass())
-
-		return classes
+		return [...super.classes, ...this.sizeState.getClass(), ...this.variantState.getClass()]
 	}
 
 	/**
@@ -115,7 +109,9 @@ export default class TSpinner extends TComponent<ISpinnerProps, TSpinnerEvents> 
 	getProps(): ISpinnerProps {
 		return {
 			...super.getProps(),
-			size: this._sizeHelper.value,
+			size: this.size,
+			variant: this.variant,
+			borderWidth: this._borderWidth,
 		}
 	}
 }

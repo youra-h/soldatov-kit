@@ -20,7 +20,7 @@ export default class TIcon extends TPresentable<IIconProps, TIconEvents> impleme
 	constructor(options: IPresentableOptions<IIconProps> | Partial<IIconProps> = {}) {
 		super(options)
 
-		const { props = {} } = TIcon.prepareOptions(options)
+		const { props = {} } = TPresentable.prepareOptions(options)
 
 		this.sizeState = new TSizeState({
 			baseClass: this._baseClass,
