@@ -48,6 +48,13 @@ export interface IPresentableOptions<TProps extends IPresentableProps = IPresent
 	baseClass?: string
 }
 
+/**
+ * Результат нормализации опций presentable-слоя.
+ * Здесь `baseClass` гарантированно вычислен.
+ */
+export type TPresentablePreparedOptions<TProps extends IPresentableProps = IPresentableProps> =
+	IPresentableOptions<TProps> & { baseClass: string }
+
 export interface IPresentable<
 	TProps extends IPresentableProps = IPresentableProps,
 	TEvents extends Record<string, (...args: any) => any> = TPresentableEvents,

@@ -2,7 +2,12 @@ import TComponentModel from '../component-model/component-model.class'
 import type { IComponentModelOptions, IComponentModelProps } from '../component-model'
 import type { TVisibilityState } from '../states'
 import { TVisibilityState as TVisibilityStateImpl } from '../states/visibility.state'
-import type { IPresentableOptions, IPresentableProps, TPresentableEvents } from './types'
+import type {
+	IPresentableOptions,
+	IPresentableProps,
+	TPresentablePreparedOptions,
+	TPresentableEvents,
+} from './types'
 
 /**
  * Web-presentable слой: tag/classes/attrs.
@@ -25,7 +30,6 @@ export default class TPresentable<
 		visible: true,
 		classes: [],
 		attrs: {},
-		baseClass: 's-presentable',
 	}
 
 	protected _tag: string | object
@@ -37,19 +41,19 @@ export default class TPresentable<
 	static prepareOptions<TP extends IPresentableProps>(
 		options: IPresentableOptions<TP> | Partial<TP>,
 		defaultBaseClass?: string,
-	): IPresentableOptions<TP>
+	): TPresentablePreparedOptions<TP>
 
 	static prepareOptions<T extends IComponentModelProps>(
 		options: IComponentModelOptions<T> | Partial<T>,
 		defaultBaseClass?: string,
-	): IComponentModelOptions<T> & { baseClass?: string }
+	): IComponentModelOptions<T> & { baseClass: string }
 
 	static override prepareOptions<T extends IComponentModelProps>(
 		options: IComponentModelOptions<T> | Partial<T> = {},
 		defaultBaseClass?: string,
 	) {
 		if (options && typeof options === 'object' && 'props' in options) {
-			const normalized = options as IPresentableOptions<T>
+			const normalized = options as IComponentModelOptions<T> & { baseClass?: string }
 
 			return {
 				...normalized,
@@ -67,8 +71,8 @@ export default class TPresentable<
 	}
 
 	constructor(options: IPresentableOptions<TProps> | Partial<TProps> = {}) {
-		const { props = {} as Partial<TProps>, baseClass } =
-			TPresentable.prepareOptions<TProps>(options)
+		const ctor = new.target as typeof TPresentable
+		const { props = {} as Partial<TProps>, baseClass } = ctor.prepareOptions<TProps>(options)
 
 		super({ props })
 
@@ -83,7 +87,7 @@ export default class TPresentable<
 			this.events.emit('change:visible', value)
 		})
 
-		this._baseClass = baseClass ?? TPresentable.defaultValues.baseClass!
+		this._baseClass = baseClass
 		this._classes = (props.classes ?? TPresentable.defaultValues.classes!) as string[]
 		this._attrs = (props.attrs ?? TPresentable.defaultValues.attrs!) as Record<string, unknown>
 	}
