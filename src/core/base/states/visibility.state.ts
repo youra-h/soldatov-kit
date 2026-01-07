@@ -1,4 +1,5 @@
 import { TStateUnit } from '../state-unit'
+import type { TEvented } from '../../common/evented'
 
 /**
  * События `TVisibilityState`.
@@ -11,12 +12,29 @@ export type TVisibilityStateEvents = {
 }
 
 /**
+ * Контракт visibility-state.
+ * Нужен для того, чтобы агрегирующие компоненты (например, presentable)
+ * могли принимать альтернативные реализации state (через фабрики/опции),
+ * не привязываясь к конкретному классу.
+ */
+export interface IVisibilityState {
+	visible: boolean
+	show(): void
+	hide(): void
+	readonly events: TEvented<TVisibilityStateEvents>
+}
+
+export type TVisibilityStateCtor<TState extends IVisibilityState = IVisibilityState> = new (
+	initial?: boolean,
+) => TState
+
+/**
  * Единица состояния "visible".
  *
  * Хранит флаг видимости и эмитит локальное событие `change`.
  * Компонент-агрегат обычно пробрасывает его наружу как `change:visible`.
  */
-export class TVisibilityState extends TStateUnit<TVisibilityStateEvents> {
+export class TVisibilityState extends TStateUnit<TVisibilityStateEvents> implements IVisibilityState {
 	private _visible = true
 
 	constructor(initial: boolean = true) {

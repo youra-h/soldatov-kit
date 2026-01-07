@@ -1,6 +1,9 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { TPresentable } from '../base/presentable'
 import type { IPresentableProps } from '../base/presentable'
+import { TVisibilityState } from '../base/states'
+import type { IVisibilityState, TVisibilityStateEvents } from '../base/states'
+import { TEvented } from '../common/evented'
 
 describe('TPresentable', () => {
 	beforeEach(() => {
@@ -112,5 +115,54 @@ describe('TPresentable', () => {
 	it('toJSON сериализует getProps()', () => {
 		const p = new TPresentable({ id: 'x', tag: 'span', classes: ['a'] })
 		expect(p.toJSON()).toEqual(p.getProps())
+	})
+
+	it('states.factory позволяет менять поведение visible-state (пример: лог при visible=true)', () => {
+		const log: string[] = []
+
+		class TLoggedVisibilityState implements IVisibilityState {
+			public readonly events = new TEvented<TVisibilityStateEvents>()
+			private _visible: boolean
+
+			constructor(initial: boolean, private readonly _log: string[]) {
+				this._visible = initial
+			}
+
+			get visible(): boolean {
+				return this._visible
+			}
+			set visible(value: boolean) {
+				if (this._visible === value) return
+				this._visible = value
+				this.events.emit('change', value)
+				if (value) {
+					this._log.push('state:visible=true')
+				}
+			}
+
+			show(): void {
+				this.visible = true
+			}
+
+			hide(): void {
+				this.visible = false
+			}
+		}
+
+		const factory = vi.fn((key: 'rendered' | 'visible', initial: boolean): IVisibilityState => {
+			if (key === 'visible') return new TLoggedVisibilityState(initial, log)
+			return new TVisibilityState(initial)
+		})
+
+		const p = new TPresentable({ props: { visible: false }, states: { factory } })
+		p.events.on('change:visible', (value) => {
+			log.push(`presentable:change:visible=${value}`)
+		})
+
+		p.visible = true
+
+		expect(factory).toHaveBeenCalled()
+		expect(log).toContain('state:visible=true')
+		expect(log).toContain('presentable:change:visible=true')
 	})
 })

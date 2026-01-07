@@ -4,6 +4,23 @@ import type {
 	IComponentModelProps,
 	TComponentModelEvents,
 } from '../component-model'
+import type { IVisibilityState, TVisibilityStateCtor } from '../states'
+
+export type TPresentableStateKey = 'rendered' | 'visible'
+
+export type TPresentableVisibilityStateFactory = (
+	key: TPresentableStateKey,
+	initial: boolean,
+) => IVisibilityState
+
+export type TPresentableStatesOptions = {
+	/** Фабрика создания state (если задана — имеет приоритет). */
+	factory?: TPresentableVisibilityStateFactory
+	/** Класс state для `rendered` (если не задана factory). */
+	rendered?: TVisibilityStateCtor
+	/** Класс state для `visible` (если не задана factory). */
+	visible?: TVisibilityStateCtor
+}
 
 export type TPresentableEvents = TComponentModelEvents & {
 	/** beforeShow (можно отменить, вернув false) */
@@ -50,6 +67,11 @@ export interface IPresentableOptions<TProps extends IPresentableProps = IPresent
 	extends IComponentModelOptions<TProps>
 {
 	baseClass?: string
+	/**
+	 * Инъекция state-реализаций для rendered/visible.
+	 * Нужна, чтобы менять поведение state свойств без оверрайда геттеров/сеттеров.
+	 */
+	states?: TPresentableStatesOptions
 }
 
 /**

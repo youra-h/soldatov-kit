@@ -1,6 +1,7 @@
 import { TComponentModel } from '../component-model'
 import type { IComponentModelOptions, IComponentModelProps } from '../component-model'
 import { TVisibilityState } from '../states'
+import type { IVisibilityState } from '../states'
 import type {
 	IPresentableOptions,
 	IPresentableProps,
@@ -33,8 +34,8 @@ export default class TPresentable<
 	}
 
 	protected _tag: string | object
-	protected _renderedState: TVisibilityState
-	protected _visibilityState: TVisibilityState
+	protected _renderedState: IVisibilityState
+	protected _visibilityState: IVisibilityState
 	protected _baseClass: string
 	protected _classes: string[]
 	protected _attrs: Record<string, unknown>
@@ -54,7 +55,10 @@ export default class TPresentable<
 		defaultBaseClass?: string,
 	) {
 		if (options && typeof options === 'object') {
-			const normalized = options as IComponentModelOptions<T> & { baseClass?: string }
+			const normalized = options as IComponentModelOptions<T> & {
+				baseClass?: string
+				states?: unknown
+			}
 
 			if ('props' in options) {
 				return {
@@ -72,6 +76,14 @@ export default class TPresentable<
 					baseClass: normalized.baseClass,
 				}
 			}
+
+			if ('states' in options) {
+				return {
+					props: {} as Partial<T>,
+					...normalized,
+					baseClass: defaultBaseClass ?? (this as typeof TPresentable).baseClass,
+				}
+			}
 		}
 
 		return {
@@ -82,26 +94,35 @@ export default class TPresentable<
 
 	constructor(options: IPresentableOptions<TProps> | Partial<TProps> = {}) {
 		const ctor = new.target as typeof TPresentable
-		const { props = {} as Partial<TProps>, baseClass } = ctor.prepareOptions<TProps>(options)
+		const { props = {} as Partial<TProps>, baseClass, states } = ctor.prepareOptions<TProps>(options)
 
 		super({ props })
 
 		this._tag = props.tag ?? TPresentable.defaultValues.tag!
 
-		this._renderedState = new TVisibilityState(
+		const initialRendered =
 			typeof props.rendered === 'boolean'
 				? props.rendered
-				: (TPresentable.defaultValues.rendered as boolean),
-		)
+				: (TPresentable.defaultValues.rendered as boolean)
+		const initialVisible =
+			typeof props.visible === 'boolean'
+				? props.visible
+				: (TPresentable.defaultValues.visible as boolean)
+
+		const stateFactory = states?.factory
+		const RenderedStateCtor = states?.rendered ?? TVisibilityState
+		const VisibilityStateCtor = states?.visible ?? TVisibilityState
+
+		this._renderedState = stateFactory
+			? stateFactory('rendered', initialRendered)
+			: new RenderedStateCtor(initialRendered)
 		this._renderedState.events.on('change', (value) => {
 			this.events.emit('change:rendered', value)
 		})
 
-		this._visibilityState = new TVisibilityState(
-			typeof props.visible === 'boolean'
-				? props.visible
-				: (TPresentable.defaultValues.visible as boolean),
-		)
+		this._visibilityState = stateFactory
+			? stateFactory('visible', initialVisible)
+			: new VisibilityStateCtor(initialVisible)
 		this._visibilityState.events.on('change', (value) => {
 			this.events.emit('change:visible', value)
 		})
