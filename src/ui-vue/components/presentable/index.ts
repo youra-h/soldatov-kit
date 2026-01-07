@@ -1,7 +1,3 @@
-export {
-	default as BasePresentable,
-	emitsPresentable,
-	propsPresentable,
-	syncPresentable,
-} from './base.presentable'
-export { default as Presentable } from './Presentable.vue'
+export { default as BasePresentable, emitsPresentable, syncPresentable } from './base.component'
+import Presentable from './Presentable.vue'
+export { Presentable }

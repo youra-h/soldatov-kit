@@ -4,7 +4,7 @@ import { Icon, useIconImport } from '@ui/icon'
 import { Button } from '@ui/button'
 import { TIcon, TButton } from '@core'
 
-const IconHome = useIconImport('/src/packages/icons/home.svg')
+const IconHome = useIconImport('/src/icons/home.svg')
 const icon = TIcon.create({ tag: IconHome })
 // const icon = new TIcon({ tag: IconHome }) // просто props
 

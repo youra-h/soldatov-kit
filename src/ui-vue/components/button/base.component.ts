@@ -8,7 +8,7 @@ import {
 	TButton,
 } from '../../../core'
 import { Control, emitsControl, propsControl, syncControl } from '../control'
-import type { TEmits, TProps, ISyncComponentOptions } from '../../types/common'
+import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types'
 import { Icon } from '../icon'
 import { Spinner } from '../spinner'
 
@@ -55,7 +55,7 @@ export default {
  * @param props
  * @param instance
  */
-export function syncButton(options: ISyncComponentOptions<IButtonProps>) {
+export function syncButton(options: ISyncComponentModelOptions<IButtonProps>) {
 	syncControl(options)
 
 	const { instance, props } = options

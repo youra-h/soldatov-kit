@@ -4,7 +4,7 @@ import { Button } from '@ui/button'
 import { TButton } from '@core'
 
 const button = reactive(new TButton({ text: 'Button 1' }))
-button.on('click', () => {
+button.events.on('click', () => {
 	console.log('Button instance clicked!')
 })
 

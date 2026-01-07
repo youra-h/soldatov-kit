@@ -1,3 +1,2 @@
 export { default as BaseButton, emitsButton, syncButton } from './base.component'
-import Button from './Button.vue'
-export { Button }
+export { default as Button } from './Button.vue'

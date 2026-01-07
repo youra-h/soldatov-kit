@@ -5,7 +5,7 @@ import { Button } from '@ui/button'
 import { Icon, useIconImport } from '@ui/icon'
 import { TIcon, TSwitch, TButton } from '@core'
 
-const icon = TIcon.create({ tag: useIconImport('/src/packages/icons/home.svg') })
+const icon = TIcon.create({ tag: useIconImport('/src/icons/home.svg') })
 const loading = ref(false)
 
 setTimeout(() => {
