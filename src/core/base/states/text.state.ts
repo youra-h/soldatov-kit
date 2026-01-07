@@ -17,7 +17,7 @@ export interface ITextState {
 	readonly events: TEvented<TTextStateEvents>
 }
 
-export type TTextStateCtor = TStateCtor<ITextState>
+export type TTextStateCtor = TStateCtor<ITextState, string>
 
 /**
  * Единица состояния для текстового значения (label/content).

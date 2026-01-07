@@ -1,8 +1,8 @@
-import { TTextState } from '../states'
+import { TTextState, type ITextState } from '../states'
 import { TControl } from '../control'
 import type { IPresentableOptions } from '../presentable'
 import { TPresentable } from '../presentable'
-import type { ITextableProps, TTextableEvents } from './types'
+import type { ITextableProps, TTextableEvents, TTextableStatesOptions } from './types'
 
 /**
  * Слой "textable": добавляет отображаемое текстовое значение `text`.
@@ -14,22 +14,28 @@ import type { ITextableProps, TTextableEvents } from './types'
 export default class TTextable<
 	TProps extends ITextableProps = ITextableProps,
 	TEvents extends TTextableEvents = TTextableEvents,
-> extends TControl<TProps, TEvents> {
+	TStates extends TTextableStatesOptions = TTextableStatesOptions,
+> extends TControl<TProps, TEvents, TStates> {
 	static defaultValues: Partial<ITextableProps> = {
 		...TControl.defaultValues,
 		text: '',
 	}
 
-	protected _textState: TTextState
+	protected _textState: ITextState
 
-	constructor(options: IPresentableOptions<TProps> | Partial<TProps> = {}) {
+	constructor(options: IPresentableOptions<TProps, TStates> | Partial<TProps> = {}) {
 		super(options)
 
-		const { props = {} as Partial<TProps> } = TPresentable.prepareOptions<TProps>(
-			options as any,
-		)
+		const { props = {} as Partial<TProps>, states } = TPresentable.prepareOptions<
+			TProps,
+			TStates
+		>(options)
 
-		this._textState = new TTextState(props.text ?? (TTextable.defaultValues.text as string))
+		const initialText = props.text ?? (TTextable.defaultValues.text as string)
+
+		const TextCtor = states?.text ?? TTextState
+
+		this._textState = new TextCtor(initialText)
 
 		this._textState.events.on('change', (value) => {
 			this.events.emit('change:text' as any, value)

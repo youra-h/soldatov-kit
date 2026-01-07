@@ -1,4 +1,5 @@
-import type { IControl, IControlProps, TControlEvents } from '../control'
+import type { IControl, IControlProps, TControlEvents, TControlStatesOptions } from '../control'
+import type { TTextStateCtor } from '../states'
 
 export type TTextableEvents = TControlEvents & {
 	/** change:text */
@@ -8,6 +9,10 @@ export type TTextableEvents = TControlEvents & {
 export interface ITextableProps extends IControlProps {
 	/** Отображаемый текст компонента (не путать с value у контролов). */
 	text?: string
+}
+
+export type TTextableStatesOptions = TControlStatesOptions & {
+	text?: TTextStateCtor
 }
 
 export interface ITextable<
