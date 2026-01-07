@@ -11,9 +11,9 @@ export default defineConfig({
 	resolve: {
 		alias: {
 			'@': fileURLToPath(new URL('./src', import.meta.url)),
-			'@packages': fileURLToPath(new URL('./src/packages', import.meta.url)),
-			'@ui': fileURLToPath(new URL('./src/packages/ui', import.meta.url)),
-			'@icons': fileURLToPath(new URL('./src/packages/icons', import.meta.url)),
+			'@ui-vue': fileURLToPath(new URL('./src/ui-vue', import.meta.url)),
+			'@icons': fileURLToPath(new URL('./src/icons', import.meta.url)),
+			'@foundation': fileURLToPath(new URL('./src/foundation', import.meta.url)),
 			'@core': fileURLToPath(new URL('./src/core', import.meta.url)),
 		},
 	},

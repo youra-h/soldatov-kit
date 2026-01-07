@@ -1,8 +1,7 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '@playwright/test'
 
-// See here how to get started:
-// https://playwright.dev/docs/intro
-test('visits the app root url', async ({ page }) => {
-  await page.goto('/');
-  await expect(page.locator('h1')).toHaveText('You did it!');
+test('opens e2e playground', async ({ page }) => {
+  await page.goto('/e2e/')
+  await expect(page.getByTestId('e2e-title')).toHaveText('E2E Playground')
+  await expect(page.getByTestId('presentable')).toContainText('Presentable content')
 })

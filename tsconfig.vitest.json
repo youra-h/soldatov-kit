@@ -1,6 +1,11 @@
 {
   "extends": "./tsconfig.app.json",
-  "include": ["src/**/__tests__/*", "env.d.ts", "src/core/__tests__/activable-collection.spec.ts", "src/core/__tests__/old/activable-tree.spec.ts", "src/core/__tests__/collection.spec.ts", "src/core/__tests__/old/component.spec.ts", "src/core/__tests__/event-emitter.spec.ts", "src/core/__tests__/old/menu-tree.spec.ts", "src/core/__tests__/selectable-collection.spec.ts", "src/core/__tests__/old/selectable-tree.spec.ts", "src/core/__tests__/old/selectable-tree.test.ts", "src/core/__tests__/tree.spec.ts"],
+  "include": [
+    "env.d.ts",
+    "src/**/*.vue",
+    "src/**/*.{test,spec}.ts",
+    "src/**/__tests__/**/*.{test,spec}.ts"
+  ],
   "exclude": [],
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.vitest.tsbuildinfo",
