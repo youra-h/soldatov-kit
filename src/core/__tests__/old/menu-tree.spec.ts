@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { TActivatableTree } from '../classes/tree/activable/activable-tree.class'
 import { TActivatableTreeItem } from '../classes/tree/activable/activable-tree-item.class'
-import type { TConstructor } from '../common/types'
+import type { TConstructor } from '../../common/types'
 
 export class TMenuItem extends TActivatableTreeItem {
 	public label: string = ''
