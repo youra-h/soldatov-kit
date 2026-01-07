@@ -197,4 +197,19 @@ export default class TPresentable<
 			attrs: this._attrs,
 		} as TProps
 	}
+
+	/**
+	 * Компонент скрыт и удален из Dom
+	 */
+	// get isHidden(): boolean {
+	// 	return this._hidden ? this._visible : true
+	// }
+
+	/**
+	 * Компонент видим и не удален из Dom
+	 */
+	get isVisibility(): boolean {
+		// return this._hidden ? true : this._visible
+		return this._visibility.visible
+	}
 }

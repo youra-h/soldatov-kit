@@ -1,6 +1,6 @@
 import { type PropType, watch } from 'vue'
-import { type IPresentable, TPresentable } from '../../../core'
-import type { TEmits, TProps, ISyncPresentableOptions } from '../../types'
+import { type IPresentable, type IPresentableProps, TPresentable } from '../../../core'
+import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types'
 
 export const emitsPresentable: TEmits = [
 	'update:visible',
@@ -15,21 +15,21 @@ export const propsPresentable: TProps = {
 		type: Object as PropType<IPresentable>,
 	},
 	id: {
-		type: [String, Number] as PropType<IPresentable['id']>,
+		type: [String, Number] as PropType<IPresentableProps['id']>,
 		default: TPresentable.defaultValues.id,
 	},
 	tag: {
-		type: [Object, String] as PropType<IPresentable['tag']>,
+		type: [Object, String] as PropType<IPresentableProps['tag']>,
 		default: TPresentable.defaultValues.tag,
 	},
 	visible: {
-		type: Boolean as PropType<IPresentable['visible']>,
+		type: Boolean as PropType<IPresentableProps['visible']>,
 		default: TPresentable.defaultValues.visible,
 	},
-	hidden: {
-		type: Boolean as PropType<IPresentable['hidden']>,
-		default: TPresentable.defaultValues.hidden,
-	},
+	// hidden: {
+	// 	type: Boolean as PropType<IPresentable['hidden']>,
+	// 	default: TPresentable.defaultValues.hidden,
+	// },
 }
 
 export default {
@@ -45,7 +45,7 @@ export default {
 	},
 }
 
-export function syncPresentable(options: ISyncPresentableOptions<IPresentable>) {
+export function syncPresentable(options: ISyncComponentModelOptions<IPresentable>) {
 	const { instance, props, emit } = options
 
 	watch<Object | string>(
@@ -75,12 +75,12 @@ export function syncPresentable(options: ISyncPresentableOptions<IPresentable>) 
 		},
 	)
 
-	watch<boolean>(
-		() => props.hidden,
-		(value) => {
-			if (value !== instance.hidden) {
-				instance.hidden = value
-			}
-		},
-	)
+	// watch<boolean>(
+	// 	() => props.hidden,
+	// 	(value) => {
+	// 		if (value !== instance.hidden) {
+	// 			instance.hidden = value
+	// 		}
+	// 	},
+	// )
 }
