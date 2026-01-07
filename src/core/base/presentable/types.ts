@@ -4,7 +4,7 @@ import type {
 	IComponentModelProps,
 	TComponentModelEvents,
 } from '../component-model'
-import type { IVisibilityState, TVisibilityStateCtor } from '../states'
+import type { TVisibilityStateCtor } from '../states'
 
 export type TPresentableStatesOptions = {
 	/** Класс state для `rendered`. */
@@ -70,8 +70,13 @@ export interface IPresentableOptions<
  * Результат нормализации опций presentable-слоя.
  * Здесь `baseClass` гарантированно вычислен.
  */
-export type TPresentablePreparedOptions<TProps extends IPresentableProps = IPresentableProps> =
-	IPresentableOptions<TProps> & { baseClass: string }
+export type TPresentablePreparedOptions<
+	TProps extends IPresentableProps = IPresentableProps,
+	TStates extends TPresentableStatesOptions = TPresentableStatesOptions,
+> = IPresentableOptions<TProps, TStates> & {
+	props: Partial<TProps>
+	baseClass: string
+}
 
 export interface IPresentable<
 	TProps extends IPresentableProps = IPresentableProps,

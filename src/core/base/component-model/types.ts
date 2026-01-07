@@ -26,6 +26,6 @@ export interface IComponentModel<
  * Опции для создания компонента.
  * props — начальные свойства.
  */
-export interface IComponentModelOptions<T> {
-	props?: Partial<T>
+export interface IComponentModelOptions<TProps> {
+	props?: Partial<TProps>
 }

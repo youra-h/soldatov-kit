@@ -1,11 +1,6 @@
 import type { IPresentable, IPresentableProps, TPresentableEvents } from '../presentable'
 import type { IPresentableOptions, TPresentableStatesOptions } from '../presentable'
-import type {
-	IDisableableState,
-	IFocusableState,
-	TDisableableStateCtor,
-	TFocusableStateCtor,
-} from '../states'
+import type { TDisableableStateCtor, TFocusableStateCtor } from '../states'
 
 export type TInteractiveEvents = TPresentableEvents & {
 	/** change:disabled */
@@ -21,16 +16,15 @@ export interface IInteractiveProps extends IPresentableProps {
 	focused?: boolean
 }
 
-export type TInteractiveStatesOptions = {
+export type TInteractiveStatesOptions = TPresentableStatesOptions & {
 	disableable?: TDisableableStateCtor
 	focusable?: TFocusableStateCtor
 }
 
 export interface IInteractiveOptions<
 	TProps extends IInteractiveProps = IInteractiveProps,
-> extends IPresentableOptions<TProps, TPresentableStatesOptions & TInteractiveStatesOptions> {
-	// states?: TPresentableStatesOptions & TInteractiveStatesOptions
-}
+	TStates extends TInteractiveStatesOptions = TInteractiveStatesOptions,
+> extends IPresentableOptions<TProps, TStates> {}
 
 export interface IInteractive<
 	TProps extends IInteractiveProps = IInteractiveProps,

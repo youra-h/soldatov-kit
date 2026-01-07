@@ -7,6 +7,7 @@ import type {
 	IPresentableProps,
 	TPresentablePreparedOptions,
 	TPresentableEvents,
+	TPresentableStatesOptions,
 } from './types'
 
 /**
@@ -20,6 +21,7 @@ import type {
 export default class TPresentable<
 	TProps extends IPresentableProps = IPresentableProps,
 	TEvents extends TPresentableEvents = TPresentableEvents,
+	TStates extends TPresentableStatesOptions = TPresentableStatesOptions,
 > extends TComponentModel<TProps, TEvents> {
 	/** Базовый CSS-класс по умолчанию (можно переопределить в наследниках). */
 	static baseClass = 's-presentable'
@@ -40,65 +42,53 @@ export default class TPresentable<
 	protected _classes: string[]
 	protected _attrs: Record<string, unknown>
 
-	static prepareOptions<TP extends IPresentableProps>(
-		options: IPresentableOptions<TP> | Partial<TP>,
-		defaultBaseClass?: string,
-	): TPresentablePreparedOptions<TP>
+	static prepareOptions<
+		TProps extends IPresentableProps = IPresentableProps,
+		TStates extends TPresentableStatesOptions = TPresentableStatesOptions,
+	>(
+		options: IPresentableOptions<TProps, TStates> | Partial<TProps>,
+	): TPresentablePreparedOptions<TProps, TStates> {
+		const defaultBaseClass = (this as typeof TPresentable).baseClass
 
-	static prepareOptions<T extends IComponentModelProps>(
-		options: IComponentModelOptions<T> | Partial<T>,
-		defaultBaseClass?: string,
-	): IComponentModelOptions<T> & { baseClass: string }
+		const raw = options as Record<string, unknown>
+		const hasPropsKey = Object.prototype.hasOwnProperty.call(raw, 'props')
+		const hasStatesKey = Object.prototype.hasOwnProperty.call(raw, 'states')
+		const hasBaseClassKey = Object.prototype.hasOwnProperty.call(raw, 'baseClass')
 
-	static override prepareOptions<T extends IComponentModelProps>(
-		options: IComponentModelOptions<T> | Partial<T> = {},
-		defaultBaseClass?: string,
-	) {
-		if (options && typeof options === 'object') {
-			const normalized = options as IComponentModelOptions<T> & {
-				baseClass?: string
-				states?: unknown
-			}
+		// { baseClass: '...' } — считаем это "опциями", а не props
+		const isOnlyBaseClass =
+			hasBaseClassKey && Object.keys(raw).length === 1 && Object.keys(raw)[0] === 'baseClass'
 
-			if ('props' in options) {
-				return {
-					...normalized,
-					baseClass:
-						normalized.baseClass ??
-						defaultBaseClass ??
-						(this as typeof TPresentable).baseClass,
-				}
-			}
+		// Если есть props/states — это точно options-объект
+		// Если только baseClass — тоже трактуем как options-объект
+		const isOptionsObject = hasPropsKey || hasStatesKey || isOnlyBaseClass
 
-			if ('baseClass' in options) {
-				return {
-					props: {} as Partial<T>,
-					baseClass: normalized.baseClass,
-				}
-			}
+		if (isOptionsObject) {
+			const opt = options as IPresentableOptions<TProps, TStates>
+			const props = (opt.props ?? {}) as Partial<TProps>
 
-			if ('states' in options) {
-				return {
-					props: {} as Partial<T>,
-					...normalized,
-					baseClass: defaultBaseClass ?? (this as typeof TPresentable).baseClass,
-				}
+			return {
+				props,
+				states: opt.states,
+				baseClass: opt.baseClass ?? props.baseClass ?? defaultBaseClass,
 			}
 		}
 
+		// Иначе это plain props
+		const props = options as Partial<TProps>
 		return {
-			props: options as Partial<T>,
-			baseClass: defaultBaseClass ?? (this as typeof TPresentable).baseClass,
+			props,
+			baseClass: props.baseClass ?? defaultBaseClass,
 		}
 	}
 
-	constructor(options: IPresentableOptions<TProps> | Partial<TProps> = {}) {
+	constructor(options: IPresentableOptions<TProps, TStates> | Partial<TProps> = {}) {
 		const ctor = new.target as typeof TPresentable
 		const {
 			props = {} as Partial<TProps>,
 			baseClass,
 			states,
-		} = ctor.prepareOptions<TProps>(options)
+		} = ctor.prepareOptions<TProps, TStates>(options)
 
 		super({ props })
 
