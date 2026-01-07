@@ -2,7 +2,7 @@ import { TActivatableTree } from '../src/core/classes/tree/activable/activable-t
 import { TActivatableTreeItem } from '../src/core/classes/tree/activable/activable-tree-item.class'
 import { TSelectableTree } from '../src/core/classes/tree/selectable/selectable-tree.class'
 import { TSelectableTreeItem } from '../src/core/classes/tree/selectable/selectable-tree-item.class'
-import type { TConstructor } from '../src/core/common/types'
+import type { TConstructor } from '../core/common/types'
 
 export class TMenuItem extends TActivatableTreeItem {
 	public label: string = ''
