@@ -27,10 +27,10 @@ export default class TComponentModel<
 	protected _id: string | number
 	public readonly events: TEvented<TEvents>
 
-	constructor(options: IComponentModelOptions<IComponentModelProps> = {}) {
+	constructor(options: IComponentModelOptions<TProps> | Partial<TProps> = {}) {
+		const ctor = new.target as typeof TComponentModel
+		const { props = {} as Partial<TProps> } = ctor.prepareOptions<TProps>(options)
 		super()
-
-		const { props = {} } = options
 
 		this.events = new TEvented<TEvents>()
 		this._id = props.id ?? TComponentModel.defaultValues.id!

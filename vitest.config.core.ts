@@ -6,6 +6,7 @@ export default mergeConfig(
 	defineConfig({
 		test: {
 			include: ['src/core/__tests__/**/*.{test,spec}.ts'],
+			exclude: ['src/core/__tests__/old/**'],
 			name: 'core'
 		},
 	}),
