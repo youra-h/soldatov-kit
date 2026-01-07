@@ -25,8 +25,8 @@ export default {
 <template>
 	<component
 		:is="component.tag"
-		v-if="component.isHidden"
-		v-show="component.isVisibility"
+		v-if="component.rendered"
+		v-show="component.visible"
 		:class="component.classes"
 	>
 	</component>

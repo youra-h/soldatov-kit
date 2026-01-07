@@ -26,13 +26,15 @@ export default class TPresentable<
 	static defaultValues: Partial<IPresentableProps> = {
 		id: '',
 		tag: 'div',
+		rendered: true,
 		visible: true,
 		classes: [],
 		attrs: {},
 	}
 
 	protected _tag: string | object
-	protected _visibility: TVisibilityState
+	protected _renderedState: TVisibilityState
+	protected _visibilityState: TVisibilityState
 	protected _baseClass: string
 	protected _classes: string[]
 	protected _attrs: Record<string, unknown>
@@ -86,12 +88,21 @@ export default class TPresentable<
 
 		this._tag = props.tag ?? TPresentable.defaultValues.tag!
 
-		this._visibility = new TVisibilityState(
+		this._renderedState = new TVisibilityState(
+			typeof props.rendered === 'boolean'
+				? props.rendered
+				: (TPresentable.defaultValues.rendered as boolean),
+		)
+		this._renderedState.events.on('change', (value) => {
+			this.events.emit('change:rendered', value)
+		})
+
+		this._visibilityState = new TVisibilityState(
 			typeof props.visible === 'boolean'
 				? props.visible
 				: (TPresentable.defaultValues.visible as boolean),
 		)
-		this._visibility.events.on('change', (value) => {
+		this._visibilityState.events.on('change', (value) => {
 			this.events.emit('change:visible', value)
 		})
 
@@ -100,8 +111,20 @@ export default class TPresentable<
 		this._attrs = (props.attrs ?? TPresentable.defaultValues.attrs!) as Record<string, unknown>
 	}
 
+	get rendered(): boolean {
+		return this._renderedState.visible
+	}
+	set rendered(value: boolean) {
+		if (value === this._renderedState.visible) return
+		if (value) {
+			this._renderedState.show()
+		} else {
+			this._renderedState.hide()
+		}
+	}
+
 	get visible(): boolean {
-		return this._visibility.visible
+		return this._visibilityState.visible
 	}
 	set visible(value: boolean) {
 		if (value) {
@@ -118,7 +141,7 @@ export default class TPresentable<
 		if (!canShow) return
 
 		if (this.visible) return
-		this._visibility.show()
+		this._visibilityState.show()
 
 		this.events.emit('show' as any)
 
@@ -133,7 +156,7 @@ export default class TPresentable<
 		if (!canHide) return
 
 		if (!this.visible) return
-		this._visibility.hide()
+		this._visibilityState.hide()
 
 		this.events.emit('hide' as any)
 
@@ -191,25 +214,11 @@ export default class TPresentable<
 		return {
 			...super.getProps(),
 			tag: this._tag,
+			rendered: this.rendered,
 			visible: this.visible,
 			baseClass: this._baseClass,
 			classes: this._classes,
 			attrs: this._attrs,
 		} as TProps
-	}
-
-	/**
-	 * Компонент скрыт и удален из Dom
-	 */
-	// get isHidden(): boolean {
-	// 	return this._hidden ? this._visible : true
-	// }
-
-	/**
-	 * Компонент видим и не удален из Dom
-	 */
-	get isVisibility(): boolean {
-		// return this._hidden ? true : this._visible
-		return this._visibility.visible
 	}
 }

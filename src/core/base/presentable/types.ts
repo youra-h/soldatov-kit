@@ -20,6 +20,8 @@ export type TPresentableEvents = TComponentModelEvents & {
 	hide: () => void
 	/** change:visible */
 	'change:visible': (value: boolean) => void
+	/** change:rendered */
+	'change:rendered': (value: boolean) => void
 
 	/** change:tag */
 	'change:tag': (value: string | object) => void
@@ -31,6 +33,8 @@ export type TPresentableEvents = TComponentModelEvents & {
 
 export interface IPresentableProps extends IComponentModelProps {
 	tag?: string | object
+	/** Отрисован ли компонент в DOM (аналог v-if) */
+	rendered?: boolean
 	/** Виден ли компонент (логическая видимость) */
 	visible?: boolean
 	classes?: string[] // dynamic classes (без baseClass)
@@ -62,6 +66,7 @@ export interface IPresentable<
 	readonly classes: string[]
 	readonly attrs: Record<string, unknown>
 	tag: string | object
+	rendered: boolean
 	visible: boolean
 	show(): void
 	hide(): void

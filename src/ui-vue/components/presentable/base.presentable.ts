@@ -3,7 +3,9 @@ import { type IPresentable, type IPresentableProps, TPresentable } from '../../.
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types'
 
 export const emitsPresentable: TEmits = [
+	'update:rendered',
 	'update:visible',
+	'rendered',
 	'hide',
 	'show',
 	'visible',
@@ -21,6 +23,10 @@ export const propsPresentable: TProps = {
 	tag: {
 		type: [Object, String] as PropType<IPresentableProps['tag']>,
 		default: TPresentable.defaultValues.tag,
+	},
+	rendered: {
+		type: Boolean as PropType<IPresentableProps['rendered']>,
+		default: TPresentable.defaultValues.rendered,
 	},
 	visible: {
 		type: Boolean as PropType<IPresentableProps['visible']>,
@@ -53,6 +59,17 @@ export function syncPresentable(options: ISyncComponentModelOptions<IPresentable
 		(value) => {
 			if (value !== instance.tag) {
 				instance.tag = value
+			}
+		},
+	)
+
+	watch<boolean>(
+		() => props.rendered,
+		(value) => {
+			if (value !== instance.rendered) {
+				instance.rendered = value
+				emit?.('rendered', value)
+				emit?.('update:rendered', value)
 			}
 		},
 	)
