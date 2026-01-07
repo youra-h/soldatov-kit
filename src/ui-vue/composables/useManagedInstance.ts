@@ -1,4 +1,4 @@
-import { type IComponentOptions } from '@core'
+import { type IComponentModelOptions } from '@core'
 
 /**
  * Use a managed instance of a component.
@@ -8,7 +8,7 @@ import { type IComponentOptions } from '@core'
  * @returns The managed instance of the component.
  */
 export function useManagedInstance<T>(
-	Ctor: new (options: IComponentOptions<any>) => T,
+	Ctor: new (options: IComponentModelOptions<any>) => T,
 	props: any,
 	key: string = 'is',
 ): T {

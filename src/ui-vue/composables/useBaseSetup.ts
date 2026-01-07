@@ -1,5 +1,5 @@
 import { reactive } from 'vue'
-import { useManagedInstance } from '../../packages/common/useManagedInstance'
+import { useManagedInstance } from './useManagedInstance'
 
 /**
  * Use a managed instance of a component.
