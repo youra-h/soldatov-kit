@@ -1,4 +1,10 @@
-import type { IStylable, IStylableProps, TStylableEvents } from '../stylable'
+import type {
+	IStylable,
+	IStylableProps,
+	TStylableEvents,
+	TStylableStatesOptions,
+} from '../stylable'
+import type { TDisableableStateCtor, TFocusableStateCtor } from '../states'
 
 export type TControlEvents = TStylableEvents & {
 	/** change:disabled */
@@ -12,6 +18,11 @@ export type TControlEvents = TStylableEvents & {
 export interface IControlProps extends IStylableProps {
 	disabled?: boolean
 	focused?: boolean
+}
+
+export type TControlStatesOptions = TStylableStatesOptions & {
+	disableable?: TDisableableStateCtor
+	focusable?: TFocusableStateCtor
 }
 
 export interface IControl<

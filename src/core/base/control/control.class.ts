@@ -1,8 +1,9 @@
 import { TDisableableState, TFocusableState } from '../states'
+import type { IDisableableState, IFocusableState } from '../states'
 import { TPresentable } from '../presentable'
 import type { IPresentableOptions } from '../presentable'
 import { TStylable } from '../stylable'
-import type { IControlProps, TControlEvents } from './types'
+import type { IControlProps, TControlEvents, TControlStatesOptions } from './types'
 
 /**
  * База для Ui-контролов: stylable (size/variant) + интерактивность (disabled/focused/click).
@@ -14,6 +15,7 @@ import type { IControlProps, TControlEvents } from './types'
 export default class TControl<
 	TProps extends IControlProps = IControlProps,
 	TEvents extends TControlEvents = TControlEvents,
+	TStates extends TControlStatesOptions = TControlStatesOptions,
 > extends TStylable<TProps, TEvents> {
 	static defaultValues: Partial<IControlProps> = {
 		...TStylable.defaultValues,
@@ -21,25 +23,31 @@ export default class TControl<
 		focused: false,
 	}
 
-	protected _disableable: TDisableableState
-	protected _focusable: TFocusableState
+	protected _disableable: IDisableableState
+	protected _focusable: IFocusableState
 
-	constructor(options: IPresentableOptions<TProps> | Partial<TProps> = {}) {
+	constructor(options: IPresentableOptions<TProps, TStates> | Partial<TProps> = {}) {
 		super(options)
-		const { props = {} as Partial<TProps> } = TPresentable.prepareOptions<TProps>(
-			options as any,
-		)
 
-		this._disableable = new TDisableableState(
-			props.disabled ?? (TControl.defaultValues.disabled as boolean),
-		)
+		const { props = {} as Partial<TProps>, states } = TPresentable.prepareOptions<
+			TProps,
+			TStates
+		>(options)
+
+		const initialDisabled = props.disabled ?? (TControl.defaultValues.disabled as boolean)
+		const initialFocused = props.focused ?? (TControl.defaultValues.focused as boolean)
+
+		const DisableableCtor = states?.disableable ?? TDisableableState
+		const FocusableCtor = states?.focusable ?? TFocusableState
+
+		this._disableable = new DisableableCtor(initialDisabled)
+
 		this._disableable.events.on('change', (value) => {
 			this.events.emit('change:disabled' as any, value)
 		})
 
-		this._focusable = new TFocusableState(
-			props.focused ?? (TControl.defaultValues.focused as boolean),
-		)
+		this._focusable = new FocusableCtor(initialFocused)
+
 		this._focusable.events.on('change', (value) => {
 			this.events.emit('change:focused' as any, value)
 		})
