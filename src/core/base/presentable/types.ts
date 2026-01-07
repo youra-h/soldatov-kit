@@ -14,8 +14,6 @@ export type TPresentableVisibilityStateFactory = (
 ) => IVisibilityState
 
 export type TPresentableStatesOptions = {
-	/** Фабрика создания state (если задана — имеет приоритет). */
-	factory?: TPresentableVisibilityStateFactory
 	/** Класс state для `rendered` (если не задана factory). */
 	rendered?: TVisibilityStateCtor
 	/** Класс state для `visible` (если не задана factory). */

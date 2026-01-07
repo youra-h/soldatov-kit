@@ -108,21 +108,13 @@ export default class TPresentable<
 		const initialRendered = props.rendered ?? (TPresentable.defaultValues.rendered as boolean)
 		const initialVisible = props.visible ?? (TPresentable.defaultValues.visible as boolean)
 
-		// Создаём состояния — поддерживаем либо ctor, либо готовый инстанс
-		const resolveState = (
-			opt: any,
-			DefaultCtor: new (initial?: boolean) => IVisibilityState,
-			initial: boolean,
-		) => {
-			if (opt && typeof opt === 'object' && typeof (opt as any).show === 'function') {
-				return opt as IVisibilityState
-			}
-			const Ctor = typeof opt === 'function' ? opt : DefaultCtor
-			return new Ctor(initial)
-		}
+		// Позволяем переопределять классы состояний
+		const RenderedStateCtor = states?.rendered ?? TVisibilityState
+		const VisibleStateCtor = states?.visible ?? TVisibilityState
 
-		this._renderedState = resolveState(states?.rendered, TVisibilityState, initialRendered)
-		this._visibilityState = resolveState(states?.visible, TVisibilityState, initialVisible)
+		// Создаём состояния
+		this._renderedState = new RenderedStateCtor(initialRendered)
+		this._visibilityState = new VisibleStateCtor(initialVisible)
 
 		this._renderedState.events.on('change', (value) =>
 			this.events.emit('change:rendered', value),

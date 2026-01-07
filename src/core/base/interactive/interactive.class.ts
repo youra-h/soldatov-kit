@@ -35,17 +35,13 @@ export default class TInteractive<
 		const DisableableCtor = states?.disableable ?? TDisableableState
 		const FocusableCtor = states?.focusable ?? TFocusableState
 
-		this._disableable = states?.createDisableable
-			? states.createDisableable(initialDisabled)
-			: new DisableableCtor(initialDisabled)
+		this._disableable = new DisableableCtor(initialDisabled)
 
 		this._disableable.events.on('change', (value) => {
 			this.events.emit('change:disabled' as any, value)
 		})
 
-		this._focusable = states?.createFocusable
-			? states.createFocusable(initialFocused)
-			: new FocusableCtor(initialFocused)
+		this._focusable = new FocusableCtor(initialFocused)
 
 		this._focusable.events.on('change', (value) => {
 			this.events.emit('change:focused' as any, value)

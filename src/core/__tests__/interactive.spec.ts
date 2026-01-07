@@ -35,7 +35,7 @@ describe('TInteractive', () => {
 		expect(handler).toHaveBeenCalledWith(event)
 	})
 
-	it('states.createDisableable позволяет подменить disableable-state', () => {
+	it('states позволяет передать инстанс или класс для disableable-state', () => {
 		const log: string[] = []
 
 		class TLoggedDisableableState extends TDisableableState {
@@ -43,22 +43,27 @@ describe('TInteractive', () => {
 				super(initial)
 			}
 
-			override get disabled(): boolean {
-				return super.disabled
-			}
 			override set disabled(value: boolean) {
 				super.disabled = value
 				if (value) this._log.push('disabled:true')
 			}
 		}
 
-		const interactive = new TInteractive({
-			states: {
-				createDisableable: (initial) => new TLoggedDisableableState(initial, log),
-			},
-		})
+		// 1) instance
+		const instance = new TLoggedDisableableState(false, log)
+		const i1 = new TInteractive({ states: { disableable: instance } })
+		i1.disabled = true
+		expect(log).toContain('disabled:true')
 
-		interactive.disabled = true
+		// 2) ctor
+		log.length = 0
+		class CtorLogged extends TLoggedDisableableState {
+			constructor(initial = false) {
+				super(initial, log)
+			}
+		}
+		const i2 = new TInteractive({ states: { disableable: CtorLogged } })
+		i2.disabled = true
 		expect(log).toContain('disabled:true')
 	})
 })

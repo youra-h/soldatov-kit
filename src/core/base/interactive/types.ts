@@ -22,9 +22,7 @@ export interface IInteractiveProps extends IPresentableProps {
 }
 
 export type TInteractiveStatesOptions = {
-	createDisableable?: (initial: boolean) => IDisableableState
 	disableable?: TDisableableStateCtor
-	createFocusable?: (initial: boolean) => IFocusableState
 	focusable?: TFocusableStateCtor
 }
 
