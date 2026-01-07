@@ -1,6 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { TSelectableTree } from '../classes/tree/selectable/selectable-tree.class'
-import { TSelectableTreeItem } from '../classes/tree/selectable/selectable-tree-item.class'
+import { TSelectableTree, TSelectableTreeItem } from '../components/tree'
 
 describe('TSelectableTree', () => {
 	it('should create instance', () => {

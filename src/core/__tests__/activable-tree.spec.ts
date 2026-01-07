@@ -1,6 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { TActivatableTree } from '../classes/tree/activable/activable-tree.class'
-import { TActivatableTreeItem } from '../classes/tree/activable/activable-tree-item.class'
+import { TActivatableTree, TActivatableTreeItem } from '../components/tree'
 
 describe('TActivatableTree', () => {
 	it('should create instance', () => {
