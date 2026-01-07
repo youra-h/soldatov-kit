@@ -1,8 +1,7 @@
 import type { TComponentSize, TComponentVariant } from '../../common/types'
 import { TPresentable } from '../presentable'
 import type { IPresentableOptions } from '../presentable'
-import { TSizeState } from '../states/size.state'
-import { TVariantState } from '../states/variant.state'
+import { TSizeState, TVariantState } from '../states'
 import type { IStylableProps, TStylableEvents } from './types'
 
 /**

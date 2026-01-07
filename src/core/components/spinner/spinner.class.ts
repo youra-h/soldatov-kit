@@ -1,8 +1,7 @@
 import { TPresentable, type IPresentableOptions } from '../../base/presentable'
 import type { TComponentSize, TComponentVariant } from '../../common/types'
 import type { ISpinner, ISpinnerProps, TSpinnerEvents } from './types'
-import { TSizeState } from '../../base/states/size.state'
-import { TVariantState } from '../../base/states/variant.state'
+import { TSizeState, TVariantState } from '../../base/states'
 
 export default class TSpinner extends TPresentable<ISpinnerProps, TSpinnerEvents> implements ISpinner {
 	static override baseClass = 's-spinner'
