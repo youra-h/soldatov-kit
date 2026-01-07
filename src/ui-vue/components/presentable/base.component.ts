@@ -3,12 +3,18 @@ import { type IPresentable, type IPresentableProps, TPresentable } from '../../.
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types'
 
 export const emitsPresentable: TEmits = [
-	'update:rendered',
-	'update:visible',
 	'rendered',
+	'update:rendered',
+	'change:rendered',
+	'visible',
+	'update:visible',
+	'change:visible',
 	'hide',
 	'show',
-	'visible',
+	'beforeShow',
+	'afterShow',
+	'beforeHide',
+	'afterHide',
 	'created',
 ] as const
 
@@ -31,7 +37,7 @@ export const propsPresentable: TProps = {
 	visible: {
 		type: Boolean as PropType<IPresentableProps['visible']>,
 		default: TPresentable.defaultValues.visible,
-	}
+	},
 }
 
 export default {
@@ -49,6 +55,41 @@ export default {
 
 export function syncPresentable(options: ISyncComponentModelOptions<IPresentable>) {
 	const { instance, props, emit } = options
+
+	// Пробрасываем события core-инстанса наружу (Vue events).
+	instance.events.on('created' as any, (component: IPresentable) => {
+		emit?.('created', component)
+	})
+
+	instance.events.on('beforeShow' as any, () => {
+		emit?.('beforeShow')
+	})
+	instance.events.on('afterShow' as any, () => {
+		emit?.('afterShow')
+	})
+	instance.events.on('beforeHide' as any, () => {
+		emit?.('beforeHide')
+	})
+	instance.events.on('afterHide' as any, () => {
+		emit?.('afterHide')
+	})
+	instance.events.on('show' as any, () => {
+		emit?.('show', instance)
+	})
+	instance.events.on('hide' as any, () => {
+		emit?.('hide')
+	})
+
+	instance.events.on('change:visible' as any, (value: boolean) => {
+		emit?.('change:visible', value)
+		emit?.('visible', value)
+		emit?.('update:visible', value)
+	})
+	instance.events.on('change:rendered' as any, (value: boolean) => {
+		emit?.('change:rendered', value)
+		emit?.('rendered', value)
+		emit?.('update:rendered', value)
+	})
 
 	watch<Object | string>(
 		() => props.tag,
