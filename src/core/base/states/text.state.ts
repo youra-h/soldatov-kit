@@ -27,7 +27,7 @@ export type TTextStateCtor = TStateCtor<ITextState, string>
  *
  * Примечание: `text` — это именно отображаемый текст/подпись, а не `value`.
  */
-export class TTextState extends TStateUnit<TTextStateEvents> {
+export class TTextState extends TStateUnit<TTextStateEvents> implements ITextState {
 	private _text = ''
 
 	constructor(initial: string = '') {

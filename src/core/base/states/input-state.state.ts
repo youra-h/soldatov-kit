@@ -1,4 +1,6 @@
 import { TStateUnit } from '../state-unit'
+import type { TEvented } from '../../common/evented'
+import type { TStateCtor } from './types'
 
 export type TControlInputState = 'normal' | 'success' | 'warning' | 'error'
 
@@ -26,6 +28,12 @@ export interface IInputStateProps {
 	loading?: boolean
 }
 
+export interface IInputState extends IInputStateProps {
+	readonly events: TEvented<TInputStateEvents>
+}
+
+export type TInputStateCtor = TStateCtor<IInputState, Partial<IInputStateProps>>
+
 /**
  * Единица состояния для атрибутов/состояний ввода.
  *
@@ -36,7 +44,7 @@ export interface IInputStateProps {
  * Инварианты:
  * - при `invalid = true` состояние `state` принудительно становится `'error'`.
  */
-export class TInputState extends TStateUnit<TInputStateEvents> {
+export class TInputState extends TStateUnit<TInputStateEvents> implements IInputState {
 	private _readonly = false
 	private _required = false
 	private _invalid = false

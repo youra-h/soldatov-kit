@@ -31,7 +31,7 @@ export type TValueStateCtor<T> = TStateCtor<IValueState<T>, T>
  * - `value` (setter) — финальное изменение (change/commit)
  * - `input(value)` — промежуточное изменение (например, ввод в текстовом поле)
  */
-export class TValueState<T> extends TStateUnit<TValueStateEvents<T>> {
+export class TValueState<T> extends TStateUnit<TValueStateEvents<T>> implements IValueState<T> {
 	private _value: T
 
 	constructor(initial: T) {

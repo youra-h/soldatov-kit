@@ -1,6 +1,6 @@
-import { TInputState } from '../states'
+import { TInputState, type IInputState } from '../states'
 import { TValueControl } from '../value-control'
-import type { IInputControlProps, TInputControlEvents } from './types'
+import type { IInputControlProps, TInputControlEvents, TInputControlStatesOptions } from './types'
 import type { TControlInputState } from '../states'
 import type { IPresentableOptions } from '../presentable'
 import { TPresentable } from '../presentable'
@@ -19,6 +19,7 @@ export default class TInputControl<
 	TValue = string,
 	TProps extends IInputControlProps<TValue> = IInputControlProps<TValue>,
 	TEvents extends TInputControlEvents<TValue> = TInputControlEvents<TValue>,
+	TStates extends TInputControlStatesOptions<TValue> = TInputControlStatesOptions<TValue>,
 > extends TValueControl<TValue, TProps, TEvents> {
 	static defaultValues: Partial<IInputControlProps<any>> = {
 		...TValueControl.defaultValues,
@@ -29,66 +30,79 @@ export default class TInputControl<
 		loading: false,
 	}
 
-	protected _inputState: TInputState
+	protected _inputState: IInputState
 
-	constructor(options: IPresentableOptions<TProps> | Partial<TProps> = {}) {
+	constructor(options: IPresentableOptions<TProps, TStates> | Partial<TProps> = {}) {
 		super(options)
 
-		const { props = {} as Partial<TProps> } = TPresentable.prepareOptions<TProps>(
-			options as any,
-		)
+		const { props = {} as Partial<TProps>, states } = TPresentable.prepareOptions<
+			TProps,
+			TStates
+		>(options)
 
-		this._inputState = new TInputState({
-			readonly: props.readonly ?? (TInputControl.defaultValues.readonly as boolean),
-			required: props.required ?? (TInputControl.defaultValues.required as boolean),
-			invalid: props.invalid ?? (TInputControl.defaultValues.invalid as boolean),
-			state: (props.state ?? TInputControl.defaultValues.state) as any,
-			loading: props.loading ?? (TInputControl.defaultValues.loading as boolean),
+		const readonly = props.readonly ?? (TInputControl.defaultValues.readonly as boolean)
+		const required = props.required ?? (TInputControl.defaultValues.required as boolean)
+		const invalid = props.invalid ?? (TInputControl.defaultValues.invalid as boolean)
+		const state = props.state ?? (TInputControl.defaultValues.state as TControlInputState)
+		const loading = props.loading ?? (TInputControl.defaultValues.loading as boolean)
+
+		const InputStateCtor = states?.inputState ?? TInputState
+
+		this._inputState = new InputStateCtor({
+			readonly,
+			required,
+			invalid,
+			state,
+			loading,
 		})
 
 		this._inputState.events.on('change', (patch) => {
 			if (patch.readonly !== undefined)
 				this.events.emit('change:readonly' as any, patch.readonly)
+
 			if (patch.required !== undefined)
 				this.events.emit('change:required' as any, patch.required)
+
 			if (patch.invalid !== undefined)
 				this.events.emit('change:invalid' as any, patch.invalid)
+
 			if (patch.state !== undefined) this.events.emit('change:state' as any, patch.state)
+
 			if (patch.loading !== undefined)
 				this.events.emit('change:loading' as any, patch.loading)
 		})
 	}
 
 	get readonly(): boolean {
-		return this._inputState.readonly
+		return this._inputState.readonly!
 	}
 	set readonly(value: boolean) {
 		this._inputState.readonly = value
 	}
 
 	get required(): boolean {
-		return this._inputState.required
+		return this._inputState.required!
 	}
 	set required(value: boolean) {
 		this._inputState.required = value
 	}
 
 	get invalid(): boolean {
-		return this._inputState.invalid
+		return this._inputState.invalid!
 	}
 	set invalid(value: boolean) {
 		this._inputState.invalid = value
 	}
 
 	get state(): TControlInputState {
-		return this._inputState.state
+		return this._inputState.state!
 	}
 	set state(value: TControlInputState) {
 		this._inputState.state = value
 	}
 
 	get loading(): boolean {
-		return this._inputState.loading
+		return this._inputState.loading!
 	}
 	set loading(value: boolean) {
 		this._inputState.loading = value
