@@ -1,4 +1,5 @@
 import { TStateUnit } from '../state-unit'
+import type { TEvented } from '../../common/evented'
 
 /**
  * События `TDisableableState`.
@@ -10,13 +11,22 @@ export type TDisableableStateEvents = {
 	change: (value: boolean) => void
 }
 
+export interface IDisableableState {
+	disabled: boolean
+	readonly events: TEvented<TDisableableStateEvents>
+}
+
+export type TDisableableStateCtor<TState extends IDisableableState = IDisableableState> = new (
+	initial?: boolean,
+) => TState
+
 /**
  * Единица состояния "disabled".
  *
  * Хранит флаг недоступности и эмитит локальное событие `change`.
  * Компонент-агрегат может пробросить это наружу как `disabled`.
  */
-export class TDisableableState extends TStateUnit<TDisableableStateEvents> {
+export class TDisableableState extends TStateUnit<TDisableableStateEvents> implements IDisableableState {
 	private _disabled = false
 
 	constructor(initial: boolean = false) {

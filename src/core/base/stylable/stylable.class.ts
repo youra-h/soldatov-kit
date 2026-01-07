@@ -1,8 +1,8 @@
 import type { TComponentSize, TComponentVariant } from '../../common/types'
 import { TPresentable } from '../presentable'
-import type { IPresentableOptions } from '../presentable'
 import { TSizeState, TVariantState } from '../states'
-import type { IStylableProps, TStylableEvents } from './types'
+import type { IModifierValueState, TSizeStateOptions, TVariantStateOptions } from '../states'
+import type { IStylableOptions, IStylableProps, TStylableEvents } from './types'
 
 /**
  * Слой "stylable": унифицированные `size` и `variant`.
@@ -20,28 +20,36 @@ export default class TStylable<
 		variant: 'normal',
 	}
 
-	protected _sizeState: TSizeState
-	protected _variantState: TVariantState
+	protected _sizeState: IModifierValueState<TComponentSize>
+	protected _variantState: IModifierValueState<TComponentVariant>
 
-	constructor(options: IPresentableOptions<TProps> | Partial<TProps> = {}) {
+	constructor(options: IStylableOptions<TProps> | Partial<TProps> = {}) {
 		super(options)
 
-		const { props = {} as Partial<TProps> } = TPresentable.prepareOptions<TProps>(
+		const { props = {} as Partial<TProps>, states } = TPresentable.prepareOptions<TProps>(
 			options as any,
-		)
+		) as unknown as { props: Partial<TProps>; states?: IStylableOptions<TProps>['states'] }
 
-		this._sizeState = new TSizeState({
+		const sizeOptions: TSizeStateOptions = {
 			baseClass: this._baseClass,
 			value: (props.size ?? TStylable.defaultValues.size) as TComponentSize,
-		})
+		}
+		const variantOptions: TVariantStateOptions = {
+			baseClass: this._baseClass,
+			value: (props.variant ?? TStylable.defaultValues.variant) as TComponentVariant,
+		}
+
+		const SizeCtor = states?.size ?? TSizeState
+		const VariantCtor = states?.variant ?? TVariantState
+
+		this._sizeState = states?.createSize ? states.createSize(sizeOptions) : new SizeCtor(sizeOptions)
 		this._sizeState.events.on('change', (value) => {
 			this.events.emit('change:size' as any, value)
 		})
 
-		this._variantState = new TVariantState({
-			baseClass: this._baseClass,
-			value: (props.variant ?? TStylable.defaultValues.variant) as TComponentVariant,
-		})
+		this._variantState = states?.createVariant
+			? states.createVariant(variantOptions)
+			: new VariantCtor(variantOptions)
 		this._variantState.events.on('change', (value) => {
 			this.events.emit('change:variant' as any, value)
 		})

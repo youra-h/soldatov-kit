@@ -1,7 +1,7 @@
 import { TDisableableState, TFocusableState } from '../states'
+import type { IDisableableState, IFocusableState } from '../states'
 import { TPresentable } from '../presentable'
-import type { IPresentableOptions } from '../presentable'
-import type { IInteractiveProps, TInteractiveEvents } from './types'
+import type { IInteractiveOptions, IInteractiveProps, TInteractiveEvents } from './types'
 
 /**
  * База для интерактивных компонентов: disabled + focused.
@@ -19,27 +19,33 @@ export default class TInteractive<
 		focused: false,
 	}
 
-	protected _disableable: TDisableableState
-	protected _focusable: TFocusableState
+	protected _disableable: IDisableableState
+	protected _focusable: IFocusableState
 
-	constructor(options: IPresentableOptions<TProps> | Partial<TProps> = {}) {
+	constructor(options: IInteractiveOptions<TProps> | Partial<TProps> = {}) {
 		super(options)
 
-		const { props = {} as Partial<TProps> } = TPresentable.prepareOptions<TProps>(
+		const { props = {} as Partial<TProps>, states } = TPresentable.prepareOptions<TProps>(
 			options as any,
-		)
+		) as unknown as { props: Partial<TProps>; states?: IInteractiveOptions<TProps>['states'] }
 
-		this._disableable = new TDisableableState(
-			props.disabled ?? (TInteractive.defaultValues.disabled as boolean),
-		)
+		const initialDisabled = props.disabled ?? (TInteractive.defaultValues.disabled as boolean)
+		const initialFocused = props.focused ?? (TInteractive.defaultValues.focused as boolean)
+
+		const DisableableCtor = states?.disableable ?? TDisableableState
+		const FocusableCtor = states?.focusable ?? TFocusableState
+
+		this._disableable = states?.createDisableable
+			? states.createDisableable(initialDisabled)
+			: new DisableableCtor(initialDisabled)
 
 		this._disableable.events.on('change', (value) => {
 			this.events.emit('change:disabled' as any, value)
 		})
 
-		this._focusable = new TFocusableState(
-			props.focused ?? (TInteractive.defaultValues.focused as boolean),
-		)
+		this._focusable = states?.createFocusable
+			? states.createFocusable(initialFocused)
+			: new FocusableCtor(initialFocused)
 
 		this._focusable.events.on('change', (value) => {
 			this.events.emit('change:focused' as any, value)

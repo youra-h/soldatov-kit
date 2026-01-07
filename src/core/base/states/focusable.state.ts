@@ -1,4 +1,5 @@
 import { TStateUnit } from '../state-unit'
+import type { TEvented } from '../../common/evented'
 
 /**
  * События `TFocusableState`.
@@ -10,6 +11,15 @@ export type TFocusableStateEvents = {
 	change: (value: boolean) => void
 }
 
+export interface IFocusableState {
+	focused: boolean
+	readonly events: TEvented<TFocusableStateEvents>
+}
+
+export type TFocusableStateCtor<TState extends IFocusableState = IFocusableState> = new (
+	initial?: boolean,
+) => TState
+
 /**
  * Единица состояния "focused".
  *
@@ -18,7 +28,7 @@ export type TFocusableStateEvents = {
  * - навигации/управления фокусом на уровне модели
  * - синхронизации с UI-обвязкой (Vue/React и т.п.)
  */
-export class TFocusableState extends TStateUnit<TFocusableStateEvents> {
+export class TFocusableState extends TStateUnit<TFocusableStateEvents> implements IFocusableState {
 	private _focused = false
 
 	constructor(initial: boolean = false) {

@@ -1,6 +1,7 @@
 import { describe, it, expect, vi } from 'vitest'
 import { TStylable } from '../base/stylable'
 import type { IStylableProps } from '../base/stylable'
+import { TSizeState } from '../base/states'
 
 describe('TStylable', () => {
 	it('size и variant выставляются и эмитят события', () => {
@@ -25,5 +26,21 @@ describe('TStylable', () => {
 			baseClass: 's-test',
 		})
 		expect(stylable.getProps()).toMatchObject({ size: 'lg', variant: 'primary' })
+	})
+
+	it('states.size позволяет подменить size-state и влияет на classes', () => {
+		class TCustomSizeState extends TSizeState {
+			override getClass(): string[] {
+				return [`${this.baseClass}--size-custom`]
+			}
+		}
+
+		const stylable = new TStylable<IStylableProps>({
+			props: { size: 'xl' },
+			baseClass: 's-test',
+			states: { size: TCustomSizeState },
+		})
+
+		expect(stylable.classes).toContain('s-test--size-custom')
 	})
 })

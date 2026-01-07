@@ -1,4 +1,5 @@
 import { TStateUnit } from '../state-unit'
+import type { TEvented } from '../../common/evented'
 
 export interface IModifierValueOptions<T extends string = string> {
 	baseClass?: string
@@ -9,6 +10,18 @@ export interface IModifierValueOptions<T extends string = string> {
 export type TModifierValueEvents<T extends string = string> = {
 	change: (newValue: T, oldValue: T) => void
 }
+
+export interface IModifierValueState<T extends string = string> {
+	value: T
+	baseClass: string
+	readonly events: TEvented<TModifierValueEvents<T>>
+	getClass(): string[]
+}
+
+export type TModifierValueStateCtor<
+	T extends string = string,
+	TState extends IModifierValueState<T> = IModifierValueState<T>,
+> = new (options?: IModifierValueOptions<T>) => TState
 
 /**
  * Базовый state для строкового модификатора CSS-класса.
@@ -22,7 +35,7 @@ export type TModifierValueEvents<T extends string = string> = {
 export abstract class TModifierValue<
 	T extends string = string,
 	TEvents extends TModifierValueEvents<T> = TModifierValueEvents<T>,
-> extends TStateUnit<TEvents> {
+> extends TStateUnit<TEvents> implements IModifierValueState<T> {
 	protected _baseClass: string
 	protected _value: T
 	protected _exclude: T[]
