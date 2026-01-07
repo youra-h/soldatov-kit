@@ -1,14 +1,14 @@
-import { TControl } from '../../base/control'
+import { TTextable } from '../../base/textable'
 import type { IButton, IButtonProps, TButtonAppearance, TButtonEvents } from './types'
 import { TIcon } from '../icon'
 import { TSpinner } from '../spinner'
-import type { IPresentableOptions } from '../../base/presentable'
+import { TPresentable, type IPresentableOptions } from '../../base/presentable'
 
-export default class TButton extends TControl<IButtonProps, TButtonEvents> implements IButton {
+export default class TButton extends TTextable<IButtonProps, TButtonEvents> implements IButton {
 	static override baseClass = 's-button'
 
 	static defaultValues: Partial<IButtonProps> = {
-		...TControl.defaultValues,
+		...TTextable.defaultValues,
 		variant: 'normal',
 		appearance: 'normal',
 		icon: undefined,
@@ -22,11 +22,9 @@ export default class TButton extends TControl<IButtonProps, TButtonEvents> imple
 	protected _spinner?: TSpinner
 
 	constructor(options: IPresentableOptions<IButtonProps> | Partial<IButtonProps> = {}) {
-		const ctor = new.target as typeof TButton
-		const prepared = ctor.prepareOptions<IButtonProps>(options)
-		super(prepared)
+		super(options)
 
-		const { props = {} } = prepared
+		const { props = {} } = TPresentable.prepareOptions(options)
 
 		this._tag = props.tag ?? TButton.defaultValues.tag!
 

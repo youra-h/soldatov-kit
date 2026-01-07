@@ -1,11 +1,11 @@
-import type { IControl, IControlProps, TControlEvents } from '../../base/control'
+import type { ITextable, ITextableProps, TTextableEvents } from '../../base/textable'
 import type { TComponentVariant } from '../../common/types'
 import { TIcon } from '../icon'
 import { TSpinner } from '../spinner'
 
 export type TButtonAppearance = 'normal' | 'plain' | 'outlined'
 
-export interface IButtonProps extends IControlProps {
+export interface IButtonProps extends ITextableProps {
 	// Вариант отображения кнопки
 	variant?: TComponentVariant
 	// Внешний вид кнопки
@@ -18,6 +18,6 @@ export interface IButtonProps extends IControlProps {
 	spinner?: TSpinner
 }
 
-export type TButtonEvents = TControlEvents & {}
+export type TButtonEvents = TTextableEvents & {}
 
-export interface IButton extends IControl<IButtonProps, TButtonEvents> {}
+export interface IButton extends ITextable<IButtonProps, TButtonEvents> {}

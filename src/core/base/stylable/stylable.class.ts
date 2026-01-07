@@ -25,6 +25,7 @@ export default class TStylable<
 
 	constructor(options: any = {}) {
 		super(options)
+
 		const { props = {} } = options
 
 		this._sizeState = new TSizeState({
