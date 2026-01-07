@@ -1,7 +1,7 @@
 import type { IValueControl, IValueControlProps, TValueControlEvents } from '../value-control'
 import type { TControlInputState } from '../states'
 
-export type TTextInputControlEvents = TValueControlEvents<string> & {
+export type TInputControlEvents = TValueControlEvents<string> & {
 	'change:readonly': (value: boolean) => void
 	'change:required': (value: boolean) => void
 	'change:invalid': (value: boolean) => void
@@ -19,7 +19,7 @@ export interface ITextInputControlProps extends IValueControlProps<string> {
 
 export interface ITextInputControl<
 	TProps extends ITextInputControlProps = ITextInputControlProps,
-	TEvents extends Record<string, (...args: any) => any> = TTextInputControlEvents,
+	TEvents extends Record<string, (...args: any) => any> = TInputControlEvents,
 > extends IValueControl<string, TProps, TEvents> {
 	readonly: boolean
 	required: boolean

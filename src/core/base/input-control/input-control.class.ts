@@ -1,6 +1,6 @@
 import { TInputState } from '../states'
 import { TValueControl } from '../value-control'
-import type { ITextInputControlProps, TTextInputControlEvents } from './types'
+import type { ITextInputControlProps, TInputControlEvents } from './types'
 import type { TControlInputState } from '../states'
 import type { IPresentableOptions } from '../presentable'
 import { TPresentable } from '../presentable'
@@ -15,9 +15,9 @@ import { TPresentable } from '../presentable'
  *
  * Добавляет `TInputState` (readonly/required/invalid/state/loading).
  */
-export default class TTextInputControl<
+export default class TInputControl<
 	TProps extends ITextInputControlProps = ITextInputControlProps,
-	TEvents extends TTextInputControlEvents = TTextInputControlEvents,
+	TEvents extends TInputControlEvents = TInputControlEvents,
 > extends TValueControl<string, TProps, TEvents> {
 	static defaultValues: Partial<ITextInputControlProps> = {
 		...TValueControl.defaultValues,
@@ -38,11 +38,11 @@ export default class TTextInputControl<
 		)
 
 		this._inputState = new TInputState({
-			readonly: props.readonly ?? (TTextInputControl.defaultValues.readonly as boolean),
-			required: props.required ?? (TTextInputControl.defaultValues.required as boolean),
-			invalid: props.invalid ?? (TTextInputControl.defaultValues.invalid as boolean),
-			state: (props.state ?? TTextInputControl.defaultValues.state) as any,
-			loading: props.loading ?? (TTextInputControl.defaultValues.loading as boolean),
+			readonly: props.readonly ?? (TInputControl.defaultValues.readonly as boolean),
+			required: props.required ?? (TInputControl.defaultValues.required as boolean),
+			invalid: props.invalid ?? (TInputControl.defaultValues.invalid as boolean),
+			state: (props.state ?? TInputControl.defaultValues.state) as any,
+			loading: props.loading ?? (TInputControl.defaultValues.loading as boolean),
 		})
 
 		this._inputState.events.on('change', (patch) => {

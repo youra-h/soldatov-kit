@@ -1,10 +1,10 @@
 import { describe, it, expect, vi } from 'vitest'
-import { TTextInputControl } from '../base/text-input-control'
-import type { ITextInputControlProps } from '../base/text-input-control'
+import { TInputControl } from '../base/input-control'
+import type { ITextInputControlProps } from '../base/input-control'
 
-describe('TTextInputControl', () => {
+describe('TInputControl', () => {
 	it('принимает form-flags через { props } и через plain props', () => {
-		const a = new TTextInputControl<ITextInputControlProps>({
+		const a = new TInputControl<ITextInputControlProps>({
 			props: { value: '', readonly: true, required: true, invalid: false, state: 'warning', loading: true },
 		} as any)
 		expect(a.readonly).toBe(true)
@@ -13,7 +13,7 @@ describe('TTextInputControl', () => {
 		expect(a.state).toBe('warning')
 		expect(a.loading).toBe(true)
 
-		const b = new TTextInputControl<ITextInputControlProps>({
+		const b = new TInputControl<ITextInputControlProps>({
 			value: '', readonly: false, required: false, invalid: true, state: 'normal', loading: false,
 		} as any)
 		expect(b.invalid).toBe(true)
@@ -22,7 +22,7 @@ describe('TTextInputControl', () => {
 	})
 
 	it('сеттерами эмитит change:* события', () => {
-		const c = new TTextInputControl<ITextInputControlProps>({ value: '' } as any)
+		const c = new TInputControl<ITextInputControlProps>({ value: '' } as any)
 		const ro = vi.fn()
 		const req = vi.fn()
 		const inv = vi.fn()
@@ -50,14 +50,14 @@ describe('TTextInputControl', () => {
 	})
 
 	it('getProps/toJSON отражают input flags', () => {
-		const c = new TTextInputControl<ITextInputControlProps>({ value: '', readonly: true, required: true } as any)
+		const c = new TInputControl<ITextInputControlProps>({ value: '', readonly: true, required: true } as any)
 		const props = c.getProps()
 		expect(props).toMatchObject({ readonly: true, required: true })
 		expect(c.toJSON()).toEqual(props)
 	})
 
 	it('наследует value и события change:value/input:value', () => {
-		const c = new TTextInputControl<ITextInputControlProps>({ value: 'a' } as any)
+		const c = new TInputControl<ITextInputControlProps>({ value: 'a' } as any)
 		const change = vi.fn()
 		const input = vi.fn()
 		c.events.on('change:value', change)
