@@ -1,5 +1,6 @@
 import { TStateUnit } from '../state-unit'
 import type { TEvented } from '../../common/evented'
+import type { TStateCtor } from './types'
 
 /**
  * События `TVisibilityState`.
@@ -26,10 +27,9 @@ export interface IVisibilityState {
 
 /**
  * Тип конструктора visibility-state.
+ * Является конкретной реализацией универсального TStateCtor.
  */
-export type TVisibilityStateCtor<TState extends IVisibilityState = IVisibilityState> = new (
-	initial?: boolean,
-) => TState
+export type TVisibilityStateCtor = TStateCtor<IVisibilityState>
 
 /**
  * Единица состояния "visible".

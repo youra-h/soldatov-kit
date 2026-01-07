@@ -1,5 +1,6 @@
 import { TStateUnit } from '../state-unit'
 import type { TEvented } from '../../common/evented'
+import type { TStateCtor } from './types'
 
 /**
  * События `TFocusableState`.
@@ -16,9 +17,7 @@ export interface IFocusableState {
 	readonly events: TEvented<TFocusableStateEvents>
 }
 
-export type TFocusableStateCtor<TState extends IFocusableState = IFocusableState> = new (
-	initial?: boolean,
-) => TState
+export type TFocusableStateCtor = TStateCtor<IFocusableState>
 
 /**
  * Единица состояния "focused".

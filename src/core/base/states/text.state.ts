@@ -1,4 +1,6 @@
 import { TStateUnit } from '../state-unit'
+import type { TEvented } from '../../common/evented'
+import type { TStateCtor } from './types'
 
 /**
  * События `TTextState`.
@@ -9,6 +11,13 @@ export type TTextStateEvents = {
 	 */
 	change: (value: string) => void
 }
+
+export interface ITextState {
+	text: string
+	readonly events: TEvented<TTextStateEvents>
+}
+
+export type TTextStateCtor = TStateCtor<ITextState>
 
 /**
  * Единица состояния для текстового значения (label/content).

@@ -1,4 +1,6 @@
 import { TStateUnit } from '../state-unit'
+import type { TEvented } from '../../common/evented'
+import type { TStateCtor } from './types'
 
 /**
  * События `TValueState`.
@@ -13,6 +15,13 @@ export type TValueStateEvents<T> = {
 	 */
 	input: (value: T) => void
 }
+
+export interface IValueState<T> {
+	value: T
+	readonly events: TEvented<TValueStateEvents<T>>
+}
+
+export type TValueStateCtor<T> = TStateCtor<IValueState<T>>
 
 /**
  * Единица состояния для значения контрола.
