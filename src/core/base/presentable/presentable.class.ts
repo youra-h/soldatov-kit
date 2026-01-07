@@ -1,7 +1,6 @@
-import TComponentModel from '../component-model/component-model.class'
+import { TComponentModel } from '../component-model'
 import type { IComponentModelOptions, IComponentModelProps } from '../component-model'
-import type { TVisibilityState } from '../states'
-import { TVisibilityState as TVisibilityStateImpl } from '../states/visibility.state'
+import { TVisibilityState } from '../states'
 import type {
 	IPresentableOptions,
 	IPresentableProps,
@@ -78,7 +77,7 @@ export default class TPresentable<
 
 		this._tag = props.tag ?? TPresentable.defaultValues.tag!
 
-		this._visibility = new TVisibilityStateImpl(
+		this._visibility = new TVisibilityState(
 			typeof props.visible === 'boolean'
 				? props.visible
 				: (TPresentable.defaultValues.visible as boolean),

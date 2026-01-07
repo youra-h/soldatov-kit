@@ -1,9 +1,7 @@
-import type { TDisableableState, TFocusableState } from '../states'
-import { TDisableableState as TDisableableStateImpl } from '../states/disableable.state'
-import { TFocusableState as TFocusableStateImpl } from '../states/focusable.state'
-import TPresentable from '../presentable/presentable.class'
+import { TDisableableState, TFocusableState } from '../states'
+import { TPresentable } from '../presentable'
 import type { IPresentableOptions } from '../presentable'
-import TStylable from '../stylable/stylable.class'
+import { TStylable } from '../stylable'
 import type { IControlProps, TControlEvents } from './types'
 
 /**
@@ -28,16 +26,18 @@ export default class TControl<
 
 	constructor(options: IPresentableOptions<TProps> | Partial<TProps> = {}) {
 		super(options)
-		const { props = {} as Partial<TProps> } = TPresentable.prepareOptions<TProps>(options as any)
+		const { props = {} as Partial<TProps> } = TPresentable.prepareOptions<TProps>(
+			options as any,
+		)
 
-		this._disableable = new TDisableableStateImpl(
+		this._disableable = new TDisableableState(
 			props.disabled ?? (TControl.defaultValues.disabled as boolean),
 		)
 		this._disableable.events.on('change', (value) => {
 			this.events.emit('change:disabled' as any, value)
 		})
 
-		this._focusable = new TFocusableStateImpl(
+		this._focusable = new TFocusableState(
 			props.focused ?? (TControl.defaultValues.focused as boolean),
 		)
 		this._focusable.events.on('change', (value) => {

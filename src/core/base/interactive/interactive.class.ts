@@ -1,7 +1,5 @@
-import type { TDisableableState, TFocusableState } from '../states'
-import { TDisableableState as TDisableableStateImpl } from '../states/disableable.state'
-import { TFocusableState as TFocusableStateImpl } from '../states/focusable.state'
-import TPresentable from '../presentable/presentable.class'
+import { TDisableableState, TFocusableState } from '../states'
+import { TPresentable } from '../presentable'
 import type { IPresentableOptions } from '../presentable'
 import type { IInteractiveProps, TInteractiveEvents } from './types'
 
@@ -31,7 +29,7 @@ export default class TInteractive<
 			options as any,
 		)
 
-		this._disableable = new TDisableableStateImpl(
+		this._disableable = new TDisableableState(
 			props.disabled ?? (TInteractive.defaultValues.disabled as boolean),
 		)
 
@@ -39,7 +37,7 @@ export default class TInteractive<
 			this.events.emit('change:disabled' as any, value)
 		})
 
-		this._focusable = new TFocusableStateImpl(
+		this._focusable = new TFocusableState(
 			props.focused ?? (TInteractive.defaultValues.focused as boolean),
 		)
 

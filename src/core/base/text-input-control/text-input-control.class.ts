@@ -3,7 +3,7 @@ import { TValueControl } from '../value-control'
 import type { ITextInputControlProps, TTextInputControlEvents } from './types'
 import type { TControlInputState } from '../states'
 import type { IPresentableOptions } from '../presentable'
-import TPresentable from '../presentable/presentable.class'
+import { TPresentable } from '../presentable'
 
 /**
  * База для текстовых инпутов.

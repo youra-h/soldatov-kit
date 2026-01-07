@@ -1,7 +1,7 @@
 import { TValueState } from '../states'
 import { TControl } from '../control'
 import type { IPresentableOptions } from '../presentable'
-import TPresentable from '../presentable/presentable.class'
+import { TPresentable } from '../presentable'
 import type { IValueControlProps, TValueControlEvents } from './types'
 
 /**
