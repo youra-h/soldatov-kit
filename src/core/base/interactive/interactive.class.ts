@@ -25,9 +25,8 @@ export default class TInteractive<
 	constructor(options: IInteractiveOptions<TProps> | Partial<TProps> = {}) {
 		super(options)
 
-		const { props = {} as Partial<TProps>, states } = TPresentable.prepareOptions<TProps>(
-			options as any,
-		) as unknown as { props: Partial<TProps>; states?: IInteractiveOptions<TProps>['states'] }
+		const { props = {} as Partial<TProps>, states } =
+			TPresentable.prepareOptions<TProps>(options)
 
 		const initialDisabled = props.disabled ?? (TInteractive.defaultValues.disabled as boolean)
 		const initialFocused = props.focused ?? (TInteractive.defaultValues.focused as boolean)

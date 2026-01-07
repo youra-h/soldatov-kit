@@ -6,17 +6,10 @@ import type {
 } from '../component-model'
 import type { IVisibilityState, TVisibilityStateCtor } from '../states'
 
-export type TPresentableStateKey = 'rendered' | 'visible'
-
-export type TPresentableVisibilityStateFactory = (
-	key: TPresentableStateKey,
-	initial: boolean,
-) => IVisibilityState
-
 export type TPresentableStatesOptions = {
-	/** Класс state для `rendered` (если не задана factory). */
+	/** Класс state для `rendered`. */
 	rendered?: TVisibilityStateCtor
-	/** Класс state для `visible` (если не задана factory). */
+	/** Класс state для `visible`. */
 	visible?: TVisibilityStateCtor
 }
 
@@ -61,15 +54,16 @@ export interface IPresentableProps extends IComponentModelProps {
  * Опции для presentable-слоя.
  * props — начальные свойства, baseClass — базовый CSS-класс (можно переопределить для конкретного инстанса).
  */
-export interface IPresentableOptions<TProps extends IPresentableProps = IPresentableProps>
-	extends IComponentModelOptions<TProps>
-{
+export interface IPresentableOptions<
+	TProps extends IPresentableProps = IPresentableProps,
+	TStates extends TPresentableStatesOptions = TPresentableStatesOptions,
+> extends IComponentModelOptions<TProps> {
 	baseClass?: string
 	/**
 	 * Инъекция state-реализаций для rendered/visible.
 	 * Нужна, чтобы менять поведение state свойств без оверрайда геттеров/сеттеров.
 	 */
-	states?: TPresentableStatesOptions
+	states?: TStates
 }
 
 /**

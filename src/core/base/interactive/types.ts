@@ -26,10 +26,10 @@ export type TInteractiveStatesOptions = {
 	focusable?: TFocusableStateCtor
 }
 
-export interface IInteractiveOptions<TProps extends IInteractiveProps = IInteractiveProps>
-	extends IPresentableOptions<TProps>
-{
-	states?: TPresentableStatesOptions & TInteractiveStatesOptions
+export interface IInteractiveOptions<
+	TProps extends IInteractiveProps = IInteractiveProps,
+> extends IPresentableOptions<TProps, TPresentableStatesOptions & TInteractiveStatesOptions> {
+	// states?: TPresentableStatesOptions & TInteractiveStatesOptions
 }
 
 export interface IInteractive<

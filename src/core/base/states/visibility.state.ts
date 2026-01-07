@@ -24,6 +24,9 @@ export interface IVisibilityState {
 	readonly events: TEvented<TVisibilityStateEvents>
 }
 
+/**
+ * Тип конструктора visibility-state.
+ */
 export type TVisibilityStateCtor<TState extends IVisibilityState = IVisibilityState> = new (
 	initial?: boolean,
 ) => TState
