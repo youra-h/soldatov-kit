@@ -1,8 +1,8 @@
-import { TValueState } from '../states'
+import { TValueState, type IValueState } from '../states'
 import { TControl } from '../control'
 import type { IPresentableOptions } from '../presentable'
 import { TPresentable } from '../presentable'
-import type { IValueControlProps, TValueControlEvents } from './types'
+import type { IValueControlProps, TValueControlEvents, TValueControlStatesOptions } from './types'
 
 /**
  * База для контролов со значением.
@@ -17,26 +17,33 @@ export default class TValueControl<
 	TValue,
 	TProps extends IValueControlProps<TValue> = IValueControlProps<TValue>,
 	TEvents extends TValueControlEvents<TValue> = TValueControlEvents<TValue>,
-> extends TControl<TProps, TEvents> {
+	TStates extends TValueControlStatesOptions<TValue> = TValueControlStatesOptions<TValue>,
+> extends TControl<TProps, TEvents, TStates> {
 	static defaultValues: Partial<IValueControlProps<any>> = {
 		...TControl.defaultValues,
 		name: '',
-		value: null,
+		value: undefined,
 	}
 
-	protected _valueState: TValueState<TValue>
+	protected _valueState: IValueState<TValue>
 	protected _name: string
 
-	constructor(options: IPresentableOptions<TProps> | Partial<TProps> = {}) {
+	constructor(options: IPresentableOptions<TProps, TStates> | Partial<TProps> = {}) {
 		super(options)
 
-		const { props = {} as Partial<TProps> } = TPresentable.prepareOptions<TProps>(
-			options as any,
-		)
+		const { props = {} as Partial<TProps>, states } = TPresentable.prepareOptions<
+			TProps,
+			TStates
+		>(options)
 
 		this._name = props.name ?? (TValueControl.defaultValues.name as string)
 
-		this._valueState = new TValueState<TValue>(props.value as TValue)
+		const initialValue =
+			(props.value) ?? (TValueControl.defaultValues.value as TValue)
+
+		const ValueCtor = states?.value ?? TValueState
+
+		this._valueState = new ValueCtor(initialValue)
 
 		this._valueState.events.on('change', (value) => {
 			this.events.emit('change:value' as any, value)

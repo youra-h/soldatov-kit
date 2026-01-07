@@ -1,4 +1,5 @@
-import type { IControl, IControlProps, TControlEvents } from '../control'
+import type { IControl, IControlProps, TControlEvents, TControlStatesOptions } from '../control'
+import type { TValueStateCtor } from '../states'
 
 export type TValueControlEvents<T> = TControlEvents & {
 	/** change:value */
@@ -9,17 +10,21 @@ export type TValueControlEvents<T> = TControlEvents & {
 	'change:name': (value: string) => void
 }
 
-export interface IValueControlProps<T> extends IControlProps {
-	value: T
+export interface IValueControlProps<TValue> extends IControlProps {
+	value: TValue
 	name?: string
 }
 
+export type TValueControlStatesOptions<TValue> = TControlStatesOptions & {
+	value?: TValueStateCtor<TValue>
+}
+
 export interface IValueControl<
-	T,
-	TProps extends IValueControlProps<T> = IValueControlProps<T>,
-	TEvents extends Record<string, (...args: any) => any> = TValueControlEvents<T>,
+	TValue,
+	TProps extends IValueControlProps<TValue> = IValueControlProps<TValue>,
+	TEvents extends Record<string, (...args: any) => any> = TValueControlEvents<TValue>,
 > extends IControl<TProps, TEvents> {
-	value: T
+	value: TValue
 	name: string
-	input(value: T): void
+	input(value: TValue): void
 }

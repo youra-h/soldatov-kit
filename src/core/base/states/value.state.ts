@@ -19,9 +19,10 @@ export type TValueStateEvents<T> = {
 export interface IValueState<T> {
 	value: T
 	readonly events: TEvented<TValueStateEvents<T>>
+	input(value: T): void
 }
 
-export type TValueStateCtor<T> = TStateCtor<IValueState<T>>
+export type TValueStateCtor<T> = TStateCtor<IValueState<T>, T>
 
 /**
  * Единица состояния для значения контрола.
