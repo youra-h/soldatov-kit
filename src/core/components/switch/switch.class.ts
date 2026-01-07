@@ -1,45 +1,41 @@
-import { type IComponentModelOptions } from '../../base/component'
-import { TControlInput } from '../control-input'
+import { TInputControl } from '../../base/input-control'
+import { TPresentable, type IPresentableOptions } from '../../base/presentable'
 import type { ISwitch, ISwitchProps, TSwitchEvents } from './types'
 import { TIcon } from '../icon'
 
-export default class TSwitch extends TControlInput<ISwitchProps, TSwitchEvents> implements ISwitch {
+
+export default class TSwitch
+	extends TInputControl<boolean | null, ISwitchProps, TSwitchEvents>
+	implements ISwitch
+{
+	static override baseClass = 's-switch'
+
 	static defaultValues: Partial<ISwitchProps> = {
-		...TControlInput.defaultValues,
+		...TInputControl.defaultValues,
 		value: false,
 		variant: 'normal',
 	}
 
-	protected _value: boolean
 	protected _icon?: TIcon
 
-	constructor(options: IComponentModelOptions<ISwitchProps> = {}) {
-		const { props = {}, baseClass = 's-switch' } = options
+	constructor(options: IPresentableOptions<ISwitchProps> | Partial<ISwitchProps> = {}) {
+		super(options)
 
-		super({ props, baseClass })
+		const { props = {} as Partial<ISwitchProps> } = TPresentable.prepareOptions<ISwitchProps>(
+			options as any,
+		)
 
-		this._value = props.value ?? TSwitch.defaultValues.value!
-		this._icon = props.icon ?? TSwitch.defaultValues.icon!
+		this.value = props.value ?? (TSwitch.defaultValues.value as boolean | null)
+		this.icon = props.icon ?? TSwitch.defaultValues.icon!
 
-		this._sizeHelper.events.on('change', (value) => {
-			// Если есть спиннер, синхронизируем его размер с кнопкой
-			this.spinner!.size = value
-
-			if (this._icon) {
-				this._icon.size = value
-			}
+		// legacy compat: UI layer historically listens to changeValue
+		this.events.on('change:value' as any, (value: boolean | null) => {
+			this.events.emit('changeValue' as any, value)
 		})
-	}
 
-	get value(): boolean {
-		return this._value
-	}
-
-	set value(value: boolean) {
-		if (this._value !== value) {
-			this._value = value
-			this.events.emit('changeValue', value)
-		}
+		this.events.on('change:size' as any, (value: any) => {
+			if (this._icon) this._icon.size = value
+		})
 	}
 
 	get icon(): TIcon | undefined {
@@ -67,14 +63,14 @@ export default class TSwitch extends TControlInput<ISwitchProps, TSwitchEvents> 
 	 * Если было true, то станет false
 	 */
 	change(event?: Event) {
-		const oldValue = this._value
+		const oldValue = this.value
 
 		this.value = this.value === true ? false : true
 
-		if (oldValue !== this._value) {
-			this.events.emit('change', {
+		if (oldValue !== this.value) {
+			this.events.emit('change' as any, {
 				event,
-				value: this._value,
+				value: this.value,
 			})
 		}
 	}

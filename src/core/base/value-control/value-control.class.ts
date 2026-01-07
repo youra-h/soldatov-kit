@@ -14,9 +14,9 @@ import type { IValueControlProps, TValueControlEvents } from './types'
  * Интерактивность (disabled/focused) и stylable (size/variant) наследуются из `TControl`.
  */
 export default class TValueControl<
-	T,
-	TProps extends IValueControlProps<T> = IValueControlProps<T>,
-	TEvents extends TValueControlEvents<T> = TValueControlEvents<T>,
+	TValue,
+	TProps extends IValueControlProps<TValue> = IValueControlProps<TValue>,
+	TEvents extends TValueControlEvents<TValue> = TValueControlEvents<TValue>,
 > extends TControl<TProps, TEvents> {
 	static defaultValues: Partial<IValueControlProps<any>> = {
 		...TControl.defaultValues,
@@ -24,7 +24,7 @@ export default class TValueControl<
 		value: null,
 	}
 
-	protected _valueState: TValueState<T>
+	protected _valueState: TValueState<TValue>
 	protected _name: string
 
 	constructor(options: IPresentableOptions<TProps> | Partial<TProps> = {}) {
@@ -36,7 +36,7 @@ export default class TValueControl<
 
 		this._name = props.name ?? (TValueControl.defaultValues.name as string)
 
-		this._valueState = new TValueState<T>(props.value as T)
+		this._valueState = new TValueState<TValue>(props.value as TValue)
 
 		this._valueState.events.on('change', (value) => {
 			this.events.emit('change:value' as any, value)
@@ -58,14 +58,14 @@ export default class TValueControl<
 		this.events.emit('change:name' as any, value)
 	}
 
-	get value(): T {
+	get value(): TValue {
 		return this._valueState.value
 	}
-	set value(value: T) {
+	set value(value: TValue) {
 		this._valueState.value = value
 	}
 
-	input(value: T): void {
+	input(value: TValue): void {
 		this._valueState.input(value)
 	}
 

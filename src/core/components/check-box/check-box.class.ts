@@ -1,46 +1,51 @@
-import { type IComponentModelOptions } from '../../base/component'
-import { TControlInput } from '../control-input'
+import { TInputControl } from '../../base/input-control'
+import { TPresentable, type IPresentableOptions } from '../../base/presentable'
 import type { ICheckBox, ICheckBoxProps, TCheckBoxEvents } from './types'
 import { TIcon } from '../icon'
 
-export default class TCheckBox extends TControlInput<ICheckBoxProps, TCheckBoxEvents> implements ICheckBox {
+
+export default class TCheckBox
+	extends TInputControl<boolean | null, ICheckBoxProps, TCheckBoxEvents>
+	implements ICheckBox
+{
+	static override baseClass = 's-check-box'
+
 	static defaultValues: Partial<ICheckBoxProps> = {
-		...TControlInput.defaultValues,
+		...TInputControl.defaultValues,
 		value: false,
 		indeterminate: false,
 		plain: false,
 		variant: 'normal',
 	}
 
-	protected _value: boolean | null
 	protected _indeterminate: boolean
 	protected _plain: boolean
 	protected _icon?: TIcon
 	protected _indeterminateIcon?: TIcon
 
-	constructor(options: IComponentModelOptions<ICheckBoxProps> = {}) {
-		const { props = {}, baseClass = 's-check-box' } = options
+	constructor(options: IPresentableOptions<ICheckBoxProps> | Partial<ICheckBoxProps> = {}) {
+		super(options)
 
-		super({ props, baseClass })
+		const { props = {} as Partial<ICheckBoxProps> } = TPresentable.prepareOptions<ICheckBoxProps>(
+			options as any,
+		)
 
-		this._value = props.value ?? TCheckBox.defaultValues.value!
+		this.value = props.value ?? (TCheckBox.defaultValues.value as boolean | null)
 		this._indeterminate = props.indeterminate ?? TCheckBox.defaultValues.indeterminate!
 		this._plain = props.plain ?? TCheckBox.defaultValues.plain!
-		this._icon = props.icon ?? TCheckBox.defaultValues.icon!
-		this._indeterminateIcon =
+		this.icon = props.icon ?? TCheckBox.defaultValues.icon!
+		this.indeterminateIcon =
 			props.indeterminateIcon ?? TCheckBox.defaultValues.indeterminateIcon!
-	}
 
-	get value(): boolean | null {
-		return this._value
-	}
+		// legacy compat: UI layer historically listens to changeValue
+		this.events.on('change:value' as any, (value: boolean | null) => {
+			this.events.emit('changeValue' as any, value)
+		})
 
-	set value(value: boolean | null) {
-		if (this._value !== value) {
-			this._value = value
-
-			this.events.emit('changeValue', value)
-		}
+		this.events.on('change:size' as any, (value: any) => {
+			if (this._icon) this._icon.size = value
+			if (this._indeterminateIcon) this._indeterminateIcon.size = value
+		})
 	}
 
 	get indeterminate(): boolean {
@@ -50,7 +55,7 @@ export default class TCheckBox extends TControlInput<ICheckBoxProps, TCheckBoxEv
 	set indeterminate(value: boolean) {
 		if (this._indeterminate !== value) {
 			this._indeterminate = value
-			this.events.emit('changeIndeterminate', value)
+			this.events.emit('changeIndeterminate' as any, value)
 		}
 	}
 
@@ -113,7 +118,7 @@ export default class TCheckBox extends TControlInput<ICheckBoxProps, TCheckBoxEv
 	 * Если было true, то станет false
 	 */
 	change(event?: Event) {
-		const oldValue = this._value
+		const oldValue = this.value
 
 		if (this.indeterminate) {
 			this.indeterminate = false
@@ -122,10 +127,10 @@ export default class TCheckBox extends TControlInput<ICheckBoxProps, TCheckBoxEv
 			this.value = this.value === true ? false : true
 		}
 
-		if (oldValue !== this._value) {
-			this.events.emit('change', {
+		if (oldValue !== this.value) {
+			this.events.emit('change' as any, {
 				event,
-				value: this._value,
+				value: this.value,
 			})
 		}
 	}

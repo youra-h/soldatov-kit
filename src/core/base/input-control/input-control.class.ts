@@ -1,6 +1,6 @@
 import { TInputState } from '../states'
 import { TValueControl } from '../value-control'
-import type { ITextInputControlProps, TInputControlEvents } from './types'
+import type { IInputControlProps, TInputControlEvents } from './types'
 import type { TControlInputState } from '../states'
 import type { IPresentableOptions } from '../presentable'
 import { TPresentable } from '../presentable'
@@ -16,10 +16,11 @@ import { TPresentable } from '../presentable'
  * Добавляет `TInputState` (readonly/required/invalid/state/loading).
  */
 export default class TInputControl<
-	TProps extends ITextInputControlProps = ITextInputControlProps,
-	TEvents extends TInputControlEvents = TInputControlEvents,
-> extends TValueControl<string, TProps, TEvents> {
-	static defaultValues: Partial<ITextInputControlProps> = {
+	TValue = string,
+	TProps extends IInputControlProps<TValue> = IInputControlProps<TValue>,
+	TEvents extends TInputControlEvents<TValue> = TInputControlEvents<TValue>,
+> extends TValueControl<TValue, TProps, TEvents> {
+	static defaultValues: Partial<IInputControlProps<any>> = {
 		...TValueControl.defaultValues,
 		readonly: false,
 		required: false,
