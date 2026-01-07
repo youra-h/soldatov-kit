@@ -31,11 +31,7 @@ export const propsPresentable: TProps = {
 	visible: {
 		type: Boolean as PropType<IPresentableProps['visible']>,
 		default: TPresentable.defaultValues.visible,
-	},
-	// hidden: {
-	// 	type: Boolean as PropType<IPresentable['hidden']>,
-	// 	default: TPresentable.defaultValues.hidden,
-	// },
+	}
 }
 
 export default {
@@ -91,13 +87,4 @@ export function syncPresentable(options: ISyncComponentModelOptions<IPresentable
 			}
 		},
 	)
-
-	// watch<boolean>(
-	// 	() => props.hidden,
-	// 	(value) => {
-	// 		if (value !== instance.hidden) {
-	// 			instance.hidden = value
-	// 		}
-	// 	},
-	// )
 }
