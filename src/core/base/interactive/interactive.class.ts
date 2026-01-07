@@ -1,12 +1,7 @@
 import { TDisableableState, TFocusableState } from '../states'
 import type { IDisableableState, IFocusableState } from '../states'
-import { TPresentable } from '../presentable'
-import type {
-	IInteractiveOptions,
-	IInteractiveProps,
-	TInteractiveEvents,
-	TInteractiveStatesOptions,
-} from './types'
+import { TPresentable, type IPresentableOptions } from '../presentable'
+import type { IInteractiveProps, TInteractiveEvents, TInteractiveStatesOptions } from './types'
 
 /**
  * База для интерактивных компонентов: disabled + focused.
@@ -28,7 +23,7 @@ export default class TInteractive<
 	protected _disableable: IDisableableState
 	protected _focusable: IFocusableState
 
-	constructor(options: IInteractiveOptions<TProps, TStates> | Partial<TProps> = {}) {
+	constructor(options: IPresentableOptions<TProps, TStates> | Partial<TProps> = {}) {
 		super(options)
 
 		const { props = {} as Partial<TProps>, states } = TPresentable.prepareOptions<
