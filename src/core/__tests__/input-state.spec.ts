@@ -36,4 +36,10 @@ describe('TInputState', () => {
 		expect(s.state).toBe('error')
 		expect(handler).toHaveBeenLastCalledWith({ invalid: true, state: 'error' })
 	})
+
+	it('при инициализации invalid=true принудительно выставляет state=error', () => {
+		const s = new TInputState({ invalid: true, state: 'normal' })
+		expect(s.invalid).toBe(true)
+		expect(s.state).toBe('error')
+	})
 })

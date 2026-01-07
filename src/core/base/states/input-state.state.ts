@@ -52,6 +52,10 @@ export class TInputState extends TStateUnit<TInputStateEvents> {
 			if (initial.state !== undefined) this._state = initial.state
 			if (initial.loading !== undefined) this._loading = initial.loading
 		}
+
+		if (this._invalid) {
+			this._state = 'error'
+		}
 	}
 
 	get readonly(): boolean {
