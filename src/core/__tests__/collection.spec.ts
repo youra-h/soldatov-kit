@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import { TCollection, TCollectionItem } from '../classes/collection'
+import { TCollection, TCollectionItem } from '../base/collection'
 
 class TestItem extends TCollectionItem {}
 
@@ -13,26 +13,30 @@ describe('TCollectionItem', () => {
 		item.free()
 
 		expect(spy).toHaveBeenCalled()
-		expect(spy.mock.calls[0][0]).toBe(item)
+		// expect(spy.mock.calls[0][0]).toBe(item)
+		const payload = spy.mock.calls[0]![0]
+		expect(payload).toBe(item)
 	})
 })
 
 describe('TCollection', () => {
 	it('add() creates item, increments count and emits "added"', () => {
-		const col = new TCollection({ itemClass: TestItem })
-		const spy = vi.fn()
+        const col = new TCollection({ itemClass: TestItem })
+        const spy = vi.fn()
 
-		col.events.on('added', spy)
+        col.events.on('added', spy)
 
-		const item = col.add({})
+        const item = col.add({})
 
-		expect(col.count).toBe(1)
-		expect(col.getItem(0)).toBe(item)
-		expect(spy).toHaveBeenCalled()
-		const payload = spy.mock.calls[0][0]
-		expect(payload.collection).toBe(col)
-		expect(payload.item).toBe(item)
-	})
+        expect(col.count).toBe(1)
+        expect(col.getItem(0)).toBe(item)
+        expect(spy).toHaveBeenCalled()
+
+        // безопасный доступ — non-null assertion
+        const payload = spy.mock.calls[0]![0]
+        expect(payload.collection).toBe(col)
+        expect(payload.item).toBe(item)
+    })
 
 	it('insert() and insertAt() insert items at positions and respect collection membership', () => {
 		const col1 = new TCollection({ itemClass: TestItem })
@@ -126,7 +130,7 @@ describe('TCollection', () => {
 
 		expect(col2.getItem(2)).toBe(x)
 		expect(afterMoveSpy).toHaveBeenCalled()
-		const payload = afterMoveSpy.mock.calls[0][0]
+		const payload = afterMoveSpy.mock.calls[0]![0]
 		expect(payload.collection).toBe(col2)
 		expect(payload.item).toBe(x)
 	})

@@ -1,6 +1,6 @@
 import { TTreeItem } from './tree-item.class'
 import type { TConstructor } from '../../../common/types'
-import { TCollection } from '../../collection/collection.class'
+import { TCollection } from '../../../base/collection'
 
 /**
  * Элемент дерева с подключаемым поведением.

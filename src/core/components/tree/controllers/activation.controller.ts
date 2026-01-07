@@ -1,6 +1,6 @@
 import type { TTree } from '../tree.class'
 import type { ITreeItem } from '../item/types'
-import type { TActivatableBehavior } from '../../behavior/activable.behavior'
+import type { TActivatableBehavior } from '../../../base/behaviors'
 
 // Интерфейс элемента, который ожидает контроллер
 interface IItemWithActivatable {

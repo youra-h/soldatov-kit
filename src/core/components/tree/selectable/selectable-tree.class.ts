@@ -2,7 +2,7 @@ import { TTree } from './../tree.class'
 import { TreeSelectionController } from './../controllers/selection.controller'
 import { TSelectableTreeItem } from './selectable-tree-item.class'
 import type { TConstructor } from '../../../common/types'
-import type { TSelectionMode } from '../../collection/selectable/types'
+import type { TSelectionMode } from '../../../base/collection'
 
 /**
  * Корневой класс дерева с поддержкой выделения (selection).

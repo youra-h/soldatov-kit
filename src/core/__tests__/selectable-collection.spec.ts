@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
-import { TSelectableCollection, TSelectableCollectionItem } from '../classes/collection'
+import { TSelectableCollection, TSelectableCollectionItem } from '../base/collection'
 
 describe('TSelectableCollectionItem', () => {
 	it('toggleSelected and setter emit "change" with itself', () => {
@@ -10,7 +10,10 @@ describe('TSelectableCollectionItem', () => {
 
 		item.selected = true
 		expect(spy).toHaveBeenCalled()
-		expect(spy.mock.calls[0][0]).toBe(item)
+		// expect(spy.mock.calls[0][0]).toBe(item)
+		const payload = spy.mock.calls[0]![0]
+		expect(payload).toBe(item)
+		expect(item.selected).toBe(true)
 
 		spy.mockClear()
 		item.toggleSelected()

@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
-import { TActivatableCollection, TActivatableCollectionItem } from '../classes/collection'
+import { TActivatableCollection, TActivatableCollectionItem } from '../base/collection'
 
 describe('TActivatableCollectionItem', () => {
 	it('setter and toggleActive emit "change" with itself', () => {
@@ -10,7 +10,10 @@ describe('TActivatableCollectionItem', () => {
 
 		item.active = true
 		expect(spy).toHaveBeenCalled()
-		expect(spy.mock.calls[0][0]).toBe(item)
+		// expect(spy.mock.calls[0][0]).toBe(item)
+		const payload = spy.mock.calls[0]![0]
+		expect(payload).toBe(item)
+		expect(item.active).toBe(true)
 
 		spy.mockClear()
 		item.toggleActive()
@@ -55,7 +58,7 @@ describe('TActivatableCollection', () => {
 		expect(col.activeItem).toBeUndefined()
 		expect(a.active).toBe(false)
 		expect(spy).toHaveBeenCalled()
-		const payload = spy.mock.calls[0][0]
+		const payload = spy.mock.calls[0]![0]
 		expect(payload.collection).toBe(col)
 		expect(payload.item).toBeUndefined()
 	})
