@@ -8,7 +8,7 @@ import {
 	TButton,
 } from '../../../core'
 import { Control, emitsControl, propsControl, syncControl } from '../control'
-import type { TEmits, TProps, ISyncComponentOptions } from '../../types/types'
+import type { TEmits, TProps, ISyncComponentOptions } from '../../types/common'
 import { Icon } from '../icon'
 import { Spinner } from '../spinner'
 

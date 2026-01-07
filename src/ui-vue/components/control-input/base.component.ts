@@ -12,7 +12,7 @@ import {
 	propsControlValue,
 	syncControlValue,
 } from '../control-value'
-import type { TEmits, TProps, ISyncComponentOptions } from '../../types/types'
+import type { TEmits, TProps, ISyncComponentOptions } from '../../types/common'
 
 export const emitsControlInput: TEmits = [...emitsControlValue] as const
 

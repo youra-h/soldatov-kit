@@ -6,7 +6,7 @@ import {
 	propsControlInput,
 	syncControlInput,
 } from '../control-input'
-import type { TEmits, TProps, ISyncComponentOptions } from '../../types/types'
+import type { TEmits, TProps, ISyncComponentOptions } from '../../types/common'
 import { Icon } from '../icon'
 
 export const emitsCheckBox: TEmits = [

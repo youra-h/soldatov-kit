@@ -1,8 +1,8 @@
 import { type PropType, watch } from 'vue'
-import { type IComponent, TComponent } from '../../../core'
-import type { TEmits, TProps, ISyncComponentOptions } from '../../types/types'
+import { type IPresentable, TPresentable } from '../../../core'
+import type { TEmits, TProps, ISyncPresentableOptions } from '../../types'
 
-export const emitsComponent: TEmits = [
+export const emitsPresentable: TEmits = [
 	'update:visible',
 	'hide',
 	'show',
@@ -10,42 +10,42 @@ export const emitsComponent: TEmits = [
 	'created',
 ] as const
 
-export const propsComponent: TProps = {
+export const propsPresentable: TProps = {
 	is: {
-		type: Object as PropType<IComponent>,
+		type: Object as PropType<IPresentable>,
 	},
 	id: {
-		type: [String, Number] as PropType<IComponent['id']>,
-		default: TComponent.defaultValues.id,
+		type: [String, Number] as PropType<IPresentable['id']>,
+		default: TPresentable.defaultValues.id,
 	},
 	tag: {
-		type: [Object, String] as PropType<IComponent['tag']>,
-		default: TComponent.defaultValues.tag,
+		type: [Object, String] as PropType<IPresentable['tag']>,
+		default: TPresentable.defaultValues.tag,
 	},
 	visible: {
-		type: Boolean as PropType<IComponent['visible']>,
-		default: TComponent.defaultValues.visible,
+		type: Boolean as PropType<IPresentable['visible']>,
+		default: TPresentable.defaultValues.visible,
 	},
 	hidden: {
-		type: Boolean as PropType<IComponent['hidden']>,
-		default: TComponent.defaultValues.hidden,
+		type: Boolean as PropType<IPresentable['hidden']>,
+		default: TPresentable.defaultValues.hidden,
 	},
 }
 
 export default {
-	name: 'BaseComponent',
-	emits: emitsComponent,
-	props: propsComponent,
+	name: 'BasePresentable',
+	emits: emitsPresentable,
+	props: propsPresentable,
 	created() {
 		// @ts-ignore
-		;(this.component! as IComponent).id = this.$.uid
+		;(this.component! as IPresentable).id = this.$.uid
 		// Emit 'created' event when component is created
 		// @ts-ignore
 		this.$emit('created', this.component)
 	},
 }
 
-export function syncComponent(options: ISyncComponentOptions<IComponent>) {
+export function syncPresentable(options: ISyncPresentableOptions<IPresentable>) {
 	const { instance, props, emit } = options
 
 	watch<Object | string>(
