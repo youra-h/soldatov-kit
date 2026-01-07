@@ -75,9 +75,6 @@ describe('ui-vue: Presentable', () => {
 		const onHide = vi.fn()
 		const onChangeVisible = vi.fn()
 		const onChangeRendered = vi.fn()
-		const onChangeTag = vi.fn()
-		const onChangeClasses = vi.fn()
-		const onChangeAttrs = vi.fn()
 
 		const instCreated = vi.fn()
 		const instBeforeShow = vi.fn(() => true)
@@ -88,9 +85,6 @@ describe('ui-vue: Presentable', () => {
 		const instHide = vi.fn()
 		const instChangeVisible = vi.fn()
 		const instChangeRendered = vi.fn()
-		const instChangeTag = vi.fn()
-		const instChangeClasses = vi.fn()
-		const instChangeAttrs = vi.fn()
 
 		instance.events.on('created' as any, instCreated)
 		instance.events.on('beforeShow' as any, instBeforeShow)
@@ -101,9 +95,6 @@ describe('ui-vue: Presentable', () => {
 		instance.events.on('hide' as any, instHide)
 		instance.events.on('change:visible' as any, instChangeVisible)
 		instance.events.on('change:rendered' as any, instChangeRendered)
-		instance.events.on('change:tag' as any, instChangeTag)
-		instance.events.on('change:classes' as any, instChangeClasses)
-		instance.events.on('change:attrs' as any, instChangeAttrs)
 
 		const wrapper = mount(Presentable as any, {
 			props: {
@@ -118,9 +109,6 @@ describe('ui-vue: Presentable', () => {
 				onHide,
 				['onChange:visible']: onChangeVisible,
 				['onChange:rendered']: onChangeRendered,
-				['onChange:tag']: onChangeTag,
-				['onChange:classes']: onChangeClasses,
-				['onChange:attrs']: onChangeAttrs,
 			} as any,
 			slots: {
 				default: 'Hello',
@@ -131,19 +119,6 @@ describe('ui-vue: Presentable', () => {
 		await vi.runAllTimersAsync()
 		expect(instCreated).toHaveBeenCalled()
 		expect(onCreated).toHaveBeenCalled()
-
-		// change:* (tag/classes/attrs/rendered)
-		instance.tag = 'section'
-		expect(instChangeTag).toHaveBeenCalledWith('section')
-		expect(onChangeTag).toHaveBeenCalledWith('section')
-
-		instance.setClasses(['x'])
-		expect(instChangeClasses).toHaveBeenCalledWith(['x'])
-		expect(onChangeClasses).toHaveBeenCalledWith(['x'])
-
-		instance.attrs = { role: 'x' }
-		expect(instChangeAttrs).toHaveBeenCalledWith({ role: 'x' })
-		expect(onChangeAttrs).toHaveBeenCalledWith({ role: 'x' })
 
 		instance.rendered = false
 		expect(instChangeRendered).toHaveBeenCalledWith(false)

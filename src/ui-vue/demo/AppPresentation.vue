@@ -1,26 +1,89 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import { Presentable } from '@ui/presentable'
+import { TPresentable } from '@core'
+import DemoLayout from './DemoLayout.vue'
 
-const rendered = ref(true)
-const visible = ref(true)
+const instance = reactive(new TPresentable({ tag: 'div', rendered: true, visible: true }))
+
+const eventLog = ref<string[]>([])
+const push = (source: 'core' | 'vue', name: string, payload?: unknown) => {
+	const suffix = payload === undefined ? '' : ` ${JSON.stringify(payload)}`
+	eventLog.value.unshift(`${source}:${name}${suffix}`)
+	if (eventLog.value.length > 50) eventLog.value.length = 50
+}
+
+// Core way (instance.events.on)
+instance.events.on('created' as any, () => push('core', 'created'))
+instance.events.on('beforeShow' as any, () => {
+	push('core', 'beforeShow')
+	return true
+})
+instance.events.on('afterShow' as any, () => push('core', 'afterShow'))
+instance.events.on('beforeHide' as any, () => {
+	push('core', 'beforeHide')
+	return true
+})
+instance.events.on('afterHide' as any, () => push('core', 'afterHide'))
+instance.events.on('show' as any, () => push('core', 'show'))
+instance.events.on('hide' as any, () => push('core', 'hide'))
+instance.events.on('change:visible' as any, (v: boolean) => push('core', 'change:visible', v))
+instance.events.on('change:rendered' as any, (v: boolean) => push('core', 'change:rendered', v))
+
+// Vue way (@event)
+const onCreated = () => push('vue', 'created')
+const onBeforeShow = () => push('vue', 'beforeShow')
+const onAfterShow = () => push('vue', 'afterShow')
+const onBeforeHide = () => push('vue', 'beforeHide')
+const onAfterHide = () => push('vue', 'afterHide')
+const onShow = () => push('vue', 'show')
+const onHide = () => push('vue', 'hide')
+const onChangeVisible = (v: boolean) => push('vue', 'change:visible', v)
+const onChangeRendered = (v: boolean) => push('vue', 'change:rendered', v)
+
+const rendered = computed(() => instance.rendered)
+const visible = computed(() => instance.visible)
+
+const toggleRendered = () => (instance.rendered = !instance.rendered)
+const toggleVisible = () => (instance.visible = !instance.visible)
+const show = () => instance.show()
+const hide = () => instance.hide()
 </script>
 
 <template>
-	<div class="flex flex-col gap-4">
-		<h1 class="text-lg font-semibold">Presentable</h1>
+	<DemoLayout title="Presentable">
+		<template #controls>
+			<div class="flex flex-wrap gap-2">
+				<button type="button" class="px-2 py-1 border rounded" @click="toggleRendered">
+					rendered: {{ rendered }}
+				</button>
+				<button type="button" class="px-2 py-1 border rounded" @click="toggleVisible">
+					visible: {{ visible }}
+				</button>
+				<button type="button" class="px-2 py-1 border rounded" @click="show">show()</button>
+				<button type="button" class="px-2 py-1 border rounded" @click="hide">hide()</button>
+			</div>
+		</template>
 
-		<div class="flex gap-2">
-			<button type="button" class="px-2 py-1 border rounded" @click="rendered = !rendered">
-				rendered: {{ rendered }}
-			</button>
-			<button type="button" class="px-2 py-1 border rounded" @click="visible = !visible">
-				visible: {{ visible }}
-			</button>
-		</div>
-
-		<Presentable tag="div" :rendered="rendered" :visible="visible">
+		<Presentable
+			:is="instance"
+			@created="onCreated"
+			@beforeShow="onBeforeShow"
+			@afterShow="onAfterShow"
+			@beforeHide="onBeforeHide"
+			@afterHide="onAfterHide"
+			@show="onShow"
+			@hide="onHide"
+			@change:visible="onChangeVisible"
+			@change:rendered="onChangeRendered"
+		>
 			Presentable content
 		</Presentable>
-	</div>
+
+		<template #events>
+			<div class="text-sm whitespace-pre-wrap">
+				<div v-for="(line, idx) in eventLog" :key="idx">{{ line }}</div>
+			</div>
+		</template>
+	</DemoLayout>
 </template>
