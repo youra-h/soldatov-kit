@@ -1,5 +1,7 @@
 import { TTextState } from '../states'
 import { TControl } from '../control'
+import type { IPresentableOptions } from '../presentable'
+import TPresentable from '../presentable/presentable.class'
 import type { ITextableProps, TTextableEvents } from './types'
 
 /**
@@ -20,10 +22,12 @@ export default class TTextable<
 
 	protected _textState: TTextState
 
-	constructor(options: any = {}) {
+	constructor(options: IPresentableOptions<TProps> | Partial<TProps> = {}) {
 		super(options)
 
-		const { props = {} } = options
+		const { props = {} as Partial<TProps> } = TPresentable.prepareOptions<TProps>(
+			options as any,
+		)
 
 		this._textState = new TTextState(props.text ?? (TTextable.defaultValues.text as string))
 

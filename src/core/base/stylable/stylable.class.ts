@@ -1,5 +1,6 @@
 import type { TComponentSize, TComponentVariant } from '../../common/types'
 import TPresentable from '../presentable/presentable.class'
+import type { IPresentableOptions } from '../presentable'
 import { TSizeState } from '../states/size.state'
 import { TVariantState } from '../states/variant.state'
 import type { IStylableProps, TStylableEvents } from './types'
@@ -23,10 +24,12 @@ export default class TStylable<
 	protected _sizeState: TSizeState
 	protected _variantState: TVariantState
 
-	constructor(options: any = {}) {
+	constructor(options: IPresentableOptions<TProps> | Partial<TProps> = {}) {
 		super(options)
 
-		const { props = {} } = options
+		const { props = {} as Partial<TProps> } = TPresentable.prepareOptions<TProps>(
+			options as any,
+		)
 
 		this._sizeState = new TSizeState({
 			baseClass: this._baseClass,

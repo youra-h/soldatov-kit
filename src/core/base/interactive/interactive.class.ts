@@ -2,6 +2,7 @@ import type { TDisableableState, TFocusableState } from '../states'
 import { TDisableableState as TDisableableStateImpl } from '../states/disableable.state'
 import { TFocusableState as TFocusableStateImpl } from '../states/focusable.state'
 import TPresentable from '../presentable/presentable.class'
+import type { IPresentableOptions } from '../presentable'
 import type { IInteractiveProps, TInteractiveEvents } from './types'
 
 /**
@@ -11,11 +12,9 @@ import type { IInteractiveProps, TInteractiveEvents } from './types'
  * события наружу в формате `change:*`.
  */
 export default class TInteractive<
-		TProps extends IInteractiveProps = IInteractiveProps,
-		TEvents extends TInteractiveEvents = TInteractiveEvents,
-	>
-	extends TPresentable<TProps, TEvents>
-{
+	TProps extends IInteractiveProps = IInteractiveProps,
+	TEvents extends TInteractiveEvents = TInteractiveEvents,
+> extends TPresentable<TProps, TEvents> {
 	static defaultValues: Partial<IInteractiveProps> = {
 		...TPresentable.defaultValues,
 		disabled: false,
@@ -25,9 +24,12 @@ export default class TInteractive<
 	protected _disableable: TDisableableState
 	protected _focusable: TFocusableState
 
-	constructor(options: any = {}) {
+	constructor(options: IPresentableOptions<TProps> | Partial<TProps> = {}) {
 		super(options)
-		const { props = {} } = options
+
+		const { props = {} as Partial<TProps> } = TPresentable.prepareOptions<TProps>(
+			options as any,
+		)
 
 		this._disableable = new TDisableableStateImpl(
 			props.disabled ?? (TInteractive.defaultValues.disabled as boolean),

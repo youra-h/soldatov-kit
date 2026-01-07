@@ -1,5 +1,7 @@
 import { TValueState } from '../states'
 import { TControl } from '../control'
+import type { IPresentableOptions } from '../presentable'
+import TPresentable from '../presentable/presentable.class'
 import type { IValueControlProps, TValueControlEvents } from './types'
 
 /**
@@ -25,9 +27,12 @@ export default class TValueControl<
 	protected _valueState: TValueState<T>
 	protected _name: string
 
-	constructor(options: any = {}) {
+	constructor(options: IPresentableOptions<TProps> | Partial<TProps> = {}) {
 		super(options)
-		const { props = {} } = options
+
+		const { props = {} as Partial<TProps> } = TPresentable.prepareOptions<TProps>(
+			options as any,
+		)
 
 		this._name = props.name ?? (TValueControl.defaultValues.name as string)
 

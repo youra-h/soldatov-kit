@@ -2,6 +2,8 @@ import { TInputState } from '../states'
 import { TValueControl } from '../value-control'
 import type { ITextInputControlProps, TTextInputControlEvents } from './types'
 import type { TControlInputState } from '../states'
+import type { IPresentableOptions } from '../presentable'
+import TPresentable from '../presentable/presentable.class'
 
 /**
  * База для текстовых инпутов.
@@ -28,9 +30,12 @@ export default class TTextInputControl<
 
 	protected _inputState: TInputState
 
-	constructor(options: any = {}) {
+	constructor(options: IPresentableOptions<TProps> | Partial<TProps> = {}) {
 		super(options)
-		const { props = {} } = options
+
+		const { props = {} as Partial<TProps> } = TPresentable.prepareOptions<TProps>(
+			options as any,
+		)
 
 		this._inputState = new TInputState({
 			readonly: props.readonly ?? (TTextInputControl.defaultValues.readonly as boolean),
