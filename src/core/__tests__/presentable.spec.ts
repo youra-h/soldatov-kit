@@ -117,7 +117,7 @@ describe('TPresentable', () => {
 		expect(p.toJSON()).toEqual(p.getProps())
 	})
 
-	it('states.factory позволяет менять поведение visible-state (пример: лог при visible=true)', () => {
+	it('states позволяет передавать инстансы или конструкторы для visibility-state', () => {
 		const log: string[] = []
 
 		class TLoggedVisibilityState implements IVisibilityState {
@@ -149,20 +149,26 @@ describe('TPresentable', () => {
 			}
 		}
 
-		const factory = vi.fn((key: 'rendered' | 'visible', initial: boolean): IVisibilityState => {
-			if (key === 'visible') return new TLoggedVisibilityState(initial, log)
-			return new TVisibilityState(initial)
-		})
 
-		const p = new TPresentable({ props: { visible: false }, states: { factory } })
-		p.events.on('change:visible', (value) => {
+		// 1) Передаём готовые инстансы
+		const instanceVisible = new TLoggedVisibilityState(false, log)
+		const instanceRendered = new TVisibilityState(true)
+		const p1 = new TPresentable({ props: { visible: false }, states: { rendered: instanceRendered, visible: instanceVisible } })
+		p1.events.on('change:visible', (value) => {
 			log.push(`presentable:change:visible=${value}`)
 		})
-
-		p.visible = true
-
-		expect(factory).toHaveBeenCalled()
+		p1.visible = true
 		expect(log).toContain('state:visible=true')
 		expect(log).toContain('presentable:change:visible=true')
+
+		// 2) Передаём конструктор/класс — TPresentable создаст экземпляр сам
+		log.length = 0
+		const p2 = new TPresentable({ props: { visible: false }, states: { visible: class TLoggedCtor extends TLoggedVisibilityState { constructor(initial = false) { super(initial, log) } } } })
+		p2.events.on('change:visible', (value) => {
+			log.push(`presentable2:change:visible=${value}`)
+		})
+		p2.visible = true
+		expect(log).toContain('state:visible=true')
+		expect(log).toContain('presentable2:change:visible=true')
 	})
 })

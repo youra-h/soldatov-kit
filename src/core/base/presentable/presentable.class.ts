@@ -94,38 +94,42 @@ export default class TPresentable<
 
 	constructor(options: IPresentableOptions<TProps> | Partial<TProps> = {}) {
 		const ctor = new.target as typeof TPresentable
-		const { props = {} as Partial<TProps>, baseClass, states } = ctor.prepareOptions<TProps>(options)
+		const {
+			props = {} as Partial<TProps>,
+			baseClass,
+			states,
+		} = ctor.prepareOptions<TProps>(options)
 
 		super({ props })
 
 		this._tag = props.tag ?? TPresentable.defaultValues.tag!
 
-		const initialRendered =
-			typeof props.rendered === 'boolean'
-				? props.rendered
-				: (TPresentable.defaultValues.rendered as boolean)
-		const initialVisible =
-			typeof props.visible === 'boolean'
-				? props.visible
-				: (TPresentable.defaultValues.visible as boolean)
+		// Инициализируем состояния видимости
+		const initialRendered = props.rendered ?? (TPresentable.defaultValues.rendered as boolean)
+		const initialVisible = props.visible ?? (TPresentable.defaultValues.visible as boolean)
 
-		const stateFactory = states?.factory
-		const RenderedStateCtor = states?.rendered ?? TVisibilityState
-		const VisibilityStateCtor = states?.visible ?? TVisibilityState
+		// Создаём состояния — поддерживаем либо ctor, либо готовый инстанс
+		const resolveState = (
+			opt: any,
+			DefaultCtor: new (initial?: boolean) => IVisibilityState,
+			initial: boolean,
+		) => {
+			if (opt && typeof opt === 'object' && typeof (opt as any).show === 'function') {
+				return opt as IVisibilityState
+			}
+			const Ctor = typeof opt === 'function' ? opt : DefaultCtor
+			return new Ctor(initial)
+		}
 
-		this._renderedState = stateFactory
-			? stateFactory('rendered', initialRendered)
-			: new RenderedStateCtor(initialRendered)
-		this._renderedState.events.on('change', (value) => {
-			this.events.emit('change:rendered', value)
-		})
+		this._renderedState = resolveState(states?.rendered, TVisibilityState, initialRendered)
+		this._visibilityState = resolveState(states?.visible, TVisibilityState, initialVisible)
 
-		this._visibilityState = stateFactory
-			? stateFactory('visible', initialVisible)
-			: new VisibilityStateCtor(initialVisible)
-		this._visibilityState.events.on('change', (value) => {
-			this.events.emit('change:visible', value)
-		})
+		this._renderedState.events.on('change', (value) =>
+			this.events.emit('change:rendered', value),
+		)
+		this._visibilityState.events.on('change', (value) =>
+			this.events.emit('change:visible', value),
+		)
 
 		this._baseClass = baseClass
 		this._classes = (props.classes ?? TPresentable.defaultValues.classes!) as string[]
