@@ -8,7 +8,7 @@ type TPresentableVueProps = IPresentableProps & { is?: IPresentable }
 export default {
 	name: '_Presentable',
 	extends: BasePresentable,
-	setup(props: IPresentableProps, { emit }) {
+	setup(props: TPresentableVueProps, { emit }) {
 		const { is: component } = useBaseSetup(TPresentable, props)
 
 		syncPresentable({
@@ -18,7 +18,7 @@ export default {
 		})
 
 		return { component }
-	}
+	},
 }
 </script>
 

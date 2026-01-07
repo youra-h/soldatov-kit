@@ -4,7 +4,7 @@ import { Presentable } from '@ui/presentable'
 import { TPresentable } from '@core'
 import DemoLayout from './DemoLayout.vue'
 
-const instance = reactive(new TPresentable({ tag: 'div', rendered: true, visible: true }))
+const instance = new TPresentable({ tag: 'div', rendered: true, visible: true })
 
 const eventLog = ref<string[]>([])
 const push = (source: 'core' | 'vue', name: string, payload?: unknown) => {
