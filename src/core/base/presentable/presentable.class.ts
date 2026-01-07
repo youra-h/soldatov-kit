@@ -51,15 +51,24 @@ export default class TPresentable<
 		options: IComponentModelOptions<T> | Partial<T> = {},
 		defaultBaseClass?: string,
 	) {
-		if (options && typeof options === 'object' && 'props' in options) {
+		if (options && typeof options === 'object') {
 			const normalized = options as IComponentModelOptions<T> & { baseClass?: string }
 
-			return {
-				...normalized,
-				baseClass:
-					normalized.baseClass ??
-					defaultBaseClass ??
-					(this as typeof TPresentable).baseClass,
+			if ('props' in options) {
+				return {
+					...normalized,
+					baseClass:
+						normalized.baseClass ??
+						defaultBaseClass ??
+						(this as typeof TPresentable).baseClass,
+				}
+			}
+
+			if ('baseClass' in options) {
+				return {
+					props: {} as Partial<T>,
+					baseClass: normalized.baseClass,
+				}
 			}
 		}
 

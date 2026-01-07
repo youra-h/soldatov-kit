@@ -4,7 +4,10 @@ import type { IControlProps } from '../base/control'
 
 describe('TControl', () => {
 	it('дисейбл/фокус трекают state и эмитят события', () => {
-		const ctrl = new TControl<IControlProps>({ baseClass: 's-test', disabled: false, focused: false })
+		const ctrl = new TControl<IControlProps>({
+			props: { disabled: false, focused: false },
+			baseClass: 's-test',
+		})
 		const disabledHandler = vi.fn()
 		const focusedHandler = vi.fn()
 		ctrl.events.on('change:disabled', disabledHandler)
@@ -32,11 +35,13 @@ describe('TControl', () => {
 
 	it('getProps возвращает variant/size/disabled/focused', () => {
 		const ctrl = new TControl<IControlProps>({
+			props: {
+				size: 'sm',
+				variant: 'primary',
+				disabled: true,
+				focused: false,
+			},
 			baseClass: 's-test',
-			size: 'sm',
-			variant: 'primary',
-			disabled: true,
-			focused: false,
 		})
 		expect(ctrl.getProps()).toMatchObject({
 			variant: 'primary',

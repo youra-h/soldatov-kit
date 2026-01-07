@@ -20,7 +20,10 @@ describe('TStylable', () => {
 	})
 
 	it('getProps отражает size и variant', () => {
-		const stylable = new TStylable<IStylableProps>({ baseClass: 's-test', size: 'lg', variant: 'primary' })
+		const stylable = new TStylable<IStylableProps>({
+			props: { size: 'lg', variant: 'primary' },
+			baseClass: 's-test',
+		})
 		expect(stylable.getProps()).toMatchObject({ size: 'lg', variant: 'primary' })
 	})
 })
