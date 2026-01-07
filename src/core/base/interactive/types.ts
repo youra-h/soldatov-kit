@@ -1,5 +1,5 @@
 import type { IPresentable, IPresentableProps, TPresentableEvents } from '../presentable'
-import type { IPresentableOptions, TPresentableStatesOptions } from '../presentable'
+import type { TPresentableStatesOptions } from '../presentable'
 import type { TDisableableStateCtor, TFocusableStateCtor } from '../states'
 
 export type TInteractiveEvents = TPresentableEvents & {

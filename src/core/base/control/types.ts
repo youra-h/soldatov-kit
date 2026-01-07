@@ -9,20 +9,10 @@ export type TControlEvents = TStylableEvents & {
 	click: (event: Event) => void
 }
 
-/**
- * @deprecated Используйте `TControlEvents`.
- */
-export type TStylableInteractiveEvents = TControlEvents
-
 export interface IControlProps extends IStylableProps {
 	disabled?: boolean
 	focused?: boolean
 }
-
-/**
- * @deprecated Используйте `IControlProps`.
- */
-export interface IStylableInteractiveProps extends IControlProps {}
 
 export interface IControl<
 	TProps extends IControlProps = IControlProps,
@@ -32,11 +22,3 @@ export interface IControl<
 	focused: boolean
 	click(event: Event): void
 }
-
-/**
- * @deprecated Используйте `IControl`.
- */
-export type IStylableInteractive<
-	TProps extends IStylableInteractiveProps = IStylableInteractiveProps,
-	TEvents extends Record<string, (...args: any) => any> = TStylableInteractiveEvents,
-> = IControl<TProps, TEvents>

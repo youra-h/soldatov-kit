@@ -1,8 +1,8 @@
 import type { TComponentSize, TComponentVariant } from '../../common/types'
-import { TPresentable } from '../presentable'
+import { TPresentable, type IPresentableOptions } from '../presentable'
 import { TSizeState, TVariantState } from '../states'
 import type { IModifierValueState, TSizeStateOptions, TVariantStateOptions } from '../states'
-import type { IStylableOptions, IStylableProps, TStylableEvents } from './types'
+import type { IStylableProps, TStylableEvents, TStylableStatesOptions } from './types'
 
 /**
  * Слой "stylable": унифицированные `size` и `variant`.
@@ -13,7 +13,8 @@ import type { IStylableOptions, IStylableProps, TStylableEvents } from './types'
 export default class TStylable<
 	TProps extends IStylableProps = IStylableProps,
 	TEvents extends TStylableEvents = TStylableEvents,
-> extends TPresentable<TProps, TEvents> {
+	TStates extends TStylableStatesOptions = TStylableStatesOptions,
+> extends TPresentable<TProps, TEvents, TStates> {
 	static defaultValues: Partial<IStylableProps> = {
 		...TPresentable.defaultValues,
 		size: 'normal',
@@ -23,12 +24,13 @@ export default class TStylable<
 	protected _sizeState: IModifierValueState<TComponentSize>
 	protected _variantState: IModifierValueState<TComponentVariant>
 
-	constructor(options: IStylableOptions<TProps> | Partial<TProps> = {}) {
+	constructor(options: IPresentableOptions<TProps, TStates> | Partial<TProps> = {}) {
 		super(options)
 
-		const { props = {} as Partial<TProps>, states } = TPresentable.prepareOptions<TProps>(
-			options as any,
-		) as unknown as { props: Partial<TProps>; states?: IStylableOptions<TProps>['states'] }
+		const { props = {} as Partial<TProps>, states } = TPresentable.prepareOptions<
+			TProps,
+			TStates
+		>(options)
 
 		const sizeOptions: TSizeStateOptions = {
 			baseClass: this._baseClass,
@@ -42,14 +44,12 @@ export default class TStylable<
 		const SizeCtor = states?.size ?? TSizeState
 		const VariantCtor = states?.variant ?? TVariantState
 
-		this._sizeState = states?.createSize ? states.createSize(sizeOptions) : new SizeCtor(sizeOptions)
+		this._sizeState = new SizeCtor(sizeOptions)
 		this._sizeState.events.on('change', (value) => {
 			this.events.emit('change:size' as any, value)
 		})
 
-		this._variantState = states?.createVariant
-			? states.createVariant(variantOptions)
-			: new VariantCtor(variantOptions)
+		this._variantState = new VariantCtor(variantOptions)
 		this._variantState.events.on('change', (value) => {
 			this.events.emit('change:variant' as any, value)
 		})
