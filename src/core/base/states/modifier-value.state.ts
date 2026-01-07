@@ -1,27 +1,27 @@
 import { TStateUnit } from '../state-unit'
 import type { TEvented } from '../../common/evented'
 
-export interface IModifierValueOptions<T extends string = string> {
+export interface IModifierValueOptions<TValue extends string = string> {
 	baseClass?: string
-	exclude?: T[]
-	value?: T
+	exclude?: TValue[]
+	value?: TValue
 }
 
-export type TModifierValueEvents<T extends string = string> = {
-	change: (newValue: T, oldValue: T) => void
+export type TModifierValueEvents<TValue extends string = string> = {
+	change: (newValue: TValue, oldValue: TValue) => void
 }
 
-export interface IModifierValueState<T extends string = string> {
-	value: T
+export interface IModifierValueState<TValue extends string = string> {
+	value: TValue
 	baseClass: string
-	readonly events: TEvented<TModifierValueEvents<T>>
+	readonly events: TEvented<TModifierValueEvents<TValue>>
 	getClass(): string[]
 }
 
 export type TModifierValueStateCtor<
-	T extends string = string,
-	TState extends IModifierValueState<T> = IModifierValueState<T>,
-> = new (options?: IModifierValueOptions<T>) => TState
+	TValue extends string = string,
+	TState extends IModifierValueState<TValue> = IModifierValueState<TValue>,
+> = new (options?: IModifierValueOptions<TValue>) => TState
 
 /**
  * Базовый state для строкового модификатора CSS-класса.
@@ -33,24 +33,24 @@ export type TModifierValueStateCtor<
  * - `baseClass` — базовый CSS-класс компонента, от которого строятся модификаторы
  */
 export abstract class TModifierValue<
-	T extends string = string,
-	TEvents extends TModifierValueEvents<T> = TModifierValueEvents<T>,
-> extends TStateUnit<TEvents> implements IModifierValueState<T> {
+	TValue extends string = string,
+	TEvents extends TModifierValueEvents<TValue> = TModifierValueEvents<TValue>,
+> extends TStateUnit<TEvents> implements IModifierValueState<TValue> {
 	protected _baseClass: string
-	protected _value: T
-	protected _exclude: T[]
+	protected _value: TValue
+	protected _exclude: TValue[]
 
-	constructor(options: IModifierValueOptions<T> = {}) {
+	constructor(options: IModifierValueOptions<TValue> = {}) {
 		super()
 		this._baseClass = options.baseClass ?? 's-control'
 		this._exclude = options.exclude ?? []
-		this._value = options.value ?? ('normal' as T)
+		this._value = options.value ?? ('normal' as TValue)
 	}
 
-	get value(): T {
+	get value(): TValue {
 		return this._value
 	}
-	set value(newValue: T) {
+	set value(newValue: TValue) {
 		if (this._value === newValue) return
 
 		const oldValue = this._value
