@@ -1,5 +1,5 @@
 import type { IControl, IControlProps, TControlEvents, TControlStatesOptions } from '../control'
-import type { TValueStateCtor } from '../states'
+import type { IValueState, TValueStateCtor } from '../states'
 
 export type TValueControlEvents<T> = TControlEvents & {
 	/** change:value */
@@ -16,7 +16,7 @@ export interface IValueControlProps<TValue> extends IControlProps {
 }
 
 export type TValueControlStatesOptions<TValue> = TControlStatesOptions & {
-	value?: TValueStateCtor<TValue>
+	value?: TValueStateCtor<TValue> | IValueState<TValue>
 }
 
 export interface IValueControl<

@@ -3,6 +3,7 @@ import type { IDisableableState, IFocusableState } from '../states'
 import { TPresentable } from '../presentable'
 import type { IPresentableOptions } from '../presentable'
 import { TStylable } from '../stylable'
+import { resolveState } from '../../common/resolve-state'
 import type { IControlProps, TControlEvents, TControlStatesOptions } from './types'
 
 /**
@@ -34,19 +35,24 @@ export default class TControl<
 			TStates
 		>(options)
 
-		const initialDisabled = props.disabled ?? (TControl.defaultValues.disabled as boolean)
-		const initialFocused = props.focused ?? (TControl.defaultValues.focused as boolean)
+		const disabled = props.disabled ?? (TControl.defaultValues.disabled as boolean)
+		const focused = props.focused ?? (TControl.defaultValues.focused as boolean)
 
-		const DisableableCtor = states?.disableable ?? TDisableableState
-		const FocusableCtor = states?.focusable ?? TFocusableState
-
-		this._disableable = new DisableableCtor(initialDisabled)
+		this._disableable = resolveState<IDisableableState, boolean>(
+			states?.disableable,
+			TDisableableState,
+			disabled,
+		)
 
 		this._disableable.events.on('change', (value) => {
 			this.events.emit('change:disabled' as any, value)
 		})
 
-		this._focusable = new FocusableCtor(initialFocused)
+		this._focusable = resolveState<IFocusableState, boolean>(
+			states?.focusable,
+			TFocusableState,
+			focused,
+		)
 
 		this._focusable.events.on('change', (value) => {
 			this.events.emit('change:focused' as any, value)

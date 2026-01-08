@@ -2,6 +2,7 @@ import type { TComponentSize, TComponentVariant } from '../../common/types'
 import { TPresentable, type IPresentableOptions } from '../presentable'
 import { TSizeState, TVariantState } from '../states'
 import type { IModifierValueState, TSizeStateOptions, TVariantStateOptions } from '../states'
+import { resolveState } from '../../common/resolve-state'
 import type { IStylableProps, TStylableEvents, TStylableStatesOptions } from './types'
 
 /**
@@ -41,15 +42,21 @@ export default class TStylable<
 			value: (props.variant ?? TStylable.defaultValues.variant) as TComponentVariant,
 		}
 
-		const SizeCtor = states?.size ?? TSizeState
-		const VariantCtor = states?.variant ?? TVariantState
+		this._sizeState = resolveState<IModifierValueState<TComponentSize>, TSizeStateOptions>(
+			states?.size,
+			TSizeState,
+			sizeOptions,
+		)
 
-		this._sizeState = new SizeCtor(sizeOptions)
 		this._sizeState.events.on('change', (value) => {
 			this.events.emit('change:size' as any, value)
 		})
 
-		this._variantState = new VariantCtor(variantOptions)
+		this._variantState = resolveState<
+			IModifierValueState<TComponentVariant>,
+			TVariantStateOptions
+		>(states?.variant, TVariantState, variantOptions)
+
 		this._variantState.events.on('change', (value) => {
 			this.events.emit('change:variant' as any, value)
 		})

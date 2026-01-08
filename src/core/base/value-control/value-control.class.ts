@@ -2,6 +2,7 @@ import { TValueState, type IValueState } from '../states'
 import { TControl } from '../control'
 import type { IPresentableOptions } from '../presentable'
 import { TPresentable } from '../presentable'
+import { resolveState } from '../../common/resolve-state'
 import type { IValueControlProps, TValueControlEvents, TValueControlStatesOptions } from './types'
 
 /**
@@ -38,12 +39,13 @@ export default class TValueControl<
 
 		this._name = props.name ?? (TValueControl.defaultValues.name as string)
 
-		const initialValue =
-			(props.value) ?? (TValueControl.defaultValues.value as TValue)
+		const value = props.value ?? (TValueControl.defaultValues.value as TValue)
 
-		const ValueCtor = states?.value ?? TValueState
-
-		this._valueState = new ValueCtor(initialValue)
+		this._valueState = resolveState<IValueState<TValue>, TValue>(
+			states?.value,
+			TValueState as unknown as new (initial?: TValue) => IValueState<TValue>,
+			value,
+		)
 
 		this._valueState.events.on('change', (value) => {
 			this.events.emit('change:value' as any, value)

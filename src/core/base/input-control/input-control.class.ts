@@ -1,9 +1,10 @@
-import { TInputState, type IInputState } from '../states'
+import { TInputState, type IInputState, type IInputStateProps } from '../states'
 import { TValueControl } from '../value-control'
 import type { IInputControlProps, TInputControlEvents, TInputControlStatesOptions } from './types'
 import type { TControlInputState } from '../states'
 import type { IPresentableOptions } from '../presentable'
 import { TPresentable } from '../presentable'
+import { resolveState } from '../../common/resolve-state'
 
 /**
  * База для текстовых инпутов.
@@ -46,15 +47,17 @@ export default class TInputControl<
 		const state = props.state ?? (TInputControl.defaultValues.state as TControlInputState)
 		const loading = props.loading ?? (TInputControl.defaultValues.loading as boolean)
 
-		const InputStateCtor = states?.inputState ?? TInputState
-
-		this._inputState = new InputStateCtor({
-			readonly,
-			required,
-			invalid,
-			state,
-			loading,
-		})
+		this._inputState = resolveState<IInputState, Partial<IInputStateProps>>(
+			states?.inputState,
+			TInputState,
+			{
+				readonly,
+				required,
+				invalid,
+				state,
+				loading,
+			},
+		)
 
 		this._inputState.events.on('change', (patch) => {
 			if (patch.readonly !== undefined)

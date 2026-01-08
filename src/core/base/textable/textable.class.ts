@@ -2,6 +2,7 @@ import { TTextState, type ITextState } from '../states'
 import { TControl } from '../control'
 import type { IPresentableOptions } from '../presentable'
 import { TPresentable } from '../presentable'
+import { resolveState } from '../../common/resolve-state'
 import type { ITextableProps, TTextableEvents, TTextableStatesOptions } from './types'
 
 /**
@@ -31,11 +32,9 @@ export default class TTextable<
 			TStates
 		>(options)
 
-		const initialText = props.text ?? (TTextable.defaultValues.text as string)
+		const text = props.text ?? (TTextable.defaultValues.text as string)
 
-		const TextCtor = states?.text ?? TTextState
-
-		this._textState = new TextCtor(initialText)
+		this._textState = resolveState<ITextState, string>(states?.text, TTextState, text)
 
 		this._textState.events.on('change', (value) => {
 			this.events.emit('change:text' as any, value)

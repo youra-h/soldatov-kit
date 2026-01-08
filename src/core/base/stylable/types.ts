@@ -1,7 +1,7 @@
 import type { TComponentSize, TComponentVariant } from '../../common/types'
 import type { IPresentable, IPresentableProps, TPresentableEvents } from '../presentable'
 import type { TPresentableStatesOptions } from '../presentable'
-import type { TModifierValueStateCtor } from '../states'
+import type { IModifierValueState, TModifierValueStateCtor } from '../states'
 
 export type TStylableEvents = TPresentableEvents & {
 	/** change:size */
@@ -16,8 +16,8 @@ export interface IStylableProps extends IPresentableProps {
 }
 
 export type TStylableStatesOptions = TPresentableStatesOptions & {
-	size?: TModifierValueStateCtor<TComponentSize>
-	variant?: TModifierValueStateCtor<TComponentVariant>
+	size?: TModifierValueStateCtor<TComponentSize> | IModifierValueState<TComponentSize>
+	variant?: TModifierValueStateCtor<TComponentVariant> | IModifierValueState<TComponentVariant>
 }
 
 export interface IStylable<
