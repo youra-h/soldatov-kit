@@ -1,5 +1,5 @@
-import type { IPresentable, IPresentableProps, TPresentableEvents } from '../presentable'
-import type { TPresentableStatesOptions } from '../presentable'
+import type { IComponentView, IComponentViewProps, TComponentViewEvents } from '../component-view'
+import type { TComponentViewStatesOptions } from '../component-view'
 import type {
 	IDisableableState,
 	IFocusableState,
@@ -7,7 +7,7 @@ import type {
 	TFocusableStateCtor,
 } from '../states'
 
-export type TInteractiveEvents = TPresentableEvents & {
+export type TInteractiveEvents = TComponentViewEvents & {
 	/** change:disabled */
 	'change:disabled': (value: boolean) => void
 	/** change:focused */
@@ -16,12 +16,12 @@ export type TInteractiveEvents = TPresentableEvents & {
 	click: (event: Event) => void
 }
 
-export interface IInteractiveProps extends IPresentableProps {
+export interface IInteractiveProps extends IComponentViewProps {
 	disabled?: boolean
 	focused?: boolean
 }
 
-export type TInteractiveStatesOptions = TPresentableStatesOptions & {
+export type TInteractiveStatesOptions = TComponentViewStatesOptions & {
 	disableable?: TDisableableStateCtor | IDisableableState
 	focusable?: TFocusableStateCtor | IFocusableState
 }
@@ -29,7 +29,7 @@ export type TInteractiveStatesOptions = TPresentableStatesOptions & {
 export interface IInteractive<
 	TProps extends IInteractiveProps = IInteractiveProps,
 	TEvents extends Record<string, (...args: any) => any> = TInteractiveEvents,
-> extends IPresentable<TProps, TEvents> {
+> extends IComponentView<TProps, TEvents> {
 	disabled: boolean
 	focused: boolean
 	click(event: Event): void

@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { computed, reactive, ref } from 'vue'
-import { Presentable } from '@ui/presentable'
-import { TPresentable } from '@core'
+import { ComponentView } from '@ui/component-view'
+import { TComponentView } from '@core'
 import DemoLayout from './DemoLayout.vue'
 
-const instance = new TPresentable({ tag: 'div', rendered: true, visible: true })
+const instance = new TComponentView({ tag: 'div', rendered: true, visible: true })
 
 const eventLog = ref<string[]>([])
 const push = (source: 'core' | 'vue', name: string, payload?: unknown) => {
@@ -51,7 +51,7 @@ const hide = () => instance.hide()
 </script>
 
 <template>
-	<DemoLayout title="Presentable">
+	<DemoLayout title="ComponentView">
 		<template #controls>
 			<div class="flex flex-wrap gap-2">
 				<button type="button" class="px-2 py-1 border rounded" @click="toggleRendered">
@@ -65,7 +65,7 @@ const hide = () => instance.hide()
 			</div>
 		</template>
 
-		<Presentable
+		<ComponentView
 			:is="instance"
 			@created="onCreated"
 			@beforeShow="onBeforeShow"
@@ -77,8 +77,8 @@ const hide = () => instance.hide()
 			@change:visible="onChangeVisible"
 			@change:rendered="onChangeRendered"
 		>
-			Presentable content
-		</Presentable>
+			ComponentView content
+		</ComponentView>
 
 		<template #events>
 			<div class="text-sm whitespace-pre-wrap">

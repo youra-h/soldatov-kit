@@ -1,10 +1,10 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { mount } from '@vue/test-utils'
-import { TPresentable } from '@core'
+import { TComponentView } from '@core'
 
-import Presentable from '../components/presentable/Presentable.vue'
+import ComponentView from '../components/component-view/ComponentView.vue'
 
-describe('ui-vue: Presentable', () => {
+describe('ui-vue: ComponentView', () => {
 	beforeEach(() => {
 		vi.useFakeTimers()
 	})
@@ -14,7 +14,7 @@ describe('ui-vue: Presentable', () => {
 	})
 
 	it('рендерится в DOM при rendered=true', () => {
-		const wrapper = mount(Presentable, {
+		const wrapper = mount(ComponentView, {
 			props: {
 				tag: 'div',
 				rendered: true,
@@ -30,7 +30,7 @@ describe('ui-vue: Presentable', () => {
 	})
 
 	it('не рендерится в DOM при rendered=false', () => {
-		const wrapper = mount(Presentable, {
+		const wrapper = mount(ComponentView, {
 			props: {
 				tag: 'div',
 				rendered: false,
@@ -47,7 +47,7 @@ describe('ui-vue: Presentable', () => {
 	})
 
 	it('v-show прячет элемент при visible=false', () => {
-		const wrapper = mount(Presentable, {
+		const wrapper = mount(ComponentView, {
 			props: {
 				tag: 'div',
 				rendered: true,
@@ -64,7 +64,7 @@ describe('ui-vue: Presentable', () => {
 	})
 
 	it('поддерживает :is="instance" и пробрасывает события (instance.events.on + Vue @event)', async () => {
-		const instance = new TPresentable({ tag: 'div', rendered: true, visible: true })
+		const instance = new TComponentView({ tag: 'div', rendered: true, visible: true })
 
 		const onCreated = vi.fn()
 		const onBeforeShow = vi.fn()
@@ -96,7 +96,7 @@ describe('ui-vue: Presentable', () => {
 		instance.events.on('change:visible' as any, instChangeVisible)
 		instance.events.on('change:rendered' as any, instChangeRendered)
 
-		const wrapper = mount(Presentable as any, {
+		const wrapper = mount(ComponentView as any, {
 			props: {
 				is: instance,
 				// Vue listeners (эквивалент @event="handler")

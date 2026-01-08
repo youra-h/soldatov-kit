@@ -28,9 +28,9 @@ describe('TControl', () => {
 		ctrl.variant = 'primary'
 		const classes = ctrl.classes
 
-		expect(classes).toContain('s-presentable')
-		expect(classes).toContain('s-presentable--size-xl')
-		expect(classes).toContain('s-presentable--primary')
+		expect(classes).toContain('s-component-view')
+		expect(classes).toContain('s-component-view--size-xl')
+		expect(classes).toContain('s-component-view--primary')
 	})
 
 	it('getProps возвращает variant/size/disabled/focused', () => {

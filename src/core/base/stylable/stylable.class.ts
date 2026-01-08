@@ -1,5 +1,5 @@
 import type { TComponentSize, TComponentVariant } from '../../common/types'
-import { TPresentable, type IPresentableOptions } from '../presentable'
+import { TComponentView, type IComponentViewOptions } from '../component-view'
 import { TSizeState, TVariantState } from '../states'
 import type { IModifierValueState, TSizeStateOptions, TVariantStateOptions } from '../states'
 import { resolveState } from '../../common/resolve-state'
@@ -15,9 +15,9 @@ export default class TStylable<
 	TProps extends IStylableProps = IStylableProps,
 	TEvents extends TStylableEvents = TStylableEvents,
 	TStates extends TStylableStatesOptions = TStylableStatesOptions,
-> extends TPresentable<TProps, TEvents, TStates> {
+> extends TComponentView<TProps, TEvents, TStates> {
 	static defaultValues: Partial<IStylableProps> = {
-		...TPresentable.defaultValues,
+		...TComponentView.defaultValues,
 		size: 'normal',
 		variant: 'normal',
 	}
@@ -25,10 +25,10 @@ export default class TStylable<
 	protected _sizeState: IModifierValueState<TComponentSize>
 	protected _variantState: IModifierValueState<TComponentVariant>
 
-	constructor(options: IPresentableOptions<TProps, TStates> | Partial<TProps> = {}) {
+	constructor(options: IComponentViewOptions<TProps, TStates> | Partial<TProps> = {}) {
 		super(options)
 
-		const { props = {} as Partial<TProps>, states } = TPresentable.prepareOptions<
+		const { props = {} as Partial<TProps>, states } = TComponentView.prepareOptions<
 			TProps,
 			TStates
 		>(options)

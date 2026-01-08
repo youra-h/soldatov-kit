@@ -1,11 +1,11 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
-import { TPresentable } from '../base/presentable'
-import type { IPresentableProps } from '../base/presentable'
+import { TComponentView } from '../base/component-view'
+import type { IComponentViewProps } from '../base/component-view'
 import { TVisibilityState } from '../base/states'
 import type { IVisibilityState, TVisibilityStateEvents } from '../base/states'
 import { TEvented } from '../common/evented'
 
-describe('TPresentable', () => {
+describe('TComponentView', () => {
 	beforeEach(() => {
 		vi.useFakeTimers()
 	})
@@ -15,7 +15,7 @@ describe('TPresentable', () => {
 	})
 
 	it('принимает { props } и baseClass', () => {
-		const p = new TPresentable({ props: { id: 'x', tag: 'span', visible: false }, baseClass: 'my' })
+		const p = new TComponentView({ props: { id: 'x', tag: 'span', visible: false }, baseClass: 'my' })
 		expect(p.id).toBe('x')
 		expect(p.tag).toBe('span')
 		expect(p.visible).toBe(false)
@@ -23,39 +23,39 @@ describe('TPresentable', () => {
 	})
 
 	it('принимает "голые" props без ключа props', () => {
-		const p = new TPresentable({ id: 'x', tag: 'section', classes: ['a'], attrs: { role: 'x' } })
+		const p = new TComponentView({ id: 'x', tag: 'section', classes: ['a'], attrs: { role: 'x' } })
 		expect(p.id).toBe('x')
 		expect(p.tag).toBe('section')
-		expect(p.classes).toContain(TPresentable.baseClass)
+		expect(p.classes).toContain(TComponentView.baseClass)
 		expect(p.classes).toContain('a')
 		expect(p.attrs).toEqual({ role: 'x' })
 	})
 
 	it('getProps возвращает все свойства (включая baseClass/classes/attrs)', () => {
-		const p = new TPresentable<IPresentableProps>({
+		const p = new TComponentView<IComponentViewProps>({
 			id: 123,
 			tag: 'div',
 			visible: true,
 			classes: ['x'],
 			attrs: { a: 1 },
 		})
-		const props = p.getProps() as IPresentableProps
+		const props = p.getProps() as IComponentViewProps
 		expect(props.id).toBe(123)
 		expect(props.tag).toBe('div')
 		expect(props.visible).toBe(true)
-		expect(props.baseClass).toBe(TPresentable.baseClass)
+		expect(props.baseClass).toBe(TComponentView.baseClass)
 		expect(props.classes).toEqual(['x'])
 		expect(props.attrs).toEqual({ a: 1 })
 	})
 
 	it('create создаёт инстанс и прокидывает id', () => {
-		const p = TPresentable.create({ id: 'c' })
-		expect(p).toBeInstanceOf(TPresentable)
+		const p = TComponentView.create({ id: 'c' })
+		expect(p).toBeInstanceOf(TComponentView)
 		expect(p.id).toBe('c')
 	})
 
 	it('show/hide эмитят события и меняют visible', () => {
-		const p = new TPresentable({ visible: false })
+		const p = new TComponentView({ visible: false })
 		const beforeShow = vi.spyOn(p as any, 'beforeShow').mockReturnValue(true)
 		const beforeHide = vi.spyOn(p as any, 'beforeHide').mockReturnValue(true)
 		const emitWithResult = vi.spyOn(p.events, 'emitWithResult').mockReturnValue(true)
@@ -83,7 +83,7 @@ describe('TPresentable', () => {
 	})
 
 	it('visible=true вызывает show, visible=false вызывает hide', () => {
-		const p = new TPresentable({ visible: false })
+		const p = new TComponentView({ visible: false })
 		const show = vi.spyOn(p as any, 'show')
 		const hide = vi.spyOn(p as any, 'hide')
 
@@ -94,7 +94,7 @@ describe('TPresentable', () => {
 	})
 
 	it('tag/attrs/setClasses эмитят change:*', () => {
-		const p = new TPresentable()
+		const p = new TComponentView()
 		const tagHandler = vi.fn()
 		const attrsHandler = vi.fn()
 		const classesHandler = vi.fn()
@@ -113,7 +113,7 @@ describe('TPresentable', () => {
 	})
 
 	it('toJSON сериализует getProps()', () => {
-		const p = new TPresentable({ id: 'x', tag: 'span', classes: ['a'] })
+		const p = new TComponentView({ id: 'x', tag: 'span', classes: ['a'] })
 		expect(p.toJSON()).toEqual(p.getProps())
 	})
 
@@ -154,22 +154,22 @@ describe('TPresentable', () => {
 		const instanceVisible = new TLoggedVisibilityState(false, log)
 		const instanceRendered = new TVisibilityState(true)
 
-		const p1 = new TPresentable({ props: { visible: false }, states: { rendered: instanceRendered, visible: instanceVisible } })
+		const p1 = new TComponentView({ props: { visible: false }, states: { rendered: instanceRendered, visible: instanceVisible } })
 		p1.events.on('change:visible', (value) => {
-			log.push(`presentable:change:visible=${value}`)
+			log.push(`component-view:change:visible=${value}`)
 		})
 		p1.visible = true
 		expect(log).toContain('state:visible=true')
-		expect(log).toContain('presentable:change:visible=true')
+		expect(log).toContain('component-view:change:visible=true')
 
-		// 2) Передаём конструктор/класс — TPresentable создаст экземпляр сам
+		// 2) Передаём конструктор/класс — TComponentView создаст экземпляр сам
 		log.length = 0
-		const p2 = new TPresentable({ props: { visible: false }, states: { visible: class TLoggedCtor extends TLoggedVisibilityState { constructor(initial = false) { super(initial, log) } } } })
+		const p2 = new TComponentView({ props: { visible: false }, states: { visible: class TLoggedCtor extends TLoggedVisibilityState { constructor(initial = false) { super(initial, log) } } } })
 		p2.events.on('change:visible', (value) => {
-			log.push(`presentable2:change:visible=${value}`)
+			log.push(`component-view2:change:visible=${value}`)
 		})
 		p2.visible = true
 		expect(log).toContain('state:visible=true')
-		expect(log).toContain('presentable2:change:visible=true')
+		expect(log).toContain('component-view2:change:visible=true')
 	})
 })

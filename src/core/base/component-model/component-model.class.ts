@@ -10,7 +10,7 @@ import type {
 /**
  * Headless-модель компонента.
  *
- * Это тонкая основа для будущих слоёв (`TPresentable`, `TInteractive`, ...).
+ * Это тонкая основа для будущих слоёв (`TComponentView`, `TInteractive`, ...).
  * Хранит `id` и единый emitter `events`.
  */
 export default class TComponentModel<

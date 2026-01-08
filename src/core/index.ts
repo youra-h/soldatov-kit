@@ -6,7 +6,7 @@ export * from './common/evented'
 // base (слои/ядро)
 export * from './base/entity'
 export * from './base/component-model'
-export * from './base/presentable'
+export * from './base/component-view'
 export * from './base/interactive'
 export * from './base/stylable'
 export * from './base/control'

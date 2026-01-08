@@ -1,13 +1,13 @@
-import { TPresentable, type IPresentableOptions } from '../../base/presentable'
+import { TComponentView, type IComponentViewOptions } from '../../base/component-view'
 import type { TComponentSize, TComponentVariant } from '../../common/types'
 import type { ISpinner, ISpinnerProps, TSpinnerEvents } from './types'
 import { TSizeState, TVariantState } from '../../base/states'
 
-export default class TSpinner extends TPresentable<ISpinnerProps, TSpinnerEvents> implements ISpinner {
+export default class TSpinner extends TComponentView<ISpinnerProps, TSpinnerEvents> implements ISpinner {
 	static override baseClass = 's-spinner'
 
 	static defaultValues: Partial<ISpinnerProps> = {
-		...TPresentable.defaultValues,
+		...TComponentView.defaultValues,
 		variant: 'primary',
 		size: 'normal',
 		tag: 'span',
@@ -18,10 +18,10 @@ export default class TSpinner extends TPresentable<ISpinnerProps, TSpinnerEvents
 	readonly variantState: TVariantState
 	protected _borderWidth: number | 'auto'
 
-	constructor(options: IPresentableOptions<ISpinnerProps> | Partial<ISpinnerProps> = {}) {
+	constructor(options: IComponentViewOptions<ISpinnerProps> | Partial<ISpinnerProps> = {}) {
 		super(options)
 
-		const { props = {} } = TPresentable.prepareOptions(options)
+		const { props = {} } = TComponentView.prepareOptions(options)
 
 		this.sizeState = new TSizeState({
 			baseClass: this._baseClass,

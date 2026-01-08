@@ -1,7 +1,7 @@
 import { TDisableableState, TFocusableState } from '../states'
 import type { IDisableableState, IFocusableState } from '../states'
-import { TPresentable } from '../presentable'
-import type { IPresentableOptions } from '../presentable'
+import { TComponentView } from '../component-view'
+import type { IComponentViewOptions } from '../component-view'
 import { TStylable } from '../stylable'
 import { resolveState } from '../../common/resolve-state'
 import type { IControlProps, TControlEvents, TControlStatesOptions } from './types'
@@ -27,10 +27,10 @@ export default class TControl<
 	protected _disableable: IDisableableState
 	protected _focusable: IFocusableState
 
-	constructor(options: IPresentableOptions<TProps, TStates> | Partial<TProps> = {}) {
+	constructor(options: IComponentViewOptions<TProps, TStates> | Partial<TProps> = {}) {
 		super(options)
 
-		const { props = {} as Partial<TProps>, states } = TPresentable.prepareOptions<
+		const { props = {} as Partial<TProps>, states } = TComponentView.prepareOptions<
 			TProps,
 			TStates
 		>(options)

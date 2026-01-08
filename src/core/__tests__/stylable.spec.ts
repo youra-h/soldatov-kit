@@ -13,11 +13,11 @@ describe('TStylable', () => {
 
 		stylable.size = 'xl'
 		expect(sizeHandler).toHaveBeenCalledWith('xl')
-		expect(stylable.classes).toContain('s-presentable--size-xl')
+		expect(stylable.classes).toContain('s-component-view--size-xl')
 
 		stylable.variant = 'primary'
 		expect(variantHandler).toHaveBeenCalledWith('primary')
-		expect(stylable.classes).toContain('s-presentable--primary')
+		expect(stylable.classes).toContain('s-component-view--primary')
 	})
 
 	it('getProps отражает size и variant', () => {

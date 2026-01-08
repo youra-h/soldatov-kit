@@ -1,5 +1,5 @@
 import { TInputControl } from '../../base/input-control'
-import { TPresentable, type IPresentableOptions } from '../../base/presentable'
+import { TComponentView, type IComponentViewOptions } from '../../base/component-view'
 import type { ICheckBox, ICheckBoxProps, TCheckBoxEvents } from './types'
 import { TIcon } from '../icon'
 
@@ -23,10 +23,10 @@ export default class TCheckBox
 	protected _icon?: TIcon
 	protected _indeterminateIcon?: TIcon
 
-	constructor(options: IPresentableOptions<ICheckBoxProps> | Partial<ICheckBoxProps> = {}) {
+	constructor(options: IComponentViewOptions<ICheckBoxProps> | Partial<ICheckBoxProps> = {}) {
 		super(options)
 
-		const { props = {} as Partial<ICheckBoxProps> } = TPresentable.prepareOptions<ICheckBoxProps>(
+		const { props = {} as Partial<ICheckBoxProps> } = TComponentView.prepareOptions<ICheckBoxProps>(
 			options as any,
 		)
 

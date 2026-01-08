@@ -1,17 +1,17 @@
 <script lang="ts">
-import { TPresentable, type IPresentable, type IPresentableProps } from '../../../core'
-import BasePresentable, { syncPresentable } from './base.component'
+import { TComponentView, type IComponentView, type IComponentViewProps } from '../../../core'
+import BaseComponentView, { syncComponentView } from './base.component'
 import { useBaseSetup } from '../../composables/useBaseSetup'
 
-type TPresentableVueProps = IPresentableProps & { is?: IPresentable }
+type TComponentViewVueProps = IComponentViewProps & { is?: IComponentView }
 
 export default {
-	name: '_Presentable',
-	extends: BasePresentable,
-	setup(props: TPresentableVueProps, { emit }) {
-		const { is: component } = useBaseSetup(TPresentable, props)
+	name: '_ComponentView',
+	extends: BaseComponentView,
+	setup(props: TComponentViewVueProps, { emit }) {
+		const { is: component } = useBaseSetup(TComponentView, props)
 
-		syncPresentable({
+		syncComponentView({
 			instance: component,
 			props,
 			emit,

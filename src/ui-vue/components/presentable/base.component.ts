@@ -1,8 +1,8 @@
 import { type PropType, watch } from 'vue'
-import { type IPresentable, type IPresentableProps, TPresentable } from '../../../core'
+import { type IComponentView, type IComponentViewProps, TComponentView } from '../../../core'
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types'
 
-export const emitsPresentable: TEmits = [
+export const emitsComponentView: TEmits = [
 	'rendered',
 	'update:rendered',
 	'change:rendered',
@@ -18,46 +18,46 @@ export const emitsPresentable: TEmits = [
 	'created',
 ] as const
 
-export const propsPresentable: TProps = {
+export const propsComponentView: TProps = {
 	is: {
-		type: Object as PropType<IPresentable>,
+		type: Object as PropType<IComponentView>,
 	},
 	id: {
-		type: [String, Number] as PropType<IPresentableProps['id']>,
-		default: TPresentable.defaultValues.id,
+		type: [String, Number] as PropType<IComponentViewProps['id']>,
+		default: TComponentView.defaultValues.id,
 	},
 	tag: {
-		type: [Object, String] as PropType<IPresentableProps['tag']>,
-		default: TPresentable.defaultValues.tag,
+		type: [Object, String] as PropType<IComponentViewProps['tag']>,
+		default: TComponentView.defaultValues.tag,
 	},
 	rendered: {
-		type: Boolean as PropType<IPresentableProps['rendered']>,
-		default: TPresentable.defaultValues.rendered,
+		type: Boolean as PropType<IComponentViewProps['rendered']>,
+		default: TComponentView.defaultValues.rendered,
 	},
 	visible: {
-		type: Boolean as PropType<IPresentableProps['visible']>,
-		default: TPresentable.defaultValues.visible,
+		type: Boolean as PropType<IComponentViewProps['visible']>,
+		default: TComponentView.defaultValues.visible,
 	},
 }
 
 export default {
-	name: 'BasePresentable',
-	emits: emitsPresentable,
-	props: propsPresentable,
+	name: 'BaseComponentView',
+	emits: emitsComponentView,
+	props: propsComponentView,
 	created() {
 		// @ts-ignore
-		;(this.component! as IPresentable).id = this.$.uid
+		;(this.component! as IComponentView).id = this.$.uid
 		// Emit 'created' event when component is created
 		// @ts-ignore
 		this.$emit('created', this.component)
 	},
 }
 
-export function syncPresentable(options: ISyncComponentModelOptions<IPresentable>) {
+export function syncComponentView(options: ISyncComponentModelOptions<IComponentView>) {
 	const { instance, props, emit } = options
 
 	// Пробрасываем события core-инстанса наружу (Vue events).
-	instance.events.on('created' as any, (component: IPresentable) => {
+	instance.events.on('created' as any, (component: IComponentView) => {
 		emit?.('created', component)
 	})
 

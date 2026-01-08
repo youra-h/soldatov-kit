@@ -1,7 +1,7 @@
 import { TValueState, type IValueState } from '../states'
 import { TControl } from '../control'
-import type { IPresentableOptions } from '../presentable'
-import { TPresentable } from '../presentable'
+import type { IComponentViewOptions } from '../component-view'
+import { TComponentView } from '../component-view'
 import { resolveState } from '../../common/resolve-state'
 import type { IValueControlProps, TValueControlEvents, TValueControlStatesOptions } from './types'
 
@@ -29,10 +29,10 @@ export default class TValueControl<
 	protected _valueState: IValueState<TValue>
 	protected _name: string
 
-	constructor(options: IPresentableOptions<TProps, TStates> | Partial<TProps> = {}) {
+	constructor(options: IComponentViewOptions<TProps, TStates> | Partial<TProps> = {}) {
 		super(options)
 
-		const { props = {} as Partial<TProps>, states } = TPresentable.prepareOptions<
+		const { props = {} as Partial<TProps>, states } = TComponentView.prepareOptions<
 			TProps,
 			TStates
 		>(options)

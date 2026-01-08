@@ -1,6 +1,6 @@
 import { type PropType, watch } from 'vue'
 import { type IControlProps, type TComponentSize, TControl } from '../../../core'
-import { BaseComponent, emitsComponent, propsComponent, syncComponent } from '../presentable'
+import { BaseComponent, emitsComponent, propsComponent, syncComponent } from '../component-view'
 import type { TEmits, TProps, ISyncComponentOptions } from '../../types/common'
 
 export const emitsControl: TEmits = [

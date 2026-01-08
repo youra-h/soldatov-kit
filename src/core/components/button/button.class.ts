@@ -2,7 +2,7 @@ import { TTextable } from '../../base/textable'
 import type { IButton, IButtonProps, TButtonAppearance, TButtonEvents } from './types'
 import { TIcon } from '../icon'
 import { TSpinner } from '../spinner'
-import { TPresentable, type IPresentableOptions } from '../../base/presentable'
+import { TComponentView, type IComponentViewOptions } from '../../base/component-view'
 
 export default class TButton extends TTextable<IButtonProps, TButtonEvents> implements IButton {
 	static override baseClass = 's-button'
@@ -21,10 +21,10 @@ export default class TButton extends TTextable<IButtonProps, TButtonEvents> impl
 	protected _loading: boolean
 	protected _spinner?: TSpinner
 
-	constructor(options: IPresentableOptions<IButtonProps> | Partial<IButtonProps> = {}) {
+	constructor(options: IComponentViewOptions<IButtonProps> | Partial<IButtonProps> = {}) {
 		super(options)
 
-		const { props = {} } = TPresentable.prepareOptions(options)
+		const { props = {} } = TComponentView.prepareOptions(options)
 
 		this._tag = props.tag ?? TButton.defaultValues.tag!
 

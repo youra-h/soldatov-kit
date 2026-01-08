@@ -2,8 +2,8 @@ import { TInputState, type IInputState, type IInputStateProps } from '../states'
 import { TValueControl } from '../value-control'
 import type { IInputControlProps, TInputControlEvents, TInputControlStatesOptions } from './types'
 import type { TControlInputState } from '../states'
-import type { IPresentableOptions } from '../presentable'
-import { TPresentable } from '../presentable'
+import type { IComponentViewOptions } from '../component-view'
+import { TComponentView } from '../component-view'
 import { resolveState } from '../../common/resolve-state'
 
 /**
@@ -33,10 +33,10 @@ export default class TInputControl<
 
 	protected _inputState: IInputState
 
-	constructor(options: IPresentableOptions<TProps, TStates> | Partial<TProps> = {}) {
+	constructor(options: IComponentViewOptions<TProps, TStates> | Partial<TProps> = {}) {
 		super(options)
 
-		const { props = {} as Partial<TProps>, states } = TPresentable.prepareOptions<
+		const { props = {} as Partial<TProps>, states } = TComponentView.prepareOptions<
 			TProps,
 			TStates
 		>(options)

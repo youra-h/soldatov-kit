@@ -1,7 +1,7 @@
-import type { IPresentable, IPresentableProps, TPresentableEvents } from '../../base/presentable'
+import type { IComponentView, IComponentViewProps, TComponentViewEvents } from '../../base/component-view'
 import type { TComponentSize, TComponentVariant } from '../../common/types'
 
-export interface ISpinnerProps extends IPresentableProps {
+export interface ISpinnerProps extends IComponentViewProps {
 	// Размер компонента
 	size?: TComponentSize
 	// Вариант отображения компонента
@@ -10,9 +10,9 @@ export interface ISpinnerProps extends IPresentableProps {
 	borderWidth?: number | 'auto'
 }
 
-export type TSpinnerEvents = TPresentableEvents & {}
+export type TSpinnerEvents = TComponentViewEvents & {}
 
-export interface ISpinner extends IPresentable<ISpinnerProps, TSpinnerEvents> {
+export interface ISpinner extends IComponentView<ISpinnerProps, TSpinnerEvents> {
 	size: TComponentSize
 	variant: TComponentVariant
 }

@@ -1,14 +1,14 @@
-import { TPresentable } from '../../base/presentable'
+import { TComponentView } from '../../base/component-view'
 import type { IIcon, IIconProps, TIconEvents } from './types'
 import { TSizeState } from '../../base/states/size.state'
 import type { TComponentSize } from '../../common/types'
-import type { IPresentableOptions } from '../../base/presentable'
+import type { IComponentViewOptions } from '../../base/component-view'
 
-export default class TIcon extends TPresentable<IIconProps, TIconEvents> implements IIcon {
+export default class TIcon extends TComponentView<IIconProps, TIconEvents> implements IIcon {
 	static override baseClass = 's-icon'
 
 	static defaultValues: Partial<IIconProps> = {
-		...TPresentable.defaultValues,
+		...TComponentView.defaultValues,
 		size: 'normal',
 		tag: 'error',
 	}
@@ -17,10 +17,10 @@ export default class TIcon extends TPresentable<IIconProps, TIconEvents> impleme
 	protected _height: string | number | undefined
 	readonly sizeState: TSizeState
 
-	constructor(options: IPresentableOptions<IIconProps> | Partial<IIconProps> = {}) {
+	constructor(options: IComponentViewOptions<IIconProps> | Partial<IIconProps> = {}) {
 		super(options)
 
-		const { props = {} } = TPresentable.prepareOptions(options)
+		const { props = {} } = TComponentView.prepareOptions(options)
 
 		this.sizeState = new TSizeState({
 			baseClass: this._baseClass,

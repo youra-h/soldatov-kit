@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import Presentable from '../src/ui-vue/components/presentable/Presentable.vue'
+import ComponentView from '../src/ui-vue/components/component-view/ComponentView.vue'
 
 const rendered = ref(true)
 const visible = ref(true)
@@ -17,13 +17,13 @@ const visible = ref(true)
 			visible: {{ visible }}
 		</button>
 
-		<Presentable
-			data-testid="presentable"
+		<ComponentView
+			data-testid="component-view"
 			:tag="'div'"
 			:rendered="rendered"
 			:visible="visible"
 		>
-			Presentable content
-		</Presentable>
+			ComponentView content
+		</ComponentView>
 	</div>
 </template>

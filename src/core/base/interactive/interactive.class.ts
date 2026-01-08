@@ -1,6 +1,6 @@
 import { TDisableableState, TFocusableState } from '../states'
 import type { IDisableableState, IFocusableState } from '../states'
-import { TPresentable, type IPresentableOptions } from '../presentable'
+import { TComponentView, type IComponentViewOptions } from '../component-view'
 import { resolveState } from '../../common/resolve-state'
 import type { IInteractiveProps, TInteractiveEvents, TInteractiveStatesOptions } from './types'
 
@@ -14,9 +14,9 @@ export default class TInteractive<
 	TProps extends IInteractiveProps = IInteractiveProps,
 	TEvents extends TInteractiveEvents = TInteractiveEvents,
 	TStates extends TInteractiveStatesOptions = TInteractiveStatesOptions,
-> extends TPresentable<TProps, TEvents, TStates> {
+> extends TComponentView<TProps, TEvents, TStates> {
 	static defaultValues: Partial<IInteractiveProps> = {
-		...TPresentable.defaultValues,
+		...TComponentView.defaultValues,
 		disabled: false,
 		focused: false,
 	}
@@ -24,10 +24,10 @@ export default class TInteractive<
 	protected _disableable: IDisableableState
 	protected _focusable: IFocusableState
 
-	constructor(options: IPresentableOptions<TProps, TStates> | Partial<TProps> = {}) {
+	constructor(options: IComponentViewOptions<TProps, TStates> | Partial<TProps> = {}) {
 		super(options)
 
-		const { props = {} as Partial<TProps>, states } = TPresentable.prepareOptions<
+		const { props = {} as Partial<TProps>, states } = TComponentView.prepareOptions<
 			TProps,
 			TStates
 		>(options)

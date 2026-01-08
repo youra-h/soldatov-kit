@@ -6,14 +6,14 @@ import type {
 } from '../component-model'
 import type { IVisibilityState, TVisibilityStateCtor } from '../states'
 
-export type TPresentableStatesOptions = {
+export type TComponentViewStatesOptions = {
 	/** Класс state для `rendered`. */
 	rendered?: TVisibilityStateCtor | IVisibilityState
 	/** Класс state для `visible`. */
 	visible?: TVisibilityStateCtor | IVisibilityState
 }
 
-export type TPresentableEvents = TComponentModelEvents & {
+export type TComponentViewEvents = TComponentModelEvents & {
 	/** beforeShow (можно отменить, вернув false) */
 	beforeShow: () => boolean
 	/** afterShow */
@@ -39,7 +39,7 @@ export type TPresentableEvents = TComponentModelEvents & {
 	'change:attrs': (value: Record<string, unknown>) => void
 }
 
-export interface IPresentableProps extends IComponentModelProps {
+export interface IComponentViewProps extends IComponentModelProps {
 	tag?: string | object
 	/** Отрисован ли компонент в DOM (аналог v-if) */
 	rendered?: boolean
@@ -51,12 +51,12 @@ export interface IPresentableProps extends IComponentModelProps {
 }
 
 /**
- * Опции для presentable-слоя.
+ * Опции для component-view-слоя.
  * props — начальные свойства, baseClass — базовый CSS-класс (можно переопределить для конкретного инстанса).
  */
-export interface IPresentableOptions<
-	TProps extends IPresentableProps = IPresentableProps,
-	TStates extends TPresentableStatesOptions = TPresentableStatesOptions,
+export interface IComponentViewOptions<
+	TProps extends IComponentViewProps = IComponentViewProps,
+	TStates extends TComponentViewStatesOptions = TComponentViewStatesOptions,
 > extends IComponentModelOptions<TProps> {
 	baseClass?: string
 	/**
@@ -67,20 +67,20 @@ export interface IPresentableOptions<
 }
 
 /**
- * Результат нормализации опций presentable-слоя.
+ * Результат нормализации опций component-view-слоя.
  * Здесь `baseClass` гарантированно вычислен.
  */
-export type TPresentablePreparedOptions<
-	TProps extends IPresentableProps = IPresentableProps,
-	TStates extends TPresentableStatesOptions = TPresentableStatesOptions,
-> = IPresentableOptions<TProps, TStates> & {
+export type TComponentViewPreparedOptions<
+	TProps extends IComponentViewProps = IComponentViewProps,
+	TStates extends TComponentViewStatesOptions = TComponentViewStatesOptions,
+> = IComponentViewOptions<TProps, TStates> & {
 	props: Partial<TProps>
 	baseClass: string
 }
 
-export interface IPresentable<
-	TProps extends IPresentableProps = IPresentableProps,
-	TEvents extends Record<string, (...args: any) => any> = TPresentableEvents,
+export interface IComponentView<
+	TProps extends IComponentViewProps = IComponentViewProps,
+	TEvents extends Record<string, (...args: any) => any> = TComponentViewEvents,
 > extends IComponentModel<TProps, TEvents> {
 	readonly classes: string[]
 	readonly attrs: Record<string, unknown>

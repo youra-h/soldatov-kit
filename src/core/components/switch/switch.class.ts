@@ -1,5 +1,5 @@
 import { TInputControl } from '../../base/input-control'
-import { TPresentable, type IPresentableOptions } from '../../base/presentable'
+import { TComponentView, type IComponentViewOptions } from '../../base/component-view'
 import type { ISwitch, ISwitchProps, TSwitchEvents } from './types'
 import { TIcon } from '../icon'
 
@@ -18,10 +18,10 @@ export default class TSwitch
 
 	protected _icon?: TIcon
 
-	constructor(options: IPresentableOptions<ISwitchProps> | Partial<ISwitchProps> = {}) {
+	constructor(options: IComponentViewOptions<ISwitchProps> | Partial<ISwitchProps> = {}) {
 		super(options)
 
-		const { props = {} as Partial<ISwitchProps> } = TPresentable.prepareOptions<ISwitchProps>(
+		const { props = {} as Partial<ISwitchProps> } = TComponentView.prepareOptions<ISwitchProps>(
 			options as any,
 		)
 

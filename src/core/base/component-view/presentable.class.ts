@@ -4,30 +4,30 @@ import { TVisibilityState } from '../states'
 import type { IVisibilityState } from '../states'
 import { resolveState } from '../../common/resolve-state'
 import type {
-	IPresentableOptions,
-	IPresentableProps,
-	TPresentablePreparedOptions,
-	TPresentableEvents,
-	TPresentableStatesOptions,
+	IComponentViewOptions,
+	IComponentViewProps,
+	TComponentViewPreparedOptions,
+	TComponentViewEvents,
+	TComponentViewStatesOptions,
 } from './types'
 
 /**
- * Web-presentable слой: tag/classes/attrs.
+ * Web-component-view слой: tag/classes/attrs.
  *
  * Это слой, который удобен для UI-обёрток (Vue/React):
  * - `tag` (div/button/custom)
  * - `classes` (baseClass + динамические)
  * - `attrs` (произвольные атрибуты)
  */
-export default class TPresentable<
-	TProps extends IPresentableProps = IPresentableProps,
-	TEvents extends TPresentableEvents = TPresentableEvents,
-	TStates extends TPresentableStatesOptions = TPresentableStatesOptions,
+export default class TComponentView<
+	TProps extends IComponentViewProps = IComponentViewProps,
+	TEvents extends TComponentViewEvents = TComponentViewEvents,
+	TStates extends TComponentViewStatesOptions = TComponentViewStatesOptions,
 > extends TComponentModel<TProps, TEvents> {
 	/** Базовый CSS-класс по умолчанию (можно переопределить в наследниках). */
-	static baseClass = 's-presentable'
+	static baseClass = 's-component-view'
 
-	static defaultValues: Partial<IPresentableProps> = {
+	static defaultValues: Partial<IComponentViewProps> = {
 		id: '',
 		tag: 'div',
 		rendered: true,
@@ -44,12 +44,12 @@ export default class TPresentable<
 	protected _attrs: Record<string, unknown>
 
 	static prepareOptions<
-		TProps extends IPresentableProps = IPresentableProps,
-		TStates extends TPresentableStatesOptions = TPresentableStatesOptions,
+		TProps extends IComponentViewProps = IComponentViewProps,
+		TStates extends TComponentViewStatesOptions = TComponentViewStatesOptions,
 	>(
-		options: IPresentableOptions<TProps, TStates> | Partial<TProps>,
-	): TPresentablePreparedOptions<TProps, TStates> {
-		const defaultBaseClass = (this as typeof TPresentable).baseClass
+		options: IComponentViewOptions<TProps, TStates> | Partial<TProps>,
+	): TComponentViewPreparedOptions<TProps, TStates> {
+		const defaultBaseClass = (this as typeof TComponentView).baseClass
 
 		const raw = options as Record<string, unknown>
 		const hasPropsKey = Object.prototype.hasOwnProperty.call(raw, 'props')
@@ -65,7 +65,7 @@ export default class TPresentable<
 		const isOptionsObject = hasPropsKey || hasStatesKey || isOnlyBaseClass
 
 		if (isOptionsObject) {
-			const opt = options as IPresentableOptions<TProps, TStates>
+			const opt = options as IComponentViewOptions<TProps, TStates>
 			const props = (opt.props ?? {}) as Partial<TProps>
 
 			return {
@@ -83,8 +83,8 @@ export default class TPresentable<
 		}
 	}
 
-	constructor(options: IPresentableOptions<TProps, TStates> | Partial<TProps> = {}) {
-		const ctor = new.target as typeof TPresentable
+	constructor(options: IComponentViewOptions<TProps, TStates> | Partial<TProps> = {}) {
+		const ctor = new.target as typeof TComponentView
 		const {
 			props = {} as Partial<TProps>,
 			baseClass,
@@ -93,11 +93,11 @@ export default class TPresentable<
 
 		super({ props })
 
-		this._tag = props.tag ?? TPresentable.defaultValues.tag!
+		this._tag = props.tag ?? TComponentView.defaultValues.tag!
 
 		// Инициализируем состояния видимости
-		const rendered = props.rendered ?? (TPresentable.defaultValues.rendered as boolean)
-		const visible = props.visible ?? (TPresentable.defaultValues.visible as boolean)
+		const rendered = props.rendered ?? (TComponentView.defaultValues.rendered as boolean)
+		const visible = props.visible ?? (TComponentView.defaultValues.visible as boolean)
 
 		this._renderedState = resolveState<IVisibilityState, boolean>(
 			states?.rendered,
@@ -118,8 +118,8 @@ export default class TPresentable<
 		)
 
 		this._baseClass = baseClass
-		this._classes = (props.classes ?? TPresentable.defaultValues.classes!) as string[]
-		this._attrs = (props.attrs ?? TPresentable.defaultValues.attrs!) as Record<string, unknown>
+		this._classes = (props.classes ?? TComponentView.defaultValues.classes!) as string[]
+		this._attrs = (props.attrs ?? TComponentView.defaultValues.attrs!) as Record<string, unknown>
 	}
 
 	get rendered(): boolean {

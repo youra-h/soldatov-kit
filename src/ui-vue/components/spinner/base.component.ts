@@ -5,7 +5,7 @@ import {
 	type TComponentSize,
 	type TComponentVariant,
 } from '../../../core'
-import { Component, emitsComponent, propsComponent, syncComponent } from '../presentable'
+import { Component, emitsComponent, propsComponent, syncComponent } from '../component-view'
 import type { TEmits, TProps, ISyncComponentOptions } from '../../types/common'
 
 export const emitsSpinner: TEmits = [...emitsComponent] as const
