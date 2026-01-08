@@ -4,13 +4,13 @@ import type {
 	IComponentModelProps,
 	TComponentModelEvents,
 } from '../component-model'
-import type { TVisibilityStateCtor } from '../states'
+import type { IVisibilityState, TVisibilityStateCtor } from '../states'
 
 export type TPresentableStatesOptions = {
 	/** Класс state для `rendered`. */
-	rendered?: TVisibilityStateCtor
+	rendered?: TVisibilityStateCtor | IVisibilityState
 	/** Класс state для `visible`. */
-	visible?: TVisibilityStateCtor
+	visible?: TVisibilityStateCtor | IVisibilityState
 }
 
 export type TPresentableEvents = TComponentModelEvents & {

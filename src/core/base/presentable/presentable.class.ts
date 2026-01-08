@@ -2,6 +2,7 @@ import { TComponentModel } from '../component-model'
 import type { IComponentModelOptions, IComponentModelProps } from '../component-model'
 import { TVisibilityState } from '../states'
 import type { IVisibilityState } from '../states'
+import { resolveState } from '../../common/resolve-state'
 import type {
 	IPresentableOptions,
 	IPresentableProps,
@@ -95,16 +96,19 @@ export default class TPresentable<
 		this._tag = props.tag ?? TPresentable.defaultValues.tag!
 
 		// Инициализируем состояния видимости
-		const initialRendered = props.rendered ?? (TPresentable.defaultValues.rendered as boolean)
-		const initialVisible = props.visible ?? (TPresentable.defaultValues.visible as boolean)
+		const rendered = props.rendered ?? (TPresentable.defaultValues.rendered as boolean)
+		const visible = props.visible ?? (TPresentable.defaultValues.visible as boolean)
 
-		// Позволяем переопределять классы состояний
-		const RenderedStateCtor = states?.rendered ?? TVisibilityState
-		const VisibleStateCtor = states?.visible ?? TVisibilityState
-
-		// Создаём состояния
-		this._renderedState = new RenderedStateCtor(initialRendered)
-		this._visibilityState = new VisibleStateCtor(initialVisible)
+		this._renderedState = resolveState<IVisibilityState, boolean>(
+			states?.rendered,
+			TVisibilityState,
+			rendered,
+		)
+		this._visibilityState = resolveState<IVisibilityState, boolean>(
+			states?.visible,
+			TVisibilityState,
+			visible,
+		)
 
 		this._renderedState.events.on('change', (value) =>
 			this.events.emit('change:rendered', value),

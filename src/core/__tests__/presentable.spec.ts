@@ -153,6 +153,7 @@ describe('TPresentable', () => {
 		// 1) Передаём готовые инстансы
 		const instanceVisible = new TLoggedVisibilityState(false, log)
 		const instanceRendered = new TVisibilityState(true)
+
 		const p1 = new TPresentable({ props: { visible: false }, states: { rendered: instanceRendered, visible: instanceVisible } })
 		p1.events.on('change:visible', (value) => {
 			log.push(`presentable:change:visible=${value}`)
