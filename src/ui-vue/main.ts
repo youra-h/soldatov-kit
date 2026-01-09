@@ -1,4 +1,4 @@
 import { createApp } from 'vue'
-import AppPresentation from './demo/AppPresentation.vue'
+import AppComponentView from './demo/AppComponentView.vue'
 
-createApp(AppPresentation).mount('#app')
+createApp(AppComponentView).mount('#app')
