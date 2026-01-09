@@ -119,7 +119,10 @@ export default class TComponentView<
 
 		this._baseClass = baseClass
 		this._classes = (props.classes ?? TComponentView.defaultValues.classes!) as string[]
-		this._attrs = (props.attrs ?? TComponentView.defaultValues.attrs!) as Record<string, unknown>
+		this._attrs = (props.attrs ?? TComponentView.defaultValues.attrs!) as Record<
+			string,
+			unknown
+		>
 	}
 
 	get rendered(): boolean {
@@ -188,7 +191,6 @@ export default class TComponentView<
 	protected afterHide(): void {}
 
 	get tag(): string | object {
-		console.log('get tag', this._tag)
 		return this._tag
 	}
 	set tag(value: string | object) {
