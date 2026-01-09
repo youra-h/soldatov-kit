@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { TComponentView } from '@core'
 
-import ComponentView from '../components/component-view/ComponentView.vue'
+import { ComponentView } from '../components/component-view'
 
 describe('ui-vue: ComponentView', () => {
 	beforeEach(() => {
