@@ -188,6 +188,7 @@ export default class TComponentView<
 	protected afterHide(): void {}
 
 	get tag(): string | object {
+		console.log('get tag', this._tag)
 		return this._tag
 	}
 	set tag(value: string | object) {

@@ -4,7 +4,7 @@ import { ComponentView } from '@ui/component-view'
 import { TComponentView } from '@core'
 import DemoLayout from './DemoLayout.vue'
 
-const instance = reactive(new TComponentView({ tag: 'div', rendered: true, visible: true }))
+const instance = shallowReactive(new TComponentView({ tag: 'div', rendered: true, visible: true }))
 
 const eventLog = ref<string[]>([])
 const push = (source: 'core' | 'vue', name: string, payload?: unknown) => {
@@ -48,12 +48,20 @@ const toggleRendered = () => (instance.rendered = !instance.rendered)
 const toggleVisible = () => (instance.visible = !instance.visible)
 const show = () => instance.show()
 const hide = () => instance.hide()
+
+const onChangeTag = () => {
+	const tags = ['div', 'span', 'section', 'article', 'header', 'footer']
+	const currentIndex = tags.indexOf(instance.tag as string)
+	const nextIndex = (currentIndex + 1) % tags.length
+	instance.tag = tags[nextIndex]
+}
 </script>
 
 <template>
 	<DemoLayout title="ComponentView">
 		<template #controls>
 			<div class="flex flex-wrap gap-2">
+				<button @click="onChangeTag">tag: {{ instance.tag }}</button>
 				<button type="button" class="px-2 py-1 border rounded" @click="toggleRendered">
 					rendered: {{ rendered }}
 				</button>
@@ -80,10 +88,10 @@ const hide = () => instance.hide()
 			ComponentView content
 		</ComponentView>
 
-		<template #events>
+		<!-- <template #events>
 			<div class="text-sm whitespace-pre-wrap">
 				<div v-for="(line, idx) in eventLog" :key="idx">{{ line }}</div>
 			</div>
-		</template>
+		</template> -->
 	</DemoLayout>
 </template>

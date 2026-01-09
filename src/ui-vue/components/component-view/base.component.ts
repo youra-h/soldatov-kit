@@ -47,10 +47,10 @@ export default {
 	props: propsComponentView,
 	created() {
 		// @ts-ignore
-		;(this.component! as IComponentView).id = this.$.uid
+		;(this.instance! as IComponentView).id = this.$.uid
 		// Emit 'created' event when component is created
 		// @ts-ignore
-		this.$emit('created', this.component)
+		this.$emit('created', this.instance)
 	},
 }
 
@@ -58,8 +58,8 @@ export function syncComponentView(options: ISyncComponentModelOptions<IComponent
 	const { instance, props, emit } = options
 
 	// Пробрасываем события core-инстанса наружу (Vue events).
-	instance.events.on('created' as any, (component: IComponentView) => {
-		emit?.('created', component)
+	instance.events.on('created' as any, (instance: IComponentView) => {
+		emit?.('created', instance)
 	})
 
 	instance.events.on('beforeShow' as any, () => {
@@ -78,9 +78,8 @@ export function syncComponentView(options: ISyncComponentModelOptions<IComponent
 		emit?.('show', instance)
 	})
 	instance.events.on('hide' as any, () => {
-		emit?.('hide')
+		emit?.('hide', instance)
 	})
-
 	instance.events.on('change:visible' as any, (value: boolean) => {
 		emit?.('change:visible', value)
 		emit?.('visible', value)
@@ -124,7 +123,7 @@ export function syncComponentView(options: ISyncComponentModelOptions<IComponent
 				if (value) {
 					emit?.('show', instance)
 				} else {
-					emit?.('hide')
+					emit?.('hide', instance)
 				}
 			}
 		},

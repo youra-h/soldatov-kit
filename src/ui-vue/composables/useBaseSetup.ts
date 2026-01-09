@@ -1,4 +1,5 @@
-import { shallowReactive } from 'vue'
+import { shallowReactive, isProxy, type ShallowReactive } from 'vue'
+import { type IComponentModelOptions } from '@core'
 import { useManagedInstance } from './useManagedInstance'
 
 /**
@@ -9,13 +10,15 @@ import { useManagedInstance } from './useManagedInstance'
  * @returns The managed instance of the component.
  */
 export function useBaseSetup<T extends object>(
-	Ctor: new (props: any) => T,
+	Ctor: new (options: IComponentModelOptions<any>) => T,
 	props: any,
 	key: string = 'is',
 ) {
 	const instance = useManagedInstance(Ctor, props, key)
 
-	const reactiveInstance = shallowReactive(instance)
+	const reactiveInstance = (
+		isProxy(instance) ? instance : shallowReactive(instance)
+	) as ShallowReactive<T>
 
 	return { is: reactiveInstance }
 }

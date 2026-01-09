@@ -14,6 +14,7 @@ export function useManagedInstance<T>(
 	key: string = 'is',
 ): T {
 	const candidate = props[key]
+
 	if (
 		candidate &&
 		(candidate instanceof Ctor || (isProxy(candidate) && toRaw(candidate) instanceof Ctor))

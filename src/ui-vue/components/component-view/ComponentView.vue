@@ -1,5 +1,6 @@
 <script lang="ts">
 import type { UnwrapNestedRefs } from 'vue'
+import { computed } from 'vue'
 import { TComponentView, type IComponentView, type IComponentViewProps } from '../../../core'
 import BaseComponentView, { syncComponentView } from './base.component'
 import { useBaseSetup } from '../../composables/useBaseSetup'
@@ -12,26 +13,31 @@ export default {
 	name: '_ComponentView',
 	extends: BaseComponentView,
 	setup(props: TComponentViewVueProps, { emit }) {
-		const { is: component } = useBaseSetup(TComponentView, props)
+		const { is: instance } = useBaseSetup(TComponentView, props)
 
 		syncComponentView({
-			instance: component,
+			instance,
 			props,
 			emit,
 		})
 
-		return { component }
+		const visible = computed(() => instance.visible)
+		const tag = computed(() => instance.tag)
+
+		return { instance, visible, tag }
 	},
 }
 </script>
 
 <template>
-	{{ component.visible }}
+	{{ tag }}
+	{{ visible }}
+	{{ console.log('ComponentView render', instance) }}
 	<component
-		:is="component.tag"
-		v-if="component.rendered"
-		v-show="component.visible"
-		:class="component.classes"
+		:is="instance.tag"
+		v-if="instance.rendered"
+		v-show="instance.visible"
+		:class="instance.classes"
 	>
 		<slot />
 	</component>
