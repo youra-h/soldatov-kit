@@ -1,4 +1,5 @@
 import { type IComponentModelOptions } from '@core'
+import { isProxy, toRaw } from 'vue'
 
 /**
  * Use a managed instance of a component.
@@ -12,8 +13,12 @@ export function useManagedInstance<T>(
 	props: any,
 	key: string = 'is',
 ): T {
-	if (props[key] && props[key] instanceof Ctor) {
-		return props[key]
+	const candidate = props[key]
+	if (
+		candidate &&
+		(candidate instanceof Ctor || (isProxy(candidate) && toRaw(candidate) instanceof Ctor))
+	) {
+		return candidate
 	}
 
 	return new Ctor({

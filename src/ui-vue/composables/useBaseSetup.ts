@@ -1,4 +1,4 @@
-import { shallowReactive } from 'vue'
+import { reactive } from 'vue'
 import { useManagedInstance } from './useManagedInstance'
 
 /**
@@ -15,7 +15,7 @@ export function useBaseSetup<T extends object>(
 ) {
 	const instance = useManagedInstance(Ctor, props, key)
 
-	const reactiveInstance = shallowReactive(instance)
+	const reactiveInstance = reactive(instance)
 
 	return { is: reactiveInstance }
 }

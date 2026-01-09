@@ -1,4 +1,5 @@
-import { type PropType, watch } from 'vue'
+import type { PropType, UnwrapNestedRefs } from 'vue'
+import { watch } from 'vue'
 import { type IComponentView, type IComponentViewProps, TComponentView } from '../../../core'
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types'
 
@@ -20,7 +21,7 @@ export const emitsComponentView: TEmits = [
 
 export const propsComponentView: TProps = {
 	is: {
-		type: Object as PropType<IComponentView>,
+		type: Object as PropType<IComponentView | UnwrapNestedRefs<IComponentView>>,
 	},
 	id: {
 		type: [String, Number] as PropType<IComponentViewProps['id']>,

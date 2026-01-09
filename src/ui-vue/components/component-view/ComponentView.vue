@@ -1,9 +1,12 @@
 <script lang="ts">
+import type { UnwrapNestedRefs } from 'vue'
 import { TComponentView, type IComponentView, type IComponentViewProps } from '../../../core'
 import BaseComponentView, { syncComponentView } from './base.component'
 import { useBaseSetup } from '../../composables/useBaseSetup'
 
-type TComponentViewVueProps = IComponentViewProps & { is?: IComponentView }
+type TComponentViewVueProps = IComponentViewProps & {
+	is?: IComponentView | UnwrapNestedRefs<IComponentView>
+}
 
 export default {
 	name: '_ComponentView',
@@ -23,6 +26,7 @@ export default {
 </script>
 
 <template>
+	{{ component.visible }}
 	<component
 		:is="component.tag"
 		v-if="component.rendered"

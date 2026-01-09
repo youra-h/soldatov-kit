@@ -148,31 +148,31 @@ export default class TComponentView<
 	show(): void {
 		if (!this.beforeShow()) return
 
-		const canShow = this.events.emitWithResult('beforeShow' as any)
+		const canShow = this.events.emitWithResult('beforeShow')
 		if (!canShow) return
 
 		if (this.visible) return
 		this._visibilityState.show()
 
-		this.events.emit('show' as any)
+		this.events.emit('show')
 
 		this.afterShow()
-		this.events.emit('afterShow' as any)
+		this.events.emit('afterShow')
 	}
 
 	hide(): void {
 		if (!this.beforeHide()) return
 
-		const canHide = this.events.emitWithResult('beforeHide' as any)
+		const canHide = this.events.emitWithResult('beforeHide')
 		if (!canHide) return
 
 		if (!this.visible) return
 		this._visibilityState.hide()
 
-		this.events.emit('hide' as any)
+		this.events.emit('hide')
 
 		this.afterHide()
-		this.events.emit('afterHide' as any)
+		this.events.emit('afterHide')
 	}
 
 	protected beforeShow(): boolean {
@@ -195,7 +195,7 @@ export default class TComponentView<
 
 		this._tag = value
 
-		this.events.emit('change:tag' as any, value)
+		this.events.emit('change:tag', value)
 	}
 
 	get attrs(): Record<string, unknown> {
@@ -206,7 +206,7 @@ export default class TComponentView<
 
 		this._attrs = value
 
-		this.events.emit('change:attrs' as any, value)
+		this.events.emit('change:attrs', value)
 	}
 
 	get classes(): string[] {
@@ -218,7 +218,7 @@ export default class TComponentView<
 
 		this._classes = value
 
-		this.events.emit('change:classes' as any, value)
+		this.events.emit('change:classes', value)
 	}
 
 	getProps(): TProps {

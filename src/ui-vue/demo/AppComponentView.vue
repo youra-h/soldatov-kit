@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { computed, shallowReactive, ref } from 'vue'
+import { computed, shallowReactive, reactive, ref } from 'vue'
 import { ComponentView } from '@ui/component-view'
 import { TComponentView } from '@core'
 import DemoLayout from './DemoLayout.vue'
 
-const instance = shallowReactive(new TComponentView({ tag: 'div', rendered: true, visible: true }))
+const instance = reactive(new TComponentView({ tag: 'div', rendered: true, visible: true }))
 
 const eventLog = ref<string[]>([])
 const push = (source: 'core' | 'vue', name: string, payload?: unknown) => {
