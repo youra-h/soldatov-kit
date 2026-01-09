@@ -4,7 +4,7 @@ import { ComponentView } from '@ui/component-view'
 import { TComponentView } from '@core'
 import DemoLayout from './DemoLayout.vue'
 
-const instance = new TComponentView({ tag: 'div', rendered: true, visible: true })
+const instance = reactive(new TComponentView({ tag: 'div', rendered: true, visible: true }))
 
 const eventLog = ref<string[]>([])
 const push = (source: 'core' | 'vue', name: string, payload?: unknown) => {
