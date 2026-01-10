@@ -51,7 +51,9 @@ export class TVisibilityState extends TStateUnit<TVisibilityStateEvents> impleme
 
 	set visible(value: boolean) {
 		if (this._visible === value) return
+
 		this._visible = value
+
 		this.events.emit('change', value)
 	}
 
