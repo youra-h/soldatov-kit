@@ -21,10 +21,7 @@ export default {
 			emit,
 		})
 
-		const visible = computed(() => instance.visible)
-		const tag = computed(() => instance.tag)
-
-		return { instance, visible, tag }
+		return { instance }
 	},
 }
 </script>
