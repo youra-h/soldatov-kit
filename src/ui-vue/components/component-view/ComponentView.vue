@@ -30,9 +30,6 @@ export default {
 </script>
 
 <template>
-	{{ tag }}
-	{{ visible }}
-	{{ console.log('ComponentView render', instance) }}
 	<component
 		:is="instance.tag"
 		v-if="instance.rendered"
