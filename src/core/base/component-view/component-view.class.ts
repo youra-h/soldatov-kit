@@ -130,6 +130,7 @@ export default class TComponentView<
 	}
 	set rendered(value: boolean) {
 		if (value === this._renderedState.visible) return
+
 		if (value) {
 			this._renderedState.show()
 		} else {
