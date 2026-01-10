@@ -1,6 +1,5 @@
 <script lang="ts">
 import type { UnwrapNestedRefs } from 'vue'
-import { computed } from 'vue'
 import { TComponentView, type IComponentView, type IComponentViewProps } from '../../../core'
 import BaseComponentView, { syncComponentView } from './base.component'
 import { useBaseSetup } from '../../composables/useBaseSetup'
