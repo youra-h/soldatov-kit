@@ -58,9 +58,9 @@ export function syncComponentView(options: ISyncComponentModelOptions<IComponent
 	const { instance, props, emit } = options
 
 	// Пробрасываем события core-инстанса наружу (Vue events).
-	instance.events.on('created' as any, (instance: IComponentView) => {
-		emit?.('created', instance)
-	})
+	// instance.events.on('created' as any, (instance: IComponentView) => {
+	// 	emit?.('created', instance)
+	// })
 
 	instance.events.on('beforeShow' as any, () => {
 		emit?.('beforeShow')
