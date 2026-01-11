@@ -6,7 +6,7 @@
  * - имеет собственные `events`
  * - обычно используется компонентом-агрегатом, который подписывается и пробрасывает события наружу
  */
-export * from './modifier-value.state'
+export * from './stylable-modifier.state'
 export * from './size.state'
 export * from './input-state.state'
 export * from './variant.state'

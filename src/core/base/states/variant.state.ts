@@ -1,9 +1,9 @@
 import type { TComponentVariant } from '../../common/types'
-import { TModifierValue, type IModifierValueOptions } from './modifier-value.state'
+import { TStylableModifierState, type IStylableModifierStateOptions } from './stylable-modifier.state'
 
-export type TVariantStateOptions = IModifierValueOptions<TComponentVariant>
+export type TVariantStateOptions = IStylableModifierStateOptions<TComponentVariant>
 
-export class TVariantState extends TModifierValue<TComponentVariant> {
+export class TVariantState extends TStylableModifierState<TComponentVariant> {
 	constructor(options: TVariantStateOptions = {}) {
 		super(options)
 	}

@@ -1,7 +1,7 @@
 import type { TComponentSize, TComponentVariant } from '../../common/types'
 import { TComponentView, type IComponentViewOptions } from '../component-view'
 import { TSizeState, TVariantState } from '../states'
-import type { IModifierValueState, TSizeStateOptions, TVariantStateOptions } from '../states'
+import type { IStylableModifierState, TSizeStateOptions, TVariantStateOptions } from '../states'
 import { resolveState } from '../../common/resolve-state'
 import type { IStylableProps, TStylableEvents, TStylableStatesOptions } from './types'
 
@@ -22,8 +22,8 @@ export default class TStylable<
 		variant: 'normal',
 	}
 
-	protected _sizeState: IModifierValueState<TComponentSize>
-	protected _variantState: IModifierValueState<TComponentVariant>
+	protected _sizeState: IStylableModifierState<TComponentSize>
+	protected _variantState: IStylableModifierState<TComponentVariant>
 
 	constructor(options: IComponentViewOptions<TProps, TStates> | Partial<TProps> = {}) {
 		super(options)
@@ -42,7 +42,7 @@ export default class TStylable<
 			value: (props.variant ?? TStylable.defaultValues.variant) as TComponentVariant,
 		}
 
-		this._sizeState = resolveState<IModifierValueState<TComponentSize>, TSizeStateOptions>(
+		this._sizeState = resolveState<IStylableModifierState<TComponentSize>, TSizeStateOptions>(
 			states?.size,
 			TSizeState,
 			sizeOptions,
@@ -53,7 +53,7 @@ export default class TStylable<
 		})
 
 		this._variantState = resolveState<
-			IModifierValueState<TComponentVariant>,
+			IStylableModifierState<TComponentVariant>,
 			TVariantStateOptions
 		>(states?.variant, TVariantState, variantOptions)
 

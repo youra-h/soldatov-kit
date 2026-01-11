@@ -1,9 +1,9 @@
 import type { TComponentSize } from '../../common/types'
-import { TModifierValue, type IModifierValueOptions } from './modifier-value.state'
+import { TStylableModifierState, type IStylableModifierStateOptions } from './stylable-modifier.state'
 
-export type TSizeStateOptions = IModifierValueOptions<TComponentSize>
+export type TSizeStateOptions = IStylableModifierStateOptions<TComponentSize>
 
-export class TSizeState extends TModifierValue<TComponentSize> {
+export class TSizeState extends TStylableModifierState<TComponentSize> {
 	constructor(options: TSizeStateOptions = {}) {
 		super(options)
 	}
