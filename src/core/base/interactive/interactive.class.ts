@@ -36,7 +36,7 @@ export default class TInteractive<
 
 		this._disableable = resolveState<IStateUnit<boolean>, boolean>(
 			states?.disableable,
-			TStateUnit as unknown as new (initial: boolean) => IStateUnit<boolean>,
+			TStateUnit,
 			disabled,
 		)
 
@@ -46,7 +46,7 @@ export default class TInteractive<
 
 		this._focusable = resolveState<IStateUnit<boolean>, boolean>(
 			states?.focusable,
-			TStateUnit as unknown as new (initial: boolean) => IStateUnit<boolean>,
+			TStateUnit,
 			focused,
 		)
 

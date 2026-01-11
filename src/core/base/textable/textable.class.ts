@@ -36,7 +36,7 @@ export default class TTextable<
 
 		this._textState = resolveState<IStateUnit<string>, string>(
 			states?.text,
-			TStateUnit as unknown as new (initial: string) => IStateUnit<string>,
+			TStateUnit,
 			text,
 		)
 

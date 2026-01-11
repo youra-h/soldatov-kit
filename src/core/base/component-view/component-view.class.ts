@@ -10,6 +10,7 @@ import type {
 	TComponentViewEvents,
 	TComponentViewStatesOptions,
 } from './types'
+import { type IStateUnit, TStateUnit } from '../state-unit'
 
 /**
  * Web-component-view слой: tag/classes/attrs.
@@ -37,7 +38,7 @@ export default class TComponentView<
 	}
 
 	protected _tag: string | object
-	protected _renderedState: IVisibilityState
+	protected _renderedState: IStateUnit<boolean>
 	protected _visibilityState: IVisibilityState
 	protected _baseClass: string
 	protected _classes: string[]
@@ -99,9 +100,9 @@ export default class TComponentView<
 		const rendered = props.rendered ?? (TComponentView.defaultValues.rendered as boolean)
 		const visible = props.visible ?? (TComponentView.defaultValues.visible as boolean)
 
-		this._renderedState = resolveState<IVisibilityState, boolean>(
+		this._renderedState = resolveState<IStateUnit<boolean>, boolean>(
 			states?.rendered,
-			TVisibilityState,
+			TStateUnit,
 			rendered,
 		)
 		this._visibilityState = resolveState<IVisibilityState, boolean>(
@@ -126,16 +127,12 @@ export default class TComponentView<
 	}
 
 	get rendered(): boolean {
-		return this._renderedState.visible
+		return this._renderedState.value
 	}
 	set rendered(value: boolean) {
-		if (value === this._renderedState.visible) return
+		if (value === this._renderedState.value) return
 
-		if (value) {
-			this._renderedState.show()
-		} else {
-			this._renderedState.hide()
-		}
+		this._renderedState.value = value
 	}
 
 	get visible(): boolean {

@@ -1,9 +1,9 @@
-import { TValueState, type IValueState } from '../states'
 import { TControl } from '../control'
 import type { IComponentViewOptions } from '../component-view'
 import { TComponentView } from '../component-view'
 import { resolveState } from '../../common/resolve-state'
 import type { IValueControlProps, TValueControlEvents, TValueControlStatesOptions } from './types'
+import { TStateUnit, type IStateUnit } from '../state-unit'
 
 /**
  * База для контролов со значением.
@@ -26,7 +26,7 @@ export default class TValueControl<
 		value: undefined,
 	}
 
-	protected _valueState: IValueState<TValue>
+	protected _valueState: IStateUnit<TValue>
 	protected _name: string
 
 	constructor(options: IComponentViewOptions<TProps, TStates> | Partial<TProps> = {}) {
@@ -41,18 +41,14 @@ export default class TValueControl<
 
 		const value = props.value ?? (TValueControl.defaultValues.value as TValue)
 
-		this._valueState = resolveState<IValueState<TValue>, TValue>(
+		this._valueState = resolveState<IStateUnit<TValue>, TValue>(
 			states?.value,
-			TValueState as unknown as new (initial?: TValue) => IValueState<TValue>,
+			TStateUnit,
 			value,
 		)
 
 		this._valueState.events.on('change', (value) => {
 			this.events.emit('change:value' as any, value)
-		})
-
-		this._valueState.events.on('input', (value) => {
-			this.events.emit('input:value' as any, value)
 		})
 	}
 
@@ -72,10 +68,6 @@ export default class TValueControl<
 	}
 	set value(value: TValue) {
 		this._valueState.value = value
-	}
-
-	input(value: TValue): void {
-		this._valueState.input(value)
 	}
 
 	getProps(): TProps {
