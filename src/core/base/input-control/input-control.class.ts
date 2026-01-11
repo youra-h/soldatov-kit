@@ -1,4 +1,4 @@
-import { TInputState, type IInputState, type IInputStateProps } from '../states'
+import { TInputState, type IInputState, type IInputStateValue } from '../states'
 import { TValueControl } from '../value-control'
 import type { IInputControlProps, TInputControlEvents, TInputControlStatesOptions } from './types'
 import type { TControlInputState } from '../states'
@@ -47,7 +47,7 @@ export default class TInputControl<
 		const state = props.state ?? (TInputControl.defaultValues.state as TControlInputState)
 		const loading = props.loading ?? (TInputControl.defaultValues.loading as boolean)
 
-		this._inputState = resolveState<IInputState, Partial<IInputStateProps>>(
+		this._inputState = resolveState<IInputState, Partial<IInputStateValue>>(
 			states?.inputState,
 			TInputState,
 			{
@@ -59,8 +59,8 @@ export default class TInputControl<
 			},
 		)
 
-		this._inputState.events.on('change', (patch: IInputStateProps) => {
-			const keys = Object.keys(patch) as (keyof IInputStateProps)[]
+		this._inputState.events.on('change', (patch: IInputStateValue) => {
+			const keys = Object.keys(patch) as (keyof IInputStateValue)[]
 
 			for (const key of keys) {
 				;(this.events as any).emit(`change:${key}`, patch[key])
@@ -69,35 +69,35 @@ export default class TInputControl<
 	}
 
 	get readonly(): boolean {
-		return this._inputState.readonly!
+		return this._inputState.readonly
 	}
 	set readonly(value: boolean) {
 		this._inputState.readonly = value
 	}
 
 	get required(): boolean {
-		return this._inputState.required!
+		return this._inputState.required
 	}
 	set required(value: boolean) {
 		this._inputState.required = value
 	}
 
 	get invalid(): boolean {
-		return this._inputState.invalid!
+		return this._inputState.invalid
 	}
 	set invalid(value: boolean) {
 		this._inputState.invalid = value
 	}
 
 	get state(): TControlInputState {
-		return this._inputState.state!
+		return this._inputState.state
 	}
 	set state(value: TControlInputState) {
 		this._inputState.state = value
 	}
 
 	get loading(): boolean {
-		return this._inputState.loading!
+		return this._inputState.loading
 	}
 	set loading(value: boolean) {
 		this._inputState.loading = value

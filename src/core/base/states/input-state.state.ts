@@ -2,20 +2,23 @@ import { TStateUnit, type IStateUnit } from '../state-unit'
 
 export type TControlInputState = 'normal' | 'success' | 'warning' | 'error'
 
-export interface IInputStateProps {
-	// Значение недоступно для редактирования
-	readonly?: boolean
-	// Значение обязательно для заполнения
-	required?: boolean
-	// Значение не валидно
-	invalid?: boolean
-	// Состояние контрола
-	state?: TControlInputState
-	// Показать индикатор загрузки
-	loading?: boolean
+// Единственный тип - для значения состояния (все поля обязательные)
+export interface IInputStateValue {
+	readonly: boolean
+	required: boolean
+	invalid: boolean
+	state: TControlInputState
+	loading: boolean
 }
 
-export interface IInputState extends IStateUnit<IInputStateProps>, IInputStateProps {}
+// Публичный интерфейс
+export interface IInputState extends IStateUnit<IInputStateValue> {
+	readonly: boolean
+	required: boolean
+	invalid: boolean
+	state: TControlInputState
+	loading: boolean
+}
 
 /**
  * Единица состояния для атрибутов/состояний ввода.
@@ -27,15 +30,15 @@ export interface IInputState extends IStateUnit<IInputStateProps>, IInputStatePr
  * Инварианты:
  * - при `invalid = true` состояние `state` принудительно становится `'error'`.
  */
-export class TInputState extends TStateUnit<IInputStateProps> implements IInputState {
+export class TInputState extends TStateUnit<IInputStateValue> implements IInputState {
 	private _readonly = false
 	private _required = false
 	private _invalid = false
 	private _state: TControlInputState = 'normal'
 	private _loading = false
 
-	constructor(initial: Partial<IInputStateProps> = {}) {
-		const value: IInputStateProps = {
+	constructor(initial: Partial<IInputStateValue> = {}) {
+		const value: IInputStateValue = {
 			readonly: initial.readonly ?? false,
 			required: initial.required ?? false,
 			invalid: initial.invalid ?? false,
