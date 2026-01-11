@@ -31,12 +31,6 @@ export interface IInputState extends IStateUnit<IInputStateValue> {
  * - при `invalid = true` состояние `state` принудительно становится `'error'`.
  */
 export class TInputState extends TStateUnit<IInputStateValue> implements IInputState {
-	private _readonly = false
-	private _required = false
-	private _invalid = false
-	private _state: TControlInputState = 'normal'
-	private _loading = false
-
 	constructor(initial: Partial<IInputStateValue> = {}) {
 		const value: IInputStateValue = {
 			readonly: initial.readonly ?? false,
@@ -52,60 +46,59 @@ export class TInputState extends TStateUnit<IInputStateValue> implements IInputS
 	}
 
 	get readonly(): boolean {
-		return this._readonly
+		return this._value.readonly
 	}
 	set readonly(value: boolean) {
-		if (this._readonly === value) return
+		if (this._value.readonly === value) return
 
-		this._readonly = value
+		this._value.readonly = value
 
 		this.events.emit('change', { readonly: value })
 	}
 
 	get required(): boolean {
-		return this._required
+		return this._value.required
 	}
 	set required(value: boolean) {
-		if (this._required === value) return
+		if (this._value.required === value) return
 
-		this._required = value
+		this._value.required = value
 
 		this.events.emit('change', { required: value })
 	}
 
 	get invalid(): boolean {
-		return this._invalid
+		return this._value.invalid
 	}
 	set invalid(value: boolean) {
-		if (this._invalid === value) return
+		if (this._value.invalid === value) return
 
-		this._invalid = value
+		const newState = value ? 'error' : this._value.state
 
-		if (value) {
-			this._state = 'error'
-		}
+		this._value.invalid = value
+		this._value.state = newState
 
-		this.events.emit('change', { invalid: value, state: this._state })
+		this.events.emit('change', { invalid: value, state: newState })
 	}
 
 	get state(): TControlInputState {
-		return this._state
+		return this._value.state
 	}
 	set state(value: TControlInputState) {
-		if (this._state === value) return
+		if (this._value.state === value) return
 
-		this._state = value
+		this._value.state = value
 
 		this.events.emit('change', { state: value })
 	}
 
 	get loading(): boolean {
-		return this._loading
+		return this._value.loading
 	}
 	set loading(value: boolean) {
-		if (this._loading === value) return
+		if (this._value.loading === value) return
 
-		this._loading = value
+		this._value.loading = value
 
 		this.events.emit('change', { loading: value })
 	}
