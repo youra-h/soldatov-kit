@@ -1,4 +1,4 @@
-import { TStateUnit, type IStateUnit, type TStateUnitValueEvents } from '../state-unit'
+import { TStateUnit, type IStateUnit } from '../state-unit'
 
 export interface IModifierValueOptions<TValue extends string = string> {
 	baseClass?: string
@@ -6,15 +6,7 @@ export interface IModifierValueOptions<TValue extends string = string> {
 	value?: TValue
 }
 
-type TModifierValueEvents<TValue extends string = string> = TStateUnitValueEvents<
-	TValue,
-	[TValue, TValue]
->
-
-export type IModifierValueState<TValue extends string = string> = IStateUnit<
-	TValue,
-	TModifierValueEvents<TValue>
-> & {
+export type IModifierValueState<TValue extends string = string> = IStateUnit<TValue> & {
 	baseClass: string
 	getClass(): string[]
 }
@@ -35,8 +27,7 @@ export type TModifierValueStateCtor<
  */
 export abstract class TModifierValue<
 	TValue extends string = string,
-	TEvents extends TModifierValueEvents<TValue> = TModifierValueEvents<TValue>,
-	> extends TStateUnit<TValue, TEvents> implements IModifierValueState<TValue> {
+	> extends TStateUnit<TValue> implements IModifierValueState<TValue> {
 	protected _baseClass: string
 	protected _exclude: TValue[]
 
@@ -44,10 +35,6 @@ export abstract class TModifierValue<
 		super(options.value ?? ('normal' as TValue))
 		this._baseClass = options.baseClass ?? 's-control'
 		this._exclude = options.exclude ?? []
-	}
-
-	protected override emitChange(next: TValue, prev: TValue): void {
-		this.events.emit('change', next, prev)
 	}
 
 	get baseClass(): string {

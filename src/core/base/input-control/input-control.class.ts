@@ -59,20 +59,12 @@ export default class TInputControl<
 			},
 		)
 
-		this._inputState.events.on('change', (patch) => {
-			if (patch.readonly !== undefined)
-				this.events.emit('change:readonly' as any, patch.readonly)
+		this._inputState.events.on('change', (patch: IInputStateProps) => {
+			const keys = Object.keys(patch) as (keyof IInputStateProps)[]
 
-			if (patch.required !== undefined)
-				this.events.emit('change:required' as any, patch.required)
-
-			if (patch.invalid !== undefined)
-				this.events.emit('change:invalid' as any, patch.invalid)
-
-			if (patch.state !== undefined) this.events.emit('change:state' as any, patch.state)
-
-			if (patch.loading !== undefined)
-				this.events.emit('change:loading' as any, patch.loading)
+			for (const key of keys) {
+				;(this.events as any).emit(`change:${key}`, patch[key])
+			}
 		})
 	}
 

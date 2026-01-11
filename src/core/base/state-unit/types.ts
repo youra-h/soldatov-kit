@@ -1,20 +1,7 @@
 import { TEvented } from '../../common/evented'
 
-/**
- * Базовый контракт событий state-unit.
- *
- * Важно: `change` допускает произвольный набор аргументов.
- * По умолчанию это один аргумент — новое значение.
- * Но для некоторых стейтов удобно эмитить, например:
- * - `change(patch)` (patch-based)
- * - `change(next, prev)` (new/old)
- */
-export type TStateUnitEvents = {
-	change: (...args: any[]) => void
-}
-
-export type TStateUnitValueEvents<TValue, TArgs extends any[] = [TValue]> = {
-	change: (...args: TArgs) => void
+export type TStateUnitValueEvents<TValue> = {
+	change: (value: TValue) => void
 }
 
 /**
@@ -23,7 +10,7 @@ export type TStateUnitValueEvents<TValue, TArgs extends any[] = [TValue]> = {
  */
 export interface IStateUnit<
 	TValue,
-	TEvents extends TStateUnitEvents = TStateUnitValueEvents<TValue>,
+	TEvents extends TStateUnitValueEvents<TValue> = TStateUnitValueEvents<TValue>,
 > {
 	value: TValue
 	readonly events: TEvented<TEvents>

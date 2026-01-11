@@ -1,9 +1,6 @@
-import { TStateUnit, type IStateUnit, type TStateUnitValueEvents } from '../state-unit'
-import type { TStateCtor } from './types'
+import { TStateUnit, type IStateUnit } from '../state-unit'
 
 export type TControlInputState = 'normal' | 'success' | 'warning' | 'error'
-
-type TInputStateEvents = TStateUnitValueEvents<IInputStateProps, [Partial<IInputStateProps>]>
 
 export interface IInputStateProps {
 	// Значение недоступно для редактирования
@@ -18,9 +15,7 @@ export interface IInputStateProps {
 	loading?: boolean
 }
 
-export type IInputState = IStateUnit<IInputStateProps, TInputStateEvents> & IInputStateProps
-
-export type TInputStateCtor = TStateCtor<IInputState, Partial<IInputStateProps>>
+export interface IInputState extends IStateUnit<IInputStateProps>, IInputStateProps {}
 
 /**
  * Единица состояния для атрибутов/состояний ввода.
@@ -32,89 +27,83 @@ export type TInputStateCtor = TStateCtor<IInputState, Partial<IInputStateProps>>
  * Инварианты:
  * - при `invalid = true` состояние `state` принудительно становится `'error'`.
  */
-export class TInputState
-	extends TStateUnit<IInputStateProps, TInputStateEvents>
-	implements IInputState
-{
-	constructor(initial?: Partial<IInputStateProps>) {
-		const snapshot: IInputStateProps = {
-			readonly: initial?.readonly ?? false,
-			required: initial?.required ?? false,
-			invalid: initial?.invalid ?? false,
-			state: initial?.state ?? 'normal',
-			loading: initial?.loading ?? false,
+export class TInputState extends TStateUnit<IInputStateProps> implements IInputState {
+	private _readonly = false
+	private _required = false
+	private _invalid = false
+	private _state: TControlInputState = 'normal'
+	private _loading = false
+
+	constructor(initial: Partial<IInputStateProps> = {}) {
+		const value: IInputStateProps = {
+			readonly: initial.readonly ?? false,
+			required: initial.required ?? false,
+			invalid: initial.invalid ?? false,
+			state: initial.state ?? 'normal',
+			loading: initial.loading ?? false,
 		}
 
-		if (snapshot.invalid) {
-			snapshot.state = 'error'
-		}
+		if (value.invalid) value.state = 'error'
 
-		super(snapshot)
-	}
-
-	protected emitChange(next: IInputStateProps, prev: IInputStateProps): void {
-		const patch: Partial<IInputStateProps> = {}
-
-		if (next.readonly !== prev.readonly) patch.readonly = next.readonly
-		if (next.required !== prev.required) patch.required = next.required
-		if (next.invalid !== prev.invalid) patch.invalid = next.invalid
-		if (next.state !== prev.state) patch.state = next.state
-		if (next.loading !== prev.loading) patch.loading = next.loading
-
-		this.events.emit('change', patch)
-	}
-
-	private applyPatch(patch: Partial<IInputStateProps>): void {
-		const next: IInputStateProps = {
-			...this.value,
-			...patch,
-		}
-
-		if (next.invalid) {
-			next.state = 'error'
-		}
-
-		this.value = next
+		super(value)
 	}
 
 	get readonly(): boolean {
-		return this.value.readonly ?? false
+		return this._readonly
 	}
 	set readonly(value: boolean) {
-		if ((this.value.readonly ?? false) === value) return
-		this.applyPatch({ readonly: value })
+		if (this._readonly === value) return
+
+		this._readonly = value
+
+		this.events.emit('change', { readonly: value })
 	}
 
 	get required(): boolean {
-		return this.value.required ?? false
+		return this._required
 	}
 	set required(value: boolean) {
-		if ((this.value.required ?? false) === value) return
-		this.applyPatch({ required: value })
+		if (this._required === value) return
+
+		this._required = value
+
+		this.events.emit('change', { required: value })
 	}
 
 	get invalid(): boolean {
-		return this.value.invalid ?? false
+		return this._invalid
 	}
 	set invalid(value: boolean) {
-		if ((this.value.invalid ?? false) === value) return
-		this.applyPatch({ invalid: value })
+		if (this._invalid === value) return
+
+		this._invalid = value
+
+		if (value) {
+			this._state = 'error'
+		}
+
+		this.events.emit('change', { invalid: value, state: this._state })
 	}
 
 	get state(): TControlInputState {
-		return (this.value.state ?? 'normal') as TControlInputState
+		return this._state
 	}
 	set state(value: TControlInputState) {
-		if (this.invalid) return
-		if (this.state === value) return
-		this.applyPatch({ state: value })
+		if (this._state === value) return
+
+		this._state = value
+
+		this.events.emit('change', { state: value })
 	}
 
 	get loading(): boolean {
-		return this.value.loading ?? false
+		return this._loading
 	}
 	set loading(value: boolean) {
-		if ((this.value.loading ?? false) === value) return
-		this.applyPatch({ loading: value })
+		if (this._loading === value) return
+
+		this._loading = value
+
+		this.events.emit('change', { loading: value })
 	}
 }
