@@ -1,10 +1,10 @@
 import { TStateUnit, type IStateUnit } from '../state-unit'
 
 /**
- * Опции для создания CSS-модификатора состояния.
+ * Опции для создания stylable-модификатора состояния.
  */
 export interface IStylableModifierStateOptions<TValue extends string = string> {
-	/** Базовый CSS-класс компонента */
+	/** Базовый stylable-класс компонента */
 	baseClass?: string
 	/** Значения модификатора, которые нужно исключить из генерации классов */
 	exclude?: TValue[]
@@ -13,26 +13,26 @@ export interface IStylableModifierStateOptions<TValue extends string = string> {
 }
 
 /**
- * Интерфейс состояния CSS-модификатора.
- * Расширяет базовый IStateUnit методом для генерации CSS-классов.
+ * Интерфейс состояния stylable-модификатора.
+ * Расширяет базовый IStateUnit методом для генерации stylable-классов.
  */
 export interface IStylableModifierState<TValue extends string = string> extends IStateUnit<TValue> {
-	/** Базовый CSS-класс компонента */
+	/** Базовый stylable-класс компонента */
 	baseClass: string
-	/** Генерирует массив CSS-классов на основе текущего значения */
+	/** Генерирует массив stylable-классов на основе текущего значения */
 	getClass(): string[]
 }
 
 /**
- * Базовое состояние для CSS-модификатора.
+ * Базовое состояние для stylable-модификатора.
  *
  * Используется для унифицированных сущностей вроде `size` и `variant`,
- * которые преобразуют значение (например, 'large') в CSS-класс
+ * которые преобразуют значение (например, 'large') в stylable-класс
  * (например, 's-control--size-large').
  *
  * Правила:
  * - `value` — текущее значение модификатора
- * - `baseClass` — базовый CSS-класс компонента, от которого строятся модификаторы
+ * - `baseClass` — базовый stylable-класс компонента, от которого строятся модификаторы
  * - `exclude` — список значений, для которых не нужно генерировать классы
  */
 export abstract class TStylableModifierState<
