@@ -1,19 +1,9 @@
-import { TStateUnit, type IStateUnit } from '../state-unit'
-import type { TEvented } from '../../common/evented'
+import { TStateUnit, type IStateUnit, type TStateUnitValueEvents } from '../state-unit'
 import type { TStateCtor } from './types'
 
 export type TControlInputState = 'normal' | 'success' | 'warning' | 'error'
 
-/**
- * События `TInputState`.
- */
-export type TInputStateEvents = {
-	/**
-	 * Срабатывает при любом изменении одного или нескольких полей.
-	 * Передаёт патч (частичный набор изменённых свойств).
-	 */
-	change: (patch: Partial<IInputStateProps>) => void
-}
+type TInputStateEvents = TStateUnitValueEvents<IInputStateProps, [Partial<IInputStateProps>]>
 
 export interface IInputStateProps {
 	// Значение недоступно для редактирования
@@ -28,9 +18,7 @@ export interface IInputStateProps {
 	loading?: boolean
 }
 
-export interface IInputState extends IStateUnit<IInputStateProps, TInputStateEvents>, IInputStateProps {
-	readonly events: TEvented<TInputStateEvents>
-}
+export type IInputState = IStateUnit<IInputStateProps, TInputStateEvents> & IInputStateProps
 
 export type TInputStateCtor = TStateCtor<IInputState, Partial<IInputStateProps>>
 
@@ -64,7 +52,7 @@ export class TInputState
 		super(snapshot)
 	}
 
-	protected override emitChange(next: IInputStateProps, prev: IInputStateProps): void {
+	protected emitChange(next: IInputStateProps, prev: IInputStateProps): void {
 		const patch: Partial<IInputStateProps> = {}
 
 		if (next.readonly !== prev.readonly) patch.readonly = next.readonly

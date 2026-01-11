@@ -1,5 +1,4 @@
-import { TStateUnit } from '../state-unit'
-import type { TEvented } from '../../common/evented'
+import { TStateUnit, type IStateUnit, type TStateUnitValueEvents } from '../state-unit'
 
 export interface IModifierValueOptions<TValue extends string = string> {
 	baseClass?: string
@@ -7,14 +6,16 @@ export interface IModifierValueOptions<TValue extends string = string> {
 	value?: TValue
 }
 
-export type TModifierValueEvents<TValue extends string = string> = {
-	change: (newValue: TValue, oldValue: TValue) => void
-}
+type TModifierValueEvents<TValue extends string = string> = TStateUnitValueEvents<
+	TValue,
+	[TValue, TValue]
+>
 
-export interface IModifierValueState<TValue extends string = string> {
-	value: TValue
+export type IModifierValueState<TValue extends string = string> = IStateUnit<
+	TValue,
+	TModifierValueEvents<TValue>
+> & {
 	baseClass: string
-	readonly events: TEvented<TModifierValueEvents<TValue>>
 	getClass(): string[]
 }
 
