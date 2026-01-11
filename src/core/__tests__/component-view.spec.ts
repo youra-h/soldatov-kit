@@ -2,8 +2,9 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { TComponentView } from '../base/component-view'
 import type { IComponentViewProps } from '../base/component-view'
 import { TVisibilityState } from '../base/states'
-import type { IVisibilityState, TVisibilityStateEvents } from '../base/states'
-import { TEvented } from '../common/evented'
+import type { IVisibilityState } from '../base/states'
+import { TStateUnit } from '../base/state-unit'
+import type { TStateUnitValueEvents } from '../base/state-unit/types'
 
 describe('TComponentView', () => {
 	beforeEach(() => {
@@ -120,35 +121,31 @@ describe('TComponentView', () => {
 	it('states позволяет передавать инстансы или конструкторы для visibility-state', () => {
 		const log: string[] = []
 
-		class TLoggedVisibilityState implements IVisibilityState {
-			public readonly events = new TEvented<TVisibilityStateEvents>()
-			private _visible: boolean
-
+		class TLoggedVisibilityState extends TStateUnit<boolean> implements IVisibilityState {
 			constructor(initial: boolean, private readonly _log: string[]) {
-				this._visible = initial
+				super(initial)
 			}
 
-			get visible(): boolean {
-				return this._visible
+			get value(): boolean {
+				return this._value
 			}
-			set visible(value: boolean) {
-				if (this._visible === value) return
-				this._visible = value
-				this.events.emit('change', value)
-				if (value) {
-					this._log.push('state:visible=true')
+			set value(val: boolean) {
+				if (this._value === val) return
+				this._value = val
+				this.events.emit('change', val)
+				if (val) {
+					this._log.push('state:value=true')
 				}
 			}
 
 			show(): void {
-				this.visible = true
+				this.value = true
 			}
 
 			hide(): void {
-				this.visible = false
+				this.value = false
 			}
 		}
-
 
 		// 1) Передаём готовые инстансы
 		const instanceVisible = new TLoggedVisibilityState(false, log)
@@ -159,7 +156,7 @@ describe('TComponentView', () => {
 			log.push(`component-view:change:visible=${value}`)
 		})
 		p1.visible = true
-		expect(log).toContain('state:visible=true')
+		expect(log).toContain('state:value=true')
 		expect(log).toContain('component-view:change:visible=true')
 
 		// 2) Передаём конструктор/класс — TComponentView создаст экземпляр сам
@@ -169,7 +166,7 @@ describe('TComponentView', () => {
 			log.push(`component-view2:change:visible=${value}`)
 		})
 		p2.visible = true
-		expect(log).toContain('state:visible=true')
+		expect(log).toContain('state:value=true')
 		expect(log).toContain('component-view2:change:visible=true')
 	})
 })

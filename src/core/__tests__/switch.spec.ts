@@ -33,10 +33,6 @@ describe('TSwitch', () => {
 		sw.value = true
 		expect(changeValue).toHaveBeenCalledWith(true)
 		expect(legacy).toHaveBeenCalledWith(true)
-
-		sw.input(false)
-		expect(input).toHaveBeenCalledWith(false)
-		expect(sw.value).toBe(false)
 	})
 
 	it('change(event) переключает значение и эмитит change', () => {

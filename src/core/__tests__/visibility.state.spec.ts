@@ -7,14 +7,14 @@ describe('TVisibilityState', () => {
 		const handler = vi.fn()
 		s.events.on('change', handler)
 
-		expect(s.visible).toBe(false)
+		expect(s.value).toBe(false)
 
 		s.show()
-		expect(s.visible).toBe(true)
+		expect(s.value).toBe(true)
 		expect(handler).toHaveBeenCalledWith(true)
 
 		s.hide()
-		expect(s.visible).toBe(false)
+		expect(s.value).toBe(false)
 		expect(handler).toHaveBeenCalledWith(false)
 	})
 })

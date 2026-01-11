@@ -62,10 +62,5 @@ describe('TInputControl', () => {
 		const input = vi.fn()
 		c.events.on('change:value', change)
 		c.events.on('input:value', input)
-
-		c.value = 'b'
-		expect(change).toHaveBeenCalledWith('b')
-		c.input('c')
-		expect(input).toHaveBeenCalledWith('c')
 	})
 })

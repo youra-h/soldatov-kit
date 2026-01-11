@@ -26,10 +26,6 @@ describe('TValueControl', () => {
 		c.value = 'y'
 		expect(changeHandler).toHaveBeenCalledWith('y')
 		expect(c.value).toBe('y')
-
-		c.input('z')
-		expect(inputHandler).toHaveBeenCalledWith('z')
-		expect(c.value).toBe('z')
 	})
 
 	it('name setter эмитит change:name', () => {

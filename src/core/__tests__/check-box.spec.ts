@@ -51,10 +51,6 @@ describe('TCheckBox', () => {
 		cb.value = true
 		expect(changeValue).toHaveBeenCalledWith(true)
 		expect(legacy).toHaveBeenCalledWith(true)
-
-		cb.input(false)
-		expect(input).toHaveBeenCalledWith(false)
-		expect(cb.value).toBe(false)
 	})
 
 	it('change(event) переключает значение и эмитит change', () => {

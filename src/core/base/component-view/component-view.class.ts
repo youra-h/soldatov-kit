@@ -1,5 +1,4 @@
 import { TComponentModel } from '../component-model'
-import type { IComponentModelOptions, IComponentModelProps } from '../component-model'
 import { TVisibilityState } from '../states'
 import type { IVisibilityState } from '../states'
 import { resolveState } from '../../common/resolve-state'
@@ -136,7 +135,7 @@ export default class TComponentView<
 	}
 
 	get visible(): boolean {
-		return this._visibilityState.visible
+		return this._visibilityState.value
 	}
 	set visible(value: boolean) {
 		if (value) {
