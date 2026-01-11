@@ -1,6 +1,2 @@
-export {
-	IStateUnit,
-	TStateUnit,
-	TStateUnitEvents,
-	TStateValueEvents,
-} from './state-unit.class'
+export { TStateUnit } from './state-unit.class'
+export type { IStateUnit, TStateUnitValueEvents } from './types'
