@@ -1,20 +1,20 @@
 import { describe, it, expect, vi } from 'vitest'
-import { TDisableableState } from '../base/states'
+import { TStateUnit } from '../base/state-unit'
 
-describe('TDisableableState', () => {
+describe('TStateUnit<boolean>', () => {
 	it('инициализируется initial и эмитит change только при изменении', () => {
-		const s = new TDisableableState(false)
+		const s = new TStateUnit(false)
 		const handler = vi.fn()
 		s.events.on('change', handler)
 
-		expect(s.disabled).toBe(false)
+		expect(s.value).toBe(false)
 
-		s.disabled = true
-		expect(s.disabled).toBe(true)
+		s.value = true
+		expect(s.value).toBe(true)
 		expect(handler).toHaveBeenCalledWith(true)
 
 		handler.mockClear()
-		s.disabled = true
+		s.value = true
 		expect(handler).not.toHaveBeenCalled()
 	})
 })

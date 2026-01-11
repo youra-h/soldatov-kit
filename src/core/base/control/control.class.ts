@@ -1,5 +1,4 @@
-import { TDisableableState, TFocusableState } from '../states'
-import type { IDisableableState, IFocusableState } from '../states'
+import { TStateUnit, type IStateUnit } from '../state-unit'
 import { TComponentView } from '../component-view'
 import type { IComponentViewOptions } from '../component-view'
 import { TStylable } from '../stylable'
@@ -24,8 +23,8 @@ export default class TControl<
 		focused: false,
 	}
 
-	protected _disableable: IDisableableState
-	protected _focusable: IFocusableState
+	protected _disableable: IStateUnit<boolean>
+	protected _focusable: IStateUnit<boolean>
 
 	constructor(options: IComponentViewOptions<TProps, TStates> | Partial<TProps> = {}) {
 		super(options)
@@ -38,9 +37,9 @@ export default class TControl<
 		const disabled = props.disabled ?? (TControl.defaultValues.disabled as boolean)
 		const focused = props.focused ?? (TControl.defaultValues.focused as boolean)
 
-		this._disableable = resolveState<IDisableableState, boolean>(
+		this._disableable = resolveState<IStateUnit<boolean>, boolean>(
 			states?.disableable,
-			TDisableableState,
+			TStateUnit as unknown as new (initial: boolean) => IStateUnit<boolean>,
 			disabled,
 		)
 
@@ -48,9 +47,9 @@ export default class TControl<
 			this.events.emit('change:disabled' as any, value)
 		})
 
-		this._focusable = resolveState<IFocusableState, boolean>(
+		this._focusable = resolveState<IStateUnit<boolean>, boolean>(
 			states?.focusable,
-			TFocusableState,
+			TStateUnit as unknown as new (initial: boolean) => IStateUnit<boolean>,
 			focused,
 		)
 
@@ -60,17 +59,17 @@ export default class TControl<
 	}
 
 	get disabled(): boolean {
-		return this._disableable.disabled
+		return this._disableable.value
 	}
 	set disabled(value: boolean) {
-		this._disableable.disabled = value
+		this._disableable.value = value
 	}
 
 	get focused(): boolean {
-		return this._focusable.focused
+		return this._focusable.value
 	}
 	set focused(value: boolean) {
-		this._focusable.focused = value
+		this._focusable.value = value
 	}
 
 	click(event: Event): void {

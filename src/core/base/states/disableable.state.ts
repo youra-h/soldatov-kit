@@ -1,4 +1,4 @@
-import { TStateUnit } from '../state-unit'
+import { TStateUnit, type IStateUnit } from '../state-unit'
 import type { TEvented } from '../../common/evented'
 import type { TStateCtor } from './types'
 
@@ -12,9 +12,12 @@ export type TDisableableStateEvents = {
 	change: (value: boolean) => void
 }
 
+/** @deprecated Используй `IStateUnit<boolean>` (value-based state). */
 export interface IDisableableState {
 	disabled: boolean
 	readonly events: TEvented<TDisableableStateEvents>
+	/** value-based API */
+	value: boolean
 }
 
 export type TDisableableStateCtor = TStateCtor<IDisableableState>
@@ -25,26 +28,20 @@ export type TDisableableStateCtor = TStateCtor<IDisableableState>
  * Хранит флаг недоступности и эмитит локальное событие `change`.
  * Компонент-агрегат может пробросить это наружу как `disabled`.
  */
+/** @deprecated Используй `TStateUnit<boolean>` (value-based state). */
 export class TDisableableState
-	extends TStateUnit<TDisableableStateEvents>
+	extends TStateUnit<boolean, TDisableableStateEvents>
 	implements IDisableableState
 {
-	private _disabled = false
-
 	constructor(initial: boolean = false) {
-		super()
-		this._disabled = initial
+		super(initial)
 	}
 
 	get disabled(): boolean {
-		return this._disabled
+		return this.value
 	}
 
 	set disabled(value: boolean) {
-		if (this._disabled === value) return
-
-		this._disabled = value
-
-		this.events.emit('change', value)
+		this.value = value
 	}
 }

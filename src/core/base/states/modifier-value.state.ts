@@ -35,27 +35,18 @@ export type TModifierValueStateCtor<
 export abstract class TModifierValue<
 	TValue extends string = string,
 	TEvents extends TModifierValueEvents<TValue> = TModifierValueEvents<TValue>,
-> extends TStateUnit<TEvents> implements IModifierValueState<TValue> {
+	> extends TStateUnit<TValue, TEvents> implements IModifierValueState<TValue> {
 	protected _baseClass: string
-	protected _value: TValue
 	protected _exclude: TValue[]
 
 	constructor(options: IModifierValueOptions<TValue> = {}) {
-		super()
+		super(options.value ?? ('normal' as TValue))
 		this._baseClass = options.baseClass ?? 's-control'
 		this._exclude = options.exclude ?? []
-		this._value = options.value ?? ('normal' as TValue)
 	}
 
-	get value(): TValue {
-		return this._value
-	}
-	set value(newValue: TValue) {
-		if (this._value === newValue) return
-
-		const oldValue = this._value
-		this._value = newValue
-		this.events.emit('change', newValue, oldValue)
+	protected override emitChange(next: TValue, prev: TValue): void {
+		this.events.emit('change', next, prev)
 	}
 
 	get baseClass(): string {

@@ -1,20 +1,20 @@
 import { describe, it, expect, vi } from 'vitest'
-import { TTextState } from '../base/states'
+import { TStateUnit } from '../base/state-unit'
 
-describe('TTextState', () => {
-	it('изменяет text и эмитит change только при изменении', () => {
-		const s = new TTextState('a')
+describe('TStateUnit<string>', () => {
+	it('изменяет value и эмитит change только при изменении', () => {
+		const s = new TStateUnit('a')
 		const handler = vi.fn()
 		s.events.on('change', handler)
 
-		expect(s.text).toBe('a')
+		expect(s.value).toBe('a')
 
-		s.text = 'b'
-		expect(s.text).toBe('b')
+		s.value = 'b'
+		expect(s.value).toBe('b')
 		expect(handler).toHaveBeenCalledWith('b')
 
 		handler.mockClear()
-		s.text = 'b'
+		s.value = 'b'
 		expect(handler).not.toHaveBeenCalled()
 	})
 })

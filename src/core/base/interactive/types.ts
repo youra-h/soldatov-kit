@@ -1,11 +1,7 @@
 import type { IComponentView, IComponentViewProps, TComponentViewEvents } from '../component-view'
 import type { TComponentViewStatesOptions } from '../component-view'
-import type {
-	IDisableableState,
-	IFocusableState,
-	TDisableableStateCtor,
-	TFocusableStateCtor,
-} from '../states'
+import type { IStateUnit } from '../state-unit'
+import type { TStateCtor } from '../states'
 
 export type TInteractiveEvents = TComponentViewEvents & {
 	/** change:disabled */
@@ -22,8 +18,8 @@ export interface IInteractiveProps extends IComponentViewProps {
 }
 
 export type TInteractiveStatesOptions = TComponentViewStatesOptions & {
-	disableable?: TDisableableStateCtor | IDisableableState
-	focusable?: TFocusableStateCtor | IFocusableState
+	disableable?: TStateCtor<IStateUnit<boolean>, boolean> | IStateUnit<boolean>
+	focusable?: TStateCtor<IStateUnit<boolean>, boolean> | IStateUnit<boolean>
 }
 
 export interface IInteractive<

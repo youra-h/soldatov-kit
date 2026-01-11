@@ -1,5 +1,4 @@
-import { TDisableableState, TFocusableState } from '../states'
-import type { IDisableableState, IFocusableState } from '../states'
+import { TStateUnit, type IStateUnit } from '../state-unit'
 import { TComponentView, type IComponentViewOptions } from '../component-view'
 import { resolveState } from '../../common/resolve-state'
 import type { IInteractiveProps, TInteractiveEvents, TInteractiveStatesOptions } from './types'
@@ -7,7 +6,7 @@ import type { IInteractiveProps, TInteractiveEvents, TInteractiveStatesOptions }
 /**
  * База для интерактивных компонентов: disabled + focused.
  *
- * Внутри использует state-units (`TDisableableState`, `TFocusableState`) и пробрасывает
+ * Внутри использует value-based state-unit (`TStateUnit<boolean>`) и пробрасывает
  * события наружу в формате `change:*`.
  */
 export default class TInteractive<
@@ -21,8 +20,8 @@ export default class TInteractive<
 		focused: false,
 	}
 
-	protected _disableable: IDisableableState
-	protected _focusable: IFocusableState
+	protected _disableable: IStateUnit<boolean>
+	protected _focusable: IStateUnit<boolean>
 
 	constructor(options: IComponentViewOptions<TProps, TStates> | Partial<TProps> = {}) {
 		super(options)
@@ -35,9 +34,9 @@ export default class TInteractive<
 		const disabled = props.disabled ?? (TInteractive.defaultValues.disabled as boolean)
 		const focused = props.focused ?? (TInteractive.defaultValues.focused as boolean)
 
-		this._disableable = resolveState<IDisableableState, boolean>(
+		this._disableable = resolveState<IStateUnit<boolean>, boolean>(
 			states?.disableable,
-			TDisableableState,
+			TStateUnit as unknown as new (initial: boolean) => IStateUnit<boolean>,
 			disabled,
 		)
 
@@ -45,9 +44,9 @@ export default class TInteractive<
 			this.events.emit('change:disabled' as any, value)
 		})
 
-		this._focusable = resolveState<IFocusableState, boolean>(
+		this._focusable = resolveState<IStateUnit<boolean>, boolean>(
 			states?.focusable,
-			TFocusableState,
+			TStateUnit as unknown as new (initial: boolean) => IStateUnit<boolean>,
 			focused,
 		)
 
@@ -57,17 +56,17 @@ export default class TInteractive<
 	}
 
 	get disabled(): boolean {
-		return this._disableable.disabled
+		return this._disableable.value
 	}
 	set disabled(value: boolean) {
-		this._disableable.disabled = value
+		this._disableable.value = value
 	}
 
 	get focused(): boolean {
-		return this._focusable.focused
+		return this._focusable.value
 	}
 	set focused(value: boolean) {
-		this._focusable.focused = value
+		this._focusable.value = value
 	}
 
 	click(event: Event): void {

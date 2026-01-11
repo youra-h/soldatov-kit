@@ -2,15 +2,16 @@ import { describe, it, expect, vi } from 'vitest'
 import { TStateUnit } from '../base/state-unit'
 
 describe('TStateUnit', () => {
-	it('имеет events и умеет эмитить события', () => {
-		type TEvents = { ping: (value: number) => void }
-		class TTestState extends TStateUnit<TEvents> {}
-
-		const s = new TTestState()
+	it('хранит value и эмитит change(value) при изменении', () => {
+		const s = new TStateUnit(1)
 		const handler = vi.fn()
-		s.events.on('ping', handler)
-		s.events.emit('ping', 123)
+		s.events.on('change', handler)
 
-		expect(handler).toHaveBeenCalledWith(123)
+		s.value = 2
+		expect(handler).toHaveBeenCalledWith(2)
+
+		handler.mockClear()
+		s.value = 2
+		expect(handler).not.toHaveBeenCalled()
 	})
 })

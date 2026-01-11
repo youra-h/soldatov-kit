@@ -4,12 +4,8 @@ import type {
 	TStylableEvents,
 	TStylableStatesOptions,
 } from '../stylable'
-import type {
-	IDisableableState,
-	IFocusableState,
-	TDisableableStateCtor,
-	TFocusableStateCtor,
-} from '../states'
+import type { IStateUnit } from '../state-unit'
+import type { TStateCtor } from '../states'
 
 export type TControlEvents = TStylableEvents & {
 	/** change:disabled */
@@ -26,8 +22,8 @@ export interface IControlProps extends IStylableProps {
 }
 
 export type TControlStatesOptions = TStylableStatesOptions & {
-	disableable?: TDisableableStateCtor | IDisableableState
-	focusable?: TFocusableStateCtor | IFocusableState
+	disableable?: TStateCtor<IStateUnit<boolean>, boolean> | IStateUnit<boolean>
+	focusable?: TStateCtor<IStateUnit<boolean>, boolean> | IStateUnit<boolean>
 }
 
 export interface IControl<

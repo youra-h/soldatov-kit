@@ -12,9 +12,12 @@ export type TFocusableStateEvents = {
 	change: (value: boolean) => void
 }
 
+/** @deprecated Используй `IStateUnit<boolean>` (value-based state). */
 export interface IFocusableState {
 	focused: boolean
 	readonly events: TEvented<TFocusableStateEvents>
+	/** value-based API */
+	value: boolean
 }
 
 export type TFocusableStateCtor = TStateCtor<IFocusableState>
@@ -27,23 +30,20 @@ export type TFocusableStateCtor = TStateCtor<IFocusableState>
  * - навигации/управления фокусом на уровне модели
  * - синхронизации с UI-обвязкой (Vue/React и т.п.)
  */
-export class TFocusableState extends TStateUnit<TFocusableStateEvents> implements IFocusableState {
-	private _focused = false
-
+export class TFocusableState
+	extends TStateUnit<boolean, TFocusableStateEvents>
+	implements IFocusableState
+{
+	/** @deprecated Используй `TStateUnit<boolean>` (value-based state). */
 	constructor(initial: boolean = false) {
-		super()
-		this._focused = initial
+		super(initial)
 	}
 
 	get focused(): boolean {
-		return this._focused
+		return this.value
 	}
 
 	set focused(value: boolean) {
-		if (this._focused === value) return
-
-		this._focused = value
-
-		this.events.emit('change', value)
+		this.value = value
 	}
 }

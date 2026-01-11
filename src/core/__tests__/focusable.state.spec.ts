@@ -1,20 +1,21 @@
 import { describe, it, expect, vi } from 'vitest'
-import { TFocusableState } from '../base/states'
+import { TStateUnit } from '../base/state-unit'
 
-describe('TFocusableState', () => {
+
+describe('TStateUnit<boolean>', () => {
 	it('инициализируется initial и эмитит change только при изменении', () => {
-		const s = new TFocusableState(false)
+		const s = new TStateUnit(false)
 		const handler = vi.fn()
 		s.events.on('change', handler)
 
-		expect(s.focused).toBe(false)
+		expect(s.value).toBe(false)
 
-		s.focused = true
-		expect(s.focused).toBe(true)
+		s.value = true
+		expect(s.value).toBe(true)
 		expect(handler).toHaveBeenCalledWith(true)
 
 		handler.mockClear()
-		s.focused = true
+		s.value = true
 		expect(handler).not.toHaveBeenCalled()
 	})
 })

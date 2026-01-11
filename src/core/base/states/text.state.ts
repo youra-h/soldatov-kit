@@ -12,9 +12,12 @@ export type TTextStateEvents = {
 	change: (value: string) => void
 }
 
+/** @deprecated Используй `IStateUnit<string>` (value-based state). */
 export interface ITextState {
 	text: string
 	readonly events: TEvented<TTextStateEvents>
+	/** value-based API */
+	value: string
 }
 
 export type TTextStateCtor = TStateCtor<ITextState, string>
@@ -27,23 +30,17 @@ export type TTextStateCtor = TStateCtor<ITextState, string>
  *
  * Примечание: `text` — это именно отображаемый текст/подпись, а не `value`.
  */
-export class TTextState extends TStateUnit<TTextStateEvents> implements ITextState {
-	private _text = ''
-
+export class TTextState extends TStateUnit<string, TTextStateEvents> implements ITextState {
+	/** @deprecated Используй `TStateUnit<string>` (value-based state). */
 	constructor(initial: string = '') {
-		super()
-		this._text = initial
+		super(initial)
 	}
 
 	get text(): string {
-		return this._text
+		return this.value
 	}
 
 	set text(value: string) {
-		if (this._text === value) return
-
-		this._text = value
-
-		this.events.emit('change', value)
+		this.value = value
 	}
 }

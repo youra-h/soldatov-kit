@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest'
 import { TInteractive } from '../base/interactive'
-import { TDisableableState } from '../base/states'
+import { TStateUnit } from '../base/state-unit'
 
 describe('TInteractive', () => {
 	it('меняет disabled/focused и эмитит события', () => {
@@ -38,13 +38,13 @@ describe('TInteractive', () => {
 	it('states позволяет передать инстанс или класс для disableable-state', () => {
 		const log: string[] = []
 
-		class TLoggedDisableableState extends TDisableableState {
+		class TLoggedDisableableState extends TStateUnit<boolean> {
 			constructor(initial: boolean, private readonly _log: string[]) {
 				super(initial)
 			}
 
-			override set disabled(value: boolean) {
-				super.disabled = value
+			override set value(value: boolean) {
+				super.value = value
 				if (value) this._log.push('disabled:true')
 			}
 		}

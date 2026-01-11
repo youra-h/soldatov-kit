@@ -1,4 +1,4 @@
-import { TStateUnit } from '../state-unit'
+import { TStateUnit, type IStateUnit } from '../state-unit'
 import type { TEvented } from '../../common/evented'
 import type { TStateCtor } from './types'
 
@@ -19,6 +19,8 @@ export type TVisibilityStateEvents = {
  * не привязываясь к конкретному классу.
  */
 export interface IVisibilityState {
+	/** value-based API */
+	value: boolean
 	visible: boolean
 	show(): void
 	hide(): void
@@ -37,24 +39,17 @@ export type TVisibilityStateCtor = TStateCtor<IVisibilityState>
  * Хранит флаг видимости и эмитит локальное событие `change`.
  * Компонент-агрегат обычно пробрасывает его наружу как `change:visible`.
  */
-export class TVisibilityState extends TStateUnit<TVisibilityStateEvents> implements IVisibilityState {
-	private _visible = true
-
+export class TVisibilityState extends TStateUnit<boolean, TVisibilityStateEvents> implements IVisibilityState {
 	constructor(initial: boolean = true) {
-		super()
-		this._visible = initial
+		super(initial)
 	}
 
 	get visible(): boolean {
-		return this._visible
+		return this.value
 	}
 
 	set visible(value: boolean) {
-		if (this._visible === value) return
-
-		this._visible = value
-
-		this.events.emit('change', value)
+		this.value = value
 	}
 
 	show(): void {

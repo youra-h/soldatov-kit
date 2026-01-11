@@ -1,5 +1,6 @@
 import type { IControl, IControlProps, TControlEvents, TControlStatesOptions } from '../control'
-import type { ITextState, TTextStateCtor } from '../states'
+import type { IStateUnit } from '../state-unit'
+import type { TStateCtor } from '../states'
 
 export type TTextableEvents = TControlEvents & {
 	/** change:text */
@@ -12,7 +13,7 @@ export interface ITextableProps extends IControlProps {
 }
 
 export type TTextableStatesOptions = TControlStatesOptions & {
-	text?: TTextStateCtor | ITextState
+	text?: TStateCtor<IStateUnit<string>, string> | IStateUnit<string>
 }
 
 export interface ITextable<

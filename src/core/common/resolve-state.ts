@@ -1,4 +1,4 @@
-export type TStateCtor<TState, TInitial> = new (initial?: TInitial) => TState
+export type TStateCtor<TState, TInitial> = new (initial: TInitial) => TState
 
 export type TStateInput<TState, TInitial> = TStateCtor<TState, TInitial> | TState | undefined
 
