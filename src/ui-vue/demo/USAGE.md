@@ -1,8 +1,18 @@
 # Инструкция по работе с Playground
 
+## Переключение между playground
+
+Откройте файл [App.vue](App.vue) и измените переменную:
+
+```typescript
+const activePlayground = 'component-view' // измените на нужный ключ
+```
+
+Доступные значения указаны в объекте `playgrounds`.
+
 ## Запуск playground
 
-Playground автоматически загружается при запуске приложения через `AppComponentView.vue`.
+Playground автоматически загружается при запуске приложения.
 
 ## Структура интерфейса
 

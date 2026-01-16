@@ -2,19 +2,30 @@
 
 Структура playground для тестирования и демонстрации компонентов.
 
+## Быстрый старт
+
+Для переключения между playground компонентами откройте [App.vue](App.vue) и измените переменную `activePlayground`:
+
+```typescript
+// Выберите активный playground
+const activePlayground = 'component-view' // или другой ключ
+```
+
 ## Структура файлов
 
 ```
 demo/
+├── App.vue                       # 🎯 Главная точка входа (переключение playground)
 ├── PlaygroundLayout.vue          # Базовый layout с 3 строками
 ├── EventLog.vue                  # Компонент для отображения логов событий
-├── ComponentViewPlayground.vue   # Главный компонент для ComponentView
+├── ComponentViewPlayground.vue   # Playground для ComponentView
 ├── component-view/               # Папка с компонентами для ComponentView
 │   ├── PropertiesPanel.vue      # Панель свойств компонента
 │   ├── PropsDemo.vue            # Демо с передачей props
 │   ├── InstanceDemo.vue         # Демо с передачей instance
 │   └── SlotsDemo.vue            # Демо различных вариантов слотов
-└── AppComponentView.vue         # Точка входа
+├── App*.vue                      # @deprecated старые файлы (будут удалены)
+└── *.md                          # Документация
 ```
 
 ## Компоненты
@@ -64,15 +75,38 @@ demo/
 
 ## Использование
 
-```vue
-<template>
-  <ComponentViewPlayground />
-</template>
-```
+### Переключение playground
+
+1. Откройте [App.vue](App.vue)
+2. Измените значение `activePlayground`:
+   ```typescript
+   const activePlayground = 'component-view'
+   ```
+3. Сохраните файл - hot reload автоматически обновит интерфейс
+
+### Доступные playground
+
+- `'component-view'` - ComponentView компонент
+
+*Добавляйте новые playground по мере создания*
 
 ## Добавление нового компонента
 
 Для добавления playground для нового компонента:
+5. Добавить новый playground в [App.vue](App.vue):
+   ```typescript
+   import ButtonPlayground from './ButtonPlayground.vue'
+   
+   const playgrounds = {
+     'component-view': markRaw(ComponentViewPlayground),
+     'button': markRaw(ButtonPlayground), // ← добавить здесь
+   } as const
+   ```
+6. Изменить `activePlayground` для просмотра
+
+## Deprecated файлы
+
+Файлы `App*.vue` (AppButton.vue, AppCheckBox.vue и т.д.) помечены как @deprecated и будут удалены. Используйте новую систему с [App.vue](App.vue) вместо них.
 
 1. Создать папку `demo/<component-name>/`
 2. Создать компоненты:

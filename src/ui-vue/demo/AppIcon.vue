@@ -1,3 +1,7 @@
+<!--
+@deprecated Use App.vue instead. Create IconPlayground.vue and add to playgrounds map
+This file will be removed in the future
+-->
 <script setup lang="ts">
 import { reactive } from 'vue'
 import { Icon, useIconImport } from '@ui/icon'

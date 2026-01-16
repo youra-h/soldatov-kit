@@ -1,3 +1,7 @@
+<!--
+@deprecated Use App.vue instead. Create SwitchPlayground.vue and add to playgrounds map
+This file will be removed in the future
+-->
 <script setup lang="ts">
 import { ref } from 'vue'
 import { Switch } from '@ui/switch'

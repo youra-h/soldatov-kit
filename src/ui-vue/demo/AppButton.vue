@@ -1,3 +1,7 @@
+<!--
+@deprecated Use App.vue instead. Create ButtonPlayground.vue and add to playgrounds map
+This file will be removed in the future
+-->
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
 import { Button } from '@ui/button'

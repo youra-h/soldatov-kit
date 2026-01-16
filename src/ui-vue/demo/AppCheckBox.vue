@@ -1,3 +1,7 @@
+<!--
+@deprecated Use App.vue instead. Create CheckBoxPlayground.vue and add to playgrounds map
+This file will be removed in the future
+-->
 <script setup lang="ts">
 import { reactive, defineAsyncComponent } from 'vue'
 import { CheckBox } from '@ui/check-box'
