@@ -60,7 +60,7 @@ const handleTagChange = (event: Event) => {
 		</div>
 
 		<!-- Tag -->
-		<div class="properties-panel__field properties-panel__field--full">
+		<div class="properties-panel__field">
 			<label class="properties-panel__label">tag:</label>
 			<select :value="tag" @change="handleTagChange" class="properties-panel__select">
 				<option v-for="tagOption in tags" :key="tagOption" :value="tagOption">
@@ -77,21 +77,18 @@ const handleTagChange = (event: Event) => {
 .properties-panel {
 	$this: &;
 
-	@apply grid grid-cols-2;
+	@apply flex flex-col;
 	@apply gap-4;
 
 	&__field {
 		@apply flex items-center;
 		@apply gap-2;
-
-		&--full {
-			@apply col-span-2;
-		}
 	}
 
 	&__label {
 		@apply font-medium;
 		@apply text-sm;
+		@apply w-30;
 	}
 
 	&__checkbox {
@@ -101,7 +98,7 @@ const handleTagChange = (event: Event) => {
 	&__select {
 		@apply border rounded;
 		@apply px-2 py-1;
-		@apply flex-1;
+		@apply w-60;
 	}
 }
 </style>
