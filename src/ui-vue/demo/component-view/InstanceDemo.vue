@@ -93,11 +93,36 @@ watch(() => props.tag, (newVal) => {
 		@hide="onHide"
 		@change:visible="onChangeVisible"
 		@change:rendered="onChangeRendered"
-		class="border-2 border-green-500 rounded p-4"
+		class="instance-demo"
 	>
-		<div class="text-center">
-			<div class="font-semibold">Instance Demo</div>
-			<div class="text-sm text-gray-600">Component with instance</div>
+		<div class="instance-demo__content">
+			<div class="instance-demo__title">Instance Demo</div>
+			<div class="instance-demo__subtitle">Component with instance</div>
 		</div>
 	</ComponentView>
 </template>
+
+<style lang="scss" scoped>
+@reference "./../../../foundation/tailwind/index.css";
+
+.instance-demo {
+	$this: &;
+
+	@apply border-2 border-green-500;
+	@apply rounded;
+	@apply p-4;
+
+	&__content {
+		@apply text-center;
+	}
+
+	&__title {
+		@apply font-semibold;
+	}
+
+	&__subtitle {
+		@apply text-sm;
+		@apply text-gray-600;
+	}
+}
+</style>

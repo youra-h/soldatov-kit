@@ -7,49 +7,111 @@ defineProps<Props>()
 </script>
 
 <template>
-	<div class="flex flex-col gap-6 p-4">
+	<div class="pg-layout">
 		<!-- Header -->
-		<div class="flex items-center justify-between">
-			<h1 class="text-2xl font-bold">{{ title }}</h1>
+		<div class="pg-layout__header">
+			<h1 class="pg-layout__title">{{ title }}</h1>
 		</div>
 
 		<!-- Row 1: Properties Panel -->
-		<div class="border rounded-lg p-4 bg-gray-50">
-			<h2 class="text-lg font-semibold mb-3">Properties</h2>
+		<div class="pg-layout__section pg-layout__section--properties">
+			<h2 class="pg-layout__section-title">Properties</h2>
 			<slot name="properties" />
 		</div>
 
 		<!-- Row 2: Three Column Demo -->
-		<div class="grid grid-cols-3 gap-4">
+		<div class="pg-layout__demo-grid">
 			<!-- Column 1: Props Demo -->
-			<div class="border rounded-lg p-4 flex flex-col">
-				<h3 class="text-sm font-semibold mb-3">Props Demo</h3>
-				<div class="flex-1 flex items-center justify-center">
+			<div class="pg-layout__demo-column">
+				<h3 class="pg-layout__demo-title">Props Demo</h3>
+				<div class="pg-layout__demo-content">
 					<slot name="props-demo" />
 				</div>
 			</div>
 
 			<!-- Column 2: Instance Demo -->
-			<div class="border rounded-lg p-4 flex flex-col">
-				<h3 class="text-sm font-semibold mb-3">Instance Demo</h3>
-				<div class="flex-1 flex items-center justify-center">
+			<div class="pg-layout__demo-column">
+				<h3 class="pg-layout__demo-title">Instance Demo</h3>
+				<div class="pg-layout__demo-content">
 					<slot name="instance-demo" />
 				</div>
 			</div>
 
 			<!-- Column 3: Slots Demo -->
-			<div class="border rounded-lg p-4 flex flex-col">
-				<h3 class="text-sm font-semibold mb-3">Slots Demo</h3>
-				<div class="flex-1 flex items-center justify-center">
+			<div class="pg-layout__demo-column">
+				<h3 class="pg-layout__demo-title">Slots Demo</h3>
+				<div class="pg-layout__demo-content">
 					<slot name="slots-demo" />
 				</div>
 			</div>
 		</div>
 
 		<!-- Row 3: Event Log -->
-		<div class="border rounded-lg p-4 bg-gray-50">
-			<h2 class="text-lg font-semibold mb-3">Event Log</h2>
+		<div class="pg-layout__section pg-layout__section--log">
+			<h2 class="pg-layout__section-title">Event Log</h2>
 			<slot name="event-log" />
 		</div>
 	</div>
 </template>
+
+<style lang="scss" scoped>
+@reference "./../../foundation/tailwind/index.css";
+
+.pg-layout {
+	$this: &;
+
+	@apply flex flex-col;
+	@apply gap-6;
+	@apply p-4;
+
+	&__header {
+		@apply flex items-center justify-between;
+	}
+
+	&__title {
+		@apply text-2xl;
+		@apply font-bold;
+	}
+
+	&__section {
+		@apply border rounded-lg;
+		@apply p-4;
+
+		&--properties {
+			@apply bg-gray-50;
+		}
+
+		&--log {
+			@apply bg-gray-50;
+		}
+	}
+
+	&__section-title {
+		@apply text-lg;
+		@apply font-semibold;
+		@apply mb-3;
+	}
+
+	&__demo-grid {
+		@apply grid grid-cols-3;
+		@apply gap-4;
+	}
+
+	&__demo-column {
+		@apply border rounded-lg;
+		@apply p-4;
+		@apply flex flex-col;
+	}
+
+	&__demo-title {
+		@apply text-sm;
+		@apply font-semibold;
+		@apply mb-3;
+	}
+
+	&__demo-content {
+		@apply flex-1;
+		@apply flex items-center justify-center;
+	}
+}
+</style>

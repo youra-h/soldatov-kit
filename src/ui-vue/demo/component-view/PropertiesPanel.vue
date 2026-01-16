@@ -11,7 +11,7 @@ const emit = defineEmits<{
 	'update:visible': [value: boolean]
 	'update:rendered': [value: boolean]
 	'update:tag': [value: string]
-	'change': [props: Props]
+	change: [props: Props]
 }>()
 
 const tags = ['div', 'span', 'section', 'article', 'header', 'footer', 'main', 'aside']
@@ -36,37 +36,33 @@ const handleTagChange = (event: Event) => {
 </script>
 
 <template>
-	<div class="grid grid-cols-2 gap-4">
+	<div class="properties-panel">
 		<!-- Visible -->
-		<div class="flex items-center gap-2">
-			<label class="font-medium text-sm">visible:</label>
+		<div class="properties-panel__field">
+			<label class="properties-panel__label">visible:</label>
 			<input
 				type="checkbox"
 				:checked="visible"
 				@change="handleVisibleChange"
-				class="w-4 h-4"
+				class="properties-panel__checkbox"
 			/>
 		</div>
 
 		<!-- Rendered -->
-		<div class="flex items-center gap-2">
-			<label class="font-medium text-sm">rendered:</label>
+		<div class="properties-panel__field">
+			<label class="properties-panel__label">rendered:</label>
 			<input
 				type="checkbox"
 				:checked="rendered"
 				@change="handleRenderedChange"
-				class="w-4 h-4"
+				class="properties-panel__checkbox"
 			/>
 		</div>
 
 		<!-- Tag -->
-		<div class="flex items-center gap-2 col-span-2">
-			<label class="font-medium text-sm">tag:</label>
-			<select
-				:value="tag"
-				@change="handleTagChange"
-				class="border rounded px-2 py-1 flex-1"
-			>
+		<div class="properties-panel__field properties-panel__field--full">
+			<label class="properties-panel__label">tag:</label>
+			<select :value="tag" @change="handleTagChange" class="properties-panel__select">
 				<option v-for="tagOption in tags" :key="tagOption" :value="tagOption">
 					{{ tagOption }}
 				</option>
@@ -74,3 +70,38 @@ const handleTagChange = (event: Event) => {
 		</div>
 	</div>
 </template>
+
+<style lang="scss" scoped>
+@reference "./../../../foundation/tailwind/index.css";
+
+.properties-panel {
+	$this: &;
+
+	@apply grid grid-cols-2;
+	@apply gap-4;
+
+	&__field {
+		@apply flex items-center;
+		@apply gap-2;
+
+		&--full {
+			@apply col-span-2;
+		}
+	}
+
+	&__label {
+		@apply font-medium;
+		@apply text-sm;
+	}
+
+	&__checkbox {
+		@apply w-4 h-4;
+	}
+
+	&__select {
+		@apply border rounded;
+		@apply px-2 py-1;
+		@apply flex-1;
+	}
+}
+</style>

@@ -11,7 +11,7 @@ type Props = {
 const props = defineProps<Props>()
 
 const emit = defineEmits<{
-	'log': [entry: EventLogEntry]
+	log: [entry: EventLogEntry]
 }>()
 
 const logEvent = (source: EventLogEntry['source'], name: string, payload?: unknown) => {
@@ -19,7 +19,7 @@ const logEvent = (source: EventLogEntry['source'], name: string, payload?: unkno
 		timestamp: new Date().toISOString(),
 		source,
 		name,
-		payload
+		payload,
 	})
 }
 
@@ -49,11 +49,36 @@ const onChangeRendered = (v: boolean) => logEvent('vue', 'change:rendered', v)
 		@hide="onHide"
 		@change:visible="onChangeVisible"
 		@change:rendered="onChangeRendered"
-		class="border-2 border-blue-500 rounded p-4"
+		class="props-demo"
 	>
-		<div class="text-center">
-			<div class="font-semibold">Props Demo</div>
-			<div class="text-sm text-gray-600">Component with props</div>
+		<div class="props-demo__content">
+			<div class="props-demo__title">Props Demo</div>
+			<div class="props-demo__subtitle">Component with props</div>
 		</div>
 	</ComponentView>
 </template>
+
+<style lang="scss" scoped>
+@reference "./../../../foundation/tailwind/index.css";
+
+.props-demo {
+	$this: &;
+
+	@apply border-2 border-blue-500;
+	@apply rounded;
+	@apply p-4;
+
+	&__content {
+		@apply text-center;
+	}
+
+	&__title {
+		@apply font-semibold;
+	}
+
+	&__subtitle {
+		@apply text-sm;
+		@apply text-gray-600;
+	}
+}
+</style>

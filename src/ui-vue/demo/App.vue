@@ -39,15 +39,50 @@ const CurrentPlayground = computed(() => {
 </script>
 
 <template>
-	<div class="min-h-screen bg-gray-50">
-		<div v-if="CurrentPlayground" class="container mx-auto">
+	<div class="pg-app">
+		<div v-if="CurrentPlayground" class="pg-app__container">
 			<component :is="CurrentPlayground" />
 		</div>
-		<div v-else class="flex items-center justify-center min-h-screen">
-			<div class="text-center">
-				<h1 class="text-2xl font-bold text-red-600 mb-2">Playground not found</h1>
-				<p class="text-gray-600">Check the activePlayground variable</p>
+		<div v-else class="pg-app__error">
+			<div class="pg-app__error-content">
+				<h1 class="pg-app__error-title">Playground not found</h1>
+				<p class="pg-app__error-text">Check the activePlayground variable</p>
 			</div>
 		</div>
 	</div>
 </template>
+
+<style lang="scss" scoped>
+@reference "./../../foundation/tailwind/index.css";
+
+.pg-app {
+	$this: &;
+
+	@apply min-h-screen;
+	@apply bg-gray-50;
+
+	&__container {
+		@apply container mx-auto;
+	}
+
+	&__error {
+		@apply flex items-center justify-center;
+		@apply min-h-screen;
+	}
+
+	&__error-content {
+		@apply text-center;
+	}
+
+	&__error-title {
+		@apply text-2xl;
+		@apply font-bold;
+		@apply text-red-600;
+		@apply mb-2;
+	}
+
+	&__error-text {
+		@apply text-gray-600;
+	}
+}
+</style>
