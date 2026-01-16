@@ -29,6 +29,10 @@ const handleLog = (entry: EventLogEntry) => {
 		eventLog.value = eventLog.value.slice(0, 200)
 	}
 }
+
+const handleClearLogs = () => {
+	eventLog.value = []
+}
 </script>
 
 <template>
@@ -61,7 +65,7 @@ const handleLog = (entry: EventLogEntry) => {
 		</template>
 
 		<template #event-log>
-			<EventLog :events="eventLog" />
+			<EventLog :events="eventLog" @clear="handleClearLogs" />
 		</template>
 	</PlaygroundLayout>
 </template>

@@ -17,6 +17,10 @@ const props = withDefaults(defineProps<Props>(), {
 	maxEntries: 100,
 })
 
+const emit = defineEmits<{
+	clear: []
+}>()
+
 const displayedEvents = computed(() => props.events.slice(0, props.maxEntries))
 
 const formatTime = (timestamp: string) => {
@@ -34,18 +38,26 @@ const formatTime = (timestamp: string) => {
 <template>
 	<div class="event-log">
 		<div v-if="displayedEvents.length === 0" class="event-log__empty">No events yet</div>
-		<div v-else class="event-log__list">
-			<div v-for="(event, idx) in displayedEvents" :key="idx" class="event-log__entry">
-				<span class="event-log__timestamp">{{ formatTime(event.timestamp) }}</span>
-				<span class="event-log__separator">|</span>
-				<span :class="['event-log__source', `event-log__source--${event.source}`]">
-					{{ event.source }}
-				</span>
-				<span class="event-log__separator">→</span>
-				<span class="event-log__name">{{ event.name }}</span>
-				<span v-if="event.payload !== undefined" class="event-log__payload">
-					{{ JSON.stringify(event.payload) }}
-				</span>
+		<div v-else class="event-log__content">
+			<div class="event-log__header">
+				<span class="event-log__count">{{ displayedEvents.length }} events</span>
+				<button class="event-log__clear-btn" @click="emit('clear')">
+					Clear logs
+				</button>
+			</div>
+			<div class="event-log__list">
+				<div v-for="(event, idx) in displayedEvents" :key="idx" class="event-log__entry">
+					<span class="event-log__timestamp">{{ formatTime(event.timestamp) }}</span>
+					<span class="event-log__separator">|</span>
+					<span :class="['event-log__source', `event-log__source--${event.source}`]">
+						{{ event.source }}
+					</span>
+					<span class="event-log__separator">→</span>
+					<span class="event-log__name">{{ event.name }}</span>
+					<span v-if="event.payload !== undefined" class="event-log__payload">
+						{{ JSON.stringify(event.payload) }}
+					</span>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -68,8 +80,43 @@ const formatTime = (timestamp: string) => {
 		@apply py-4;
 	}
 
+	&__content {
+		@apply flex flex-col;
+		@apply h-full;
+	}
+
+	&__header {
+		@apply flex items-center justify-between;
+		@apply mb-3;
+		@apply pb-2;
+		@apply border-b border-gray-300;
+	}
+
+	&__count {
+		@apply text-sm;
+		@apply font-medium;
+		@apply text-gray-700;
+	}
+
+	&__clear-btn {
+		@apply px-3 py-1;
+		@apply text-xs;
+		@apply font-medium;
+		@apply bg-red-500;
+		@apply text-white;
+		@apply rounded;
+		@apply transition-colors;
+		@apply hover:bg-red-600;
+		@apply focus:outline-none;
+		@apply focus:ring-2;
+		@apply focus:ring-red-500;
+		@apply focus:ring-offset-1;
+	}
+
 	&__list {
 		@apply space-y-1;
+		@apply overflow-auto;
+		@apply flex-1;
 	}
 
 	&__entry {
