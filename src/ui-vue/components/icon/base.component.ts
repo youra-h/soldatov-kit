@@ -1,12 +1,17 @@
 import { type PropType, watch } from 'vue'
 import { type IIconProps, TIcon, type TComponentSize } from '../../../core'
-import { Component, emitsComponent, propsComponent, syncComponent } from '../component-view'
-import type { TEmits, TProps, ISyncComponentOptions } from '../../types/common'
+import {
+	ComponentView,
+	emitsComponentView,
+	propsComponentView,
+	syncComponentView,
+} from '../component-view'
+import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types/common'
 
-export const emitsIcon: TEmits = [...emitsComponent] as const
+export const emitsIcon: TEmits = [...emitsComponentView] as const
 
 export const propsIcon: TProps = {
-	...propsComponent,
+	...propsComponentView,
 	tag: {
 		type: [String, Object] as PropType<IIconProps['tag']>,
 		default: TIcon.defaultValues.tag,
@@ -27,7 +32,7 @@ export const propsIcon: TProps = {
 
 export default {
 	name: 'BaseIcon',
-	extends: Component,
+	extends: ComponentView,
 	emits: emitsIcon,
 	props: propsIcon,
 }
@@ -37,15 +42,15 @@ export default {
  * @param props
  * @param instance
  */
-export function syncIcon(options: ISyncComponentOptions<IIconProps>) {
-	syncComponent(options)
+export function syncIcon(options: ISyncComponentModelOptions<IIconProps>) {
+	syncComponentView(options)
 
 	const { instance, props } = options
 
-	watch<TComponentSize>(
+	watch<TComponentSize | undefined>(
 		() => props.size,
 		(value) => {
-			if (value && value !== instance.size) {
+			if (value !== undefined && value !== instance.size) {
 				instance.size = value
 			}
 		},
@@ -54,7 +59,7 @@ export function syncIcon(options: ISyncComponentOptions<IIconProps>) {
 	watch<number | string | undefined>(
 		() => props.width,
 		(value) => {
-			if (value && value !== instance.width) {
+			if (value !== undefined && value !== instance.width) {
 				instance.width = value
 			}
 		},
@@ -63,7 +68,7 @@ export function syncIcon(options: ISyncComponentOptions<IIconProps>) {
 	watch<number | string | undefined>(
 		() => props.height,
 		(value) => {
-			if (value && value !== instance.height) {
+			if (value !== undefined && value !== instance.height) {
 				instance.height = value
 			}
 		},
