@@ -3,10 +3,10 @@ import { ref } from 'vue'
 import PlaygroundLayout from './PlaygroundLayout.vue'
 import EventLog from './EventLog.vue'
 import type { EventLogEntry } from './EventLog.vue'
-import PropertiesPanel from './component-view/PropertiesPanel.vue'
-import PropsDemo from './component-view/PropsDemo.vue'
-import InstanceDemo from './component-view/InstanceDemo.vue'
-import SlotsDemo from './component-view/SlotsDemo.vue'
+import PropertiesPanel from './component-view/Properties.vue'
+import PropsDemo from './component-view/Component.vue'
+import InstanceDemo from './component-view/Instance.vue'
+import SlotsDemo from './component-view/Slots.vue'
 
 // Component properties state
 const componentProps = ref({
