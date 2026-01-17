@@ -27,7 +27,7 @@ const handleChange = (event: Event) => {
 	</select>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @reference "./../../../foundation/tailwind/index.css";
 
 .size-selector {

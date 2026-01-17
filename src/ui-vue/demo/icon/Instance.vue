@@ -86,13 +86,3 @@ watch(
 	<Icon :is="instance" class="instance-demo" />
 </template>
 
-<style lang="scss" scoped>
-@reference "./../../../foundation/tailwind/index.css";
-
-.instance-demo {
-	@apply border-2 border-green-500;
-	@apply rounded;
-	@apply p-4;
-	@apply inline-flex;
-}
-</style>

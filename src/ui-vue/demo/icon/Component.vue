@@ -25,14 +25,3 @@ const props = defineProps<Props>()
 		class="props-demo"
 	/>
 </template>
-
-<style lang="scss" scoped>
-@reference "./../../../foundation/tailwind/index.css";
-
-.props-demo {
-	@apply border-2 border-blue-500;
-	@apply rounded;
-	@apply p-4;
-	@apply inline-flex;
-}
-</style>

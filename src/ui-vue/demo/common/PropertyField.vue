@@ -13,7 +13,7 @@ defineProps<{
 	</div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @reference "./../../../foundation/tailwind/index.css";
 
 .property-field {

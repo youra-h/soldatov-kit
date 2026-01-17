@@ -70,7 +70,7 @@ const handleTagChange = (event: Event) => {
 	</div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @reference "./../../../foundation/tailwind/index.css";
 
 .properties-panel {

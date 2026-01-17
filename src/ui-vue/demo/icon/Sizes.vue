@@ -31,7 +31,7 @@ const sizes: TComponentSize[] = ['sm', 'normal', 'auto', 'lg', 'xl', '2xl']
 	</div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @reference "./../../../foundation/tailwind/index.css";
 
 .sizes-demo {
@@ -66,10 +66,5 @@ const sizes: TComponentSize[] = ['sm', 'normal', 'auto', 'lg', 'xl', '2xl']
 		@apply font-mono;
 	}
 
-	&__icon {
-		@apply border border-gray-300;
-		@apply rounded;
-		@apply p-1;
-	}
 }
 </style>
