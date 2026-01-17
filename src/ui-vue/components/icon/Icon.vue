@@ -23,6 +23,7 @@ export default {
 </script>
 
 <template>
+	{{ console.log(instance.sizeState) }}
 	<component
 		:is="instance.tag"
 		v-if="instance.rendered"

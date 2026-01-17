@@ -35,16 +35,16 @@ const handlePropsChange = (newProps: Partial<typeof componentProps.value>) => {
 			<PropertiesPanel v-bind="componentProps" @change="handlePropsChange" />
 		</template>
 
-		<template #props-demo>
+		<!-- <template #props-demo>
 			<PropsDemo v-bind="componentProps" />
-		</template>
+		</template> -->
 
 		<template #instance-demo>
 			<InstanceDemo v-bind="componentProps" />
 		</template>
 
-		<template #slots-demo>
+		<!-- <template #slots-demo>
 			<SizesDemo v-bind="componentProps" />
-		</template>
+		</template> -->
 	</PlaygroundLayout>
 </template>

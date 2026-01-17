@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { shallowReactive, watch } from 'vue'
+import { shallowReactive, watch, reactive } from 'vue'
 import { Icon, useIconImport } from '@ui/icon'
 import { TIcon, type IIconProps } from '@core'
 import type { TComponentSize } from '../common/SizeSelector.vue'
