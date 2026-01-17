@@ -15,6 +15,9 @@ const componentProps = ref({
 	tag: 'div'
 })
 
+// Ref для Instance demo
+const instanceDemoRef = ref<InstanceType<typeof InstanceDemo>>()
+
 // Event log
 const eventLog = ref<EventLogEntry[]>([])
 
@@ -33,6 +36,20 @@ const handleLog = (entry: EventLogEntry) => {
 const handleClearLogs = () => {
 	eventLog.value = []
 }
+
+const handleShow = () => {
+	// Для Props demo просто меняем visible
+	componentProps.value = { ...componentProps.value, visible: true }
+	// Для Instance demo вызываем метод show()
+	instanceDemoRef.value?.show()
+}
+
+const handleHide = () => {
+	// Для Props demo просто меняем visible
+	componentProps.value = { ...componentProps.value, visible: false }
+	// Для Instance demo вызываем метод hide()
+	instanceDemoRef.value?.hide()
+}
 </script>
 
 <template>
@@ -41,6 +58,8 @@ const handleClearLogs = () => {
 			<PropertiesPanel
 				v-bind="componentProps"
 				@change="handlePropsChange"
+				@show="handleShow"
+				@hide="handleHide"
 			/>
 		</template>
 
@@ -53,6 +72,7 @@ const handleClearLogs = () => {
 
 		<template #instance-demo>
 			<InstanceDemo
+				ref="instanceDemoRef"
 				v-bind="componentProps"
 				@log="handleLog"
 			/>

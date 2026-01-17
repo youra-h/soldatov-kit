@@ -22,6 +22,8 @@ const emit = defineEmits<{
 	'update:width': [value: number | string]
 	'update:height': [value: number | string]
 	change: [props: Props]
+	show: []
+	hide: []
 }>()
 
 const handleVisibleChange = (event: Event) => {
@@ -56,6 +58,14 @@ const handleHeightChange = (event: Event) => {
 	const value = (event.target as HTMLInputElement).value
 	emit('update:height', value)
 	emit('change', { ...props, height: value })
+}
+
+const handleShow = () => {
+	emit('show')
+}
+
+const handleHide = () => {
+	emit('hide')
 }
 </script>
 
@@ -112,6 +122,18 @@ const handleHeightChange = (event: Event) => {
 				placeholder="auto"
 			/>
 		</PropertyField>
+
+		<!-- Actions -->
+		<PropertyField label="actions">
+			<div class="properties-panel__actions">
+				<button @click="handleShow" class="properties-panel__button">
+					Show
+				</button>
+				<button @click="handleHide" class="properties-panel__button">
+					Hide
+				</button>
+			</div>
+		</PropertyField>
 	</div>
 </template>
 
@@ -130,6 +152,18 @@ const handleHeightChange = (event: Event) => {
 		@apply border rounded;
 		@apply px-2 py-1;
 		@apply w-60;
+	}
+
+	&__actions {
+		@apply flex gap-2;
+	}
+
+	&__button {
+		@apply border rounded;
+		@apply px-3 py-1;
+		@apply bg-blue-500 text-white;
+		@apply hover:bg-blue-600;
+		@apply transition-colors;
 	}
 }
 </style>

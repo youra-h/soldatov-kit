@@ -15,8 +15,9 @@ type Props = {
 
 const props = defineProps<Props>()
 
+// Используем new TIcon вместо TIcon.create, так как передаем Partial<IIconProps>
 const instance = shallowReactive(
-	TIcon.create({
+	new TIcon({
 		tag: useIconImport(props.tag || '/src/icons/home.svg'),
 		rendered: props.rendered ?? true,
 		visible: props.visible ?? true,
@@ -25,6 +26,11 @@ const instance = shallowReactive(
 		height: props.height,
 	}),
 )
+
+defineExpose({
+	show: () => instance.show(),
+	hide: () => instance.hide(),
+})
 
 // Watch props and update instance
 watch(
