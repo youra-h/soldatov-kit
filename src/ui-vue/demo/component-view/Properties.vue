@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import PropertyField from '../common/PropertyField.vue'
+
 type Props = {
 	visible?: boolean
 	rendered?: boolean
@@ -12,6 +14,8 @@ const emit = defineEmits<{
 	'update:rendered': [value: boolean]
 	'update:tag': [value: string]
 	change: [props: Props]
+	show: []
+	hide: []
 }>()
 
 const tags = ['div', 'span', 'section', 'article', 'header', 'footer', 'main', 'aside']
@@ -33,63 +37,67 @@ const handleTagChange = (event: Event) => {
 	emit('update:tag', value)
 	emit('change', { ...props, tag: value })
 }
+
+const handleShow = () => {
+	emit('show')
+}
+
+const handleHide = () => {
+	emit('hide')
+}
 </script>
 
 <template>
 	<div class="properties-panel">
 		<!-- Visible -->
-		<div class="properties-panel__field">
-			<label class="properties-panel__label">visible:</label>
+		<PropertyField label="visible">
 			<input
 				type="checkbox"
 				:checked="visible"
 				@change="handleVisibleChange"
 				class="properties-panel__checkbox"
 			/>
-		</div>
+		</PropertyField>
 
 		<!-- Rendered -->
-		<div class="properties-panel__field">
-			<label class="properties-panel__label">rendered:</label>
+		<PropertyField label="rendered">
 			<input
 				type="checkbox"
 				:checked="rendered"
 				@change="handleRenderedChange"
 				class="properties-panel__checkbox"
 			/>
-		</div>
+		</PropertyField>
 
 		<!-- Tag -->
-		<div class="properties-panel__field">
-			<label class="properties-panel__label">tag:</label>
+		<PropertyField label="tag">
 			<select :value="tag" @change="handleTagChange" class="properties-panel__select">
 				<option v-for="tagOption in tags" :key="tagOption" :value="tagOption">
 					{{ tagOption }}
 				</option>
 			</select>
-		</div>
+		</PropertyField>
+
+		<!-- Actions -->
+		<PropertyField label="actions">
+			<div class="properties-panel__actions">
+				<button @click="handleShow" class="properties-panel__button">
+					Show
+				</button>
+				<button @click="handleHide" class="properties-panel__button">
+					Hide
+				</button>
+			</div>
+		</PropertyField>
 	</div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @reference "./../../../foundation/tailwind/index.css";
 
 .properties-panel {
-	$this: &;
-
 	@apply flex flex-col;
 	@apply gap-4;
-
-	&__field {
-		@apply flex items-center;
-		@apply gap-2;
-	}
-
-	&__label {
-		@apply font-medium;
-		@apply text-sm;
-		@apply w-30;
-	}
 
 	&__checkbox {
 		@apply w-4 h-4;
@@ -99,6 +107,18 @@ const handleTagChange = (event: Event) => {
 		@apply border rounded;
 		@apply px-2 py-1;
 		@apply w-60;
+	}
+
+	&__actions {
+		@apply flex gap-2;
+	}
+
+	&__button {
+		@apply border rounded;
+		@apply px-3 py-1;
+		@apply bg-blue-500 text-white;
+		@apply hover:bg-blue-600;
+		@apply transition-colors;
 	}
 }
 </style>

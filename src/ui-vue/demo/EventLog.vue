@@ -63,7 +63,7 @@ const formatTime = (timestamp: string) => {
 	</div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @reference "./../../foundation/tailwind/index.css";
 
 .event-log {

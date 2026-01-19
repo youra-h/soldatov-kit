@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, markRaw } from 'vue'
 import ComponentViewPlayground from './ComponentViewPlayground.vue'
+import IconPlayground from './IconPlayground.vue'
 
 /**
  * Playground Manager
@@ -19,6 +20,7 @@ import ComponentViewPlayground from './ComponentViewPlayground.vue'
 // Маппинг доступных playground компонентов
 const playgrounds = {
 	'component-view': markRaw(ComponentViewPlayground),
+	'icon': markRaw(IconPlayground),
 	// Добавьте здесь другие playground по мере создания:
 	// 'button': markRaw(ButtonPlayground),
 	// 'check-box': markRaw(CheckBoxPlayground),
@@ -52,7 +54,7 @@ const CurrentPlayground = computed(() => {
 	</div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @reference "./../../foundation/tailwind/index.css";
 
 .pg-app {

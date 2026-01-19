@@ -14,9 +14,9 @@ import type {
  * Хранит `id` и единый emitter `events`.
  */
 export default class TComponentModel<
-	TProps extends IComponentModelProps = IComponentModelProps,
-	TEvents extends TComponentModelEvents = TComponentModelEvents,
->
+		TProps extends IComponentModelProps = IComponentModelProps,
+		TEvents extends TComponentModelEvents = TComponentModelEvents,
+	>
 	extends TEntity<TProps>
 	implements IComponentModel<TProps, TEvents>
 {
@@ -45,11 +45,27 @@ export default class TComponentModel<
 		return { props: options as Partial<TProps> }
 	}
 
+	/**
+	 * Создает экземпляр компонента с заданными props.
+	 * @param props Начальные свойства компонента (могут включать специфичные поля дочерних классов)
+	 * @returns Экземпляр компонента
+	 * @example
+	 * TIcon.create({ tag: 'icon.svg', size: 'lg' })
+	 * TButton.create({ text: 'Click me', variant: 'primary' })
+	 */
+	/**
+	 * Создает экземпляр компонента с заданными props.
+	 * @param props Начальные свойства компонента (могут включать специфичные поля дочерних классов)
+	 * @returns Экземпляр компонента
+	 * @example
+	 * TIcon.create({ tag: 'icon.svg', size: 'lg' })
+	 * TButton.create({ text: 'Click me', variant: 'primary' })
+	 */
 	static create<T extends TComponentModel>(
 		this: new (options: any) => T,
-		props: Partial<IComponentModelProps> = {},
+		props?: Partial<T extends TComponentModel<infer P> ? P : IComponentModelProps>,
 	): T {
-		return new this({ props })
+		return new this({ props: props ?? {} })
 	}
 
 	get id(): string | number {

@@ -16,6 +16,11 @@ const emit = defineEmits<{
 	'log': [entry: EventLogEntry]
 }>()
 
+defineExpose({
+	show: () => instance.show(),
+	hide: () => instance.hide(),
+})
+
 const instance = shallowReactive(new TComponentView({
 	tag: props.tag || 'div',
 	rendered: props.rendered ?? true,

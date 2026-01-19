@@ -7,33 +7,34 @@ export default {
 	name: '_Icon',
 	extends: BaseIcon,
 	setup(props: IIconProps, { emit }) {
-		const { is: component } = useBaseSetup(TIcon, props)
+		const { is: instance } = useBaseSetup(TIcon, props)
 
 		syncIcon({
 			props,
-			instance: component,
+			instance,
 			emit,
 		})
 
 		return {
-			component,
+			instance,
 		}
 	},
 }
 </script>
 
 <template>
+	{{ console.log(instance.sizeState) }}
 	<component
-		:is="component.tag"
-		v-if="component.rendered"
-		v-show="component.visible"
-		:class="component.classes"
+		:is="instance.tag"
+		v-if="instance.rendered"
+		v-show="instance.visible"
+		:class="instance.classes"
 	>
 	</component>
 </template>
 
 <style lang="scss">
-@reference "./../../theme";
+@reference "./../../../foundation/tailwind/index.css";
 
 .s-icon {
 	&--size-normal {

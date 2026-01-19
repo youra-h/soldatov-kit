@@ -54,8 +54,10 @@ export default {
 	},
 }
 
-export function syncComponentView(options: ISyncComponentModelOptions<IComponentView>) {
-	const { instance, props, emit } = options
+export function syncComponentView(
+	options: ISyncComponentModelOptions<IComponentViewProps, IComponentView>,
+) {
+	const { props, instance, emit } = options
 
 	// Пробрасываем события core-инстанса наружу (Vue events).
 	// instance.events.on('created' as any, (instance: IComponentView) => {
@@ -91,19 +93,19 @@ export function syncComponentView(options: ISyncComponentModelOptions<IComponent
 		emit?.('update:rendered', value)
 	})
 
-	watch<Object | string>(
+	watch<Object | string | undefined>(
 		() => props.tag,
 		(value) => {
-			if (value !== instance.tag) {
+			if (value !== undefined && value !== instance.tag) {
 				instance.tag = value
 			}
 		},
 	)
 
-	watch<boolean>(
+	watch<boolean | undefined>(
 		() => props.rendered,
 		(value) => {
-			if (value !== instance.rendered) {
+			if (value !== undefined && value !== instance.rendered) {
 				instance.rendered = value
 				emit?.('rendered', value)
 				emit?.('update:rendered', value)
@@ -111,10 +113,10 @@ export function syncComponentView(options: ISyncComponentModelOptions<IComponent
 		},
 	)
 
-	watch<boolean>(
+	watch<boolean | undefined>(
 		() => props.visible,
 		(value) => {
-			if (value !== instance.visible) {
+			if (value !== undefined && value !== instance.visible) {
 				instance.visible = value
 
 				emit?.('visible', value)

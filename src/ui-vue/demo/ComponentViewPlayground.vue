@@ -3,10 +3,10 @@ import { ref } from 'vue'
 import PlaygroundLayout from './PlaygroundLayout.vue'
 import EventLog from './EventLog.vue'
 import type { EventLogEntry } from './EventLog.vue'
-import PropertiesPanel from './component-view/PropertiesPanel.vue'
-import PropsDemo from './component-view/PropsDemo.vue'
-import InstanceDemo from './component-view/InstanceDemo.vue'
-import SlotsDemo from './component-view/SlotsDemo.vue'
+import PropertiesPanel from './component-view/Properties.vue'
+import PropsDemo from './component-view/Component.vue'
+import InstanceDemo from './component-view/Instance.vue'
+import SlotsDemo from './component-view/Slots.vue'
 
 // Component properties state
 const componentProps = ref({
@@ -14,6 +14,9 @@ const componentProps = ref({
 	rendered: true,
 	tag: 'div'
 })
+
+// Ref для Instance demo
+const instanceDemoRef = ref<InstanceType<typeof InstanceDemo>>()
 
 // Event log
 const eventLog = ref<EventLogEntry[]>([])
@@ -33,6 +36,20 @@ const handleLog = (entry: EventLogEntry) => {
 const handleClearLogs = () => {
 	eventLog.value = []
 }
+
+const handleShow = () => {
+	// Для Props demo просто меняем visible
+	componentProps.value = { ...componentProps.value, visible: true }
+	// Для Instance demo вызываем метод show()
+	instanceDemoRef.value?.show()
+}
+
+const handleHide = () => {
+	// Для Props demo просто меняем visible
+	componentProps.value = { ...componentProps.value, visible: false }
+	// Для Instance demo вызываем метод hide()
+	instanceDemoRef.value?.hide()
+}
 </script>
 
 <template>
@@ -41,6 +58,8 @@ const handleClearLogs = () => {
 			<PropertiesPanel
 				v-bind="componentProps"
 				@change="handlePropsChange"
+				@show="handleShow"
+				@hide="handleHide"
 			/>
 		</template>
 
@@ -53,6 +72,7 @@ const handleClearLogs = () => {
 
 		<template #instance-demo>
 			<InstanceDemo
+				ref="instanceDemoRef"
 				v-bind="componentProps"
 				@log="handleLog"
 			/>
