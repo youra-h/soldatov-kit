@@ -86,10 +86,6 @@ const variants: TComponentVariant[] = ['normal', 'primary', 'secondary', 'succes
 .sizes-demo {
 	$this: &;
 
-	@apply border-2 border-purple-500;
-	@apply rounded;
-	@apply p-4;
-
 	&__title {
 		@apply font-semibold text-lg;
 		@apply mb-4;

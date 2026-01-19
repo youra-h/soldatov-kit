@@ -93,14 +93,20 @@ defineProps<Props>()
 	}
 
 	&__demo-grid {
-		@apply grid grid-cols-3;
+		@apply grid;
 		@apply gap-4;
+		grid-template-columns: 1fr 1fr 2fr;
 	}
 
 	&__demo-column {
 		@apply border rounded-lg;
 		@apply p-4;
 		@apply flex flex-col;
+		@apply max-h-[800px];
+
+		&:nth-child(3) {
+			@apply overflow-y-auto;
+		}
 	}
 
 	&__demo-title {
