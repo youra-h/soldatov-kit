@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { shallowReactive, watch, reactive } from 'vue'
+import { watch, reactive } from 'vue'
 import { Icon, useIconImport } from '@ui/icon'
 import { TIcon, type IIconProps } from '@core'
 import type { TComponentSize } from '../common/SizeSelector.vue'
@@ -16,7 +16,7 @@ type Props = {
 const props = defineProps<Props>()
 
 // Используем new TIcon вместо TIcon.create, так как передаем Partial<IIconProps>
-const instance = shallowReactive(
+const instance = reactive(
 	new TIcon({
 		tag: useIconImport(props.tag || '/src/icons/home.svg'),
 		rendered: props.rendered ?? true,

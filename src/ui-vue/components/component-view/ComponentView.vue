@@ -15,8 +15,8 @@ export default {
 		const { is: instance } = useBaseSetup(TComponentView, props)
 
 		syncComponentView({
-			instance,
 			props,
+			instance,
 			emit,
 		})
 

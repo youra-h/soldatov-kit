@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { shallowReactive, onMounted, watch } from 'vue'
+import { reactive, onMounted, watch } from 'vue'
 import { ComponentView } from '@ui/component-view'
 import { TComponentView } from '@core'
 import type { EventLogEntry } from '../EventLog.vue'
@@ -21,7 +21,7 @@ defineExpose({
 	hide: () => instance.hide(),
 })
 
-const instance = shallowReactive(new TComponentView({
+const instance = reactive(new TComponentView({
 	tag: props.tag || 'div',
 	rendered: props.rendered ?? true,
 	visible: props.visible ?? true
