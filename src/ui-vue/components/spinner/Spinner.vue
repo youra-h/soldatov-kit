@@ -7,16 +7,16 @@ export default {
 	name: '_Spinner',
 	extends: BaseSpinner,
 	setup(props: ISpinnerProps, { emit }) {
-		const { is: component } = useBaseSetup(TSpinner, props)
+		const { is: instance } = useBaseSetup(TSpinner, props)
 
 		syncSpinner({
 			props,
-			instance: component,
+			instance,
 			emit,
 		})
 
 		return {
-			component,
+			instance,
 		}
 	},
 }
@@ -24,11 +24,11 @@ export default {
 
 <template>
 	<component
-		:is="component.tag"
-		v-if="component.rendered"
-		v-show="component.visible"
-		:class="component.classes"
-		:style="component.styles"
+		:is="instance.tag"
+		v-if="instance.rendered"
+		v-show="instance.visible"
+		:class="instance.classes"
+		:style="instance.styles"
 	>
 		<slot />
 	</component>

@@ -69,19 +69,19 @@ export function syncButton(options: ISyncComponentModelOptions<IButtonProps>) {
 		},
 	)
 
-	watch<TComponentVariant>(
+	watch<TComponentVariant | undefined>(
 		() => props.variant,
 		(value) => {
-			if (value && value !== instance.variant) {
+			if (value !== undefined && value !== instance.variant) {
 				instance.variant = value
 			}
 		},
 	)
 
-	watch<TButtonAppearance>(
+	watch<TButtonAppearance | undefined>(
 		() => props.appearance,
 		(value) => {
-			if (value && value !== instance.appearance) {
+			if (value !== undefined && value !== instance.appearance) {
 				instance.appearance = value
 			}
 		},
@@ -90,16 +90,16 @@ export function syncButton(options: ISyncComponentModelOptions<IButtonProps>) {
 	watch<TSpinner | undefined>(
 		() => props.spinner,
 		(value) => {
-			if (value && value !== instance.spinner) {
+			if (value !== undefined && value !== instance.spinner) {
 				instance.spinner = value
 			}
 		},
 	)
 
-	watch<boolean>(
+	watch<boolean | undefined>(
 		() => props.loading,
 		(value) => {
-			if (value !== instance.loading) {
+			if (value !== undefined && value !== instance.loading) {
 				instance.loading = value
 			}
 		},

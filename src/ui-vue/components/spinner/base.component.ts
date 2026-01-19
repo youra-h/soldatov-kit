@@ -5,13 +5,18 @@ import {
 	type TComponentSize,
 	type TComponentVariant,
 } from '../../../core'
-import { Component, emitsComponent, propsComponent, syncComponent } from '../component-view'
-import type { TEmits, TProps, ISyncComponentOptions } from '../../types/common'
+import {
+	ComponentView,
+	emitsComponentView,
+	propsComponentView,
+	syncComponentView,
+} from '../component-view'
+import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types/common'
 
-export const emitsSpinner: TEmits = [...emitsComponent] as const
+export const emitsSpinner: TEmits = [...emitsComponentView] as const
 
 export const propsSpinner: TProps = {
-	...propsComponent,
+	...propsComponentView,
 	variant: {
 		type: String as PropType<ISpinnerProps['variant']>,
 		default: TSpinner.defaultValues.variant,
@@ -28,7 +33,7 @@ export const propsSpinner: TProps = {
 
 export default {
 	name: 'BaseSpinner',
-	extends: Component,
+	extends: ComponentView,
 	emits: emitsSpinner,
 	props: propsSpinner,
 }
@@ -38,33 +43,33 @@ export default {
  * @param props
  * @param instance
  */
-export function syncSpinner(options: ISyncComponentOptions<ISpinnerProps>) {
-	syncComponent(options)
+export function syncSpinner(options: ISyncComponentModelOptions<ISpinnerProps>) {
+	syncComponentView(options)
 
 	const { instance, props } = options
 
-	watch<TComponentVariant>(
+	watch<TComponentVariant | undefined>(
 		() => props.variant,
 		(value) => {
-			if (value && value !== instance.variant) {
+			if (value !== undefined && value !== instance.variant) {
 				instance.variant = value
 			}
 		},
 	)
 
-	watch<TComponentSize>(
+	watch<TComponentSize | undefined>(
 		() => props.size,
 		(value) => {
-			if (value && value !== instance.size) {
+			if (value !== undefined && value !== instance.size) {
 				instance.size = value
 			}
 		},
 	)
 
-	watch<'auto' | number>(
+	watch<'auto' | number | undefined>(
 		() => props.borderWidth,
 		(value) => {
-			if (value !== instance.borderWidth) {
+			if (value !== undefined && value !== instance.borderWidth) {
 				instance.borderWidth = value
 			}
 		},
