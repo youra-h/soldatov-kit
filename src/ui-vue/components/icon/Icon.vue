@@ -23,7 +23,6 @@ export default {
 </script>
 
 <template>
-	{{ console.log(instance.sizeState) }}
 	<component
 		:is="instance.tag"
 		v-if="instance.rendered"
@@ -34,7 +33,7 @@ export default {
 </template>
 
 <style lang="scss">
-@reference "./../../../foundation/tailwind/index.css";
+@reference "./../../../foundation/tailwind";
 
 .s-icon {
 	&--size-normal {

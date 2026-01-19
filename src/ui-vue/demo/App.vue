@@ -2,6 +2,7 @@
 import { computed, markRaw } from 'vue'
 import ComponentViewPlayground from './ComponentViewPlayground.vue'
 import IconPlayground from './IconPlayground.vue'
+import SpinnerPlayground from './SpinnerPlayground.vue'
 
 /**
  * Playground Manager
@@ -21,6 +22,7 @@ import IconPlayground from './IconPlayground.vue'
 const playgrounds = {
 	'component-view': markRaw(ComponentViewPlayground),
 	'icon': markRaw(IconPlayground),
+	'spinner': markRaw(SpinnerPlayground),
 	// Добавьте здесь другие playground по мере создания:
 	// 'button': markRaw(ButtonPlayground),
 	// 'check-box': markRaw(CheckBoxPlayground),
@@ -28,7 +30,7 @@ const playgrounds = {
 } as const
 
 // 🎯 Выберите активный playground, изменив значение этой переменной
-const activePlayground = 'component-view' as keyof typeof playgrounds
+const activePlayground = 'spinner' as keyof typeof playgrounds
 
 const CurrentPlayground = computed(() => {
 	const component = playgrounds[activePlayground]

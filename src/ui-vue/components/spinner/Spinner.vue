@@ -36,7 +36,7 @@ export default {
 
 <style lang="scss">
 @use './mixines' as mixines;
-@reference "./../../theme";
+@reference "./../../../foundation/tailwind";
 
 .s-spinner {
 	@apply w-4 h-4;
