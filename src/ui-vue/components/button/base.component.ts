@@ -7,23 +7,15 @@ import {
 	TSpinner,
 	TButton,
 } from '../../../core'
-import { Control, emitsControl, propsControl, syncControl } from '../control'
+import { BaseTextable, emitsTextable, propsTextable, syncTextable } from '../textable'
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types'
 import { Icon } from '../icon'
 import { Spinner } from '../spinner'
 
-export const emitsButton: TEmits = [...emitsControl] as const
+export const emitsButton: TEmits = [...emitsTextable] as const
 
 export const propsButton: TProps = {
-	...propsControl,
-	tag: {
-		type: [String, Object] as PropType<IButtonProps['tag']>,
-		default: TButton.defaultValues.tag,
-	},
-	variant: {
-		type: String as PropType<IButtonProps['variant']>,
-		default: TButton.defaultValues.variant,
-	},
+	...propsTextable,
 	appearance: {
 		type: String as PropType<IButtonProps['appearance']>,
 		default: TButton.defaultValues.appearance,
@@ -44,7 +36,7 @@ export const propsButton: TProps = {
 
 export default {
 	name: 'BaseButton',
-	extends: Control,
+	extends: BaseTextable,
 	components: { Icon, Spinner },
 	emits: emitsButton,
 	props: propsButton,
@@ -56,7 +48,7 @@ export default {
  * @param instance
  */
 export function syncButton(options: ISyncComponentModelOptions<IButtonProps>) {
-	syncControl(options)
+	syncTextable(options)
 
 	const { instance, props } = options
 
@@ -65,15 +57,6 @@ export function syncButton(options: ISyncComponentModelOptions<IButtonProps>) {
 		(value) => {
 			if (value && value !== instance.icon) {
 				instance.icon = value
-			}
-		},
-	)
-
-	watch<TComponentVariant | undefined>(
-		() => props.variant,
-		(value) => {
-			if (value !== undefined && value !== instance.variant) {
-				instance.variant = value
 			}
 		},
 	)
