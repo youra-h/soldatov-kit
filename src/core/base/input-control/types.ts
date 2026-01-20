@@ -4,7 +4,8 @@ import type {
 	TValueControlEvents,
 	TValueControlStatesOptions,
 } from '../value-control'
-import type { IInputState, TControlInputState, TInputStateCtor } from '../states'
+import type { IStateUnit } from '../state-unit'
+import type { IInputStateValue, TControlInputState, TStateCtor } from '../states'
 
 export type TInputControlEvents<T = string> = TValueControlEvents<T> & {
 	'change:readonly': (value: boolean) => void
@@ -22,8 +23,8 @@ export interface IInputControlProps<T = string> extends IValueControlProps<T> {
 	loading?: boolean
 }
 
-export type TInputControlStatesOptions<T = string> = TValueControlStatesOptions<T> & {
-	inputState?: TInputStateCtor | IInputState
+export type TInputControlStatesOptions<T = IInputStateValue> = TValueControlStatesOptions<T> & {
+	inputState?: TStateCtor<IStateUnit<T>, T> | IStateUnit<T>
 }
 
 export interface IInputControl<
