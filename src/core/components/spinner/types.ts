@@ -1,4 +1,8 @@
-import type { IComponentView, IComponentViewProps, TComponentViewEvents } from '../../base/component-view'
+import type {
+	IComponentView,
+	IComponentViewProps,
+	TComponentViewEvents,
+} from '../../base/component-view'
 import type { TComponentSize, TComponentVariant } from '../../common/types'
 
 export interface ISpinnerProps extends IComponentViewProps {

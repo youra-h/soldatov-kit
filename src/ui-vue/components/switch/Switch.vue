@@ -2,44 +2,43 @@
 import { TSwitch, type ISwitchProps } from '../../../core'
 import BaseSwitch, { syncSwitch } from './base.component'
 import { useBaseSetup } from '../../composables/useBaseSetup'
-import { Icon, useIconImport } from '../icon'
-import { TIcon } from '../../../core'
+import { Icon } from '../icon'
 
 export default {
 	name: '_Switch',
 	extends: BaseSwitch,
 	setup(props: ISwitchProps, { emit }) {
-		const { is: component } = useBaseSetup(TSwitch, props)
+		const { is: instance } = useBaseSetup(TSwitch, props)
 
 		syncSwitch({
 			props,
-			instance: component,
+			instance,
 			emit,
 		})
 
-		return { component }
+		return { instance }
 	},
 }
 </script>
 
 <template>
-	<div :class="component.classes">
+	<div :class="instance.classes">
 		<input
 			type="checkbox"
-			:id="component.id.toString()"
-			:checked="component.value || undefined"
-			:name="component.name"
-			:disabled="component.disabled"
-			:readonly="component.readonly"
-			:required="component.required"
-			:aria-checked="component.value"
-			@change="component.change($event)"
+			:id="instance.id.toString()"
+			:checked="instance.value || undefined"
+			:name="instance.name"
+			:disabled="instance.disabled"
+			:readonly="instance.readonly"
+			:required="instance.required"
+			:aria-checked="instance.value"
+			@change="instance.change($event)"
 		/>
 		<div class="s-switch__track">
 			<div class="s-switch__track--thumb">
 				<transition name="fade" mode="out-in">
-					<Spinner v-if="component.loading" :is="component.spinner" />
-					<Icon v-else-if="component.icon" :is="component.icon" />
+					<Spinner v-if="instance.loading" :is="instance.spinner" />
+					<Icon v-else-if="instance.icon" :is="instance.icon" />
 				</transition>
 			</div>
 		</div>

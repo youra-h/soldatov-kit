@@ -1,19 +1,19 @@
 import { type PropType, watch } from 'vue'
 import { type ISwitchProps, TSwitch, TIcon } from '../../../core'
 import {
-	BaseControlInput,
-	emitsControlInput,
-	propsControlInput,
-	syncControlInput,
+	BaseInputControl,
+	emitsInputControl,
+	propsInputControl,
+	syncInputControl,
 } from '../input-control'
-import type { TEmits, TProps, ISyncComponentOptions } from '../../types/common'
+import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types/common'
 import { Icon } from '../icon'
 import { Spinner } from '../spinner'
 
-export const emitsSwitch: TEmits = [...emitsControlInput] as const
+export const emitsSwitch: TEmits = [...emitsInputControl] as const
 
 export const propsSwitch: TProps = {
-	...propsControlInput,
+	...propsInputControl,
 	value: {
 		type: [Boolean] as PropType<ISwitchProps['value']>,
 		default: TSwitch.defaultValues.value,
@@ -26,7 +26,7 @@ export const propsSwitch: TProps = {
 
 export default {
 	name: 'BaseSwitch',
-	extends: BaseControlInput,
+	extends: BaseInputControl,
 	components: { Icon, Spinner },
 	emits: emitsSwitch,
 	props: propsSwitch,
@@ -37,8 +37,8 @@ export default {
  * @param props
  * @param instance
  */
-export function syncSwitch(options: ISyncComponentOptions<ISwitchProps>): void {
-	syncControlInput(options)
+export function syncSwitch(options: ISyncComponentModelOptions<ISwitchProps>): void {
+	syncInputControl(options)
 
 	const { instance, props } = options
 

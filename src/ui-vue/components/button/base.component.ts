@@ -1,6 +1,5 @@
 import { type PropType, watch } from 'vue'
 import {
-	type TComponentVariant,
 	TIcon,
 	type IButtonProps,
 	type TButtonAppearance,

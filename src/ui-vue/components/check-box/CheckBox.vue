@@ -9,52 +9,52 @@ export default {
 	name: '_CheckBox',
 	extends: BaseCheckBox,
 	setup(props: ICheckBoxProps, { emit }) {
-		const { is: component } = useBaseSetup(TCheckBox, props)
+		const { is: instance } = useBaseSetup(TCheckBox, props)
 
 		syncCheckBox({
 			props,
-			instance: component,
+			instance,
 			emit,
 		})
 
-		if (!component.icon) {
-			component.icon = TIcon.create({
+		if (!instance.icon) {
+			instance.icon = TIcon.create({
 				tag: useIconImport('/src/packages/icons/check.svg'),
 			})
 		}
 
-		if (!component.indeterminateIcon) {
-			component.indeterminateIcon = TIcon.create({
+		if (!instance.indeterminateIcon) {
+			instance.indeterminateIcon = TIcon.create({
 				tag: useIconImport('/src/packages/icons/check_indeterminate.svg'),
 			})
 		}
 
-		return { component }
+		return { instance }
 	},
 }
 </script>
 
 <template>
-	<div :class="component.classes">
+	<div :class="instance.classes">
 		<input
 			type="checkbox"
-			:id="component.id.toString()"
-			:checked="component.value || undefined"
-			:name="component.name"
-			:disabled="component.disabled"
-			:readonly="component.readonly"
-			:required="component.required"
-			:aria-checked="component.getAriaChecked()"
-			@change="component.change($event)"
+			:id="instance.id.toString()"
+			:checked="instance.value || undefined"
+			:name="instance.name"
+			:disabled="instance.disabled"
+			:readonly="instance.readonly"
+			:required="instance.required"
+			:aria-checked="instance.getAriaChecked()"
+			@change="instance.change($event)"
 		/>
 		<div class="s-check-box__container">
-			<slot name="icon" :value="component.value" :indeterminate="component.indeterminate">
-				<Icon v-if="component.icon && component.value" :is="component.icon" />
+			<slot name="icon" :value="instance.value" :indeterminate="instance.indeterminate">
+				<Icon v-if="instance.icon && instance.value" :is="instance.icon" />
 				<Icon
 					v-else-if="
-						component.indeterminate && component.indeterminateIcon && !!!component.value
+						instance.indeterminate && instance.indeterminateIcon && !!!instance.value
 					"
-					:is="component.indeterminateIcon"
+					:is="instance.indeterminateIcon"
 				/>
 			</slot>
 		</div>

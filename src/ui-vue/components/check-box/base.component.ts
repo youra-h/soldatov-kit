@@ -1,22 +1,22 @@
 import { type PropType, watch } from 'vue'
 import { type ICheckBoxProps, TCheckBox, TIcon } from '../../../core'
 import {
-	BaseControlInput,
-	emitsControlInput,
-	propsControlInput,
-	syncControlInput,
+	BaseInputControl,
+	emitsInputControl,
+	propsInputControl,
+	syncInputControl,
 } from '../input-control'
-import type { TEmits, TProps, ISyncComponentOptions } from '../../types/common'
+import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types/common'
 import { Icon } from '../icon'
 
 export const emitsCheckBox: TEmits = [
-	...emitsControlInput,
+	...emitsInputControl,
 	'update:indeterminate',
 	'changeIndeterminate',
 ] as const
 
 export const propsCheckBox: TProps = {
-	...propsControlInput,
+	...propsInputControl,
 	value: {
 		type: [Boolean, Number] as PropType<ICheckBoxProps['value']>,
 		default: TCheckBox.defaultValues.value,
@@ -41,7 +41,7 @@ export const propsCheckBox: TProps = {
 
 export default {
 	name: 'BaseCheckBox',
-	extends: BaseControlInput,
+	extends: BaseInputControl,
 	components: { Icon },
 	emits: emitsCheckBox,
 	props: propsCheckBox,
@@ -52,15 +52,15 @@ export default {
  * @param props
  * @param instance
  */
-export function syncCheckBox(options: ISyncComponentOptions<ICheckBoxProps>): void {
-	syncControlInput(options)
+export function syncCheckBox(options: ISyncComponentModelOptions<ICheckBoxProps>): void {
+	syncInputControl(options)
 
 	const { instance, props, emit } = options
 
-	watch<boolean>(
+	watch<boolean | undefined>(
 		() => props.indeterminate,
 		(value) => {
-			if (value !== instance.indeterminate) {
+			if (value !== undefined && value !== instance.indeterminate) {
 				instance.indeterminate = value
 
 				emit?.('update:indeterminate', value)
@@ -69,10 +69,10 @@ export function syncCheckBox(options: ISyncComponentOptions<ICheckBoxProps>): vo
 		},
 	)
 
-	watch<boolean>(
+	watch<boolean | undefined>(
 		() => props.plain,
 		(value) => {
-			if (value !== instance.plain) {
+			if (value !== undefined && value !== instance.plain) {
 				instance.plain = value
 			}
 		},
