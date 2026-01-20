@@ -55,6 +55,10 @@ export const propsInputControl: TProps = {
 		type: Boolean as PropType<IInputControlProps<any>['loading']>,
 		default: TInputControl.defaultValues.loading,
 	},
+	spinner: {
+		type: Object as PropType<IInputControlProps<any>['spinner']>,
+		default: TInputControl.defaultValues.spinner,
+	},
 }
 
 export default {

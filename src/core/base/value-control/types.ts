@@ -27,5 +27,4 @@ export interface IValueControl<
 > extends IControl<TProps, TEvents> {
 	value: TValue
 	name: string
-	input(value: TValue): void
 }

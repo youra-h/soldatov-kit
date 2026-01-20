@@ -16,6 +16,7 @@
     "test:ui": "vitest --config vitest.config.ui.ts",
     "build-only": "vite build",
     "type-check": "vue-tsc --build",
+    "type-check:core": "vue-tsc --noEmit -p tsconfig.core.json",
     "lint": "eslint . --fix",
     "format": "prettier --write src/"
   },

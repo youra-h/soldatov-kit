@@ -24,11 +24,6 @@ export default class TInputControl<
 > extends TValueControl<TValue, TProps, TEvents> {
 	static defaultValues: Partial<IInputControlProps<any>> = {
 		...TValueControl.defaultValues,
-		readonly: false,
-		required: false,
-		invalid: false,
-		state: 'normal',
-		loading: false,
 	}
 
 	protected _inputState: IInputState
@@ -41,21 +36,15 @@ export default class TInputControl<
 			TStates
 		>(options)
 
-		const readonly = props.readonly ?? (TInputControl.defaultValues.readonly as boolean)
-		const required = props.required ?? (TInputControl.defaultValues.required as boolean)
-		const invalid = props.invalid ?? (TInputControl.defaultValues.invalid as boolean)
-		const state = props.state ?? (TInputControl.defaultValues.state as TControlInputState)
-		const loading = props.loading ?? (TInputControl.defaultValues.loading as boolean)
-
 		this._inputState = resolveState<IInputState, Partial<IInputStateValue>>(
 			states?.inputState,
 			TInputState,
 			{
-				readonly,
-				required,
-				invalid,
-				state,
-				loading,
+				readonly: props.readonly,
+				required: props.required,
+				invalid: props.invalid,
+				state: props.state,
+				loading: props.loading,
 			},
 		)
 
