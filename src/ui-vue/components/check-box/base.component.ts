@@ -5,7 +5,7 @@ import {
 	emitsControlInput,
 	propsControlInput,
 	syncControlInput,
-} from '../control-input'
+} from '../input-control'
 import type { TEmits, TProps, ISyncComponentOptions } from '../../types/common'
 import { Icon } from '../icon'
 

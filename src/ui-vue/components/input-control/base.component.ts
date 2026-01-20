@@ -11,7 +11,7 @@ import {
 	emitsValueControl,
 	propsValueControl,
 	syncValueControl,
-} from '../control-value'
+} from '../value-control'
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types'
 
 export const emitsInputControl: TEmits = [
