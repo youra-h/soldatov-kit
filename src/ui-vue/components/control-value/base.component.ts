@@ -1,23 +1,38 @@
-import { type PropType, watch } from 'vue'
-import { type IControlValueProps, TControlValue } from '../../../core'
+import type { PropType } from 'vue'
+import { watch } from 'vue'
+import { type IValueControl, type IValueControlProps, TValueControl } from '../../../core'
 import { BaseControl, emitsControl, propsControl, syncControl } from '../control'
-import type { TEmits, TProps, ISyncComponentOptions } from '../../types/common'
+import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types'
 
-export const emitsControlValue: TEmits = [...emitsControl, 'update:value', 'changeValue'] as const
+export const emitsValueControl: TEmits = [
+	...emitsControl,
+	'change:value',
+	'update:value',
+	'value',
+	'input:value',
+	'input',
+	'change:name',
+	'update:name',
+	'name',
+] as const
 
-export const propsControlValue: TProps = {
+export const propsValueControl: TProps = {
 	...propsControl,
 	value: {
-		type: String as PropType<IControlValueProps['value']>,
-		default: TControlValue.defaultValues.value,
+		type: [String, Number, Boolean, Object, Array] as PropType<any>,
+		default: undefined,
+	},
+	name: {
+		type: String as PropType<IValueControlProps<any>['name']>,
+		default: TValueControl.defaultValues.name,
 	},
 }
 
 export default {
-	name: 'BaseControlValue',
+	name: 'BaseValueControl',
 	extends: BaseControl,
-	emits: emitsControlValue,
-	props: propsControlValue,
+	emits: emitsValueControl,
+	props: propsValueControl,
 }
 
 /**
@@ -25,19 +40,45 @@ export default {
  * @param props
  * @param instance
  */
-export function syncControlValue(options: ISyncComponentOptions<IControlValueProps>): void {
+export function syncValueControl<TValue>(
+	options: ISyncComponentModelOptions<IValueControlProps<TValue>, IValueControl<TValue>>,
+) {
 	syncControl(options)
 
 	const { instance, props, emit } = options
 
-	watch<any>(
+	// Пробрасываем события core-инстанса наружу (Vue events).
+	instance.events.on('change:value' as any, (value: TValue) => {
+		emit?.('change:value', value)
+		emit?.('value', value)
+		emit?.('update:value', value)
+	})
+
+	instance.events.on('input:value' as any, (value: TValue) => {
+		emit?.('input:value', value)
+		emit?.('input', value)
+	})
+
+	instance.events.on('change:name' as any, (value: string) => {
+		emit?.('change:name', value)
+		emit?.('name', value)
+		emit?.('update:name', value)
+	})
+
+	watch(
 		() => props.value,
 		(value) => {
-			if (value !== instance.value) {
-				instance.value = value
+			if (value !== undefined && value !== instance.value) {
+				instance.value = value as TValue
+			}
+		},
+	)
 
-				emit?.('update:value', value)
-				emit?.('changeValue', value)
+	watch<string | undefined>(
+		() => props.name,
+		(value) => {
+			if (value !== undefined && value !== instance.name) {
+				instance.name = value
 			}
 		},
 	)

@@ -1,11 +1,16 @@
 import type { PropType } from 'vue'
 import { watch } from 'vue'
-import { type IControl, type IControlProps, TControl } from '../../../core'
-import { BaseStylable, emitsStylable, propsStylable, syncStylable } from '../stylable'
+import { type IInteractive, type IInteractiveProps, TInteractive } from '../../../core'
+import {
+	BaseComponentView,
+	emitsComponentView,
+	propsComponentView,
+	syncComponentView,
+} from '../component-view'
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types'
 
-export const emitsControl: TEmits = [
-	...emitsStylable,
+export const emitsInteractive: TEmits = [
+	...emitsComponentView,
 	'change:disabled',
 	'update:disabled',
 	'disabled',
@@ -15,23 +20,23 @@ export const emitsControl: TEmits = [
 	'click',
 ] as const
 
-export const propsControl: TProps = {
-	...propsStylable,
+export const propsInteractive: TProps = {
+	...propsComponentView,
 	disabled: {
-		type: Boolean as PropType<IControlProps['disabled']>,
-		default: TControl.defaultValues.disabled,
+		type: Boolean as PropType<IInteractiveProps['disabled']>,
+		default: TInteractive.defaultValues.disabled,
 	},
 	focused: {
-		type: Boolean as PropType<IControlProps['focused']>,
-		default: TControl.defaultValues.focused,
+		type: Boolean as PropType<IInteractiveProps['focused']>,
+		default: TInteractive.defaultValues.focused,
 	},
 }
 
 export default {
-	name: 'BaseControl',
-	extends: BaseStylable,
-	emits: emitsControl,
-	props: propsControl,
+	name: 'BaseInteractive',
+	extends: BaseComponentView,
+	emits: emitsInteractive,
+	props: propsInteractive,
 }
 
 /**
@@ -39,8 +44,10 @@ export default {
  * @param props
  * @param instance
  */
-export function syncControl(options: ISyncComponentModelOptions<IControlProps, IControl>) {
-	syncStylable(options)
+export function syncInteractive(
+	options: ISyncComponentModelOptions<IInteractiveProps, IInteractive>,
+) {
+	syncComponentView(options)
 
 	const { instance, props, emit } = options
 

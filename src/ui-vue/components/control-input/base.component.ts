@@ -1,58 +1,67 @@
-import { type PropType, watch } from 'vue'
+import type { PropType } from 'vue'
+import { watch } from 'vue'
 import {
-	type IControlInputProps,
-	TControlInput,
-	type TComponentVariant,
+	type IInputControl,
+	type IInputControlProps,
+	TInputControl,
 	type TControlInputState,
-	TSpinner,
 } from '../../../core'
 import {
-	BaseControlValue,
-	emitsControlValue,
-	propsControlValue,
-	syncControlValue,
+	BaseValueControl,
+	emitsValueControl,
+	propsValueControl,
+	syncValueControl,
 } from '../control-value'
-import type { TEmits, TProps, ISyncComponentOptions } from '../../types/common'
+import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types'
 
-export const emitsControlInput: TEmits = [...emitsControlValue] as const
+export const emitsInputControl: TEmits = [
+	...emitsValueControl,
+	'change:readonly',
+	'update:readonly',
+	'readonly',
+	'change:required',
+	'update:required',
+	'required',
+	'change:invalid',
+	'update:invalid',
+	'invalid',
+	'change:state',
+	'update:state',
+	'state',
+	'change:loading',
+	'update:loading',
+	'loading',
+] as const
 
-export const propsControlInput: TProps = {
-	...propsControlValue,
-	variant: {
-		type: String as PropType<IControlInputProps['variant']>,
-		default: TControlInput.defaultValues.variant,
-	},
+export const propsInputControl: TProps = {
+	...propsValueControl,
 	readonly: {
-		type: Boolean as PropType<IControlInputProps['readonly']>,
-		default: TControlInput.defaultValues.readonly,
+		type: Boolean as PropType<IInputControlProps<any>['readonly']>,
+		default: TInputControl.defaultValues.readonly,
 	},
 	required: {
-		type: Boolean as PropType<IControlInputProps['required']>,
-		default: TControlInput.defaultValues.required,
+		type: Boolean as PropType<IInputControlProps<any>['required']>,
+		default: TInputControl.defaultValues.required,
 	},
 	invalid: {
-		type: Boolean as PropType<IControlInputProps['invalid']>,
-		default: TControlInput.defaultValues.invalid,
+		type: Boolean as PropType<IInputControlProps<any>['invalid']>,
+		default: TInputControl.defaultValues.invalid,
 	},
 	state: {
-		type: String as PropType<IControlInputProps['state']>,
-		default: TControlInput.defaultValues.state,
+		type: String as PropType<IInputControlProps<any>['state']>,
+		default: TInputControl.defaultValues.state,
 	},
 	loading: {
-		type: Boolean as PropType<IControlInputProps['loading']>,
-		default: TControlInput.defaultValues.loading,
-	},
-	spinner: {
-		type: Object as PropType<IControlInputProps['spinner']>,
-		default: TControlInput.defaultValues.spinner,
+		type: Boolean as PropType<IInputControlProps<any>['loading']>,
+		default: TInputControl.defaultValues.loading,
 	},
 }
 
 export default {
-	name: 'BaseControlInput',
-	extends: BaseControlValue,
-	emits: emitsControlInput,
-	props: propsControlInput,
+	name: 'BaseInputControl',
+	extends: BaseValueControl,
+	emits: emitsInputControl,
+	props: propsInputControl,
 }
 
 /**
@@ -60,70 +69,85 @@ export default {
  * @param props
  * @param instance
  */
-export function syncControlInput(options: ISyncComponentOptions<IControlInputProps>): void {
-	syncControlValue(options)
+export function syncInputControl<TValue = string>(
+	options: ISyncComponentModelOptions<IInputControlProps<TValue>, IInputControl<TValue>>,
+) {
+	syncValueControl(options)
 
 	const { instance, props, emit } = options
 
-	watch<TComponentVariant>(
-		() => props.variant,
-		(value) => {
-			if (value !== instance.variant) {
-				instance.variant = value
-			}
-		},
-	)
+	// Пробрасываем события core-инстанса наружу (Vue events).
+	instance.events.on('change:readonly' as any, (value: boolean) => {
+		emit?.('change:readonly', value)
+		emit?.('readonly', value)
+		emit?.('update:readonly', value)
+	})
 
-	watch<boolean>(
+	instance.events.on('change:required' as any, (value: boolean) => {
+		emit?.('change:required', value)
+		emit?.('required', value)
+		emit?.('update:required', value)
+	})
+
+	instance.events.on('change:invalid' as any, (value: boolean) => {
+		emit?.('change:invalid', value)
+		emit?.('invalid', value)
+		emit?.('update:invalid', value)
+	})
+
+	instance.events.on('change:state' as any, (value: TControlInputState) => {
+		emit?.('change:state', value)
+		emit?.('state', value)
+		emit?.('update:state', value)
+	})
+
+	instance.events.on('change:loading' as any, (value: boolean) => {
+		emit?.('change:loading', value)
+		emit?.('loading', value)
+		emit?.('update:loading', value)
+	})
+
+	watch<boolean | undefined>(
 		() => props.readonly,
 		(value) => {
-			if (value !== instance.readonly) {
+			if (value !== undefined && value !== instance.readonly) {
 				instance.readonly = value
 			}
 		},
 	)
 
-	watch<boolean>(
+	watch<boolean | undefined>(
 		() => props.required,
 		(value) => {
-			if (value !== instance.required) {
+			if (value !== undefined && value !== instance.required) {
 				instance.required = value
 			}
 		},
 	)
 
-	watch<boolean>(
+	watch<boolean | undefined>(
 		() => props.invalid,
 		(value) => {
-			if (value !== instance.invalid) {
+			if (value !== undefined && value !== instance.invalid) {
 				instance.invalid = value
 			}
 		},
 	)
 
-	watch<TControlInputState>(
+	watch<TControlInputState | undefined>(
 		() => props.state,
 		(value) => {
-			if (value !== instance.state) {
+			if (value !== undefined && value !== instance.state) {
 				instance.state = value
 			}
 		},
 	)
 
-	watch<boolean>(
+	watch<boolean | undefined>(
 		() => props.loading,
 		(value) => {
-			if (value !== instance.loading) {
+			if (value !== undefined && value !== instance.loading) {
 				instance.loading = value
-			}
-		},
-	)
-
-	watch<TSpinner | undefined>(
-		() => props.spinner,
-		(value) => {
-			if (value && value !== instance.spinner) {
-				instance.spinner = value
 			}
 		},
 	)

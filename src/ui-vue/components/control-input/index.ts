@@ -1,7 +1,6 @@
 export {
-	default as BaseControlInput,
-	emitsControlInput,
-	propsControlInput,
-	syncControlInput,
+	default as BaseInputControl,
+	emitsInputControl,
+	syncInputControl,
+	propsInputControl,
 } from './base.component'
-export { default as ControlInput } from './ControlInput.vue'

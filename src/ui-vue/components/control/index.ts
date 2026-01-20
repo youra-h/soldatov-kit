@@ -1,2 +1,2 @@
-export { default as BaseControl, emitsControl, propsControl, syncControl } from './base.component'
+export { default as BaseControl, emitsControl, syncControl, propsControl } from './base.component'
 export { default as Control } from './Control.vue'
