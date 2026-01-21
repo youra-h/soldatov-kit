@@ -44,7 +44,6 @@ export default class TInputControl<
 				required: props.required,
 				invalid: props.invalid,
 				state: props.state,
-				loading: props.loading,
 			},
 		)
 
@@ -85,13 +84,6 @@ export default class TInputControl<
 		this._inputState.state = value
 	}
 
-	get loading(): boolean {
-		return this._inputState.loading
-	}
-	set loading(value: boolean) {
-		this._inputState.loading = value
-	}
-
 	getProps(): TProps {
 		return {
 			...super.getProps(),
@@ -99,7 +91,6 @@ export default class TInputControl<
 			required: this._inputState.required,
 			invalid: this._inputState.invalid,
 			state: this._inputState.state as any,
-			loading: this._inputState.loading,
 		} as TProps
 	}
 }

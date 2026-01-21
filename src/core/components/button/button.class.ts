@@ -1,8 +1,10 @@
 import { TTextable } from '../../base/textable'
-import type { IButton, IButtonProps, TButtonAppearance, TButtonEvents } from './types'
+import type { IButton, IButtonProps, TButtonAppearance, TButtonEvents, TButtonStatesOptions } from './types'
 import { TIcon } from '../icon'
 import { TSpinner } from '../spinner'
 import { TComponentView, type IComponentViewOptions } from '../../base/component-view'
+import { TLoadingState, type ILoadingState } from '../../base/states'
+import { resolveState } from '../../common/resolve-state'
 
 export default class TButton extends TTextable<IButtonProps, TButtonEvents> implements IButton {
 	static override baseClass = 's-button'
@@ -18,30 +20,62 @@ export default class TButton extends TTextable<IButtonProps, TButtonEvents> impl
 
 	protected _appearance: TButtonAppearance
 	protected _icon?: TIcon
-	protected _loading: boolean
-	protected _spinner?: TSpinner
+	protected _loadingState: ILoadingState<TSpinner>
 
-	constructor(options: IComponentViewOptions<IButtonProps> | Partial<IButtonProps> = {}) {
+	constructor(options: IComponentViewOptions<IButtonProps, TButtonStatesOptions> | Partial<IButtonProps> = {}) {
 		super(options)
 
-		const { props = {} } = TComponentView.prepareOptions(options)
+		const { props = {}, states } = TComponentView.prepareOptions<IButtonProps, TButtonStatesOptions>(options)
 
 		this._tag = props.tag ?? TButton.defaultValues.tag!
-
-		this._loading = props.loading ?? TButton.defaultValues.loading!
-		this._spinner = props.spinner ?? TButton.defaultValues.spinner!
 
 		this._appearance = props.appearance ?? TButton.defaultValues.appearance!
 		this.icon = props.icon ?? TButton.defaultValues.icon!
 
-		this.events.on('change:variant' as any, (value: any) => {
-			// Если есть спиннер, синхронизируем его вариант с кнопкой
-			this.spinner!.variant = value
+		// Создаем loading state с дефолтным поведением для кнопки
+		// Если передан states.loading, используем его, иначе создаем с дефолтным behavior
+		const loadingInitial = states?.loading
+			? undefined // resolveState сам разберется
+			: {
+				shouldDisable: true,
+				createSpinner: () => new TSpinner({
+					props: {
+						size: this.size,
+						variant: this.variant,
+					},
+				}),
+			}
+
+		this._loadingState = resolveState<ILoadingState<TSpinner>, boolean | any>(
+			states?.loading,
+			TLoadingState,
+			loadingInitial,
+		)
+
+		// Устанавливаем начальное значение loading из props
+		if (props.loading !== undefined) {
+			this._loadingState.loading = props.loading
+		}
+
+		// При изменении loading синхронизируем disabled если задано в behavior
+		this._loadingState.events.on('change', (value) => {
+			if (this._loadingState.behavior.shouldDisable) {
+				this._disableable.value = value.loading
+			}
+			this.events.emit('change:loading', value.loading)
 		})
 
-		this.events.on('change:size' as any, (value: any) => {
-			// Если есть спиннер, синхронизируем его размер с кнопкой
-			this.spinner!.size = value
+		// Синхронизируем size/variant со spinner
+		this.events.on('change:variant', (value) => {
+			if (this._loadingState.spinner) {
+				this._loadingState.spinner.variant = value
+			}
+		})
+
+		this.events.on('change:size', (value) => {
+			if (this._loadingState.spinner) {
+				this._loadingState.spinner.size = value
+			}
 
 			if (this._icon) {
 				this._icon.size = value
@@ -75,33 +109,15 @@ export default class TButton extends TTextable<IButtonProps, TButtonEvents> impl
 	}
 
 	get loading(): boolean {
-		return this._loading
+		return this._loadingState.loading
 	}
 
 	set loading(value: boolean) {
-		if (this._loading !== value) {
-			this._loading = value
-		}
+		this._loadingState.loading = value
 	}
 
 	get spinner(): TSpinner | undefined {
-		// Если включается режим загрузки и не задан спиннер, создаем его
-		if (!this._spinner) {
-			this._spinner = new TSpinner({
-				props: {
-					size: this.size,
-					variant: this.variant,
-				},
-			})
-		}
-
-		return this._spinner
-	}
-
-	set spinner(value: TSpinner | undefined) {
-		if (this._spinner !== value) {
-			this._spinner = value
-		}
+		return this._loadingState.spinner
 	}
 
 	get classes(): string[] {
@@ -120,8 +136,7 @@ export default class TButton extends TTextable<IButtonProps, TButtonEvents> impl
 			...super.getProps(),
 			appearance: this._appearance,
 			icon: this._icon,
-			loading: this._loading,
-			spinner: this._spinner,
+			loading: this.loading,
 		}
 	}
 }

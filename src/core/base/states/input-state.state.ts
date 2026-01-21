@@ -8,7 +8,6 @@ export interface IInputStateValue {
 	required: boolean
 	invalid: boolean
 	state: TControlInputState
-	loading: boolean
 }
 
 // Публичный интерфейс
@@ -17,7 +16,6 @@ export interface IInputState extends IStateUnit<IInputStateValue> {
 	required: boolean
 	invalid: boolean
 	state: TControlInputState
-	loading: boolean
 }
 
 /**
@@ -37,7 +35,6 @@ export class TInputState extends TStateUnit<IInputStateValue> implements IInputS
 			required: initial.required ?? false,
 			invalid: initial.invalid ?? false,
 			state: initial.state ?? 'normal',
-			loading: initial.loading ?? false,
 		}
 
 		if (value.invalid) value.state = 'error'
@@ -90,16 +87,5 @@ export class TInputState extends TStateUnit<IInputStateValue> implements IInputS
 		this._value.state = value
 
 		this.events.emit('change', { state: value })
-	}
-
-	get loading(): boolean {
-		return this._value.loading
-	}
-	set loading(value: boolean) {
-		if (this._value.loading === value) return
-
-		this._value.loading = value
-
-		this.events.emit('change', { loading: value })
 	}
 }
