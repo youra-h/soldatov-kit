@@ -12,7 +12,14 @@ const emit = defineEmits<{
 }>()
 
 const icons = [
+	{ name: 'None', path: '' },
 	{ name: 'home', path: '/src/icons/home.svg' },
+	{ name: 'heart', path: '/src/icons/heart.svg' },
+	{ name: 'star', path: '/src/icons/star.svg' },
+	{ name: 'user', path: '/src/icons/user.svg' },
+	{ name: 'mail', path: '/src/icons/mail.svg' },
+	{ name: 'settings', path: '/src/icons/settings.svg' },
+	{ name: 'arrow-right', path: '/src/icons/arrow-right.svg' },
 	{ name: 'check', path: '/src/icons/check.svg' },
 	{ name: 'check_indeterminate', path: '/src/icons/check_indeterminate.svg' },
 	{ name: 'close', path: '/src/icons/close.svg' },
