@@ -17,7 +17,7 @@ describe('TInputControl', () => {
 			value: '', readonly: false, required: false, invalid: true, state: 'normal', loading: false,
 		} as any)
 		expect(b.invalid).toBe(true)
-		// инвариант TInputState: invalid=true -> state='error'
+		// Инвариант: invalid=true -> state='error'
 		expect(b.state).toBe('error')
 	})
 
@@ -46,14 +46,24 @@ describe('TInputControl', () => {
 
 		c.invalid = true
 		expect(inv).toHaveBeenCalledWith(true)
+		// Автоматически устанавливается state='error' при invalid=true
+		expect(st).toHaveBeenCalledWith('error')
 		expect(c.state).toBe('error')
 	})
 
 	it('getProps/toJSON отражают input flags', () => {
-		const c = new TInputControl<ITextInputControlProps>({ value: '', readonly: true, required: true } as any)
+		const c = new TInputControl<ITextInputControlProps>({ value: '', readonly: true, required: true, loading: true } as any)
 		const props = c.getProps()
-		expect(props).toMatchObject({ readonly: true, required: true })
+		expect(props).toMatchObject({ readonly: true, required: true, loading: true })
 		expect(c.toJSON()).toEqual(props)
+	})
+
+	it('loading state НЕ делает disabled автоматически (в отличие от TButton)', () => {
+		const c = new TInputControl<ITextInputControlProps>({ value: '' } as any)
+
+		c.loading = true
+		expect(c.loading).toBe(true)
+		expect(c.disabled).toBe(false) // НЕ disabled при loading
 	})
 
 	it('наследует value и события change:value/input:value', () => {

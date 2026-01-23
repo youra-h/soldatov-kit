@@ -4,7 +4,7 @@ import {
 	type IInputControl,
 	type IInputControlProps,
 	TInputControl,
-	type TControlInputState,
+	type TInputControlState,
 } from '../../../core'
 import {
 	BaseValueControl,
@@ -99,7 +99,7 @@ export function syncInputControl<TValue = string>(
 		emit?.('update:invalid', value)
 	})
 
-	instance.events.on('change:state' as any, (value: TControlInputState) => {
+	instance.events.on('change:state' as any, (value: TInputControlState) => {
 		emit?.('change:state', value)
 		emit?.('state', value)
 		emit?.('update:state', value)
@@ -138,7 +138,7 @@ export function syncInputControl<TValue = string>(
 		},
 	)
 
-	watch<TControlInputState | undefined>(
+	watch<TInputControlState | undefined>(
 		() => props.state,
 		(value) => {
 			if (value !== undefined && value !== instance.state) {

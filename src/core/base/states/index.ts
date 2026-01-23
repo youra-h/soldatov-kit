@@ -8,7 +8,6 @@
  */
 export * from './stylable-modifier.state'
 export * from './size.state'
-export * from './input-state.state'
 export * from './variant.state'
 export * from './visibility.state'
 export * from './loading.state'
