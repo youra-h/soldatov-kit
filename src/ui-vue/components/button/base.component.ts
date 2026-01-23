@@ -3,7 +3,6 @@ import {
 	TIcon,
 	type IButtonProps,
 	type TButtonAppearance,
-	TSpinner,
 	TButton,
 } from '../../../core'
 import { BaseTextable, emitsTextable, propsTextable, syncTextable } from '../textable'
@@ -26,10 +25,6 @@ export const propsButton: TProps = {
 	loading: {
 		type: Boolean as PropType<IButtonProps['loading']>,
 		default: TButton.defaultValues.loading,
-	},
-	spinner: {
-		type: Object as PropType<IButtonProps['spinner']>,
-		default: TButton.defaultValues.spinner,
 	},
 }
 
@@ -65,15 +60,6 @@ export function syncButton(options: ISyncComponentModelOptions<IButtonProps>) {
 		(value) => {
 			if (value !== undefined && value !== instance.appearance) {
 				instance.appearance = value
-			}
-		},
-	)
-
-	watch<TSpinner | undefined>(
-		() => props.spinner,
-		(value) => {
-			if (value !== undefined && value !== instance.spinner) {
-				instance.spinner = value
 			}
 		},
 	)
