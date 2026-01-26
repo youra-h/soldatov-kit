@@ -87,7 +87,10 @@ const renderedLabel = computed(() => (props.rendered ? 'Unrender' : 'Render'))
 			</PropertyField>
 
 			<PropertyField label="rendered" :model-value="rendered">
-				<button class="properties-panel__button" @click="handleChange('rendered', !rendered)">
+				<button
+					class="properties-panel__button"
+					@click="handleChange('rendered', !rendered)"
+				>
 					{{ renderedLabel }}
 				</button>
 			</PropertyField>
@@ -97,11 +100,17 @@ const renderedLabel = computed(() => (props.rendered ? 'Unrender' : 'Render'))
 			<h4 class="properties-panel__section-title">Style</h4>
 
 			<PropertyField label="size" :model-value="size">
-				<SizeSelector :model-value="size" @update:model-value="handleChange('size', $event)" />
+				<SizeSelector
+					:model-value="size"
+					@update:model-value="handleChange('size', $event)"
+				/>
 			</PropertyField>
 
 			<PropertyField label="variant" :model-value="variant">
-				<VariantSelector :model-value="variant" @update:model-value="handleChange('variant', $event)" />
+				<VariantSelector
+					:model-value="variant"
+					@update:model-value="handleChange('variant', $event)"
+				/>
 			</PropertyField>
 
 			<PropertyField label="appearance" :model-value="appearance">
@@ -130,7 +139,10 @@ const renderedLabel = computed(() => (props.rendered ? 'Unrender' : 'Render'))
 			</PropertyField>
 
 			<PropertyField label="icon" :model-value="icon">
-				<IconSelector :model-value="icon" @update:model-value="handleChange('icon', $event)" />
+				<IconSelector
+					:model-value="icon"
+					@update:model-value="handleChange('icon', $event)"
+				/>
 			</PropertyField>
 		</div>
 
@@ -154,7 +166,11 @@ const renderedLabel = computed(() => (props.rendered ? 'Unrender' : 'Render'))
 			</PropertyField>
 
 			<template v-if="loading">
-				<PropertyField label="  ↳ shouldDisable" :model-value="loadingShouldDisable" class="properties-panel__nested">
+				<PropertyField
+					label="  ↳ shouldDisable"
+					:model-value="loadingShouldDisable"
+					class="properties-panel__nested"
+				>
 					<CheckboxField
 						:model-value="loadingShouldDisable"
 						@update:model-value="handleChange('loadingShouldDisable', $event)"
@@ -162,10 +178,16 @@ const renderedLabel = computed(() => (props.rendered ? 'Unrender' : 'Render'))
 					/>
 				</PropertyField>
 
-				<PropertyField label="  ↳ spinner" :model-value="spinnerType" class="properties-panel__nested">
+				<PropertyField
+					label="  ↳ spinner"
+					:model-value="spinnerType"
+					class="properties-panel__nested"
+				>
 					<select
 						:value="spinnerType"
-						@change="handleChange('spinnerType', ($event.target as HTMLSelectElement).value)"
+						@change="
+							handleChange('spinnerType', ($event.target as HTMLSelectElement).value)
+						"
 						class="properties-panel__select"
 					>
 						<option v-for="type in spinnerTypes" :key="type.value" :value="type.value">

@@ -5,6 +5,7 @@ import { TIcon, TSpinner, TLoadingState } from '@core'
 import type { TComponentSize } from '../common/SizeSelector.vue'
 import type { TComponentVariant } from '../common/VariantSelector.vue'
 import type { TButtonAppearance } from '@core'
+import { useIconImport } from '@/ui-vue/components/icon'
 
 type Props = {
 	visible?: boolean
@@ -58,7 +59,10 @@ const loadingState = computed(() => {
 
 const iconInstance = computed(() => {
 	if (!props.icon) return undefined
-	return TIcon.getInstance(props.icon)
+
+	const icon = useIconImport(props.icon)
+
+	return TIcon.getInstance(icon)
 })
 </script>
 

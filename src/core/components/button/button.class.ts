@@ -1,5 +1,11 @@
 import { TTextable } from '../../base/textable'
-import type { IButton, IButtonProps, TButtonAppearance, TButtonEvents, TButtonStatesOptions } from './types'
+import type {
+	IButton,
+	IButtonProps,
+	TButtonAppearance,
+	TButtonEvents,
+	TButtonStatesOptions,
+} from './types'
 import { TIcon } from '../icon'
 import { TSpinner } from '../spinner'
 import { TComponentView, type IComponentViewOptions } from '../../base/component-view'
@@ -22,10 +28,17 @@ export default class TButton extends TTextable<IButtonProps, TButtonEvents> impl
 	protected _icon?: TIcon
 	protected _loadingState: ILoadingState<TSpinner>
 
-	constructor(options: IComponentViewOptions<IButtonProps, TButtonStatesOptions> | Partial<IButtonProps> = {}) {
+	constructor(
+		options:
+			| IComponentViewOptions<IButtonProps, TButtonStatesOptions>
+			| Partial<IButtonProps> = {},
+	) {
 		super(options)
 
-		const { props = {}, states } = TComponentView.prepareOptions<IButtonProps, TButtonStatesOptions>(options)
+		const { props = {}, states } = TComponentView.prepareOptions<
+			IButtonProps,
+			TButtonStatesOptions
+		>(options)
 
 		this._tag = props.tag ?? TButton.defaultValues.tag!
 
@@ -37,14 +50,15 @@ export default class TButton extends TTextable<IButtonProps, TButtonEvents> impl
 		const loadingInitial = states?.loading
 			? undefined // resolveState сам разберется
 			: {
-				shouldDisable: true,
-				createSpinner: () => new TSpinner({
-					props: {
-						size: this.size,
-						variant: this.variant,
-					},
-				}),
-			}
+					shouldDisable: true,
+					createSpinner: () =>
+						new TSpinner({
+							props: {
+								size: this.size,
+								variant: this.variant,
+							},
+						}),
+				}
 
 		this._loadingState = resolveState<ILoadingState<TSpinner>, boolean | any>(
 			states?.loading,
