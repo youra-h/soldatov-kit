@@ -36,7 +36,7 @@ export default {
 		</slot>
 		<slot>{{ instance.text }}</slot>
 		<slot name="after">
-			<TSpinner v-if="instance.loading && instance.spinner" :is="instance.spinner" />
+			<Spinner v-if="instance.loading && instance.spinner" :is="instance.spinner" />
 		</slot>
 	</component>
 </template>

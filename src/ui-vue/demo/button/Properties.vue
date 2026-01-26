@@ -4,6 +4,7 @@ import PropertyField from '../common/PropertyField.vue'
 import SizeSelector from '../common/SizeSelector.vue'
 import VariantSelector from '../common/VariantSelector.vue'
 import IconSelector from '../common/IconSelector.vue'
+import CheckboxField from '../common/CheckboxField.vue'
 import type { TComponentSize } from '../common/SizeSelector.vue'
 import type { TComponentVariant } from '../common/VariantSelector.vue'
 import type { TButtonAppearance } from '@core'
@@ -137,37 +138,28 @@ const renderedLabel = computed(() => (props.rendered ? 'Unrender' : 'Render'))
 			<h4 class="properties-panel__section-title">State</h4>
 
 			<PropertyField label="disabled" :model-value="disabled">
-				<label class="properties-panel__checkbox">
-					<input
-						type="checkbox"
-						:checked="disabled"
-						@change="handleChange('disabled', ($event.target as HTMLInputElement).checked)"
-					/>
-					<span>Disabled</span>
-				</label>
+				<CheckboxField
+					:model-value="disabled"
+					@update:model-value="handleChange('disabled', $event)"
+					label="Disabled"
+				/>
 			</PropertyField>
 
 			<PropertyField label="loading" :model-value="loading">
-				<label class="properties-panel__checkbox">
-					<input
-						type="checkbox"
-						:checked="loading"
-						@change="handleChange('loading', ($event.target as HTMLInputElement).checked)"
-					/>
-					<span>Loading</span>
-				</label>
+				<CheckboxField
+					:model-value="loading"
+					@update:model-value="handleChange('loading', $event)"
+					label="Loading"
+				/>
 			</PropertyField>
 
 			<template v-if="loading">
 				<PropertyField label="  ↳ shouldDisable" :model-value="loadingShouldDisable" class="properties-panel__nested">
-					<label class="properties-panel__checkbox">
-						<input
-							type="checkbox"
-							:checked="loadingShouldDisable"
-							@change="handleChange('loadingShouldDisable', ($event.target as HTMLInputElement).checked)"
-						/>
-						<span>Disable when loading</span>
-					</label>
+					<CheckboxField
+						:model-value="loadingShouldDisable"
+						@update:model-value="handleChange('loadingShouldDisable', $event)"
+						label="Disable when loading"
+					/>
 				</PropertyField>
 
 				<PropertyField label="  ↳ spinner" :model-value="spinnerType" class="properties-panel__nested">
@@ -225,29 +217,17 @@ const renderedLabel = computed(() => (props.rendered ? 'Unrender' : 'Render'))
 	}
 
 	&__select {
-		@apply w-full px-2 py-1.5 rounded;
+		@apply w-60 px-2 py-1.5 rounded;
 		@apply border border-gray-300;
 		@apply text-sm;
 		@apply focus:outline-none focus:ring-2 focus:ring-blue-500;
 	}
 
 	&__input {
-		@apply w-full px-2 py-1.5 rounded;
+		@apply w-60 px-2 py-1.5 rounded;
 		@apply border border-gray-300;
 		@apply text-sm;
 		@apply focus:outline-none focus:ring-2 focus:ring-blue-500;
-	}
-
-	&__checkbox {
-		@apply flex items-center gap-2 cursor-pointer;
-
-		input[type="checkbox"] {
-			@apply w-4 h-4;
-		}
-
-		span {
-			@apply text-sm;
-		}
 	}
 
 	&__nested {

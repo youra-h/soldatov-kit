@@ -2,6 +2,7 @@
 import PropertyField from '../common/PropertyField.vue'
 import SizeSelector, { type TComponentSize } from '../common/SizeSelector.vue'
 import IconSelector from '../common/IconSelector.vue'
+import CheckboxField from '../common/CheckboxField.vue'
 
 type Props = {
 	visible?: boolean
@@ -25,18 +26,6 @@ const emit = defineEmits<{
 	show: []
 	hide: []
 }>()
-
-const handleVisibleChange = (event: Event) => {
-	const value = (event.target as HTMLInputElement).checked
-	emit('update:visible', value)
-	emit('change', { ...props, visible: value })
-}
-
-const handleRenderedChange = (event: Event) => {
-	const value = (event.target as HTMLInputElement).checked
-	emit('update:rendered', value)
-	emit('change', { ...props, rendered: value })
-}
 
 const handleTagChange = (value: string) => {
 	emit('update:tag', value)
@@ -73,21 +62,17 @@ const handleHide = () => {
 	<div class="properties-panel">
 		<!-- Visible -->
 		<PropertyField label="visible">
-			<input
-				type="checkbox"
-				:checked="visible"
-				@change="handleVisibleChange"
-				class="properties-panel__checkbox"
+			<CheckboxField
+				:model-value="visible || false"
+				@update:model-value="emit('update:visible', $event); emit('change', { ...props, visible: $event })"
 			/>
 		</PropertyField>
 
 		<!-- Rendered -->
 		<PropertyField label="rendered">
-			<input
-				type="checkbox"
-				:checked="rendered"
-				@change="handleRenderedChange"
-				class="properties-panel__checkbox"
+			<CheckboxField
+				:model-value="rendered || false"
+				@update:model-value="emit('update:rendered', $event); emit('change', { ...props, rendered: $event })"
 			/>
 		</PropertyField>
 
@@ -143,10 +128,6 @@ const handleHide = () => {
 .properties-panel {
 	@apply flex flex-col;
 	@apply gap-4;
-
-	&__checkbox {
-		@apply w-4 h-4;
-	}
 
 	&__input {
 		@apply border rounded;
