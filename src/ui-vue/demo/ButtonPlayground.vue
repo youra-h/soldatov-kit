@@ -1,59 +1,67 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import PlaygroundLayout from './PlaygroundLayout.vue'
-import PropertiesPanel from './button/Properties.vue'
+import type { EventLogEntry } from './EventLog.vue'
+import Properties from './common/Properties.vue'
+import type { TPropertiesSchema } from './common/Properties.vue'
+import LoadingControl from './common/LoadingControl.vue'
 import PropsDemo from './button/Component.vue'
 import InstanceDemo from './button/Instance.vue'
 import AppearancesDemo from './button/Appearances.vue'
-import type { TComponentSize } from './common/SizeSelector.vue'
-import type { TComponentVariant } from './common/VariantSelector.vue'
-import type { TButtonAppearance } from '@core'
+import { SIZES, VARIANTS, BUTTON_APPEARANCES } from './common/items'
+import type { TComponentSize, TComponentVariant, TButtonAppearance } from '@core'
 
-// Ref для Instance demo
-const instanceDemoRef = ref<InstanceType<typeof InstanceDemo>>()
+const emit = defineEmits<{
+	log: [entry: EventLogEntry]
+}>()
+
+type SpinnerType = 'none' | 'default' | 'small' | 'large' | 'primary' | 'danger'
+
+// Схема свойств для Button
+const propertiesSchema: TPropertiesSchema = {
+	visible: { type: 'boolean', default: true },
+	rendered: { type: 'boolean', default: true },
+	disabled: { type: 'boolean', default: false },
+	size: { type: 'select', default: 'normal', options: SIZES },
+	variant: { type: 'select', default: 'normal', options: VARIANTS },
+	appearance: { type: 'select', default: 'normal', options: BUTTON_APPEARANCES },
+	text: { type: 'string', default: 'Button', placeholder: 'Button text' },
+}
 
 // Component properties state
 const componentProps = ref<{
 	visible: boolean
 	rendered: boolean
+	disabled: boolean
 	size: TComponentSize
 	variant: TComponentVariant
 	appearance: TButtonAppearance
-	disabled: boolean
-	loading: boolean
-	loadingShouldDisable: boolean
-	spinnerType: 'default' | 'small' | 'large' | 'primary' | 'danger'
 	text: string
-	icon: string
+	// Loading state
+	loading: boolean
+	loadingDisabled: boolean
+	spinnerType: SpinnerType
 }>({
 	visible: true,
 	rendered: true,
+	disabled: false,
 	size: 'normal',
 	variant: 'normal',
 	appearance: 'normal',
-	disabled: false,
-	loading: false,
-	loadingShouldDisable: true,
-	spinnerType: 'default',
 	text: 'Button',
-	icon: '',
+	loading: false,
+	loadingDisabled: true,
+	spinnerType: 'default',
 })
 
-const handlePropsChange = (newProps: Partial<typeof componentProps.value>) => {
-	componentProps.value = { ...componentProps.value, ...newProps }
-}
+// Ref для Instance demo
+const instanceDemoRef = ref<InstanceType<typeof InstanceDemo>>()
 
 const handleShow = () => {
-	// Для Props demo просто меняем visible
-	componentProps.value = { ...componentProps.value, visible: true }
-	// Для Instance demo вызываем метод show()
 	instanceDemoRef.value?.show()
 }
 
 const handleHide = () => {
-	// Для Props demo просто меняем visible
-	componentProps.value = { ...componentProps.value, visible: false }
-	// Для Instance demo вызываем метод hide()
 	instanceDemoRef.value?.hide()
 }
 </script>
@@ -61,15 +69,34 @@ const handleHide = () => {
 <template>
 	<PlaygroundLayout title="Button Playground">
 		<template #properties>
-			<PropertiesPanel v-bind="componentProps" @change="handlePropsChange" @show="handleShow" @hide="handleHide" />
+			<div class="button-properties">
+				<Properties
+					v-model="componentProps"
+					:schema="propertiesSchema"
+					@show="handleShow"
+					@hide="handleHide"
+				/>
+
+				<div class="button-properties__divider"></div>
+
+				<LoadingControl
+					v-model:loading="componentProps.loading"
+					v-model:disabled="componentProps.loadingDisabled"
+					v-model:spinner-type="componentProps.spinnerType"
+				/>
+			</div>
 		</template>
 
 		<template #props-demo>
-			<PropsDemo v-bind="componentProps" />
+			<PropsDemo v-bind="componentProps" @log="emit('log', $event)" />
 		</template>
 
 		<template #instance-demo>
-			<InstanceDemo ref="instanceDemoRef" v-bind="componentProps" />
+			<InstanceDemo
+				ref="instanceDemoRef"
+				v-bind="componentProps"
+				@log="emit('log', $event)"
+			/>
 		</template>
 
 		<template #slots-demo>
@@ -77,3 +104,16 @@ const handleHide = () => {
 		</template>
 	</PlaygroundLayout>
 </template>
+
+<style lang="scss" scoped>
+@reference "./../../foundation/tailwind/index.css";
+
+.button-properties {
+	@apply flex flex-col;
+	@apply gap-4;
+
+	&__divider {
+		@apply border-t border-gray-200;
+	}
+}
+</style>

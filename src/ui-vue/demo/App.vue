@@ -3,9 +3,9 @@ import { computed, markRaw, ref } from 'vue'
 import ComponentViewPlayground from './ComponentViewPlayground.vue'
 import IconPlayground from './IconPlayground.vue'
 import SpinnerPlayground from './SpinnerPlayground.vue'
+import ButtonPlayground from './ButtonPlayground.vue'
 import EventLog from './EventLog.vue'
 import type { EventLogEntry } from './EventLog.vue'
-// import ButtonPlayground from './ButtonPlayground.vue'
 
 /**
  * Playground Manager
@@ -21,7 +21,7 @@ const playgrounds = {
 	'component-view': { component: markRaw(ComponentViewPlayground), label: 'ComponentView' },
 	icon: { component: markRaw(IconPlayground), label: 'Icon' },
 	spinner: { component: markRaw(SpinnerPlayground), label: 'Spinner' },
-	// button: { component: markRaw(ButtonPlayground), label: 'Button' },
+	button: { component: markRaw(ButtonPlayground), label: 'Button' },
 	// Добавьте здесь другие playground по мере создания:
 	// 'check-box': { component: markRaw(CheckBoxPlayground), label: 'CheckBox' },
 	// 'switch': { component: markRaw(SwitchPlayground), label: 'Switch' },

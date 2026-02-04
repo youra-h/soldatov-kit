@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { Button } from '@ui/button'
-import { TIcon, TSpinner, TLoadingState } from '@core'
+import { Button, emitsButton } from '@ui/button'
+import { TSpinner, TLoadingState } from '@core'
 import PanelDemo from '../common/PanelDemo.vue'
-import type { TComponentSize } from '../common/SizeSelector.vue'
-import type { TComponentVariant } from '../common/VariantSelector.vue'
-import type { TButtonAppearance } from '@core'
-import { useIconImport } from '@/ui-vue/components/icon'
+import { useEventLogger } from '../common/useEventLogger'
+import type { EventLogEntry } from '../EventLog.vue'
+import type { TComponentSize, TComponentVariant, TButtonAppearance } from '@core'
+
+type SpinnerType = 'none' | 'default' | 'small' | 'large' | 'primary' | 'danger'
 
 type Props = {
 	visible?: boolean
@@ -15,63 +16,53 @@ type Props = {
 	variant?: TComponentVariant
 	appearance?: TButtonAppearance
 	disabled?: boolean
-	loading?: boolean
-	loadingShouldDisable?: boolean
-	spinnerType?: 'default' | 'small' | 'large' | 'primary' | 'danger'
 	text?: string
-	icon?: string
+	// Loading props
+	loading?: boolean
+	loadingDisabled?: boolean
+	spinnerType?: SpinnerType
 }
 
 const props = defineProps<Props>()
 
-// Создаем custom loading state если нужно переопределить дефолтное поведение
+const emit = defineEmits<{
+	log: [entry: EventLogEntry]
+}>()
+
+// Создаем обработчики событий через композабл
+const { handlers } = useEventLogger(emit, emitsButton)
+
+// Создаем loading state в зависимости от настроек
 const loadingState = computed(() => {
-	// Если дефолтный тип И дефолтное поведение disabled - используем встроенное
-	if (props.spinnerType === 'default' && (props.loadingShouldDisable ?? true)) {
-		return undefined
+	if (!props.loading) return undefined
+
+	// Если spinnerType = 'none', не создаем spinner
+	if (props.spinnerType === 'none') {
+		return new TLoadingState({
+			shouldDisable: props.loadingDisabled,
+		})
 	}
 
-	// Создаем custom spinner если выбран не default
-	let customSpinner = undefined
-	if (props.spinnerType && props.spinnerType !== 'default') {
-		const spinnerConfig: Record<
-			string,
-			{ size?: TComponentSize; variant?: TComponentVariant }
-		> = {
-			small: { size: 'sm' },
-			large: { size: 'lg' },
-			primary: { variant: 'primary' },
-			danger: { variant: 'danger' },
-		}
-
-		const config = spinnerConfig[props.spinnerType]
-		if (config) {
-			customSpinner = new TSpinner({
-				props: {
-					size: config.size || props.size,
-					variant: config.variant || props.variant,
-				},
-			})
-		}
+	// Создаем spinner в зависимости от типа
+	const spinnerConfig: Record<string, { size?: TComponentSize; variant?: TComponentVariant }> = {
+		default: {},
+		small: { size: 'sm' },
+		large: { size: 'lg' },
+		primary: { variant: 'primary' },
+		danger: { variant: 'danger' },
 	}
+
+	const config = spinnerConfig[props.spinnerType || 'default']
 
 	return new TLoadingState({
-		shouldDisable: props.loadingShouldDisable ?? true,
-		createSpinner: customSpinner ? () => customSpinner! : undefined,
+		shouldDisable: props.loadingDisabled,
+		createSpinner: () => new TSpinner(config),
 	})
-})
-
-const iconInstance = computed(() => {
-	if (!props.icon) return undefined
-
-	const icon = useIconImport(props.icon)
-
-	return TIcon.getInstance(icon)
 })
 </script>
 
 <template>
-	<PanelDemo title="Component (props)" info="Controlled by props from Properties panel">
+	<PanelDemo info="Props-based demo">
 		<Button
 			:visible="visible"
 			:rendered="rendered"
@@ -79,10 +70,9 @@ const iconInstance = computed(() => {
 			:variant="variant"
 			:appearance="appearance"
 			:disabled="disabled"
-			:loading="loading"
 			:text="text"
-			:icon="iconInstance"
-			:states="loadingState ? { loading: loadingState } : undefined"
+			:loading-state="loadingState"
+			v-bind="handlers"
 		/>
 	</PanelDemo>
 </template>
