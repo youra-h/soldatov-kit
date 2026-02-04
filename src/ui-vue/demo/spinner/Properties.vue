@@ -1,3 +1,4 @@
+<!-- @deprecated Используйте общий компонент Properties из common/Properties.vue -->
 <script setup lang="ts">
 import PropertyField from '../common/PropertyField.vue'
 import SizeSelector, { type TComponentSize } from '../common/SizeSelector.vue'
@@ -48,7 +49,10 @@ const handleHide = () => {
 		<PropertyField label="visible">
 			<CheckboxField
 				:model-value="visible || false"
-				@update:model-value="emit('update:visible', $event); emit('change', { ...props, visible: $event })"
+				@update:model-value="
+					emit('update:visible', $event)
+					emit('change', { ...props, visible: $event })
+				"
 			/>
 		</PropertyField>
 
@@ -56,7 +60,10 @@ const handleHide = () => {
 		<PropertyField label="rendered">
 			<CheckboxField
 				:model-value="rendered || false"
-				@update:model-value="emit('update:rendered', $event); emit('change', { ...props, rendered: $event })"
+				@update:model-value="
+					emit('update:rendered', $event)
+					emit('change', { ...props, rendered: $event })
+				"
 			/>
 		</PropertyField>
 
@@ -67,18 +74,17 @@ const handleHide = () => {
 
 		<!-- Variant -->
 		<PropertyField label="variant">
-			<VariantSelector :model-value="variant || 'normal'" @update:model-value="handleVariantChange" />
+			<VariantSelector
+				:model-value="variant || 'normal'"
+				@update:model-value="handleVariantChange"
+			/>
 		</PropertyField>
 
 		<!-- Actions -->
 		<PropertyField label="actions">
 			<div class="properties-panel__actions">
-				<button @click="handleShow" class="properties-panel__button">
-					Show
-				</button>
-				<button @click="handleHide" class="properties-panel__button">
-					Hide
-				</button>
+				<button @click="handleShow" class="properties-panel__button">Show</button>
+				<button @click="handleHide" class="properties-panel__button">Hide</button>
 			</div>
 		</PropertyField>
 	</div>

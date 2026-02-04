@@ -1,24 +1,25 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import PlaygroundLayout from './PlaygroundLayout.vue'
-import PropertiesPanel from './icon/Properties.vue'
+import Properties from './common/Properties.vue'
+import type { TPropertiesSchema } from './common/Properties.vue'
 import PropsDemo from './icon/Component.vue'
 import InstanceDemo from './icon/Instance.vue'
 import SizesDemo from './icon/Sizes.vue'
-import type { TComponentSize } from './common/SizeSelector.vue'
+import { SIZES, ICON_PATHS } from './common/items'
 
-// Ref для Instance demo
-const instanceDemoRef = ref<InstanceType<typeof InstanceDemo>>()
+// Схема свойств для Icon
+const propertiesSchema: TPropertiesSchema = {
+	visible: { type: 'boolean', default: true },
+	rendered: { type: 'boolean', default: true },
+	tag: { type: 'select', default: '/src/icons/home.svg', options: ICON_PATHS },
+	size: { type: 'select', default: 'normal', options: SIZES },
+	width: { type: 'string', placeholder: 'auto' },
+	height: { type: 'string', placeholder: 'auto' },
+}
 
 // Component properties state
-const componentProps = ref<{
-	visible: boolean
-	rendered: boolean
-	tag: string
-	size: TComponentSize
-	width?: number | string
-	height?: number | string
-}>({
+const componentProps = ref({
 	visible: true,
 	rendered: true,
 	tag: '/src/icons/home.svg',
@@ -27,21 +28,14 @@ const componentProps = ref<{
 	height: undefined,
 })
 
-const handlePropsChange = (newProps: Partial<typeof componentProps.value>) => {
-	componentProps.value = { ...componentProps.value, ...newProps }
-}
+// Ref для Instance demo
+const instanceDemoRef = ref<InstanceType<typeof InstanceDemo>>()
 
 const handleShow = () => {
-	// Для Props demo просто меняем visible
-	componentProps.value = { ...componentProps.value, visible: true }
-	// Для Instance demo вызываем метод show()
 	instanceDemoRef.value?.show()
 }
 
 const handleHide = () => {
-	// Для Props demo просто меняем visible
-	componentProps.value = { ...componentProps.value, visible: false }
-	// Для Instance demo вызываем метод hide()
 	instanceDemoRef.value?.hide()
 }
 </script>
@@ -49,7 +43,12 @@ const handleHide = () => {
 <template>
 	<PlaygroundLayout title="Icon Playground">
 		<template #properties>
-			<PropertiesPanel v-bind="componentProps" @change="handlePropsChange" @show="handleShow" @hide="handleHide" />
+			<Properties
+				v-model="componentProps"
+				:schema="propertiesSchema"
+				@show="handleShow"
+				@hide="handleHide"
+			/>
 		</template>
 
 		<template #props-demo>

@@ -2,8 +2,8 @@
 import { computed, markRaw } from 'vue'
 import ComponentViewPlayground from './ComponentViewPlayground.vue'
 import IconPlayground from './IconPlayground.vue'
-import SpinnerPlayground from './SpinnerPlayground.vue'
-import ButtonPlayground from './ButtonPlayground.vue'
+// import SpinnerPlayground from './SpinnerPlayground.vue'
+// import ButtonPlayground from './ButtonPlayground.vue'
 
 /**
  * Playground Manager
@@ -23,8 +23,8 @@ import ButtonPlayground from './ButtonPlayground.vue'
 const playgrounds = {
 	'component-view': markRaw(ComponentViewPlayground),
 	icon: markRaw(IconPlayground),
-	spinner: markRaw(SpinnerPlayground),
-	button: markRaw(ButtonPlayground),
+	// spinner: markRaw(SpinnerPlayground),
+	// button: markRaw(ButtonPlayground),
 	// Добавьте здесь другие playground по мере создания:
 	// 'check-box': markRaw(CheckBoxPlayground),
 	// 'switch': markRaw(SwitchPlayground),

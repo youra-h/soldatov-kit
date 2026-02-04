@@ -1,3 +1,4 @@
+<!-- @deprecated Используйте стандартный <input type="checkbox"> напрямую -->
 <script setup lang="ts">
 type Props = {
 	modelValue: boolean

@@ -1,3 +1,4 @@
+<!-- @deprecated Используйте общий компонент Properties из common/Properties.vue -->
 <script setup lang="ts">
 import { computed } from 'vue'
 import PropertyField from '../common/PropertyField.vue'
