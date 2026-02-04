@@ -4,6 +4,7 @@ import { ComponentView } from '@ui/component-view'
 import { TComponentView } from '@core'
 import PanelDemo from '../common/PanelDemo.vue'
 import { useSyncPropsToInstance } from '../common/useSyncPropsToInstance'
+import { useEventLogger } from '../common/useEventLogger'
 import type { EventLogEntry } from '../EventLog.vue'
 
 type Props = {
@@ -31,14 +32,8 @@ const instance = reactive(
 	}),
 )
 
-const logEvent = (source: EventLogEntry['source'], name: string, payload?: unknown) => {
-	emit('log', {
-		timestamp: new Date().toISOString(),
-		source,
-		name,
-		payload,
-	})
-}
+// Создаем обработчики событий через композабл
+const { handlers, logEvent } = useEventLogger(emit)
 
 // Setup core event listeners
 onMounted(() => {
@@ -63,35 +58,13 @@ onMounted(() => {
 	)
 })
 
-// Vue component events
-const onCreated = () => logEvent('vue', 'created')
-const onBeforeShow = () => logEvent('vue', 'beforeShow')
-const onAfterShow = () => logEvent('vue', 'afterShow')
-const onBeforeHide = () => logEvent('vue', 'beforeHide')
-const onAfterHide = () => logEvent('vue', 'afterHide')
-const onShow = () => logEvent('vue', 'show')
-const onHide = () => logEvent('vue', 'hide')
-const onChangeVisible = (v: boolean) => logEvent('vue', 'change:visible', v)
-const onChangeRendered = (v: boolean) => logEvent('vue', 'change:rendered', v)
-
 // Синхронизация props с instance
 useSyncPropsToInstance(props, instance)
 </script>
 
 <template>
 	<PanelDemo info="Managed by TComponentView instance">
-		<ComponentView
-			:is="instance"
-			@created="onCreated"
-			@beforeShow="onBeforeShow"
-			@afterShow="onAfterShow"
-			@beforeHide="onBeforeHide"
-			@afterHide="onAfterHide"
-			@show="onShow"
-			@hide="onHide"
-			@change:visible="onChangeVisible"
-			@change:rendered="onChangeRendered"
-		>
+		<ComponentView :is="instance" v-bind="handlers">
 			<div style="text-align: center">
 				<div style="font-weight: 600">Instance Demo</div>
 				<div style="font-size: 0.875rem; color: #666">Component with instance</div>

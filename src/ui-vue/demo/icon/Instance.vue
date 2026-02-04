@@ -4,6 +4,8 @@ import { Icon, useIconImport } from '@ui/icon'
 import { TIcon } from '@core'
 import PanelDemo from '../common/PanelDemo.vue'
 import { useSyncPropsToInstance } from '../common/useSyncPropsToInstance'
+import { useEventLogger } from '../common/useEventLogger'
+import type { EventLogEntry } from '../EventLog.vue'
 import type { TComponentSize } from '@core'
 
 type Props = {
@@ -16,6 +18,10 @@ type Props = {
 }
 
 const props = defineProps<Props>()
+
+const emit = defineEmits<{
+	log: [entry: EventLogEntry]
+}>()
 
 // Используем new TIcon вместо TIcon.create, так как передаем Partial<IIconProps>
 const instance = reactive(
@@ -34,6 +40,9 @@ defineExpose({
 	hide: () => instance.hide(),
 })
 
+// Создаем обработчики событий через композабл
+const { handlers } = useEventLogger(emit)
+
 // Синхронизация props с instance (tag требует трансформации через useIconImport)
 useSyncPropsToInstance(props, instance, undefined, {
 	tag: (value) => useIconImport(value),
@@ -42,6 +51,6 @@ useSyncPropsToInstance(props, instance, undefined, {
 
 <template>
 	<PanelDemo info="Managed by TIcon instance">
-		<Icon :is="instance" />
+		<Icon :is="instance" v-bind="handlers" />
 	</PanelDemo>
 </template>

@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { Icon, useIconImport } from '@ui/icon'
 import PanelDemo from '../common/PanelDemo.vue'
+import { useEventLogger } from '../common/useEventLogger'
+import type { EventLogEntry } from '../EventLog.vue'
 import type { TComponentSize } from '@core'
 
 type Props = {
@@ -13,6 +15,13 @@ type Props = {
 }
 
 const props = defineProps<Props>()
+
+const emit = defineEmits<{
+	log: [entry: EventLogEntry]
+}>()
+
+// Создаем обработчики событий через композабл
+const { handlers } = useEventLogger(emit)
 </script>
 
 <template>
@@ -24,6 +33,7 @@ const props = defineProps<Props>()
 			:size="size"
 			:width="width"
 			:height="height"
+			v-bind="handlers"
 		/>
 	</PanelDemo>
 </template>
