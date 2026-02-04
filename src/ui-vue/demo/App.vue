@@ -4,8 +4,8 @@ import ComponentViewPlayground from './playground/ComponentView.vue'
 import IconPlayground from './playground/Icon.vue'
 import SpinnerPlayground from './playground/Spinner.vue'
 import ButtonPlayground from './playground/Button.vue'
-import EventLog from './EventLog.vue'
-import type { EventLogEntry } from './EventLog.vue'
+import EventLog from './common/EventLog.vue'
+import type { EventLogEntry } from './common/EventLog.vue'
 
 /**
  * Playground Manager

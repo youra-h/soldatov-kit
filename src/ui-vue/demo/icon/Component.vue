@@ -2,7 +2,7 @@
 import { Icon, useIconImport, emitsIcon } from '@ui/icon'
 import PanelDemo from '../common/PanelDemo.vue'
 import { useEventLogger } from '../common/useEventLogger'
-import type { EventLogEntry } from '../EventLog.vue'
+import type { EventLogEntry } from '../common/EventLog.vue'
 import type { TComponentSize } from '@core'
 
 type Props = {

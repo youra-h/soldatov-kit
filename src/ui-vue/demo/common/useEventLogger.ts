@@ -1,5 +1,5 @@
 import { onMounted } from 'vue'
-import type { EventLogEntry } from '../EventLog.vue'
+import type { EventLogEntry } from './EventLog.vue'
 
 /**
  * Композабл для создания обработчиков событий компонента с логированием

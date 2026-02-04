@@ -5,7 +5,7 @@ import { TComponentView } from '@core'
 import PanelDemo from '../common/PanelDemo.vue'
 import { useSyncPropsToInstance } from '../common/useSyncPropsToInstance'
 import { useEventLogger, useCoreEventLogger } from '../common/useEventLogger'
-import type { EventLogEntry } from '../EventLog.vue'
+import type { EventLogEntry } from '../common/EventLog.vue'
 
 type Props = {
 	visible?: boolean
