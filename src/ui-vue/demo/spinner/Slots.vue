@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { Spinner } from '@ui/spinner'
 import { Icon, useIconImport } from '@ui/icon'
-import type { TComponentSize } from '../common/SizeSelector.vue'
-import type { TComponentVariant } from '../common/VariantSelector.vue'
+import { SIZES, VARIANTS } from '../common/items'
+import type { TComponentSize, TComponentVariant } from '@core'
 
 type Props = {
 	visible?: boolean
@@ -11,8 +11,8 @@ type Props = {
 
 const props = defineProps<Props>()
 
-const sizes: TComponentSize[] = ['sm', 'normal', 'lg', 'xl', '2xl']
-const variants: TComponentVariant[] = ['normal', 'primary', 'secondary', 'success', 'danger', 'warning']
+const sizes: TComponentSize[] = SIZES
+const variants: TComponentVariant[] = VARIANTS
 </script>
 
 <template>
@@ -22,7 +22,9 @@ const variants: TComponentVariant[] = ['normal', 'primary', 'secondary', 'succes
 		<!-- Grid with all sizes and variants -->
 		<div class="sizes-demo__grid">
 			<div class="sizes-demo__grid-header">
-				<div class="sizes-demo__grid-cell sizes-demo__grid-cell--header">Size / Variant</div>
+				<div class="sizes-demo__grid-cell sizes-demo__grid-cell--header">
+					Size / Variant
+				</div>
 				<div
 					v-for="variant in variants"
 					:key="variant"
@@ -32,19 +34,11 @@ const variants: TComponentVariant[] = ['normal', 'primary', 'secondary', 'succes
 				</div>
 			</div>
 
-			<div
-				v-for="size in sizes"
-				:key="size"
-				class="sizes-demo__grid-row"
-			>
+			<div v-for="size in sizes" :key="size" class="sizes-demo__grid-row">
 				<div class="sizes-demo__grid-cell sizes-demo__grid-cell--label">
 					{{ size }}
 				</div>
-				<div
-					v-for="variant in variants"
-					:key="variant"
-					class="sizes-demo__grid-cell"
-				>
+				<div v-for="variant in variants" :key="variant" class="sizes-demo__grid-cell">
 					<Spinner
 						:visible="visible"
 						:rendered="rendered"

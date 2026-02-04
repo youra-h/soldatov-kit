@@ -1,9 +1,12 @@
 <script setup lang="ts">
-import { watch, reactive } from 'vue'
-import { Spinner } from '@ui/spinner'
-import { TSpinner, type ISpinnerProps } from '@core'
-import type { TComponentSize } from '../common/SizeSelector.vue'
-import type { TComponentVariant } from '../common/VariantSelector.vue'
+import { reactive } from 'vue'
+import { Spinner, emitsSpinner } from '@ui/spinner'
+import { TSpinner } from '@core'
+import PanelDemo from '../common/PanelDemo.vue'
+import { useSyncPropsToInstance } from '../common/useSyncPropsToInstance'
+import { useEventLogger, useCoreEventLogger } from '../common/useEventLogger'
+import type { EventLogEntry } from '../EventLog.vue'
+import type { TComponentSize, TComponentVariant } from '@core'
 
 type Props = {
 	visible?: boolean
@@ -13,6 +16,10 @@ type Props = {
 }
 
 const props = defineProps<Props>()
+
+const emit = defineEmits<{
+	log: [entry: EventLogEntry]
+}>()
 
 // Создаем инстанс компонента
 const instance = reactive(
@@ -29,44 +36,18 @@ defineExpose({
 	hide: () => instance.hide(),
 })
 
-// Watch props and update instance
-watch(
-	() => props.visible,
-	(newVal) => {
-		if (newVal !== undefined && instance.visible !== newVal) {
-			instance.visible = newVal
-		}
-	},
-)
+// Создаем обработчики событий через композабл
+const { handlers, logEvent } = useEventLogger(emit, emitsSpinner)
 
-watch(
-	() => props.rendered,
-	(newVal) => {
-		if (newVal !== undefined && instance.rendered !== newVal) {
-			instance.rendered = newVal
-		}
-	},
-)
+// Автоматическая подписка на core события
+useCoreEventLogger(instance, logEvent, emitsSpinner)
 
-watch(
-	() => props.size,
-	(newVal) => {
-		if (newVal !== undefined && instance.size !== newVal) {
-			instance.size = newVal
-		}
-	},
-)
-
-watch(
-	() => props.variant,
-	(newVal) => {
-		if (newVal !== undefined && instance.variant !== newVal) {
-			instance.variant = newVal
-		}
-	},
-)
+// Синхронизация props с instance
+useSyncPropsToInstance(props, instance)
 </script>
 
 <template>
-	<Spinner :is="instance" class="instance-demo" />
+	<PanelDemo info="Managed by TSpinner instance">
+		<Spinner :is="instance" v-bind="handlers" />
+	</PanelDemo>
 </template>

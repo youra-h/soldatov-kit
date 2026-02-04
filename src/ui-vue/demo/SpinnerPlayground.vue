@@ -1,15 +1,26 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import PlaygroundLayout from './PlaygroundLayout.vue'
-import PropertiesPanel from './spinner/Properties.vue'
+import type { EventLogEntry } from './EventLog.vue'
+import Properties from './common/Properties.vue'
+import type { TPropertiesSchema } from './common/Properties.vue'
 import PropsDemo from './spinner/Component.vue'
 import InstanceDemo from './spinner/Instance.vue'
-import SizesDemo from './spinner/Slots.vue'
-import type { TComponentSize } from './common/SizeSelector.vue'
-import type { TComponentVariant } from './common/VariantSelector.vue'
+import SlotsDemo from './spinner/Slots.vue'
+import { SIZES, VARIANTS } from './common/items'
+import type { TComponentSize, TComponentVariant } from '@core'
 
-// Ref для Instance demo
-const instanceDemoRef = ref<InstanceType<typeof InstanceDemo>>()
+const emit = defineEmits<{
+	log: [entry: EventLogEntry]
+}>()
+
+// Схема свойств для Spinner
+const propertiesSchema: TPropertiesSchema = {
+	visible: { type: 'boolean', default: true },
+	rendered: { type: 'boolean', default: true },
+	size: { type: 'select', default: 'normal', options: SIZES },
+	variant: { type: 'select', default: 'normal', options: VARIANTS },
+}
 
 // Component properties state
 const componentProps = ref<{
@@ -24,21 +35,14 @@ const componentProps = ref<{
 	variant: 'normal',
 })
 
-const handlePropsChange = (newProps: Partial<typeof componentProps.value>) => {
-	componentProps.value = { ...componentProps.value, ...newProps }
-}
+// Ref для Instance demo
+const instanceDemoRef = ref<InstanceType<typeof InstanceDemo>>()
 
 const handleShow = () => {
-	// Для Props demo просто меняем visible
-	componentProps.value = { ...componentProps.value, visible: true }
-	// Для Instance demo вызываем метод show()
 	instanceDemoRef.value?.show()
 }
 
 const handleHide = () => {
-	// Для Props demo просто меняем visible
-	componentProps.value = { ...componentProps.value, visible: false }
-	// Для Instance demo вызываем метод hide()
 	instanceDemoRef.value?.hide()
 }
 </script>
@@ -46,24 +50,28 @@ const handleHide = () => {
 <template>
 	<PlaygroundLayout title="Spinner Playground">
 		<template #properties>
-			<PropertiesPanel
-				v-bind="componentProps"
-				@change="handlePropsChange"
+			<Properties
+				v-model="componentProps"
+				:schema="propertiesSchema"
 				@show="handleShow"
 				@hide="handleHide"
 			/>
 		</template>
 
 		<template #props-demo>
-			<PropsDemo v-bind="componentProps" />
+			<PropsDemo v-bind="componentProps" @log="emit('log', $event)" />
 		</template>
 
 		<template #instance-demo>
-			<InstanceDemo ref="instanceDemoRef" v-bind="componentProps" />
+			<InstanceDemo
+				ref="instanceDemoRef"
+				v-bind="componentProps"
+				@log="emit('log', $event)"
+			/>
 		</template>
 
 		<template #slots-demo>
-			<SizesDemo v-bind="componentProps" />
+			<SlotsDemo v-bind="componentProps" />
 		</template>
 	</PlaygroundLayout>
 </template>
