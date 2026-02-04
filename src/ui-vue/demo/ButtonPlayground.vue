@@ -7,7 +7,7 @@ import type { TPropertiesSchema } from './common/Properties.vue'
 import LoadingControl from './common/LoadingControl.vue'
 import PropsDemo from './button/Component.vue'
 import InstanceDemo from './button/Instance.vue'
-import AppearancesDemo from './button/Appearances.vue'
+import SlotsDemo from './button/Slots.vue'
 import { SIZES, VARIANTS, BUTTON_APPEARANCES } from './common/items'
 import type { TComponentSize, TComponentVariant, TButtonAppearance } from '@core'
 
@@ -100,7 +100,7 @@ const handleHide = () => {
 		</template>
 
 		<template #slots-demo>
-			<AppearancesDemo :size="componentProps.size" :variant="componentProps.variant" />
+			<SlotsDemo :size="componentProps.size" :variant="componentProps.variant" />
 		</template>
 	</PlaygroundLayout>
 </template>
