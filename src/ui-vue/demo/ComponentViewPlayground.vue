@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import PlaygroundLayout from './PlaygroundLayout.vue'
+import PlaygroundLayout from './layout/PlaygroundLayout.vue'
 import type { EventLogEntry } from './EventLog.vue'
 import Properties from './common/Properties.vue'
 import type { TPropertiesSchema } from './common/Properties.vue'
