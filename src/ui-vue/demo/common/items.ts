@@ -1,10 +1,7 @@
 /**
  * Общие списки для селекторов в демо-компонентах
  */
-
-export type TComponentSize = 'sm' | 'normal' | 'auto' | 'lg' | 'xl' | '2xl'
-export type TComponentVariant = 'normal' | 'primary' | 'danger' | 'warning' | 'success'
-export type TButtonAppearance = 'normal' | 'plain' | 'outlined'
+import type { TComponentSize, TComponentVariant, TButtonAppearance } from '@/core'
 
 /** Размеры компонентов */
 export const SIZES: TComponentSize[] = ['sm', 'normal', 'auto', 'lg', 'xl', '2xl']
