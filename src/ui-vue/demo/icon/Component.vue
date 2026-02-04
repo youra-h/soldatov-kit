@@ -16,7 +16,7 @@ const props = defineProps<Props>()
 </script>
 
 <template>
-	<PanelDemo title="Component (props)" info="Controlled by props from Properties panel">
+	<PanelDemo info="Controlled by props from Properties panel">
 		<Icon
 			:tag="useIconImport(tag || '/src/icons/home.svg')"
 			:visible="visible"

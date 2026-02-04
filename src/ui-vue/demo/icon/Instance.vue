@@ -90,7 +90,7 @@ watch(
 </script>
 
 <template>
-	<PanelDemo title="Instance Demo" info="Managed by TIcon instance">
+	<PanelDemo info="Managed by TIcon instance">
 		<Icon :is="instance" />
 	</PanelDemo>
 </template>

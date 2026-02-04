@@ -134,6 +134,52 @@ const componentProps = ref({
 
 Всё! Поле автоматически появится в панели свойств.
 
+## Пример использования PanelDemo
+
+### Старый подход (с кастомными стилями) ✗
+
+```vue
+<template>
+    <div class="demo-container">
+        <h3 class="demo-title">Component (props)</h3>
+        <div class="demo-content">
+            <MyComponent v-bind="props" />
+        </div>
+        <div class="demo-info">Some info</div>
+    </div>
+</template>
+
+<style>
+.demo-container {
+    /* много дублированных стилей */
+}
+.demo-title {
+    /* ... */
+}
+.demo-content {
+    /* ... */
+}
+.demo-info {
+    /* ... */
+}
+</style>
+```
+
+### Новый подход ✅
+
+```vue
+<script setup>
+import PanelDemo from '../common/PanelDemo.vue'
+</script>
+
+<template>
+    <PanelDemo title="Component (props)" info="Some info">
+        <MyComponent v-bind="props" />
+    </PanelDemo>
+</template>
+<!-- Стилей нет - все в PanelDemo! -->
+```
+
 ## Deprecated компоненты
 
 Следующие компоненты помечены как deprecated и будут удалены в будущем:
@@ -144,12 +190,16 @@ const componentProps = ref({
 - ✗ `src/ui-vue/demo/spinner/Properties.vue`
 - ✗ `src/ui-vue/demo/common/CheckboxField.vue`
 
-**Используйте вместо них:** `src/ui-vue/demo/common/Properties.vue`
+**Используйте вместо них:**
+
+- `src/ui-vue/demo/common/Properties.vue` - для панели свойств
+- `src/ui-vue/demo/common/PanelDemo.vue` - для оформления демо-секций
 
 ## Преимущества нового подхода
 
 1. ✅ **Меньше кода** - не нужно создавать компонент для каждого playground
 2. ✅ **Легче поддерживать** - изменения в одном месте
 3. ✅ **Простота** - декларативное описание схемы
-4. ✅ **Нет дублирования** - списки в одном файле
+4. ✅ **Нет дублирования** - списки в одном файле, стили в PanelDemo
 5. ✅ **Стандартные элементы** - используем нативный checkbox вместо кастомного
+6. ✅ **Чистый код** - Component.vue, Instance.vue, Slots.vue без стилей

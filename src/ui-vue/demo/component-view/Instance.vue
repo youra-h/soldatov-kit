@@ -103,7 +103,7 @@ watch(
 </script>
 
 <template>
-	<PanelDemo title="Instance Demo" info="Managed by TComponentView instance">
+	<PanelDemo info="Managed by TComponentView instance">
 		<ComponentView
 			:is="instance"
 			@created="onCreated"

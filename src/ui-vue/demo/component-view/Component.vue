@@ -37,7 +37,7 @@ const onChangeRendered = (v: boolean) => logEvent('vue', 'change:rendered', v)
 </script>
 
 <template>
-	<PanelDemo title="Component (props)" info="Controlled by props from Properties panel">
+	<PanelDemo info="Controlled by props from Properties panel">
 		<ComponentView
 			:tag="tag"
 			:visible="visible"
