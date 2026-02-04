@@ -45,12 +45,6 @@ defineProps<Props>()
 				</div>
 			</div>
 		</div>
-
-		<!-- Row 3: Event Log -->
-		<div class="pg-layout__section pg-layout__section--log">
-			<h2 class="pg-layout__section-title">Event Log</h2>
-			<slot name="event-log" />
-		</div>
 	</div>
 </template>
 
@@ -59,7 +53,6 @@ defineProps<Props>()
 
 .pg-layout {
 	$this: &;
-
 	@apply flex flex-col;
 	@apply gap-6;
 	@apply p-4;
@@ -78,10 +71,6 @@ defineProps<Props>()
 		@apply p-4;
 
 		&--properties {
-			@apply bg-gray-50;
-		}
-
-		&--log {
 			@apply bg-gray-50;
 		}
 	}

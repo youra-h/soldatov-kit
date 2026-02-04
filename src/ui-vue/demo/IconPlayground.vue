@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import PlaygroundLayout from './PlaygroundLayout.vue'
-import EventLog from './EventLog.vue'
 import type { EventLogEntry } from './EventLog.vue'
 import Properties from './common/Properties.vue'
 import type { TPropertiesSchema } from './common/Properties.vue'
@@ -10,6 +9,10 @@ import InstanceDemo from './icon/Instance.vue'
 import SlotsDemo from './icon/Slots.vue'
 import { SIZES, ICON_PATHS } from './common/items'
 import type { TComponentSize } from '@core'
+
+const emit = defineEmits<{
+	log: [entry: EventLogEntry]
+}>()
 
 // Схема свойств для Icon
 const propertiesSchema: TPropertiesSchema = {
@@ -41,21 +44,6 @@ const componentProps = ref<{
 // Ref для Instance demo
 const instanceDemoRef = ref<InstanceType<typeof InstanceDemo>>()
 
-// Event log
-const eventLog = ref<EventLogEntry[]>([])
-
-const handleLog = (entry: EventLogEntry) => {
-	eventLog.value.unshift(entry)
-	// Keep only last 200 events
-	if (eventLog.value.length > 200) {
-		eventLog.value = eventLog.value.slice(0, 200)
-	}
-}
-
-const handleClearLogs = () => {
-	eventLog.value = []
-}
-
 const handleShow = () => {
 	instanceDemoRef.value?.show()
 }
@@ -77,19 +65,19 @@ const handleHide = () => {
 		</template>
 
 		<template #props-demo>
-			<PropsDemo v-bind="componentProps" @log="handleLog" />
+			<PropsDemo v-bind="componentProps" @log="emit('log', $event)" />
 		</template>
 
 		<template #instance-demo>
-			<InstanceDemo ref="instanceDemoRef" v-bind="componentProps" @log="handleLog" />
+			<InstanceDemo
+				ref="instanceDemoRef"
+				v-bind="componentProps"
+				@log="emit('log', $event)"
+			/>
 		</template>
 
 		<template #slots-demo>
 			<SlotsDemo v-bind="componentProps" />
-		</template>
-
-		<template #event-log>
-			<EventLog :events="eventLog" @clear="handleClearLogs" />
 		</template>
 	</PlaygroundLayout>
 </template>
