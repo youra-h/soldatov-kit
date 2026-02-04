@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import PlaygroundLayout from './layout/PlaygroundLayout.vue'
-import type { EventLogEntry } from './EventLog.vue'
-import Properties from './common/Properties.vue'
-import type { TPropertiesSchema } from './common/Properties.vue'
-import PropsDemo from './icon/Component.vue'
-import InstanceDemo from './icon/Instance.vue'
-import SlotsDemo from './icon/Slots.vue'
-import { SIZES, ICON_PATHS } from './common/items'
+import PlaygroundLayout from './../layout/PlaygroundLayout.vue'
+import type { EventLogEntry } from './../EventLog.vue'
+import Properties from './../common/Properties.vue'
+import type { TPropertiesSchema } from './../common/Properties.vue'
+import PropsDemo from './../icon/Component.vue'
+import InstanceDemo from './../icon/Instance.vue'
+import SlotsDemo from './../icon/Slots.vue'
+import { SIZES, ICON_PATHS } from './../common/items'
 import type { TComponentSize } from '@core'
 
 const emit = defineEmits<{

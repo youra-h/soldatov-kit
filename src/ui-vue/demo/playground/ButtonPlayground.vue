@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import PlaygroundLayout from './layout/PlaygroundLayout.vue'
-import type { EventLogEntry } from './EventLog.vue'
-import Properties from './common/Properties.vue'
-import type { TPropertiesSchema } from './common/Properties.vue'
-import LoadingControl from './common/LoadingControl.vue'
-import PropsDemo from './button/Component.vue'
-import InstanceDemo from './button/Instance.vue'
-import SlotsDemo from './button/Slots.vue'
-import { SIZES, VARIANTS, BUTTON_APPEARANCES } from './common/items'
+import PlaygroundLayout from './../layout/PlaygroundLayout.vue'
+import type { EventLogEntry } from './../EventLog.vue'
+import Properties from './../common/Properties.vue'
+import type { TPropertiesSchema } from './../common/Properties.vue'
+import LoadingControl from './../common/LoadingControl.vue'
+import PropsDemo from './../button/Component.vue'
+import InstanceDemo from './../button/Instance.vue'
+import SlotsDemo from './../button/Slots.vue'
+import { SIZES, VARIANTS, BUTTON_APPEARANCES } from './../common/items'
 import type { TComponentSize, TComponentVariant, TButtonAppearance } from '@core'
 
 const emit = defineEmits<{

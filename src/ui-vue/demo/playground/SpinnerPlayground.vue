@@ -1,30 +1,38 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import PlaygroundLayout from './layout/PlaygroundLayout.vue'
-import type { EventLogEntry } from './EventLog.vue'
-import Properties from './common/Properties.vue'
-import type { TPropertiesSchema } from './common/Properties.vue'
-import PropsDemo from './component-view/Component.vue'
-import InstanceDemo from './component-view/Instance.vue'
-import SlotsDemo from './component-view/Slots.vue'
-import { HTML_TAGS } from './common/items'
+import PlaygroundLayout from './../layout/PlaygroundLayout.vue'
+import type { EventLogEntry } from './../EventLog.vue'
+import Properties from './../common/Properties.vue'
+import type { TPropertiesSchema } from './../common/Properties.vue'
+import PropsDemo from './../spinner/Component.vue'
+import InstanceDemo from './../spinner/Instance.vue'
+import SlotsDemo from './../spinner/Slots.vue'
+import { SIZES, VARIANTS } from './../common/items'
+import type { TComponentSize, TComponentVariant } from '@core'
 
 const emit = defineEmits<{
 	log: [entry: EventLogEntry]
 }>()
 
-// Схема свойств для ComponentView
+// Схема свойств для Spinner
 const propertiesSchema: TPropertiesSchema = {
 	visible: { type: 'boolean', default: true },
 	rendered: { type: 'boolean', default: true },
-	tag: { type: 'select', default: 'div', options: HTML_TAGS },
+	size: { type: 'select', default: 'normal', options: SIZES },
+	variant: { type: 'select', default: 'normal', options: VARIANTS },
 }
 
 // Component properties state
-const componentProps = ref({
+const componentProps = ref<{
+	visible: boolean
+	rendered: boolean
+	size: TComponentSize
+	variant: TComponentVariant
+}>({
 	visible: true,
 	rendered: true,
-	tag: 'div',
+	size: 'normal',
+	variant: 'normal',
 })
 
 // Ref для Instance demo
@@ -40,7 +48,7 @@ const handleHide = () => {
 </script>
 
 <template>
-	<PlaygroundLayout title="ComponentView Playground">
+	<PlaygroundLayout title="Spinner Playground">
 		<template #properties>
 			<Properties
 				v-model="componentProps"
