@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Icon, useIconImport } from '@ui/icon'
 import PanelDemo from '../common/PanelDemo.vue'
-import type { TComponentSize } from '../common/SizeSelector.vue'
+import { SIZES } from '../common/items'
 
 type Props = {
 	visible?: boolean
@@ -10,15 +10,13 @@ type Props = {
 }
 
 const props = defineProps<Props>()
-
-const sizes: TComponentSize[] = ['sm', 'normal', 'auto', 'lg', 'xl', '2xl']
 </script>
 
 <template>
 	<PanelDemo title="All Sizes Demo">
 		<div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center">
 			<div
-				v-for="size in sizes"
+				v-for="size in SIZES"
 				:key="size"
 				style="
 					display: flex;

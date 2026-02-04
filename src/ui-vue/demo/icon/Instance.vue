@@ -3,7 +3,7 @@ import { watch, reactive } from 'vue'
 import { Icon, useIconImport } from '@ui/icon'
 import { TIcon, type IIconProps } from '@core'
 import PanelDemo from '../common/PanelDemo.vue'
-import type { TComponentSize } from '../common/SizeSelector.vue'
+import type { TComponentSize } from '@core'
 
 type Props = {
 	visible?: boolean
