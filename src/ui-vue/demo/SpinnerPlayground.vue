@@ -4,7 +4,7 @@ import PlaygroundLayout from './PlaygroundLayout.vue'
 import PropertiesPanel from './spinner/Properties.vue'
 import PropsDemo from './spinner/Component.vue'
 import InstanceDemo from './spinner/Instance.vue'
-import SizesDemo from './spinner/Sizes.vue'
+import SizesDemo from './spinner/Slots.vue'
 import type { TComponentSize } from './common/SizeSelector.vue'
 import type { TComponentVariant } from './common/VariantSelector.vue'
 
@@ -46,7 +46,12 @@ const handleHide = () => {
 <template>
 	<PlaygroundLayout title="Spinner Playground">
 		<template #properties>
-			<PropertiesPanel v-bind="componentProps" @change="handlePropsChange" @show="handleShow" @hide="handleHide" />
+			<PropertiesPanel
+				v-bind="componentProps"
+				@change="handlePropsChange"
+				@show="handleShow"
+				@hide="handleHide"
+			/>
 		</template>
 
 		<template #props-demo>
