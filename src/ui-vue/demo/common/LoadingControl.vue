@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import PropertyField from './PropertyField.vue'
 
 type SpinnerType = 'none' | 'default' | 'small' | 'large' | 'primary' | 'danger'
 
@@ -43,33 +44,22 @@ const localSpinnerType = computed({
 
 <template>
 	<div class="loading-control">
-		<div class="loading-control__row">
-			<label class="loading-control__label">
-				<input v-model="localLoading" type="checkbox" class="loading-control__checkbox" />
-				<span class="loading-control__label-text">Loading</span>
-			</label>
-		</div>
+		<PropertyField label="loading">
+			<input v-model="localLoading" type="checkbox" class="loading-control__checkbox" />
+		</PropertyField>
 
 		<div v-if="loading" class="loading-control__options">
-			<div class="loading-control__row">
-				<label class="loading-control__label">
-					<input
-						v-model="localDisabled"
-						type="checkbox"
-						class="loading-control__checkbox"
-					/>
-					<span class="loading-control__label-text">Disable while loading</span>
-				</label>
-			</div>
+			<PropertyField label="disabled">
+				<input v-model="localDisabled" type="checkbox" class="loading-control__checkbox" />
+			</PropertyField>
 
-			<div class="loading-control__row">
-				<label class="loading-control__field-label">Spinner:</label>
+			<PropertyField label="spinner">
 				<select v-model="localSpinnerType" class="loading-control__select">
 					<option v-for="type in spinnerTypes" :key="type" :value="type">
 						{{ type }}
 					</option>
 				</select>
-			</div>
+			</PropertyField>
 		</div>
 	</div>
 </template>
@@ -78,54 +68,26 @@ const localSpinnerType = computed({
 @reference "./../../../foundation/tailwind/index.css";
 
 .loading-control {
-	$this: &;
-
 	@apply flex flex-col;
-	@apply gap-2;
-
-	&__row {
-		@apply flex items-center;
-		@apply gap-2;
-	}
+	@apply gap-4;
 
 	&__options {
 		@apply pl-6;
 		@apply flex flex-col;
-		@apply gap-2;
+		@apply gap-4;
 		@apply pt-2;
 		@apply border-l-2 border-blue-200;
 	}
 
-	&__label {
-		@apply flex items-center;
-		@apply gap-2;
-		@apply cursor-pointer;
-	}
-
-	&__label-text {
-		@apply text-sm;
-		@apply text-gray-700;
-	}
-
 	&__checkbox {
-		@apply w-4 h-4;
+		@apply w-5 h-5;
 		@apply cursor-pointer;
-	}
-
-	&__field-label {
-		@apply text-sm;
-		@apply text-gray-700;
-		@apply font-medium;
-		@apply min-w-[80px];
 	}
 
 	&__select {
+		@apply border rounded;
 		@apply px-2 py-1;
-		@apply text-sm;
-		@apply border border-gray-300;
-		@apply rounded;
-		@apply bg-white;
-		@apply flex-1;
+		@apply w-60;
 	}
 }
 </style>
