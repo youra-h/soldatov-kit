@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { reactive, onMounted, watch } from 'vue'
+import { reactive, onMounted } from 'vue'
 import { ComponentView } from '@ui/component-view'
 import { TComponentView } from '@core'
 import PanelDemo from '../common/PanelDemo.vue'
+import { useSyncPropsToInstance } from '../common/useSyncPropsToInstance'
 import type { EventLogEntry } from '../EventLog.vue'
 
 type Props = {
@@ -73,33 +74,8 @@ const onHide = () => logEvent('vue', 'hide')
 const onChangeVisible = (v: boolean) => logEvent('vue', 'change:visible', v)
 const onChangeRendered = (v: boolean) => logEvent('vue', 'change:rendered', v)
 
-// Watch props and update instance
-watch(
-	() => props.visible,
-	(newVal) => {
-		if (newVal !== undefined && instance.visible !== newVal) {
-			instance.visible = newVal
-		}
-	},
-)
-
-watch(
-	() => props.rendered,
-	(newVal) => {
-		if (newVal !== undefined && instance.rendered !== newVal) {
-			instance.rendered = newVal
-		}
-	},
-)
-
-watch(
-	() => props.tag,
-	(newVal) => {
-		if (newVal !== undefined && instance.tag !== newVal) {
-			instance.tag = newVal
-		}
-	},
-)
+// Синхронизация props с instance
+useSyncPropsToInstance(props, instance)
 </script>
 
 <template>

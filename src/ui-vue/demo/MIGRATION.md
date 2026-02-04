@@ -28,6 +28,14 @@
 - **Принцип:** Единообразное оформление всех демо-панелей
 - **Преимущество:** Не нужно дублировать стили в каждом Component/Instance/Slots
 
+### 5. Композабл useSyncPropsToInstance ✨ НОВОЕ
+
+Автоматическая синхронизация props с reactive instance вместо множества watch'еров:
+
+- **Файл:** `src/ui-vue/demo/common/useSyncPropsToInstance.ts`
+- **Принцип:** Одна функция создает все необходимые watchers
+- **Преимущество:** 1 строка кода вместо N watch блоков
+
 ## Пример использования
 
 ### Старый подход (deprecated)
@@ -194,6 +202,7 @@ import PanelDemo from '../common/PanelDemo.vue'
 
 - `src/ui-vue/demo/common/Properties.vue` - для панели свойств
 - `src/ui-vue/demo/common/PanelDemo.vue` - для оформления демо-секций
+- `src/ui-vue/demo/common/useSyncPropsToInstance.ts` - для синхронизации props с instance
 
 ## Преимущества нового подхода
 
@@ -203,3 +212,4 @@ import PanelDemo from '../common/PanelDemo.vue'
 4. ✅ **Нет дублирования** - списки в одном файле, стили в PanelDemo
 5. ✅ **Стандартные элементы** - используем нативный checkbox вместо кастомного
 6. ✅ **Чистый код** - Component.vue, Instance.vue, Slots.vue без стилей
+7. ✅ **Автоматизация** - useSyncPropsToInstance избавляет от ручных watch'еров

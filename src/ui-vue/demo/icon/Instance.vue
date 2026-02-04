@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { watch, reactive } from 'vue'
+import { reactive } from 'vue'
 import { Icon, useIconImport } from '@ui/icon'
-import { TIcon, type IIconProps } from '@core'
+import { TIcon } from '@core'
 import PanelDemo from '../common/PanelDemo.vue'
+import { useSyncPropsToInstance } from '../common/useSyncPropsToInstance'
 import type { TComponentSize } from '@core'
 
 type Props = {
@@ -33,60 +34,10 @@ defineExpose({
 	hide: () => instance.hide(),
 })
 
-// Watch props and update instance
-watch(
-	() => props.visible,
-	(newVal) => {
-		if (newVal !== undefined && instance.visible !== newVal) {
-			instance.visible = newVal
-		}
-	},
-)
-
-watch(
-	() => props.rendered,
-	(newVal) => {
-		if (newVal !== undefined && instance.rendered !== newVal) {
-			instance.rendered = newVal
-		}
-	},
-)
-
-watch(
-	() => props.tag,
-	(newVal) => {
-		if (newVal !== undefined) {
-			instance.tag = useIconImport(newVal)
-		}
-	},
-)
-
-watch(
-	() => props.size,
-	(newVal) => {
-		if (newVal !== undefined && instance.size !== newVal) {
-			instance.size = newVal
-		}
-	},
-)
-
-watch(
-	() => props.width,
-	(newVal) => {
-		if (newVal !== undefined && instance.width !== newVal) {
-			instance.width = newVal
-		}
-	},
-)
-
-watch(
-	() => props.height,
-	(newVal) => {
-		if (newVal !== undefined && instance.height !== newVal) {
-			instance.height = newVal
-		}
-	},
-)
+// Синхронизация props с instance (tag требует трансформации через useIconImport)
+useSyncPropsToInstance(props, instance, undefined, {
+	tag: (value) => useIconImport(value),
+})
 </script>
 
 <template>
