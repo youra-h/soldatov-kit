@@ -41,9 +41,7 @@ const formatTime = (timestamp: string) => {
 		<div v-else class="event-log__content">
 			<div class="event-log__header">
 				<span class="event-log__count">{{ displayedEvents.length }} events</span>
-				<button class="event-log__clear-btn" @click="emit('clear')">
-					Clear logs
-				</button>
+				<button class="event-log__clear-btn" @click="emit('clear')">Clear logs</button>
 			</div>
 			<div class="event-log__list">
 				<div v-for="(event, idx) in displayedEvents" :key="idx" class="event-log__entry">
@@ -70,7 +68,7 @@ const formatTime = (timestamp: string) => {
 	$this: &;
 
 	@apply flex flex-col;
-	@apply h-96;
+	@apply h-full;
 	@apply overflow-auto;
 
 	&__empty {

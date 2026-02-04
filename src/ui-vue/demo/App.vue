@@ -10,30 +10,25 @@ import type { EventLogEntry } from './EventLog.vue'
 /**
  * Playground Manager
  *
- * Как использовать:
- * 1. Измените переменную activePlayground на нужный ключ
- * 2. Сохраните файл - playground переключится автоматически
- *
  * Как добавить новый playground:
  * 1. Создайте <ComponentName>Playground.vue
  * 2. Импортируйте его: import ButtonPlayground from './ButtonPlayground.vue'
- * 3. Добавьте в объект playgrounds: 'button': markRaw(ButtonPlayground)
- * 4. Используйте activePlayground = 'button'
+ * 3. Добавьте в объект playgrounds с label
  */
 
 // Маппинг доступных playground компонентов
 const playgrounds = {
-	'component-view': markRaw(ComponentViewPlayground),
-	icon: markRaw(IconPlayground),
-	// spinner: markRaw(SpinnerPlayground),
-	// button: markRaw(ButtonPlayground),
+	'component-view': { component: markRaw(ComponentViewPlayground), label: 'ComponentView' },
+	icon: { component: markRaw(IconPlayground), label: 'Icon' },
+	// spinner: { component: markRaw(SpinnerPlayground), label: 'Spinner' },
+	// button: { component: markRaw(ButtonPlayground), label: 'Button' },
 	// Добавьте здесь другие playground по мере создания:
-	// 'check-box': markRaw(CheckBoxPlayground),
-	// 'switch': markRaw(SwitchPlayground),
+	// 'check-box': { component: markRaw(CheckBoxPlayground), label: 'CheckBox' },
+	// 'switch': { component: markRaw(SwitchPlayground), label: 'Switch' },
 } as const
 
-// 🎯 Выберите активный playground, изменив значение этой переменной
-const activePlayground = 'component-view' as keyof typeof playgrounds
+// Активный playground (можно управлять через меню)
+const activePlayground = ref<keyof typeof playgrounds>('component-view')
 
 // View mode: 'sandbox' | 'logs'
 const activeView = ref<'sandbox' | 'logs'>('sandbox')
@@ -54,12 +49,20 @@ const handleClearLogs = () => {
 }
 
 const CurrentPlayground = computed(() => {
-	const component = playgrounds[activePlayground]
-	if (!component) {
-		console.error(`Playground "${activePlayground}" not found`)
+	const playground = playgrounds[activePlayground.value]
+	if (!playground) {
+		console.error(`Playground "${activePlayground.value}" not found`)
 		return null
 	}
-	return component
+	return playground.component
+})
+
+// Получить список доступных playground для меню
+const playgroundList = computed(() => {
+	return Object.entries(playgrounds).map(([key, value]) => ({
+		key: key as keyof typeof playgrounds,
+		label: value.label,
+	}))
 })
 </script>
 
@@ -84,24 +87,47 @@ const CurrentPlayground = computed(() => {
 			</button>
 		</div>
 
-		<!-- Sandbox View -->
-		<div v-if="activeView === 'sandbox'" class="pg-app__content">
-			<div v-if="CurrentPlayground" class="pg-app__container">
-				<component :is="CurrentPlayground" @log="handleLog" />
-			</div>
-			<div v-else class="pg-app__error">
-				<div class="pg-app__error-content">
-					<h1 class="pg-app__error-title">Playground not found</h1>
-					<p class="pg-app__error-text">Check the activePlayground variable</p>
-				</div>
-			</div>
-		</div>
+		<div class="pg-app__layout">
+			<!-- Sidebar Menu -->
+			<aside class="pg-app__sidebar">
+				<h3 class="pg-app__sidebar-title">Components</h3>
+				<nav class="pg-app__menu">
+					<button
+						v-for="item in playgroundList"
+						:key="item.key"
+						:class="[
+							'pg-app__menu-item',
+							{ 'pg-app__menu-item--active': activePlayground === item.key },
+						]"
+						@click="activePlayground = item.key"
+					>
+						{{ item.label }}
+					</button>
+				</nav>
+			</aside>
 
-		<!-- Logs View -->
-		<div v-else-if="activeView === 'logs'" class="pg-app__content">
-			<div class="pg-app__logs">
-				<EventLog :events="eventLog" @clear="handleClearLogs" />
-			</div>
+			<!-- Main Content -->
+			<main class="pg-app__main">
+				<!-- Sandbox View -->
+				<div v-if="activeView === 'sandbox'" class="pg-app__content">
+					<div v-if="CurrentPlayground" class="pg-app__container">
+						<component :is="CurrentPlayground" @log="handleLog" />
+					</div>
+					<div v-else class="pg-app__error">
+						<div class="pg-app__error-content">
+							<h1 class="pg-app__error-title">Playground not found</h1>
+							<p class="pg-app__error-text">Check the activePlayground variable</p>
+						</div>
+					</div>
+				</div>
+
+				<!-- Logs View -->
+				<div v-else-if="activeView === 'logs'" class="pg-app__content">
+					<div class="pg-app__logs">
+						<EventLog :events="eventLog" @clear="handleClearLogs" />
+					</div>
+				</div>
+			</main>
 		</div>
 	</div>
 </template>
@@ -139,8 +165,54 @@ const CurrentPlayground = computed(() => {
 		}
 	}
 
-	&__content {
+	&__layout {
+		@apply flex;
 		@apply min-h-[calc(100vh-49px)];
+	}
+
+	&__sidebar {
+		@apply w-64;
+		@apply bg-white;
+		@apply border-r border-gray-200;
+		@apply p-4;
+		@apply flex-shrink-0;
+	}
+
+	&__sidebar-title {
+		@apply text-sm font-semibold;
+		@apply text-gray-700;
+		@apply mb-3;
+		@apply px-2;
+	}
+
+	&__menu {
+		@apply flex flex-col;
+		@apply gap-1;
+	}
+
+	&__menu-item {
+		@apply px-3 py-2;
+		@apply text-sm;
+		@apply text-gray-700;
+		@apply rounded-md;
+		@apply text-left;
+		@apply transition-colors;
+		@apply hover:bg-gray-100;
+
+		&--active {
+			@apply bg-blue-50;
+			@apply text-blue-700;
+			@apply font-medium;
+		}
+	}
+
+	&__main {
+		@apply flex-1;
+		@apply overflow-auto;
+	}
+
+	&__content {
+		@apply min-h-full;
 	}
 
 	&__container {
