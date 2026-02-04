@@ -8,7 +8,7 @@ import LoadingControl from './../common/LoadingControl.vue'
 import PropsDemo from './../button/Component.vue'
 import InstanceDemo from './../button/Instance.vue'
 import SlotsDemo from './../button/Slots.vue'
-import { SIZES, VARIANTS, BUTTON_APPEARANCES } from './../common/items'
+import { SIZES, VARIANTS, BUTTON_APPEARANCES } from '../common/items'
 import type { TComponentSize, TComponentVariant, TButtonAppearance } from '@core'
 
 const emit = defineEmits<{

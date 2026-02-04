@@ -4,41 +4,27 @@ import PlaygroundLayout from './../layout/PlaygroundLayout.vue'
 import type { EventLogEntry } from './../EventLog.vue'
 import Properties from './../common/Properties.vue'
 import type { TPropertiesSchema } from './../common/Properties.vue'
-import PropsDemo from './../icon/Component.vue'
-import InstanceDemo from './../icon/Instance.vue'
-import SlotsDemo from './../icon/Slots.vue'
-import { SIZES, ICON_PATHS } from './../common/items'
-import type { TComponentSize } from '@core'
+import PropsDemo from './../component-view/Component.vue'
+import InstanceDemo from './../component-view/Instance.vue'
+import SlotsDemo from './../component-view/Slots.vue'
+import { HTML_TAGS } from '../common/items'
 
 const emit = defineEmits<{
 	log: [entry: EventLogEntry]
 }>()
 
-// Схема свойств для Icon
+// Схема свойств для ComponentView
 const propertiesSchema: TPropertiesSchema = {
 	visible: { type: 'boolean', default: true },
 	rendered: { type: 'boolean', default: true },
-	tag: { type: 'select', default: '/src/icons/home.svg', options: ICON_PATHS },
-	size: { type: 'select', default: 'normal', options: SIZES },
-	width: { type: 'string', placeholder: 'auto' },
-	height: { type: 'string', placeholder: 'auto' },
+	tag: { type: 'select', default: 'div', options: HTML_TAGS },
 }
 
 // Component properties state
-const componentProps = ref<{
-	visible: boolean
-	rendered: boolean
-	tag: string
-	size: TComponentSize
-	width?: number | string
-	height?: number | string
-}>({
+const componentProps = ref({
 	visible: true,
 	rendered: true,
-	tag: '/src/icons/home.svg',
-	size: 'normal',
-	width: undefined,
-	height: undefined,
+	tag: 'div',
 })
 
 // Ref для Instance demo
@@ -54,7 +40,7 @@ const handleHide = () => {
 </script>
 
 <template>
-	<PlaygroundLayout title="Icon Playground">
+	<PlaygroundLayout title="ComponentView Playground">
 		<template #properties>
 			<Properties
 				v-model="componentProps"

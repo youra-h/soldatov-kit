@@ -7,7 +7,7 @@ import type { TPropertiesSchema } from './../common/Properties.vue'
 import PropsDemo from './../spinner/Component.vue'
 import InstanceDemo from './../spinner/Instance.vue'
 import SlotsDemo from './../spinner/Slots.vue'
-import { SIZES, VARIANTS } from './../common/items'
+import { SIZES, VARIANTS } from '../common/items'
 import type { TComponentSize, TComponentVariant } from '@core'
 
 const emit = defineEmits<{

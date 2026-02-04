@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { computed, markRaw, ref } from 'vue'
-import ComponentViewPlayground from './playground/ComponentViewPlayground.vue'
-import IconPlayground from './playground/IconPlayground.vue'
-import SpinnerPlayground from './playground/SpinnerPlayground.vue'
-import ButtonPlayground from './playground/ButtonPlayground.vue'
+import ComponentViewPlayground from './playground/ComponentView.vue'
+import IconPlayground from './playground/Icon.vue'
+import SpinnerPlayground from './playground/Spinner.vue'
+import ButtonPlayground from './playground/Button.vue'
 import EventLog from './EventLog.vue'
 import type { EventLogEntry } from './EventLog.vue'
 
