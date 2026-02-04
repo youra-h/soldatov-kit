@@ -22,16 +22,16 @@ import ButtonPlayground from './ButtonPlayground.vue'
 // Маппинг доступных playground компонентов
 const playgrounds = {
 	'component-view': markRaw(ComponentViewPlayground),
-	'icon': markRaw(IconPlayground),
-	'spinner': markRaw(SpinnerPlayground),
-	'button': markRaw(ButtonPlayground),
+	icon: markRaw(IconPlayground),
+	spinner: markRaw(SpinnerPlayground),
+	button: markRaw(ButtonPlayground),
 	// Добавьте здесь другие playground по мере создания:
 	// 'check-box': markRaw(CheckBoxPlayground),
 	// 'switch': markRaw(SwitchPlayground),
 } as const
 
 // 🎯 Выберите активный playground, изменив значение этой переменной
-const activePlayground = 'button' as keyof typeof playgrounds
+const activePlayground = 'component-view' as keyof typeof playgrounds
 
 const CurrentPlayground = computed(() => {
 	const component = playgrounds[activePlayground]
