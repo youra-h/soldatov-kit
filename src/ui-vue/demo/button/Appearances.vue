@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { Button } from '@ui/button'
 import { Icon } from '@ui/icon'
-import type { TComponentSize } from '../common/SizeSelector.vue'
-import type { TComponentVariant } from '../common/VariantSelector.vue'
+import type { TComponentSize, TComponentVariant } from '@core'
 
 type Props = {
 	size?: TComponentSize
@@ -10,8 +9,6 @@ type Props = {
 }
 
 const props = defineProps<Props>()
-
-const appearances = ['normal', 'plain', 'outlined'] as const
 </script>
 
 <template>
@@ -86,9 +83,7 @@ const appearances = ['normal', 'plain', 'outlined'] as const
 			</div>
 		</div>
 
-		<div class="demo-info">
-			Demonstrating different appearances with slot combinations
-		</div>
+		<div class="demo-info">Demonstrating different appearances with slot combinations</div>
 	</div>
 </template>
 
