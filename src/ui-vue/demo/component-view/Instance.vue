@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
-import { ComponentView } from '@ui/component-view'
+import { ComponentView, emitsComponentView } from '@ui/component-view'
 import { TComponentView } from '@core'
 import PanelDemo from '../common/PanelDemo.vue'
 import { useSyncPropsToInstance } from '../common/useSyncPropsToInstance'
@@ -33,10 +33,10 @@ const instance = reactive(
 )
 
 // Создаем обработчики событий через композабл
-const { handlers, logEvent } = useEventLogger(emit)
+const { handlers, logEvent } = useEventLogger(emit, emitsComponentView)
 
 // Автоматическая подписка на core события
-useCoreEventLogger(instance, logEvent)
+useCoreEventLogger(instance, logEvent, emitsComponentView)
 
 // Синхронизация props с instance
 useSyncPropsToInstance(props, instance)

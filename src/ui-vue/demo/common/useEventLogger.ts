@@ -5,24 +5,22 @@ import type { EventLogEntry } from '../EventLog.vue'
  * Композабл для создания обработчиков событий компонента с логированием
  *
  * @param emit - функция emit из setup
- * @param extraEvents - дополнительные события специфичные для компонента
+ * @param vueEmits - массив событий компонента (например, emitsComponentView, emitsIcon)
  *
  * @example
  * ```ts
  * // Базовое использование (ComponentView)
- * const { handlers } = useEventLogger(emit)
+ * import { emitsComponentView } from '@ui/component-view'
+ * const { handlers } = useEventLogger(emit, emitsComponentView)
  *
- * // С дополнительными событиями (Button)
- * const { handlers } = useEventLogger(emit, {
- *   click: () => {},
- *   focus: () => {},
- *   blur: () => {}
- * })
+ * // Для Icon
+ * import { emitsIcon } from '@ui/icon'
+ * const { handlers } = useEventLogger(emit, emitsIcon)
  * ```
  */
 export function useEventLogger(
 	emit: (event: 'log', entry: EventLogEntry) => void,
-	extraEvents?: Record<string, (payload?: any) => void>,
+	vueEmits: readonly string[],
 ) {
 	const logEvent = (source: EventLogEntry['source'], name: string, payload?: unknown) => {
 		emit('log', {
@@ -33,33 +31,24 @@ export function useEventLogger(
 		})
 	}
 
-	// Базовые события ComponentView (присущи всем компонентам)
-	const baseHandlers = {
-		onCreated: () => logEvent('vue', 'created'),
-		onBeforeShow: () => logEvent('vue', 'beforeShow'),
-		onAfterShow: () => logEvent('vue', 'afterShow'),
-		onBeforeHide: () => logEvent('vue', 'beforeHide'),
-		onAfterHide: () => logEvent('vue', 'afterHide'),
-		onShow: () => logEvent('vue', 'show'),
-		onHide: () => logEvent('vue', 'hide'),
-		onChangeVisible: (v: boolean) => logEvent('vue', 'change:visible', v),
-		onChangeRendered: (v: boolean) => logEvent('vue', 'change:rendered', v),
-	}
+	// Генерируем обработчики для всех событий из emits
+	const handlers: Record<string, any> = {}
 
-	// Дополнительные события (если переданы)
-	const extraHandlers: Record<string, any> = {}
-	if (extraEvents) {
-		Object.entries(extraEvents).forEach(([eventName, handler]) => {
-			const handlerName = `on${eventName.charAt(0).toUpperCase()}${eventName.slice(1)}`
-			extraHandlers[handlerName] = (payload?: any) => {
-				logEvent('vue', eventName, payload)
-				handler?.(payload)
-			}
-		})
-	}
+	vueEmits.forEach((eventName) => {
+		// Конвертируем event-name в onEventName
+		const handlerName = `on${eventName
+			.split(':')
+			.map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+			.join('')
+			.replace(/^On/, 'on')}`
+
+		handlers[handlerName] = (payload?: any) => {
+			logEvent('vue', eventName, payload)
+		}
+	})
 
 	return {
-		handlers: { ...baseHandlers, ...extraHandlers },
+		handlers,
 		logEvent, // на случай если нужно логировать что-то кастомное
 	}
 }
@@ -69,40 +58,28 @@ export function useEventLogger(
  *
  * @param instance - reactive instance (TComponentView, TIcon и т.д.)
  * @param logEvent - функция логирования событий
- * @param extraEvents - дополнительные события специфичные для компонента
+ * @param coreEmits - массив событий компонента (например, emitsComponentView, emitsIcon)
  *
  * @example
  * ```ts
- * // Базовое использование (ComponentView, Icon)
- * const { logEvent } = useEventLogger(emit)
- * useCoreEventLogger(instance, logEvent)
+ * // Базовое использование (ComponentView)
+ * import { emitsComponentView } from '@ui/component-view'
+ * const { logEvent } = useEventLogger(emit, emitsComponentView)
+ * useCoreEventLogger(instance, logEvent, emitsComponentView)
  *
- * // С дополнительными событиями (Button)
- * useCoreEventLogger(instance, logEvent, ['click', 'focus', 'blur'])
+ * // Для Icon
+ * import { emitsIcon } from '@ui/icon'
+ * const { logEvent } = useEventLogger(emit, emitsIcon)
+ * useCoreEventLogger(instance, logEvent, emitsIcon)
  * ```
  */
 export function useCoreEventLogger(
 	instance: any,
 	logEvent: (source: EventLogEntry['source'], name: string, payload?: unknown) => void,
-	extraEvents?: string[],
+	coreEmits: readonly string[],
 ) {
-	// Базовые события ComponentView (присущи всем компонентам)
-	const baseEvents = [
-		'created',
-		'beforeShow',
-		'afterShow',
-		'beforeHide',
-		'afterHide',
-		'show',
-		'hide',
-		'change:visible',
-		'change:rendered',
-	]
-
-	const allEvents = extraEvents ? [...baseEvents, ...extraEvents] : baseEvents
-
 	onMounted(() => {
-		allEvents.forEach((eventName) => {
+		coreEmits.forEach((eventName) => {
 			instance.events.on(eventName as any, (payload?: any) => {
 				logEvent('core', eventName, payload)
 

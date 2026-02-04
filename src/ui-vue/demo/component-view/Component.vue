@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ComponentView } from '@ui/component-view'
+import { ComponentView, emitsComponentView } from '@ui/component-view'
 import PanelDemo from '../common/PanelDemo.vue'
 import { useEventLogger } from '../common/useEventLogger'
 import type { EventLogEntry } from '../EventLog.vue'
@@ -17,7 +17,7 @@ const emit = defineEmits<{
 }>()
 
 // Создаем обработчики событий через композабл
-const { handlers } = useEventLogger(emit)
+const { handlers } = useEventLogger(emit, emitsComponentView)
 </script>
 
 <template>

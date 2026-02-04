@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Icon, useIconImport } from '@ui/icon'
+import { Icon, useIconImport, emitsIcon } from '@ui/icon'
 import PanelDemo from '../common/PanelDemo.vue'
 import { useEventLogger } from '../common/useEventLogger'
 import type { EventLogEntry } from '../EventLog.vue'
@@ -21,7 +21,7 @@ const emit = defineEmits<{
 }>()
 
 // Создаем обработчики событий через композабл
-const { handlers } = useEventLogger(emit)
+const { handlers } = useEventLogger(emit, emitsIcon)
 </script>
 
 <template>

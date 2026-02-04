@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
-import { Icon, useIconImport } from '@ui/icon'
+import { Icon, useIconImport, emitsIcon } from '@ui/icon'
 import { TIcon } from '@core'
 import PanelDemo from '../common/PanelDemo.vue'
 import { useSyncPropsToInstance } from '../common/useSyncPropsToInstance'
@@ -41,10 +41,10 @@ defineExpose({
 })
 
 // Создаем обработчики событий через композабл
-const { handlers, logEvent } = useEventLogger(emit)
+const { handlers, logEvent } = useEventLogger(emit, emitsIcon)
 
 // Автоматическая подписка на core события
-useCoreEventLogger(instance, logEvent)
+useCoreEventLogger(instance, logEvent, emitsIcon)
 
 // Синхронизация props с instance (tag требует трансформации через useIconImport)
 useSyncPropsToInstance(props, instance, undefined, {
