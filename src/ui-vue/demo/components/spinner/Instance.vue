@@ -2,10 +2,10 @@
 import { reactive } from 'vue'
 import { Spinner, emitsSpinner } from '@ui/spinner'
 import { TSpinner } from '@core'
-import PanelDemo from '../common/PanelDemo.vue'
-import { useSyncPropsToInstance } from '../common/useSyncPropsToInstance'
-import { useEventLogger, useCoreEventLogger } from '../common/useEventLogger'
-import type { EventLogEntry } from '../common/EventLog.vue'
+import PanelDemo from '../../common/PanelDemo.vue'
+import { useSyncPropsToInstance } from '../../common/useSyncPropsToInstance'
+import { useEventLogger, useCoreEventLogger } from '../../common/useEventLogger'
+import type { EventLogEntry } from '../../common/EventLog.vue'
 import type { TComponentSize, TComponentVariant } from '@core'
 
 type Props = {

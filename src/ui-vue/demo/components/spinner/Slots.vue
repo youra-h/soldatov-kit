@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Spinner } from '@ui/spinner'
 import { Icon, useIconImport } from '@ui/icon'
-import { SIZES, VARIANTS } from '../common/items'
+import { SIZES, VARIANTS } from '../../common/items'
 import type { TComponentSize, TComponentVariant } from '@core'
 
 type Props = {
@@ -75,7 +75,7 @@ const variants: TComponentVariant[] = VARIANTS
 </template>
 
 <style lang="scss">
-@reference "./../../../foundation/tailwind/index.css";
+@reference "./../../../../foundation/tailwind/index.css";
 
 .sizes-demo {
 	$this: &;

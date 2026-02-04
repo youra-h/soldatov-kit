@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { Spinner, emitsSpinner } from '@ui/spinner'
-import PanelDemo from '../common/PanelDemo.vue'
-import { useEventLogger } from '../common/useEventLogger'
-import type { EventLogEntry } from '../common/EventLog.vue'
+import PanelDemo from '../../common/PanelDemo.vue'
+import { useEventLogger } from '../../common/useEventLogger'
+import type { EventLogEntry } from '../../common/EventLog.vue'
 import type { TComponentSize, TComponentVariant } from '@core'
 
 type Props = {

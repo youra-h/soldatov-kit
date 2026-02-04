@@ -4,9 +4,9 @@ import PlaygroundLayout from './../layout/PlaygroundLayout.vue'
 import type { EventLogEntry } from '../common/EventLog.vue'
 import Properties from './../common/Properties.vue'
 import type { TPropertiesSchema } from './../common/Properties.vue'
-import PropsDemo from './../component-view/Component.vue'
-import InstanceDemo from './../component-view/Instance.vue'
-import SlotsDemo from './../component-view/Slots.vue'
+import PropsDemo from './../components/component-view/Component.vue'
+import InstanceDemo from './../components/component-view/Instance.vue'
+import SlotsDemo from './../components/component-view/Slots.vue'
 import { HTML_TAGS } from '../common/items'
 
 const emit = defineEmits<{

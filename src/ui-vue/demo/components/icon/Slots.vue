@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Icon, useIconImport } from '@ui/icon'
-import PanelDemo from '../common/PanelDemo.vue'
-import { SIZES } from '../common/items'
+import PanelDemo from '../../common/PanelDemo.vue'
+import { SIZES } from '../../common/items'
 
 type Props = {
 	visible?: boolean

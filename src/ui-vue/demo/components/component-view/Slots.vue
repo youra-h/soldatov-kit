@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ComponentView } from '@ui/component-view'
-import PanelDemo from '../common/PanelDemo.vue'
+import PanelDemo from '../../common/PanelDemo.vue'
 
 type Props = {
 	visible?: boolean

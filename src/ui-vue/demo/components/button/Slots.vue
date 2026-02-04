@@ -88,7 +88,7 @@ const props = defineProps<Props>()
 </template>
 
 <style lang="scss" scoped>
-@reference "./../../../foundation/tailwind/index.css";
+@reference "./../../../../foundation/tailwind/index.css";
 .demo-container {
 	@apply p-6 bg-white rounded-lg shadow-sm;
 }

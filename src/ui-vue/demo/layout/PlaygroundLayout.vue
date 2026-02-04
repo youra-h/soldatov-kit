@@ -49,7 +49,7 @@ defineProps<Props>()
 </template>
 
 <style lang="scss">
-@reference "./../../foundation/tailwind/index.css";
+@reference "./../../../foundation/tailwind/index.css";
 
 .pg-layout {
 	$this: &;

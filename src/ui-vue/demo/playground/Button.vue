@@ -5,9 +5,9 @@ import type { EventLogEntry } from '../common/EventLog.vue'
 import Properties from './../common/Properties.vue'
 import type { TPropertiesSchema } from './../common/Properties.vue'
 import LoadingControl from './../common/LoadingControl.vue'
-import PropsDemo from './../button/Component.vue'
-import InstanceDemo from './../button/Instance.vue'
-import SlotsDemo from './../button/Slots.vue'
+import PropsDemo from './../components/button/Component.vue'
+import InstanceDemo from './../components/button/Instance.vue'
+import SlotsDemo from './../components/button/Slots.vue'
 import { SIZES, VARIANTS, BUTTON_APPEARANCES } from '../common/items'
 import type { TComponentSize, TComponentVariant, TButtonAppearance } from '@core'
 
@@ -106,7 +106,7 @@ const handleHide = () => {
 </template>
 
 <style lang="scss" scoped>
-@reference "./../../foundation/tailwind/index.css";
+@reference "./../../../foundation/tailwind/index.css";
 
 .button-properties {
 	@apply flex flex-col;

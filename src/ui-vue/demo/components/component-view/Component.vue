@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ComponentView, emitsComponentView } from '@ui/component-view'
-import PanelDemo from '../common/PanelDemo.vue'
-import { useEventLogger } from '../common/useEventLogger'
-import type { EventLogEntry } from '../common/EventLog.vue'
+import PanelDemo from '../../common/PanelDemo.vue'
+import { useEventLogger } from '../../common/useEventLogger'
+import type { EventLogEntry } from '../../common/EventLog.vue'
 
 type Props = {
 	visible?: boolean
