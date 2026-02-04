@@ -30,7 +30,7 @@ defineProps<Props>()
 	}
 
 	&__content {
-		@apply flex items-center justify-center px-4;
+		@apply flex items-center justify-center px-4 py-2;
 		@apply min-h-[100px];
 		@apply border-2 border-dashed border-gray-200 rounded;
 	}

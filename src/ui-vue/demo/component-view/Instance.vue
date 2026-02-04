@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { reactive, onMounted } from 'vue'
+import { reactive } from 'vue'
 import { ComponentView } from '@ui/component-view'
 import { TComponentView } from '@core'
 import PanelDemo from '../common/PanelDemo.vue'
 import { useSyncPropsToInstance } from '../common/useSyncPropsToInstance'
-import { useEventLogger } from '../common/useEventLogger'
+import { useEventLogger, useCoreEventLogger } from '../common/useEventLogger'
 import type { EventLogEntry } from '../EventLog.vue'
 
 type Props = {
@@ -35,28 +35,8 @@ const instance = reactive(
 // Создаем обработчики событий через композабл
 const { handlers, logEvent } = useEventLogger(emit)
 
-// Setup core event listeners
-onMounted(() => {
-	instance.events.on('created' as any, () => logEvent('core', 'created'))
-	instance.events.on('beforeShow' as any, () => {
-		logEvent('core', 'beforeShow')
-		return true
-	})
-	instance.events.on('afterShow' as any, () => logEvent('core', 'afterShow'))
-	instance.events.on('beforeHide' as any, () => {
-		logEvent('core', 'beforeHide')
-		return true
-	})
-	instance.events.on('afterHide' as any, () => logEvent('core', 'afterHide'))
-	instance.events.on('show' as any, () => logEvent('core', 'show'))
-	instance.events.on('hide' as any, () => logEvent('core', 'hide'))
-	instance.events.on('change:visible' as any, (v: boolean) =>
-		logEvent('core', 'change:visible', v),
-	)
-	instance.events.on('change:rendered' as any, (v: boolean) =>
-		logEvent('core', 'change:rendered', v),
-	)
-})
+// Автоматическая подписка на core события
+useCoreEventLogger(instance, logEvent)
 
 // Синхронизация props с instance
 useSyncPropsToInstance(props, instance)

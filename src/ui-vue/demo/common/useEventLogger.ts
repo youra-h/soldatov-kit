@@ -1,3 +1,4 @@
+import { onMounted } from 'vue'
 import type { EventLogEntry } from '../EventLog.vue'
 
 /**
@@ -61,4 +62,55 @@ export function useEventLogger(
 		handlers: { ...baseHandlers, ...extraHandlers },
 		logEvent, // на случай если нужно логировать что-то кастомное
 	}
+}
+
+/**
+ * Композабл для автоматической подписки на события core instance
+ *
+ * @param instance - reactive instance (TComponentView, TIcon и т.д.)
+ * @param logEvent - функция логирования событий
+ * @param extraEvents - дополнительные события специфичные для компонента
+ *
+ * @example
+ * ```ts
+ * // Базовое использование (ComponentView, Icon)
+ * const { logEvent } = useEventLogger(emit)
+ * useCoreEventLogger(instance, logEvent)
+ *
+ * // С дополнительными событиями (Button)
+ * useCoreEventLogger(instance, logEvent, ['click', 'focus', 'blur'])
+ * ```
+ */
+export function useCoreEventLogger(
+	instance: any,
+	logEvent: (source: EventLogEntry['source'], name: string, payload?: unknown) => void,
+	extraEvents?: string[],
+) {
+	// Базовые события ComponentView (присущи всем компонентам)
+	const baseEvents = [
+		'created',
+		'beforeShow',
+		'afterShow',
+		'beforeHide',
+		'afterHide',
+		'show',
+		'hide',
+		'change:visible',
+		'change:rendered',
+	]
+
+	const allEvents = extraEvents ? [...baseEvents, ...extraEvents] : baseEvents
+
+	onMounted(() => {
+		allEvents.forEach((eventName) => {
+			instance.events.on(eventName as any, (payload?: any) => {
+				logEvent('core', eventName, payload)
+
+				// Для beforeShow/beforeHide нужно вернуть true (можно отменить событие)
+				if (eventName === 'beforeShow' || eventName === 'beforeHide') {
+					return true
+				}
+			})
+		})
+	})
 }

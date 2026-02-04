@@ -4,7 +4,7 @@ import { Icon, useIconImport } from '@ui/icon'
 import { TIcon } from '@core'
 import PanelDemo from '../common/PanelDemo.vue'
 import { useSyncPropsToInstance } from '../common/useSyncPropsToInstance'
-import { useEventLogger } from '../common/useEventLogger'
+import { useEventLogger, useCoreEventLogger } from '../common/useEventLogger'
 import type { EventLogEntry } from '../EventLog.vue'
 import type { TComponentSize } from '@core'
 
@@ -41,7 +41,10 @@ defineExpose({
 })
 
 // Создаем обработчики событий через композабл
-const { handlers } = useEventLogger(emit)
+const { handlers, logEvent } = useEventLogger(emit)
+
+// Автоматическая подписка на core события
+useCoreEventLogger(instance, logEvent)
 
 // Синхронизация props с instance (tag требует трансформации через useIconImport)
 useSyncPropsToInstance(props, instance, undefined, {
