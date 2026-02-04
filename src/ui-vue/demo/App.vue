@@ -31,7 +31,7 @@ const playgrounds = {
 } as const
 
 // 🎯 Выберите активный playground, изменив значение этой переменной
-const activePlayground = 'component-view' as keyof typeof playgrounds
+const activePlayground = 'icon' as keyof typeof playgrounds
 
 const CurrentPlayground = computed(() => {
 	const component = playgrounds[activePlayground]

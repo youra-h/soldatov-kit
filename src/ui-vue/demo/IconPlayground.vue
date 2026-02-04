@@ -5,7 +5,7 @@ import Properties from './common/Properties.vue'
 import type { TPropertiesSchema } from './common/Properties.vue'
 import PropsDemo from './icon/Component.vue'
 import InstanceDemo from './icon/Instance.vue'
-import SizesDemo from './icon/Sizes.vue'
+import SlotsDemo from './icon/Slots.vue'
 import { SIZES, ICON_PATHS } from './common/items'
 
 // Схема свойств для Icon
@@ -59,8 +59,8 @@ const handleHide = () => {
 			<InstanceDemo ref="instanceDemoRef" v-bind="componentProps" />
 		</template>
 
-		<!-- <template #slots-demo>
-			<SizesDemo v-bind="componentProps" />
-		</template> -->
+		<template #slots-demo>
+			<SlotsDemo v-bind="componentProps" />
+		</template>
 	</PlaygroundLayout>
 </template>

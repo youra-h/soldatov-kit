@@ -18,7 +18,7 @@ export const BUTTON_APPEARANCES: TButtonAppearance[] = ['normal', 'plain', 'outl
 /** Пути к иконкам (можно расширить) */
 export const ICON_PATHS = [
 	'/src/icons/home.svg',
-	'/src/icons/user.svg',
-	'/src/icons/settings.svg',
-	'/src/icons/search.svg',
+	'/src/icons/check_indeterminate.svg',
+	'/src/icons/check.svg',
+	'/src/icons/close.svg',
 ]

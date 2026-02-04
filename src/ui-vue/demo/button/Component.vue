@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import { Button } from '@ui/button'
 import { TIcon, TSpinner, TLoadingState } from '@core'
+import PanelDemo from '../common/PanelDemo.vue'
 import type { TComponentSize } from '../common/SizeSelector.vue'
 import type { TComponentVariant } from '../common/VariantSelector.vue'
 import type { TButtonAppearance } from '@core'
@@ -33,7 +34,10 @@ const loadingState = computed(() => {
 	// Создаем custom spinner если выбран не default
 	let customSpinner = undefined
 	if (props.spinnerType && props.spinnerType !== 'default') {
-		const spinnerConfig: Record<string, { size?: TComponentSize; variant?: TComponentVariant }> = {
+		const spinnerConfig: Record<
+			string,
+			{ size?: TComponentSize; variant?: TComponentVariant }
+		> = {
 			small: { size: 'sm' },
 			large: { size: 'lg' },
 			primary: { variant: 'primary' },
@@ -67,46 +71,18 @@ const iconInstance = computed(() => {
 </script>
 
 <template>
-	<div class="demo-container">
-		<h3 class="demo-title">Component (props)</h3>
-		<div class="demo-content">
-			<Button
-				:visible="visible"
-				:rendered="rendered"
-				:size="size"
-				:variant="variant"
-				:appearance="appearance"
-				:disabled="disabled"
-				:loading="loading"
-				:text="text"
-				:icon="iconInstance"
-				:states="loadingState ? { loading: loadingState } : undefined"
-			/>
-		</div>
-		<div class="demo-info">
-			Controlled by props from Properties panel
-		</div>
-	</div>
+	<PanelDemo title="Component (props)" info="Controlled by props from Properties panel">
+		<Button
+			:visible="visible"
+			:rendered="rendered"
+			:size="size"
+			:variant="variant"
+			:appearance="appearance"
+			:disabled="disabled"
+			:loading="loading"
+			:text="text"
+			:icon="iconInstance"
+			:states="loadingState ? { loading: loadingState } : undefined"
+		/>
+	</PanelDemo>
 </template>
-
-<style lang="scss" scoped>
-@reference "./../../../foundation/tailwind/index.css";
-
-.demo-container {
-	@apply p-6 bg-white rounded-lg shadow-sm;
-}
-
-.demo-title {
-	@apply text-base font-semibold mb-4;
-}
-
-.demo-content {
-	@apply flex items-center justify-center;
-	@apply min-h-[100px];
-	@apply border-2 border-dashed border-gray-200 rounded;
-}
-
-.demo-info {
-	@apply mt-4 text-sm text-gray-500 text-center;
-}
-</style>

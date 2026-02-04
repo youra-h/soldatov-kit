@@ -2,6 +2,7 @@
 import { watch, reactive } from 'vue'
 import { Icon, useIconImport } from '@ui/icon'
 import { TIcon, type IIconProps } from '@core'
+import PanelDemo from '../common/PanelDemo.vue'
 import type { TComponentSize } from '../common/SizeSelector.vue'
 
 type Props = {
@@ -89,6 +90,7 @@ watch(
 </script>
 
 <template>
-	<Icon :is="instance" class="instance-demo" />
+	<PanelDemo title="Instance Demo" info="Managed by TIcon instance">
+		<Icon :is="instance" />
+	</PanelDemo>
 </template>
-

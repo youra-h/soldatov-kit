@@ -1,8 +1,6 @@
 <script setup lang="ts" generic="T extends Record<string, any>">
 import { computed } from 'vue'
 import PropertyField from './PropertyField.vue'
-import { SIZES, VARIANTS, HTML_TAGS, ICON_PATHS } from './items'
-import type { TComponentSize, TComponentVariant } from './items'
 
 /**
  * Универсальный компонент Properties для демо playground'ов.

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ComponentView } from '@ui/component-view'
+import PanelDemo from '../common/PanelDemo.vue'
 import type { EventLogEntry } from '../EventLog.vue'
 
 type Props = {
@@ -36,49 +37,25 @@ const onChangeRendered = (v: boolean) => logEvent('vue', 'change:rendered', v)
 </script>
 
 <template>
-	<ComponentView
-		:tag="tag"
-		:visible="visible"
-		:rendered="rendered"
-		@created="onCreated"
-		@beforeShow="onBeforeShow"
-		@afterShow="onAfterShow"
-		@beforeHide="onBeforeHide"
-		@afterHide="onAfterHide"
-		@show="onShow"
-		@hide="onHide"
-		@change:visible="onChangeVisible"
-		@change:rendered="onChangeRendered"
-		class="props-demo"
-	>
-		<div class="props-demo__content">
-			<div class="props-demo__title">Props Demo</div>
-			<div class="props-demo__subtitle">Component with props</div>
-		</div>
-	</ComponentView>
+	<PanelDemo title="Component (props)" info="Controlled by props from Properties panel">
+		<ComponentView
+			:tag="tag"
+			:visible="visible"
+			:rendered="rendered"
+			@created="onCreated"
+			@beforeShow="onBeforeShow"
+			@afterShow="onAfterShow"
+			@beforeHide="onBeforeHide"
+			@afterHide="onAfterHide"
+			@show="onShow"
+			@hide="onHide"
+			@change:visible="onChangeVisible"
+			@change:rendered="onChangeRendered"
+		>
+			<div style="text-align: center">
+				<div style="font-weight: 600">Props Demo</div>
+				<div style="font-size: 0.875rem; color: #666">Component with props</div>
+			</div>
+		</ComponentView>
+	</PanelDemo>
 </template>
-
-<style lang="scss" scoped>
-@reference "./../../../foundation/tailwind/index.css";
-
-.props-demo {
-	$this: &;
-
-	@apply border-2 border-blue-500;
-	@apply rounded;
-	@apply p-4;
-
-	&__content {
-		@apply text-center;
-	}
-
-	&__title {
-		@apply font-semibold;
-	}
-
-	&__subtitle {
-		@apply text-sm;
-		@apply text-gray-600;
-	}
-}
-</style>
