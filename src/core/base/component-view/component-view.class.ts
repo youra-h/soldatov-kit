@@ -8,6 +8,7 @@ import type {
 	IComponentViewRenderConfig,
 	TComponentViewEvents,
 	TComponentViewStatesOptions,
+	TComponentViewPreparedOptions,
 } from './types'
 import { type IStateUnit, TStateUnit } from '../state-unit'
 
@@ -44,11 +45,7 @@ export default class TComponentView<
 		TStates extends TComponentViewStatesOptions = TComponentViewStatesOptions,
 	>(
 		options: IComponentViewOptions<TProps, TStates> | Partial<TProps>,
-	): {
-		props: Partial<TProps>
-		renderConfig: IComponentViewRenderConfig
-		states?: TStates
-	} {
+	): TComponentViewPreparedOptions<TProps, TStates> {
 		const defaultBaseClass = (this as typeof TComponentView).baseClass
 
 		const raw = options as Record<string, unknown>

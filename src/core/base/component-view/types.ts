@@ -71,6 +71,19 @@ export interface IComponentViewOptions<
 	states?: TStates
 }
 
+/**
+ * Результат нормализации опций component-view-слоя.
+ * renderConfig всегда определен с дефолтными значениями.
+ */
+export type TComponentViewPreparedOptions<
+	TProps extends IComponentViewProps = IComponentViewProps,
+	TStates extends TComponentViewStatesOptions = TComponentViewStatesOptions,
+> = {
+	props: Partial<TProps>
+	renderConfig: Required<IComponentViewRenderConfig>
+	states?: TStates
+}
+
 export interface IComponentView<
 	TProps extends IComponentViewProps = IComponentViewProps,
 	TEvents extends Record<string, (...args: any) => any> = TComponentViewEvents,
