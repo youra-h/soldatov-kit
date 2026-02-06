@@ -1,6 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
 import { TButton } from '../components/button'
-import { TSpinner } from '../components/spinner'
 import { TLoadingState } from '../base/states'
 import type { IButtonProps } from '../components/button'
 
@@ -30,25 +29,6 @@ describe('TButton', () => {
 		expect(btn.classes).toContain('s-btn--plain')
 	})
 
-	it('spinner: создаётся лениво через TLoadingState и синхронизирует size/variant от кнопки', () => {
-		const btn = new TButton({ size: 'normal', variant: 'normal' })
-
-		// Spinner создается лениво при первом обращении к loading state
-		expect(btn.loadingState.spinner).toBeUndefined()
-
-		btn.loading = true
-		const sp = btn.loadingState.spinner
-		expect(sp).toBeInstanceOf(TSpinner)
-		expect(sp!.variant).toBe('normal')
-		expect(sp!.size).toBe('normal')
-
-		btn.variant = 'primary'
-		expect(sp!.variant).toBe('primary')
-
-		btn.size = 'xl'
-		expect(sp!.size).toBe('xl')
-	})
-
 	it('getProps/toJSON отражают ключевые props', () => {
 		const btn = new TButton({
 			props: {
@@ -72,26 +52,23 @@ describe('TButton', () => {
 		expect(btn.toJSON()).toEqual(props)
 	})
 
-	it('loading state: дефолтное поведение (disabled + spinner)', () => {
+	it('loading state: дефолтное поведение (disabled при loading)', () => {
 		const btn = new TButton({ loading: false })
 
 		expect(btn.loading).toBe(false)
 		expect(btn.disabled).toBe(false)
-		expect(btn.loadingState.spinner).toBeUndefined()
 
 		btn.loading = true
 
 		expect(btn.loading).toBe(true)
 		expect(btn.disabled).toBe(true) // автоматически disabled при loading
-		expect(btn.loadingState.spinner).toBeInstanceOf(TSpinner)
 	})
 
-	it('loading state: можно переопределить behavior через DI', () => {
+	it('loading state: можно переопределить shouldDisable через DI', () => {
 		const btn = new TButton({
 			states: {
 				loading: new TLoadingState({
 					shouldDisable: false, // не делаем disabled
-					createSpinner: undefined, // не создаем spinner
 				}),
 			},
 		})
@@ -100,11 +77,10 @@ describe('TButton', () => {
 
 		expect(btn.loading).toBe(true)
 		expect(btn.disabled).toBe(false) // не disabled
-		expect(btn.loadingState.spinner).toBeUndefined() // нет spinner
 	})
 
 	it('loading state: можно использовать кастомный LoadingState', () => {
-		class CustomLoadingState extends TLoadingState<TSpinner> {
+		class CustomLoadingState extends TLoadingState {
 			customFlag = false
 
 			override startLoading(): void {
@@ -115,7 +91,6 @@ describe('TButton', () => {
 
 		const customState = new CustomLoadingState({
 			shouldDisable: true,
-			createSpinner: () => new TSpinner({ props: { size: 'lg' } }),
 		})
 
 		const btn = new TButton({
@@ -128,7 +103,6 @@ describe('TButton', () => {
 
 		expect(btn.loading).toBe(true)
 		expect(customState.customFlag).toBe(true)
-		expect(btn.loadingState.spinner!.size).toBe('lg')
 	})
 
 	it('loading state: эмитит change:loading при изменении', () => {

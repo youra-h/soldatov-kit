@@ -4,42 +4,34 @@ import type { TStateCtor } from './types'
 /**
  * Конфигурация поведения при loading
  */
-export interface ILoadingBehavior<TSpinner = any> {
+export interface ILoadingBehavior {
 	/** Должен ли компонент становиться disabled при loading */
 	shouldDisable?: boolean
-	/** Фабрика для создания spinner (если нужен) */
-	createSpinner?: () => TSpinner
 }
 
 /**
  * Значение состояния loading
  */
-export interface ILoadingStateValue<TSpinner = any> {
+export interface ILoadingStateValue {
 	loading: boolean
-	/** Опциональный spinner, создается при loading = true если задан createSpinner */
-	spinner?: TSpinner
 }
 
-export interface ILoadingState<TSpinner = any> extends IStateUnit<ILoadingStateValue<TSpinner>> {
+export interface ILoadingState extends IStateUnit<ILoadingStateValue> {
 	loading: boolean
-	spinner?: TSpinner
-	behavior: ILoadingBehavior<TSpinner>
+	behavior: ILoadingBehavior
 
 	startLoading(): void
 	stopLoading(): void
 }
 
-export type TLoadingStateCtor<TSpinner = any> = TStateCtor<
-	ILoadingState<TSpinner>,
-	boolean | ILoadingBehavior<TSpinner>
->
+export type TLoadingStateCtor = TStateCtor<ILoadingState, boolean | ILoadingBehavior>
 
 /**
  * Единица состояния "loading" с настраиваемым поведением.
  *
  * Зачем нужна:
  * - инкапсулирует логику состояния загрузки
- * - позволяет композировать поведение через DI (создание spinner, disabled при loading)
+ * - позволяет композировать поведение через DI (disabled при loading)
  * - эмитит событие `change` с полным состоянием
  *
  * Примеры использования:
@@ -49,12 +41,9 @@ export type TLoadingStateCtor<TSpinner = any> = TStateCtor<
  *    new TLoadingState(false)
  *    ```
  *
- * 2. С автоматическим созданием spinner:
+ * 2. С автоматическим disabled при loading:
  *    ```ts
- *    new TLoadingState({
- *      shouldDisable: true,
- *      createSpinner: () => new TSpinner({ size: 'small' })
- *    })
+ *    new TLoadingState({ shouldDisable: true })
  *    ```
  *
  * 3. Кастомная логика через наследование:
@@ -67,25 +56,20 @@ export type TLoadingStateCtor<TSpinner = any> = TStateCtor<
  *    }
  *    ```
  */
-export class TLoadingState<TSpinner = any>
-	extends TStateUnit<ILoadingStateValue<TSpinner>>
-	implements ILoadingState<TSpinner>
-{
-	public behavior: ILoadingBehavior<TSpinner>
+export class TLoadingState extends TStateUnit<ILoadingStateValue> implements ILoadingState {
+	public behavior: ILoadingBehavior
 
-	constructor(initial: boolean | ILoadingBehavior<TSpinner> = false) {
+	constructor(initial: boolean | ILoadingBehavior = false) {
 		const isBoolean = typeof initial === 'boolean'
 
-		const behavior: ILoadingBehavior<TSpinner> = isBoolean
+		const behavior: ILoadingBehavior = isBoolean
 			? {}
 			: {
 					shouldDisable: initial.shouldDisable,
-					createSpinner: initial.createSpinner,
 				}
 
-		const value: ILoadingStateValue<TSpinner> = {
+		const value: ILoadingStateValue = {
 			loading: isBoolean ? initial : false,
-			spinner: undefined,
 		}
 
 		super(value)
@@ -106,20 +90,10 @@ export class TLoadingState<TSpinner = any>
 		}
 	}
 
-	get spinner(): TSpinner | undefined {
-		return this._value.spinner
-	}
-
 	startLoading(): void {
 		if (this._value.loading) return
 
 		this._value.loading = true
-
-		// Создаем spinner если задана фабрика
-		if (this.behavior.createSpinner && !this._value.spinner) {
-			this._value.spinner = this.behavior.createSpinner()
-		}
-
 		this.events.emit('change', { ...this._value })
 	}
 
@@ -127,8 +101,6 @@ export class TLoadingState<TSpinner = any>
 		if (!this._value.loading) return
 
 		this._value.loading = false
-		// Spinner остается доступен, но не показывается
-
 		this.events.emit('change', { ...this._value })
 	}
 }

@@ -1,12 +1,10 @@
 import { describe, it, expect, vi } from 'vitest'
 import { TLoadingState } from '../base/states'
-import { TSpinner } from '../components/spinner'
 
 describe('TLoadingState', () => {
 	it('создается с булевым значением', () => {
 		const state = new TLoadingState(false)
 		expect(state.loading).toBe(false)
-		expect(state.spinner).toBeUndefined()
 		expect(state.behavior.shouldDisable).toBeUndefined()
 	})
 
@@ -21,15 +19,12 @@ describe('TLoadingState', () => {
 	})
 
 	it('создается с behavior объектом', () => {
-		const createSpinner = vi.fn(() => new TSpinner())
 		const state = new TLoadingState({
 			shouldDisable: true,
-			createSpinner,
 		})
 
 		expect(state.loading).toBe(false)
 		expect(state.behavior.shouldDisable).toBe(true)
-		expect(state.behavior.createSpinner).toBe(createSpinner)
 	})
 
 	it('startLoading() устанавливает loading = true и эмитит change', () => {
@@ -40,7 +35,7 @@ describe('TLoadingState', () => {
 		state.startLoading()
 
 		expect(state.loading).toBe(true)
-		expect(handler).toHaveBeenCalledWith({ loading: true, spinner: undefined })
+		expect(handler).toHaveBeenCalledWith({ loading: true })
 	})
 
 	it('stopLoading() устанавливает loading = false и эмитит change', () => {
@@ -51,7 +46,7 @@ describe('TLoadingState', () => {
 		state.stopLoading()
 
 		expect(state.loading).toBe(false)
-		expect(handler).toHaveBeenCalledWith({ loading: false, spinner: undefined })
+		expect(handler).toHaveBeenCalledWith({ loading: false })
 	})
 
 	it('повторный вызов startLoading() не эмитит change', () => {
@@ -76,36 +71,6 @@ describe('TLoadingState', () => {
 		expect(handler).toHaveBeenCalledTimes(1)
 	})
 
-	it('создает spinner через createSpinner при startLoading', () => {
-		const spinner = new TSpinner()
-		const createSpinner = vi.fn(() => spinner)
-
-		const state = new TLoadingState({
-			createSpinner,
-		})
-
-		state.startLoading()
-
-		expect(createSpinner).toHaveBeenCalledTimes(1)
-		expect(state.spinner).toBe(spinner)
-	})
-
-	it('не создает spinner повторно при повторном startLoading', () => {
-		const spinner = new TSpinner()
-		const createSpinner = vi.fn(() => spinner)
-
-		const state = new TLoadingState({
-			createSpinner,
-		})
-
-		state.startLoading()
-		state.stopLoading()
-		state.startLoading()
-
-		expect(createSpinner).toHaveBeenCalledTimes(1)
-		expect(state.spinner).toBe(spinner)
-	})
-
 	it('сеттер loading вызывает startLoading/stopLoading', () => {
 		const state = new TLoadingState(false)
 		const handler = vi.fn()
@@ -119,31 +84,6 @@ describe('TLoadingState', () => {
 		state.loading = false
 		expect(state.loading).toBe(false)
 		expect(handler).toHaveBeenCalledTimes(2)
-	})
-
-	it('не создает spinner если createSpinner не задана', () => {
-		const state = new TLoadingState({
-			shouldDisable: true,
-			// createSpinner не задана
-		})
-
-		state.startLoading()
-
-		expect(state.spinner).toBeUndefined()
-	})
-
-	it('spinner остается после stopLoading', () => {
-		const spinner = new TSpinner()
-		const state = new TLoadingState({
-			createSpinner: () => spinner,
-		})
-
-		state.startLoading()
-		expect(state.spinner).toBe(spinner)
-
-		state.stopLoading()
-		expect(state.spinner).toBe(spinner) // spinner не удаляется
-		expect(state.loading).toBe(false)
 	})
 
 	it('поддерживает кастомное наследование', () => {

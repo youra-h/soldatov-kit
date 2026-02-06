@@ -1,20 +1,17 @@
-import { TLoadingState, type ILoadingState } from '../states'
 import { TValueControl } from '../value-control'
 import type { IInputControlProps, TInputControlEvents, TInputControlStatesOptions, TInputControlState } from './types'
 import type { IComponentViewOptions } from '../component-view'
 import { TComponentView } from '../component-view'
-import { resolveState } from '../../common/resolve-state'
 
 /**
- * База для текстовых инпутов.
+ * База для input-элементов (текстовые поля, checkbox, switch и т.д.).
  *
  * Наследует:
  * - интерактивность (disabled/focused)
- * - значение `value: string` (commit + input)
+ * - значение `value` (commit + input)
  * - name
  *
- * Добавляет простые свойства: readonly/required/invalid/state.
- * Добавляет loading через TLoadingState (без автоматического disabled).
+ * Добавляет: readonly/required/invalid/state.
  */
 export default class TInputControl<
 	TValue = string,
@@ -28,14 +25,12 @@ export default class TInputControl<
 		required: false,
 		invalid: false,
 		state: 'normal',
-		loading: false,
 	}
 
 	protected _readonly: boolean
 	protected _required: boolean
 	protected _invalid: boolean
 	protected _state: TInputControlState
-	protected _loadingState: ILoadingState<any>
 
 	constructor(options: IComponentViewOptions<TProps, TStates> | Partial<TProps> = {}) {
 		super(options)
@@ -55,29 +50,6 @@ export default class TInputControl<
 		if (this._invalid && this._state !== 'error') {
 			this._state = 'error'
 		}
-
-		// Loading через TLoadingState БЕЗ автоматического disabled
-		const loadingInitial = states?.loading
-			? undefined
-			: {
-					shouldDisable: false, // НЕ делаем disabled при loading для input
-					createSpinner: undefined, // Spinner создается на уровне UI
-				}
-
-		this._loadingState = resolveState<ILoadingState<any>, boolean | any>(
-			states?.loading,
-			TLoadingState,
-			loadingInitial,
-		)
-
-		// Устанавливаем начальное значение loading из props
-		if (props.loading !== undefined) {
-			this._loadingState.loading = props.loading
-		}
-
-		this._loadingState.events.on('change', (value) => {
-			this.events.emit('change:loading', value.loading)
-		})
 	}
 
 	get readonly(): boolean {
@@ -123,17 +95,6 @@ export default class TInputControl<
 		this.events.emit('change:state', value)
 	}
 
-	get loadingState(): ILoadingState<any> {
-		return this._loadingState
-	}
-
-	get loading(): boolean {
-		return this._loadingState.loading
-	}
-	set loading(value: boolean) {
-		this._loadingState.loading = value
-	}
-
 	getProps(): TProps {
 		return {
 			...super.getProps(),
@@ -141,7 +102,6 @@ export default class TInputControl<
 			required: this._required,
 			invalid: this._invalid,
 			state: this._state as any,
-			loading: this.loading,
 		} as TProps
 	}
 }

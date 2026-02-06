@@ -6,7 +6,6 @@ import type {
 	TButtonEvents,
 	TButtonStatesOptions,
 } from './types'
-import { TSpinner } from '../spinner'
 import { TComponentView, type IComponentViewOptions } from '../../base/component-view'
 import { TLoadingState, type ILoadingState } from '../../base/states'
 import { resolveState } from '../../common/resolve-state'
@@ -23,7 +22,7 @@ export default class TButton extends TTextable<IButtonProps, TButtonEvents> impl
 	}
 
 	protected _appearance: TButtonAppearance
-	protected _loadingState: ILoadingState<TSpinner>
+	protected _loadingState: ILoadingState
 
 	constructor(
 		options:
@@ -41,22 +40,14 @@ export default class TButton extends TTextable<IButtonProps, TButtonEvents> impl
 
 		this._appearance = props.appearance ?? TButton.defaultValues.appearance!
 
-		// Создаем loading state с дефолтным поведением для кнопки
-		// Если передан states.loading, используем его, иначе создаем с дефолтным behavior
+		// Создаем loading state с shouldDisable: true для кнопки
 		const loadingInitial = states?.loading
-			? undefined // resolveState сам разберется
+			? undefined
 			: {
-					shouldDisable: true,
-					createSpinner: () =>
-						new TSpinner({
-							props: {
-								size: this.size,
-								variant: this.variant,
-							},
-						}),
+					shouldDisable: true, // Кнопка становится disabled при loading
 				}
 
-		this._loadingState = resolveState<ILoadingState<TSpinner>, boolean | any>(
+		this._loadingState = resolveState<ILoadingState, boolean | any>(
 			states?.loading,
 			TLoadingState,
 			loadingInitial,
@@ -74,19 +65,6 @@ export default class TButton extends TTextable<IButtonProps, TButtonEvents> impl
 			}
 			this.events.emit('change:loading', value.loading)
 		})
-
-		// Синхронизируем size/variant со spinner
-		this.events.on('change:variant', (value) => {
-			if (this._loadingState.spinner) {
-				this._loadingState.spinner.variant = value
-			}
-		})
-
-		this.events.on('change:size', (value) => {
-			if (this._loadingState.spinner) {
-				this._loadingState.spinner.size = value
-			}
-		})
 	}
 
 	get appearance(): TButtonAppearance {
@@ -99,7 +77,7 @@ export default class TButton extends TTextable<IButtonProps, TButtonEvents> impl
 		}
 	}
 
-	get loadingState(): ILoadingState<TSpinner> {
+	get loadingState(): ILoadingState {
 		return this._loadingState
 	}
 

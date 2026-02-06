@@ -2,7 +2,6 @@ import type { ITextable, ITextableProps, TTextableEvents, TTextableStatesOptions
 import type { TComponentVariant } from '../../common/types'
 import type { TStateCtor } from '../../base/states'
 import type { ILoadingState, ILoadingBehavior } from '../../base/states'
-import { TSpinner } from '../spinner'
 
 export type TButtonAppearance = 'normal' | 'plain' | 'outlined'
 
@@ -20,7 +19,7 @@ export type TButtonEvents = TTextableEvents & {
 }
 
 export type TButtonStatesOptions = TTextableStatesOptions & {
-	loading?: TStateCtor<ILoadingState<TSpinner>, boolean | ILoadingBehavior<TSpinner>> | ILoadingState<TSpinner>
+	loading?: TStateCtor<ILoadingState, boolean | ILoadingBehavior> | ILoadingState
 }
 
 export interface IButton extends ITextable<IButtonProps, TButtonEvents> {
@@ -29,5 +28,5 @@ export interface IButton extends ITextable<IButtonProps, TButtonEvents> {
 	/** Показывается ли индикатор загрузки */
 	loading: boolean
 	/** State объект управления загрузкой */
-	readonly loadingState: ILoadingState<TSpinner>
+	readonly loadingState: ILoadingState
 }
