@@ -41,6 +41,7 @@ const componentProps = ref<{
 	loading: boolean
 	loadingDisabled: boolean
 	spinnerType: SpinnerType
+	spinner: any
 }>({
 	visible: true,
 	rendered: true,
@@ -52,6 +53,7 @@ const componentProps = ref<{
 	loading: false,
 	loadingDisabled: true,
 	spinnerType: 'default',
+	spinner: null,
 })
 
 // Ref для Instance demo
@@ -83,6 +85,7 @@ const handleHide = () => {
 					v-model:loading="componentProps.loading"
 					v-model:disabled="componentProps.loadingDisabled"
 					v-model:spinner-type="componentProps.spinnerType"
+					@update:spinner="componentProps.spinner = $event"
 				/>
 			</div>
 		</template>

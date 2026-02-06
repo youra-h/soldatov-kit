@@ -1,13 +1,10 @@
 <script setup lang="ts">
-import { computed } from 'vue'
 import { Button, emitsButton } from '@ui/button'
-import { TSpinner, TLoadingState } from '@core'
 import PanelDemo from '../../common/PanelDemo.vue'
 import { useEventLogger } from '../../common/useEventLogger'
 import type { EventLogEntry } from '../../common/EventLog.vue'
 import type { TComponentSize, TComponentVariant, TButtonAppearance } from '@core'
-
-type SpinnerType = 'none' | 'default' | 'small' | 'large' | 'primary' | 'danger'
+import type { VNode } from 'vue'
 
 type Props = {
 	visible?: boolean
@@ -20,7 +17,7 @@ type Props = {
 	// Loading props
 	loading?: boolean
 	loadingDisabled?: boolean
-	spinnerType?: SpinnerType
+	spinner?: VNode | null
 }
 
 const props = defineProps<Props>()
@@ -31,34 +28,6 @@ const emit = defineEmits<{
 
 // Создаем обработчики событий через композабл
 const { handlers } = useEventLogger(emit, emitsButton)
-
-// Создаем loading state в зависимости от настроек
-const loadingState = computed(() => {
-	if (!props.loading) return undefined
-
-	// Если spinnerType = 'none', не создаем spinner
-	if (props.spinnerType === 'none') {
-		return new TLoadingState({
-			shouldDisable: props.loadingDisabled,
-		})
-	}
-
-	// Создаем spinner в зависимости от типа
-	const spinnerConfig: Record<string, { size?: TComponentSize; variant?: TComponentVariant }> = {
-		default: {},
-		small: { size: 'sm' },
-		large: { size: 'lg' },
-		primary: { variant: 'primary' },
-		danger: { variant: 'danger' },
-	}
-
-	const config = spinnerConfig[props.spinnerType || 'default']
-
-	return new TLoadingState({
-		shouldDisable: props.loadingDisabled,
-		createSpinner: () => new TSpinner(config),
-	})
-})
 </script>
 
 <template>
@@ -69,10 +38,14 @@ const loadingState = computed(() => {
 			:size="size"
 			:variant="variant"
 			:appearance="appearance"
-			:disabled="disabled"
+			:disabled="loadingDisabled && loading ? true : disabled"
 			:text="text"
-			:loading-state="loadingState"
+			:loading="loading"
 			v-bind="handlers"
-		/>
+		>
+			<template v-if="loading && spinner" #after>
+				<component :is="spinner" />
+			</template>
+		</Button>
 	</PanelDemo>
 </template>

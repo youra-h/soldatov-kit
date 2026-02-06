@@ -1,6 +1,9 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, h } from 'vue'
 import PropertyField from './PropertyField.vue'
+import { Spinner } from '@ui/spinner'
+import type { TComponentSize, TComponentVariant } from '@core'
+import type { VNode } from 'vue'
 
 type SpinnerType = 'none' | 'default' | 'small' | 'large' | 'primary' | 'danger'
 
@@ -14,6 +17,7 @@ type Emits = {
 	'update:loading': [value: boolean]
 	'update:disabled': [value: boolean]
 	'update:spinnerType': [value: SpinnerType]
+	'update:spinner': [value: VNode | null]
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -38,8 +42,32 @@ const localDisabled = computed({
 
 const localSpinnerType = computed({
 	get: () => props.spinnerType,
-	set: (value) => emit('update:spinnerType', value),
+	set: (value) => {
+		emit('update:spinnerType', value)
+		emit('update:spinner', createSpinner(value))
+	},
 })
+
+// Создаем Spinner компонент на основе типа
+const createSpinner = (type: SpinnerType): VNode | null => {
+	if (type === 'none') return null
+
+	const spinnerConfig: Record<string, { size?: TComponentSize; variant?: TComponentVariant }> = {
+		default: {},
+		small: { size: 'sm' },
+		large: { size: 'lg' },
+		primary: { variant: 'primary' },
+		danger: { variant: 'danger' },
+	}
+
+	const config = spinnerConfig[type]
+	return h(Spinner, config)
+}
+
+// Эмитим начальный spinner при монтировании
+if (props.loading && props.spinnerType) {
+	emit('update:spinner', createSpinner(props.spinnerType))
+}
 </script>
 
 <template>

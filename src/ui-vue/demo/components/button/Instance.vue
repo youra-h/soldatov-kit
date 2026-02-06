@@ -1,14 +1,13 @@
 <script setup lang="ts">
 import { reactive, watch } from 'vue'
 import { Button, emitsButton } from '@ui/button'
-import { TButton, TSpinner, TLoadingState } from '@core'
+import { TButton, TLoadingState } from '@core'
 import PanelDemo from '../../common/PanelDemo.vue'
 import { useSyncPropsToInstance } from '../../common/useSyncPropsToInstance'
 import { useEventLogger, useCoreEventLogger } from '../../common/useEventLogger'
 import type { EventLogEntry } from '../../common/EventLog.vue'
 import type { TComponentSize, TComponentVariant, TButtonAppearance } from '@core'
-
-type SpinnerType = 'none' | 'default' | 'small' | 'large' | 'primary' | 'danger'
+import type { VNode } from 'vue'
 
 type Props = {
 	visible?: boolean
@@ -21,7 +20,7 @@ type Props = {
 	// Loading props
 	loading?: boolean
 	loadingDisabled?: boolean
-	spinnerType?: SpinnerType
+	spinner?: VNode | null
 }
 
 const props = defineProps<Props>()
@@ -29,32 +28,6 @@ const props = defineProps<Props>()
 const emit = defineEmits<{
 	log: [entry: EventLogEntry]
 }>()
-
-// Создаем loading state функцию для реактивного обновления
-const createLoadingState = () => {
-	if (!props.loading) return undefined
-
-	if (props.spinnerType === 'none') {
-		return new TLoadingState({
-			shouldDisable: props.loadingDisabled,
-		})
-	}
-
-	const spinnerConfig: Record<string, { size?: TComponentSize; variant?: TComponentVariant }> = {
-		default: {},
-		small: { size: 'sm' },
-		large: { size: 'lg' },
-		primary: { variant: 'primary' },
-		danger: { variant: 'danger' },
-	}
-
-	const config = spinnerConfig[props.spinnerType || 'default']
-
-	return new TLoadingState({
-		shouldDisable: props.loadingDisabled,
-		createSpinner: () => new TSpinner(config),
-	})
-}
 
 // Создаем инстанс компонента
 const instance = reactive(
@@ -83,7 +56,7 @@ useCoreEventLogger(instance, logEvent, emitsButton)
 // Синхронизация props с instance (кроме loading-related props)
 useSyncPropsToInstance(props, instance)
 
-// Отдельный watch для loading - просто toggle boolean
+// Watch для loading - просто toggle boolean
 watch(
 	() => props.loading,
 	(newVal) => {
@@ -92,10 +65,29 @@ watch(
 		}
 	},
 )
+
+// Watch для loadingDisabled - управляем shouldDisable в loadingState
+watch(
+	() => props.loadingDisabled,
+	(newVal) => {
+		if (newVal !== undefined) {
+			instance.loadingState.behavior.shouldDisable = newVal
+			// Если loading активен, синхронизируем disabled
+			if (instance.loading) {
+				instance.disabled = newVal
+			}
+		}
+	},
+	{ immediate: true },
+)
 </script>
 
 <template>
 	<PanelDemo info="Managed by TButton instance">
-		<Button :is="instance" v-bind="handlers" />
+		<Button :is="instance" v-bind="handlers">
+			<template v-if="loading && spinner" #after>
+				<component :is="spinner" />
+			</template>
+		</Button>
 	</PanelDemo>
 </template>
