@@ -53,10 +53,10 @@ describe('TButton', () => {
 		const btn = new TButton({ size: 'normal', variant: 'normal' })
 
 		// Spinner создается лениво при первом обращении к loading state
-		expect(btn.spinner).toBeUndefined()
+		expect(btn.loadingState.spinner).toBeUndefined()
 
 		btn.loading = true
-		const sp = btn.spinner
+		const sp = btn.loadingState.spinner
 		expect(sp).toBeInstanceOf(TSpinner)
 		expect(sp!.variant).toBe('normal')
 		expect(sp!.size).toBe('normal')
@@ -96,13 +96,13 @@ describe('TButton', () => {
 
 		expect(btn.loading).toBe(false)
 		expect(btn.disabled).toBe(false)
-		expect(btn.spinner).toBeUndefined()
+		expect(btn.loadingState.spinner).toBeUndefined()
 
 		btn.loading = true
 
 		expect(btn.loading).toBe(true)
 		expect(btn.disabled).toBe(true) // автоматически disabled при loading
-		expect(btn.spinner).toBeInstanceOf(TSpinner)
+		expect(btn.loadingState.spinner).toBeInstanceOf(TSpinner)
 	})
 
 	it('loading state: можно переопределить behavior через DI', () => {
@@ -119,7 +119,7 @@ describe('TButton', () => {
 
 		expect(btn.loading).toBe(true)
 		expect(btn.disabled).toBe(false) // не disabled
-		expect(btn.spinner).toBeUndefined() // нет spinner
+		expect(btn.loadingState.spinner).toBeUndefined() // нет spinner
 	})
 
 	it('loading state: можно использовать кастомный LoadingState', () => {
@@ -147,7 +147,7 @@ describe('TButton', () => {
 
 		expect(btn.loading).toBe(true)
 		expect(customState.customFlag).toBe(true)
-		expect(btn.spinner!.size).toBe('lg')
+		expect(btn.loadingState.spinner!.size).toBe('lg')
 	})
 
 	it('loading state: эмитит change:loading при изменении', () => {
