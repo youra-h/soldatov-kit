@@ -1,14 +1,19 @@
 <script setup lang="ts">
 import { Button } from '@ui/button'
-import { Icon } from '@ui/icon'
+import { Icon, useIconImport } from '@ui/icon'
 import type { TComponentSize, TComponentVariant } from '@core'
 
 type Props = {
 	size?: TComponentSize
 	variant?: TComponentVariant
+	disabled?: boolean
 }
 
 const props = defineProps<Props>()
+
+const icon1 = useIconImport('/src/icons/home.svg')
+const icon2 = useIconImport('/src/icons/check.svg')
+const icon3 = useIconImport('/src/icons/close.svg')
 </script>
 
 <template>
@@ -20,19 +25,36 @@ const props = defineProps<Props>()
 			<div class="demo-section">
 				<h4 class="demo-section-title">Normal</h4>
 				<div class="demo-section-content">
-					<Button :size="size" :variant="variant" appearance="normal" text="Default" />
-					<Button :size="size" :variant="variant" appearance="normal" text="With Icon">
+					<Button
+						:size="size"
+						:variant="variant"
+						appearance="normal"
+						text="Default"
+						:disabled="disabled"
+					/>
+					<Button
+						:size="size"
+						:variant="variant"
+						appearance="normal"
+						text="With Icon"
+						:disabled="disabled"
+					>
 						<template #before>
-							<Icon name="home" :size="size" />
+							<Icon :tag="icon1" :size="size" />
 						</template>
 					</Button>
-					<Button :size="size" :variant="variant" appearance="normal">
+					<Button
+						:size="size"
+						:variant="variant"
+						appearance="normal"
+						:disabled="disabled"
+					>
 						<template #before>
-							<Icon name="heart" :size="size" />
+							<Icon :tag="icon2" :size="size" />
 						</template>
 						Icon Both
 						<template #after>
-							<Icon name="arrow-right" :size="size" />
+							<Icon :tag="icon3" :size="size" />
 						</template>
 					</Button>
 				</div>
@@ -42,19 +64,31 @@ const props = defineProps<Props>()
 			<div class="demo-section">
 				<h4 class="demo-section-title">Plain</h4>
 				<div class="demo-section-content">
-					<Button :size="size" :variant="variant" appearance="plain" text="Default" />
-					<Button :size="size" :variant="variant" appearance="plain" text="With Icon">
+					<Button
+						:size="size"
+						:variant="variant"
+						appearance="plain"
+						text="Default"
+						:disabled="disabled"
+					/>
+					<Button
+						:size="size"
+						:variant="variant"
+						appearance="plain"
+						text="With Icon"
+						:disabled="disabled"
+					>
 						<template #before>
-							<Icon name="settings" :size="size" />
+							<Icon :tag="icon1" :size="size" />
 						</template>
 					</Button>
-					<Button :size="size" :variant="variant" appearance="plain">
+					<Button :size="size" :variant="variant" appearance="plain" :disabled="disabled">
 						<template #before>
-							<Icon name="star" :size="size" />
+							<Icon :tag="icon2" :size="size" />
 						</template>
 						Icon Both
 						<template #after>
-							<Icon name="arrow-right" :size="size" />
+							<Icon :tag="icon3" :size="size" />
 						</template>
 					</Button>
 				</div>
@@ -64,19 +98,36 @@ const props = defineProps<Props>()
 			<div class="demo-section">
 				<h4 class="demo-section-title">Outlined</h4>
 				<div class="demo-section-content">
-					<Button :size="size" :variant="variant" appearance="outlined" text="Default" />
-					<Button :size="size" :variant="variant" appearance="outlined" text="With Icon">
+					<Button
+						:size="size"
+						:variant="variant"
+						appearance="outlined"
+						text="Default"
+						:disabled="disabled"
+					/>
+					<Button
+						:size="size"
+						:variant="variant"
+						appearance="outlined"
+						text="With Icon"
+						:disabled="disabled"
+					>
 						<template #before>
-							<Icon name="user" :size="size" />
+							<Icon :tag="icon1" :size="size" />
 						</template>
 					</Button>
-					<Button :size="size" :variant="variant" appearance="outlined">
+					<Button
+						:size="size"
+						:variant="variant"
+						appearance="outlined"
+						:disabled="disabled"
+					>
 						<template #before>
-							<Icon name="mail" :size="size" />
+							<Icon :tag="icon2" :size="size" />
 						</template>
 						Icon Both
 						<template #after>
-							<Icon name="arrow-right" :size="size" />
+							<Icon :tag="icon3" :size="size" />
 						</template>
 					</Button>
 				</div>

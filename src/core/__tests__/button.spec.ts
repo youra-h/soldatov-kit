@@ -30,7 +30,10 @@ describe('TButton', () => {
 		expect(btn.classes).toContain('s-btn--plain')
 	})
 
+	it('spinner: создаётся лениво через TLoadingState и синхронизирует size/variant от кнопки', () => {
+		const btn = new TButton({ size: 'normal', variant: 'normal' })
 
+		// Spinner создается лениво при первом обращении к loading state
 		expect(btn.loadingState.spinner).toBeUndefined()
 
 		btn.loading = true

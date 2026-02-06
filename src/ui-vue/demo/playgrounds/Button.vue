@@ -100,7 +100,7 @@ const handleHide = () => {
 		</template>
 
 		<template #slots-demo>
-			<SlotsDemo :size="componentProps.size" :variant="componentProps.variant" />
+			<SlotsDemo :size="componentProps.size" :variant="componentProps.variant" :disabled="componentProps.disabled"/>
 		</template>
 	</PlaygroundLayout>
 </template>
