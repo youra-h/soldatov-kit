@@ -26,7 +26,6 @@ export default class TSwitch
 		)
 
 		this.value = props.value ?? (TSwitch.defaultValues.value as boolean | null)
-		this.icon = props.icon ?? TSwitch.defaultValues.icon!
 
 		// legacy compat: UI layer historically listens to changeValue
 		this.events.on('change:value' as any, (value: boolean | null) => {
@@ -78,7 +77,6 @@ export default class TSwitch
 	getProps(): ISwitchProps {
 		return {
 			...super.getProps(),
-			icon: this.icon,
 		}
 	}
 }

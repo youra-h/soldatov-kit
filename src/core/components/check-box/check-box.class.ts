@@ -33,9 +33,6 @@ export default class TCheckBox
 		this.value = props.value ?? (TCheckBox.defaultValues.value as boolean | null)
 		this._indeterminate = props.indeterminate ?? TCheckBox.defaultValues.indeterminate!
 		this._plain = props.plain ?? TCheckBox.defaultValues.plain!
-		this.icon = props.icon ?? TCheckBox.defaultValues.icon!
-		this.indeterminateIcon =
-			props.indeterminateIcon ?? TCheckBox.defaultValues.indeterminateIcon!
 
 		// legacy compat: UI layer historically listens to changeValue
 		this.events.on('change:value' as any, (value: boolean | null) => {
@@ -152,8 +149,6 @@ export default class TCheckBox
 			...super.getProps(),
 			indeterminate: this.indeterminate,
 			plain: this.plain,
-			icon: this.icon,
-			indeterminateIcon: this.indeterminateIcon,
 		}
 	}
 }

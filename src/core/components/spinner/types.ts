@@ -17,6 +17,10 @@ export interface ISpinnerProps extends IComponentViewProps {
 export type TSpinnerEvents = TComponentViewEvents & {}
 
 export interface ISpinner extends IComponentView<ISpinnerProps, TSpinnerEvents> {
+	/** Размер компонента */
 	size: TComponentSize
+	/** Вариант отображения */
 	variant: TComponentVariant
+	/** Толщина бордера */
+	borderWidth: number | 'auto'
 }

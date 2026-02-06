@@ -19,7 +19,6 @@ export default class TButton extends TTextable<IButtonProps, TButtonEvents> impl
 		...TTextable.defaultValues,
 		variant: 'normal',
 		appearance: 'normal',
-		icon: undefined,
 		tag: 'button',
 		loading: false,
 	}
@@ -43,7 +42,6 @@ export default class TButton extends TTextable<IButtonProps, TButtonEvents> impl
 		this._tag = props.tag ?? TButton.defaultValues.tag!
 
 		this._appearance = props.appearance ?? TButton.defaultValues.appearance!
-		this.icon = props.icon ?? TButton.defaultValues.icon!
 
 		// Создаем loading state с дефолтным поведением для кнопки
 		// Если передан states.loading, используем его, иначе создаем с дефолтным behavior
@@ -149,7 +147,6 @@ export default class TButton extends TTextable<IButtonProps, TButtonEvents> impl
 		return {
 			...super.getProps(),
 			appearance: this._appearance,
-			icon: this._icon,
 			loading: this.loading,
 		}
 	}

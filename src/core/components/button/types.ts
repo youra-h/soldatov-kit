@@ -12,8 +12,6 @@ export interface IButtonProps extends ITextableProps {
 	variant?: TComponentVariant
 	// Внешний вид кнопки
 	appearance?: TButtonAppearance
-	// Иконка кнопки
-	icon?: TIcon
 	// Показать индикатор загрузки
 	loading?: boolean
 }
@@ -27,5 +25,12 @@ export type TButtonStatesOptions = TTextableStatesOptions & {
 }
 
 export interface IButton extends ITextable<IButtonProps, TButtonEvents> {
+	/** Внешний вид кнопки */
+	appearance: TButtonAppearance
+	/** Иконка кнопки */
+	icon?: TIcon
+	/** Показывается ли индикатор загрузки */
+	loading: boolean
+	/** State объект управления загрузкой */
 	readonly loadingState: ILoadingState<TSpinner>
 }

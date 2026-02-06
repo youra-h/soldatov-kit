@@ -17,7 +17,10 @@ export type TIconEvents = TComponentViewEvents & {
 }
 
 export interface IIcon extends IComponentView<IIconProps, TIconEvents> {
+	/** Размер иконки */
 	size: TComponentSize
+	/** Ширина иконки */
 	width?: number | string
+	/** Высота иконки */
 	height?: number | string
 }

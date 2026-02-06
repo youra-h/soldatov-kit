@@ -4,8 +4,6 @@ import type { TIcon } from '../icon'
 
 export interface ISwitchProps extends IInputControlProps<boolean | null> {
 	value: boolean | null
-	// Иконка для состояния "включено"
-	icon?: TIcon
 }
 
 export type TSwitchEvents = TInputControlEvents<boolean | null> & {
@@ -15,4 +13,9 @@ export type TSwitchEvents = TInputControlEvents<boolean | null> & {
 	changeValue: (value: boolean | null) => void
 }
 
-export interface ISwitch extends IInputControl<boolean | null, ISwitchProps, TSwitchEvents> {}
+export interface ISwitch extends IInputControl<boolean | null, ISwitchProps, TSwitchEvents> {
+	/** Иконка для состояния "включено" */
+	icon?: TIcon
+	/** Переключает состояние компонента */
+	change(event?: Event): void
+}
