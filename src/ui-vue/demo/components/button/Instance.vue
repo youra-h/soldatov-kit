@@ -73,9 +73,9 @@ watch(
 		if (newVal !== undefined) {
 			instance.loadingState.behavior.shouldDisable = newVal
 			// Если loading активен, синхронизируем disabled
-			if (instance.loading) {
-				instance.disabled = newVal
-			}
+			// if (instance.loading) {
+			// 	instance.disabled = newVal
+			// }
 		}
 	},
 	{ immediate: true },

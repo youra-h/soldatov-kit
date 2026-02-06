@@ -117,4 +117,66 @@ describe('TButton', () => {
 		btn.loading = false
 		expect(handler).toHaveBeenCalledWith(false)
 	})
+
+	it('loading + disabled взаимодействие: ручной disabled приоритетнее loading', () => {
+		const btn = new TButton()
+
+		// Сценарий 1: disabled = false, loading = true → disabled становится true
+		expect(btn.disabled).toBe(false)
+		btn.loading = true
+		expect(btn.disabled).toBe(true)
+		expect(btn.loading).toBe(true)
+
+		// Сценарий 2: loading = true (disabled = true), затем вручную disabled = false
+		btn.disabled = false
+		expect(btn.disabled).toBe(false) // disabled явно установлен в false
+		expect(btn.loading).toBe(true) // loading все еще true
+
+		// Сценарий 3: loading = false, disabled остается false (не возвращается к true)
+		btn.loading = false
+		expect(btn.disabled).toBe(false) // остается false, так как был установлен вручную
+		expect(btn.loading).toBe(false)
+	})
+
+	it('loading + disabled взаимодействие: ручной disabled = true не перезаписывается loading', () => {
+		const btn = new TButton()
+
+		// Сценарий 1: вручную disabled = true
+		btn.disabled = true
+		expect(btn.disabled).toBe(true)
+
+		// Сценарий 2: loading = true не должен ничего менять (disabled уже true)
+		btn.loading = true
+		expect(btn.disabled).toBe(true)
+		expect(btn.loading).toBe(true)
+
+		// Сценарий 3: loading = false, disabled остается true (был установлен вручную)
+		btn.loading = false
+		expect(btn.disabled).toBe(true) // остается true
+		expect(btn.loading).toBe(false)
+	})
+
+	it('loading + disabled взаимодействие: циклическое переключение', () => {
+		const btn = new TButton()
+
+		// loading = true → disabled = true (автоматически)
+		btn.loading = true
+		expect(btn.disabled).toBe(true)
+
+		// loading = false → disabled = false (автоматически)
+		btn.loading = false
+		expect(btn.disabled).toBe(false)
+
+		// loading = true снова → disabled = true (автоматически)
+		btn.loading = true
+		expect(btn.disabled).toBe(true)
+
+		// вручную disabled = false (при активном loading)
+		btn.disabled = false
+		expect(btn.disabled).toBe(false)
+
+		// loading = false → disabled остается false (был установлен вручную)
+		btn.loading = false
+		expect(btn.disabled).toBe(false)
+	})
 })

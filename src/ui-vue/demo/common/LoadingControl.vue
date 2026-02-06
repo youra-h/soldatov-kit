@@ -76,7 +76,7 @@ if (props.loading && props.spinnerType) {
 			<input v-model="localLoading" type="checkbox" class="loading-control__checkbox" />
 		</PropertyField>
 
-		<div v-if="loading" class="loading-control__options">
+		<div class="loading-control__options">
 			<PropertyField label="disabled">
 				<input v-model="localDisabled" type="checkbox" class="loading-control__checkbox" />
 			</PropertyField>
