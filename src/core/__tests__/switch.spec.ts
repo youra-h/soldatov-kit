@@ -1,6 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
 import { TSwitch } from '../components/switch'
-import { TIcon } from '../components/icon'
 
 describe('TSwitch', () => {
 	it('создаётся через { props } и через plain props; baseClass override только через { baseClass, props }', () => {
@@ -46,16 +45,5 @@ describe('TSwitch', () => {
 		expect(spy).toHaveBeenCalled()
 		const payload = spy.mock.calls[0]![0]
 		expect(payload).toMatchObject({ event, value: true })
-	})
-
-	it('icon создаётся через getInstance и синхронизирует size', () => {
-		const sw = new TSwitch({ size: 'normal' })
-
-		sw.icon = { tag: 'i1', size: 'xl' } as any
-		expect(sw.icon).toBeInstanceOf(TIcon)
-		expect(sw.icon!.size).toBe('normal')
-
-		sw.size = 'xl'
-		expect(sw.icon!.size).toBe('xl')
 	})
 })

@@ -1,6 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
 import { TCheckBox } from '../components/check-box'
-import { TIcon } from '../components/icon'
 
 describe('TCheckBox', () => {
 	it('создаётся через { props } и через plain props; baseClass override только через { baseClass, props }', () => {
@@ -84,21 +83,5 @@ describe('TCheckBox', () => {
 
 		cb.indeterminate = true
 		expect(cb.getAriaChecked()).toBe('mixed')
-	})
-
-	it('icon/indeterminateIcon создаются через getInstance и синхронизируют size', () => {
-		const cb = new TCheckBox({ size: 'normal' })
-
-		cb.icon = { tag: 'i1', size: 'xl' } as any
-		expect(cb.icon).toBeInstanceOf(TIcon)
-		expect(cb.icon!.size).toBe('normal')
-
-		cb.indeterminateIcon = { tag: 'i2', size: 'xl' } as any
-		expect(cb.indeterminateIcon).toBeInstanceOf(TIcon)
-		expect(cb.indeterminateIcon!.size).toBe('normal')
-
-		cb.size = 'xl'
-		expect(cb.icon!.size).toBe('xl')
-		expect(cb.indeterminateIcon!.size).toBe('xl')
 	})
 })

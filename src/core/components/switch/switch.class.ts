@@ -1,7 +1,6 @@
 import { TInputControl } from '../../base/input-control'
 import { TComponentView, type IComponentViewOptions } from '../../base/component-view'
 import type { ISwitch, ISwitchProps, TSwitchEvents } from './types'
-import { TIcon } from '../icon'
 
 
 export default class TSwitch
@@ -16,8 +15,6 @@ export default class TSwitch
 		variant: 'normal',
 	}
 
-	protected _icon?: TIcon
-
 	constructor(options: IComponentViewOptions<ISwitchProps> | Partial<ISwitchProps> = {}) {
 		super(options)
 
@@ -31,24 +28,6 @@ export default class TSwitch
 		this.events.on('change:value' as any, (value: boolean | null) => {
 			this.events.emit('changeValue' as any, value)
 		})
-
-		this.events.on('change:size' as any, (value: any) => {
-			if (this._icon) this._icon.size = value
-		})
-	}
-
-	get icon(): TIcon | undefined {
-		return this._icon
-	}
-
-	set icon(value: TIcon | undefined) {
-		if (this._icon !== value) {
-			this._icon = value ? TIcon.getInstance(value) : undefined
-
-			if (this._icon) {
-				this._icon.size = this.size
-			}
-		}
 	}
 
 	get classes(): string[] {

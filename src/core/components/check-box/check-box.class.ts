@@ -1,7 +1,6 @@
 import { TInputControl } from '../../base/input-control'
 import { TComponentView, type IComponentViewOptions } from '../../base/component-view'
 import type { ICheckBox, ICheckBoxProps, TCheckBoxEvents } from './types'
-import { TIcon } from '../icon'
 
 
 export default class TCheckBox
@@ -20,8 +19,6 @@ export default class TCheckBox
 
 	protected _indeterminate: boolean
 	protected _plain: boolean
-	protected _icon?: TIcon
-	protected _indeterminateIcon?: TIcon
 
 	constructor(options: IComponentViewOptions<ICheckBoxProps> | Partial<ICheckBoxProps> = {}) {
 		super(options)
@@ -37,11 +34,6 @@ export default class TCheckBox
 		// legacy compat: UI layer historically listens to changeValue
 		this.events.on('change:value' as any, (value: boolean | null) => {
 			this.events.emit('changeValue' as any, value)
-		})
-
-		this.events.on('change:size' as any, (value: any) => {
-			if (this._icon) this._icon.size = value
-			if (this._indeterminateIcon) this._indeterminateIcon.size = value
 		})
 	}
 
@@ -63,34 +55,6 @@ export default class TCheckBox
 	set plain(value: boolean) {
 		if (this._plain !== value) {
 			this._plain = value
-		}
-	}
-
-	get icon(): TIcon | undefined {
-		return this._icon
-	}
-
-	set icon(value: TIcon | undefined) {
-		if (this._icon !== value) {
-			this._icon = value ? TIcon.getInstance(value) : undefined
-
-			if (this._icon) {
-				this._icon.size = this.size
-			}
-		}
-	}
-
-	get indeterminateIcon(): TIcon | undefined {
-		return this._indeterminateIcon
-	}
-
-	set indeterminateIcon(value: TIcon | undefined) {
-		if (this._indeterminateIcon !== value) {
-			this._indeterminateIcon = value ? TIcon.getInstance(value) : undefined
-
-			if (this._indeterminateIcon) {
-				this._indeterminateIcon.size = this.size
-			}
 		}
 	}
 

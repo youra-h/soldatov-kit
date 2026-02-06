@@ -1,5 +1,4 @@
 import type { IInputControl, IInputControlProps, TInputControlEvents } from '../../base/input-control'
-import type { TIcon } from '../icon'
 
 
 export interface ICheckBoxProps extends IInputControlProps<boolean | null> {
@@ -22,10 +21,6 @@ export interface ICheckBox extends IInputControl<boolean | null, ICheckBoxProps,
 	indeterminate: boolean
 	/** Упрощенный вид */
 	plain: boolean
-	/** Иконка для состояния "отмечено" */
-	icon?: TIcon
-	/** Иконка для состояния "не определено" */
-	indeterminateIcon?: TIcon
 	/** Переключает состояние чекбокса */
 	change(event?: Event): void
 	/** Возвращает значение для aria-атрибута checked */

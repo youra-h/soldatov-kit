@@ -31,12 +31,13 @@ export default {
 		:disabled="instance.disabled || undefined"
 		@click="instance.events.emit('click', $event)"
 	>
-		<slot name="before">
-			<Icon v-if="instance.icon" :is="instance.icon" />
-		</slot>
+		<slot name="before"> </slot>
 		<slot>{{ instance.text }}</slot>
 		<slot name="after">
-			<Spinner v-if="instance.loading && instance.loadingState.spinner" :is="instance.loadingState.spinner" />
+			<Spinner
+				v-if="instance.loading && instance.loadingState.spinner"
+				:is="instance.loadingState.spinner"
+			/>
 		</slot>
 	</component>
 </template>

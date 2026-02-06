@@ -6,7 +6,6 @@ import type {
 	TButtonEvents,
 	TButtonStatesOptions,
 } from './types'
-import { TIcon } from '../icon'
 import { TSpinner } from '../spinner'
 import { TComponentView, type IComponentViewOptions } from '../../base/component-view'
 import { TLoadingState, type ILoadingState } from '../../base/states'
@@ -24,7 +23,6 @@ export default class TButton extends TTextable<IButtonProps, TButtonEvents> impl
 	}
 
 	protected _appearance: TButtonAppearance
-	protected _icon?: TIcon
 	protected _loadingState: ILoadingState<TSpinner>
 
 	constructor(
@@ -88,10 +86,6 @@ export default class TButton extends TTextable<IButtonProps, TButtonEvents> impl
 			if (this._loadingState.spinner) {
 				this._loadingState.spinner.size = value
 			}
-
-			if (this._icon) {
-				this._icon.size = value
-			}
 		})
 	}
 
@@ -102,21 +96,6 @@ export default class TButton extends TTextable<IButtonProps, TButtonEvents> impl
 	set appearance(value: TButtonAppearance) {
 		if (value && this._appearance !== value) {
 			this._appearance = value
-		}
-	}
-
-	get icon(): TIcon | undefined {
-		return this._icon
-	}
-
-	set icon(value: TIcon | undefined) {
-		if (this._icon !== value) {
-			// Если value не типа TIcon, создаем новый экземпляр
-			this._icon = value ? TIcon.getInstance(value) : undefined
-
-			if (this._icon) {
-				this._icon.size = this.size
-			}
 		}
 	}
 

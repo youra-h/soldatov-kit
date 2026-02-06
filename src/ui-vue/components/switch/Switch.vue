@@ -2,7 +2,6 @@
 import { TSwitch, type ISwitchProps } from '../../../core'
 import BaseSwitch, { syncSwitch } from './base.component'
 import { useBaseSetup } from '../../composables/useBaseSetup'
-import { Icon } from '../icon'
 
 export default {
 	name: '_Switch',
@@ -38,7 +37,10 @@ export default {
 			<div class="s-switch__track--thumb">
 				<transition name="fade" mode="out-in">
 					<Spinner v-if="instance.loading && instance.loadingState.spinner" :is="instance.loadingState.spinner" />
-					<Icon v-else-if="instance.icon" :is="instance.icon" />
+					<!-- Слот для иконки (показывается когда checked) -->
+					<slot v-else-if="instance.value" name="icon" :value="instance.value">
+						<!-- Дефолтной иконки нет, слот остается пустым -->
+					</slot>
 				</transition>
 			</div>
 		</div>

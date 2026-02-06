@@ -1,5 +1,4 @@
 import type { IInputControl, IInputControlProps, TInputControlEvents } from '../../base/input-control'
-import type { TIcon } from '../icon'
 
 
 export interface ISwitchProps extends IInputControlProps<boolean | null> {
@@ -14,8 +13,6 @@ export type TSwitchEvents = TInputControlEvents<boolean | null> & {
 }
 
 export interface ISwitch extends IInputControl<boolean | null, ISwitchProps, TSwitchEvents> {
-	/** Иконка для состояния "включено" */
-	icon?: TIcon
 	/** Переключает состояние компонента */
 	change(event?: Event): void
 }

@@ -1,6 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
 import { TButton } from '../components/button'
-import { TIcon } from '../components/icon'
 import { TSpinner } from '../components/spinner'
 import { TLoadingState } from '../base/states'
 import type { IButtonProps } from '../components/button'
@@ -31,28 +30,7 @@ describe('TButton', () => {
 		expect(btn.classes).toContain('s-btn--plain')
 	})
 
-	it('icon: принимает инстанс и создаёт через getInstance из объекта/тэга; синхронизирует size', () => {
-		const btn = new TButton({ size: 'normal' })
 
-		const icon1 = new TIcon({ tag: 'i1', size: 'lg' })
-		btn.icon = icon1
-		expect(btn.icon).toBe(icon1)
-		// сеттер кнопки должен привести размер иконки к размеру кнопки
-		expect(btn.icon!.size).toBe('normal')
-
-		btn.icon = TIcon.getInstance({ tag: 'i2', size: 'xl' })
-		expect(btn.icon).toBeInstanceOf(TIcon)
-		expect(btn.icon!.size).toBe('normal')
-
-		// размер кнопки меняется -> иконка синхронизируется через обработчик change:size
-		btn.size = 'xl'
-		expect(btn.icon!.size).toBe('xl')
-	})
-
-	it('spinner: создаётся лениво через TLoadingState и синхронизирует size/variant от кнопки', () => {
-		const btn = new TButton({ size: 'normal', variant: 'normal' })
-
-		// Spinner создается лениво при первом обращении к loading state
 		expect(btn.loadingState.spinner).toBeUndefined()
 
 		btn.loading = true

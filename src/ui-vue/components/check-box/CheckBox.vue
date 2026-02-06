@@ -3,7 +3,6 @@ import { TCheckBox, type ICheckBoxProps } from '../../../core'
 import BaseCheckBox, { syncCheckBox } from './base.component'
 import { useBaseSetup } from '../../composables/useBaseSetup'
 import { Icon, useIconImport } from '../icon'
-import { TIcon } from '../../../core'
 
 export default {
 	name: '_CheckBox',
@@ -17,19 +16,11 @@ export default {
 			emit,
 		})
 
-		if (!instance.icon) {
-			instance.icon = TIcon.create({
-				tag: useIconImport('/src/packages/icons/check.svg'),
-			})
-		}
+		// Иконки по умолчанию
+		const defaultIconTag = useIconImport('/src/packages/icons/check.svg')
+		const defaultIndeterminateIconTag = useIconImport('/src/packages/icons/check_indeterminate.svg')
 
-		if (!instance.indeterminateIcon) {
-			instance.indeterminateIcon = TIcon.create({
-				tag: useIconImport('/src/packages/icons/check_indeterminate.svg'),
-			})
-		}
-
-		return { instance }
+		return { instance, defaultIconTag, defaultIndeterminateIconTag }
 	},
 }
 </script>
@@ -48,14 +39,23 @@ export default {
 			@change="instance.change($event)"
 		/>
 		<div class="s-check-box__container">
-			<slot name="icon" :value="instance.value" :indeterminate="instance.indeterminate">
-				<Icon v-if="instance.icon && instance.value" :is="instance.icon" />
-				<Icon
-					v-else-if="
-						instance.indeterminate && instance.indeterminateIcon && !!!instance.value
-					"
-					:is="instance.indeterminateIcon"
-				/>
+			<!-- Слот для checked иконки -->
+			<slot
+				v-if="instance.value && !instance.indeterminate"
+				name="icon"
+				:value="instance.value"
+				:indeterminate="instance.indeterminate"
+			>
+				<Icon :tag="defaultIconTag" :size="instance.size" />
+			</slot>
+			<!-- Слот для indeterminate иконки -->
+			<slot
+				v-else-if="instance.indeterminate"
+				name="indeterminate-icon"
+				:value="instance.value"
+				:indeterminate="instance.indeterminate"
+			>
+				<Icon :tag="defaultIndeterminateIconTag" :size="instance.size" />
 			</slot>
 		</div>
 	</div>
