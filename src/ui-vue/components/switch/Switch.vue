@@ -37,7 +37,7 @@ export default {
 		<div class="s-switch__track">
 			<div class="s-switch__track--thumb">
 				<transition name="fade" mode="out-in">
-					<Spinner v-if="instance.loading" :is="instance.spinner" />
+					<Spinner v-if="instance.loading && instance.loadingState.spinner" :is="instance.loadingState.spinner" />
 					<Icon v-else-if="instance.icon" :is="instance.icon" />
 				</transition>
 			</div>

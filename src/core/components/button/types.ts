@@ -26,4 +26,6 @@ export type TButtonStatesOptions = TTextableStatesOptions & {
 	loading?: TStateCtor<ILoadingState<TSpinner>, boolean | ILoadingBehavior<TSpinner>> | ILoadingState<TSpinner>
 }
 
-export interface IButton extends ITextable<IButtonProps, TButtonEvents> {}
+export interface IButton extends ITextable<IButtonProps, TButtonEvents> {
+	readonly loadingState: ILoadingState<TSpinner>
+}

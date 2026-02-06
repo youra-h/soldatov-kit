@@ -38,6 +38,7 @@ export interface IInputControl<
 	invalid: boolean
 	state: TInputControlState
 	loading: boolean
+	readonly loadingState: ILoadingState<any>
 }
 
 // Backward-compatible aliases for the common text-input case

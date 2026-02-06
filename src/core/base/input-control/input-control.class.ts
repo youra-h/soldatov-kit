@@ -123,6 +123,10 @@ export default class TInputControl<
 		this.events.emit('change:state', value)
 	}
 
+	get loadingState(): ILoadingState<any> {
+		return this._loadingState
+	}
+
 	get loading(): boolean {
 		return this._loadingState.loading
 	}

@@ -122,16 +122,16 @@ export default class TButton extends TTextable<IButtonProps, TButtonEvents> impl
 		}
 	}
 
+	get loadingState(): ILoadingState<TSpinner> {
+		return this._loadingState
+	}
+
 	get loading(): boolean {
 		return this._loadingState.loading
 	}
 
 	set loading(value: boolean) {
 		this._loadingState.loading = value
-	}
-
-	get spinner(): TSpinner | undefined {
-		return this._loadingState.spinner
 	}
 
 	get classes(): string[] {

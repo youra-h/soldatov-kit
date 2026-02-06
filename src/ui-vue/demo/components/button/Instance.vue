@@ -81,7 +81,7 @@ const { handlers, logEvent } = useEventLogger(emit, emitsButton)
 useCoreEventLogger(instance, logEvent, emitsButton)
 
 // Синхронизация props с instance (кроме loading-related props)
-useSyncPropsToInstance(props, instance, ['loading', 'loadingDisabled', 'spinnerType'])
+useSyncPropsToInstance(props, instance)
 
 // Отдельный watch для loading - просто toggle boolean
 watch(
