@@ -8,7 +8,6 @@ import {
 } from '../../../core'
 import { BaseTextable, emitsTextable, propsTextable, syncTextable } from '../textable'
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types'
-import { Icon } from '../icon'
 import { Spinner } from '../spinner'
 
 export const emitsButton: TEmits = [...emitsTextable, 'change:loading', 'update:loading'] as const
@@ -18,10 +17,6 @@ export const propsButton: TProps = {
 	appearance: {
 		type: String as PropType<IButtonProps['appearance']>,
 		default: TButton.defaultValues.appearance,
-	},
-	icon: {
-		type: Object as PropType<IButtonProps['icon']>,
-		default: TButton.defaultValues.icon,
 	},
 	loading: {
 		type: Boolean as PropType<IButtonProps['loading']>,
@@ -36,7 +31,7 @@ export const propsButton: TProps = {
 export default {
 	name: 'BaseButton',
 	extends: BaseTextable,
-	components: { Icon, Spinner },
+	components: { Spinner },
 	emits: emitsButton,
 	props: propsButton,
 }
@@ -46,7 +41,11 @@ export default {
  * @param props
  * @param instance
  */
-export function syncButton(options: ISyncComponentModelOptions<IButtonProps, IButton> & { props: { loadingShouldDisable?: boolean } }) {
+export function syncButton(
+	options: ISyncComponentModelOptions<IButtonProps, IButton> & {
+		props: { loadingShouldDisable?: boolean }
+	},
+) {
 	syncTextable(options)
 
 	const { instance, props, emit } = options
@@ -61,15 +60,6 @@ export function syncButton(options: ISyncComponentModelOptions<IButtonProps, IBu
 		emit?.('change:loading', value)
 		emit?.('update:loading', value)
 	})
-
-	watch<TIcon | undefined>(
-		() => props.icon,
-		(value) => {
-			if (value && value !== instance.icon) {
-				instance.icon = value
-			}
-		},
-	)
 
 	watch<TButtonAppearance | undefined>(
 		() => props.appearance,

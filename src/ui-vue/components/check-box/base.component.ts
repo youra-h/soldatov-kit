@@ -29,14 +29,6 @@ export const propsCheckBox: TProps = {
 		type: Boolean as PropType<ICheckBoxProps['plain']>,
 		default: TCheckBox.defaultValues.plain,
 	},
-	icon: {
-		type: Object as PropType<ICheckBoxProps['icon']>,
-		default: TCheckBox.defaultValues.icon,
-	},
-	indeterminateIcon: {
-		type: Object as PropType<ICheckBoxProps['indeterminateIcon']>,
-		default: TCheckBox.defaultValues.indeterminateIcon,
-	},
 }
 
 export default {
@@ -74,24 +66,6 @@ export function syncCheckBox(options: ISyncComponentModelOptions<ICheckBoxProps>
 		(value) => {
 			if (value !== undefined && value !== instance.plain) {
 				instance.plain = value
-			}
-		},
-	)
-
-	watch<TIcon | undefined>(
-		() => props.icon,
-		(value) => {
-			if (value !== instance.icon) {
-				instance.icon = value
-			}
-		},
-	)
-
-	watch<TIcon | undefined>(
-		() => props.indeterminateIcon,
-		(value) => {
-			if (value !== instance.indeterminateIcon) {
-				instance.indeterminateIcon = value
 			}
 		},
 	)
