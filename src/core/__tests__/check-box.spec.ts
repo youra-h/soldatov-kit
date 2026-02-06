@@ -12,7 +12,7 @@ describe('TCheckBox', () => {
 		expect(b.value).toBe(false)
 
 		const c = new TCheckBox({
-			baseClass: 's-cb',
+			renderConfig: { baseClass: 's-cb' },
 			props: { value: true, size: 'xl', variant: 'primary', plain: true },
 		})
 		expect(c.classes).toContain('s-cb')

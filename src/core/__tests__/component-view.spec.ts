@@ -15,8 +15,8 @@ describe('TComponentView', () => {
 		vi.useRealTimers()
 	})
 
-	it('принимает { props } и baseClass', () => {
-		const p = new TComponentView({ props: { id: 'x', tag: 'span', visible: false }, baseClass: 'my' })
+	it('принимает { props } и renderConfig с baseClass', () => {
+		const p = new TComponentView({ props: { id: 'x', tag: 'span', visible: false }, renderConfig: { baseClass: 'my' } })
 		expect(p.id).toBe('x')
 		expect(p.tag).toBe('span')
 		expect(p.visible).toBe(false)
@@ -24,29 +24,25 @@ describe('TComponentView', () => {
 	})
 
 	it('принимает "голые" props без ключа props', () => {
-		const p = new TComponentView({ id: 'x', tag: 'section', classes: ['a'], attrs: { role: 'x' } })
+		const p = new TComponentView({ id: 'x', tag: 'section' })
 		expect(p.id).toBe('x')
 		expect(p.tag).toBe('section')
 		expect(p.classes).toContain(TComponentView.baseClass)
-		expect(p.classes).toContain('a')
-		expect(p.attrs).toEqual({ role: 'x' })
 	})
 
-	it('getProps возвращает все свойства (включая baseClass/classes/attrs)', () => {
+	it('getProps возвращает бизнес-свойства (без baseClass/classes)', () => {
 		const p = new TComponentView<IComponentViewProps>({
 			id: 123,
 			tag: 'div',
 			visible: true,
-			classes: ['x'],
-			attrs: { a: 1 },
 		})
 		const props = p.getProps() as IComponentViewProps
 		expect(props.id).toBe(123)
 		expect(props.tag).toBe('div')
 		expect(props.visible).toBe(true)
-		expect(props.baseClass).toBe(TComponentView.baseClass)
-		expect(props.classes).toEqual(['x'])
-		expect(props.attrs).toEqual({ a: 1 })
+		// baseClass, classes больше не сериализуются
+		expect(props).not.toHaveProperty('baseClass')
+		expect(props).not.toHaveProperty('classes')
 	})
 
 	it('create создаёт инстанс и прокидывает id', () => {
@@ -94,27 +90,22 @@ describe('TComponentView', () => {
 		expect(hide).toHaveBeenCalled()
 	})
 
-	it('tag/attrs/setClasses эмитят change:*', () => {
+	it('tag/setClasses эмитят change:*', () => {
 		const p = new TComponentView()
 		const tagHandler = vi.fn()
-		const attrsHandler = vi.fn()
 		const classesHandler = vi.fn()
 		p.events.on('change:tag', tagHandler)
-		p.events.on('change:attrs', attrsHandler)
 		p.events.on('change:classes', classesHandler)
 
 		p.tag = 'section'
 		expect(tagHandler).toHaveBeenCalledWith('section')
-
-		p.attrs = { a: 1 }
-		expect(attrsHandler).toHaveBeenCalledWith({ a: 1 })
 
 		p.setClasses(['x'])
 		expect(classesHandler).toHaveBeenCalledWith(['x'])
 	})
 
 	it('toJSON сериализует getProps()', () => {
-		const p = new TComponentView({ id: 'x', tag: 'span', classes: ['a'] })
+		const p = new TComponentView({ id: 'x', tag: 'span' })
 		expect(p.toJSON()).toEqual(p.getProps())
 	})
 

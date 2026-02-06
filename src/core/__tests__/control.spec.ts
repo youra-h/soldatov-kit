@@ -6,7 +6,7 @@ describe('TControl', () => {
 	it('дисейбл/фокус трекают state и эмитят события', () => {
 		const ctrl = new TControl<IControlProps>({
 			props: { disabled: false, focused: false },
-			baseClass: 's-test',
+			renderConfig: { baseClass: 's-test' },
 		})
 		const disabledHandler = vi.fn()
 		const focusedHandler = vi.fn()
@@ -41,7 +41,7 @@ describe('TControl', () => {
 				disabled: true,
 				focused: false,
 			},
-			baseClass: 's-test',
+			renderConfig: { baseClass: 's-test' },
 		})
 		expect(ctrl.getProps()).toMatchObject({
 			variant: 'primary',

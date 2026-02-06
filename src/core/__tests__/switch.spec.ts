@@ -12,7 +12,7 @@ describe('TSwitch', () => {
 		expect(b.value).toBe(false)
 
 		const c = new TSwitch({
-			baseClass: 's-sw',
+			renderConfig: { baseClass: 's-sw' },
 			props: { value: true, size: 'xl', variant: 'primary' },
 		})
 		expect(c.classes).toContain('s-sw')

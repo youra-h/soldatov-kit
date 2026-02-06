@@ -30,13 +30,10 @@ export type TComponentViewEvents = TComponentModelEvents & {
 	'change:visible': (value: boolean) => void
 	/** change:rendered */
 	'change:rendered': (value: boolean) => void
-
 	/** change:tag */
 	'change:tag': (value: string | object) => void
 	/** change:classes (без baseClass) */
 	'change:classes': (value: string[]) => void
-	/** change:attrs */
-	'change:attrs': (value: Record<string, unknown>) => void
 }
 
 export interface IComponentViewProps extends IComponentModelProps {
@@ -45,20 +42,28 @@ export interface IComponentViewProps extends IComponentModelProps {
 	rendered?: boolean
 	/** Виден ли компонент (логическая видимость) */
 	visible?: boolean
-	classes?: string[] // dynamic classes (без baseClass)
-	attrs?: Record<string, unknown>
+}
+
+/**
+ * Конфигурация рендеринга компонента (НЕ сериализуется в props/JSON).
+ */
+export interface IComponentViewRenderConfig {
+	/** Базовый CSS-класс компонента (переопределяет дефолтный из класса) */
 	baseClass?: string
+	/** Дополнительные CSS-классы (без baseClass) */
+	classes?: string[]
 }
 
 /**
  * Опции для component-view-слоя.
- * props — начальные свойства, baseClass — базовый CSS-класс (можно переопределить для конкретного инстанса).
+ * props — начальные свойства, renderConfig — конфигурация отображения, states — инъекция state-объектов.
  */
 export interface IComponentViewOptions<
 	TProps extends IComponentViewProps = IComponentViewProps,
 	TStates extends TComponentViewStatesOptions = TComponentViewStatesOptions,
 > extends IComponentModelOptions<TProps> {
-	baseClass?: string
+	/** Конфигурация рендеринга (baseClass, classes) */
+	renderConfig?: IComponentViewRenderConfig
 	/**
 	 * Инъекция state-реализаций для rendered/visible.
 	 * Нужна, чтобы менять поведение state свойств без оверрайда геттеров/сеттеров.
@@ -66,27 +71,20 @@ export interface IComponentViewOptions<
 	states?: TStates
 }
 
-/**
- * Результат нормализации опций component-view-слоя.
- * Здесь `baseClass` гарантированно вычислен.
- */
-export type TComponentViewPreparedOptions<
-	TProps extends IComponentViewProps = IComponentViewProps,
-	TStates extends TComponentViewStatesOptions = TComponentViewStatesOptions,
-> = IComponentViewOptions<TProps, TStates> & {
-	props: Partial<TProps>
-	baseClass: string
-}
-
 export interface IComponentView<
 	TProps extends IComponentViewProps = IComponentViewProps,
 	TEvents extends Record<string, (...args: any) => any> = TComponentViewEvents,
 > extends IComponentModel<TProps, TEvents> {
-	readonly classes: string[]
-	readonly attrs: Record<string, unknown>
+	/** HTML-тег или компонент */
 	tag: string | object
+	/** Отрисован в DOM */
 	rendered: boolean
+	/** Логическая видимость */
 	visible: boolean
+	/** CSS-классы (включая baseClass и динамические) */
+	readonly classes: string[]
+	/** Показать компонент */
 	show(): void
+	/** Скрыть компонент */
 	hide(): void
 }

@@ -5,19 +5,18 @@ import { resolveState } from '../../common/resolve-state'
 import type {
 	IComponentViewOptions,
 	IComponentViewProps,
-	TComponentViewPreparedOptions,
+	IComponentViewRenderConfig,
 	TComponentViewEvents,
 	TComponentViewStatesOptions,
 } from './types'
 import { type IStateUnit, TStateUnit } from '../state-unit'
 
 /**
- * Web-component-view слой: tag/classes/attrs.
+ * Web-component-view слой: tag/classes.
  *
  * Это слой, который удобен для UI-обёрток (Vue/React):
  * - `tag` (div/button/custom)
  * - `classes` (baseClass + динамические)
- * - `attrs` (произвольные атрибуты)
  */
 export default class TComponentView<
 	TProps extends IComponentViewProps = IComponentViewProps,
@@ -32,8 +31,6 @@ export default class TComponentView<
 		tag: 'div',
 		rendered: true,
 		visible: true,
-		classes: [],
-		attrs: {},
 	}
 
 	protected _tag: string | object
@@ -41,37 +38,39 @@ export default class TComponentView<
 	protected _visibilityState: IVisibilityState
 	protected _baseClass: string
 	protected _classes: string[]
-	protected _attrs: Record<string, unknown>
 
 	static prepareOptions<
 		TProps extends IComponentViewProps = IComponentViewProps,
 		TStates extends TComponentViewStatesOptions = TComponentViewStatesOptions,
 	>(
 		options: IComponentViewOptions<TProps, TStates> | Partial<TProps>,
-	): TComponentViewPreparedOptions<TProps, TStates> {
+	): {
+		props: Partial<TProps>
+		renderConfig: IComponentViewRenderConfig
+		states?: TStates
+	} {
 		const defaultBaseClass = (this as typeof TComponentView).baseClass
 
 		const raw = options as Record<string, unknown>
 		const hasPropsKey = Object.prototype.hasOwnProperty.call(raw, 'props')
 		const hasStatesKey = Object.prototype.hasOwnProperty.call(raw, 'states')
-		const hasBaseClassKey = Object.prototype.hasOwnProperty.call(raw, 'baseClass')
+		const hasRenderConfigKey = Object.prototype.hasOwnProperty.call(raw, 'renderConfig')
 
-		// { baseClass: '...' } — считаем это "опциями", а не props
-		const isOnlyBaseClass =
-			hasBaseClassKey && Object.keys(raw).length === 1 && Object.keys(raw)[0] === 'baseClass'
-
-		// Если есть props/states — это точно options-объект
-		// Если только baseClass — тоже трактуем как options-объект
-		const isOptionsObject = hasPropsKey || hasStatesKey || isOnlyBaseClass
+		// Если есть props/states/renderConfig — это точно options-объект
+		const isOptionsObject = hasPropsKey || hasStatesKey || hasRenderConfigKey
 
 		if (isOptionsObject) {
 			const opt = options as IComponentViewOptions<TProps, TStates>
 			const props = (opt.props ?? {}) as Partial<TProps>
+			const renderConfig = opt.renderConfig ?? {}
 
 			return {
 				props,
+				renderConfig: {
+					baseClass: renderConfig.baseClass ?? defaultBaseClass,
+					classes: renderConfig.classes ?? [],
+				},
 				states: opt.states,
-				baseClass: opt.baseClass ?? props.baseClass ?? defaultBaseClass,
 			}
 		}
 
@@ -79,7 +78,10 @@ export default class TComponentView<
 		const props = options as Partial<TProps>
 		return {
 			props,
-			baseClass: props.baseClass ?? defaultBaseClass,
+			renderConfig: {
+				baseClass: defaultBaseClass,
+				classes: [],
+			},
 		}
 	}
 
@@ -87,7 +89,7 @@ export default class TComponentView<
 		const ctor = new.target as typeof TComponentView
 		const {
 			props = {} as Partial<TProps>,
-			baseClass,
+			renderConfig,
 			states,
 		} = ctor.prepareOptions<TProps, TStates>(options)
 
@@ -117,12 +119,8 @@ export default class TComponentView<
 			this.events.emit('change:visible', value),
 		)
 
-		this._baseClass = baseClass
-		this._classes = (props.classes ?? TComponentView.defaultValues.classes!) as string[]
-		this._attrs = (props.attrs ?? TComponentView.defaultValues.attrs!) as Record<
-			string,
-			unknown
-		>
+		this._baseClass = renderConfig.baseClass!
+		this._classes = renderConfig.classes!
 	}
 
 	get rendered(): boolean {
@@ -198,17 +196,6 @@ export default class TComponentView<
 		this.events.emit('change:tag', value)
 	}
 
-	get attrs(): Record<string, unknown> {
-		return this._attrs
-	}
-	set attrs(value: Record<string, unknown>) {
-		if (this._attrs === value) return
-
-		this._attrs = value
-
-		this.events.emit('change:attrs', value)
-	}
-
 	get classes(): string[] {
 		return [this._baseClass, ...this._classes]
 	}
@@ -227,9 +214,6 @@ export default class TComponentView<
 			tag: this._tag,
 			rendered: this.rendered,
 			visible: this.visible,
-			baseClass: this._baseClass,
-			classes: this._classes,
-			attrs: this._attrs,
 		} as TProps
 	}
 }

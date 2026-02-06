@@ -14,12 +14,12 @@ describe('TButton', () => {
 		const b = new TButton({ text: 'button 2' })
 		expect(b.text).toBe('button 2')
 
-		const c = new TButton({ props: { text: 'x' }, baseClass: 's-btn' })
+		const c = new TButton({ props: { text: 'x' }, renderConfig: { baseClass: 's-btn' } })
 		expect(c.classes).toContain('s-btn')
 	})
 
 	it('classes меняются при смене variant/size/appearance', () => {
-		const btn = new TButton({ baseClass: 's-btn' })
+		const btn = new TButton({ renderConfig: { baseClass: 's-btn' } })
 
 		btn.variant = 'primary'
 		expect(btn.classes).toContain('s-btn--primary')

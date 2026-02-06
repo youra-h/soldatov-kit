@@ -15,7 +15,7 @@ describe('TIcon', () => {
 		expect(b.size).toBe('lg')
 		expect(b.classes).toContain('s-icon--size-lg')
 
-		const c = new TIcon({ props: { tag: 'c', size: 'normal' }, baseClass: 's-test-icon' })
+		const c = new TIcon({ props: { tag: 'c', size: 'normal' }, renderConfig: { baseClass: 's-test-icon' } })
 		expect(c.classes).toContain('s-test-icon')
 		expect(c.classes).toContain('s-test-icon--size-normal')
 	})

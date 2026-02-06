@@ -20,7 +20,7 @@ describe('TSpinner', () => {
 
 		const c = new TSpinner({
 			props: { size: 'xl', variant: 'success' },
-			baseClass: 's-test-spinner',
+			renderConfig: { baseClass: 's-test-spinner' },
 		})
 		expect(c.classes).toContain('s-test-spinner')
 		expect(c.classes).toContain('s-test-spinner--size-xl')

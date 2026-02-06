@@ -23,7 +23,7 @@ describe('TStylable', () => {
 	it('getProps отражает size и variant', () => {
 		const stylable = new TStylable<IStylableProps>({
 			props: { size: 'lg', variant: 'primary' },
-			baseClass: 's-test',
+			renderConfig: { baseClass: 's-test' },
 		})
 		expect(stylable.getProps()).toMatchObject({ size: 'lg', variant: 'primary' })
 	})
@@ -37,7 +37,7 @@ describe('TStylable', () => {
 
 		const stylable = new TStylable<IStylableProps>({
 			props: { size: 'xl' },
-			baseClass: 's-test',
+			renderConfig: { baseClass: 's-test' },
 			states: { size: TCustomSizeState },
 		})
 
