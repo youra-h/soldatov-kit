@@ -16,7 +16,7 @@ type Props = {
 	required?: boolean
 	invalid?: boolean
 	state?: TInputControlState
-	value?: boolean | null
+	value?: boolean
 	indeterminate?: boolean
 	plain?: boolean
 	icon?: string
