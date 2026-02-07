@@ -45,7 +45,7 @@ const componentProps = ref<{
 	size: TComponentSize
 	variant: TComponentVariant
 	state: TInputControlState
-	value: boolean | null
+	value: boolean
 	indeterminate: boolean
 	plain: boolean
 	icon: string

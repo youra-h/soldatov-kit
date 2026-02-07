@@ -19,7 +19,7 @@ type Props = {
 	required?: boolean
 	invalid?: boolean
 	state?: TInputControlState
-	value?: boolean | null
+	value?: boolean
 	iconBefore?: string
 	iconAfter?: string
 }
