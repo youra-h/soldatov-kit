@@ -28,7 +28,6 @@ export default {
 			:checked="instance.value"
 			:name="instance.name"
 			:disabled="instance.disabled"
-			:readonly="instance.readonly"
 			:required="instance.required"
 			:aria-checked="Boolean(instance.value)"
 			@click="instance.readonly ? $event.preventDefault() : null"
@@ -54,6 +53,7 @@ export default {
 <style lang="scss">
 @use './mixines' as mixines;
 @use './../../styles/fade';
+@use './../../styles/required' as required;
 @reference "./../../../foundation/tailwind";
 
 .s-switch {
@@ -169,6 +169,23 @@ export default {
 			$bg-hover: 200,
 			$bg-track: 100
 		);
+	}
+
+	&--required {
+		&::after {
+			@include required.required-indicator($top: '-top-0.5', $left: '-left-0.5');
+			@apply z-20;
+		}
+	}
+
+	&--readonly {
+		input {
+			@apply pointer-events-none;
+		}
+
+		#{$this}__track {
+			@apply opacity-60;
+		}
 	}
 }
 </style>

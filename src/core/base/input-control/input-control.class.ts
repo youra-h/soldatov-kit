@@ -107,6 +107,20 @@ export default class TInputControl<
 		this.events.emit('change:state', value)
 	}
 
+	get classes(): string[] {
+		const classes = [...super.classes]
+
+		if (this._required) {
+			classes.push(`${this._baseClass}--required`)
+		}
+
+		if (this._readonly) {
+			classes.push(`${this._baseClass}--readonly`)
+		}
+
+		return classes
+	}
+
 	getProps(): TProps {
 		return {
 			...super.getProps(),

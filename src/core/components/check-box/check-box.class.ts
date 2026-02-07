@@ -59,7 +59,6 @@ export default class TCheckBox
 	get classes(): string[] {
 		const classes = [...super.classes]
 
-		// Добавляем класс для внешнего вида, если он задан
 		if (this._indeterminate) {
 			classes.push(`${this._baseClass}--indeterminate`)
 		}

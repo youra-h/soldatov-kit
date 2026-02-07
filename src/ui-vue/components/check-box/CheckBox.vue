@@ -33,7 +33,6 @@ export default {
 			:checked="instance.value"
 			:name="instance.name"
 			:disabled="instance.disabled"
-			:readonly="instance.readonly"
 			:required="instance.required"
 			:aria-checked="instance.getAriaChecked()"
 			@click="instance.readonly ? $event.preventDefault() : null"
@@ -64,6 +63,7 @@ export default {
 
 <style lang="scss">
 @use './mixines' as mixines;
+@use './../../styles/required' as required;
 @reference "./../../../foundation/tailwind";
 
 .s-check-box {
@@ -120,6 +120,12 @@ export default {
 		#{$this}__container {
 			@apply border-0;
 			@apply bg-transparent;
+		}
+	}
+
+	&--required {
+		#{$this}__container::after {
+			@include required.required-indicator();
 		}
 	}
 

@@ -1,0 +1,17 @@
+@mixin required-indicator(
+	$size: '1',
+	$color: 'rose',
+	$shade: '500',
+	$top: '-top-1',
+	$left: '-left-1'
+) {
+	content: '';
+	@apply absolute;
+	@apply #{$top};
+	@apply #{$left};
+	@apply #{'w-' + $size};
+	@apply #{'h-' + $size};
+	@apply rounded-full;
+	@apply #{'bg-' + $color + '-' + $shade};
+	@apply pointer-events-none;
+}

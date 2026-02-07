@@ -28,12 +28,6 @@ export default class TSwitch
 		})
 	}
 
-	get classes(): string[] {
-		const classes = [...super.classes]
-
-		return classes
-	}
-
 	/**
 	 * Переключает состояние компонента
 	 * Если было true, то станет false
