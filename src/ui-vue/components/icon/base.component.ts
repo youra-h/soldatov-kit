@@ -1,5 +1,5 @@
 import { type PropType, watch } from 'vue'
-import { type IIconProps, TIcon, type TComponentSize } from '../../../core'
+import { type IIconProps, TIcon, type TComponentSize, type IIcon } from '../../../core'
 import {
 	ComponentView,
 	emitsComponentView,
@@ -42,7 +42,7 @@ export default {
  * @param props
  * @param instance
  */
-export function syncIcon(options: ISyncComponentModelOptions<IIconProps>) {
+export function syncIcon(options: ISyncComponentModelOptions<IIconProps, IIcon>) {
 	syncComponentView(options)
 
 	const { instance, props } = options

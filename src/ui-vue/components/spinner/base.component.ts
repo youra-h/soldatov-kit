@@ -4,6 +4,7 @@ import {
 	TSpinner,
 	type TComponentSize,
 	type TComponentVariant,
+	type ISpinner,
 } from '../../../core'
 import {
 	ComponentView,
@@ -43,7 +44,7 @@ export default {
  * @param props
  * @param instance
  */
-export function syncSpinner(options: ISyncComponentModelOptions<ISpinnerProps>) {
+export function syncSpinner(options: ISyncComponentModelOptions<ISpinnerProps, ISpinner>) {
 	syncComponentView(options)
 
 	const { instance, props } = options

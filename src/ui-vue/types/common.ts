@@ -5,6 +5,6 @@ export type TProps = Readonly<Record<string, any>>
 
 export interface ISyncComponentModelOptions<TProps, TInstance = any> {
 	props: TProps
-	instance: TInstance
+	instance: TInstance | UnwrapNestedRefs<TInstance>
 	emit?: (...args: any[]) => void
 }

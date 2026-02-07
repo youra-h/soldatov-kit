@@ -51,10 +51,6 @@ export const propsInputControl: TProps = {
 		type: String as PropType<IInputControlProps<any>['state']>,
 		default: TInputControl.defaultValues.state,
 	},
-	loading: {
-		type: Boolean as PropType<IInputControlProps<any>['loading']>,
-		default: TInputControl.defaultValues.loading,
-	},
 }
 
 export default {
@@ -139,15 +135,6 @@ export function syncInputControl<TValue = string>(
 		(value) => {
 			if (value !== undefined && value !== instance.state) {
 				instance.state = value
-			}
-		},
-	)
-
-	watch<boolean | undefined>(
-		() => props.loading,
-		(value) => {
-			if (value !== undefined && value !== instance.loading) {
-				instance.loading = value
 			}
 		},
 	)

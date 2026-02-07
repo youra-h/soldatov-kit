@@ -12,7 +12,7 @@ export type TValueControlEvents<T> = TControlEvents & {
 }
 
 export interface IValueControlProps<TValue> extends IControlProps {
-	value: TValue
+	value?: TValue
 	name?: string
 }
 

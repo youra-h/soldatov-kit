@@ -1,5 +1,5 @@
-import { type PropType, watch } from 'vue'
-import { type ISwitchProps, TSwitch, TIcon } from '../../../core'
+import { type PropType } from 'vue'
+import { type ISwitchProps, TSwitch } from '../../../core'
 import {
 	BaseInputControl,
 	emitsInputControl,

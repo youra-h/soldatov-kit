@@ -11,7 +11,7 @@ export default {
 
 		syncButton({
 			props,
-			instance: instance,
+			instance,
 			emit,
 		})
 
