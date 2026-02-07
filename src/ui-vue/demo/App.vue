@@ -1,34 +1,35 @@
 <script setup lang="ts">
 import { computed, markRaw, ref } from 'vue'
-import ComponentViewPlayground from './playgrounds/ComponentView.vue'
-import IconPlayground from './playgrounds/Icon.vue'
-import SpinnerPlayground from './playgrounds/Spinner.vue'
-import ButtonPlayground from './playgrounds/Button.vue'
+import ComponentView from './playgrounds/ComponentView.vue'
+import Icon from './playgrounds/Icon.vue'
+import Spinner from './playgrounds/Spinner.vue'
+import Button from './playgrounds/Button.vue'
+import CheckBox from './playgrounds/CheckBox.vue'
+import Switch from './playgrounds/Switch.vue'
 import EventLog from './common/EventLog.vue'
 import type { EventLogEntry } from './common/EventLog.vue'
 
 /**
- * Playground Manager
+ *  Manager
  *
  * Как добавить новый playground:
- * 1. Создайте <ComponentName>Playground.vue
- * 2. Импортируйте его: import ButtonPlayground from './ButtonPlayground.vue'
+ * 1. Создайте <ComponentName>.vue
+ * 2. Импортируйте его: import Button from './Button.vue'
  * 3. Добавьте в объект playgrounds с label
  */
 
 // Маппинг доступных playground компонентов
 const playgrounds = {
-	'component-view': { component: markRaw(ComponentViewPlayground), label: 'ComponentView' },
-	icon: { component: markRaw(IconPlayground), label: 'Icon' },
-	spinner: { component: markRaw(SpinnerPlayground), label: 'Spinner' },
-	button: { component: markRaw(ButtonPlayground), label: 'Button' },
-	// Добавьте здесь другие playground по мере создания:
-	// 'check-box': { component: markRaw(CheckBoxPlayground), label: 'CheckBox' },
-	// 'switch': { component: markRaw(SwitchPlayground), label: 'Switch' },
+	'component-view': { component: markRaw(ComponentView), label: 'ComponentView' },
+	icon: { component: markRaw(Icon), label: 'Icon' },
+	spinner: { component: markRaw(Spinner), label: 'Spinner' },
+	button: { component: markRaw(Button), label: 'Button' },
+	'check-box': { component: markRaw(CheckBox), label: 'CheckBox' },
+	switch: { component: markRaw(Switch), label: 'Switch' },
 } as const
 
 // Активный playground (можно управлять через меню)
-const activePlayground = ref<keyof typeof playgrounds>('component-view')
+const active = ref<keyof typeof playgrounds>('component-view')
 
 // View mode: 'sandbox' | 'logs'
 const activeView = ref<'sandbox' | 'logs'>('sandbox')
@@ -48,10 +49,10 @@ const handleClearLogs = () => {
 	eventLog.value = []
 }
 
-const CurrentPlayground = computed(() => {
-	const playground = playgrounds[activePlayground.value]
+const Current = computed(() => {
+	const playground = playgrounds[active.value]
 	if (!playground) {
-		console.error(`Playground "${activePlayground.value}" not found`)
+		console.error(` "${active.value}" not found`)
 		return null
 	}
 	return playground.component
@@ -97,9 +98,9 @@ const playgroundList = computed(() => {
 						:key="item.key"
 						:class="[
 							'pg-app__menu-item',
-							{ 'pg-app__menu-item--active': activePlayground === item.key },
+							{ 'pg-app__menu-item--active': active === item.key },
 						]"
-						@click="activePlayground = item.key"
+						@click="active = item.key"
 					>
 						{{ item.label }}
 					</button>
@@ -110,13 +111,13 @@ const playgroundList = computed(() => {
 			<main class="pg-app__main">
 				<!-- Sandbox View -->
 				<div v-if="activeView === 'sandbox'" class="pg-app__content">
-					<div v-if="CurrentPlayground" class="pg-app__container">
-						<component :is="CurrentPlayground" @log="handleLog" />
+					<div v-if="Current" class="pg-app__container">
+						<component :is="Current" @log="handleLog" />
 					</div>
 					<div v-else class="pg-app__error">
 						<div class="pg-app__error-content">
-							<h1 class="pg-app__error-title">Playground not found</h1>
-							<p class="pg-app__error-text">Check the activePlayground variable</p>
+							<h1 class="pg-app__error-title">not found</h1>
+							<p class="pg-app__error-text">Check the active variable</p>
 						</div>
 					</div>
 				</div>

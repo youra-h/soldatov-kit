@@ -17,8 +17,8 @@ export default {
 		})
 
 		// Иконки по умолчанию
-		const defaultIconTag = useIconImport('/src/packages/icons/check.svg')
-		const defaultIndeterminateIconTag = useIconImport('/src/packages/icons/check_indeterminate.svg')
+		const defaultIconTag = useIconImport('../../icons/check.svg')
+		const defaultIndeterminateIconTag = useIconImport('../../icons/check_indeterminate.svg')
 
 		return { instance, defaultIconTag, defaultIndeterminateIconTag }
 	},
@@ -63,7 +63,7 @@ export default {
 
 <style lang="scss">
 @use './mixines' as mixines;
-@reference "./../../theme";
+@reference "./../../../foundation/tailwind";
 
 .s-check-box {
 	$this: &;

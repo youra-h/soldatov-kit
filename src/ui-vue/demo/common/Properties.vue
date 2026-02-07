@@ -128,7 +128,7 @@ const hasVisibilityActions = computed(() => {
 
 .properties-panel {
 	@apply flex flex-col;
-	@apply gap-4;
+	@apply gap-1.5;
 
 	&__input,
 	&__select {

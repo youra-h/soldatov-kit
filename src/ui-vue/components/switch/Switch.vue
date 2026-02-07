@@ -52,13 +52,13 @@ export default {
 
 <style lang="scss">
 @use './mixines' as mixines;
-@use './../../common/mixines' as common;
-@reference "./../../theme";
+@use './../../styles/fade';
+@reference "./../../../foundation/tailwind";
 
 .s-switch {
 	$this: &;
 
-	@include common.fade-transition();
+	@include fade.fade-transition();
 
 	@apply relative select-none;
 	@apply inline-flex items-center;
