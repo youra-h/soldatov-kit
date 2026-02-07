@@ -21,7 +21,7 @@ export default {
 </script>
 
 <template>
-	<div :class="instance.classes">
+	<div v-if="instance.rendered" v-show="instance.visible" :class="instance.classes">
 		<input
 			type="checkbox"
 			:id="instance.id.toString()"
