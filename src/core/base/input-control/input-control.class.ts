@@ -1,5 +1,10 @@
 import { TValueControl } from '../value-control'
-import type { IInputControlProps, TInputControlEvents, TInputControlStatesOptions, TInputControlState } from './types'
+import type {
+	IInputControlProps,
+	TInputControlEvents,
+	TInputControlStatesOptions,
+	TInputControlState,
+} from './types'
 import type { IComponentViewOptions } from '../component-view'
 import { TComponentView } from '../component-view'
 
@@ -57,7 +62,9 @@ export default class TInputControl<
 	}
 	set readonly(value: boolean) {
 		if (this._readonly === value) return
+
 		this._readonly = value
+
 		this.events.emit('change:readonly', value)
 	}
 
@@ -66,7 +73,9 @@ export default class TInputControl<
 	}
 	set required(value: boolean) {
 		if (this._required === value) return
+
 		this._required = value
+
 		this.events.emit('change:required', value)
 	}
 
@@ -75,6 +84,7 @@ export default class TInputControl<
 	}
 	set invalid(value: boolean) {
 		if (this._invalid === value) return
+
 		this._invalid = value
 
 		// Автоматически устанавливаем state = 'error' при invalid = true
@@ -91,7 +101,9 @@ export default class TInputControl<
 	}
 	set state(value: TInputControlState) {
 		if (this._state === value) return
+
 		this._state = value
+
 		this.events.emit('change:state', value)
 	}
 

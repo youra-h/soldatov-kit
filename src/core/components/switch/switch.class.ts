@@ -2,7 +2,6 @@ import { TInputControl } from '../../base/input-control'
 import { TComponentView, type IComponentViewOptions } from '../../base/component-view'
 import type { ISwitch, ISwitchProps, TSwitchEvents } from './types'
 
-
 export default class TSwitch
 	extends TInputControl<boolean | undefined, ISwitchProps, TSwitchEvents>
 	implements ISwitch
@@ -18,15 +17,14 @@ export default class TSwitch
 	constructor(options: IComponentViewOptions<ISwitchProps> | Partial<ISwitchProps> = {}) {
 		super(options)
 
-		const { props = {} as Partial<ISwitchProps> } = TComponentView.prepareOptions<ISwitchProps>(
-			options as any,
-		)
+		const { props = {} as Partial<ISwitchProps> } =
+			TComponentView.prepareOptions<ISwitchProps>(options)
 
 		this.value = props.value ?? (TSwitch.defaultValues.value as boolean)
 
 		// legacy compat: UI layer historically listens to changeValue
-		this.events.on('change:value' as any, (value: boolean | undefined) => {
-			this.events.emit('changeValue' as any, value)
+		this.events.on('change:value', (value: boolean | undefined) => {
+			this.events.emit('changeValue', value)
 		})
 	}
 
@@ -41,12 +39,14 @@ export default class TSwitch
 	 * Если было true, то станет false
 	 */
 	change(event?: Event) {
+		if (this.readonly || this.disabled) return
+
 		const oldValue = this.value
 
 		this.value = this.value === true ? false : true
 
 		if (oldValue !== this.value) {
-			this.events.emit('change' as any, {
+			this.events.emit('change', {
 				event,
 				value: this.value,
 			})

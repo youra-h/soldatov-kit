@@ -2,7 +2,6 @@ import { TInputControl } from '../../base/input-control'
 import { TComponentView, type IComponentViewOptions } from '../../base/component-view'
 import type { ICheckBox, ICheckBoxProps, TCheckBoxEvents } from './types'
 
-
 export default class TCheckBox
 	extends TInputControl<boolean | undefined, ICheckBoxProps, TCheckBoxEvents>
 	implements ICheckBox
@@ -23,17 +22,16 @@ export default class TCheckBox
 	constructor(options: IComponentViewOptions<ICheckBoxProps> | Partial<ICheckBoxProps> = {}) {
 		super(options)
 
-		const { props = {} as Partial<ICheckBoxProps> } = TComponentView.prepareOptions<ICheckBoxProps>(
-			options as any,
-		)
+		const { props = {} as Partial<ICheckBoxProps> } =
+			TComponentView.prepareOptions<ICheckBoxProps>(options)
 
 		this.value = props.value ?? (TCheckBox.defaultValues.value as boolean)
 		this._indeterminate = props.indeterminate ?? TCheckBox.defaultValues.indeterminate!
 		this._plain = props.plain ?? TCheckBox.defaultValues.plain!
 
 		// legacy compat: UI layer historically listens to changeValue
-		this.events.on('change:value' as any, (value: boolean | undefined) => {
-			this.events.emit('changeValue' as any, value)
+		this.events.on('change:value', (value: boolean | undefined) => {
+			this.events.emit('changeValue', value)
 		})
 	}
 
@@ -44,7 +42,7 @@ export default class TCheckBox
 	set indeterminate(value: boolean) {
 		if (this._indeterminate !== value) {
 			this._indeterminate = value
-			this.events.emit('changeIndeterminate' as any, value)
+			this.events.emit('changeIndeterminate', value)
 		}
 	}
 
@@ -79,6 +77,8 @@ export default class TCheckBox
 	 * Если было true, то станет false
 	 */
 	change(event?: Event) {
+		if (this.readonly || this.disabled) return
+
 		const oldValue = this.value
 
 		if (this.indeterminate) {
@@ -89,7 +89,7 @@ export default class TCheckBox
 		}
 
 		if (oldValue !== this.value) {
-			this.events.emit('change' as any, {
+			this.events.emit('change', {
 				event,
 				value: this.value,
 			})
