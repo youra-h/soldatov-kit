@@ -30,17 +30,20 @@ export default {
 			:disabled="instance.disabled"
 			:readonly="instance.readonly"
 			:required="instance.required"
-			:aria-checked="instance.value"
+			:aria-checked="Boolean(instance.value)"
 			@change="instance.change($event)"
 		/>
 		<div class="s-switch__track">
 			<div class="s-switch__track--thumb">
 				<transition name="fade" mode="out-in">
-					<Spinner v-if="instance.loading && instance.loadingState.spinner" :is="instance.loadingState.spinner" />
-					<!-- Слот для иконки (показывается когда checked) -->
-					<slot v-else-if="instance.value" name="icon" :value="instance.value">
-						<!-- Дефолтной иконки нет, слот остается пустым -->
+					<slot
+						v-if="instance.value"
+						name="before"
+						:value="instance.value"
+						:instance="instance"
+					>
 					</slot>
+					<slot v-else name="after" :value="instance.value" :instance="instance"> </slot>
 				</transition>
 			</div>
 		</div>
