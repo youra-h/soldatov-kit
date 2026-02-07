@@ -85,10 +85,10 @@ const variants: TComponentVariant[] = VARIANTS
 
 		<!-- Custom icons in slots -->
 		<div class="sizes-demo__section">
-			<div class="sizes-demo__section-title">Custom Icons (Before/After slots)</div>
+			<div class="sizes-demo__section-title">Custom Icons (Off/After slots)</div>
 			<div class="sizes-demo__section-grid">
 				<div class="sizes-demo__section-item">
-					<div class="sizes-demo__section-label">Before icon (OFF)</div>
+					<div class="sizes-demo__section-label">Off icon (OFF)</div>
 					<Switch
 						:visible="visible"
 						:rendered="rendered"
@@ -96,7 +96,7 @@ const variants: TComponentVariant[] = VARIANTS
 						variant="primary"
 						:value="false"
 					>
-						<template #before>
+						<template #off>
 							<Icon :tag="useIconImport('/src/icons/close.svg')" size="lg" />
 						</template>
 					</Switch>
@@ -110,7 +110,7 @@ const variants: TComponentVariant[] = VARIANTS
 						variant="success"
 						:value="true"
 					>
-						<template #after>
+						<template #on>
 							<Icon :tag="useIconImport('/src/icons/check.svg')" size="lg" />
 						</template>
 					</Switch>
@@ -124,10 +124,10 @@ const variants: TComponentVariant[] = VARIANTS
 						variant="danger"
 						:value="true"
 					>
-						<template #before>
+						<template #off>
 							<Icon :tag="useIconImport('/src/icons/close.svg')" size="lg" />
 						</template>
-						<template #after>
+						<template #on>
 							<Icon :tag="useIconImport('/src/icons/home.svg')" size="lg" />
 						</template>
 					</Switch>
