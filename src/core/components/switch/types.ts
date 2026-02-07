@@ -1,18 +1,18 @@
 import type { IInputControl, IInputControlProps, TInputControlEvents } from '../../base/input-control'
 
 
-export interface ISwitchProps extends IInputControlProps<boolean | null> {
-	value: boolean | null
+export interface ISwitchProps extends IInputControlProps<boolean | undefined> {
+	// value наследуется от IInputControlProps<boolean | undefined>
 }
 
-export type TSwitchEvents = TInputControlEvents<boolean | null> & {
+export type TSwitchEvents = TInputControlEvents<boolean | undefined> & {
 	// Событие изменения значения
-	change: ({ event, value }: { event: Event; value: boolean | null }) => void
+	change: ({ event, value }: { event: Event; value: boolean | undefined }) => void
 	/** legacy alias (compat with UI emits) */
-	changeValue: (value: boolean | null) => void
+	changeValue: (value: boolean | undefined) => void
 }
 
-export interface ISwitch extends IInputControl<boolean | null, ISwitchProps, TSwitchEvents> {
+export interface ISwitch extends IInputControl<boolean | undefined, ISwitchProps, TSwitchEvents> {
 	/** Переключает состояние компонента */
 	change(event?: Event): void
 }

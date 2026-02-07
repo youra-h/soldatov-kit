@@ -4,7 +4,7 @@ import type { ISwitch, ISwitchProps, TSwitchEvents } from './types'
 
 
 export default class TSwitch
-	extends TInputControl<boolean | null, ISwitchProps, TSwitchEvents>
+	extends TInputControl<boolean | undefined, ISwitchProps, TSwitchEvents>
 	implements ISwitch
 {
 	static override baseClass = 's-switch'
@@ -22,10 +22,10 @@ export default class TSwitch
 			options as any,
 		)
 
-		this.value = props.value ?? (TSwitch.defaultValues.value as boolean | null)
+		this.value = props.value ?? (TSwitch.defaultValues.value as boolean)
 
 		// legacy compat: UI layer historically listens to changeValue
-		this.events.on('change:value' as any, (value: boolean | null) => {
+		this.events.on('change:value' as any, (value: boolean | undefined) => {
 			this.events.emit('changeValue' as any, value)
 		})
 	}

@@ -4,7 +4,7 @@ import type { ICheckBox, ICheckBoxProps, TCheckBoxEvents } from './types'
 
 
 export default class TCheckBox
-	extends TInputControl<boolean | null, ICheckBoxProps, TCheckBoxEvents>
+	extends TInputControl<boolean | undefined, ICheckBoxProps, TCheckBoxEvents>
 	implements ICheckBox
 {
 	static override baseClass = 's-check-box'
@@ -27,12 +27,12 @@ export default class TCheckBox
 			options as any,
 		)
 
-		this.value = props.value ?? (TCheckBox.defaultValues.value as boolean | null)
+		this.value = props.value ?? (TCheckBox.defaultValues.value as boolean)
 		this._indeterminate = props.indeterminate ?? TCheckBox.defaultValues.indeterminate!
 		this._plain = props.plain ?? TCheckBox.defaultValues.plain!
 
 		// legacy compat: UI layer historically listens to changeValue
-		this.events.on('change:value' as any, (value: boolean | null) => {
+		this.events.on('change:value' as any, (value: boolean | undefined) => {
 			this.events.emit('changeValue' as any, value)
 		})
 	}

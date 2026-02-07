@@ -1,22 +1,22 @@
 import type { IInputControl, IInputControlProps, TInputControlEvents } from '../../base/input-control'
 
 
-export interface ICheckBoxProps extends IInputControlProps<boolean | null> {
-	value: boolean | null
+export interface ICheckBoxProps extends IInputControlProps<boolean | undefined> {
+	// value наследуется от IInputControlProps<boolean | undefined>
 	// Отображать ли состояние "не определено"
 	indeterminate?: boolean
 	// Только отображать значение, без анимации и бордеров
 	plain?: boolean
 }
 
-export type TCheckBoxEvents = TInputControlEvents<boolean | null> & {
-	change: ({ event, value }: { event: Event; value: boolean | null }) => void
+export type TCheckBoxEvents = TInputControlEvents<boolean | undefined> & {
+	change: ({ event, value }: { event: Event; value: boolean | undefined }) => void
 	changeIndeterminate: (value: boolean) => void
 	/** legacy alias (compat with UI emits) */
-	changeValue: (value: boolean | null) => void
+	changeValue: (value: boolean | undefined) => void
 }
 
-export interface ICheckBox extends IInputControl<boolean | null, ICheckBoxProps, TCheckBoxEvents> {
+export interface ICheckBox extends IInputControl<boolean | undefined, ICheckBoxProps, TCheckBoxEvents> {
 	/** Состояние "не определено" */
 	indeterminate: boolean
 	/** Упрощенный вид */
