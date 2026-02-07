@@ -74,10 +74,10 @@ watch(
 <template>
 	<PanelDemo info="Managed by TSwitch instance">
 		<Switch :is="instance" v-bind="handlers">
-			<template v-if="iconBefore" #before>
+			<template v-if="iconBefore" #off>
 				<Icon :tag="useIconImport(iconBefore)" :size="instance.size" />
 			</template>
-			<template v-if="iconAfter" #after>
+			<template v-if="iconAfter" #on>
 				<Icon :tag="useIconImport(iconAfter)" :size="instance.size" />
 			</template>
 		</Switch>

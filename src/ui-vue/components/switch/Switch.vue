@@ -37,13 +37,13 @@ export default {
 			<div class="s-switch__track--thumb">
 				<transition name="fade" mode="out-in">
 					<slot
-						v-if="instance.value"
-						name="before"
+						v-if="!instance.value"
+						name="off"
 						:value="instance.value"
 						:instance="instance"
 					>
 					</slot>
-					<slot v-else name="after" :value="instance.value" :instance="instance"> </slot>
+					<slot v-else name="on" :value="instance.value" :instance="instance"> </slot>
 				</transition>
 			</div>
 		</div>

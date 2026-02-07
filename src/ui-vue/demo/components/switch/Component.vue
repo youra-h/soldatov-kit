@@ -46,10 +46,10 @@ const { handlers } = useEventLogger(emit, emitsSwitch)
 			:value="value"
 			v-bind="handlers"
 		>
-			<template v-if="iconBefore" #before>
+			<template v-if="iconBefore" #off>
 				<Icon :tag="useIconImport(iconBefore)" :size="size" />
 			</template>
-			<template v-if="iconAfter" #after>
+			<template v-if="iconAfter" #on>
 				<Icon :tag="useIconImport(iconAfter)" :size="size" />
 			</template>
 		</Switch>
