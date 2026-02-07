@@ -30,7 +30,7 @@ export default {
 		<input
 			type="checkbox"
 			:id="instance.id.toString()"
-			:checked="instance.value || undefined"
+			:checked="instance.value"
 			:name="instance.name"
 			:disabled="instance.disabled"
 			:readonly="instance.readonly"
