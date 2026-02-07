@@ -39,7 +39,10 @@ export default class TSwitch
 	 * Если было true, то станет false
 	 */
 	change(event?: Event) {
-		if (this.readonly || this.disabled) return
+		if (this.readonly) {
+			event?.preventDefault()
+			return
+		}
 
 		const oldValue = this.value
 

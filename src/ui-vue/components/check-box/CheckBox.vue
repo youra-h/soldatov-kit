@@ -36,6 +36,7 @@ export default {
 			:readonly="instance.readonly"
 			:required="instance.required"
 			:aria-checked="instance.getAriaChecked()"
+			@click="instance.readonly ? $event.preventDefault() : null"
 			@change="instance.change($event)"
 		/>
 		<div class="s-check-box__container">
