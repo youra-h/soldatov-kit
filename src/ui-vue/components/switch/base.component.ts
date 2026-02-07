@@ -1,5 +1,5 @@
 import { type PropType } from 'vue'
-import { type ISwitchProps, TSwitch } from '../../../core'
+import { type ISwitch, type ISwitchProps, TSwitch } from '../../../core'
 import {
 	BaseInputControl,
 	emitsInputControl,
@@ -32,6 +32,6 @@ export default {
  * @param props
  * @param instance
  */
-export function syncSwitch(options: ISyncComponentModelOptions<ISwitchProps>): void {
+export function syncSwitch(options: ISyncComponentModelOptions<ISwitchProps, ISwitch>): void {
 	syncInputControl(options)
 }
