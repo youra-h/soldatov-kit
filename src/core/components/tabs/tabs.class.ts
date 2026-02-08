@@ -1,79 +1,206 @@
-import { TComponent, type IComponentModelOptions } from '../../base/component'
-import { TBaseControl } from '../../base/base-control'
-import { TTabItem } from './tab-item/tab-item.class'
-import {
-	makeSelectableByValue,
-	type IHasCollection,
-	type ISelectableByValueCollection,
-} from '../collection'
-import type { ITabs, TTabsEvents } from './types'
+import TControl from '../../base/control/control.class'
+import type { IComponentViewOptions } from '../../base/component-view'
+import { TComponentView } from '../../base/component-view'
+import { TActivatableCollection } from '../../base/collection'
+import TTabItem from './tab-item/tab-item.class'
+import type { ITabItem } from './tab-item/types'
+import type {
+	ITabs,
+	ITabsProps,
+	TTabsEvents,
+	TTabsStatesOptions,
+	TTabsOrientation,
+	TTabsAlignment,
+	TTabsPosition,
+	TTabsAppearance,
+} from './types'
 
 /**
- * Коллекция вкладок. single-select по умолчанию.
+ * Компонент табов (TTabs).
+ * Управляет коллекцией табов с поддержкой активности.
  */
-export abstract class TTabsCustom
-	extends TBaseControl<TTabsEvents>
-	implements ITabs, IHasCollection<ISelectableByValueCollection<TTabItem>>
+export class TTabs
+	extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
+	implements ITabs
 {
-	protected _collection: ISelectableByValueCollection<TTabItem>
+	static override baseClass = 's-tabs'
 
-	constructor(options: IComponentModelOptions<ITabs> = {}) {
-		options = TComponent.prepareOptions(options, 's-tabs')
-
-		super(options)
-
-		const { props = {} } = options
-
-		const CollCtor = makeSelectableByValue<TTabItem>()
-		this._collection = new CollCtor(this, TTabItem, { multiSelect: false })
+	static defaultValues: Partial<ITabsProps> = {
+		...TControl.defaultValues,
+		orientation: 'horizontal',
+		alignment: 'start',
+		position: 'start',
+		appearance: 'line',
+		stretched: false,
+		variant: 'normal',
 	}
 
-	get collection() {
+	// Простые свойства (не state, только для отображения)
+	protected _orientation: TTabsOrientation
+	protected _alignment: TTabsAlignment
+	protected _position: TTabsPosition
+	protected _appearance: TTabsAppearance
+	protected _stretched: boolean
+
+	// Композиция: коллекция табов
+	protected _collection: TActivatableCollection<any, any, ITabItem>
+
+	constructor(
+		options: IComponentViewOptions<ITabsProps, TTabsStatesOptions> | Partial<ITabsProps> = {},
+	) {
+		super(options)
+
+		const { props = {} } = TComponentView.prepareOptions<ITabsProps, TTabsStatesOptions>(
+			options,
+		)
+
+		// Инициализация простых свойств
+		this._orientation = props.orientation ?? TTabs.defaultValues.orientation!
+		this._alignment = props.alignment ?? TTabs.defaultValues.alignment!
+		this._position = props.position ?? TTabs.defaultValues.position!
+		this._appearance = props.appearance ?? TTabs.defaultValues.appearance!
+		this._stretched = props.stretched ?? TTabs.defaultValues.stretched!
+
+		// Создаем коллекцию табов
+		this._collection = new TActivatableCollection<any, any, ITabItem>({
+			itemClass: TTabItem as any,
+		})
+
+		// Подписка на события коллекции для проксирования
+		this._collection.events.on('added', (payload: { collection: any; item: ITabItem }) => {
+			const { item } = payload
+			this.events.emit('tab:added', item)
+
+			// Подписка на событие закрытия таба
+			item.events.on('close', () => {
+				this.events.emit('tab:close', item)
+			})
+		})
+
+		this._collection.events.on(
+			'afterDelete',
+			(payload: { collection: any; item: ITabItem; index: number }) => {
+				const { item } = payload
+				this.events.emit('tab:removed', item)
+			},
+		)
+
+		this._collection.events.on('change', (payload: { collection: any; item?: ITabItem }) => {
+			const { item } = payload
+			this.events.emit('tab:activated', item)
+		})
+	}
+
+	// Простые геттеры/сеттеры без state
+
+	get orientation(): TTabsOrientation {
+		return this._orientation
+	}
+
+	set orientation(value: TTabsOrientation) {
+		if (this._orientation !== value) {
+			this._orientation = value
+			this.events.emit('change:orientation', value)
+		}
+	}
+
+	get alignment(): TTabsAlignment {
+		return this._alignment
+	}
+
+	set alignment(value: TTabsAlignment) {
+		if (this._alignment !== value) {
+			this._alignment = value
+			this.events.emit('change:alignment', value)
+		}
+	}
+
+	get position(): TTabsPosition {
+		return this._position
+	}
+
+	set position(value: TTabsPosition) {
+		if (this._position !== value) {
+			this._position = value
+			this.events.emit('change:position', value)
+		}
+	}
+
+	get appearance(): TTabsAppearance {
+		return this._appearance
+	}
+
+	set appearance(value: TTabsAppearance) {
+		if (this._appearance !== value) {
+			this._appearance = value
+			this.events.emit('change:appearance', value)
+		}
+	}
+
+	get stretched(): boolean {
+		return this._stretched
+	}
+
+	set stretched(value: boolean) {
+		if (this._stretched !== value) {
+			this._stretched = value
+			this.events.emit('change:stretched', value)
+		}
+	}
+
+	// Проксирование на коллекцию
+
+	get activeItem(): ITabItem | undefined {
+		return this._collection.activeItem
+	}
+
+	get count(): number {
+		return this._collection.count
+	}
+
+	get collection(): TActivatableCollection<any, any, ITabItem> {
 		return this._collection
 	}
 
-	addTab(props?: Partial<TTabItem>) {
-		return this._collection.add(props)
+	override get classes(): string[] {
+		const classes = [...super.classes]
+
+		// Добавляем классы для ориентации
+		classes.push(`${this._baseClass}--${this._orientation}`)
+
+		// Добавляем классы для выравнивания
+		if (this._alignment !== 'start') {
+			classes.push(`${this._baseClass}--${this._alignment}`)
+		}
+
+		// Добавляем классы для позиции (только для vertical)
+		if (this._orientation === 'vertical' && this._position !== 'start') {
+			classes.push(`${this._baseClass}--position-${this._position}`)
+		}
+
+		// Добавляем классы для внешнего вида
+		if (this._appearance !== 'line') {
+			classes.push(`${this._baseClass}--${this._appearance}`)
+		}
+
+		// Добавляем класс для stretched
+		if (this._stretched) {
+			classes.push(`${this._baseClass}--stretched`)
+		}
+
+		return classes
 	}
 
-	removeTab(index: number) {
-		return this._collection.delete(index)
-	}
-
-	clear() {
-		return this._collection.clear()
-	}
-
-	getTabs(): TTabItem[] {
-		return this._collection.toArray()
-	}
-
-	getTab(index: number): TTabItem | undefined {
-		return this._collection.getItem(index)
-	}
-
-	selectTabByIndex(index: number) {
-		this._collection.select(index)
-	}
-
-	selectTabByName(name: string) {
-		return this._collection.selectByName(name)
-	}
-
-	selectTabByValue(value: any) {
-		return this._collection.selectByValue(value)
-	}
-
-	getSelected() {
-		return this._collection.getSelected()
+	override getProps(): ITabsProps {
+		return {
+			...super.getProps(),
+			orientation: this._orientation,
+			alignment: this._alignment,
+			position: this._position,
+			appearance: this._appearance,
+			stretched: this._stretched,
+		}
 	}
 }
 
-/**
- * Коллекция вкладок. single-select по умолчанию.
- */
-export class TTabs extends TTabsCustom {
-	static defaultValues: Partial<ITabs> = {
-		...TBaseControl.defaultValues,
-	}
-}
+

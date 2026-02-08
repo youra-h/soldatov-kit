@@ -1,4 +1,7 @@
-export * from './tab-item/tab-item.class'
 export * from './tab-item/types'
-export * from './tabs.class'
+export { default as TTabItemCustom } from './tab-item/tab-item-custom.class'
+export { default as TTabItem } from './tab-item/tab-item.class'
 export * from './types'
+export { TTabs } from './tabs.class'
+
+
