@@ -68,11 +68,11 @@ export default class TTabItem extends TTabItemCustom<ITabItemProps> implements I
 
 	override assign(source: Partial<ITabItem>): void {
 		super.assign(source as any)
+
 		if (source.active !== undefined) this.active = source.active
 	}
 
 	free(): void {
 		this._collectionItem.free()
-		// super.free() не вызываем, т.к. TComponentView не имеет free
 	}
 }
