@@ -7,9 +7,9 @@ const tabs = ref<TTabs>()
 
 onMounted(() => {
 	tabs.value = new TTabs()
-	tabs.value.collection.add({ text: 'Tab 1', value: 'tab1' })
-	tabs.value.collection.add({ text: 'Tab 2', value: 'tab2' })
-	tabs.value.collection.add({ text: 'Tab 3', value: 'tab3' })
+	tabs.value.collection.add({ id: 1, text: 'Tab 1', value: 'tab1' })
+	tabs.value.collection.add({ id: 2, text: 'Tab 2', value: 'tab2' })
+	tabs.value.collection.add({ id: 3, text: 'Tab 3', value: 'tab3' })
 	tabs.value.collection.setActive(tabs.value.collection.getItem(0)!)
 })
 </script>

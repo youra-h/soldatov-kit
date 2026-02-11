@@ -12,10 +12,10 @@ import { TActivatableCollectionItem } from './activable-collection-item.class'
  * Коллекция элементов с поддержкой активности.
  */
 export class TActivatableCollection<
-		TProps extends IActivatableCollectionProps = IActivatableCollectionProps,
-		TEvents extends TActivatableCollectionEvents = TActivatableCollectionEvents,
-		TItem extends IActivatableCollectionItem = IActivatableCollectionItem,
-	>
+	TProps extends IActivatableCollectionProps = IActivatableCollectionProps,
+	TEvents extends TActivatableCollectionEvents = TActivatableCollectionEvents,
+	TItem extends IActivatableCollectionItem = IActivatableCollectionItem,
+>
 	extends TCollection<TProps, TEvents, TItem>
 	implements IActivatableCollection<TProps, TEvents, TItem>
 {
@@ -36,9 +36,16 @@ export class TActivatableCollection<
 	 * @param item Элемент, который должен стать активным
 	 */
 	setActive(item: TItem): void {
-		if (this._activeItem && this._activeItem !== item) {
+		console.log('TActivatableCollection setActive', item.id)
+		// Если элемент уже активен, ничего не делаем
+		if (this._activeItem === item || item.active) {
+			return
+		}
+
+		if (this._activeItem) {
 			this._activeItem.active = false
 		}
+
 		this._activeItem = item
 
 		item.active = true
@@ -75,9 +82,9 @@ export class TActivatableCollection<
 	 */
 	protected _subscribeItem(item: TItem): void {
 		item.events.on('change', (changedItem: TItem) => {
-			if (changedItem.active) {
+			if (changedItem.active && this._activeItem !== changedItem) {
 				this.setActive(changedItem)
-			} else if (this._activeItem === changedItem) {
+			} else if (!changedItem.active && this._activeItem === changedItem) {
 				this.clear()
 			}
 		})
