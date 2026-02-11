@@ -15,8 +15,11 @@ import type {
  * Наследуется от TValueControl, где value — это ключ таба.
  * Generic TProps позволяет передавать расширенные Props (например, ITabItemProps с active).
  */
-export default class TTabItemCustom<TProps extends ITabItemCustomProps = ITabItemCustomProps>
-	extends TValueControl<string | number, TProps, TTabItemCustomEvents, TTabItemCustomStatesOptions>
+export default class TTabItemCustom<
+	TProps extends ITabItemCustomProps = ITabItemCustomProps,
+	TEvents extends TTabItemCustomEvents = TTabItemCustomEvents,
+>
+	extends TValueControl<string | number, TProps, TEvents, TTabItemCustomStatesOptions>
 	implements ITabItemCustom<TProps>
 {
 	static override baseClass = 's-tab-item'
@@ -37,9 +40,10 @@ export default class TTabItemCustom<TProps extends ITabItemCustomProps = ITabIte
 	) {
 		super(options)
 
-		const { props = {}, states } = TComponentView.prepareOptions<TProps, TTabItemCustomStatesOptions>(
-			options,
-		)
+		const { props = {}, states } = TComponentView.prepareOptions<
+			TProps,
+			TTabItemCustomStatesOptions
+		>(options)
 
 		// Type assertion: TProps extends ITabItemCustomProps, поэтому props содержит text и closable
 		const customProps = props as Partial<ITabItemCustomProps>

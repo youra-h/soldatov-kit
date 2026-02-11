@@ -8,6 +8,7 @@ import type { IStateUnit } from '../../../base/state-unit'
 import type { TStateCtor } from '../../../base/states'
 import type {
 	IActivatableCollectionItemProps,
+	TActivatableItemEvents,
 } from '../../../base/collection/activable/types'
 import type { TCollectionItemEvents } from '../../../base/collection'
 
@@ -40,8 +41,9 @@ export type TTabItemCustomStatesOptions = TValueControlStatesOptions<string | nu
  * Интерфейс кастомного таба с generic TProps для гибкости наследования.
  * По умолчанию использует ITabItemCustomProps, но можно переопределить (например, ITabItemProps в ITabItem).
  */
-export interface ITabItemCustom<TProps extends ITabItemCustomProps = ITabItemCustomProps>
-	extends IValueControl<string | number, TProps, TTabItemCustomEvents> {
+export interface ITabItemCustom<
+	TProps extends ITabItemCustomProps = ITabItemCustomProps,
+> extends IValueControl<string | number, TProps, TTabItemCustomEvents> {
 	/** Текст таба */
 	text: string
 	/** Можно ли закрыть таб (undefined = наследовать от родителя TTabs) */
@@ -52,11 +54,7 @@ export interface ITabItemCustom<TProps extends ITabItemCustomProps = ITabItemCus
 
 // ============ TTabItem (коллекционный элемент с композицией) ============
 
-export type TTabItemEvents = TCollectionItemEvents &
-	TTabItemCustomEvents & {
-		/** После изменения состояния активности */
-		change: (item: any) => void
-	}
+export type TTabItemEvents = TActivatableItemEvents<ITabItem> & TTabItemCustomEvents
 
 export interface ITabItemProps extends IActivatableCollectionItemProps, ITabItemCustomProps {}
 

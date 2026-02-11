@@ -66,7 +66,7 @@ export class TTabs
 
 		// Создаем коллекцию табов
 		this._collection = new TActivatableCollection<any, any, ITabItem>({
-			itemClass: TTabItem as any,
+			itemClass: TTabItem,
 		})
 
 		// Подписка на события коллекции для проксирования
