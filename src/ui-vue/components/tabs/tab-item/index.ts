@@ -1,0 +1,5 @@
+export { default as BaseTabItemCustom } from './tab-item-custom.component'
+export * from './tab-item-custom.component'
+export { default as BaseTabItem } from './tab-item.component'
+export * from './tab-item.component'
+export { default as TabItem } from './TabItem.vue'
