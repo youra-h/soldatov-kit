@@ -28,12 +28,13 @@ export default class TTabItem extends TTabItemCustom<ITabItemProps> implements I
 			TTabItemEvents
 		>(collection)
 
-		// Проксируем события коллекции на this.events (только 2 события вместо ~20 UI-событий)
-		this._collectionItem.events.on('change', (item) => {
-			this.events.emit('change' as any, item)
+		// Проксируем события коллекции на this.events
+		// ВАЖНО: передаем this, а не item, чтобы коллекция работала с TTabItem, а не с _collectionItem
+		this._collectionItem.events.on('change', () => {
+			this.events.emit('change' as any, this)
 		})
-		this._collectionItem.events.on('free', (item) => {
-			this.events.emit('free' as any, item)
+		this._collectionItem.events.on('free', () => {
+			this.events.emit('free' as any, this)
 		})
 	}
 

@@ -188,7 +188,7 @@ export class TTabs
 
 	/**
 	 * Закрывает таб: проверяет возможность закрытия, эмитит событие и удаляет из коллекции.
-	 * Если закрываемый таб активен — автоматически активирует соседний таб.
+	 * Активация следующего таба происходит автоматически в TActivatableCollection.
 	 * @returns true если таб был закрыт, false если закрытие запрещено
 	 */
 	closeTab(item: ITabItem): boolean {
@@ -198,30 +198,8 @@ export class TTabs
 
 		this.events.emit('tab:close', item)
 
-		const wasActive = this._collection.activeItem === item
-		const index = this._collection.indexOf(item)
-
-		// Если удаляется активный таб — сначала переключаемся на соседний ДО удаления,
-		// чтобы _activeItem в коллекции был корректно обновлён
-		if (wasActive) {
-			if (this._collection.count > 1) {
-				// Есть другие табы — активируем соседний (следующий или предыдущий)
-				const newIndex =
-					index === this._collection.count - 1 ? index - 1 : index + 1
-				const newActiveItem = this._collection.getItem(newIndex)
-
-				if (newActiveItem) {
-					this._collection.setActive(newActiveItem)
-				}
-			} else {
-				// Единственный таб — очищаем активность
-				this._collection.clear()
-			}
-		}
-
-		this._collection.deleteItem(item)
-
-		return true
+		// Удаление элемента - TActivatableCollection автоматически активирует следующий таб
+		return this._collection.deleteItem(item)
 	}
 
 	override get classes(): string[] {

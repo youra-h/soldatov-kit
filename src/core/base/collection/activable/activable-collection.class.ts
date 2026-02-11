@@ -82,4 +82,57 @@ export class TActivatableCollection<
 			}
 		})
 	}
+
+	/**
+	 * Переопределяем delete, чтобы автоматически активировать следующий элемент
+	 * после удаления активного элемента.
+	 * @param index Индекс удаляемого элемента
+	 * @returns true, если элемент был удалён, false если индекс вне диапазона
+	 */
+	override delete(index: number): boolean {
+		if (index < 0 || index >= this.count) {
+			return false
+		}
+
+		const item = this.getItem(index)
+		const wasActive = this._activeItem === item
+
+		// Если удаляется активный элемент и в коллекции есть другие элементы,
+		// активируем соседний элемент ДО удаления
+		if (wasActive && this.count > 1) {
+			// Выбираем следующий элемент, если он есть, иначе предыдущий
+			const newIndex = index < this.count - 1 ? index + 1 : index - 1
+			const newActiveItem = this.getItem(newIndex)
+
+			if (newActiveItem) {
+				this.setActive(newActiveItem)
+			}
+		}
+
+		// Вызываем родительский метод delete
+		const result = super.delete(index)
+
+		// Если удалён последний активный элемент, очищаем активность
+		if (result && wasActive && this.count === 0) {
+			this._activeItem = undefined
+		}
+
+		return result
+	}
+
+	/**
+	 * Переопределяем deleteItem, чтобы автоматически активировать следующий элемент
+	 * после удаления активного элемента.
+	 * @param item Элемент для удаления
+	 * @returns true, если удаление прошло успешно, иначе false
+	 */
+	override deleteItem(item: TItem): boolean {
+		const index = this.indexOf(item)
+
+		if (index === -1) {
+			return false
+		}
+
+		return this.delete(index)
+	}
 }

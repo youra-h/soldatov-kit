@@ -77,4 +77,120 @@ describe('TActivatableCollection', () => {
 		a.active = false
 		expect(col.activeItem).toBeUndefined()
 	})
+
+	it('delete activates next item when deleting active item (has next)', () => {
+		const col = new TActivatableCollection({ itemClass: TActivatableCollectionItem })
+
+		const a = col.add({})
+		const b = col.add({})
+		const c = col.add({})
+
+		col.setActive(a)
+
+		// Delete active item (first) - should activate next item (b)
+		const result = col.delete(0)
+
+		expect(result).toBe(true)
+		expect(col.activeItem).toBe(b)
+		expect(b.active).toBe(true)
+		expect(col.count).toBe(2)
+	})
+
+	it('delete activates previous item when deleting active last item', () => {
+		const col = new TActivatableCollection({ itemClass: TActivatableCollectionItem })
+
+		const a = col.add({})
+		const b = col.add({})
+		const c = col.add({})
+
+		col.setActive(c)
+
+		// Delete active item (last) - should activate previous item (b)
+		const result = col.delete(2)
+
+		expect(result).toBe(true)
+		expect(col.activeItem).toBe(b)
+		expect(b.active).toBe(true)
+		expect(col.count).toBe(2)
+	})
+
+	it('delete activates next when deleting active middle item', () => {
+		const col = new TActivatableCollection({ itemClass: TActivatableCollectionItem })
+
+		const a = col.add({})
+		const b = col.add({})
+		const c = col.add({})
+
+		col.setActive(b)
+
+		// Delete active item (middle) - should activate next item (c)
+		const result = col.delete(1)
+
+		expect(result).toBe(true)
+		expect(col.activeItem).toBe(c)
+		expect(c.active).toBe(true)
+		expect(col.count).toBe(2)
+	})
+
+	it('delete does not change active item when deleting non-active item', () => {
+		const col = new TActivatableCollection({ itemClass: TActivatableCollectionItem })
+
+		const a = col.add({})
+		const b = col.add({})
+		const c = col.add({})
+
+		col.setActive(b)
+
+		// Delete non-active item
+		const result = col.delete(2)
+
+		expect(result).toBe(true)
+		expect(col.activeItem).toBe(b)
+		expect(b.active).toBe(true)
+		expect(col.count).toBe(2)
+	})
+
+	it('delete clears active when deleting the only active item', () => {
+		const col = new TActivatableCollection({ itemClass: TActivatableCollectionItem })
+
+		const a = col.add({})
+		col.setActive(a)
+
+		// Delete the only item
+		const result = col.delete(0)
+
+		expect(result).toBe(true)
+		expect(col.activeItem).toBeUndefined()
+		expect(col.count).toBe(0)
+	})
+
+	it('deleteItem works correctly and activates next item', () => {
+		const col = new TActivatableCollection({ itemClass: TActivatableCollectionItem })
+
+		const a = col.add({})
+		const b = col.add({})
+		const c = col.add({})
+
+		col.setActive(a)
+
+		// Delete active item using deleteItem
+		const result = col.deleteItem(a)
+
+		expect(result).toBe(true)
+		expect(col.activeItem).toBe(b)
+		expect(b.active).toBe(true)
+		expect(col.count).toBe(2)
+	})
+
+	it('deleteItem returns false when item is not in collection', () => {
+		const col = new TActivatableCollection({ itemClass: TActivatableCollectionItem })
+		const a = col.add({})
+
+		const outsideItem = new TActivatableCollectionItem()
+
+		const result = col.deleteItem(outsideItem)
+
+		expect(result).toBe(false)
+		expect(col.count).toBe(1)
+	})
 })
