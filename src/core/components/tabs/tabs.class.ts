@@ -32,6 +32,7 @@ export class TTabs
 		position: 'start',
 		appearance: 'line',
 		stretched: false,
+		closable: false,
 		variant: 'normal',
 	}
 
@@ -41,6 +42,7 @@ export class TTabs
 	protected _position: TTabsPosition
 	protected _appearance: TTabsAppearance
 	protected _stretched: boolean
+	protected _closable: boolean
 
 	// Композиция: коллекция табов
 	protected _collection: TActivatableCollection<any, any, ITabItem>
@@ -60,6 +62,7 @@ export class TTabs
 		this._position = props.position ?? TTabs.defaultValues.position!
 		this._appearance = props.appearance ?? TTabs.defaultValues.appearance!
 		this._stretched = props.stretched ?? TTabs.defaultValues.stretched!
+		this._closable = props.closable ?? TTabs.defaultValues.closable!
 
 		// Создаем коллекцию табов
 		this._collection = new TActivatableCollection<any, any, ITabItem>({
@@ -71,9 +74,9 @@ export class TTabs
 			const { item } = payload
 			this.events.emit('tab:added', item)
 
-			// Подписка на событие закрытия таба
+			// Подписка на событие закрытия таба — вызывает closeTab с проверкой и удалением
 			item.events.on('close', () => {
-				this.events.emit('tab:close', item)
+				this.closeTab(item)
 			})
 		})
 
@@ -148,6 +151,17 @@ export class TTabs
 		}
 	}
 
+	get closable(): boolean {
+		return this._closable
+	}
+
+	set closable(value: boolean) {
+		if (this._closable !== value) {
+			this._closable = value
+			this.events.emit('change:closable', value)
+		}
+	}
+
 	// Проксирование на коллекцию
 
 	get activeItem(): ITabItem | undefined {
@@ -160,6 +174,54 @@ export class TTabs
 
 	get collection(): TActivatableCollection<any, any, ITabItem> {
 		return this._collection
+	}
+
+	/**
+	 * Проверяет, может ли конкретный таб быть закрыт.
+	 * Логика: item.closable ?? this.closable
+	 * - Если у таба явно задан closable (true/false) — используется значение таба.
+	 * - Если у таба closable = undefined — наследуется от родителя (TTabs.closable).
+	 */
+	isTabClosable(item: ITabItem): boolean {
+		return item.closable ?? this._closable
+	}
+
+	/**
+	 * Закрывает таб: проверяет возможность закрытия, эмитит событие и удаляет из коллекции.
+	 * Если закрываемый таб активен — автоматически активирует соседний таб.
+	 * @returns true если таб был закрыт, false если закрытие запрещено
+	 */
+	closeTab(item: ITabItem): boolean {
+		if (!this.isTabClosable(item)) {
+			return false
+		}
+
+		this.events.emit('tab:close', item)
+
+		const wasActive = this._collection.activeItem === item
+		const index = this._collection.indexOf(item)
+
+		// Если удаляется активный таб — сначала переключаемся на соседний ДО удаления,
+		// чтобы _activeItem в коллекции был корректно обновлён
+		if (wasActive) {
+			if (this._collection.count > 1) {
+				// Есть другие табы — активируем соседний (следующий или предыдущий)
+				const newIndex =
+					index === this._collection.count - 1 ? index - 1 : index + 1
+				const newActiveItem = this._collection.getItem(newIndex)
+
+				if (newActiveItem) {
+					this._collection.setActive(newActiveItem)
+				}
+			} else {
+				// Единственный таб — очищаем активность
+				this._collection.clear()
+			}
+		}
+
+		this._collection.deleteItem(item)
+
+		return true
 	}
 
 	override get classes(): string[] {
@@ -199,6 +261,7 @@ export class TTabs
 			position: this._position,
 			appearance: this._appearance,
 			stretched: this._stretched,
+			closable: this._closable,
 		}
 	}
 }

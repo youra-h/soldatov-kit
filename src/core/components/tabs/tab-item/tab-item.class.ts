@@ -7,7 +7,10 @@ import type { ITabItem, ITabItemProps, TTabItemEvents } from './types'
  * Элемент таба для работы в коллекции.
  * Композиция: TActivatableCollectionItem + TTabItemCustom.
  */
-export default class TTabItem extends TActivatableCollectionItem<ITabItemProps> implements ITabItem {
+export default class TTabItem
+	extends TActivatableCollectionItem<ITabItemProps, TTabItemEvents>
+	implements ITabItem
+{
 	protected _customItem: TTabItemCustom
 
 	constructor(collection?: TCollection) {
@@ -15,9 +18,14 @@ export default class TTabItem extends TActivatableCollectionItem<ITabItemProps> 
 
 		// Создаем кастомный элемент таба
 		this._customItem = new TTabItemCustom()
+
+		// Проксируем событие close из TTabItemCustom на TTabItem.events
+		this._customItem.events.on('close', () => {
+			this.events.emit('close')
+		})
 	}
 
-	// Проксирование свойств text, value, badge, closable на _customItem
+	// Проксирование свойств text, value, closable на _customItem
 
 	get text(): string {
 		return this._customItem.text
@@ -35,19 +43,11 @@ export default class TTabItem extends TActivatableCollectionItem<ITabItemProps> 
 		this._customItem.value = val
 	}
 
-	get badge(): string | number | undefined {
-		return this._customItem.badge
-	}
-
-	set badge(value: string | number | undefined) {
-		this._customItem.badge = value
-	}
-
-	get closable(): boolean {
+	get closable(): boolean | undefined {
 		return this._customItem.closable
 	}
 
-	set closable(value: boolean) {
+	set closable(value: boolean | undefined) {
 		this._customItem.closable = value
 	}
 
@@ -66,13 +66,11 @@ export default class TTabItem extends TActivatableCollectionItem<ITabItemProps> 
 	override assign(source: Partial<ITabItem>): void {
 		if (source.text !== undefined) this.text = source.text
 		if (source.value !== undefined) this.value = source.value
-		if (source.badge !== undefined) this.badge = source.badge
 		if (source.closable !== undefined) this.closable = source.closable
 		if (source.active !== undefined) this.active = source.active
 	}
 
 	override free(): void {
 		super.free()
-		// Дополнительная очистка если нужно
 	}
 }

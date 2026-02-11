@@ -12,7 +12,7 @@ import type {
 
 /**
  * Кастомная логика элемента таба (без коллекционной части).
- * Наследуется от TValueControl, где value - это ключ таба.
+ * Наследуется от TValueControl, где value — это ключ таба.
  */
 export default class TTabItemCustom
 	extends TValueControl<string | number, ITabItemCustomProps, TTabItemCustomEvents, TTabItemCustomStatesOptions>
@@ -24,14 +24,12 @@ export default class TTabItemCustom
 		...TValueControl.defaultValues,
 		text: '',
 		value: '',
-		badge: undefined,
-		closable: false,
+		closable: undefined,
 		variant: 'normal',
 	}
 
 	protected _textState: IStateUnit<string>
-	protected _badgeState: IStateUnit<string | number | undefined>
-	protected _closableState: IStateUnit<boolean>
+	protected _closableState: IStateUnit<boolean | undefined>
 
 	constructor(
 		options:
@@ -52,24 +50,15 @@ export default class TTabItemCustom
 			props.text ?? TTabItemCustom.defaultValues.text!,
 		)
 
-		this._badgeState = resolveState<
-			IStateUnit<string | number | undefined>,
-			string | number | undefined
-		>(states?.badge, TStateUnit, props.badge ?? TTabItemCustom.defaultValues.badge)
-
-		this._closableState = resolveState<IStateUnit<boolean>, boolean>(
+		this._closableState = resolveState<IStateUnit<boolean | undefined>, boolean | undefined>(
 			states?.closable,
 			TStateUnit,
-			props.closable ?? TTabItemCustom.defaultValues.closable!,
+			props.closable ?? TTabItemCustom.defaultValues.closable,
 		)
 
 		// Подписка на изменения state-объектов
 		this._textState.events.on('change', (value) => {
 			this.events.emit('change:text', value)
-		})
-
-		this._badgeState.events.on('change', (value) => {
-			this.events.emit('change:badge', value)
 		})
 
 		this._closableState.events.on('change', (value) => {
@@ -85,19 +74,11 @@ export default class TTabItemCustom
 		this._textState.value = value
 	}
 
-	get badge(): string | number | undefined {
-		return this._badgeState.value
-	}
-
-	set badge(value: string | number | undefined) {
-		this._badgeState.value = value
-	}
-
-	get closable(): boolean {
+	get closable(): boolean | undefined {
 		return this._closableState.value
 	}
 
-	set closable(value: boolean) {
+	set closable(value: boolean | undefined) {
 		this._closableState.value = value
 	}
 
@@ -112,10 +93,6 @@ export default class TTabItemCustom
 			classes.push(`${this._baseClass}--closable`)
 		}
 
-		if (this.badge !== undefined) {
-			classes.push(`${this._baseClass}--with-badge`)
-		}
-
 		return classes
 	}
 
@@ -123,7 +100,6 @@ export default class TTabItemCustom
 		return {
 			...super.getProps(),
 			text: this.text,
-			badge: this.badge,
 			closable: this.closable,
 		}
 	}

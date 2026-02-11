@@ -17,10 +17,8 @@ import type { TCollectionItemEvents } from '../../../base/collection'
 export type TTabItemCustomEvents = TValueControlEvents<string | number> & {
 	/** change:text */
 	'change:text': (value: string) => void
-	/** change:badge */
-	'change:badge': (value: string | number | undefined) => void
 	/** change:closable */
-	'change:closable': (value: boolean) => void
+	'change:closable': (value: boolean | undefined) => void
 	/** close */
 	close: () => void
 }
@@ -28,27 +26,23 @@ export type TTabItemCustomEvents = TValueControlEvents<string | number> & {
 export interface ITabItemCustomProps extends IValueControlProps<string | number> {
 	/** Текст таба */
 	text?: string
-	/** Бейдж с числом/текстом */
-	badge?: string | number
-	/** Можно ли закрыть таб */
+	/** Можно ли закрыть таб (undefined = наследовать от родителя TTabs) */
 	closable?: boolean
 }
 
 export type TTabItemCustomStatesOptions = TValueControlStatesOptions<string | number> & {
 	text?: TStateCtor<IStateUnit<string>, string> | IStateUnit<string>
-	badge?:
-		| TStateCtor<IStateUnit<string | number | undefined>, string | number | undefined>
-		| IStateUnit<string | number | undefined>
-	closable?: TStateCtor<IStateUnit<boolean>, boolean> | IStateUnit<boolean>
+	closable?:
+		| TStateCtor<IStateUnit<boolean | undefined>, boolean | undefined>
+		| IStateUnit<boolean | undefined>
 }
 
-export interface ITabItemCustom extends IValueControl<string | number, ITabItemCustomProps, TTabItemCustomEvents> {
+export interface ITabItemCustom
+	extends IValueControl<string | number, ITabItemCustomProps, TTabItemCustomEvents> {
 	/** Текст таба */
 	text: string
-	/** Бейдж с числом/текстом */
-	badge: string | number | undefined
-	/** Можно ли закрыть таб */
-	closable: boolean
+	/** Можно ли закрыть таб (undefined = наследовать от родителя TTabs) */
+	closable: boolean | undefined
 	/** Закрыть таб (emit close event) */
 	close(): void
 }
@@ -62,19 +56,16 @@ export type TTabItemEvents = TCollectionItemEvents &
 	}
 
 export interface ITabItemProps extends IActivatableCollectionItemProps, ITabItemCustomProps {
-	/** Активен ли таб */
-	active: boolean
+	// active уже наследуется от IActivatableCollectionItemProps
 }
 
-export interface ITabItem extends IActivatableCollectionItem<ITabItemProps, any> {
+export interface ITabItem extends IActivatableCollectionItem<ITabItemProps, TTabItemEvents> {
 	/** Текст таба */
 	text: string
 	/** Уникальный ключ таба (value из TValueControl) */
 	value: string | number
-	/** Бейдж с числом/текстом */
-	badge: string | number | undefined
-	/** Можно ли закрыть таб */
-	closable: boolean
+	/** Можно ли закрыть таб (undefined = наследовать от родителя TTabs) */
+	closable: boolean | undefined
 	/** Закрыть таб (emit close event) */
 	close(): void
 }

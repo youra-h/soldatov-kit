@@ -18,11 +18,13 @@ export type TTabsEvents = TControlEvents & {
 	'change:appearance': (value: TTabsAppearance) => void
 	/** change:stretched */
 	'change:stretched': (value: boolean) => void
+	/** change:closable */
+	'change:closable': (value: boolean) => void
 	/** tab:added */
 	'tab:added': (item: ITabItem) => void
 	/** tab:removed */
 	'tab:removed': (item: ITabItem) => void
-	/** tab:close */
+	/** tab:close — эмитится перед удалением таба при закрытии */
 	'tab:close': (item: ITabItem) => void
 	/** tab:activated */
 	'tab:activated': (item: ITabItem | undefined) => void
@@ -39,6 +41,8 @@ export interface ITabsProps extends IControlProps {
 	appearance?: TTabsAppearance
 	/** Растягивать табы на всю ширину/высоту */
 	stretched?: boolean
+	/** Разрешить закрытие табов (по умолчанию false) */
+	closable?: boolean
 }
 
 export type TTabsStatesOptions = TControlStatesOptions
@@ -54,11 +58,17 @@ export interface ITabs extends IControl<ITabsProps, TTabsEvents> {
 	appearance: TTabsAppearance
 	/** Растягивать табы на всю ширину/высоту */
 	stretched: boolean
+	/** Разрешить закрытие табов */
+	closable: boolean
 	/** Активный таб (из коллекции) */
 	readonly activeItem: ITabItem | undefined
 	/** Количество табов (из коллекции) */
 	readonly count: number
 	/** Доступ к коллекции табов */
 	readonly collection: TActivatableCollection<any, any, ITabItem>
+	/** Проверяет, может ли конкретный таб быть закрыт (item.closable ?? this.closable) */
+	isTabClosable(item: ITabItem): boolean
+	/** Закрывает таб: проверяет возможность, эмитит событие, удаляет из коллекции */
+	closeTab(item: ITabItem): boolean
 }
 
