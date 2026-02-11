@@ -13,10 +13,11 @@ import type {
 /**
  * Кастомная логика элемента таба (без коллекционной части).
  * Наследуется от TValueControl, где value — это ключ таба.
+ * Generic TProps позволяет передавать расширенные Props (например, ITabItemProps с active).
  */
-export default class TTabItemCustom
-	extends TValueControl<string | number, ITabItemCustomProps, TTabItemCustomEvents, TTabItemCustomStatesOptions>
-	implements ITabItemCustom
+export default class TTabItemCustom<TProps extends ITabItemCustomProps = ITabItemCustomProps>
+	extends TValueControl<string | number, TProps, TTabItemCustomEvents, TTabItemCustomStatesOptions>
+	implements ITabItemCustom<TProps>
 {
 	static override baseClass = 's-tab-item'
 
@@ -32,28 +33,28 @@ export default class TTabItemCustom
 	protected _closableState: IStateUnit<boolean | undefined>
 
 	constructor(
-		options:
-			| IComponentViewOptions<ITabItemCustomProps, TTabItemCustomStatesOptions>
-			| Partial<ITabItemCustomProps> = {},
+		options: IComponentViewOptions<TProps, TTabItemCustomStatesOptions> | Partial<TProps> = {},
 	) {
 		super(options)
 
-		const { props = {}, states } = TComponentView.prepareOptions<
-			ITabItemCustomProps,
-			TTabItemCustomStatesOptions
-		>(options)
+		const { props = {}, states } = TComponentView.prepareOptions<TProps, TTabItemCustomStatesOptions>(
+			options,
+		)
+
+		// Type assertion: TProps extends ITabItemCustomProps, поэтому props содержит text и closable
+		const customProps = props as Partial<ITabItemCustomProps>
 
 		// Инициализация state-объектов
 		this._textState = resolveState<IStateUnit<string>, string>(
 			states?.text,
 			TStateUnit,
-			props.text ?? TTabItemCustom.defaultValues.text!,
+			customProps.text ?? TTabItemCustom.defaultValues.text!,
 		)
 
 		this._closableState = resolveState<IStateUnit<boolean | undefined>, boolean | undefined>(
 			states?.closable,
 			TStateUnit,
-			props.closable ?? TTabItemCustom.defaultValues.closable,
+			customProps.closable ?? TTabItemCustom.defaultValues.closable,
 		)
 
 		// Подписка на изменения state-объектов
@@ -96,11 +97,11 @@ export default class TTabItemCustom
 		return classes
 	}
 
-	override getProps(): ITabItemCustomProps {
+	override getProps(): TProps {
 		return {
 			...super.getProps(),
 			text: this.text,
 			closable: this.closable,
-		}
+		} as TProps
 	}
 }

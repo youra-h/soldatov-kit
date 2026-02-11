@@ -7,7 +7,6 @@ import type {
 import type { IStateUnit } from '../../../base/state-unit'
 import type { TStateCtor } from '../../../base/states'
 import type {
-	IActivatableCollectionItem,
 	IActivatableCollectionItemProps,
 } from '../../../base/collection/activable/types'
 import type { TCollectionItemEvents } from '../../../base/collection'
@@ -37,8 +36,12 @@ export type TTabItemCustomStatesOptions = TValueControlStatesOptions<string | nu
 		| IStateUnit<boolean | undefined>
 }
 
-export interface ITabItemCustom
-	extends IValueControl<string | number, ITabItemCustomProps, TTabItemCustomEvents> {
+/**
+ * Интерфейс кастомного таба с generic TProps для гибкости наследования.
+ * По умолчанию использует ITabItemCustomProps, но можно переопределить (например, ITabItemProps в ITabItem).
+ */
+export interface ITabItemCustom<TProps extends ITabItemCustomProps = ITabItemCustomProps>
+	extends IValueControl<string | number, TProps, TTabItemCustomEvents> {
 	/** Текст таба */
 	text: string
 	/** Можно ли закрыть таб (undefined = наследовать от родителя TTabs) */
@@ -55,17 +58,20 @@ export type TTabItemEvents = TCollectionItemEvents &
 		change: (item: any) => void
 	}
 
-export interface ITabItemProps extends IActivatableCollectionItemProps, ITabItemCustomProps {
-	// active уже наследуется от IActivatableCollectionItemProps
-}
+export interface ITabItemProps extends IActivatableCollectionItemProps, ITabItemCustomProps {}
 
-export interface ITabItem extends IActivatableCollectionItem<ITabItemProps, TTabItemEvents> {
-	/** Текст таба */
-	text: string
-	/** Уникальный ключ таба (value из TValueControl) */
-	value: string | number
-	/** Можно ли закрыть таб (undefined = наследовать от родителя TTabs) */
-	closable: boolean | undefined
-	/** Закрыть таб (emit close event) */
-	close(): void
+/**
+ * Интерфейс элемента таба для коллекции.
+ * Наследует все UI-свойства от ITabItemCustom<ITabItemProps> + добавляет свойства коллекции.
+ * Передаем ITabItemProps в generic, чтобы getProps()/toJSON() вернули правильный тип с active.
+ */
+export interface ITabItem extends ITabItemCustom<ITabItemProps> {
+	/** Признак активности элемента (из коллекции) */
+	active: boolean
+	/** Ссылка на коллекцию-владелец */
+	collection: any | null
+	/** Переключить активность */
+	toggleActive(): void
+	/** Освобождение ресурсов (из коллекции) */
+	free(): void
 }
