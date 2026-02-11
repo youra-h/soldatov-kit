@@ -6,6 +6,7 @@ import Spinner from './playgrounds/Spinner.vue'
 import Button from './playgrounds/Button.vue'
 import CheckBox from './playgrounds/CheckBox.vue'
 import Switch from './playgrounds/Switch.vue'
+import Tabs from './playgrounds/Tabs.vue'
 import EventLog from './common/EventLog.vue'
 import type { EventLogEntry } from './common/EventLog.vue'
 
@@ -26,6 +27,7 @@ const playgrounds = {
 	button: { component: markRaw(Button), label: 'Button' },
 	'check-box': { component: markRaw(CheckBox), label: 'CheckBox' },
 	switch: { component: markRaw(Switch), label: 'Switch' },
+	tabs: { component: markRaw(Tabs), label: 'Tabs' },
 } as const
 
 // Активный playground (можно управлять через меню)

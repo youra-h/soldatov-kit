@@ -2,7 +2,7 @@ import type { PropType } from 'vue'
 import { watch } from 'vue'
 import { type ITabItem, type ITabItemProps, TTabItem } from '../../../../core'
 import {
-	BaseTabItemCustom,
+	default as BaseTabItemCustom,
 	emitsTabItemCustom,
 	propsTabItemCustom,
 	syncTabItemCustom,

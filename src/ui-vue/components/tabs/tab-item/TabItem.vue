@@ -55,7 +55,7 @@ export default {
 </template>
 
 <style lang="scss">
-@reference "./../../../foundation/tailwind";
+@reference "./../../../../foundation/tailwind";
 
 .s-tab-item {
 	$this: &;
