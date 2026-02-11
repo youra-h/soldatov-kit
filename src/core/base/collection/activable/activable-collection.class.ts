@@ -119,20 +119,4 @@ export class TActivatableCollection<
 
 		return result
 	}
-
-	/**
-	 * Переопределяем deleteItem, чтобы автоматически активировать следующий элемент
-	 * после удаления активного элемента.
-	 * @param item Элемент для удаления
-	 * @returns true, если удаление прошло успешно, иначе false
-	 */
-	override deleteItem(item: TItem): boolean {
-		const index = this.indexOf(item)
-
-		if (index === -1) {
-			return false
-		}
-
-		return this.delete(index)
-	}
 }
