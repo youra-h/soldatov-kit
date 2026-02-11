@@ -61,132 +61,123 @@ export default {
 </template>
 
 <style lang="scss">
+@reference "./../../../foundation/tailwind";
+
 .s-tabs {
 	$this: &;
 
-	display: flex;
-	width: 100%;
+	@apply flex w-full;
 
 	// Ориентация
 	&--horizontal {
-		flex-direction: column;
+		@apply flex-col;
 
 		#{$this}__list {
-			flex-direction: row;
+			@apply flex-row;
 		}
 	}
 
 	&--vertical {
-		flex-direction: row;
+		@apply flex-row;
 
 		#{$this}__list {
-			flex-direction: column;
+			@apply flex-col;
 		}
 
 		&#{$this}--position-end {
-			flex-direction: row-reverse;
+			@apply flex-row-reverse;
 		}
 	}
 
 	// Список табов
 	&__list {
-		display: flex;
-		gap: 0.25rem;
+		@apply flex gap-1;
 	}
 
 	// Выравнивание
 	&--center #{$this}__list {
-		justify-content: center;
+		@apply justify-center;
 	}
 
 	&--end #{$this}__list {
-		justify-content: flex-end;
+		@apply justify-end;
 	}
 
 	&--stretch #{$this}__list {
-		justify-content: space-between;
+		@apply justify-between;
 	}
 
 	// Stretched - табы занимают всю ширину
 	&--stretched {
 		.s-tab-item {
-			flex: 1;
-			justify-content: center;
+			@apply flex-1 justify-center;
 		}
 	}
 
 	// Внешний вид
 	&--line {
 		#{$this}__list {
-			border-bottom: 1px solid #e5e7eb;
+			@apply border-b border-gray-200;
 		}
 
 		.s-tab-item {
-			border-bottom: 2px solid transparent;
+			@apply border-b-2 border-transparent;
 
 			&--active {
-				border-bottom-color: #3b82f6;
+				@apply border-blue-500;
 			}
 		}
 	}
 
 	&--pills {
 		.s-tab-item {
-			border-radius: 0.375rem;
+			@apply rounded-md;
 
 			&--active {
-				background: #eff6ff;
+				@apply bg-blue-50;
 			}
 		}
 	}
 
 	&--contained {
 		#{$this}__list {
-			background: #f9fafb;
-			padding: 0.25rem;
-			border-radius: 0.5rem;
+			@apply bg-gray-50;
+			@apply p-1 rounded-lg;
 		}
 
 		.s-tab-item {
-			border-radius: 0.375rem;
+			@apply rounded-md;
 
 			&--active {
-				background: white;
-				box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+				@apply bg-white shadow-sm;
 			}
 		}
 	}
 
 	&--segmented {
 		#{$this}__list {
-			border: 1px solid #e5e7eb;
-			border-radius: 0.5rem;
-			padding: 0.25rem;
-			gap: 0;
+			@apply border border-gray-200;
+			@apply rounded-lg p-1 gap-0;
 		}
 
 		.s-tab-item {
-			border-radius: 0.375rem;
-			margin: 0;
+			@apply rounded-md m-0;
 
 			&--active {
-				background: #3b82f6;
-				color: white;
+				@apply bg-blue-500 text-white;
 			}
 		}
 	}
 
 	// Контент
 	&__content {
-		flex: 1;
-		padding: 1rem;
+		@apply flex-1 p-4;
 	}
 
 	// Отключенное состояние
 	&:disabled,
 	&--disabled {
-		opacity: 0.5;
-		pointer-events: none;
+		@apply opacity-50 pointer-events-none;
 	}
 }
 </style>

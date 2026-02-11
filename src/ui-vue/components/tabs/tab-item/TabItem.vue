@@ -55,46 +55,38 @@ export default {
 </template>
 
 <style lang="scss">
+@reference "./../../../foundation/tailwind";
+
 .s-tab-item {
 	$this: &;
 
-	display: inline-flex;
-	align-items: center;
-	gap: 0.5rem;
-	padding: 0.5rem 1rem;
-	cursor: pointer;
-	user-select: none;
-	position: relative;
+	@apply inline-flex items-center gap-2;
+	@apply px-4 py-2;
+	@apply cursor-pointer select-none;
+	@apply relative;
 
 	&__text {
-		display: inline-flex;
-		align-items: center;
+		@apply inline-flex items-center;
 	}
 
 	&__close {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		padding: 0.125rem;
-		border: none;
-		background: transparent;
-		cursor: pointer;
-		border-radius: 0.25rem;
+		@apply inline-flex items-center justify-center;
+		@apply p-0.5;
+		@apply border-none bg-transparent;
+		@apply cursor-pointer rounded;
 
 		&:hover {
-			background: rgba(0, 0, 0, 0.05);
+			@apply bg-black/5;
 		}
 	}
 
 	&--closable {
-		padding-right: 0.5rem;
+		@apply pr-2;
 	}
 
 	&:disabled,
 	&--disabled {
-		opacity: 0.5;
-		cursor: default;
-		pointer-events: none;
+		@apply opacity-50 cursor-default pointer-events-none;
 	}
 }
 </style>
