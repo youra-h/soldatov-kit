@@ -46,7 +46,7 @@ export type TSelectableCollectionEvents = TCollectionEvents & {
 	 * @param payload.collection Коллекция, в которой изменился выбор
 	 * @param payload.items      Массив выбранных элементов
 	 */
-	change: (payload: { collection: ICollection; items: ICollectionItem[] }) => void
+	change: (payload: { collection: ISelectableCollection; items: ISelectableCollectionItem[] }) => void
 }
 
 export interface ISelectableCollection<

@@ -7,10 +7,7 @@ import { TEvented } from '../../common/evented'
  * Базовый интерфейс коллекции элементов.
  * Определяет контракт, который должны реализовывать все коллекции.
  */
-export interface ICollectionProps {
-	/** Количество элементов в коллекции */
-	readonly count: number
-}
+export interface ICollectionProps {}
 
 /**
  * События, которые эмитит коллекция TCollection.
@@ -167,7 +164,9 @@ export interface ICollection<
 	TProps extends ICollectionProps = ICollectionProps,
 	TEvents extends TCollectionEvents = TCollectionEvents,
 	TItem extends ICollectionItem = ICollectionItem,
-> extends IEntity<TProps>,
-		ICollectionMethods<TItem> {
+>
+	extends IEntity<TProps>, ICollectionMethods<TItem> {
 	readonly events: TEvented<TEvents>
+	/** Количество элементов в коллекции */
+	readonly count: number
 }
