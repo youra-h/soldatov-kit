@@ -103,6 +103,32 @@ describe('TActivatableCollection', () => {
 		expect(spy).toHaveBeenCalled()
 	})
 
+	it('addFromArray() with multiple active: true keeps last one active', () => {
+		const col = new TActivatableCollection({ itemClass: TActivatableCollectionItem })
+
+		// добавляем элементы, несколько с active: true
+		const items = col.addFromArray([
+			{ active: true },
+			{ active: false },
+			{ active: true },
+			{ active: true },
+			{ active: false },
+		])
+
+		expect(items).toHaveLength(5)
+		expect(col.count).toBe(5)
+
+		// только последний элемент с active: true должен остаться активным
+		expect(col.activeItem).toBe(items[3])
+		expect(items[3]!.active).toBe(true)
+
+		// все остальные должны быть неактивными
+		expect(items[0]!.active).toBe(false)
+		expect(items[1]!.active).toBe(false)
+		expect(items[2]!.active).toBe(false)
+		expect(items[4]!.active).toBe(false)
+	})
+
 	it('delete activates next item when deleting active item (has next)', () => {
 		const col = new TActivatableCollection({ itemClass: TActivatableCollectionItem })
 
