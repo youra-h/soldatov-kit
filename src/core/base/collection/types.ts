@@ -22,12 +22,19 @@ export type TCollectionEvents = {
 	changed: (payload: { collection: TCollection; item?: ICollectionItem }) => void
 
 	/**
+	 * После очистки коллекции.
+	 *
+	 * @param payload.collection  Коллекция, которая была очищена.
+	 */
+	cleared: (payload: { collection: TCollection }) => void
+
+	/**
 	 * После успешного добавления нового элемента.
 	 *
 	 * @param payload.collection  Коллекция, в которую добавлен элемент.
 	 * @param payload.item        Добавленный элемент.
 	 */
-	added: (payload: { collection: TCollection; item: ICollectionItem }) => void
+	'item:added': (payload: { collection: TCollection; item: ICollectionItem }) => void
 
 	/**
 	 * После удаления элемента.
@@ -35,7 +42,7 @@ export type TCollectionEvents = {
 	 * @param payload.collection  Коллекция, из которой удалён элемент.
 	 * @param payload.item        Удалённый элемент.
 	 */
-	deleted: (payload: { collection: TCollection; item: ICollectionItem }) => void
+	'item:deleted': (payload: { collection: TCollection; item: ICollectionItem }) => void
 
 	/**
 	 * Перед удалением элемента.
@@ -46,7 +53,7 @@ export type TCollectionEvents = {
 	 * @param payload.item        Элемент, который будут удалять.
 	 * @returns                   false для отмены операции, иначе продолжить.
 	 */
-	beforeDelete: (payload: {
+	'item:beforeDelete': (payload: {
 		collection: TCollection
 		index: number
 		item: ICollectionItem
@@ -59,18 +66,11 @@ export type TCollectionEvents = {
 	 * @param payload.index       Индекс, с которого удалили элемент.
 	 * @param payload.item        Удалённый элемент.
 	 */
-	afterDelete: (payload: {
+	'item:afterDelete': (payload: {
 		collection: TCollection
 		index: number
 		item: ICollectionItem
 	}) => void
-
-	/**
-	 * После очистки коллекции.
-	 *
-	 * @param payload.collection  Коллекция, которая была очищена.
-	 */
-	cleared: (payload: { collection: TCollection }) => void
 
 	/**
 	 * Перед перемещением элемента.
@@ -81,7 +81,7 @@ export type TCollectionEvents = {
 	 * @param payload.newIndex    Новый индекс для элемента.
 	 * @returns                   false для отмены операции, иначе продолжить.
 	 */
-	beforeMove: (payload: {
+	'item:beforeMove': (payload: {
 		collection: TCollection
 		oldIndex: number
 		newIndex: number
@@ -95,7 +95,7 @@ export type TCollectionEvents = {
 	 * @param payload.oldIndex    Исходный исходный индекс.
 	 * @param payload.newIndex    Индекс, на который элемент переместился.
 	 */
-	afterMove: (payload: {
+	'item:afterMove': (payload: {
 		collection: TCollection
 		item: ICollectionItem
 		oldIndex: number

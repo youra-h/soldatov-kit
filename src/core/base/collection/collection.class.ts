@@ -68,7 +68,7 @@ export class TCollection<
 
 		this._items.push(item)
 
-		this.events.emit('added', { collection: this, item })
+		this.events.emit('item:added', { collection: this, item })
 
 		return item
 	}
@@ -147,7 +147,7 @@ export class TCollection<
 		this._items.splice(index, 0, item)
 		item.collection = this
 
-		this.events.emit('added', { collection: this, item })
+		this.events.emit('item:added', { collection: this, item })
 
 		return true
 	}
@@ -166,7 +166,7 @@ export class TCollection<
 		const item = this._items[index]
 
 		if (
-			this.events.emitWithResult('beforeDelete', { collection: this, index, item }) === false
+			this.events.emitWithResult('item:beforeDelete', { collection: this, index, item }) === false
 		) {
 			return false
 		}
@@ -174,9 +174,9 @@ export class TCollection<
 		const removed = this._items.splice(index, 1)[0]
 		removed?.free()
 
-		this.events.emit('deleted', { collection: this, item })
+		this.events.emit('item:deleted', { collection: this, item })
 
-		this.events.emit('afterDelete', { collection: this, index, item })
+		this.events.emit('item:afterDelete', { collection: this, index, item })
 
 		return true
 	}
@@ -218,7 +218,7 @@ export class TCollection<
 		if (oldIndex === -1 || oldIndex === newIndex) return
 
 		if (
-			this.events.emitWithResult('beforeMove', { collection: this, oldIndex, newIndex }) ===
+			this.events.emitWithResult('item:beforeMove', { collection: this, oldIndex, newIndex }) ===
 			false
 		) {
 			return
@@ -231,7 +231,7 @@ export class TCollection<
 		this._items.splice(oldIndex, 1)
 		this._items.splice(ni, 0, item)
 
-		this.events.emit('afterMove', { collection: this, item, oldIndex, newIndex })
+		this.events.emit('item:afterMove', { collection: this, item, oldIndex, newIndex })
 	}
 
 	/**

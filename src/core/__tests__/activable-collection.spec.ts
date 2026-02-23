@@ -23,14 +23,14 @@ describe('TActivatableCollectionItem', () => {
 })
 
 describe('TActivatableCollection', () => {
-	it('setActive sets active item and emits change; previous item is deactivated', () => {
+	it('setActive sets active item and emits item:activated; previous item is deactivated', () => {
 		const col = new TActivatableCollection({ itemClass: TActivatableCollectionItem })
 
 		const a = col.add({})
 		const b = col.add({})
 
 		const spy = vi.fn()
-		col.events.on('change', spy)
+		col.events.on('item:activated', spy)
 
 		col.setActive(a)
 		expect(col.activeItem).toBe(a)
@@ -44,14 +44,14 @@ describe('TActivatableCollection', () => {
 		expect(col.activeItem).toBe(b)
 	})
 
-	it('clear clears active and emits change with undefined item', () => {
+	it('clear clears active and emits item:deactivated', () => {
 		const col = new TActivatableCollection({ itemClass: TActivatableCollectionItem })
 
 		const a = col.add({})
 		col.setActive(a)
 
 		const spy = vi.fn()
-		col.events.on('change', spy)
+		col.events.on('item:deactivated', spy)
 
 		col.clear()
 
@@ -60,7 +60,6 @@ describe('TActivatableCollection', () => {
 		expect(spy).toHaveBeenCalled()
 		const payload = spy.mock.calls[0]![0]
 		expect(payload.collection).toBe(col)
-		expect(payload.item).toBeUndefined()
 	})
 
 	it('adding item subscribes to item change and respects item.active toggles', () => {
@@ -81,8 +80,8 @@ describe('TActivatableCollection', () => {
 	it('addFromArray() subscribes to item events and maintains active state', () => {
 		const col = new TActivatableCollection({ itemClass: TActivatableCollectionItem })
 
-		const spy = vi.fn()
-		col.events.on('change', spy)
+		const activeSpy = vi.fn()
+		col.events.on('item:activated', activeSpy)
 
 		// добавляем элементы, один с active: true
 		const items = col.addFromArray([
@@ -100,7 +99,7 @@ describe('TActivatableCollection', () => {
 		expect(col.activeItem).toBe(items[2])
 		// предыдущий активный элемент должен быть деактивирован
 		expect(items[1]!.active).toBe(false)
-		expect(spy).toHaveBeenCalled()
+		expect(activeSpy).toHaveBeenCalled()
 	})
 
 	it('addFromArray() with multiple active: true keeps last one active', () => {

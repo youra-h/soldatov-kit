@@ -23,19 +23,22 @@ describe('TSelectableCollectionItem', () => {
 })
 
 describe('TSelectableCollection', () => {
-	it('single mode: selecting an item unselects previous one', () => {
+	it('single mode: selecting an item unselects previous one and emits item:selected/item:unselected', () => {
 		const col = new TSelectableCollection({ itemClass: TSelectableCollectionItem })
 
 		const a = col.add({})
 		const b = col.add({})
 
-		const colSpy = vi.fn()
-		col.events.on('change', colSpy)
+		const selectedSpy = vi.fn()
+		const unselectedSpy = vi.fn()
+		col.events.on('item:selected', selectedSpy)
+		col.events.on('item:unselected', unselectedSpy)
 
 		a.selected = true
 		expect(a.selected).toBe(true)
 		expect(col.selectedCount).toBe(1)
 		expect(col.selected[0]).toBe(a)
+		expect(selectedSpy).toHaveBeenCalledTimes(1)
 
 		b.selected = true
 		// a must be deselected
@@ -43,7 +46,8 @@ describe('TSelectableCollection', () => {
 		expect(b.selected).toBe(true)
 		expect(col.selectedCount).toBe(1)
 		expect(col.selected[0]).toBe(b)
-		expect(colSpy).toHaveBeenCalled()
+		expect(selectedSpy).toHaveBeenCalledTimes(2)
+		expect(unselectedSpy).toHaveBeenCalledTimes(1)
 	})
 
 	it('multiple mode: allows multiple selection', () => {
@@ -73,7 +77,7 @@ describe('TSelectableCollection', () => {
 		expect(col.selectedCount).toBe(0)
 	})
 
-	it('clear deselects all and emits change', () => {
+	it('clear deselects all and emits selection:cleared', () => {
 		const col = new TSelectableCollection({
 			itemClass: TSelectableCollectionItem,
 			mode: 'multiple',
@@ -88,7 +92,7 @@ describe('TSelectableCollection', () => {
 		expect(col.selectedCount).toBe(2)
 
 		const spy = vi.fn()
-		col.events.on('change', spy)
+		col.events.on('selection:cleared', spy)
 
 		col.clear()
 
@@ -104,8 +108,8 @@ describe('TSelectableCollection', () => {
 			mode: 'multiple'
 		})
 
-		const spy = vi.fn()
-		col.events.on('change', spy)
+		const selectedSpy = vi.fn()
+		col.events.on('item:selected', selectedSpy)
 
 		// добавляем элементы с разным состоянием selected
 		const items = col.addFromArray([
@@ -120,7 +124,7 @@ describe('TSelectableCollection', () => {
 		// проверяем, что подписки работают
 		items[1]!.selected = true
 		expect(col.selectedCount).toBe(3)
-		expect(spy).toHaveBeenCalled()
+		expect(selectedSpy).toHaveBeenCalled()
 	})
 
 	it('changing mode from multiple to single keeps only first selected', () => {

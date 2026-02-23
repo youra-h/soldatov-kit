@@ -108,15 +108,11 @@ export class TSelectableCollection<
 				}
 
 				this._selected.add(changedItem)
+				this.events.emit('item:selected', { collection: this, item: changedItem })
 			} else {
 				this._selected.delete(changedItem)
+				this.events.emit('item:unselected', { collection: this, item: changedItem })
 			}
-
-			this.events.emit('change', {
-				collection: this,
-				items: this.selected,
-				item: changedItem,
-			})
 		})
 	}
 
@@ -125,6 +121,6 @@ export class TSelectableCollection<
 
 		this._selected.clear()
 
-		this.events.emit('change', { collection: this, items: [] })
+		this.events.emit('selection:cleared', { collection: this })
 	}
 }

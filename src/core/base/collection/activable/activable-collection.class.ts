@@ -52,7 +52,7 @@ export class TActivatableCollection<
 			item.active = true
 		}
 
-		this.events.emit('change', { collection: this, item })
+		this.events.emit('item:activated', { collection: this, item })
 	}
 
 	/** Очистить активный элемент */
@@ -62,7 +62,7 @@ export class TActivatableCollection<
 
 			this._activeItem = undefined
 
-			this.events.emit('change', { collection: this, item: undefined })
+			this.events.emit('item:deactivated', { collection: this })
 		}
 	}
 

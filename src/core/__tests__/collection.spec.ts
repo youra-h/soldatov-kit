@@ -20,11 +20,11 @@ describe('TCollectionItem', () => {
 })
 
 describe('TCollection', () => {
-	it('add() creates item, increments count and emits "added"', () => {
+	it('add() creates item, increments count and emits "item:added"', () => {
         const col = new TCollection({ itemClass: TestItem })
         const spy = vi.fn()
 
-        col.events.on('added', spy)
+        col.events.on('item:added', spy)
 
         const item = col.add({})
 
@@ -38,11 +38,11 @@ describe('TCollection', () => {
         expect(payload.item).toBe(item)
     })
 
-	it('addFromArray() creates multiple items from array and emits "added" for each', () => {
+	it('addFromArray() creates multiple items from array and emits "item:added" for each', () => {
 		const col = new TCollection({ itemClass: TestItem })
 		const spy = vi.fn()
 
-		col.events.on('added', spy)
+		col.events.on('item:added', spy)
 
 		const sources = [{}, {}, {}]
 		const items = col.addFromArray(sources)
@@ -61,7 +61,7 @@ describe('TCollection', () => {
 		const col = new TCollection({ itemClass: TestItem })
 		const spy = vi.fn()
 
-		col.events.on('added', spy)
+		col.events.on('item:added', spy)
 
 		const items = col.addFromArray([])
 
@@ -88,14 +88,14 @@ describe('TCollection', () => {
 		expect(res).toBe(false)
 	})
 
-	it('delete() removes item and emits before/after events; beforeDelete can cancel', () => {
+	it('delete() removes item and emits before/after events; item:beforeDelete can cancel', () => {
 		const col = new TCollection({ itemClass: TestItem })
 
 		const a = col.add({})
 		const b = col.add({})
 
 		// cancel deletion
-		col.events.on('beforeDelete', () => false)
+		col.events.on('item:beforeDelete', () => false)
 		const res1 = col.delete(0)
 		expect(res1).toBe(false)
 		expect(col.count).toBe(2)
@@ -106,7 +106,7 @@ describe('TCollection', () => {
 		const i1 = col2.add({})
 		const i2 = col2.add({})
 		const afterSpy = vi.fn()
-		col2.events.on('afterDelete', afterSpy)
+		col2.events.on('item:afterDelete', afterSpy)
 
 		const res2 = col2.delete(0)
 		expect(res2).toBe(true)
@@ -142,7 +142,7 @@ describe('TCollection', () => {
 		const c = col.add({})
 
 		// cancel move
-		col.events.on('beforeMove', () => false)
+		col.events.on('item:beforeMove', () => false)
 		col.setItemIndex(a, 2)
 		// positions unchanged
 		expect(col.getItem(0)).toBe(a)
@@ -156,7 +156,7 @@ describe('TCollection', () => {
 		const z = col2.add({})
 
 		const afterMoveSpy = vi.fn()
-		col2.events.on('afterMove', afterMoveSpy)
+		col2.events.on('item:afterMove', afterMoveSpy)
 
 		col2.setItemIndex(x, 2)
 

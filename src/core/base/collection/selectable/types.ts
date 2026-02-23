@@ -42,11 +42,30 @@ export interface ISelectableCollectionProps extends ICollectionProps {
  */
 export type TSelectableCollectionEvents = TCollectionEvents & {
 	/**
-	 * После изменения выбора.
-	 * @param payload.collection Коллекция, в которой изменился выбор
-	 * @param payload.items      Массив выбранных элементов
+	 * После выбора элемента.
+	 * @param payload.collection Коллекция, в которой выбран элемент
+	 * @param payload.item       Выбранный элемент
 	 */
-	change: (payload: { collection: ISelectableCollection; items: ISelectableCollectionItem[] }) => void
+	'item:selected': (payload: {
+		collection: ISelectableCollection
+		item: ISelectableCollectionItem
+	}) => void
+
+	/**
+	 * После отмены выбора элемента.
+	 * @param payload.collection Коллекция, в которой отменен выбор
+	 * @param payload.item       Элемент, с которого снят выбор
+	 */
+	'item:unselected': (payload: {
+		collection: ISelectableCollection
+		item: ISelectableCollectionItem
+	}) => void
+
+	/**
+	 * После очистки всех выбранных элементов.
+	 * @param payload.collection Коллекция, в которой очищен выбор
+	 */
+	'selection:cleared': (payload: { collection: ISelectableCollection }) => void
 }
 
 export interface ISelectableCollection<

@@ -41,11 +41,20 @@ export interface IActivatableCollectionProps extends ICollectionProps {}
  */
 export type TActivatableCollectionEvents = TCollectionEvents & {
 	/**
-	 * После изменения активного элемента.
-	 * @param payload.collection Коллекция, в которой изменился активный элемент
-	 * @param payload.item       Новый активный элемент (или undefined)
+	 * После активации элемента.
+	 * @param payload.collection Коллекция, в которой активирован элемент
+	 * @param payload.item       Активированный элемент
 	 */
-	change: (payload: { collection: IActivatableCollection; item?: IActivatableCollectionItem }) => void
+	'item:activated': (payload: {
+		collection: IActivatableCollection
+		item: IActivatableCollectionItem
+	}) => void
+
+	/**
+	 * После деактивации элемента (активный элемент сброшен).
+	 * @param payload.collection Коллекция, в которой деактивирован элемент
+	 */
+	'item:deactivated': (payload: { collection: IActivatableCollection }) => void
 }
 
 /**
