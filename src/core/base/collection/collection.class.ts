@@ -174,6 +174,8 @@ export class TCollection<
 		const removed = this._items.splice(index, 1)[0]
 		removed?.free()
 
+		this.events.emit('deleted', { collection: this, item })
+
 		this.events.emit('afterDelete', { collection: this, index, item })
 
 		return true

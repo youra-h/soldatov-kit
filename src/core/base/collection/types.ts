@@ -30,6 +30,14 @@ export type TCollectionEvents = {
 	added: (payload: { collection: TCollection; item: ICollectionItem }) => void
 
 	/**
+	 * После удаления элемента.
+	 *
+	 * @param payload.collection  Коллекция, из которой удалён элемент.
+	 * @param payload.item        Удалённый элемент.
+	 */
+	deleted: (payload: { collection: TCollection; item: ICollectionItem }) => void
+
+	/**
 	 * Перед удалением элемента.
 	 * Если хоть один обработчик вернёт false — удаление отменится.
 	 *
