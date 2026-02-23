@@ -31,8 +31,8 @@ export const emitsTabs: TEmits = [
 	'tab:removed',
 	'tab:close',
 	'tab:activated',
-	'update:activeItem',
-	'update:count',
+	'change:count',
+	'change:activeItem',
 ] as const
 
 export const propsTabs: TProps = {
@@ -119,12 +119,12 @@ export function syncTabs(options: ISyncComponentModelOptions<ITabsProps, ITabs>)
 
 	instance.events.on('tab:added', (item: ITabItem) => {
 		emit?.('tab:added', item)
-		emit?.('update:count', instance.count)
+		emit?.('change:count', instance.count)
 	})
 
 	instance.events.on('tab:removed', (item: ITabItem) => {
 		emit?.('tab:removed', item)
-		emit?.('update:count', instance.count)
+		emit?.('change:count', instance.count)
 	})
 
 	instance.events.on('tab:close', (item: ITabItem) => {
@@ -133,7 +133,7 @@ export function syncTabs(options: ISyncComponentModelOptions<ITabsProps, ITabs>)
 
 	instance.events.on('tab:activated', (item: ITabItem | undefined) => {
 		emit?.('tab:activated', item)
-		emit?.('update:activeItem', instance.activeItem)
+		emit?.('change:activeItem', instance.activeItem)
 	})
 
 	// Watch props
