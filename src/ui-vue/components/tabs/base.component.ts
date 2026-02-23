@@ -13,10 +13,7 @@ import {
 	type IActivatableCollectionItem,
 } from '../../../core'
 import { BaseControl, emitsControl, propsControl, syncControl } from '../control'
-import {
-	emitsActivatableCollection,
-	syncActivatableCollection,
-} from '../collection/activable'
+import { emitsActivatableCollection, syncActivatableCollection } from '../collection/activable'
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types'
 
 export const emitsTabs: TEmits = [
@@ -35,7 +32,6 @@ export const emitsTabs: TEmits = [
 	'change:closable',
 	'update:closable',
 	'tab:close',
-	'change:count',
 ] as const
 
 export const propsTabs: TProps = {
@@ -63,7 +59,7 @@ export const propsTabs: TProps = {
 	closable: {
 		type: Boolean as PropType<ITabsProps['closable']>,
 		default: TTabs.defaultValues.closable,
-	}
+	},
 }
 
 export default {
@@ -80,6 +76,13 @@ export function syncTabs(options: ISyncComponentModelOptions<ITabsProps, ITabs>)
 	syncControl(options)
 
 	const { props, instance, emit } = options
+
+	// Проксируем события коллекции через syncActivatableCollection
+	syncActivatableCollection({
+		instance: instance.collection,
+		emit,
+		props: {},
+	})
 
 	// Пробрасываем события core-инстанса наружу (Vue events)
 	instance.events.on('change:orientation', (value: TTabsOrientation) => {
@@ -111,28 +114,6 @@ export function syncTabs(options: ISyncComponentModelOptions<ITabsProps, ITabs>)
 		emit?.('change:closable', value)
 		emit?.('update:closable', value)
 	})
-
-	// Проксируем события коллекции через syncActivatableCollection
-	syncActivatableCollection({
-		instance: instance.collection,
-		emit,
-		props: {},
-	})
-
-	// Дополнительно эмитим change:count при изменении коллекции
-	instance.collection.events.on(
-		'item:added',
-		() => {
-			emit?.('change:count', instance.count)
-		},
-	)
-
-	instance.collection.events.on(
-		'item:deleted',
-		() => {
-			emit?.('change:count', instance.count)
-		},
-	)
 
 	instance.events.on('tab:close', (item: ITabItem) => {
 		emit?.('tab:close', item)
