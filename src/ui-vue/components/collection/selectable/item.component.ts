@@ -3,6 +3,7 @@ import { watch } from 'vue'
 import {
 	type ISelectableCollectionItem,
 	type ISelectableCollectionItemProps,
+	TSelectableCollectionItem
 } from '../../../../core'
 import {
 	BaseCollectionItem,
@@ -24,7 +25,7 @@ export const propsSelectableCollectionItem: TProps = {
 	...propsCollectionItem,
 	selected: {
 		type: Boolean as PropType<ISelectableCollectionItemProps['selected']>,
-		default: false,
+		default: TSelectableCollectionItem.defaultValues.selected,
 	},
 }
 

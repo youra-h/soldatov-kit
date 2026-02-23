@@ -19,7 +19,6 @@ export const emitsSelectableCollection: TEmits = [
 	...emitsCollection,
 	'change',
 	'change:selected',
-	'update:selected',
 	'change:mode',
 	'update:mode',
 	'change:selectedCount',
@@ -56,9 +55,7 @@ export function syncSelectableCollection(
 		(payload: { collection: ISelectableCollection; items: ISelectableCollectionItem[] }) => {
 			emit?.('change', payload)
 			emit?.('change:selected', instance.selected)
-			emit?.('update:selected', instance.selected)
 			emit?.('change:selectedCount', instance.selectedCount)
-			emit?.('update:selectedCount', instance.selectedCount)
 		},
 	)
 
