@@ -81,8 +81,8 @@ export class TTabs
 		})
 
 		this._collection.events.on(
-			'afterDelete',
-			(payload: { collection: any; item: ITabItem; index: number }) => {
+			'deleted',
+			(payload: { collection: any; item: ITabItem }) => {
 				const { item } = payload
 				this.events.emit('tab:removed', item)
 			},
