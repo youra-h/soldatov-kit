@@ -9,12 +9,19 @@ import {
 	type TTabsPosition,
 	type TTabsAppearance,
 	type ITabItem,
+	type IActivatableCollection,
+	type IActivatableCollectionItem,
 } from '../../../core'
 import { BaseControl, emitsControl, propsControl, syncControl } from '../control'
+import {
+	emitsActivatableCollection,
+	syncActivatableCollection,
+} from '../collection/activable'
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types'
 
 export const emitsTabs: TEmits = [
 	...emitsControl,
+	...emitsActivatableCollection,
 	'change:orientation',
 	'update:orientation',
 	'change:alignment',
@@ -27,12 +34,8 @@ export const emitsTabs: TEmits = [
 	'update:stretched',
 	'change:closable',
 	'update:closable',
-	'tab:added',
-	'tab:removed',
 	'tab:close',
-	'tab:activated',
 	'change:count',
-	'change:activeItem',
 ] as const
 
 export const propsTabs: TProps = {
@@ -109,23 +112,30 @@ export function syncTabs(options: ISyncComponentModelOptions<ITabsProps, ITabs>)
 		emit?.('update:closable', value)
 	})
 
-	instance.events.on('tab:added', (item: ITabItem) => {
-		emit?.('tab:added', item)
-		emit?.('change:count', instance.count)
+	// Проксируем события коллекции через syncActivatableCollection
+	syncActivatableCollection({
+		instance: instance.collection,
+		emit,
+		props: {},
 	})
 
-	instance.events.on('tab:removed', (item: ITabItem) => {
-		emit?.('tab:removed', item)
-		emit?.('change:count', instance.count)
-	})
+	// Дополнительно эмитим change:count при изменении коллекции
+	instance.collection.events.on(
+		'item:added',
+		() => {
+			emit?.('change:count', instance.count)
+		},
+	)
+
+	instance.collection.events.on(
+		'item:deleted',
+		() => {
+			emit?.('change:count', instance.count)
+		},
+	)
 
 	instance.events.on('tab:close', (item: ITabItem) => {
 		emit?.('tab:close', item)
-	})
-
-	instance.events.on('tab:activated', (item: ITabItem | undefined) => {
-		emit?.('tab:activated', item)
-		emit?.('change:activeItem', instance.activeItem)
 	})
 
 	// Watch props
