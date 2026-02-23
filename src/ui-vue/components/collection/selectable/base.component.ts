@@ -5,6 +5,7 @@ import {
 	type ISelectableCollectionProps,
 	type ISelectableCollectionItem,
 	type TSelectionMode,
+	TSelectableCollection,
 } from '../../../../core'
 import {
 	default as BaseCollection,
@@ -29,12 +30,8 @@ export const propsSelectableCollection: TProps = {
 	...propsCollection,
 	mode: {
 		type: String as PropType<TSelectionMode>,
-		default: 'single' as TSelectionMode,
+		default: TSelectableCollection.defaultValues.mode,
 	},
-	// selected: {
-	// 	type: Array as PropType<ISelectableCollectionItem[]>,
-	// 	default: () => [],
-	// },
 }
 
 export default {

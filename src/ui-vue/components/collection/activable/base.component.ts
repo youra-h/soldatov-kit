@@ -20,11 +20,7 @@ export const emitsActivatableCollection: TEmits = [
 ] as const
 
 export const propsActivatableCollection: TProps = {
-	...propsCollection,
-	activeItem: {
-		type: Object as PropType<IActivatableCollectionItem | undefined>,
-		default: undefined,
-	},
+	...propsCollection
 }
 
 export default {
