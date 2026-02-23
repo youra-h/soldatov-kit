@@ -100,6 +100,12 @@ export interface ICollectionMethods<TItem extends ICollectionItem = ICollectionI
 	add(source?: Partial<TItem>): TItem
 
 	/**
+	 * Добавляет элементы из массива и возвращает массив созданных элементов
+	 * @param sources Массив данных для создания элементов
+	 */
+	addFromArray(sources: Partial<TItem>[]): TItem[]
+
+	/**
 	 * Вернуть индекс элемента
 	 * @param item Элемент коллекции
 	 */

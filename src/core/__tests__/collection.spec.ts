@@ -38,6 +38,38 @@ describe('TCollection', () => {
         expect(payload.item).toBe(item)
     })
 
+	it('addFromArray() creates multiple items from array and emits "added" for each', () => {
+		const col = new TCollection({ itemClass: TestItem })
+		const spy = vi.fn()
+
+		col.events.on('added', spy)
+
+		const sources = [{}, {}, {}]
+		const items = col.addFromArray(sources)
+
+		expect(items).toHaveLength(3)
+		expect(col.count).toBe(3)
+		expect(spy).toHaveBeenCalledTimes(3)
+
+		// проверяем, что каждый элемент добавлен в коллекцию
+		items.forEach((item, index) => {
+			expect(col.getItem(index)).toBe(item)
+		})
+	})
+
+	it('addFromArray() returns empty array when called with empty array', () => {
+		const col = new TCollection({ itemClass: TestItem })
+		const spy = vi.fn()
+
+		col.events.on('added', spy)
+
+		const items = col.addFromArray([])
+
+		expect(items).toHaveLength(0)
+		expect(col.count).toBe(0)
+		expect(spy).not.toHaveBeenCalled()
+	})
+
 	it('insert() and insertAt() insert items at positions and respect collection membership', () => {
 		const col1 = new TCollection({ itemClass: TestItem })
 		const col2 = new TCollection({ itemClass: TestItem })

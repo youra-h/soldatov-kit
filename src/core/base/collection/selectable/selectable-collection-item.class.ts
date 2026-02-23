@@ -22,7 +22,12 @@ export class TSelectableCollectionItem<
 	implements ISelectableCollectionItem
 {
 	private _selected = false
-
+	getProps(): TProps {
+		return {
+			...super.getProps(),
+			selected: this._selected,
+		} as TProps
+	}
 	get selected(): boolean {
 		return this._selected
 	}

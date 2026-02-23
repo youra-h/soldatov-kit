@@ -78,6 +78,31 @@ describe('TActivatableCollection', () => {
 		expect(col.activeItem).toBeUndefined()
 	})
 
+	it('addFromArray() subscribes to item events and maintains active state', () => {
+		const col = new TActivatableCollection({ itemClass: TActivatableCollectionItem })
+
+		const spy = vi.fn()
+		col.events.on('change', spy)
+
+		// добавляем элементы, один с active: true
+		const items = col.addFromArray([
+			{ active: false },
+			{ active: true },
+			{ active: false },
+		])
+
+		expect(items).toHaveLength(3)
+		expect(col.count).toBe(3)
+		expect(col.activeItem).toBe(items[1])
+
+		// проверяем, что подписки работают
+		items[2]!.active = true
+		expect(col.activeItem).toBe(items[2])
+		// предыдущий активный элемент должен быть деактивирован
+		expect(items[1]!.active).toBe(false)
+		expect(spy).toHaveBeenCalled()
+	})
+
 	it('delete activates next item when deleting active item (has next)', () => {
 		const col = new TActivatableCollection({ itemClass: TActivatableCollectionItem })
 

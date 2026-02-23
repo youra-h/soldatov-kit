@@ -20,8 +20,9 @@ export class TActivatableCollectionItem<
 
 	getProps(): TProps {
 		return {
-			...super.getProps()
-		}
+			...super.getProps(),
+			active: this._active,
+		} as TProps
 	}
 
 	get active(): boolean {

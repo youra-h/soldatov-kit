@@ -98,6 +98,31 @@ describe('TSelectableCollection', () => {
 		expect(spy).toHaveBeenCalled()
 	})
 
+	it('addFromArray() subscribes to item events and maintains selection state', () => {
+		const col = new TSelectableCollection({
+			itemClass: TSelectableCollectionItem,
+			mode: 'multiple'
+		})
+
+		const spy = vi.fn()
+		col.events.on('change', spy)
+
+		// добавляем элементы с разным состоянием selected
+		const items = col.addFromArray([
+			{ selected: true },
+			{ selected: false },
+			{ selected: true },
+		])
+
+		expect(items).toHaveLength(3)
+		expect(col.count).toBe(3)
+
+		// проверяем, что подписки работают
+		items[1]!.selected = true
+		expect(col.selectedCount).toBe(3)
+		expect(spy).toHaveBeenCalled()
+	})
+
 	it('changing mode from multiple to single keeps only first selected', () => {
 		const col = new TSelectableCollection({ itemClass: TSelectableCollectionItem, mode: 'multiple' })
 
