@@ -3,6 +3,7 @@ import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types'
 
 export const emitsCollection: TEmits = [
 	'added',
+	'deleted',
 	'beforeDelete',
 	'afterDelete',
 	'cleared',
@@ -28,6 +29,10 @@ export function syncCollection(options: ISyncComponentModelOptions<ICollectionPr
 	// Пробрасываем события core-инстанса наружу (Vue events)
 	instance.events.on('added', (payload: { collection: ICollection; item: ICollectionItem }) => {
 		emit?.('added', payload)
+	})
+
+	instance.events.on('deleted', (payload: { collection: ICollection; item: ICollectionItem }) => {
+		emit?.('deleted', payload)
 	})
 
 	instance.events.on(
