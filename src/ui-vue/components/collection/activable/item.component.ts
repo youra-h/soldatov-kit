@@ -3,6 +3,7 @@ import { watch } from 'vue'
 import {
 	type IActivatableCollectionItem,
 	type IActivatableCollectionItemProps,
+	TActivatableCollectionItem
 } from '../../../../core'
 import {
 	BaseCollectionItem,
@@ -24,7 +25,7 @@ export const propsActivatableCollectionItem: TProps = {
 	...propsCollectionItem,
 	active: {
 		type: Boolean as PropType<IActivatableCollectionItemProps['active']>,
-		default: false,
+		default: TActivatableCollectionItem.defaultValues.active,
 	},
 }
 

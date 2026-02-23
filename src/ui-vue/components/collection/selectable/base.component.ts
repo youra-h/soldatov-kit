@@ -23,7 +23,6 @@ export const emitsSelectableCollection: TEmits = [
 	'change:mode',
 	'update:mode',
 	'change:selectedCount',
-	'update:selectedCount',
 ] as const
 
 export const propsSelectableCollection: TProps = {

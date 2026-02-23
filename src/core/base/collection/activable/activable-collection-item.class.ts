@@ -9,14 +9,18 @@ import type {
  * Элемент коллекции с поддержкой активности.
  */
 export class TActivatableCollectionItem<
-		TProps extends IActivatableCollectionItemProps = IActivatableCollectionItemProps,
-		TEvents extends
-			TActivatableItemEvents<IActivatableCollectionItem> = TActivatableItemEvents<IActivatableCollectionItem>,
-	>
+	TProps extends IActivatableCollectionItemProps = IActivatableCollectionItemProps,
+	TEvents extends TActivatableItemEvents<IActivatableCollectionItem> =
+		TActivatableItemEvents<IActivatableCollectionItem>,
+>
 	extends TCollectionItem<TProps, TEvents>
 	implements IActivatableCollectionItem
 {
-	protected _active = false
+	static defaultValues: Partial<IActivatableCollectionItemProps> = {
+		active: false,
+	}
+
+	protected _active = TActivatableCollectionItem.defaultValues.active!
 
 	getProps(): TProps {
 		return {

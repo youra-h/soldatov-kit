@@ -1,4 +1,3 @@
-import type { PropType } from 'vue'
 import {
 	type IActivatableCollection,
 	type IActivatableCollectionProps,
@@ -16,7 +15,6 @@ export const emitsActivatableCollection: TEmits = [
 	...emitsCollection,
 	'change',
 	'change:activeItem',
-	'update:activeItem',
 ] as const
 
 export const propsActivatableCollection: TProps = {
@@ -46,7 +44,6 @@ export function syncActivatableCollection(
 		(payload: { collection: IActivatableCollection; item?: IActivatableCollectionItem }) => {
 			emit?.('change', payload)
 			emit?.('change:activeItem', instance.activeItem)
-			emit?.('update:activeItem', instance.activeItem)
 		},
 	)
 }

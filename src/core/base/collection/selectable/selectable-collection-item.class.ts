@@ -14,20 +14,26 @@ import type {
  * @template TEvents Тип событий элемента
  */
 export class TSelectableCollectionItem<
-		TProps extends ISelectableCollectionItemProps = ISelectableCollectionItemProps,
-		TEvents extends
-			TSelectableItemEvents<ISelectableCollectionItem> = TSelectableItemEvents<ISelectableCollectionItem>,
-	>
+	TProps extends ISelectableCollectionItemProps = ISelectableCollectionItemProps,
+	TEvents extends TSelectableItemEvents<ISelectableCollectionItem> =
+		TSelectableItemEvents<ISelectableCollectionItem>,
+>
 	extends TCollectionItem<TProps, TEvents>
 	implements ISelectableCollectionItem
 {
-	private _selected = false
+	static defaultValues: Partial<ISelectableCollectionItemProps> = {
+		selected: false,
+	}
+
+	private _selected = TSelectableCollectionItem.defaultValues.selected!
+
 	getProps(): TProps {
 		return {
 			...super.getProps(),
 			selected: this._selected,
 		} as TProps
 	}
+
 	get selected(): boolean {
 		return this._selected
 	}
