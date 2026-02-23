@@ -32,11 +32,9 @@ export interface IActivatableCollectionItem<
 
 /**
  * Свойства коллекции с поддержкой активности.
+ * Пока нет специфичных настроек, но интерфейс оставляем для расширяемости.
  */
-export interface IActivatableCollectionProps extends ICollectionProps {
-	/** Активный элемент (undefined если нет) */
-	activeItem?: IActivatableCollectionItem
-}
+export interface IActivatableCollectionProps extends ICollectionProps {}
 
 /**
  * События коллекции с поддержкой активности.
@@ -57,8 +55,7 @@ export interface IActivatableCollection<
 	TProps extends IActivatableCollectionProps = IActivatableCollectionProps,
 	TEvents extends TActivatableCollectionEvents = TActivatableCollectionEvents,
 	TItem extends IActivatableCollectionItem = IActivatableCollectionItem,
-> extends ICollection<TProps, TEvents, TItem>,
-		IActivatableCollectionProps {
+> extends ICollection<TProps, TEvents, TItem> {
 	/** Текущий активный элемент */
 	readonly activeItem?: TItem
 	/** Установить активный элемент */

@@ -1,4 +1,3 @@
-import type { PropType, UnwrapNestedRefs } from 'vue'
 import { type ICollection, type ICollectionProps, type ICollectionItem } from '../../../core'
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types'
 
@@ -12,11 +11,7 @@ export const emitsCollection: TEmits = [
 	'changed',
 ] as const
 
-export const propsCollection: TProps = {
-	is: {
-		type: Object as PropType<ICollection | UnwrapNestedRefs<ICollection>>,
-	},
-}
+export const propsCollection: TProps = {}
 
 export default {
 	name: 'BaseCollection',

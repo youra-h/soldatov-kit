@@ -13,13 +13,17 @@ import type { TConstructor } from '../../../common/types'
  * Коллекция элементов с поддержкой выбора.
  */
 export class TSelectableCollection<
-		TProps extends ISelectableCollectionProps = ISelectableCollectionProps,
-		TEvents extends TSelectableCollectionEvents = TSelectableCollectionEvents,
-		TItem extends ISelectableCollectionItem = ISelectableCollectionItem,
-	>
+	TProps extends ISelectableCollectionProps = ISelectableCollectionProps,
+	TEvents extends TSelectableCollectionEvents = TSelectableCollectionEvents,
+	TItem extends ISelectableCollectionItem = ISelectableCollectionItem,
+>
 	extends TCollection<TProps, TEvents, TItem>
 	implements ISelectableCollection<TProps, TEvents, TItem>
 {
+	static defaultValues: Partial<ISelectableCollectionProps> = {
+		mode: 'single',
+	}
+
 	protected _mode: TSelectionMode
 	private _selected: Set<TItem> = new Set()
 
@@ -28,7 +32,7 @@ export class TSelectableCollection<
 			itemClass: (options?.itemClass ?? TSelectableCollectionItem) as TConstructor<TItem>,
 		})
 
-		this._mode = options?.mode ?? 'single'
+		this._mode = options?.mode ?? TSelectableCollection.defaultValues.mode!
 	}
 
 	get mode(): TSelectionMode {
