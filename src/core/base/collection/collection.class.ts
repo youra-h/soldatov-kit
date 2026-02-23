@@ -15,10 +15,10 @@ import { TEntity } from '../../base/entity'
  * @fires afterMove - Элемент был перемещён
  */
 export class TCollection<
-		TProps extends ICollectionProps = ICollectionProps,
-		TEvents extends TCollectionEvents = TCollectionEvents,
-		TItem extends ICollectionItem = ICollectionItem,
-	>
+	TProps extends ICollectionProps = ICollectionProps,
+	TEvents extends TCollectionEvents = TCollectionEvents,
+	TItem extends ICollectionItem = ICollectionItem,
+>
 	extends TEntity<TProps>
 	implements ICollection<TProps, TEvents, TItem>
 {
@@ -61,6 +61,9 @@ export class TCollection<
 	add(source: Partial<TItem> = {}): TItem {
 		const item = new this._itemClass(this)
 
+		// Хук для подписки на события элемента перед assign (для наследников)
+		this._onBeforeItemAdd(item)
+
 		item.assign(source as TItem)
 
 		this._items.push(item)
@@ -69,6 +72,14 @@ export class TCollection<
 
 		return item
 	}
+
+	/**
+	 * Хук, вызываемый перед assign при добавлении элемента.
+	 * Переопределяется в наследниках для подписки на события элемента.
+	 * @param item Созданный элемент
+	 * @protected
+	 */
+	protected _onBeforeItemAdd(item: TItem): void {}
 
 	/**
 	 * Создаёт и добавляет элементы из массива в конец коллекции.

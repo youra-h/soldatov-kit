@@ -36,9 +36,8 @@ export class TActivatableCollection<
 	 * @param item Элемент, который должен стать активным
 	 */
 	setActive(item: TItem): void {
-		console.log('TActivatableCollection setActive', item.id)
 		// Если элемент уже активен, ничего не делаем
-		if (this._activeItem === item || item.active) {
+		if (this._activeItem === item) {
 			return
 		}
 
@@ -48,7 +47,10 @@ export class TActivatableCollection<
 
 		this._activeItem = item
 
-		item.active = true
+		// Устанавливаем active только если он еще не установлен
+		if (!item.active) {
+			item.active = true
+		}
 
 		this.events.emit('change', { collection: this, item })
 	}
@@ -65,15 +67,12 @@ export class TActivatableCollection<
 	}
 
 	/**
-	 * Переопределяем add, чтобы подписаться на события элемента
-	 * @param source Частичные данные для создания элемента
+	 * Переопределяем хук для подписки на события элемента перед assign
+	 * @param item Элемент коллекции
+	 * @protected
 	 */
-	add(source: Partial<TItem> = {}): TItem {
-		const item = super.add(source)
-
+	protected override _onBeforeItemAdd(item: TItem): void {
 		this._subscribeItem(item)
-
-		return item
 	}
 
 	/**

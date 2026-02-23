@@ -71,18 +71,20 @@ export class TSelectableCollection<
 		return this._mode === 'single'
 	}
 
-	/** Переопределяем add, чтобы подписаться на события элемента */
-	add(source: Partial<TItem> = {}): TItem {
-		const item = super.add(source)
+	/**
+	 * Переопределяем хук для подписки на события элемента перед assign
+	 * @param item Элемент коллекции
+	 * @protected
+	 */
+	protected override _onBeforeItemAdd(item: TItem): void {
 		this._subscribeItem(item)
-		return item
 	}
 
 	/**
 	 * Подписка на события элемента
 	 * @param item Элемент коллекции
 	 */
-	private _subscribeItem(item: TItem): void {
+	protected _subscribeItem(item: TItem): void {
 		item.events.on('change', (changedItem: TItem) => {
 			if (this._mode === 'none') {
 				// в режиме none игнорируем выбор
