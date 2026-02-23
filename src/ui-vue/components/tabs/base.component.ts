@@ -60,15 +60,7 @@ export const propsTabs: TProps = {
 	closable: {
 		type: Boolean as PropType<ITabsProps['closable']>,
 		default: TTabs.defaultValues.closable,
-	},
-	activeItem: {
-		type: Object as PropType<ITabItem | undefined>,
-		default: undefined,
-	},
-	count: {
-		type: Number,
-		default: 0,
-	},
+	}
 }
 
 export default {
