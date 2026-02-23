@@ -2,13 +2,14 @@ import { type ICollection, type ICollectionProps, type ICollectionItem } from '.
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types'
 
 export const emitsCollection: TEmits = [
-	'added',
-	'deleted',
-	'beforeDelete',
-	'afterDelete',
+	'item:added',
+	'item:beforeDelete',
+	'item:deleted',
+	'item:afterDelete',
 	'cleared',
-	'beforeMove',
-	'afterMove',
+	'item:beforeMove',
+	'item:moved',
+	'item:afterMove',
 	'changed',
 ] as const
 
@@ -27,25 +28,31 @@ export function syncCollection(options: ISyncComponentModelOptions<ICollectionPr
 	const { instance, emit } = options
 
 	// Пробрасываем события core-инстанса наружу (Vue events)
-	instance.events.on('added', (payload: { collection: ICollection; item: ICollectionItem }) => {
-		emit?.('added', payload)
-	})
-
-	instance.events.on('deleted', (payload: { collection: ICollection; item: ICollectionItem }) => {
-		emit?.('deleted', payload)
-	})
-
 	instance.events.on(
-		'beforeDelete',
-		(payload: { collection: ICollection; index: number; item: ICollectionItem }) => {
-			emit?.('beforeDelete', payload)
+		'item:added',
+		(payload: { collection: ICollection; item: ICollectionItem }) => {
+			emit?.('item:added', payload)
 		},
 	)
 
 	instance.events.on(
-		'afterDelete',
+		'item:deleted',
+		(payload: { collection: ICollection; item: ICollectionItem }) => {
+			emit?.('item:deleted', payload)
+		},
+	)
+
+	instance.events.on(
+		'item:beforeDelete',
 		(payload: { collection: ICollection; index: number; item: ICollectionItem }) => {
-			emit?.('afterDelete', payload)
+			emit?.('item:beforeDelete', payload)
+		},
+	)
+
+	instance.events.on(
+		'item:afterDelete',
+		(payload: { collection: ICollection; index: number; item: ICollectionItem }) => {
+			emit?.('item:afterDelete', payload)
 		},
 	)
 
@@ -54,21 +61,33 @@ export function syncCollection(options: ISyncComponentModelOptions<ICollectionPr
 	})
 
 	instance.events.on(
-		'beforeMove',
+		'item:beforeMove',
 		(payload: { collection: ICollection; oldIndex: number; newIndex: number }) => {
-			emit?.('beforeMove', payload)
+			emit?.('item:beforeMove', payload)
 		},
 	)
 
 	instance.events.on(
-		'afterMove',
+		'item:moved',
 		(payload: {
 			collection: ICollection
 			item: ICollectionItem
 			oldIndex: number
 			newIndex: number
 		}) => {
-			emit?.('afterMove', payload)
+			emit?.('item:moved', payload)
+		},
+	)
+
+	instance.events.on(
+		'item:afterMove',
+		(payload: {
+			collection: ICollection
+			item: ICollectionItem
+			oldIndex: number
+			newIndex: number
+		}) => {
+			emit?.('item:afterMove', payload)
 		},
 	)
 

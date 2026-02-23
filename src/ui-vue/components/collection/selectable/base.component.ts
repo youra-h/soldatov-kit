@@ -17,7 +17,9 @@ import type { TEmits, TProps, ISyncComponentModelOptions } from '../../../types'
 
 export const emitsSelectableCollection: TEmits = [
 	...emitsCollection,
-	'change',
+	'item:selected',
+	'item:unselected',
+	'selection:cleared',
 	'change:selected',
 	'change:mode',
 	'update:mode',
@@ -51,9 +53,27 @@ export function syncSelectableCollection(
 
 	// Пробрасываем события core-инстанса наружу (Vue events)
 	instance.events.on(
-		'change',
-		(payload: { collection: ISelectableCollection; items: ISelectableCollectionItem[] }) => {
-			emit?.('change', payload)
+		'item:selected',
+		(payload: { collection: ISelectableCollection; item: ISelectableCollectionItem }) => {
+			emit?.('item:selected', payload)
+			emit?.('change:selected', instance.selected)
+			emit?.('change:selectedCount', instance.selectedCount)
+		},
+	)
+
+	instance.events.on(
+		'item:unselected',
+		(payload: { collection: ISelectableCollection; item: ISelectableCollectionItem }) => {
+			emit?.('item:unselected', payload)
+			emit?.('change:selected', instance.selected)
+			emit?.('change:selectedCount', instance.selectedCount)
+		},
+	)
+
+	instance.events.on(
+		'selection:cleared',
+		(payload: { collection: ISelectableCollection }) => {
+			emit?.('selection:cleared', payload)
 			emit?.('change:selected', instance.selected)
 			emit?.('change:selectedCount', instance.selectedCount)
 		},
