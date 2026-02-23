@@ -67,9 +67,7 @@ export class TCollection<
 
 		item.assign(source as TItem)
 
-		this._items.push(item)
-
-		this.events.emit('item:added', { collection: this, item })
+		this.insertAt(item)
 
 		return item
 	}
