@@ -56,37 +56,43 @@ describe('TTabs', () => {
 			expect(item.text).toBe('Tab 1')
 		})
 
-		it('emits tab:added event when item is added', () => {
+		it('emits item:added event when item is added', () => {
 			const spy = vi.fn()
-			tabs.events.on('tab:added', spy)
+			tabs.events.on('item:added', spy)
 
 			const item = tabs.collection.add({ text: 'Tab 1' })
 
-			expect(spy).toHaveBeenCalledWith(item)
+			expect(spy).toHaveBeenCalledWith(
+				expect.objectContaining({ collection: tabs.collection, item }),
+			)
 		})
 
-		it('emits tab:removed event when item is removed', () => {
+		it('emits item:deleted event when item is deleted', () => {
 			const item = tabs.collection.add({ text: 'Tab 1' })
 
 			const spy = vi.fn()
-			tabs.events.on('tab:removed', spy)
+			tabs.events.on('item:deleted', spy)
 
 			tabs.collection.deleteItem(item)
 
-			expect(spy).toHaveBeenCalledWith(item)
+			expect(spy).toHaveBeenCalledWith(
+				expect.objectContaining({ collection: tabs.collection, item }),
+			)
 			expect(tabs.count).toBe(0)
 		})
 
-		it('emits tab:activated event when item is activated', () => {
+		it('emits item:activated event when item is activated', () => {
 			const item1 = tabs.collection.add({ text: 'Tab 1' })
 			const item2 = tabs.collection.add({ text: 'Tab 2' })
 
 			const spy = vi.fn()
-			tabs.events.on('tab:activated', spy)
+			tabs.events.on('item:activated', spy)
 
 			tabs.collection.setActive(item1)
 
-			expect(spy).toHaveBeenCalledWith(item1)
+			expect(spy).toHaveBeenCalledWith(
+				expect.objectContaining({ collection: tabs.collection, item: item1 }),
+			)
 			expect(tabs.activeItem).toBe(item1)
 		})
 	})

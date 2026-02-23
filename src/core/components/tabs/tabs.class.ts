@@ -19,10 +19,7 @@ import type {
  * Компонент табов (TTabs).
  * Управляет коллекцией табов с поддержкой активности.
  */
-export class TTabs
-	extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
-	implements ITabs
-{
+export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions> implements ITabs {
 	static override baseClass = 's-tabs'
 
 	static defaultValues: Partial<ITabsProps> = {
@@ -70,27 +67,42 @@ export class TTabs
 		})
 
 		// Подписка на события коллекции для проксирования
-		this._collection.events.on('added', (payload: { collection: any; item: ITabItem }) => {
+		this._collection.events.on('item:added', (payload: { collection: any; item: ITabItem }) => {
 			const { item } = payload
-			this.events.emit('tab:added', item)
 
 			// Подписка на событие закрытия таба — вызывает closeTab с проверкой и удалением
 			item.events.on('close', () => {
 				this.closeTab(item)
 			})
+
+			// Пробрасываем событие наружу
+			this.events.emit('item:added', payload)
 		})
 
 		this._collection.events.on(
-			'deleted',
+			'item:deleted',
 			(payload: { collection: any; item: ITabItem }) => {
-				const { item } = payload
-				this.events.emit('tab:removed', item)
+				// Пробрасываем событие наружу
+				this.events.emit('item:deleted', payload)
 			},
 		)
 
-		this._collection.events.on('change', (payload: { collection: any; item?: ITabItem }) => {
-			const { item } = payload
-			this.events.emit('tab:activated', item)
+		this._collection.events.on(
+			'item:activated',
+			(payload: { collection: any; item: ITabItem }) => {
+				// Пробрасываем событие наружу
+				this.events.emit('item:activated', payload)
+			},
+		)
+
+		this._collection.events.on('item:deactivated', (payload: { collection: any }) => {
+			// Пробрасываем событие наружу
+			this.events.emit('item:deactivated', payload)
+		})
+
+		this._collection.events.on('item:moved', (payload: { collection: any }) => {
+			// Пробрасываем событие наружу
+			this.events.emit('item:moved', payload)
 		})
 	}
 
@@ -243,5 +255,3 @@ export class TTabs
 		}
 	}
 }
-
-

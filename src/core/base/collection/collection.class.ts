@@ -8,6 +8,7 @@ import { TEntity } from '../../base/entity'
  * Коллекция элементов с поддержкой событий и пакетного обновления.
  * @fires changed - Коллекция изменилась (элемент добавлен, удалён, перемещён, обновлён)
  * @fires added - Элемент был добавлен
+ * @fires deleted - Элемент был удалён
  * @fires beforeDelete - Элемент будет удалён (можно отменить)
  * @fires afterDelete - Элемент был удалён
  * @fires cleared - Коллекция была очищена
@@ -230,6 +231,8 @@ export class TCollection<
 
 		this._items.splice(oldIndex, 1)
 		this._items.splice(ni, 0, item)
+
+		this.events.emit('item:moved', { collection: this, item, oldIndex, newIndex: ni })
 
 		this.events.emit('item:afterMove', { collection: this, item, oldIndex, newIndex })
 	}

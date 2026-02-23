@@ -1,5 +1,5 @@
 import type { IControl, IControlProps, TControlEvents, TControlStatesOptions } from '../../base/control'
-import type { TActivatableCollection } from '../../base/collection'
+import type { TActivatableCollection, TActivatableCollectionEvents } from '../../base/collection'
 import type { ITabItem } from './tab-item/types'
 
 export type TTabsOrientation = 'horizontal' | 'vertical'
@@ -7,7 +7,8 @@ export type TTabsAlignment = 'start' | 'center' | 'end' | 'stretch'
 export type TTabsPosition = 'start' | 'end'
 export type TTabsAppearance = 'line' | 'pills' | 'contained' | 'segmented'
 
-export type TTabsEvents = TControlEvents & {
+export type TTabsEvents = TControlEvents &
+	TActivatableCollectionEvents & {
 	/** change:orientation */
 	'change:orientation': (value: TTabsOrientation) => void
 	/** change:alignment */
@@ -20,14 +21,8 @@ export type TTabsEvents = TControlEvents & {
 	'change:stretched': (value: boolean) => void
 	/** change:closable */
 	'change:closable': (value: boolean) => void
-	/** tab:added */
-	'tab:added': (item: ITabItem) => void
-	/** tab:removed */
-	'tab:removed': (item: ITabItem) => void
 	/** tab:close — эмитится перед удалением таба при закрытии */
 	'tab:close': (item: ITabItem) => void
-	/** tab:activated */
-	'tab:activated': (item: ITabItem | undefined) => void
 }
 
 export interface ITabsProps extends IControlProps {

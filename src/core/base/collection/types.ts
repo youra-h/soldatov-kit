@@ -37,14 +37,6 @@ export type TCollectionEvents = {
 	'item:added': (payload: { collection: TCollection; item: ICollectionItem }) => void
 
 	/**
-	 * После удаления элемента.
-	 *
-	 * @param payload.collection  Коллекция, из которой удалён элемент.
-	 * @param payload.item        Удалённый элемент.
-	 */
-	'item:deleted': (payload: { collection: TCollection; item: ICollectionItem }) => void
-
-	/**
 	 * Перед удалением элемента.
 	 * Если хоть один обработчик вернёт false — удаление отменится.
 	 *
@@ -58,6 +50,14 @@ export type TCollectionEvents = {
 		index: number
 		item: ICollectionItem
 	}) => boolean | void
+
+	/**
+	 * После удаления элемента.
+	 *
+	 * @param payload.collection  Коллекция, из которой удалён элемент.
+	 * @param payload.item        Удалённый элемент.
+	 */
+	'item:deleted': (payload: { collection: TCollection; item: ICollectionItem }) => void
 
 	/**
 	 * После удаления элемента.
@@ -86,6 +86,13 @@ export type TCollectionEvents = {
 		oldIndex: number
 		newIndex: number
 	}) => boolean | void
+
+	'item:moved': (payload: {
+		collection: TCollection
+		item: ICollectionItem
+		oldIndex: number
+		newIndex: number
+	}) => void
 
 	/**
 	 * После перемещения элемента.
