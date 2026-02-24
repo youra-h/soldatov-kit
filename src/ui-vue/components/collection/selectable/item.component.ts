@@ -15,10 +15,8 @@ import type { TEmits, TProps, ISyncComponentModelOptions } from '../../../types'
 
 export const emitsSelectableCollectionItem: TEmits = [
 	...emitsCollectionItem,
-	'change',
-	'change:selected',
+	'change:selection',
 	'update:selected',
-	'selected',
 ] as const
 
 export const propsSelectableCollectionItem: TProps = {
@@ -50,10 +48,8 @@ export function syncSelectableCollectionItem(
 	const { props, instance, emit } = options
 
 	// Пробрасываем события core-инстанса наружу (Vue events)
-	instance.events.on('change', (item: ISelectableCollectionItem) => {
-		emit?.('change', item)
-		emit?.('change:selected', instance.selected)
-		emit?.('selected', instance.selected)
+	instance.events.on('change:selection', (item: ISelectableCollectionItem) => {
+		emit?.('change:selection', item)
 		emit?.('update:selected', instance.selected)
 	})
 

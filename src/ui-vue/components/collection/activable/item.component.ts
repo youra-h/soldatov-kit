@@ -15,10 +15,8 @@ import type { TEmits, TProps, ISyncComponentModelOptions } from '../../../types'
 
 export const emitsActivatableCollectionItem: TEmits = [
 	...emitsCollectionItem,
-	'change',
-	'change:active',
+	'change:activation',
 	'update:active',
-	'active',
 ] as const
 
 export const propsActivatableCollectionItem: TProps = {
@@ -50,10 +48,8 @@ export function syncActivatableCollectionItem(
 	const { props, instance, emit } = options
 
 	// Пробрасываем события core-инстанса наружу (Vue events)
-	instance.events.on('change', (item: IActivatableCollectionItem) => {
-		emit?.('change', item)
-		emit?.('change:active', instance.active)
-		emit?.('active', instance.active)
+	instance.events.on('change:activation', (item: IActivatableCollectionItem) => {
+		emit?.('change:activation', item)
 		emit?.('update:active', instance.active)
 	})
 
