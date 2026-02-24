@@ -13,7 +13,7 @@ export class TSelectableTreeItem extends TBehaviorTreeItem<TSelectableBehavior> 
 	 * @param collection Коллекция/ветка дерева, которой принадлежит элемент
 	 */
 	constructor(collection?: TCollection) {
-		super(TSelectableBehavior, collection)
+		super(TSelectableBehavior, 'change:selection', collection)
 	}
 
 	/** Выбран ли элемент. */

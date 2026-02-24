@@ -4,8 +4,7 @@ import { TCollection } from '../../../base/collection'
 
 export class TActivatableTreeItem extends TBehaviorTreeItem<TActivatableBehavior> {
 	constructor(collection?: TCollection) {
-		// Передаем класс поведения и коллекцию в родительский конструктор
-		super(TActivatableBehavior, collection)
+		super(TActivatableBehavior, 'change:activation', collection)
 	}
 
 	// Фасад для удобства (item.active вместо item.behavior.active)

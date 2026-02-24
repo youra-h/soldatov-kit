@@ -150,9 +150,9 @@ describe('TTabItem', () => {
 			expect(collection.activeItem).toBeUndefined()
 		})
 
-		it('emits change event when active changes', () => {
+		it('emits change:activation event when active changes', () => {
 			const spy = vi.fn()
-			item.events.on('change', spy)
+			item.events.on('change:activation', spy)
 
 			item.active = true
 
