@@ -17,7 +17,7 @@ export type TSelectableItemEvents<TItem> = TCollectionItemEvents & {
 	 * После изменения состояния выбранности.
 	 * @param item Элемент, у которого изменился selected
 	 */
-	change: (item: TItem) => void
+	'change:selection': (item: TItem) => void
 }
 
 export interface ISelectableCollectionItem<

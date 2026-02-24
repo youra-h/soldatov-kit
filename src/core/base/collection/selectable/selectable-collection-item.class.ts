@@ -42,7 +42,7 @@ export class TSelectableCollectionItem<
 		if (this._selected !== value) {
 			this._selected = value
 
-			this.events.emit('change', this)
+			this.events.emit('change:selection', this)
 		}
 	}
 

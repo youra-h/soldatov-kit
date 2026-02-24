@@ -89,7 +89,7 @@ export class TSelectableCollection<
 	 * @param item Элемент коллекции
 	 */
 	protected _subscribeItem(item: TItem): void {
-		item.events.on('change', (changedItem: TItem) => {
+		item.events.on('change:selection', (changedItem: TItem) => {
 			if (this._mode === 'none') {
 				// в режиме none игнорируем выбор
 				changedItem.selected = false

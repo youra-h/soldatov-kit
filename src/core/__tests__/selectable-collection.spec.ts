@@ -2,11 +2,11 @@ import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { TSelectableCollection, TSelectableCollectionItem } from '../base/collection'
 
 describe('TSelectableCollectionItem', () => {
-	it('toggleSelected and setter emit "change" with itself', () => {
+	it('toggleSelected and setter emit "change:selection" with itself', () => {
 		const item = new TSelectableCollectionItem()
 		const spy = vi.fn()
 
-		item.events.on('change', spy)
+		item.events.on('change:selection', spy)
 
 		item.selected = true
 		expect(spy).toHaveBeenCalled()

@@ -2,11 +2,11 @@ import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { TActivatableCollection, TActivatableCollectionItem } from '../base/collection'
 
 describe('TActivatableCollectionItem', () => {
-	it('setter and toggleActive emit "change" with itself', () => {
+	it('setter and toggleActive emit "change:activation" with itself', () => {
 		const item = new TActivatableCollectionItem()
 		const spy = vi.fn()
 
-		item.events.on('change', spy)
+		item.events.on('change:activation', spy)
 
 		item.active = true
 		expect(spy).toHaveBeenCalled()

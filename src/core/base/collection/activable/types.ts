@@ -17,7 +17,7 @@ export type TActivatableItemEvents<TItem> = TCollectionItemEvents & {
 	 * После изменения состояния активности.
 	 * @param item Элемент, у которого изменился active
 	 */
-	change: (item: TItem) => void
+	'change:activation': (item: TItem) => void
 }
 
 /**

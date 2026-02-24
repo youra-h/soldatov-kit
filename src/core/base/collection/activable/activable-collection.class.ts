@@ -80,7 +80,7 @@ export class TActivatableCollection<
 	 * @param item Элемент коллекции
 	 */
 	protected _subscribeItem(item: TItem): void {
-		item.events.on('change', (changedItem: TItem) => {
+		item.events.on('change:activation', (changedItem: TItem) => {
 			if (changedItem.active && this._activeItem !== changedItem) {
 				this.setActive(changedItem)
 			} else if (!changedItem.active && this._activeItem === changedItem) {
