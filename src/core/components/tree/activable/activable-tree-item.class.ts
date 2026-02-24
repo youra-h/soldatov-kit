@@ -4,7 +4,11 @@ import { TCollection } from '../../../base/collection'
 
 export class TActivatableTreeItem extends TBehaviorTreeItem<TActivatableBehavior> {
 	constructor(collection?: TCollection) {
-		super(TActivatableBehavior, 'change:activation', collection)
+		super(collection)
+
+		this._behavior = new TActivatableBehavior()
+
+		this._behavior.events.on('change:activation', () => this.notifyChange('behaviorChange'))
 	}
 
 	// Фасад для удобства (item.active вместо item.behavior.active)
