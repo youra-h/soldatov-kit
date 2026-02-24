@@ -25,8 +25,8 @@ export default class TTabItem
 		this._collectionItem = new TActivatableCollectionItem(collection)
 
 		// Проксируем события коллекции на this.events
-		this._collectionItem.events.on('change', () => {
-			this.events.emit('change', this)
+		this._collectionItem.events.on('change:activation', () => {
+			this.events.emit('change:activation', this)
 		})
 		this._collectionItem.events.on('free', () => {
 			this.events.emit('free', this)

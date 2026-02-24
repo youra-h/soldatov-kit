@@ -10,7 +10,6 @@ import type {
 	IActivatableCollectionItemProps,
 	TActivatableItemEvents,
 } from '../../../base/collection/activable/types'
-import type { TCollectionItemEvents } from '../../../base/collection'
 
 // ============ TTabItemCustom (логика таба без коллекции) ============
 
