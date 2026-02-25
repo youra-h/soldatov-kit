@@ -7,6 +7,7 @@ import type {
 } from './types'
 import type { TConstructor } from '../../../common/types'
 import { TActivatableCollectionItem } from './activable-collection-item.class'
+import { isSame } from '../../../common/is-same'
 
 /**
  * Коллекция элементов с поддержкой активности.
@@ -37,7 +38,7 @@ export class TActivatableCollection<
 	 */
 	setActive(item: TItem): void {
 		// Если элемент уже активен, ничего не делаем
-		if (this._activeItem === item) {
+		if (isSame(this._activeItem, item)) {
 			return
 		}
 
@@ -81,9 +82,9 @@ export class TActivatableCollection<
 	 */
 	protected _subscribeItem(item: TItem): void {
 		item.events.on('change:activation', (changedItem: TItem) => {
-			if (changedItem.active && this._activeItem !== changedItem) {
+			if (changedItem.active && !isSame(this._activeItem, changedItem)) {
 				this.setActive(changedItem)
-			} else if (!changedItem.active && this._activeItem === changedItem) {
+			} else if (!changedItem.active && isSame(this._activeItem, changedItem)) {
 				this.clear()
 			}
 		})
@@ -101,7 +102,7 @@ export class TActivatableCollection<
 		}
 
 		const item = this.getItem(index)
-		const wasActive = this._activeItem === item
+		const wasActive = isSame(this._activeItem, item)
 
 		// Если удаляется активный элемент и в коллекции есть другие элементы,
 		// активируем соседний элемент ДО удаления
