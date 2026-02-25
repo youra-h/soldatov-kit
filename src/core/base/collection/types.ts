@@ -177,8 +177,8 @@ export interface ICollectionMethods<TItem extends ICollectionItem = ICollectionI
 	/** Перебор элементов */
 	forEach(fn: (item: TItem, index: number) => void): void
 
-	/** Возвращает массив элементов */
-	toArray(): TItem[]
+	/** Возвращает нативный массив элементов-инстансов */
+	getItems(): TItem[]
 
 	/**
 	 * Возвращает первый элемент, удовлетворяющий условию предиката.

@@ -3,6 +3,27 @@ import { TCollection, TCollectionItem } from '../base/collection'
 
 class TestItem extends TCollectionItem {}
 
+// Расширенный элемент с полями для тестирования getItems / toArray
+interface TestRichItemProps {
+	name: string
+	value: number
+}
+
+class TestRichItem extends TCollectionItem<TestRichItemProps> {
+	private _name: string = ''
+	private _value: number = 0
+
+	get name() { return this._name }
+	set name(v: string) { this._name = v }
+
+	get value() { return this._value }
+	set value(v: number) { this._value = v }
+
+	getProps(): Readonly<TestRichItemProps> {
+		return { name: this._name, value: this._value }
+	}
+}
+
 describe('TCollectionItem', () => {
 	it('free() emits "free" with itself', () => {
 		const item = new TestItem()
@@ -165,5 +186,37 @@ describe('TCollection', () => {
 		const payload = afterMoveSpy.mock.calls[0]![0]
 		expect(payload.collection).toBe(col2)
 		expect(payload.item).toBe(x)
+	})
+})
+
+describe('TCollection — getItems', () => {
+	it('getItems() возвращает массив инстансов элементов', () => {
+		const col = new TCollection({ itemClass: TestRichItem })
+		const a = col.add({ name: 'Alice', value: 1 })
+		const b = col.add({ name: 'Bob', value: 2 })
+
+		const items = col.getItems<TestRichItem>()
+
+		expect(items).toHaveLength(2)
+		// Возвращает именно инстансы, а не plain-объекты
+		expect(items[0]).toBe(a)
+		expect(items[1]).toBe(b)
+		expect(items[0]).toBeInstanceOf(TestRichItem)
+	})
+
+	it('getItems() возвращает пустой массив для пустой коллекции', () => {
+		const col = new TCollection({ itemClass: TestRichItem })
+		expect(col.getItems()).toHaveLength(0)
+	})
+
+	it('getItems() и toArray() — разные объекты, но одинаковые данные', () => {
+		const col = new TCollection({ itemClass: TestRichItem })
+		col.add({ name: 'Charlie', value: 42 })
+
+		const item = col.getItems<TestRichItem>()[0]!
+
+		// инстанс и plain-объект — разные объекты
+		expect(item.name).toBe('Charlie')
+		expect(item.value).toBe(42)
 	})
 })

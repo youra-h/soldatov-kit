@@ -272,10 +272,9 @@ export class TCollection<
 	}
 
 	/**
-	 * Возвращает массив элементов коллекции.
-	 * Возвращаемый тип параметризуется типом элементов.
+	 * Возвращает нативный массив элементов-инстансов коллекции.
 	 */
-	toArray<T extends TItem>(): T[] {
+	getItems<T extends TItem>(): T[] {
 		return this._items as T[]
 	}
 
