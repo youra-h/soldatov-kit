@@ -9,8 +9,6 @@ import {
 	type TTabsPosition,
 	type TTabsAppearance,
 	type ITabItem,
-	type IActivatableCollection,
-	type IActivatableCollectionItem,
 } from '../../../core'
 import { BaseControl, emitsControl, propsControl, syncControl } from '../control'
 import { emitsActivatableCollection, syncActivatableCollection } from '../collection/activable'
