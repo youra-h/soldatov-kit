@@ -39,13 +39,6 @@ export abstract class TCollectionItem<
 		this._collection = value
 	}
 
-	getProps(): TProps {
-		return {
-			...super.getProps(),
-			collection: this._collection,
-		}
-	}
-
 	/**
 	 * Освобождает ресурсы, отписывается от событий и т.д.
 	 * Вызывается перед удалением элемента из коллекции или при явном освобождении.
