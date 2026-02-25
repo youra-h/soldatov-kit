@@ -10,6 +10,8 @@ export interface IAssignable<T = TEntityProps> {
 
 // Параметризуемый базовый объект
 export interface IEntity<TProps = TEntityProps> extends IAssignable<TProps> {
+	/** Уникальный идентификатор объекта в рамках текущей сессии */
+	readonly uid: number
 	// Возвращает свойства объекта (только для чтения)
 	getProps(): Readonly<TProps>
 	// Сериализация объекта в JSON

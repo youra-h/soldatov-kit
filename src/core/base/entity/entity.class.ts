@@ -1,6 +1,10 @@
 import type { TEntityProps, IEntity } from './types'
+import { createUid } from '../../common/uid'
 
 export abstract class TEntity<TProps extends TEntityProps = TEntityProps> implements IEntity<TProps> {
+	/** Уникальный идентификатор объекта в рамках текущей сессии */
+	public readonly uid: number = createUid()
+
 	getProps(): Readonly<TProps> {
 		return {} as TProps
 	}
