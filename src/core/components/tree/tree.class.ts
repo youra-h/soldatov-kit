@@ -28,8 +28,15 @@ export class TTree<TItem extends ITreeItem = ITreeItem, TEvents extends TTreeEve
 	 * @param predicate Функция-условие
 	 */
 	public find(predicate: (item: TItem) => boolean): TItem | undefined {
-		// Ищем в текущем уровне и во вложенных
 		return this._findRecursive(this, predicate)
+	}
+
+	/**
+	 * Рекурсивный поиск по ключу и значению (DFS).
+	 * Переопределяет плоский findBy из TCollection.
+	 */
+	public findBy<K extends keyof TItem>(key: K, value: TItem[K]): TItem | undefined {
+		return this.find((item) => item[key] === value)
 	}
 
 	private _findRecursive(

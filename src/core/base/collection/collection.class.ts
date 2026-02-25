@@ -278,4 +278,23 @@ export class TCollection<
 	toArray<T extends TItem>(): T[] {
 		return this._items as T[]
 	}
+
+	/**
+	 * Возвращает первый элемент, удовлетворяющий условию предиката.
+	 * Производит линейный поиск по плоскому списку элементов.
+	 * @param predicate Функция-условие
+	 */
+	find(predicate: (item: TItem) => boolean): TItem | undefined {
+		return this._items.find(predicate)
+	}
+
+	/**
+	 * Возвращает первый элемент, у которого значение поля key равно value.
+	 * Производит линейный поиск по плоскому списку элементов.
+	 * @param key Имя поля
+	 * @param value Искомое значение
+	 */
+	findBy<K extends keyof TItem>(key: K, value: TItem[K]): TItem | undefined {
+		return this._items.find((item) => item[key] === value)
+	}
 }

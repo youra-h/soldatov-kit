@@ -179,6 +179,19 @@ export interface ICollectionMethods<TItem extends ICollectionItem = ICollectionI
 
 	/** Возвращает массив элементов */
 	toArray(): TItem[]
+
+	/**
+	 * Возвращает первый элемент, удовлетворяющий условию предиката.
+	 * @param predicate Функция-условие
+	 */
+	find(predicate: (item: TItem) => boolean): TItem | undefined
+
+	/**
+	 * Возвращает первый элемент, у которого значение поля key равно value.
+	 * @param key Имя поля
+	 * @param value Искомое значение
+	 */
+	findBy<K extends keyof TItem>(key: K, value: TItem[K]): TItem | undefined
 }
 
 export interface ICollection<
