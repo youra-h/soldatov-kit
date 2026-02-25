@@ -1,8 +1,3 @@
-// common (общие типы/эвенты)
-export * from './common/types'
-export * from './common/event-emitter'
-export * from './common/evented'
-
 // base (слои/ядро)
 export * from './base/entity'
 export * from './base/component-model'
@@ -28,3 +23,7 @@ export * from './components/check-box'
 export * from './components/switch'
 export * from './components/tabs'
 export * from './components/tree'
+
+// common (вспомогательные утилиты)
+export * from './common/is-same'
+export * from './common/evented'
