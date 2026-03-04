@@ -1,7 +1,5 @@
 // Тип обработчика события
 export type TEventHandler = (...args: unknown[]) => unknown
-// Тип карты событий
-export type TEventMap = Record<string, TEventHandler[]>
 
 /**
  * Подписка на события
@@ -10,49 +8,42 @@ export type TEventMap = Record<string, TEventHandler[]>
  * emitter.on('event', (data) => console.log(data))
  */
 export class TEventEmitter {
-	private _items: TEventMap = {}
+	private _items: Map<string, Set<TEventHandler>> = new Map()
 
 	on(event: string, handler: TEventHandler): void {
-		if (!this._items[event]) {
-			this._items[event] = []
+		let handlers = this._items.get(event)
+
+		if (!handlers) {
+			handlers = new Set()
+			this._items.set(event, handlers)
 		}
 
-		this._items[event].push(handler)
+		handlers.add(handler)
 	}
 
 	off(event: string, handler: TEventHandler): void {
-		if (!this._items[event]) {
-			return
-		}
-
-		this._items[event] = this._items[event].filter((h) => h !== handler)
+		this._items.get(event)?.delete(handler)
 	}
 
 	emit(event: string, ...args: unknown[]): void {
-		if (!this._items[event]) {
-			return
-		}
-
-		this._items[event].forEach((handler) => handler(...args))
+		this._items.get(event)?.forEach((handler) => handler(...args))
 	}
 
 	/**
-	 * Выполняет событие и возвращает результат выполнения обработчиков
-	 * @param event
-	 * @param args
-	 * @returns {boolean}
+	 * Выполняет событие и возвращает результат выполнения обработчиков.
+	 * Если хотя бы один обработчик вернул false — возвращает false.
 	 */
 	emitWithResult(event: string, ...args: unknown[]): boolean {
-		if (!this._items[event]) {
+		const handlers = this._items.get(event)
+
+		if (!handlers) {
 			return true
 		}
 
 		let result = true
 
-		for (const handler of this._items[event]) {
-			const res = handler(...args)
-
-			if (res === false) {
+		for (const handler of handlers) {
+			if (handler(...args) === false) {
 				result = false
 			}
 		}
@@ -62,9 +53,10 @@ export class TEventEmitter {
 
 	remove(event?: string): void {
 		if (event) {
-			delete this._items[event]
+			this._items.delete(event)
 		} else {
-			this._items = {}
+			this._items.clear()
 		}
 	}
 }
+
