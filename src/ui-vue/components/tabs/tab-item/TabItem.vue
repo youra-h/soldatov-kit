@@ -1,5 +1,5 @@
 <script lang="ts">
-import { TTabItem, type ITabItemProps } from '../../../../core'
+import { TTabItem, type ITabItemProps } from '@core'
 import BaseTabItem, { syncTabItem } from './tab-item.component'
 import { useBaseSetup } from '../../../composables/useBaseSetup'
 import { Icon, useIconImport } from '../../icon'

@@ -1,5 +1,5 @@
 import type { PropType } from 'vue'
-import { type ITabItem, type ITabItemProps } from '../../../../core'
+import { type ITabItem, type ITabItemProps } from '@core'
 import {
 	default as BaseTabItemCustom,
 	emitsTabItemCustom,

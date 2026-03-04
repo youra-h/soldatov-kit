@@ -9,7 +9,7 @@ import {
 	type TTabsPosition,
 	type TTabsAppearance,
 	type ITabItem,
-} from '../../../core'
+} from '@core'
 import { BaseControl, emitsControl, propsControl, syncControl } from '../control'
 import { emitsActivatableCollection, syncActivatableCollection } from '../collection/activable'
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types'

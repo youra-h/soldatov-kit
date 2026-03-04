@@ -4,7 +4,7 @@ import {
 	type ITabItemCustom,
 	type ITabItemCustomProps,
 	TTabItemCustom,
-} from '../../../../core'
+} from '@core'
 import { BaseValueControl, emitsValueControl, propsValueControl, syncValueControl } from '../../value-control'
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../../types'
 
