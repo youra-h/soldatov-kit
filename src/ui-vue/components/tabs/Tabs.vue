@@ -1,9 +1,8 @@
 <script lang="ts">
-import { TTabs, type ITabsProps, type ITabItem } from '../../../core'
+import { TTabs, type ITabsProps, type ITabItem } from '@core'
 import BaseTabs, { syncTabs } from './base.component'
 import { useBaseSetup } from '../../composables/useBaseSetup'
 import { TabItem } from './tab-item'
-import { computed } from 'vue'
 
 export default {
 	name: '_Tabs',
@@ -18,8 +17,7 @@ export default {
 			emit,
 		})
 
-		// Преобразуем коллекцию в reactive массив
-		const items = computed(() => instance.collection.toArray<ITabItem>())
+		const items = instance.collection.getItems()
 
 		return { instance, items }
 	},
@@ -28,29 +26,17 @@ export default {
 
 <template>
 	<div v-if="instance.rendered" v-show="instance.visible" :class="instance.classes">
+		{{ console.log(instance.collection._items) }}
 		<div class="s-tabs__list" role="tablist">
-			<!-- Рендерим табы из коллекции -->
-			<TabItem
-				v-for="(item, index) in items"
-				:key="item.id || index"
-				:is="item"
-				:closable="instance.isTabClosable(item)"
-				:class="{
-					's-tab-item--active': item.active,
-				}"
+			<button
+				v-for="item in items"
+				:key="item.uid"
+				class="s-tab-item"
+				role="tab"
 				@click="instance.collection.setActive(item)"
-				@close="instance.closeTab(item)"
 			>
-				<!-- Пробрасываем слоты -->
-				<template #default="slotProps">
-					<slot name="tab-item" v-bind="{ ...slotProps, item, index }">
-						{{ item.text }}
-					</slot>
-				</template>
-				<template #close-icon>
-					<slot name="close-icon" v-bind="{ item, index }" />
-				</template>
-			</TabItem>
+				{{ item.text }}
+			</button>
 		</div>
 
 		<!-- Слот для контента табов -->

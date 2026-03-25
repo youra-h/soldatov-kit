@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, markRaw } from 'vue'
 import { TTabs } from '@core'
 import { Tabs } from '@ui/tabs'
 
@@ -10,7 +10,11 @@ onMounted(() => {
 	tabs.value.collection.add({ id: 1, text: 'Tab 1', value: 'tab1' })
 	tabs.value.collection.add({ id: 2, text: 'Tab 2', value: 'tab2' })
 	tabs.value.collection.add({ id: 3, text: 'Tab 3', value: 'tab3' })
-	tabs.value.collection.setActive(tabs.value.collection.getItem(0)!)
+
+	const item2 = tabs.value.collection.findBy('id', 2)!
+
+	tabs.value.collection.setActive(item2)
+
 })
 </script>
 
