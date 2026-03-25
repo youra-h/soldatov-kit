@@ -1,5 +1,5 @@
 import { TCollection } from '../collection.class'
-import type { ICollectionItem, ICollectionItemProps, TCollectionItemEvents } from './types'
+import type { ICollectionItem, ICollectionItemOptions, ICollectionItemProps, TCollectionItemEvents } from './types'
 import { TEntity } from '../../../base/entity'
 import { TEvented } from '../../../common/evented'
 
@@ -21,11 +21,11 @@ export abstract class TCollectionItem<
 	// События
 	public readonly events: TEvented<TEvents>
 
-	constructor(collection?: TCollection) {
+	constructor(options: ICollectionItemOptions = {}) {
 		super()
 
-		if (collection) {
-			this._collection = collection
+		if (options.collection) {
+			this._collection = options.collection
 		}
 
 		this.events = new TEvented<TEvents>()

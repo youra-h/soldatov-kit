@@ -60,7 +60,7 @@ export class TCollection<
 	 * Возвращает созданный элемент.
 	 */
 	add(source: Partial<TItem> = {}): TItem {
-		const item = new this._itemClass(this)
+		const item = new this._itemClass({ collection: this })
 
 		// Хук для подписки на события элемента перед assign (для наследников)
 		this._onBeforeItemAdd(item)
@@ -114,7 +114,7 @@ export class TCollection<
 	 * @param index Позиция вставки.
 	 */
 	insert(index: number): TItem | undefined {
-		const item = new this._itemClass(this)
+		const item = new this._itemClass({ collection: this })
 
 		index = Math.max(0, Math.min(index, this._items.length))
 

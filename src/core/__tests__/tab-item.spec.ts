@@ -123,7 +123,7 @@ describe('TTabItem', () => {
 		})
 
 		it('creates tab item with collection', () => {
-			item = new TTabItem(collection)
+			item = new TTabItem({ collection })
 
 			expect(item.collection).toBe(collection)
 		})

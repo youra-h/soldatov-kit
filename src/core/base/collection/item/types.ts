@@ -3,6 +3,17 @@ import { TCollectionItem } from './../item/collection-item.class'
 import type { IEntity } from '../../../base/entity'
 import { TEvented } from '../../../common/evented'
 
+export interface ICollectionItemOptions {
+	collection?: TCollection
+}
+
+/**
+ * Utility-тип: добавляет `collection` к любым опциям компонента.
+ * Используется в компонентах, которые являются элементами коллекции (например, TTabItem, TTreeItem).
+ */
+export type TWithCollectionOptions<TOptions extends object = object> =
+	TOptions & ICollectionItemOptions
+
 export interface ICollectionItemProps {}
 
 export interface ICollectionItemMethods {

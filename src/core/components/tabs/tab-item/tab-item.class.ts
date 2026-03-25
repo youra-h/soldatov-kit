@@ -1,7 +1,7 @@
 import { TActivatableCollectionItem } from '../../../base/collection/activable/activable-collection-item.class'
-import type { TCollection } from '../../../base/collection'
 import TTabItemCustom from './tab-item-custom.class'
-import type { ITabItem, ITabItemProps, TTabItemEvents } from './types'
+import type { ITabItem, ITabItemOptions, ITabItemProps, TTabItemEvents } from './types'
+import type { TCollection } from '../../../base/collection'
 
 /**
  * Элемент таба для работы в коллекции.
@@ -18,11 +18,12 @@ export default class TTabItem
 {
 	protected _collectionItem: TActivatableCollectionItem
 
-	constructor(collection?: TCollection) {
-		super()
+	constructor(options: ITabItemOptions | Partial<ITabItemProps> = {}) {
+		const { collection, ...componentOptions } = options as ITabItemOptions
+		super(componentOptions)
 
 		// Создаем элемент коллекции (у него свои Props, а не ITabItemProps!)
-		this._collectionItem = new TActivatableCollectionItem(collection)
+		this._collectionItem = new TActivatableCollectionItem({ collection })
 
 		// Проксируем события коллекции на this.events
 		this._collectionItem.events.on('change:activation', () => {
