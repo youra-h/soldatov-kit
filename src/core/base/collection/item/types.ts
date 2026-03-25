@@ -11,7 +11,7 @@ export interface ICollectionItemOptions {
  * Utility-тип: добавляет `collection` к любым опциям компонента.
  * Используется в компонентах, которые являются элементами коллекции (например, TTabItem, TTreeItem).
  */
-export type TWithCollectionOptions<TOptions extends object = object> =
+export type TCollectableOptions<TOptions extends object = object> =
 	TOptions & ICollectionItemOptions
 
 export interface ICollectionItemProps {}

@@ -11,7 +11,7 @@ import type {
 	TActivatableItemEvents,
 } from '../../../base/collection/activable/types'
 import type { IComponentViewOptions } from '../../../base/component-view'
-import type { TWithCollectionOptions } from '../../../base/collection/item/types'
+import type { TCollectableOptions } from '../../../base/collection/item/types'
 
 // ============ TTabItemCustom (логика таба без коллекции) ============
 
@@ -55,7 +55,7 @@ export interface ITabItemCustom<
 
 // ============ TTabItem (коллекционный элемент с композицией) ============
 
-export type ITabItemOptions = TWithCollectionOptions<
+export type ITabItemOptions = TCollectableOptions<
 	IComponentViewOptions<ITabItemProps, TTabItemCustomStatesOptions>
 >
 
