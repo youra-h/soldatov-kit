@@ -5,7 +5,6 @@ import { resolveState } from '../../common/resolve-state'
 import type {
 	IComponentViewOptions,
 	IComponentViewProps,
-	IComponentViewRenderConfig,
 	TComponentViewEvents,
 	TComponentViewStatesOptions,
 	TComponentViewPreparedOptions,
