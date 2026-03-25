@@ -83,6 +83,7 @@ export default class TComponentView<
 
 	constructor(options: IComponentViewOptions<TProps, TStates> | Partial<TProps> = {}) {
 		const ctor = new.target as typeof TComponentView
+
 		const {
 			props = {} as Partial<TProps>,
 			renderConfig,
