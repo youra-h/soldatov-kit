@@ -3,11 +3,12 @@ import { TTabItem, type ITabItemProps } from '@core'
 import BaseTabItem, { syncTabItem } from './tab-item.component'
 import { useBaseSetup } from '../../../composables/useBaseSetup'
 import { Icon, useIconImport } from '../../icon'
+import { Button } from '../../button'
 
 export default {
 	name: '_TabItem',
 	extends: BaseTabItem,
-	components: { Icon },
+	components: { Icon, Button },
 	setup(props: ITabItemProps, { emit }) {
 		const { is: instance } = useBaseSetup(TTabItem, props)
 
@@ -26,33 +27,28 @@ export default {
 </script>
 
 <template>
-	<div
-		v-if="instance.rendered"
-		v-show="instance.visible"
+	<Button
+		:visible="instance.visible"
+		:rendered="instance.rendered"
+		:size="size"
+		:variant="variant"
+		:text="instance.text"
 		:class="instance.classes"
 		@click="instance.click($event)"
 		role="tab"
 	>
-		<!-- Слот для текста -->
-		<span class="s-tab-item__text">
-			<slot :text="instance.text" :active="instance.active">
-				{{ instance.text }}
-			</slot>
-		</span>
-
-		<!-- Кнопка закрытия -->
-		<button
-			v-if="instance.closable !== false"
-			type="button"
-			class="s-tab-item__close"
-			@click.stop="instance.close()"
-			:aria-label="'Close'"
-		>
-			<slot name="close-icon">
+		<template #after>
+			<!-- Кнопка закрытия -->
+			<Button
+				:rendered="instance.closable"
+				class="s-tab-item__close"
+				@click.stop="instance.close()"
+				appearance="plain"
+			>
 				<Icon :tag="closeIconTag" :size="instance.size" />
-			</slot>
-		</button>
-	</div>
+			</Button>
+		</template>
+	</Button>
 </template>
 
 <style lang="scss">
@@ -71,14 +67,7 @@ export default {
 	}
 
 	&__close {
-		@apply inline-flex items-center justify-center;
-		@apply p-0.5;
-		@apply border-none bg-transparent;
-		@apply cursor-pointer rounded;
-
-		&:hover {
-			@apply bg-black/5;
-		}
+		@apply px-1;
 	}
 
 	&--closable {
