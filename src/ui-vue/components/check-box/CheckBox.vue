@@ -1,5 +1,5 @@
 <script lang="ts">
-import { TCheckBox, type ICheckBoxProps } from '../../../core'
+import { TCheckBox, type ICheckBoxProps } from '@core'
 import BaseCheckBox, { syncCheckBox } from './base.component'
 import { useBaseSetup } from '../../composables/useBaseSetup'
 import { Icon, useIconImport } from '../icon'

@@ -26,17 +26,14 @@ export default {
 
 <template>
 	<div v-if="instance.rendered" v-show="instance.visible" :class="instance.classes">
-		{{ console.log(instance.collection._items) }}
 		<div class="s-tabs__list" role="tablist">
-			<button
-				v-for="item in items"
-				:key="item.uid"
-				class="s-tab-item"
-				role="tab"
-				@click="instance.collection.setActive(item)"
-			>
-				{{ item.text }}
-			</button>
+			<template v-for="item in items" :key="item.uid">
+				<tab-item
+					:is="item"
+				>
+					{{ item.text }}
+				</tab-item>
+			</template>
 		</div>
 
 		<!-- Слот для контента табов -->

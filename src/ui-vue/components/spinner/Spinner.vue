@@ -1,5 +1,5 @@
 <script lang="ts">
-import { TSpinner, type ISpinnerProps } from '../../../core'
+import { TSpinner, type ISpinnerProps } from '@core'
 import { useBaseSetup } from '../../composables/useBaseSetup'
 import BaseSpinner, { syncSpinner } from './base.component'
 

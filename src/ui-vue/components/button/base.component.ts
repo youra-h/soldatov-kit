@@ -4,7 +4,7 @@ import {
 	type TButtonAppearance,
 	TButton,
 	type IButton,
-} from '../../../core'
+} from '@core'
 import { BaseTextable, emitsTextable, propsTextable, syncTextable } from '../textable'
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types'
 import { Spinner } from '../spinner'

@@ -1,5 +1,5 @@
 import { type PropType } from 'vue'
-import { type ISwitch, type ISwitchProps, TSwitch } from '../../../core'
+import { type ISwitch, type ISwitchProps, TSwitch } from '@core'
 import {
 	BaseInputControl,
 	emitsInputControl,

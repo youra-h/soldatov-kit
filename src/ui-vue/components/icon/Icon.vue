@@ -1,5 +1,5 @@
 <script lang="ts">
-import { TIcon, type IIconProps } from '../../../core'
+import { TIcon, type IIconProps } from '@core'
 import { useBaseSetup } from '../../composables/useBaseSetup'
 import BaseIcon, { syncIcon } from './base.component'
 

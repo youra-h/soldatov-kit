@@ -2,7 +2,7 @@ import {
 	type IActivatableCollection,
 	type IActivatableCollectionProps,
 	type IActivatableCollectionItem,
-} from '../../../../core'
+} from '@core'
 import {
 	default as BaseCollection,
 	emitsCollection,

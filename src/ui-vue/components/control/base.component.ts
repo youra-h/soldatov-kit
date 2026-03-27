@@ -1,6 +1,6 @@
 import type { PropType } from 'vue'
 import { watch } from 'vue'
-import { type IControl, type IControlProps, TControl } from '../../../core'
+import { type IControl, type IControlProps, TControl } from '@core'
 import { BaseStylable, emitsStylable, propsStylable, syncStylable } from '../stylable'
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types'
 

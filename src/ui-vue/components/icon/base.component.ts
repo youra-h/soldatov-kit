@@ -1,5 +1,5 @@
 import { type PropType, watch } from 'vue'
-import { type IIconProps, TIcon, type TComponentSize, type IIcon } from '../../../core'
+import { type IIconProps, TIcon, type TComponentSize, type IIcon } from '@core'
 import {
 	ComponentView,
 	emitsComponentView,

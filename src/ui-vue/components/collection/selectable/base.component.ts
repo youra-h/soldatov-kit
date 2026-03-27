@@ -6,7 +6,7 @@ import {
 	type ISelectableCollectionItem,
 	type TSelectionMode,
 	TSelectableCollection,
-} from '../../../../core'
+} from '@core'
 import {
 	default as BaseCollection,
 	emitsCollection,

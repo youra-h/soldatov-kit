@@ -1,4 +1,4 @@
-import { type ICollection, type ICollectionProps, type ICollectionItem } from '../../../core'
+import { type ICollection, type ICollectionProps, type ICollectionItem } from '@core'
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types'
 
 export const emitsCollection: TEmits = [

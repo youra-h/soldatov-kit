@@ -5,7 +5,7 @@ import {
 	type IInputControlProps,
 	TInputControl,
 	type TInputControlState,
-} from '../../../core'
+} from '@core'
 import {
 	BaseValueControl,
 	emitsValueControl,

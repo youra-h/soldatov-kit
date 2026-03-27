@@ -1,5 +1,5 @@
 <script lang="ts">
-import { TSwitch, type ISwitchProps } from '../../../core'
+import { TSwitch, type ISwitchProps } from '@core'
 import BaseSwitch, { syncSwitch } from './base.component'
 import { useBaseSetup } from '../../composables/useBaseSetup'
 

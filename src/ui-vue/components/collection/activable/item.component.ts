@@ -4,7 +4,7 @@ import {
 	type IActivatableCollectionItem,
 	type IActivatableCollectionItemProps,
 	TActivatableCollectionItem
-} from '../../../../core'
+} from '@core'
 import {
 	BaseCollectionItem,
 	emitsCollectionItem,

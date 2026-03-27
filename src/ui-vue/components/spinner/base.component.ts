@@ -5,7 +5,7 @@ import {
 	type TComponentSize,
 	type TComponentVariant,
 	type ISpinner,
-} from '../../../core'
+} from '@core'
 import {
 	ComponentView,
 	emitsComponentView,

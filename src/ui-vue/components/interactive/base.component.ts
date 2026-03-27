@@ -1,6 +1,6 @@
 import type { PropType } from 'vue'
 import { watch } from 'vue'
-import { type IInteractive, type IInteractiveProps, TInteractive } from '../../../core'
+import { type IInteractive, type IInteractiveProps, TInteractive } from '@core'
 import {
 	BaseComponentView,
 	emitsComponentView,

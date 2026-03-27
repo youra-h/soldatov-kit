@@ -31,6 +31,7 @@ export default {
 		v-show="instance.visible"
 		:class="instance.classes"
 		@click="instance.click($event)"
+		role="tab"
 	>
 		<!-- Слот для текста -->
 		<span class="s-tab-item__text">

@@ -1,5 +1,5 @@
 <script lang="ts">
-import { TButton, type IButtonProps } from '../../../core'
+import { TButton, type IButtonProps } from '@core'
 import { useBaseSetup } from '../../composables/useBaseSetup'
 import BaseButton, { syncButton } from './base.component'
 
