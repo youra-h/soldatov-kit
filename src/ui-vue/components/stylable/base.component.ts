@@ -1,7 +1,7 @@
 import type { PropType } from 'vue'
 import { watch } from 'vue'
-import { type IStylable, type IStylableProps, TStylable } from '@core'
-import type { TComponentSize, TComponentVariant } from '@core'
+import { TStylable } from '@core'
+import type { IStylable, IStylableProps, TComponentSize, TComponentVariant } from '@core'
 import {
 	BaseComponentView,
 	emitsComponentView,

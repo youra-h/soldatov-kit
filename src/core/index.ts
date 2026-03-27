@@ -27,3 +27,4 @@ export * from './components/tree'
 // common (вспомогательные утилиты)
 export * from './common/is-same'
 export * from './common/evented'
+export type { TComponentSize, TComponentVariant } from './common/types'
