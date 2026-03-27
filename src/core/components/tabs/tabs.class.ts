@@ -75,8 +75,25 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 				this.closeTab(item)
 			})
 
+			// Propagation: новый таб наследует size и variant от контейнера
+			item.size = this.size
+			item.variant = this.variant
+
 			// Пробрасываем событие наружу
 			this.events.emit('item:added', payload)
+		})
+
+		// Propagation: при изменении size/variant у контейнера — обновляем все существующие итемы
+		this.events.on('change:size', (value) => {
+			this._collection.forEach((item) => {
+				item.size = value
+			})
+		})
+
+		this.events.on('change:variant', (value) => {
+			this._collection.forEach((item) => {
+				item.variant = value
+			})
 		})
 
 		this._collection.events.on(

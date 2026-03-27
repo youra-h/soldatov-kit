@@ -326,4 +326,61 @@ describe('TTabs', () => {
 			expect(props.closable).toBe(true)
 		})
 	})
+
+	describe('size/variant propagation', () => {
+		it('propagates current size to newly added item', () => {
+			tabs.size = 'sm'
+
+			const item = tabs.collection.add({ text: 'Tab 1' })
+
+			expect(item.size).toBe('sm')
+		})
+
+		it('propagates current variant to newly added item', () => {
+			tabs.variant = 'primary'
+
+			const item = tabs.collection.add({ text: 'Tab 1' })
+
+			expect(item.variant).toBe('primary')
+		})
+
+		it('propagates size to all existing items when tabs.size changes', () => {
+			const item1 = tabs.collection.add({ text: 'Tab 1' })
+			const item2 = tabs.collection.add({ text: 'Tab 2' })
+
+			tabs.size = 'lg'
+
+			expect(item1.size).toBe('lg')
+			expect(item2.size).toBe('lg')
+		})
+
+		it('propagates variant to all existing items when tabs.variant changes', () => {
+			const item1 = tabs.collection.add({ text: 'Tab 1' })
+			const item2 = tabs.collection.add({ text: 'Tab 2' })
+
+			tabs.variant = 'primary'
+
+			expect(item1.variant).toBe('primary')
+			expect(item2.variant).toBe('primary')
+		})
+
+		it('propagates size and variant together when both changed', () => {
+			const item = tabs.collection.add({ text: 'Tab 1' })
+
+			tabs.size = 'sm'
+			tabs.variant = 'secondary'
+
+			expect(item.size).toBe('sm')
+			expect(item.variant).toBe('secondary')
+		})
+
+		it('new item inherits size after collection already has items', () => {
+			tabs.size = 'lg'
+			tabs.collection.add({ text: 'Tab 1' })
+
+			const item2 = tabs.collection.add({ text: 'Tab 2' })
+
+			expect(item2.size).toBe('lg')
+		})
+	})
 })
