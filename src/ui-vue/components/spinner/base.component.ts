@@ -18,6 +18,10 @@ export const emitsSpinner: TEmits = [...emitsComponentView] as const
 
 export const propsSpinner: TProps = {
 	...propsComponentView,
+	tag: {
+		type: [Object, String] as PropType<ISpinnerProps['tag']>,
+		default: TSpinner.defaultValues.tag,
+	},
 	variant: {
 		type: String as PropType<ISpinnerProps['variant']>,
 		default: TSpinner.defaultValues.variant,

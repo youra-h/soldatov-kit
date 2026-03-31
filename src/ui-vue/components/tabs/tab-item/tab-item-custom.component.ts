@@ -19,6 +19,10 @@ export const emitsTabItemCustom: TEmits = [
 
 export const propsTabItemCustom: TProps = {
 	...propsValueControl,
+	tag: {
+		type: [Object, String] as PropType<ITabItemCustomProps['tag']>,
+		default: TTabItemCustom.defaultValues.tag,
+	},
 	text: {
 		type: String as PropType<ITabItemCustomProps['text']>,
 		default: TTabItemCustom.defaultValues.text,

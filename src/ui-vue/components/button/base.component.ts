@@ -13,6 +13,10 @@ export const emitsButton: TEmits = [...emitsTextable, 'change:loading', 'update:
 
 export const propsButton: TProps = {
 	...propsTextable,
+	tag: {
+		type: [Object, String] as PropType<IButtonProps['tag']>,
+		default: TButton.defaultValues.tag,
+	},
 	appearance: {
 		type: String as PropType<IButtonProps['appearance']>,
 		default: TButton.defaultValues.appearance,
