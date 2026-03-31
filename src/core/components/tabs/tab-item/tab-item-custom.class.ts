@@ -30,6 +30,7 @@ export default class TTabItemCustom<
 		value: '',
 		closable: undefined,
 		variant: 'normal',
+		tag: 'button',
 	}
 
 	protected _textState: IStateUnit<string>

@@ -32,12 +32,24 @@ export default {
 		:rendered="instance.rendered"
 		:size="size"
 		:variant="variant"
-		:text="instance.text"
 		:class="instance.classes"
 		@click="instance.click($event)"
 		role="tab"
 	>
+		<!-- Слот до текста -->
+		<template #before>
+			<slot name="before" />
+		</template>
+
+		<!-- Слот для текста -->
+		<slot :text="instance.text" :active="instance.active">
+			{{ instance.text }}
+		</slot>
+
+		<!-- Слот после текста + кнопка закрытия -->
 		<template #after>
+			<slot name="after" />
+
 			<!-- Кнопка закрытия -->
 			<Button
 				:rendered="instance.closable"
@@ -45,7 +57,9 @@ export default {
 				@click.stop="instance.close()"
 				appearance="plain"
 			>
-				<Icon :tag="closeIconTag" :size="instance.size" />
+				<slot name="close-icon">
+					<Icon :tag="closeIconTag" :size="instance.size" />
+				</slot>
 			</Button>
 		</template>
 	</Button>
@@ -57,26 +71,8 @@ export default {
 .s-tab-item {
 	$this: &;
 
-	@apply inline-flex items-center gap-2;
-	@apply px-4 py-2;
-	@apply cursor-pointer select-none;
-	@apply relative;
-
-	&__text {
-		@apply inline-flex items-center;
-	}
-
 	&__close {
 		@apply px-1;
-	}
-
-	&--closable {
-		@apply pr-2;
-	}
-
-	&:disabled,
-	&--disabled {
-		@apply opacity-50 cursor-default pointer-events-none;
 	}
 }
 </style>

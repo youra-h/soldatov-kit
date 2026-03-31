@@ -27,9 +27,7 @@ export default {
 <template>
 	<div v-if="instance.rendered" v-show="instance.visible" :class="instance.classes">
 		<div class="s-tabs__list" role="tablist">
-			<template v-for="item in items" :key="item.uid">
-				<tab-item :is="item" />
-			</template>
+			<tab-item v-for="item in items" :key="item.uid" :is="item" />
 		</div>
 
 		<!-- Слот для контента табов -->
