@@ -1,5 +1,5 @@
 <script lang="ts">
-import { TTabs, type ITabsProps, type ITabItem } from '@core'
+import { TTabs, type ITabsProps } from '@core'
 import BaseTabs, { syncTabs } from './base.component'
 import { useBaseSetup } from '../../composables/useBaseSetup'
 import { TabItem } from './tab-item'
@@ -28,11 +28,7 @@ export default {
 	<div v-if="instance.rendered" v-show="instance.visible" :class="instance.classes">
 		<div class="s-tabs__list" role="tablist">
 			<template v-for="item in items" :key="item.uid">
-				<tab-item
-					:is="item"
-				>
-					{{ item.text }}
-				</tab-item>
+				<tab-item :is="item" />
 			</template>
 		</div>
 

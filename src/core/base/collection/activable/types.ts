@@ -6,7 +6,7 @@ import type { ICollectionItem, TCollectionItemEvents, ICollectionItemProps } fro
  */
 export interface IActivatableCollectionItemProps extends ICollectionItemProps {
 	/** Признак активности элемента */
-	active: boolean
+	active?: boolean
 }
 
 /**

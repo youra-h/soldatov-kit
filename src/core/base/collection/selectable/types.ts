@@ -6,7 +6,7 @@ import type { ICollectionItem, TCollectionItemEvents, ICollectionItemProps } fro
  */
 export interface ISelectableCollectionItemProps extends ICollectionItemProps {
 	/** Признак выбранности элемента */
-	selected: boolean
+	selected?: boolean
 }
 
 /**

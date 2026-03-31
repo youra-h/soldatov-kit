@@ -29,8 +29,13 @@ export default class TTabItem
 		this._collectionItem.events.on('change:activation', () => {
 			this.events.emit('change:activation', this)
 		})
+
 		this._collectionItem.events.on('free', () => {
 			this.events.emit('free', this)
+		})
+
+		this.events.on('click', (event) => {
+			this.active = true
 		})
 	}
 
