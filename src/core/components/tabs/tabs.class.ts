@@ -248,9 +248,7 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 		}
 
 		// Добавляем классы для внешнего вида
-		if (this._appearance !== 'line') {
-			classes.push(`${this._baseClass}--${this._appearance}`)
-		}
+		classes.push(`${this._baseClass}--${this._appearance}`)
 
 		// Добавляем класс для stretched
 		if (this._stretched) {

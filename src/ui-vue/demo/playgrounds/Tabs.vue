@@ -8,6 +8,7 @@ const tabs = ref<TTabs>()
 onMounted(() => {
 	tabs.value = new TTabs()
 
+	tabs.value.variant = 'primary'
 	tabs.value.appearance = 'line'
 	tabs.value.orientation = 'horizontal'
 

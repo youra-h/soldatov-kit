@@ -95,54 +95,35 @@ export default {
 	// Внешний вид
 	&--line {
 		#{$this}__list {
-			@apply border-b border-gray-200;
 		}
 
 		.s-tab-item {
-			@apply border-b-2 border-transparent;
-
-			&--active {
-				@apply border-blue-500;
-			}
 		}
 	}
 
 	&--pills {
 		.s-tab-item {
-			@apply rounded-md;
-
 			&--active {
-				@apply bg-blue-50;
 			}
 		}
 	}
 
 	&--contained {
 		#{$this}__list {
-			@apply bg-gray-50;
-			@apply p-1 rounded-lg;
 		}
 
 		.s-tab-item {
-			@apply rounded-md;
-
 			&--active {
-				@apply bg-white shadow-sm;
 			}
 		}
 	}
 
 	&--segmented {
 		#{$this}__list {
-			@apply border border-gray-200;
-			@apply rounded-lg p-1 gap-0;
 		}
 
 		.s-tab-item {
-			@apply rounded-md m-0;
-
 			&--active {
-				@apply bg-blue-500 text-white;
 			}
 		}
 	}
