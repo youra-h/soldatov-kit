@@ -2,6 +2,7 @@
 import { TSwitch, type ISwitchProps } from '@core'
 import BaseSwitch, { syncSwitch } from './base.component'
 import { useBaseSetup } from '../../composables/useBaseSetup'
+import { useElementSync } from '../../composables/useElementSync'
 
 export default {
 	name: '_Switch',
@@ -15,13 +16,15 @@ export default {
 			emit,
 		})
 
-		return { instance }
+		const rootRef = useElementSync(instance)
+
+		return { instance, rootRef }
 	},
 }
 </script>
 
 <template>
-	<div v-if="instance.rendered" v-show="instance.visible" :class="instance.classes">
+	<div ref="rootRef" v-if="instance.rendered" v-show="instance.visible" :class="instance.classes">
 		<input
 			type="checkbox"
 			:id="instance.id.toString()"

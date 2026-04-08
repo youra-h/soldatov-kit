@@ -3,6 +3,7 @@ import type { UnwrapNestedRefs } from 'vue'
 import { TComponentView, type IComponentView, type IComponentViewProps } from '@core'
 import BaseComponentView, { syncComponentView } from './base.component'
 import { useBaseSetup } from '../../composables/useBaseSetup'
+import { useElementSync } from '../../composables/useElementSync'
 
 type TComponentViewVueProps = IComponentViewProps & {
 	is?: IComponentView | UnwrapNestedRefs<IComponentView>
@@ -20,13 +21,16 @@ export default {
 			emit,
 		})
 
-		return { instance }
+		const rootRef = useElementSync(instance)
+
+		return { instance, rootRef }
 	},
 }
 </script>
 
 <template>
 	<component
+		ref="rootRef"
 		:is="instance.tag"
 		v-if="instance.rendered"
 		v-show="instance.visible"

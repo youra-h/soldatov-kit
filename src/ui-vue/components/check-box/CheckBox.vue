@@ -2,6 +2,7 @@
 import { TCheckBox, type ICheckBoxProps } from '@core'
 import BaseCheckBox, { syncCheckBox } from './base.component'
 import { useBaseSetup } from '../../composables/useBaseSetup'
+import { useElementSync } from '../../composables/useElementSync'
 import { Icon, useIconImport } from '../icon'
 
 export default {
@@ -20,13 +21,15 @@ export default {
 		const defaultIconTag = useIconImport('../../icons/check.svg')
 		const defaultIndeterminateIconTag = useIconImport('../../icons/check_indeterminate.svg')
 
-		return { instance, defaultIconTag, defaultIndeterminateIconTag }
+		const rootRef = useElementSync(instance)
+
+		return { instance, defaultIconTag, defaultIndeterminateIconTag, rootRef }
 	},
 }
 </script>
 
 <template>
-	<div v-if="instance.rendered" v-show="instance.visible" :class="instance.classes">
+	<div ref="rootRef" v-if="instance.rendered" v-show="instance.visible" :class="instance.classes">
 		<input
 			type="checkbox"
 			:id="instance.id.toString()"

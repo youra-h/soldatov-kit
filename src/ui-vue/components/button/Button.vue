@@ -1,6 +1,7 @@
 <script lang="ts">
 import { TButton, type IButtonProps } from '@core'
 import { useBaseSetup } from '../../composables/useBaseSetup'
+import { useElementSync } from '../../composables/useElementSync'
 import BaseButton, { syncButton } from './base.component'
 
 export default {
@@ -15,8 +16,11 @@ export default {
 			emit,
 		})
 
+		const rootRef = useElementSync(instance)
+
 		return {
 			instance,
+			rootRef,
 		}
 	},
 }
@@ -24,6 +28,7 @@ export default {
 
 <template>
 	<component
+		ref="rootRef"
 		:is="instance.tag"
 		v-if="instance.rendered"
 		v-show="instance.visible"

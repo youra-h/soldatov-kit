@@ -3,6 +3,7 @@ import { ref, watch, nextTick, onMounted } from 'vue'
 import { TTabs, type ITabsProps } from '@core'
 import BaseTabs, { syncTabs } from './base.component'
 import { useBaseSetup } from '../../composables/useBaseSetup'
+import { useElementSync } from '../../composables/useElementSync'
 import { TabItem } from './tab-item'
 
 export default {
@@ -35,14 +36,16 @@ export default {
 		watch(() => instance.activeItem, updateIndicator)
 		onMounted(updateIndicator)
 
-		return { instance, items, listRef }
+		const rootRef = useElementSync(instance)
+
+		return { instance, items, listRef, rootRef }
 	},
 }
 </script>
 
 <template>
 	{{ instance.classes }}
-	<div v-if="instance.rendered" v-show="instance.visible" :class="instance.classes">
+	<div ref="rootRef" v-if="instance.rendered" v-show="instance.visible" :class="instance.classes">
 		<div class="s-tabs__list" ref="listRef" role="tablist">
 			<tab-item v-for="item in items" :key="item.uid" :is="item" />
 		</div>
