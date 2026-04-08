@@ -82,6 +82,7 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 
 				if (!el) return
 
+				console.log('refresh', el.offsetLeft, el?.offsetWidth)
 				setTimeout(() => {
 					console.log('refresh', el.offsetLeft, el?.offsetWidth)
 				}, 1000);

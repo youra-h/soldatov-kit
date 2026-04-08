@@ -17,6 +17,9 @@ export const emitsComponentView: TEmits = [
 	'beforeHide',
 	'afterHide',
 	'created',
+	'mount',
+	'unmount',
+	'refresh',
 ] as const
 
 export const propsComponentView: TProps = {
@@ -51,6 +54,10 @@ export default {
 		// Emit 'created' event when component is created
 		// @ts-ignore
 		this.$emit('created', this.instance)
+	},
+	unmounted() {
+		// @ts-ignore
+		this.$emit('unmounted')
 	},
 }
 
@@ -91,6 +98,12 @@ export function syncComponentView(
 		emit?.('change:rendered', value)
 		emit?.('rendered', value)
 		emit?.('update:rendered', value)
+	})
+	instance.events.on('mount' as any, (payload: { el: Element; instance: IComponentView }) => {
+		emit?.('mount', payload)
+	})
+	instance.events.on('refresh' as any, (payload: { instance: IComponentView }) => {
+		emit?.('refresh', payload)
 	})
 
 	watch<Object | string | undefined>(

@@ -62,7 +62,7 @@ export default {
 				:rendered="instance.closable"
 				class="s-tab-item__close"
 				@click.stop="instance.close()"
-				@vue:mounted="instance.refresh()"
+				@mount="instance.refresh()"
 				appearance="plain"
 			>
 				<slot name="close-icon">
