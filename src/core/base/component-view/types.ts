@@ -35,9 +35,9 @@ export type TComponentViewEvents = TComponentModelEvents & {
 	/** change:classes (без baseClass) */
 	'change:classes': (value: string[]) => void
 	/** mount — root-элемент присоединён к DOM фреймворком */
-	'mount': (el: Element, instance: IComponentView) => void
+	'mount': (payload: { el: Element; instance: IComponentView }) => void
 	/** unmount — root-элемент удалён из DOM */
-	'unmount': () => void
+	'unmount': (payload: { instance: IComponentView }) => void
 }
 
 export interface IComponentViewProps extends IComponentModelProps {

@@ -205,9 +205,9 @@ export default class TComponentView<
 		this._el = value
 
 		if (value && !prev) {
-			this.events.emit('mount', value, this as any)
+			this.events.emit('mount', { el: value, instance: this as any })
 		} else if (!value && prev) {
-			this.events.emit('unmount')
+			this.events.emit('unmount', { instance: this as any })
 		}
 	}
 
