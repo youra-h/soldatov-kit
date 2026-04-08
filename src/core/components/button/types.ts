@@ -3,7 +3,7 @@ import type { TComponentVariant } from '../../common/types'
 import type { TStateCtor } from '../../base/states'
 import type { ILoadingState, ILoadingBehavior } from '../../base/states'
 
-export type TButtonAppearance = 'normal' | 'plain' | 'outlined'
+export type TButtonAppearance = 'normal' | 'plain' | 'outlined' | 'none'
 
 export interface IButtonProps extends ITextableProps {
 	// Вариант отображения кнопки

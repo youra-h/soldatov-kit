@@ -25,6 +25,7 @@ export default {
 </script>
 
 <template>
+	{{ instance.classes }}
 	<div v-if="instance.rendered" v-show="instance.visible" :class="instance.classes">
 		<div class="s-tabs__list" role="tablist">
 			<tab-item v-for="item in items" :key="item.uid" :is="item" />

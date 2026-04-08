@@ -57,12 +57,14 @@ export default {
 
 	&:focus,
 	&:focus-visible {
-		@apply duration-100;
-		@apply outline-2 outline-offset-2 outline-blue-400;
-		@apply bg-gray-200;
+		&:not(#{$this}--none) {
+			@apply duration-100;
+			@apply outline-2 outline-offset-2 outline-blue-400;
+			@apply bg-gray-200;
+		}
 	}
 
-	&:hover:not([disabled]) {
+	&:hover:not([disabled]):not(#{$this}--none) {
 		@apply bg-gray-200;
 	}
 
@@ -86,7 +88,7 @@ export default {
 		@apply bg-gray-100;
 		@apply dark:bg-gray-900;
 
-		&:active:not([disabled]) {
+		&:active:not([disabled]):not(#{$this}--none) {
 			@apply bg-gray-300;
 		}
 
@@ -117,6 +119,10 @@ export default {
 		&.s-button--warning {
 			@include mixines.button-variant($color: 'amber', $bg-idx: 600);
 		}
+	}
+
+	&--none {
+		@apply bg-transparent;
 	}
 
 	&--plain {

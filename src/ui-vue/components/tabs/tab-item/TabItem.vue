@@ -30,6 +30,8 @@ export default {
 	<Button
 		:visible="instance.visible"
 		:rendered="instance.rendered"
+		:disabled="instance.disabled"
+		appearance="none"
 		:size="size"
 		:variant="variant"
 		:class="instance.classes"
