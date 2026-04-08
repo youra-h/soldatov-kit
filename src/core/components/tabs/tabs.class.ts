@@ -78,7 +78,6 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 
 			// ResizeObserver: следим за изменением размера таба → пересчитываем индикатор
 			item.events.on('mount', ({ el }) => {
-				console.log('Tab mounted, setting up ResizeObserver', item)
 				const observer = new ResizeObserver(() => this._updateLineIndicator())
 				observer.observe(el)
 				this._itemObservers.set(item, observer)
