@@ -1,5 +1,4 @@
 <script lang="ts">
-import { ref, watch, nextTick, onMounted } from 'vue'
 import { TTabs, type ITabsProps } from '@core'
 import BaseTabs, { syncTabs } from './base.component'
 import { useBaseSetup } from '../../composables/useBaseSetup'
@@ -21,24 +20,9 @@ export default {
 
 		const items = instance.collection.getItems()
 
-		// Скользящий индикатор через CSS custom properties
-		const listRef = ref<HTMLElement | null>(null)
-
-		function updateIndicator() {
-			nextTick(() => {
-				const activeEl = instance.activeItem?.el as HTMLElement | null
-				if (!activeEl || !listRef.value) return
-				listRef.value.style.setProperty('--underline-x', `${activeEl.offsetLeft}px`)
-				listRef.value.style.setProperty('--underline-width', `${activeEl.offsetWidth}px`)
-			})
-		}
-
-		watch(() => instance.activeItem, updateIndicator)
-		onMounted(updateIndicator)
-
 		const rootRef = useElementSync(instance)
 
-		return { instance, items, listRef, rootRef }
+		return { instance, items, rootRef }
 	},
 }
 </script>
@@ -46,7 +30,7 @@ export default {
 <template>
 	{{ instance.classes }}
 	<div ref="rootRef" v-if="instance.rendered" v-show="instance.visible" :class="instance.classes">
-		<div class="s-tabs__list" ref="listRef" role="tablist">
+		<div class="s-tabs__list" role="tablist">
 			<tab-item v-for="item in items" :key="item.uid" :is="item" />
 		</div>
 
@@ -125,7 +109,9 @@ export default {
 				bottom: -1px;
 				width: var(--underline-width, 0px);
 				transform: translateX(var(--underline-x, 0px));
-				transition: transform 0.2s ease, width 0.2s ease;
+				transition:
+					transform 0.2s ease,
+					width 0.2s ease;
 			}
 		}
 

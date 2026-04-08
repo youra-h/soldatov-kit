@@ -121,6 +121,13 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 			// Пробрасываем событие наружу
 			this.events.emit('item:moved', payload)
 		})
+
+		// Индикатор: обновляем при монтировании и при смене активного таба
+		this.events.on('mount', () => this._updateLineIndicator())
+		// Индикатор: обновляем при смене внешнего вида (может влиять на размеры табов)
+		this._collection.events.on('item:activated', () => this._updateLineIndicator())
+		// Индикатор: обновляем при смене внешнего вида (может влиять на размеры табов)
+		this.events.on('change:appearance', () => this._updateLineIndicator())
 	}
 
 	// Простые геттеры/сеттеры без state
@@ -229,6 +236,19 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 
 		// Удаление элемента - TActivatableCollection автоматически активирует следующий таб
 		return this._collection.deleteItem(item)
+	}
+
+	private _updateLineIndicator(): void {
+		if (this._appearance !== 'line') return
+		if (!this._el) return
+
+		const listEl = this._el.querySelector(`.${this._baseClass}__list`) as HTMLElement | null
+		const activeEl = this.activeItem?.el as HTMLElement | null
+
+		if (!listEl || !activeEl) return
+
+		listEl.style.setProperty('--underline-x', `${activeEl.offsetLeft}px`)
+		listEl.style.setProperty('--underline-width', `${activeEl.offsetWidth}px`)
 	}
 
 	override get classes(): string[] {
