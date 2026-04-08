@@ -43,6 +43,7 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 
 	// Композиция: коллекция табов
 	protected _collection: TActivatableCollection<any, any, ITabItem>
+	private _itemObservers = new Map<ITabItem, ResizeObserver>()
 
 	constructor(
 		options: IComponentViewOptions<ITabsProps, TTabsStatesOptions> | Partial<ITabsProps> = {},
@@ -75,17 +76,17 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 				this.closeTab(item)
 			})
 
-			// Пересчитываем индикатор при refresh (например кнопка закрытия появилась)
-			item.events.on('refresh', () => {
-				// this._updateLineIndicator()
-				const el = this.activeItem?.el as HTMLElement | null
+			// ResizeObserver: следим за изменением размера таба → пересчитываем индикатор
+			item.events.on('mount', ({ el }) => {
+				console.log('Tab mounted, setting up ResizeObserver', item)
+				const observer = new ResizeObserver(() => this._updateLineIndicator())
+				observer.observe(el)
+				this._itemObservers.set(item, observer)
+			})
 
-				if (!el) return
-
-				console.log('refresh', el.offsetLeft, el?.offsetWidth)
-				setTimeout(() => {
-					console.log('refresh', el.offsetLeft, el?.offsetWidth)
-				}, 1000);
+			item.events.on('unmount', () => {
+				this._itemObservers.get(item)?.disconnect()
+				this._itemObservers.delete(item)
 			})
 
 			// Propagation: новый таб наследует size и variant от контейнера

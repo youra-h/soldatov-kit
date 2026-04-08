@@ -5,6 +5,7 @@ import { useBaseSetup } from '../../../composables/useBaseSetup'
 import { useElementSync } from '../../../composables/useElementSync'
 import { Icon, useIconImport } from '../../icon'
 import { Button } from '../../button'
+import { nextTick } from 'vue'
 
 export default {
 	name: '_TabItem',
@@ -24,6 +25,10 @@ export default {
 
 		// Иконка закрытия
 		const closeIconTag = useIconImport('../../icons/close.svg')
+
+		nextTick(() => {
+			instance.refresh()
+		})
 
 		return { instance, closeIconTag, rootRef }
 	},
@@ -62,7 +67,6 @@ export default {
 				:rendered="instance.closable"
 				class="s-tab-item__close"
 				@click.stop="instance.close()"
-				@mount="instance.refresh()"
 				appearance="plain"
 			>
 				<slot name="close-icon">

@@ -57,7 +57,7 @@ export default {
 	},
 	unmounted() {
 		// @ts-ignore
-		this.$emit('unmounted')
+		this.$emit('unmount')
 	},
 }
 
