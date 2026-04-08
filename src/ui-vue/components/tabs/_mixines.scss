@@ -1,0 +1,29 @@
+// Миксин для appearance="line"
+// $color       — название цвета (sky, emerald, rose, amber, gray)
+// $text-idx    — индекс цвета текста при hover/active (берётся из Button--outlined text-idx)
+// $border-idx  — индекс цвета линии под списком (берётся из Button--outlined border-idx)
+//                indicator = border-idx + 100 (берётся из Button--outlined hover border)
+@mixin tabs-line-variant($color, $text-idx, $border-idx) {
+	$indicator-idx: $border-idx + 100;
+
+	// Цвет разделительной линии под всем списком табов
+	.s-tabs__list {
+		@apply #{'border-' + $color + '-' + $border-idx};
+	}
+
+	// Цвет текста при hover и у активного таба
+	.s-tab-item {
+		&:hover:not([disabled]) {
+			@apply #{'text-' + $color + '-' + $text-idx};
+		}
+
+		&--active {
+			@apply #{'text-' + $color + '-' + $text-idx};
+		}
+	}
+
+	// Цвет скользящего индикатора
+	.s-tabs__indicator {
+		@apply #{'bg-' + $color + '-' + $indicator-idx};
+	}
+}

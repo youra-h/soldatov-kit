@@ -33,14 +33,15 @@ export default class TTabItem
 		this._collectionItem.events.on('free', () => {
 			this.events.emit('free', this)
 		})
+	}
 
-		this.events.on('click', (event) => {
-			this.active = true
-		})
+	// При клике активируем таб и эмитим событие click с текущим элементом
+	override click(event?: Event): void {
+		this.active = true
+		super.click(event)
 	}
 
 	// Проксирование свойств коллекции
-
 	get collection(): TCollection | null {
 		return this._collectionItem.collection
 	}
@@ -66,6 +67,16 @@ export default class TTabItem
 			...super.getProps(), // Все UI-свойства от TTabItemCustom
 			active: this.active, // Добавляем active из _collectionItem
 		}
+	}
+
+	override get classes(): string[] {
+		const classes = [...super.classes]
+
+		if (this.active) {
+			classes.push(`${this._baseClass}--active`)
+		}
+
+		return classes
 	}
 
 	override assign(source: Partial<ITabItem>): void {

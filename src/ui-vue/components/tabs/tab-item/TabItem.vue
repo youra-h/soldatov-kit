@@ -35,7 +35,7 @@ export default {
 		:size="size"
 		:variant="variant"
 		:class="instance.classes"
-		@click="instance.click($event)"
+		@click="instance.click()"
 		role="tab"
 	>
 		<!-- Слот до текста -->

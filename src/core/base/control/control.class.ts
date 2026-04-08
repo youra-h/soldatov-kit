@@ -72,7 +72,7 @@ export default class TControl<
 		this._focusable.value = value
 	}
 
-	click(event: Event): void {
+	click(event?: Event): void {
 		this.events.emit('click' as any, event)
 	}
 

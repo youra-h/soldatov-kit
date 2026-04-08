@@ -1,4 +1,5 @@
 <script lang="ts">
+import { ref, watch, nextTick, onMounted } from 'vue'
 import { TTabs, type ITabsProps } from '@core'
 import BaseTabs, { syncTabs } from './base.component'
 import { useBaseSetup } from '../../composables/useBaseSetup'
@@ -29,6 +30,7 @@ export default {
 	<div v-if="instance.rendered" v-show="instance.visible" :class="instance.classes">
 		<div class="s-tabs__list" role="tablist">
 			<tab-item v-for="item in items" :key="item.uid" :is="item" />
+			<div class="s-tabs__indicator" />
 		</div>
 
 		<!-- Слот для контента табов -->
@@ -39,6 +41,7 @@ export default {
 </template>
 
 <style lang="scss">
+@use './mixines' as mixines;
 @reference "./../../../foundation/tailwind";
 
 .s-tabs {
@@ -94,10 +97,39 @@ export default {
 
 	// Внешний вид
 	&--line {
+		// Список: разделитель, relative для позиционирования индикатора
 		#{$this}__list {
+			@apply relative border-b;
 		}
 
+		// Табы: без скруглений, сдвиг вниз на 1px чтобы перекрыть линию
 		.s-tab-item {
+			@apply rounded-none -mb-px;
+		}
+
+		// Скользящий индикатор
+		#{$this}__indicator {
+			@apply absolute bottom-0 left-0 h-0.5;
+			@apply transition-all duration-200 ease-in-out;
+		}
+
+		// Normal (default)
+		@include mixines.tabs-line-variant('gray', 700, 200);
+
+		&#{$this}--primary {
+			@include mixines.tabs-line-variant('sky', 600, 200);
+		}
+
+		&#{$this}--success {
+			@include mixines.tabs-line-variant('emerald', 600, 200);
+		}
+
+		&#{$this}--danger {
+			@include mixines.tabs-line-variant('rose', 600, 200);
+		}
+
+		&#{$this}--warning {
+			@include mixines.tabs-line-variant('amber', 600, 200);
 		}
 	}
 
