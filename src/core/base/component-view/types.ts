@@ -38,6 +38,8 @@ export type TComponentViewEvents = TComponentModelEvents & {
 	'mount': (payload: { el: Element; instance: IComponentView }) => void
 	/** unmount — root-элемент удалён из DOM */
 	'unmount': (payload: { instance: IComponentView }) => void
+	/** refresh — layout изменился, нужно пересчитать зависящие размеры */
+	'refresh': (payload: { instance: IComponentView }) => void
 }
 
 export interface IComponentViewProps extends IComponentModelProps {
@@ -102,6 +104,8 @@ export interface IComponentView<
 	readonly classes: string[]
 	/** Root HTML-элемент, устанавливается фреймворком (Vue/React) после монтирования */
 	el: Element | null
+	/** Сигнал об изменении layout: эмитит событие 'refresh' для заинтересованных слушателей */
+	refresh(): void
 	/** Показать компонент */
 	show(): void
 	/** Скрыть компонент */

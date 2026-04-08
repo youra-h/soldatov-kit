@@ -211,6 +211,10 @@ export default class TComponentView<
 		}
 	}
 
+	refresh(): void {
+		this.events.emit('refresh', { instance: this as any })
+	}
+
 	get classes(): string[] {
 		return [this._baseClass, ...this._classes]
 	}

@@ -75,6 +75,18 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 				this.closeTab(item)
 			})
 
+			// Пересчитываем индикатор при refresh (например кнопка закрытия появилась)
+			item.events.on('refresh', () => {
+				// this._updateLineIndicator()
+				const el = this.activeItem?.el as HTMLElement | null
+
+				if (!el) return
+
+				setTimeout(() => {
+					console.log('refresh', el.offsetLeft, el?.offsetWidth)
+				}, 1000);
+			})
+
 			// Propagation: новый таб наследует size и variant от контейнера
 			item.size = this.size
 			item.variant = this.variant
