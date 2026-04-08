@@ -34,6 +34,10 @@ export type TComponentViewEvents = TComponentModelEvents & {
 	'change:tag': (value: string | object) => void
 	/** change:classes (без baseClass) */
 	'change:classes': (value: string[]) => void
+	/** mount — root-элемент присоединён к DOM фреймворком */
+	'mount': (el: Element) => void
+	/** unmount — root-элемент удалён из DOM */
+	'unmount': () => void
 }
 
 export interface IComponentViewProps extends IComponentModelProps {
@@ -96,6 +100,8 @@ export interface IComponentView<
 	visible: boolean
 	/** CSS-классы (включая baseClass и динамические) */
 	readonly classes: string[]
+	/** Root HTML-элемент, устанавливается фреймворком (Vue/React) после монтирования */
+	el: Element | null
 	/** Показать компонент */
 	show(): void
 	/** Скрыть компонент */

@@ -11,6 +11,15 @@
 		@apply #{'border-' + $color + '-' + $border-idx};
 	}
 
+	// Цвет разделительной линии и индикатора
+	.s-tabs__list {
+		@apply #{'border-' + $color + '-' + $border-idx};
+
+		&::after {
+			@apply #{'bg-' + $color + '-' + $indicator-idx};
+		}
+	}
+
 	// Цвет текста при hover и у активного таба
 	.s-tab-item {
 		&:hover:not([disabled]) {
@@ -20,10 +29,5 @@
 		&--active {
 			@apply #{'text-' + $color + '-' + $text-idx};
 		}
-	}
-
-	// Цвет скользящего индикатора
-	.s-tabs__indicator {
-		@apply #{'bg-' + $color + '-' + $indicator-idx};
 	}
 }

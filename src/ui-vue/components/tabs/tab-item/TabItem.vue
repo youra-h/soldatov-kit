@@ -2,6 +2,7 @@
 import { TTabItem, type ITabItemProps } from '@core'
 import BaseTabItem, { syncTabItem } from './tab-item.component'
 import { useBaseSetup } from '../../../composables/useBaseSetup'
+import { useElementSync } from '../../../composables/useElementSync'
 import { Icon, useIconImport } from '../../icon'
 import { Button } from '../../button'
 
@@ -18,16 +19,20 @@ export default {
 			emit,
 		})
 
+		// Синхронизируем root DOM-элемент с instance.el
+		const rootRef = useElementSync(instance)
+
 		// Иконка закрытия
 		const closeIconTag = useIconImport('../../icons/close.svg')
 
-		return { instance, closeIconTag }
+		return { instance, closeIconTag, rootRef }
 	},
 }
 </script>
 
 <template>
 	<Button
+		ref="rootRef"
 		:visible="instance.visible"
 		:rendered="instance.rendered"
 		:disabled="instance.disabled"

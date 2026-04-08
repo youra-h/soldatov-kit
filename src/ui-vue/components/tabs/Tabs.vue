@@ -20,7 +20,22 @@ export default {
 
 		const items = instance.collection.getItems()
 
-		return { instance, items }
+		// Скользящий индикатор через CSS custom properties
+		const listRef = ref<HTMLElement | null>(null)
+
+		function updateIndicator() {
+			nextTick(() => {
+				const activeEl = instance.activeItem?.el as HTMLElement | null
+				if (!activeEl || !listRef.value) return
+				listRef.value.style.setProperty('--underline-x', `${activeEl.offsetLeft}px`)
+				listRef.value.style.setProperty('--underline-width', `${activeEl.offsetWidth}px`)
+			})
+		}
+
+		watch(() => instance.activeItem, updateIndicator)
+		onMounted(updateIndicator)
+
+		return { instance, items, listRef }
 	},
 }
 </script>
@@ -28,9 +43,8 @@ export default {
 <template>
 	{{ instance.classes }}
 	<div v-if="instance.rendered" v-show="instance.visible" :class="instance.classes">
-		<div class="s-tabs__list" role="tablist">
+		<div class="s-tabs__list" ref="listRef" role="tablist">
 			<tab-item v-for="item in items" :key="item.uid" :is="item" />
-			<div class="s-tabs__indicator" />
 		</div>
 
 		<!-- Слот для контента табов -->
@@ -97,20 +111,24 @@ export default {
 
 	// Внешний вид
 	&--line {
-		// Список: разделитель, relative для позиционирования индикатора
+		// Список: разделитель, relative для ::after
 		#{$this}__list {
 			@apply relative border-b;
+
+			// Индикатор через ::after, позиция через CSS custom properties
+			&::after {
+				content: '';
+				@apply absolute left-0 h-0.5;
+				bottom: -1px;
+				width: var(--underline-width, 0px);
+				transform: translateX(var(--underline-x, 0px));
+				transition: transform 0.2s ease, width 0.2s ease;
+			}
 		}
 
-		// Табы: без скруглений, сдвиг вниз на 1px чтобы перекрыть линию
+		// Табы: без скруглений, перекрывают нижнюю линию
 		.s-tab-item {
 			@apply rounded-none -mb-px;
-		}
-
-		// Скользящий индикатор
-		#{$this}__indicator {
-			@apply absolute bottom-0 left-0 h-0.5;
-			@apply transition-all duration-200 ease-in-out;
 		}
 
 		// Normal (default)

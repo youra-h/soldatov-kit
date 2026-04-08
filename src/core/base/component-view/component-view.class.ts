@@ -38,6 +38,7 @@ export default class TComponentView<
 	protected _visibilityState: IVisibilityState
 	protected _baseClass: string
 	protected _classes: string[]
+	protected _el: Element | null = null
 
 	static prepareOptions<
 		TProps extends IComponentViewProps = IComponentViewProps,
@@ -191,6 +192,23 @@ export default class TComponentView<
 		this._tag = value
 
 		this.events.emit('change:tag', value)
+	}
+
+	get el(): Element | null {
+		return this._el
+	}
+
+	set el(value: Element | null) {
+		if (this._el === value) return
+
+		const prev = this._el
+		this._el = value
+
+		if (value && !prev) {
+			this.events.emit('mount', value)
+		} else if (!value && prev) {
+			this.events.emit('unmount')
+		}
 	}
 
 	get classes(): string[] {
