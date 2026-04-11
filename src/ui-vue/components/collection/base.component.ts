@@ -1,3 +1,5 @@
+import type { PropType } from 'vue'
+import { watch } from 'vue'
 import { type ICollection, type ICollectionProps, type ICollectionItem } from '@core'
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types'
 
@@ -13,7 +15,12 @@ export const emitsCollection: TEmits = [
 	'changed',
 ] as const
 
-export const propsCollection: TProps = {}
+export const propsCollection: TProps = {
+	items: {
+		type: Array as PropType<Partial<ICollectionItem>[]>,
+		default: undefined,
+	},
+}
 
 export default {
 	name: 'BaseCollection',
@@ -25,7 +32,18 @@ export default {
  * Синхронизация props и событий для Collection
  */
 export function syncCollection(options: ISyncComponentModelOptions<ICollectionProps, ICollection>) {
-	const { instance, emit } = options
+	const { instance, emit, props } = options
+
+	// Наполняем коллекцию из prop items через сеттер instance.items
+	watch(
+		() => props.items,
+		(items) => {
+			if (items !== undefined) {
+				instance.items = items
+			}
+		},
+		{ immediate: true },
+	)
 
 	// Пробрасываем события core-инстанса наружу (Vue events)
 	instance.events.on(

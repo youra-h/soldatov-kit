@@ -3,6 +3,7 @@ import { watch } from 'vue'
 import {
 	type ITabs,
 	type ITabsProps,
+	type ICollectionProps,
 	TTabs,
 	type TTabsOrientation,
 	type TTabsAlignment,
@@ -11,7 +12,7 @@ import {
 	type ITabItem,
 } from '@core'
 import { BaseControl, emitsControl, propsControl, syncControl } from '../control'
-import { emitsActivatableCollection, syncActivatableCollection } from '../collection/activable'
+import { emitsActivatableCollection, syncActivatableCollection, propsActivatableCollection } from '../collection/activable'
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types'
 
 export const emitsTabs: TEmits = [
@@ -34,6 +35,7 @@ export const emitsTabs: TEmits = [
 
 export const propsTabs: TProps = {
 	...propsControl,
+	...propsActivatableCollection,
 	orientation: {
 		type: String as PropType<TTabsOrientation>,
 		default: TTabs.defaultValues.orientation,
@@ -70,7 +72,7 @@ export default {
 /**
  * Синхронизация props и событий для Tabs
  */
-export function syncTabs(options: ISyncComponentModelOptions<ITabsProps, ITabs>) {
+export function syncTabs(options: ISyncComponentModelOptions<ITabsProps & ICollectionProps, ITabs>) {
 	syncControl(options)
 
 	const { props, instance, emit } = options
@@ -79,7 +81,7 @@ export function syncTabs(options: ISyncComponentModelOptions<ITabsProps, ITabs>)
 	syncActivatableCollection({
 		instance: instance.collection,
 		emit,
-		props: {},
+		props: { items: props.items },
 	})
 
 	// Пробрасываем события core-инстанса наружу (Vue events)

@@ -7,7 +7,13 @@ import { TEvented } from '../../common/evented'
  * Базовый интерфейс коллекции элементов.
  * Определяет контракт, который должны реализовывать все коллекции.
  */
-export interface ICollectionProps {}
+export interface ICollectionProps {
+	/**
+	 * Данные для наполнения коллекции через addFromArray.
+	 * При установке коллекция очищается и заполняется из этого массива.
+	 */
+	items?: Partial<ICollectionItem>[]
+}
 
 /**
  * События, которые эмитит коллекция TCollection.
@@ -179,6 +185,14 @@ export interface ICollectionMethods<TItem extends ICollectionItem = ICollectionI
 
 	/** Возвращает нативный массив элементов-инстансов */
 	getItems(): TItem[]
+
+	/**
+	 * Текущие элементы коллекции.
+	 * Getter возвращает массив инстансов.
+	 * Setter очищает коллекцию и заполняет из нового массива данных.
+	 */
+	get items(): TItem[]
+	set items(sources: Partial<ICollectionItem>[])
 
 	/**
 	 * Возвращает первый элемент, удовлетворяющий условию предиката.

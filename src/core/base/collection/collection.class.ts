@@ -56,6 +56,25 @@ export class TCollection<
 	}
 
 	/**
+	 * Возвращает текущий массив элементов коллекции.
+	 */
+	get items(): TItem[] {
+		return this._items
+	}
+
+	/**
+	 * Заменяет содержимое коллекции: очищает и заполняет из массива данных.
+	 * @param sources Массив данных для создания элементов
+	 */
+	set items(sources: Partial<TItem>[]) {
+		this.clear()
+		
+		if (sources.length > 0) {
+			this.addFromArray(sources)
+		}
+	}
+
+	/**
 	 * Создаёт и добавляет новый элемент в конец коллекции.
 	 * Возвращает созданный элемент.
 	 */
