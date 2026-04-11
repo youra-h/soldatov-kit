@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import { TTabs } from '@core'
-import { Tabs } from '@ui/tabs'
+import { Tabs, TabItem } from '@ui/tabs'
 
 // --- Вариант 1: через instance (программный) ---
 const tabs = ref<TTabs>()
@@ -24,21 +24,11 @@ const tabItems = ref([
 	{ text: 'Beta', value: 'beta' },
 	{ text: 'Gamma', value: 'gamma' },
 ])
-
-function addTab() {
-	const n = tabItems.value.length + 1
-	tabItems.value = [...tabItems.value, { text: `Tab ${n}`, value: `tab${n}` }]
-}
-
-function removeLastTab() {
-	if (tabItems.value.length > 1) {
-		tabItems.value = tabItems.value.slice(0, -1)
-	}
-}
 </script>
 
 <template>
 	<div style="display: flex; flex-direction: column; gap: 2rem">
+
 		<section>
 			<h2>Вариант 1: программный (через instance)</h2>
 			<Tabs :is="tabs">
@@ -52,10 +42,6 @@ function removeLastTab() {
 
 		<section>
 			<h2>Вариант 2: prop items</h2>
-			<div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem">
-				<button @click="addTab">+ Добавить таб</button>
-				<button @click="removeLastTab">− Удалить последний</button>
-			</div>
 			<Tabs :items="tabItems" appearance="line">
 				<template #default="{ activeItem }">
 					<div v-if="activeItem" style="padding: 1rem">
@@ -64,5 +50,15 @@ function removeLastTab() {
 				</template>
 			</Tabs>
 		</section>
+
+		<section>
+			<h2>Вариант 3: декларативный (TabItem в слоте)</h2>
+			<Tabs appearance="pills">
+				<TabItem text="Профиль" value="profile" />
+				<TabItem text="Настройки" value="settings" />
+				<TabItem text="О проекте" value="about" />
+			</Tabs>
+		</section>
+
 	</div>
 </template>
