@@ -1,15 +1,14 @@
-import { inject, onMounted, onBeforeUnmount } from 'vue'
+import { inject, onBeforeUnmount, type UnwrapNestedRefs } from 'vue'
+import { type ICollectionItem } from '@core'
 import { COLLECTION_KEY } from './useProvideCollection'
 
-// Минимальный интерфейс — только то, что нужно от item.
-// Reactive proxy совместим с этим типом.
-export interface ICollectionMember {
-	collection: any
-}
-
-export function useInjectCollectionItem(item: ICollectionMember) {
+export function useInjectCollectionItem<T extends ICollectionItem>(item: T | UnwrapNestedRefs<T>) {
 	const collection = inject(COLLECTION_KEY, null)
 
-	onMounted(() => collection!.insertAt(item))
-	onBeforeUnmount(() => collection!.deleteItem(item))
+	if (collection === null) return
+
+	// Автоматическая регистрация в коллекции при монтировании (если декларативный режим)
+	collection.insertAt(item)
+	// Автоматическая де-регистрация при размонтировании
+	onBeforeUnmount(() => collection.deleteItem(item))
 }

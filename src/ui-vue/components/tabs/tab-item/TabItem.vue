@@ -3,7 +3,6 @@ import { TTabItem, type ITabItemProps } from '@core'
 import BaseTabItem, { syncTabItem } from './tab-item.component'
 import { useBaseSetup } from '../../../composables/useBaseSetup'
 import { useElementSync } from '../../../composables/useElementSync'
-import { useInjectCollectionItem } from '../../../composables/useInjectCollectionItem'
 import { Icon, useIconImport } from '../../icon'
 import { Button } from '../../button'
 import { nextTick } from 'vue'
@@ -20,9 +19,6 @@ export default {
 			instance,
 			emit,
 		})
-
-		// Одна строка: регистрация в коллекции родителя (если декларативный режим)
-		useInjectCollectionItem(instance)
 
 		const rootRef = useElementSync(instance)
 		const closeIconTag = useIconImport('../../icons/close.svg')
