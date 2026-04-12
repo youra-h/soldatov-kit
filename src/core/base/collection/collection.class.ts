@@ -68,7 +68,7 @@ export class TCollection<
 	 */
 	set items(sources: Partial<TItem>[]) {
 		this.clear()
-		
+
 		if (sources.length > 0) {
 			this.addFromArray(sources)
 		}
@@ -80,9 +80,6 @@ export class TCollection<
 	 */
 	add(source: Partial<TItem> = {}): TItem {
 		const item = new this._itemClass({ collection: this })
-
-		// Хук для подписки на события элемента перед assign (для наследников)
-		this._onBeforeItemAdd(item)
 
 		item.assign(source as TItem)
 
@@ -162,6 +159,9 @@ export class TCollection<
 			return false
 		}
 
+		// Хук для подписки на события элемента перед assign (для наследников)
+		this._onBeforeItemAdd(item)
+
 		this._items.splice(index, 0, item)
 		item.collection = this
 
@@ -184,7 +184,8 @@ export class TCollection<
 		const item = this._items[index]
 
 		if (
-			this.events.emitWithResult('item:beforeDelete', { collection: this, index, item }) === false
+			this.events.emitWithResult('item:beforeDelete', { collection: this, index, item }) ===
+			false
 		) {
 			return false
 		}
@@ -236,8 +237,11 @@ export class TCollection<
 		if (oldIndex === -1 || oldIndex === newIndex) return
 
 		if (
-			this.events.emitWithResult('item:beforeMove', { collection: this, oldIndex, newIndex }) ===
-			false
+			this.events.emitWithResult('item:beforeMove', {
+				collection: this,
+				oldIndex,
+				newIndex,
+			}) === false
 		) {
 			return
 		}

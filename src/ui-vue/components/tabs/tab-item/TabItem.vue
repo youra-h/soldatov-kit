@@ -3,6 +3,7 @@ import { TTabItem, type ITabItemProps } from '@core'
 import BaseTabItem, { syncTabItem } from './tab-item.component'
 import { useBaseSetup } from '../../../composables/useBaseSetup'
 import { useElementSync } from '../../../composables/useElementSync'
+import { useInjectCollectionItem } from '../../../composables/useInjectCollectionItem'
 import { Icon, useIconImport } from '../../icon'
 import { Button } from '../../button'
 import { nextTick } from 'vue'
@@ -20,10 +21,10 @@ export default {
 			emit,
 		})
 
-		// Синхронизируем root DOM-элемент с instance.el
-		const rootRef = useElementSync(instance)
+		// Одна строка: регистрация в коллекции родителя (если декларативный режим)
+		useInjectCollectionItem(instance)
 
-		// Иконка закрытия
+		const rootRef = useElementSync(instance)
 		const closeIconTag = useIconImport('../../icons/close.svg')
 
 		nextTick(() => {
@@ -48,21 +49,16 @@ export default {
 		@click="instance.click()"
 		role="tab"
 	>
-		<!-- Слот до текста -->
 		<template #before>
 			<slot name="before" />
 		</template>
 
-		<!-- Слот для текста -->
 		<slot :text="instance.text" :active="instance.active">
 			{{ instance.text }}
 		</slot>
 
-		<!-- Слот после текста + кнопка закрытия -->
 		<template #after>
 			<slot name="after" />
-
-			<!-- Кнопка закрытия -->
 			<Button
 				:rendered="instance.closable"
 				class="s-tab-item__close"

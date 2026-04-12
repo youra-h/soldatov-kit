@@ -3,6 +3,7 @@ import { TTabs, type ITabsProps } from '@core'
 import BaseTabs, { syncTabs } from './base.component'
 import { useBaseSetup } from '../../composables/useBaseSetup'
 import { useElementSync } from '../../composables/useElementSync'
+import { useProvideCollection } from '../../composables/useProvideCollection'
 import { TabItem } from './tab-item'
 
 export default {
@@ -18,6 +19,8 @@ export default {
 			emit,
 		})
 
+		useProvideCollection(instance.collection)
+
 		const items = instance.collection.getItems()
 
 		const rootRef = useElementSync(instance)
@@ -28,15 +31,11 @@ export default {
 </script>
 
 <template>
-	{{ instance.classes }}
 	<div ref="rootRef" v-if="instance.rendered" v-show="instance.visible" :class="instance.classes">
 		<div class="s-tabs__list" role="tablist">
-			<tab-item v-for="item in items" :key="item.uid" :is="item" />
-		</div>
-
-		<!-- Слот для контента табов -->
-		<div class="s-tabs__content">
-			<slot :activeItem="instance.activeItem" :items="items" />
+			<slot>
+				<tab-item v-for="item in items" :key="item.uid" :is="item" />
+			</slot>
 		</div>
 	</div>
 </template>
