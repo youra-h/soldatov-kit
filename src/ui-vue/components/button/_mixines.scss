@@ -20,9 +20,19 @@
 	}
 
 	// Вычисляем индексы для состояний наведения и нажатия
-	$hover-bg: if($hover-bg-idx != null, $hover-bg-idx, if($bg-idx != null, $bg-idx + 100, null));
+	$hover-bg: null;
+	@if $hover-bg-idx != null {
+		$hover-bg: $hover-bg-idx;
+	} @else if $bg-idx != null {
+		$hover-bg: $bg-idx + 100;
+	}
 	// Если hover-bg-idx не задан, увеличиваем bg-idx на 100
-	$active-bg: if($active-bg-idx != null, $active-bg-idx, $hover-bg + 100);
+	$active-bg: null;
+	@if $active-bg-idx != null {
+		$active-bg: $active-bg-idx;
+	} @else {
+		$active-bg: $hover-bg + 100;
+	}
 
 	&:hover:not([disabled]) {
 		@apply #{'bg-' + $color + '-' + $hover-bg};
@@ -32,7 +42,12 @@
 	&:focus:not([disabled]),
 	&:focus-visible:not([disabled]) {
 		@if $border-idx != null or $hover-border-idx != null {
-			$brd-idx: if($hover-border-idx != null, $hover-border-idx, $border-idx + 100);
+			$brd-idx: null;
+			@if $hover-border-idx != null {
+				$brd-idx: $hover-border-idx;
+			} @else {
+				$brd-idx: $border-idx + 100;
+			}
 			@apply #{'border-' + $color + '-' + $brd-idx};
 		}
 	}
