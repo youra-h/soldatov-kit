@@ -17,7 +17,7 @@ export class TActivatableCollectionItem<
 	implements IActivatableCollectionItem
 {
 	static defaultValues: Partial<IActivatableCollectionItemProps> = {
-		active: false,
+		active: undefined,
 	}
 
 	protected _active = TActivatableCollectionItem.defaultValues.active!
