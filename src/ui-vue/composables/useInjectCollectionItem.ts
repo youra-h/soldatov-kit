@@ -7,6 +7,9 @@ export function useInjectCollectionItem<T extends ICollectionItem>(item: T | Unw
 
 	if (collection === null) return
 
+	// Если item уже принадлежит коллекции — программный режим, пропускаем
+	if (item.collection !== null) return
+
 	// Автоматическая регистрация в коллекции при монтировании (если декларативный режим)
 	collection.insertAt(item)
 	// Автоматическая де-регистрация при размонтировании

@@ -20,43 +20,31 @@ tabs.value.collection.setActive(item2)
 
 // --- Вариант 2: через prop items ---
 const tabItems = ref([
-	{ text: 'Alpha', value: 'alpha', active: true },
-	{ text: 'Beta', value: 'beta' },
+	{ text: 'Alpha', value: 'alpha' },
+	{ text: 'Beta', value: 'beta', active: true },
 	{ text: 'Gamma', value: 'gamma' },
 ])
 </script>
 
 <template>
 	<div style="display: flex; flex-direction: column; gap: 2rem">
-		<!-- <section>
+		<section>
 			<h2>Вариант 1: программный (через instance)</h2>
-			<Tabs :is="tabs">
-				<template #default="{ activeItem }">
-					<div v-if="activeItem" style="padding: 1rem">
-						<p>Active: {{ activeItem.text }} ({{ activeItem.value }})</p>
-					</div>
-				</template>
-			</Tabs>
+			<!-- <Tabs :is="tabs"> </Tabs> -->
 		</section>
 
 		<section>
 			<h2>Вариант 2: prop items</h2>
-			<Tabs :items="tabItems" appearance="line">
-				<template #default="{ activeItem }">
-					<div v-if="activeItem" style="padding: 1rem">
-						<p>Active: {{ activeItem.text }} ({{ activeItem.value }})</p>
-					</div>
-				</template>
-			</Tabs>
-		</section> -->
+			<Tabs :items="tabItems" appearance="line" variant="primary"> </Tabs>
+		</section>
 
 		<section>
 			<h2>Вариант 3: декларативный (TabItem в слоте)</h2>
-			<Tabs appearance="line" variant="primary">
+			<!-- <Tabs appearance="line" variant="primary">
 				<TabItem text="Профиль" value="profile" />
 				<TabItem text="Настройки" value="settings" />
 				<TabItem text="О проекте" value="about" />
-			</Tabs>
+			</Tabs> -->
 		</section>
 	</div>
 </template>
