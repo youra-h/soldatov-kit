@@ -83,7 +83,7 @@ export default {
 
 	// Панель
 	&__panel {
-		@apply my-2;
+		@apply my-2.5;
 	}
 
 
