@@ -3,7 +3,7 @@ import { watch } from 'vue'
 import {
 	type IActivatableCollectionItem,
 	type IActivatableCollectionItemProps,
-	TActivatableCollectionItem
+	TActivatableCollectionItem,
 } from '@core'
 import {
 	BaseCollectionItem,
@@ -53,12 +53,13 @@ export function syncActivatableCollectionItem(
 		emit?.('update:active', instance.active)
 	})
 
-	watch<boolean | undefined>(
+	watch(
 		() => props.active,
 		(value) => {
 			if (value !== undefined && value !== instance.active) {
 				instance.active = value
 			}
 		},
+		{ immediate: true },
 	)
 }

@@ -30,12 +30,12 @@ const tabItems = ref([
 	<div style="display: flex; flex-direction: column; gap: 2rem">
 		<section>
 			<h2>Вариант 1: программный (через instance)</h2>
-			<Tabs :is="tabs"> </Tabs>
+			<!-- <Tabs :is="tabs"> </Tabs> -->
 		</section>
 
 		<section>
 			<h2>Вариант 2: prop items</h2>
-			<Tabs :items="tabItems" appearance="line" variant="primary"> </Tabs>
+			<!-- <Tabs :items="tabItems" appearance="line" variant="primary"> </Tabs> -->
 		</section>
 
 		<section>

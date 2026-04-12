@@ -141,6 +141,6 @@ export function syncComponentView(
 					emit?.('hide', instance)
 				}
 			}
-		},
+		}
 	)
 }
