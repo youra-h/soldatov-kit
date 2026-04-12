@@ -34,7 +34,7 @@ export default {
 	<div ref="rootRef" v-if="instance.rendered" v-show="instance.visible" :class="instance.classes">
 		<div class="s-tabs__list" role="tablist">
 			<slot>
-				<tab-item v-for="item in items" :key="item.uid" :is="item" />
+				<TabItem v-for="item in items" :key="item.uid" :is="item" />
 			</slot>
 		</div>
 	</div>

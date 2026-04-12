@@ -41,7 +41,7 @@ const tabItems = ref([
 		<section>
 			<h2>Вариант 3: декларативный (TabItem в слоте)</h2>
 			<Tabs appearance="line" variant="primary">
-				<TabItem text="Профиль" value="profile"  />
+				<TabItem text="Профиль" value="profile" />
 				<TabItem text="Настройки" value="settings" active />
 				<TabItem text="О проекте" value="about" />
 			</Tabs>
