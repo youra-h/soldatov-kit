@@ -81,9 +81,9 @@ export class TCollection<
 	add(source: Partial<TItem> = {}): TItem {
 		const item = new this._itemClass({ collection: this })
 
-		this.insertAt(item)
-
 		item.assign(source as TItem)
+
+		this.insertAt(item)
 
 		return item
 	}
