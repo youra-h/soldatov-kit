@@ -6,20 +6,21 @@ import {
 	propsTabItemCustom,
 	syncTabItemCustom,
 } from './tab-item-custom.component'
-import { emitsActivatableCollectionItem, syncActivatableCollectionItem } from '../../collection/activable'
+import {
+	emitsActivatableCollectionItem,
+	syncActivatableCollectionItem,
+	propsActivatableCollectionItem,
+} from '../../collection/activable'
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../../types'
 
 export const emitsTabItem: TEmits = [
 	...emitsTabItemCustom,
-	...emitsActivatableCollectionItem
+	...emitsActivatableCollectionItem,
 ] as const
 
 export const propsTabItem: TProps = {
 	...propsTabItemCustom,
-	active: {
-		type: Boolean as PropType<ITabItemProps['active']>,
-		default: undefined,
-	},
+	...propsActivatableCollectionItem,
 }
 
 export default {
@@ -32,9 +33,7 @@ export default {
 /**
  * Синхронизация props и событий для TabItem
  */
-export function syncTabItem(
-	options: ISyncComponentModelOptions<ITabItemProps, ITabItem>,
-) {
+export function syncTabItem(options: ISyncComponentModelOptions<ITabItemProps, ITabItem>) {
 	syncTabItemCustom(options)
 	syncActivatableCollectionItem(options)
 }

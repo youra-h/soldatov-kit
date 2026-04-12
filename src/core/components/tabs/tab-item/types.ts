@@ -69,8 +69,6 @@ export interface ITabItemProps extends IActivatableCollectionItemProps, ITabItem
  * Передаем ITabItemProps в generic, чтобы getProps()/toJSON() вернули правильный тип с active.
  */
 export interface ITabItem extends ITabItemCustom<ITabItemProps> {
-	/** Признак активности элемента (из коллекции) */
-	active?: boolean
 	/** Ссылка на коллекцию-владелец */
 	collection: any | null
 	/** Переключить активность */
