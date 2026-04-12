@@ -89,6 +89,18 @@ export default {
 		@apply gap-2;
 	}
 
+	&--size-xl {
+		@apply text-xl;
+		@apply px-4 py-2;
+		@apply gap-3;
+	}
+
+	&--size-2xl {
+		@apply text-2xl;
+		@apply px-5 py-3;
+		@apply gap-4;
+	}
+
 	&--normal {
 		@apply bg-gray-100;
 		@apply dark:bg-gray-900;
