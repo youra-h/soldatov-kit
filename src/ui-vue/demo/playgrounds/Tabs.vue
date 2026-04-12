@@ -30,7 +30,7 @@ const tabItems = ref([
 	<div style="display: flex; flex-direction: column; gap: 2rem">
 		<section>
 			<h2>Вариант 1: программный (через instance)</h2>
-			<!-- <Tabs :is="tabs"> </Tabs> -->
+			<Tabs :is="tabs"> </Tabs>
 		</section>
 
 		<section>
@@ -40,11 +40,11 @@ const tabItems = ref([
 
 		<section>
 			<h2>Вариант 3: декларативный (TabItem в слоте)</h2>
-			<!-- <Tabs appearance="line" variant="primary">
-				<TabItem text="Профиль" value="profile" />
-				<TabItem text="Настройки" value="settings" />
+			<Tabs appearance="line" variant="primary">
+				<TabItem text="Профиль" value="profile"  />
+				<TabItem text="Настройки" value="settings" active />
 				<TabItem text="О проекте" value="about" />
-			</Tabs> -->
+			</Tabs>
 		</section>
 	</div>
 </template>

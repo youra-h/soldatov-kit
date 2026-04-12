@@ -80,8 +80,13 @@ export class TSelectableCollection<
 	 * @param item Элемент коллекции
 	 * @protected
 	 */
-	protected override _onBeforeItemAdd(item: TItem): void {
+	protected override _onAfterItemAdd(item: TItem): void {
 		this._subscribeItem(item)
+
+		// assign() мог установить selected:true до подписки — обрабатываем начальное состояние явно
+		if (item.selected) {
+			item.events.emit('change:selection', item)
+		}
 	}
 
 	/**

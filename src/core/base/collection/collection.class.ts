@@ -89,12 +89,21 @@ export class TCollection<
 	}
 
 	/**
-	 * Хук, вызываемый перед assign при добавлении элемента.
-	 * Переопределяется в наследниках для подписки на события элемента.
-	 * @param item Созданный элемент
+	 * Хук, вызываемый перед добавлением элемента в коллекцию.
+	 * Вернуть false — отменить добавление.
+	 * @param item Элемент для добавления
 	 * @protected
 	 */
-	protected _onBeforeItemAdd(item: TItem): void {}
+	protected _onBeforeItemAdd(item: TItem): boolean | void {}
+
+	/**
+	 * Хук, вызываемый после успешного добавления элемента в коллекцию.
+	 * Переопределяется в наследниках для подписки на события элемента
+	 * и инициализации начального состояния.
+	 * @param item Добавленный элемент
+	 * @protected
+	 */
+	protected _onAfterItemAdd(item: TItem): void {}
 
 	/**
 	 * Создаёт и добавляет элементы из массива в конец коллекции.
@@ -159,13 +168,16 @@ export class TCollection<
 			return false
 		}
 
-		// Хук для подписки на события элемента перед assign (для наследников)
-		this._onBeforeItemAdd(item)
+		if (this._onBeforeItemAdd(item) === false) {
+			return false
+		}
 
 		this._items.splice(index, 0, item)
 		item.collection = this
 
 		this.events.emit('item:added', { collection: this, item })
+
+		this._onAfterItemAdd(item)
 
 		return true
 	}

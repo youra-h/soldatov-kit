@@ -72,8 +72,13 @@ export class TActivatableCollection<
 	 * @param item Элемент коллекции
 	 * @protected
 	 */
-	protected override _onBeforeItemAdd(item: TItem): void {
+	protected override _onAfterItemAdd(item: TItem): void {
 		this._subscribeItem(item)
+
+		// assign() установил active:true до подписки — обрабатываем начальное состояние явно
+		if (item.active) {
+			this.setActive(item)
+		}
 	}
 
 	/**
