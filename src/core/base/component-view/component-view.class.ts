@@ -39,6 +39,7 @@ export default class TComponentView<
 	protected _baseClass: string
 	protected _classes: string[]
 	protected _el: Element | null = null
+	private _ready: boolean = false
 
 	static prepareOptions<
 		TProps extends IComponentViewProps = IComponentViewProps,
@@ -205,10 +206,15 @@ export default class TComponentView<
 		this._el = value
 
 		if (value && !prev) {
+			this._ready = true
 			this.events.emit('mount', { el: value, instance: this as any })
 		} else if (!value && prev) {
 			this.events.emit('unmount', { instance: this as any })
 		}
+	}
+
+	get ready(): boolean {
+		return this._ready
 	}
 
 	refresh(): void {

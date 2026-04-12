@@ -288,6 +288,11 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 			classes.push(`${this._baseClass}--stretched`)
 		}
 
+		// После монтирования включаем transition на индикаторе
+		if (this.ready) {
+			classes.push(`${this._baseClass}--ready`)
+		}
+
 		return classes
 	}
 

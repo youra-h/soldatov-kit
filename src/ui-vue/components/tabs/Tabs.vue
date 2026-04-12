@@ -31,6 +31,7 @@ export default {
 </script>
 
 <template>
+	{{ console.log('render Tabs', instance.classes) }}
 	<div ref="rootRef" v-if="instance.rendered" v-show="instance.visible" :class="instance.classes">
 		<div class="s-tabs__list" role="tablist">
 			<slot>
@@ -108,10 +109,14 @@ export default {
 				bottom: -1px;
 				width: var(--underline-width, 0px);
 				transform: translateX(var(--underline-x, 0px));
-				transition:
-					transform 0.2s ease,
-					width 0.2s ease;
 			}
+		}
+
+		// Transition включается только после монтирования (--ready добавляется core через el setter)
+		&#{$this}--ready #{$this}__list::after {
+			transition:
+				transform 0.2s ease,
+				width 0.2s ease;
 		}
 
 		// Табы: без скруглений, перекрывают нижнюю линию
