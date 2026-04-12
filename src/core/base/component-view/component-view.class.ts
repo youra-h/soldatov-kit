@@ -212,6 +212,7 @@ export default class TComponentView<
 			// rAF 2: включаем transition — браузер уже отрисовал правильное начальное положение.
 			requestAnimationFrame(() => {
 				this.events.emit('ready', { instance: this as any })
+
 				requestAnimationFrame(() => {
 					this._ready = true
 				})
