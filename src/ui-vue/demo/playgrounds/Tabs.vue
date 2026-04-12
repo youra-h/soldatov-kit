@@ -30,20 +30,31 @@ const tabItems = ref([
 	<div style="display: flex; flex-direction: column; gap: 2rem">
 		<section>
 			<h2>Вариант 1: программный (через instance)</h2>
-			<Tabs :is="tabs"> </Tabs>
+			<Tabs :is="tabs">
+				<template #panel:tab1><p>Содержимое Tab 1</p></template>
+				<template #panel:tab2><p>Содержимое Tab 2</p></template>
+				<template #panel:tab3><p>Содержимое Tab 3</p></template>
+			</Tabs>
 		</section>
 
 		<section>
 			<h2>Вариант 2: prop items</h2>
-			<Tabs :items="tabItems" appearance="line" variant="primary"> </Tabs>
+			<Tabs :items="tabItems" appearance="line" variant="primary">
+				<template #panel:alpha><p>Содержимое Alpha</p></template>
+				<template #panel:beta><p>Содержимое Beta</p></template>
+				<template #panel:gamma><p>Содержимое Gamma</p></template>
+			</Tabs>
 		</section>
 
 		<section>
 			<h2>Вариант 3: декларативный (TabItem в слоте)</h2>
 			<Tabs appearance="line" variant="primary">
 				<TabItem text="Профиль" value="profile" />
-				<TabItem text="Настройки" value="settings" />
-				<TabItem text="О проекте" value="about" active />
+				<TabItem text="Настройки" value="settings" active />
+				<TabItem text="О проекте" value="about" />
+				<template #panel:profile><p>Содержимое Профиль</p></template>
+				<template #panel:settings><p>Содержимое Настройки</p></template>
+				<template #panel:about><p>Содержимое О проекте</p></template>
 			</Tabs>
 		</section>
 	</div>

@@ -1,5 +1,6 @@
 <script lang="ts">
 import { TTabs, type ITabsProps } from '@core'
+import { computed } from 'vue'
 import BaseTabs, { syncTabs } from './base.component'
 import { useBaseSetup } from '../../composables/useBaseSetup'
 import { useElementSync } from '../../composables/useElementSync'
@@ -25,7 +26,9 @@ export default {
 
 		const rootRef = useElementSync(instance)
 
-		return { instance, items, rootRef }
+		const activeValue = computed(() => instance.collection.activeItem?.value ?? null)
+
+		return { instance, items, rootRef, activeValue }
 	},
 }
 </script>
@@ -36,6 +39,9 @@ export default {
 			<slot>
 				<TabItem v-for="item in items" :key="item.uid" :is="item" />
 			</slot>
+		</div>
+		<div v-if="activeValue !== null && $slots[`panel:${activeValue}`]" class="s-tabs__panel">
+			<slot :name="`panel:${activeValue}`" />
 		</div>
 	</div>
 </template>
@@ -74,6 +80,12 @@ export default {
 	&__list {
 		@apply flex gap-1;
 	}
+
+	// Панель
+	&__panel {
+		@apply my-2;
+	}
+
 
 	// Выравнивание
 	&--center #{$this}__list {
