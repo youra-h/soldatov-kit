@@ -70,7 +70,7 @@ export interface ITabItemProps extends IActivatableCollectionItemProps, ITabItem
  */
 export interface ITabItem extends ITabItemCustom<ITabItemProps> {
 	/** Признак активности элемента (из коллекции) */
-	active: boolean
+	active?: boolean
 	/** Ссылка на коллекцию-владелец */
 	collection: any | null
 	/** Переключить активность */

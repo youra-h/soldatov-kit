@@ -18,7 +18,7 @@ export const propsTabItem: TProps = {
 	...propsTabItemCustom,
 	active: {
 		type: Boolean as PropType<ITabItemProps['active']>,
-		default: false,
+		default: undefined,
 	},
 }
 
