@@ -56,7 +56,7 @@ export default {
 		<template #after>
 			<slot name="after" />
 			<Button
-				:rendered="instance.closable"
+				:rendered="!!instance.closable"
 				class="s-tab-item__close"
 				@click.stop="instance.close()"
 				appearance="plain"
