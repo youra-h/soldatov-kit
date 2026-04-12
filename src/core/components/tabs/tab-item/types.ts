@@ -68,7 +68,7 @@ export interface ITabItemProps extends IActivatableCollectionItemProps, ITabItem
  * Наследует все UI-свойства от ITabItemCustom<ITabItemProps> + добавляет свойства коллекции.
  * Передаем ITabItemProps в generic, чтобы getProps()/toJSON() вернули правильный тип с active.
  */
-export interface ITabItem extends ITabItemCustom<ITabItemProps> {
+export interface ITabItem extends ITabItemCustom<ITabItemProps>, IActivatableCollectionItemProps {
 	/** Ссылка на коллекцию-владелец */
 	collection: any | null
 	/** Переключить активность */
