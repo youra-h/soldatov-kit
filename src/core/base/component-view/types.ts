@@ -36,6 +36,8 @@ export type TComponentViewEvents = TComponentModelEvents & {
 	'change:classes': (value: string[]) => void
 	/** mount — root-элемент присоединён к DOM фреймворком */
 	'mount': (payload: { el: Element; instance: IComponentView }) => void
+	/** ready — после первой отрисовки браузером (requestAnimationFrame после mount) */
+	'ready': (payload: { instance: IComponentView }) => void
 	/** unmount — root-элемент удалён из DOM */
 	'unmount': (payload: { instance: IComponentView }) => void
 	/** refresh — layout изменился, нужно пересчитать зависящие размеры */

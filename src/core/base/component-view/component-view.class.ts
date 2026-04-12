@@ -206,9 +206,16 @@ export default class TComponentView<
 		this._el = value
 
 		if (value && !prev) {
-			this._ready = true
 			this.events.emit('mount', { el: value, instance: this as any })
+
+			// После первой отрисовки браузером помечаем компонент как готовый.
+			// rAF — семантически верный способ сказать "после следующего paint".
+			requestAnimationFrame(() => {
+				this._ready = true
+				this.events.emit('ready', { instance: this as any })
+			})
 		} else if (!value && prev) {
+			this._ready = false
 			this.events.emit('unmount', { instance: this as any })
 		}
 	}

@@ -135,8 +135,8 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 			this.events.emit('item:moved', payload)
 		})
 
-		// Индикатор: обновляем при монтировании и при смене активного таба
-		this.events.on('mount', () => this._updateLineIndicator())
+		// Индикатор: обновляем после первой отрисовки (ready) и при смене активного таба
+		this.events.on('ready', () => this._updateLineIndicator())
 		// Индикатор: обновляем при смене внешнего вида (может влиять на размеры табов)
 		this._collection.events.on('item:activated', () => this._updateLineIndicator())
 		// Индикатор: обновляем при смене внешнего вида (может влиять на размеры табов)
