@@ -154,7 +154,7 @@ export default {
 		);
 	}
 
-	&--danger {
+	&--negative {
 		@include mixines.switch-variant(
 			$this,
 			$color: 'rose',

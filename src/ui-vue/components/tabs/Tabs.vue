@@ -146,7 +146,7 @@ export default {
 			@include mixines.tabs-line-variant('emerald', 600, 200);
 		}
 
-		&#{$this}--danger {
+		&#{$this}--negative {
 			@include mixines.tabs-line-variant('rose', 600, 200);
 		}
 

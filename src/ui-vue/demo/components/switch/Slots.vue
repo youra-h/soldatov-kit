@@ -121,7 +121,7 @@ const variants: TComponentVariant[] = VARIANTS
 						:visible="visible"
 						:rendered="rendered"
 						size="lg"
-						variant="danger"
+						variant="negative"
 						:value="true"
 					>
 						<template #off>

@@ -172,7 +172,7 @@ export default {
 		@include mixines.checkbox-variant($this, $color: 'emerald');
 	}
 
-	&--danger {
+	&--negative {
 		@include mixines.checkbox-variant($this, $color: 'rose');
 	}
 

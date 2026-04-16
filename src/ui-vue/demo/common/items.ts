@@ -7,7 +7,7 @@ import type { TComponentSize, TComponentVariant, TButtonAppearance } from '@/cor
 export const SIZES: TComponentSize[] = ['sm', 'normal', 'auto', 'lg', 'xl', '2xl']
 
 /** Варианты компонентов */
-export const VARIANTS: TComponentVariant[] = ['normal', 'accent', 'danger', 'warning', 'positive']
+export const VARIANTS: TComponentVariant[] = ['normal', 'accent', 'negative', 'warning', 'positive']
 
 /** HTML теги для ComponentView */
 export const HTML_TAGS = ['div', 'span', 'section', 'article', 'header', 'footer', 'main', 'aside']

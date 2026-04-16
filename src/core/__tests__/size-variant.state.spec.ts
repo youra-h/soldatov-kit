@@ -62,7 +62,7 @@ describe('TVariantState', () => {
 		s.value = 'normal'
 		expect(s.getClass()).toEqual([])
 
-		s.value = 'danger'
-		expect(s.getClass()).toEqual(['s-btn--danger'])
+		s.value = 'negative'
+		expect(s.getClass()).toEqual(['s-btn--negative'])
 	})
 })

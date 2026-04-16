@@ -110,7 +110,7 @@ const variants: TComponentVariant[] = VARIANTS
 						:visible="visible"
 						:rendered="rendered"
 						size="lg"
-						variant="danger"
+						variant="negative"
 						:value="false"
 						:indeterminate="true"
 					>

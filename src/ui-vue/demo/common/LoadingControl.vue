@@ -5,7 +5,7 @@ import { Spinner } from '@ui/spinner'
 import type { TComponentSize, TComponentVariant } from '@core'
 import type { VNode } from 'vue'
 
-type SpinnerType = 'none' | 'default' | 'small' | 'large' | 'accent' | 'danger'
+type SpinnerType = 'none' | 'default' | 'small' | 'large' | 'accent' | 'negative'
 
 type Props = {
 	loading: boolean
@@ -28,7 +28,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emit = defineEmits<Emits>()
 
-const spinnerTypes: SpinnerType[] = ['none', 'default', 'small', 'large', 'accent', 'danger']
+const spinnerTypes: SpinnerType[] = ['none', 'default', 'small', 'large', 'accent', 'negative']
 
 const localLoading = computed({
 	get: () => props.loading,
@@ -57,7 +57,7 @@ const createSpinner = (type: SpinnerType): VNode | null => {
 		small: { size: 'sm' },
 		large: { size: 'lg' },
 		accent: { variant: 'accent' },
-		danger: { variant: 'danger' },
+		negative: { variant: 'negative' },
 	}
 
 	const config = spinnerConfig[type]

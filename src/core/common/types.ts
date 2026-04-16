@@ -7,7 +7,7 @@ export type TComponentVariant =
 	| 'accent'
 	| 'secondary'
 	| 'positive'
-	| 'danger'
+	| 'negative'
 	| 'warning'
 
 export type TComponentSize = 'sm' | 'normal' | 'auto' | 'lg' | 'xl' | '2xl'
