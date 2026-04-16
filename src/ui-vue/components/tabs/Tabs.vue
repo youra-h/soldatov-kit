@@ -136,7 +136,7 @@ export default {
 		}
 
 		// Normal (default)
-		@include mixines.tabs-line-variant('gray', 700, 200);
+		@include mixines.tabs-line-variant('neutral', 700, 200);
 
 		&#{$this}--accent {
 			@include mixines.tabs-line-variant('sky', 600, 200);

@@ -53,7 +53,7 @@ export default {
 	animation-timing-function: cubic-bezier(0.53, 0.21, 0.29, 0.67);
 	transition: opacity 170ms cubic-bezier(0.53, 0.21, 0.29, 0.67);
 
-	@include mixines.spinner-variant(gray, 200, 700);
+	@include mixines.spinner-variant(neutral, 200, 700);
 
 	&--size-sm {
 		@apply w-3 h-3;
@@ -76,7 +76,7 @@ export default {
 	}
 
 	&--secondary {
-		@include mixines.spinner-variant(gray, 200, 700);
+		@include mixines.spinner-variant(neutral, 200, 700);
 	}
 
 	&--positive {

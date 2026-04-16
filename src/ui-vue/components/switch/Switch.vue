@@ -89,7 +89,7 @@ export default {
 		}
 
 		&:checked + #{$this}__track {
-			@apply bg-gray-700;
+			@apply bg-neutral-700;
 
 			#{$this}__track--thumb {
 				@apply translate-x-4;
@@ -97,14 +97,14 @@ export default {
 		}
 
 		&:hover:not(:disabled):not(:checked) + #{$this}__track {
-			@apply bg-gray-300;
+			@apply bg-neutral-300;
 		}
 	}
 
 	&__track {
 		@apply w-10 h-6;
 		@apply relative;
-		@apply bg-gray-200;
+		@apply bg-neutral-200;
 		@apply rounded-full;
 		@apply transition-colors duration-200;
 

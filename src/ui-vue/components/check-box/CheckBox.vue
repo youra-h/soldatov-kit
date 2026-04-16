@@ -86,7 +86,7 @@ export default {
 		}
 
 		&:disabled + #{$this}__container {
-			@apply border-gray-200 bg-gray-50;
+			@apply border-neutral-200 bg-neutral-50;
 
 			svg {
 				@apply opacity-50;
@@ -98,18 +98,18 @@ export default {
 		}
 
 		&:hover:not(:disabled) + #{$this}__container {
-			@apply border-gray-500;
+			@apply border-neutral-500;
 		}
 	}
 
 	&__container {
 		@apply flex items-center justify-center;
-		@apply w-full h-full rounded-md border border-gray-400;
+		@apply w-full h-full rounded-md border border-neutral-400;
 		@apply bg-white;
 		@apply transition-colors duration-150;
 
 		svg {
-			@apply fill-gray-700;
+			@apply fill-neutral-700;
 		}
 	}
 
@@ -151,7 +151,7 @@ export default {
 	&--secondary {
 		input {
 			&:checked + #{$this}__container {
-				@apply bg-gray-700 border-gray-700;
+				@apply bg-neutral-700 border-neutral-700;
 
 				svg {
 					@apply fill-white;
@@ -159,7 +159,7 @@ export default {
 			}
 
 			&:disabled + #{$this}__container {
-				@apply border-gray-400 bg-gray-400;
+				@apply border-neutral-400 bg-neutral-400;
 			}
 		}
 	}

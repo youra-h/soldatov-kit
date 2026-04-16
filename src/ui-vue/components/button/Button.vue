@@ -54,7 +54,7 @@ export default {
 	@apply relative transition-colors duration-200;
 	@apply truncate;
 	@apply outline-transparent;
-	@apply text-gray-800;
+	@apply text-neutral-800;
 
 	&[disabled] {
 		@apply opacity-50 cursor-not-allowed;
@@ -65,12 +65,12 @@ export default {
 		&:not(#{$this}--none) {
 			@apply duration-100;
 			@apply outline-2 outline-offset-2 outline-blue-400;
-			@apply bg-gray-200;
+			@apply bg-neutral-200;
 		}
 	}
 
 	&:hover:not([disabled]):not(#{$this}--none) {
-		@apply bg-gray-200;
+		@apply bg-neutral-200;
 	}
 
 	svg {
@@ -102,11 +102,11 @@ export default {
 	}
 
 	&--normal {
-		@apply bg-gray-100;
-		@apply dark:bg-gray-900;
+		@apply bg-neutral-100;
+		@apply dark:bg-neutral-900;
 
 		&:active:not([disabled]):not(#{$this}--none) {
-			@apply bg-gray-300;
+			@apply bg-neutral-300;
 		}
 
 		&.s-button--accent,
@@ -122,7 +122,7 @@ export default {
 		}
 
 		&.s-button--secondary {
-			@include mixines.button-variant($color: 'gray', $bg-idx: 700);
+			@include mixines.button-variant($color: 'neutral', $bg-idx: 700);
 		}
 
 		&.s-button--positive {
@@ -145,7 +145,7 @@ export default {
 	&--plain {
 		@apply bg-transparent;
 
-		@include mixines.button-variant($color: 'gray', $hover-bg-idx: 100, $text-idx: 700);
+		@include mixines.button-variant($color: 'neutral', $hover-bg-idx: 100, $text-idx: 700);
 
 		&.s-button--accent {
 			@include mixines.button-variant(
@@ -188,7 +188,7 @@ export default {
 		@apply bg-transparent border;
 
 		@include mixines.button-variant(
-			$color: 'gray',
+			$color: 'neutral',
 			$hover-bg-idx: 100,
 			$text-idx: 700,
 			$border-idx: 200
