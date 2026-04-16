@@ -5,7 +5,7 @@ export type TAbstractConstructor<T = {}> = abstract new (...args: any[]) => T
 export type TComponentVariant =
 	| 'normal'
 	| 'accent'
-	| 'secondary'
+	| 'neutral'
 	| 'positive'
 	| 'negative'
 	| 'caution'

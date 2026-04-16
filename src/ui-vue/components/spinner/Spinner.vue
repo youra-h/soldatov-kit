@@ -75,7 +75,7 @@ export default {
 		@include mixines.spinner-variant(sky, 100, 600);
 	}
 
-	&--secondary {
+	&--neutral {
 		@include mixines.spinner-variant(neutral, 200, 700);
 	}
 

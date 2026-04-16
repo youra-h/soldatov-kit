@@ -33,7 +33,7 @@ describe('TButton', () => {
 		const btn = new TButton({
 			props: {
 				text: 't',
-				variant: 'secondary',
+				variant: 'neutral',
 				size: 'lg',
 				appearance: 'outlined',
 				loading: true,
@@ -44,7 +44,7 @@ describe('TButton', () => {
 		const props = btn.getProps()
 		expect(props).toMatchObject({
 			text: 't',
-			variant: 'secondary',
+			variant: 'neutral',
 			size: 'lg',
 			appearance: 'outlined',
 			loading: true,

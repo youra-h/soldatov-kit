@@ -54,7 +54,7 @@ export default {
 	@apply relative transition-colors duration-200;
 	@apply truncate;
 	@apply outline-transparent;
-	@apply text-neutral-800;
+	@apply text-s-neutral-800;
 
 	&[disabled] {
 		@apply opacity-50 cursor-not-allowed;
@@ -65,12 +65,12 @@ export default {
 		&:not(#{$this}--none) {
 			@apply duration-100;
 			@apply outline-2 outline-offset-2 outline-blue-400;
-			@apply bg-neutral-200;
+			@apply bg-s-neutral-200;
 		}
 	}
 
 	&:hover:not([disabled]):not(#{$this}--none) {
-		@apply bg-neutral-200;
+		@apply bg-s-neutral-200;
 	}
 
 	svg {
@@ -102,15 +102,15 @@ export default {
 	}
 
 	&--normal {
-		@apply bg-neutral-100;
-		@apply dark:bg-neutral-900;
+		@apply bg-s-neutral-100;
+		@apply dark:bg-s-neutral-900;
 
 		&:active:not([disabled]):not(#{$this}--none) {
-			@apply bg-neutral-300;
+			@apply bg-s-neutral-300;
 		}
 
 		&.s-button--accent,
-		&.s-button--secondary,
+		&.s-button--neutral,
 		&.s-button--positive,
 		&.s-button--negative,
 		&.s-button--caution {
@@ -118,23 +118,23 @@ export default {
 		}
 
 		&.s-button--accent {
-			@include mixines.button-variant($color: 'sky', $bg-idx: 600);
+			@include mixines.button-variant($color: 'accent', $bg-idx: 600);
 		}
 
-		&.s-button--secondary {
+		&.s-button--neutral {
 			@include mixines.button-variant($color: 'neutral', $bg-idx: 700);
 		}
 
 		&.s-button--positive {
-			@include mixines.button-variant($color: 'emerald', $bg-idx: 600);
+			@include mixines.button-variant($color: 'positive', $bg-idx: 600);
 		}
 
 		&.s-button--negative {
-			@include mixines.button-variant($color: 'rose', $bg-idx: 600);
+			@include mixines.button-variant($color: 'negative', $bg-idx: 600);
 		}
 
 		&.s-button--caution {
-			@include mixines.button-variant($color: 'amber', $bg-idx: 600);
+			@include mixines.button-variant($color: 'caution', $bg-idx: 600);
 		}
 	}
 
@@ -149,7 +149,7 @@ export default {
 
 		&.s-button--accent {
 			@include mixines.button-variant(
-				$color: 'sky',
+				$color: 'accent',
 				$hover-bg-idx: 50,
 				$text-idx: 700,
 				$active-bg-idx: 100
@@ -158,7 +158,7 @@ export default {
 
 		&.s-button--positive {
 			@include mixines.button-variant(
-				$color: 'emerald',
+				$color: 'positive',
 				$hover-bg-idx: 50,
 				$text-idx: 700,
 				$active-bg-idx: 100
@@ -167,7 +167,7 @@ export default {
 
 		&.s-button--negative {
 			@include mixines.button-variant(
-				$color: 'rose',
+				$color: 'negative',
 				$hover-bg-idx: 50,
 				$text-idx: 700,
 				$active-bg-idx: 100
@@ -176,7 +176,7 @@ export default {
 
 		&.s-button--caution {
 			@include mixines.button-variant(
-				$color: 'amber',
+				$color: 'caution',
 				$hover-bg-idx: 50,
 				$text-idx: 700,
 				$active-bg-idx: 100
@@ -196,7 +196,7 @@ export default {
 
 		&.s-button--accent {
 			@include mixines.button-variant(
-				$color: 'sky',
+				$color: 'accent',
 				$hover-bg-idx: 50,
 				$text-idx: 600,
 				$active-bg-idx: 100,
@@ -206,7 +206,7 @@ export default {
 
 		&.s-button--positive {
 			@include mixines.button-variant(
-				$color: 'emerald',
+				$color: 'positive',
 				$hover-bg-idx: 50,
 				$text-idx: 600,
 				$active-bg-idx: 100,
@@ -216,7 +216,7 @@ export default {
 
 		&.s-button--negative {
 			@include mixines.button-variant(
-				$color: 'rose',
+				$color: 'negative',
 				$hover-bg-idx: 50,
 				$text-idx: 600,
 				$active-bg-idx: 100,
@@ -226,7 +226,7 @@ export default {
 
 		&.s-button--caution {
 			@include mixines.button-variant(
-				$color: 'amber',
+				$color: 'caution',
 				$hover-bg-idx: 50,
 				$text-idx: 600,
 				$active-bg-idx: 100,

@@ -86,7 +86,7 @@ export default {
 		}
 
 		&:disabled + #{$this}__container {
-			@apply border-neutral-200 bg-neutral-50;
+			@apply border-s-neutral-200 bg-s-neutral-50;
 
 			svg {
 				@apply opacity-50;
@@ -98,18 +98,18 @@ export default {
 		}
 
 		&:hover:not(:disabled) + #{$this}__container {
-			@apply border-neutral-500;
+			@apply border-s-neutral-500;
 		}
 	}
 
 	&__container {
 		@apply flex items-center justify-center;
-		@apply w-full h-full rounded-md border border-neutral-400;
+		@apply w-full h-full rounded-md border border-s-neutral-400;
 		@apply bg-white;
 		@apply transition-colors duration-150;
 
 		svg {
-			@apply fill-neutral-700;
+			@apply fill-s-neutral-700;
 		}
 	}
 
@@ -148,10 +148,10 @@ export default {
 		@apply w-8 h-8;
 	}
 
-	&--secondary {
+	&--neutral {
 		input {
 			&:checked + #{$this}__container {
-				@apply bg-neutral-700 border-neutral-700;
+				@apply bg-s-neutral-700 border-s-neutral-700;
 
 				svg {
 					@apply fill-white;
@@ -159,7 +159,7 @@ export default {
 			}
 
 			&:disabled + #{$this}__container {
-				@apply border-neutral-400 bg-neutral-400;
+				@apply border-s-neutral-400 bg-s-neutral-400;
 			}
 		}
 	}

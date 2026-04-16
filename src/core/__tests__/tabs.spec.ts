@@ -368,10 +368,10 @@ describe('TTabs', () => {
 			const item = tabs.collection.add({ text: 'Tab 1' })
 
 			tabs.size = 'sm'
-			tabs.variant = 'secondary'
+			tabs.variant = 'neutral'
 
 			expect(item.size).toBe('sm')
-			expect(item.variant).toBe('secondary')
+			expect(item.variant).toBe('neutral')
 		})
 
 		it('new item inherits size after collection already has items', () => {
