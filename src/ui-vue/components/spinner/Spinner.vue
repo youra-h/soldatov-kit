@@ -72,7 +72,7 @@ export default {
 	}
 
 	&--accent {
-		@include mixines.spinner-variant(sky, 100, 600);
+		@include mixines.spinner-variant(accent, 100, 600);
 	}
 
 	&--neutral {
@@ -80,15 +80,15 @@ export default {
 	}
 
 	&--positive {
-		@include mixines.spinner-variant(emerald, 100, 600);
+		@include mixines.spinner-variant(positive, 100, 600);
 	}
 
 	&--negative {
-		@include mixines.spinner-variant(rose, 100, 600);
+		@include mixines.spinner-variant(negative, 100, 600);
 	}
 
 	&--caution {
-		@include mixines.spinner-variant(amber, 100, 600);
+		@include mixines.spinner-variant(caution, 100, 600);
 	}
 }
 </style>
