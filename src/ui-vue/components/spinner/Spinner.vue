@@ -79,7 +79,7 @@ export default {
 		@include mixines.spinner-variant(gray, 200, 700);
 	}
 
-	&--success {
+	&--positive {
 		@include mixines.spinner-variant(emerald, 100, 600);
 	}
 

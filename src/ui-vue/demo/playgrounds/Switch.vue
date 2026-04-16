@@ -14,7 +14,7 @@ const emit = defineEmits<{
 	log: [entry: EventLogEntry]
 }>()
 
-const INPUT_STATES: TInputControlState[] = ['normal', 'success', 'warning', 'error']
+const INPUT_STATES: TInputControlState[] = ['normal', 'positive', 'warning', 'error']
 
 // Схема свойств для Switch
 const propertiesSchema: TPropertiesSchema = {

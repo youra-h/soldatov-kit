@@ -19,12 +19,12 @@ describe('TSpinner', () => {
 		expect(b.classes).toContain('s-spinner--accent')
 
 		const c = new TSpinner({
-			props: { size: 'xl', variant: 'success' },
+			props: { size: 'xl', variant: 'positive' },
 			renderConfig: { baseClass: 's-test-spinner' },
 		})
 		expect(c.classes).toContain('s-test-spinner')
 		expect(c.classes).toContain('s-test-spinner--size-xl')
-		expect(c.classes).toContain('s-test-spinner--success')
+		expect(c.classes).toContain('s-test-spinner--positive')
 	})
 
 	it('смена size/variant меняет classes', () => {
@@ -53,11 +53,11 @@ describe('TSpinner', () => {
 	it('getProps/toJSON отражают size/variant/borderWidth', () => {
 		const s = new TSpinner({
 			size: 'xl',
-			variant: 'success',
+			variant: 'positive',
 			borderWidth: 'auto',
 		})
 		const props = s.getProps()
-		expect(props).toMatchObject({ size: 'xl', variant: 'success', borderWidth: 'auto' })
+		expect(props).toMatchObject({ size: 'xl', variant: 'positive', borderWidth: 'auto' })
 		expect(s.toJSON()).toEqual(props)
 	})
 })

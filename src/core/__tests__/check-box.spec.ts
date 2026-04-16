@@ -24,8 +24,8 @@ describe('TCheckBox', () => {
 		const cb = new TCheckBox({ props: { variant: 'normal', size: 'normal' } })
 		expect(cb.classes).toContain('s-check-box')
 
-		cb.variant = 'success'
-		expect(cb.classes).toContain('s-check-box--success')
+		cb.variant = 'positive'
+		expect(cb.classes).toContain('s-check-box--positive')
 
 		cb.size = 'xl'
 		expect(cb.classes).toContain('s-check-box--size-xl')

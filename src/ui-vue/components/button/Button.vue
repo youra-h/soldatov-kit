@@ -111,7 +111,7 @@ export default {
 
 		&.s-button--accent,
 		&.s-button--secondary,
-		&.s-button--success,
+		&.s-button--positive,
 		&.s-button--danger,
 		&.s-button--warning {
 			@apply text-white;
@@ -125,7 +125,7 @@ export default {
 			@include mixines.button-variant($color: 'gray', $bg-idx: 700);
 		}
 
-		&.s-button--success {
+		&.s-button--positive {
 			@include mixines.button-variant($color: 'emerald', $bg-idx: 600);
 		}
 
@@ -156,7 +156,7 @@ export default {
 			);
 		}
 
-		&.s-button--success {
+		&.s-button--positive {
 			@include mixines.button-variant(
 				$color: 'emerald',
 				$hover-bg-idx: 50,
@@ -204,7 +204,7 @@ export default {
 			);
 		}
 
-		&.s-button--success {
+		&.s-button--positive {
 			@include mixines.button-variant(
 				$color: 'emerald',
 				$hover-bg-idx: 50,

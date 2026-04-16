@@ -170,7 +170,7 @@ describe('TCollection', () => {
 		expect(col.getItem(1)).toBe(b)
 		expect(col.getItem(2)).toBe(c)
 
-		// new collection to test successful move
+		// new collection to test positiveful move
 		const col2 = new TCollection({ itemClass: TestItem })
 		const x = col2.add({})
 		const y = col2.add({})

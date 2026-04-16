@@ -78,7 +78,7 @@ const variants: TComponentVariant[] = VARIANTS
 						:visible="visible"
 						:rendered="rendered"
 						:size="size"
-						variant="success"
+						variant="positive"
 						:value="true"
 						:plain="true"
 					/>

@@ -144,7 +144,7 @@ export default {
 	&--secondary {
 	}
 
-	&--success {
+	&--positive {
 		@include mixines.switch-variant(
 			$this,
 			$color: 'emerald',

@@ -6,7 +6,7 @@ export type TComponentVariant =
 	| 'normal'
 	| 'accent'
 	| 'secondary'
-	| 'success'
+	| 'positive'
 	| 'danger'
 	| 'warning'
 

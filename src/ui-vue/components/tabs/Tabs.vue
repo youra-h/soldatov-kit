@@ -142,7 +142,7 @@ export default {
 			@include mixines.tabs-line-variant('sky', 600, 200);
 		}
 
-		&#{$this}--success {
+		&#{$this}--positive {
 			@include mixines.tabs-line-variant('emerald', 600, 200);
 		}
 

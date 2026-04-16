@@ -36,8 +36,8 @@ describe('TInputControl', () => {
 		c.required = true
 		expect(req).toHaveBeenCalledWith(true)
 
-		c.state = 'success'
-		expect(st).toHaveBeenCalledWith('success')
+		c.state = 'positive'
+		expect(st).toHaveBeenCalledWith('positive')
 
 		c.invalid = true
 		expect(inv).toHaveBeenCalledWith(true)
