@@ -15,17 +15,17 @@ describe('TStylable', () => {
 		expect(sizeHandler).toHaveBeenCalledWith('xl')
 		expect(stylable.classes).toContain('s-component-view--size-xl')
 
-		stylable.variant = 'primary'
-		expect(variantHandler).toHaveBeenCalledWith('primary')
-		expect(stylable.classes).toContain('s-component-view--primary')
+		stylable.variant = 'accent'
+		expect(variantHandler).toHaveBeenCalledWith('accent')
+		expect(stylable.classes).toContain('s-component-view--accent')
 	})
 
 	it('getProps отражает size и variant', () => {
 		const stylable = new TStylable<IStylableProps>({
-			props: { size: 'lg', variant: 'primary' },
+			props: { size: 'lg', variant: 'accent' },
 			renderConfig: { baseClass: 's-test' },
 		})
-		expect(stylable.getProps()).toMatchObject({ size: 'lg', variant: 'primary' })
+		expect(stylable.getProps()).toMatchObject({ size: 'lg', variant: 'accent' })
 	})
 
 	it('states.size позволяет подменить size-state и влияет на classes', () => {

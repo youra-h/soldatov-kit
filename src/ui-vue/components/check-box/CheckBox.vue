@@ -164,7 +164,7 @@ export default {
 		}
 	}
 
-	&--primary {
+	&--accent {
 		@include mixines.checkbox-variant($this, $color: 'sky');
 	}
 

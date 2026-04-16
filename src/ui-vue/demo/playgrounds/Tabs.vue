@@ -7,7 +7,7 @@ import { Tabs, TabItem } from '@ui/tabs'
 const tabs = ref<TTabs>()
 
 tabs.value = new TTabs()
-tabs.value.variant = 'primary'
+tabs.value.variant = 'accent'
 tabs.value.appearance = 'line'
 tabs.value.orientation = 'horizontal'
 
@@ -39,7 +39,7 @@ const tabItems = ref([
 
 		<section>
 			<h2>Вариант 2: prop items</h2>
-			<Tabs :items="tabItems" appearance="line" variant="primary">
+			<Tabs :items="tabItems" appearance="line" variant="accent">
 				<template #panel:alpha><p>Содержимое Alpha</p></template>
 				<template #panel:beta><p>Содержимое Beta</p></template>
 				<template #panel:gamma><p>Содержимое Gamma</p></template>
@@ -48,7 +48,7 @@ const tabItems = ref([
 
 		<section>
 			<h2>Вариант 3: декларативный (TabItem в слоте)</h2>
-			<Tabs appearance="line" variant="primary">
+			<Tabs appearance="line" variant="accent">
 				<TabItem text="Профиль" value="profile" />
 				<TabItem text="Настройки" value="settings" active />
 				<TabItem text="О проекте" value="about" />

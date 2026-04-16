@@ -19,8 +19,8 @@ describe('TButton', () => {
 	it('classes меняются при смене variant/size/appearance', () => {
 		const btn = new TButton({ renderConfig: { baseClass: 's-btn' } })
 
-		btn.variant = 'primary'
-		expect(btn.classes).toContain('s-btn--primary')
+		btn.variant = 'accent'
+		expect(btn.classes).toContain('s-btn--accent')
 
 		btn.size = 'xl'
 		expect(btn.classes).toContain('s-btn--size-xl')

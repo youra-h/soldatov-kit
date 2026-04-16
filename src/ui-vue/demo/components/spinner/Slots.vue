@@ -59,7 +59,7 @@ const variants: TComponentVariant[] = VARIANTS
 						:visible="visible"
 						:rendered="rendered"
 						:size="size"
-						variant="primary"
+						variant="accent"
 						class="sizes-demo__spinner-with-slot"
 					>
 						<Icon

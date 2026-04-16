@@ -109,7 +109,7 @@ export default {
 			@apply bg-gray-300;
 		}
 
-		&.s-button--primary,
+		&.s-button--accent,
 		&.s-button--secondary,
 		&.s-button--success,
 		&.s-button--danger,
@@ -117,7 +117,7 @@ export default {
 			@apply text-white;
 		}
 
-		&.s-button--primary {
+		&.s-button--accent {
 			@include mixines.button-variant($color: 'sky', $bg-idx: 600);
 		}
 
@@ -147,7 +147,7 @@ export default {
 
 		@include mixines.button-variant($color: 'gray', $hover-bg-idx: 100, $text-idx: 700);
 
-		&.s-button--primary {
+		&.s-button--accent {
 			@include mixines.button-variant(
 				$color: 'sky',
 				$hover-bg-idx: 50,
@@ -194,7 +194,7 @@ export default {
 			$border-idx: 200
 		);
 
-		&.s-button--primary {
+		&.s-button--accent {
 			@include mixines.button-variant(
 				$color: 'sky',
 				$hover-bg-idx: 50,

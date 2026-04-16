@@ -12,10 +12,10 @@ describe('TSwitch', () => {
 
 		const c = new TSwitch({
 			renderConfig: { baseClass: 's-sw' },
-			props: { value: true, size: 'xl', variant: 'primary' },
+			props: { value: true, size: 'xl', variant: 'accent' },
 		})
 		expect(c.classes).toContain('s-sw')
-		expect(c.classes).toContain('s-sw--primary')
+		expect(c.classes).toContain('s-sw--accent')
 		expect(c.classes).toContain('s-sw--size-xl')
 	})
 

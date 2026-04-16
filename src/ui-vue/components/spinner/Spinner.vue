@@ -71,7 +71,7 @@ export default {
 		@apply w-7 h-7;
 	}
 
-	&--primary {
+	&--accent {
 		@include mixines.spinner-variant(sky, 100, 600);
 	}
 

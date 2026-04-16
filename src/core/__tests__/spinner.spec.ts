@@ -12,11 +12,11 @@ describe('TSpinner', () => {
 		expect(a.classes).toContain('s-spinner--size-xl')
 		expect(a.classes).toContain('s-spinner--warning')
 
-		const b = new TSpinner({ size: 'normal', variant: 'primary' })
+		const b = new TSpinner({ size: 'normal', variant: 'accent' })
 		expect(b.classes).toContain('s-spinner')
 		// size=normal исключён -> size modifier отсутствует
 		expect(b.classes).not.toContain('s-spinner--size-normal')
-		expect(b.classes).toContain('s-spinner--primary')
+		expect(b.classes).toContain('s-spinner--accent')
 
 		const c = new TSpinner({
 			props: { size: 'xl', variant: 'success' },
@@ -28,13 +28,13 @@ describe('TSpinner', () => {
 	})
 
 	it('смена size/variant меняет classes', () => {
-		const s = new TSpinner({ size: 'normal', variant: 'primary' })
-		expect(s.classes).toContain('s-spinner--primary')
+		const s = new TSpinner({ size: 'normal', variant: 'accent' })
+		expect(s.classes).toContain('s-spinner--accent')
 		expect(s.classes).not.toContain('s-spinner--warning')
 
 		s.variant = 'warning'
 		expect(s.classes).toContain('s-spinner--warning')
-		expect(s.classes).not.toContain('s-spinner--primary')
+		expect(s.classes).not.toContain('s-spinner--accent')
 
 		s.size = 'xl'
 		expect(s.classes).toContain('s-spinner--size-xl')

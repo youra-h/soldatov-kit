@@ -38,8 +38,8 @@ describe('TVariantState', () => {
 	})
 
 	it('возвращает CSS-класс для значений не из exclude', () => {
-		const s = new TVariantState({ baseClass: 's-test', value: 'primary', exclude: ['normal'] })
-		expect(s.getClass()).toEqual(['s-test--primary'])
+		const s = new TVariantState({ baseClass: 's-test', value: 'accent', exclude: ['normal'] })
+		expect(s.getClass()).toEqual(['s-test--accent'])
 	})
 
 	it('эмитит change при изменении value', () => {
@@ -47,17 +47,17 @@ describe('TVariantState', () => {
 		const handler = vi.fn()
 		s.events.on('change', handler)
 
-		s.value = 'primary'
-		expect(handler).toHaveBeenCalledWith('primary')
-		expect(s.getClass()).toEqual(['s-test--primary'])
+		s.value = 'accent'
+		expect(handler).toHaveBeenCalledWith('accent')
+		expect(s.getClass()).toEqual(['s-test--accent'])
 	})
 
 	it('переключение с исключенного на неисключенное значение корректно меняет getClass', () => {
 		const s = new TVariantState({ baseClass: 's-btn', value: 'normal', exclude: ['normal'] })
 		expect(s.getClass()).toEqual([])
 
-		s.value = 'primary'
-		expect(s.getClass()).toEqual(['s-btn--primary'])
+		s.value = 'accent'
+		expect(s.getClass()).toEqual(['s-btn--accent'])
 
 		s.value = 'normal'
 		expect(s.getClass()).toEqual([])

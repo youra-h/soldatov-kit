@@ -131,7 +131,7 @@ export default {
 		@include mixines.switch-size($this, 16, 9, 8, 7);
 	}
 
-	&--primary {
+	&--accent {
 		@include mixines.switch-variant(
 			$this,
 			$color: 'sky',

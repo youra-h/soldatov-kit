@@ -15,7 +15,7 @@ const emit = defineEmits<{
 	log: [entry: EventLogEntry]
 }>()
 
-type SpinnerType = 'none' | 'default' | 'small' | 'large' | 'primary' | 'danger'
+type SpinnerType = 'none' | 'default' | 'small' | 'large' | 'accent' | 'danger'
 
 // Схема свойств для Button
 const propertiesSchema: TPropertiesSchema = {

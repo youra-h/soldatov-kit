@@ -337,11 +337,11 @@ describe('TTabs', () => {
 		})
 
 		it('propagates current variant to newly added item', () => {
-			tabs.variant = 'primary'
+			tabs.variant = 'accent'
 
 			const item = tabs.collection.add({ text: 'Tab 1' })
 
-			expect(item.variant).toBe('primary')
+			expect(item.variant).toBe('accent')
 		})
 
 		it('propagates size to all existing items when tabs.size changes', () => {
@@ -358,10 +358,10 @@ describe('TTabs', () => {
 			const item1 = tabs.collection.add({ text: 'Tab 1' })
 			const item2 = tabs.collection.add({ text: 'Tab 2' })
 
-			tabs.variant = 'primary'
+			tabs.variant = 'accent'
 
-			expect(item1.variant).toBe('primary')
-			expect(item2.variant).toBe('primary')
+			expect(item1.variant).toBe('accent')
+			expect(item2.variant).toBe('accent')
 		})
 
 		it('propagates size and variant together when both changed', () => {

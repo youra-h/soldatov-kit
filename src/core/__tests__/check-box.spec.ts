@@ -12,10 +12,10 @@ describe('TCheckBox', () => {
 
 		const c = new TCheckBox({
 			renderConfig: { baseClass: 's-cb' },
-			props: { value: true, size: 'xl', variant: 'primary', plain: true },
+			props: { value: true, size: 'xl', variant: 'accent', plain: true },
 		})
 		expect(c.classes).toContain('s-cb')
-		expect(c.classes).toContain('s-cb--primary')
+		expect(c.classes).toContain('s-cb--accent')
 		expect(c.classes).toContain('s-cb--size-xl')
 		expect(c.classes).toContain('s-cb--plain')
 	})

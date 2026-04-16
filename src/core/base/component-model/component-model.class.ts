@@ -51,7 +51,7 @@ export default class TComponentModel<
 	 * @returns Экземпляр компонента
 	 * @example
 	 * TIcon.create({ tag: 'icon.svg', size: 'lg' })
-	 * TButton.create({ text: 'Click me', variant: 'primary' })
+	 * TButton.create({ text: 'Click me', variant: 'accent' })
 	 */
 	/**
 	 * Создает экземпляр компонента с заданными props.
@@ -59,7 +59,7 @@ export default class TComponentModel<
 	 * @returns Экземпляр компонента
 	 * @example
 	 * TIcon.create({ tag: 'icon.svg', size: 'lg' })
-	 * TButton.create({ text: 'Click me', variant: 'primary' })
+	 * TButton.create({ text: 'Click me', variant: 'accent' })
 	 */
 	static create<T extends TComponentModel>(
 		this: new (options: any) => T,

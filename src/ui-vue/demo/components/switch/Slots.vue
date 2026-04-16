@@ -93,7 +93,7 @@ const variants: TComponentVariant[] = VARIANTS
 						:visible="visible"
 						:rendered="rendered"
 						size="lg"
-						variant="primary"
+						variant="accent"
 						:value="false"
 					>
 						<template #off>
@@ -145,7 +145,7 @@ const variants: TComponentVariant[] = VARIANTS
 						:visible="visible"
 						:rendered="rendered"
 						size="lg"
-						variant="primary"
+						variant="accent"
 						:value="false"
 						:disabled="true"
 					/>

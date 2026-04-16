@@ -8,7 +8,7 @@ export default class TSpinner extends TComponentView<ISpinnerProps, TSpinnerEven
 
 	static defaultValues: Partial<ISpinnerProps> = {
 		...TComponentView.defaultValues,
-		variant: 'primary',
+		variant: 'accent',
 		size: 'normal',
 		tag: 'span',
 		borderWidth: 'auto',
