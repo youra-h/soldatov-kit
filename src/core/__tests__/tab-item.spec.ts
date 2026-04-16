@@ -118,7 +118,7 @@ describe('TTabItem', () => {
 			item = new TTabItem()
 
 			expect(item.text).toBe('')
-			expect(item.active).toBe(false)
+			expect(item.active).toBe(undefined)
 			expect(item.collection).toBeNull()
 		})
 

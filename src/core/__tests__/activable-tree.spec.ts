@@ -22,7 +22,7 @@ describe('TActivatableTree', () => {
 		const item = tree.add()
 
 		expect(tree.activeItem).toBeNull()
-		expect(item.active).toBe(false)
+		expect(item.active).toBe(undefined)
 
 		item.active = true
 
@@ -38,7 +38,7 @@ describe('TActivatableTree', () => {
 		item1.active = true
 		expect(tree.activeItem).toBe(item1)
 		expect(item1.active).toBe(true)
-		expect(item2.active).toBe(false)
+		expect(item2.active).toBe(undefined)
 
 		// Активируем второй, первый должен выключиться
 		item2.active = true
