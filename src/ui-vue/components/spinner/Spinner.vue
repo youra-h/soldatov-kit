@@ -87,7 +87,7 @@ export default {
 		@include mixines.spinner-variant(rose, 100, 600);
 	}
 
-	&--warning {
+	&--caution {
 		@include mixines.spinner-variant(amber, 100, 600);
 	}
 }

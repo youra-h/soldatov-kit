@@ -150,7 +150,7 @@ export default {
 			@include mixines.tabs-line-variant('rose', 600, 200);
 		}
 
-		&#{$this}--warning {
+		&#{$this}--caution {
 			@include mixines.tabs-line-variant('amber', 600, 200);
 		}
 	}

@@ -38,7 +38,7 @@
 	--color-s-negative-900: oklch(0.410 0.159 10.272);
 	--color-s-negative-950: oklch(0.271 0.105 12.094);
 
-	/* ─── Caution (warning) ── orange ────────────────────────── */
+	/* ─── Caution (caution) ── orange ────────────────────────── */
 	--color-s-caution-50: oklch(0.987 0.022 95.277);
 	--color-s-caution-100: oklch(0.962 0.059 95.617);
 	--color-s-caution-200: oklch(0.924 0.120 95.746);

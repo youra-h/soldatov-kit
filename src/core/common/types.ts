@@ -8,6 +8,6 @@ export type TComponentVariant =
 	| 'secondary'
 	| 'positive'
 	| 'negative'
-	| 'warning'
+	| 'caution'
 
 export type TComponentSize = 'sm' | 'normal' | 'auto' | 'lg' | 'xl' | '2xl'

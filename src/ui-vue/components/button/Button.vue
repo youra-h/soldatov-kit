@@ -113,7 +113,7 @@ export default {
 		&.s-button--secondary,
 		&.s-button--positive,
 		&.s-button--negative,
-		&.s-button--warning {
+		&.s-button--caution {
 			@apply text-white;
 		}
 
@@ -133,7 +133,7 @@ export default {
 			@include mixines.button-variant($color: 'rose', $bg-idx: 600);
 		}
 
-		&.s-button--warning {
+		&.s-button--caution {
 			@include mixines.button-variant($color: 'amber', $bg-idx: 600);
 		}
 	}
@@ -174,7 +174,7 @@ export default {
 			);
 		}
 
-		&.s-button--warning {
+		&.s-button--caution {
 			@include mixines.button-variant(
 				$color: 'amber',
 				$hover-bg-idx: 50,
@@ -224,7 +224,7 @@ export default {
 			);
 		}
 
-		&.s-button--warning {
+		&.s-button--caution {
 			@include mixines.button-variant(
 				$color: 'amber',
 				$hover-bg-idx: 50,

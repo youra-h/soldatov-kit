@@ -5,7 +5,7 @@ import type {
 	TValueControlStatesOptions,
 } from '../value-control'
 
-export type TInputControlState = 'normal' | 'positive' | 'warning' | 'error'
+export type TInputControlState = 'normal' | 'positive' | 'caution' | 'error'
 
 export type TInputControlEvents<T = string> = TValueControlEvents<T> & {
 	'change:readonly': (value: boolean) => void

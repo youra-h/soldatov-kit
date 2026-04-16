@@ -164,7 +164,7 @@ export default {
 		);
 	}
 
-	&--warning {
+	&--caution {
 		@include mixines.switch-variant(
 			$this,
 			$color: 'amber',

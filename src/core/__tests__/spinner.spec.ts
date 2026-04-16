@@ -4,13 +4,13 @@ import type { ISpinnerProps } from '../components/spinner'
 
 describe('TSpinner', () => {
 	it('создаётся через { props }, через plain props и с override baseClass', () => {
-		const a = new TSpinner({ props: { size: 'xl', variant: 'warning', borderWidth: 2 } })
+		const a = new TSpinner({ props: { size: 'xl', variant: 'caution', borderWidth: 2 } })
 		expect(a.size).toBe('xl')
-		expect(a.variant).toBe('warning')
+		expect(a.variant).toBe('caution')
 		expect(a.borderWidth).toBe(2)
 		expect(a.classes).toContain('s-spinner')
 		expect(a.classes).toContain('s-spinner--size-xl')
-		expect(a.classes).toContain('s-spinner--warning')
+		expect(a.classes).toContain('s-spinner--caution')
 
 		const b = new TSpinner({ size: 'normal', variant: 'accent' })
 		expect(b.classes).toContain('s-spinner')
@@ -30,10 +30,10 @@ describe('TSpinner', () => {
 	it('смена size/variant меняет classes', () => {
 		const s = new TSpinner({ size: 'normal', variant: 'accent' })
 		expect(s.classes).toContain('s-spinner--accent')
-		expect(s.classes).not.toContain('s-spinner--warning')
+		expect(s.classes).not.toContain('s-spinner--caution')
 
-		s.variant = 'warning'
-		expect(s.classes).toContain('s-spinner--warning')
+		s.variant = 'caution'
+		expect(s.classes).toContain('s-spinner--caution')
 		expect(s.classes).not.toContain('s-spinner--accent')
 
 		s.size = 'xl'

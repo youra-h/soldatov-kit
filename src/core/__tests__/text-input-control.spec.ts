@@ -5,12 +5,12 @@ import type { ITextInputControlProps } from '../base/input-control'
 describe('TInputControl', () => {
 	it('принимает form-flags через { props } и через plain props', () => {
 		const a = new TInputControl<ITextInputControlProps>({
-			props: { value: '', readonly: true, required: true, invalid: false, state: 'warning' },
+			props: { value: '', readonly: true, required: true, invalid: false, state: 'caution' },
 		} as any)
 		expect(a.readonly).toBe(true)
 		expect(a.required).toBe(true)
 		expect(a.invalid).toBe(false)
-		expect(a.state).toBe('warning')
+		expect(a.state).toBe('caution')
 
 		const b = new TInputControl<ITextInputControlProps>({
 			value: '', readonly: false, required: false, invalid: true, state: 'normal',
