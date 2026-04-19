@@ -64,7 +64,7 @@ export default {
 	&:focus-visible {
 		&:not(#{$this}--none) {
 			@apply duration-100;
-			@apply outline-2 outline-offset-2 outline-blue-400;
+			@apply outline-2 outline-offset-2 outline-s-accent-400;
 			@apply bg-s-neutral-200;
 		}
 	}

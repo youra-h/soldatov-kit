@@ -84,7 +84,7 @@ export default {
 		&:focus,
 		&:focus-visible {
 			+ #{$this}__track {
-				@apply outline-2 outline-offset-2 outline-blue-400;
+				@apply outline-2 outline-offset-2 outline-s-accent-400;
 			}
 		}
 
