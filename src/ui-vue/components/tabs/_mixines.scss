@@ -8,26 +8,26 @@
 
 	// Цвет разделительной линии под всем списком табов
 	.s-tabs__list {
-		@apply #{'border-' + $color + '-' + $border-idx};
+		@apply #{'border-s-' + $color + '-' + $border-idx};
 	}
 
 	// Цвет разделительной линии и индикатора
 	.s-tabs__list {
-		@apply #{'border-' + $color + '-' + $border-idx};
+		@apply #{'border-s-' + $color + '-' + $border-idx};
 
 		&::after {
-			@apply #{'bg-' + $color + '-' + $indicator-idx};
+			@apply #{'bg-s-' + $color + '-' + $indicator-idx};
 		}
 	}
 
 	// Цвет текста при hover и у активного таба
 	.s-tab-item {
 		&:hover:not([disabled]) {
-			@apply #{'text-' + $color + '-' + $text-idx};
+			@apply #{'text-s-' + $color + '-' + $text-idx};
 		}
 
 		&--active {
-			@apply #{'text-' + $color + '-' + $text-idx};
+			@apply #{'text-s-' + $color + '-' + $text-idx};
 		}
 	}
 }

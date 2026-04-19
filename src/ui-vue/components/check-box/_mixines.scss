@@ -1,27 +1,27 @@
 @mixin checkbox-variant(
-    $this,
-    $color: 'neutral',
-    $border-main: 500,
-    $border-hover: 600,
-    $border-disabled: 100,
-    $bg-disabled: 50,
-    $svg-fill: 700
+	$this,
+	$color: 'neutral',
+	$border-main: 500,
+	$border-hover: 600,
+	$border-disabled: 100,
+	$bg-disabled: 50,
+	$svg-fill: 700
 ) {
-    #{$this}__container {
-        @apply #{'border-' + $color + '-' + $border-main};
+	#{$this}__container {
+		@apply #{'border-s-' + $color + '-' + $border-main};
 
-        svg {
-            @apply #{'fill-' + $color + '-' + $svg-fill};
-        }
-    }
+		svg {
+			@apply #{'fill-s-' + $color + '-' + $svg-fill};
+		}
+	}
 
-    input {
-        &:disabled + #{$this}__container {
-            @apply #{'border-' + $color + '-' + $border-disabled};
-            @apply #{'bg-' + $color + '-' + $bg-disabled};
-        }
-        &:hover:not(:disabled) + #{$this}__container {
-            @apply #{'border-' + $color + '-' + $border-hover};
-        }
-    }
+	input {
+		&:disabled + #{$this}__container {
+			@apply #{'border-s-' + $color + '-' + $border-disabled};
+			@apply #{'bg-s-' + $color + '-' + $bg-disabled};
+		}
+		&:hover:not(:disabled) + #{$this}__container {
+			@apply #{'border-s-' + $color + '-' + $border-hover};
+		}
+	}
 }

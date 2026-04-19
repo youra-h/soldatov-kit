@@ -134,7 +134,7 @@ export default {
 	&--accent {
 		@include mixines.switch-variant(
 			$this,
-			$color: 'sky',
+			$color: 'accent',
 			$bg-checked: 600,
 			$bg-hover: 200,
 			$bg-track: 100
@@ -142,12 +142,9 @@ export default {
 	}
 
 	&--neutral {
-	}
-
-	&--positive {
 		@include mixines.switch-variant(
 			$this,
-			$color: 'emerald',
+			$color: 'positive',
 			$bg-checked: 600,
 			$bg-hover: 200,
 			$bg-track: 100
@@ -157,7 +154,7 @@ export default {
 	&--negative {
 		@include mixines.switch-variant(
 			$this,
-			$color: 'rose',
+			$color: 'negative',
 			$bg-checked: 600,
 			$bg-hover: 200,
 			$bg-track: 100
@@ -167,7 +164,7 @@ export default {
 	&--caution {
 		@include mixines.switch-variant(
 			$this,
-			$color: 'amber',
+			$color: 'caution',
 			$bg-checked: 600,
 			$bg-hover: 200,
 			$bg-track: 100

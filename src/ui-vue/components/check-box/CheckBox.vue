@@ -165,19 +165,19 @@ export default {
 	}
 
 	&--accent {
-		@include mixines.checkbox-variant($this, $color: 'sky');
+		@include mixines.checkbox-variant($this, $color: 'accent');
 	}
 
 	&--positive {
-		@include mixines.checkbox-variant($this, $color: 'emerald');
+		@include mixines.checkbox-variant($this, $color: 'positive');
 	}
 
 	&--negative {
-		@include mixines.checkbox-variant($this, $color: 'rose');
+		@include mixines.checkbox-variant($this, $color: 'negative');
 	}
 
 	&--caution {
-		@include mixines.checkbox-variant($this, $color: 'amber');
+		@include mixines.checkbox-variant($this, $color: 'caution');
 	}
 }
 </style>

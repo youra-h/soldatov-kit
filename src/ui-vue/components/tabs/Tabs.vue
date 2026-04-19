@@ -139,19 +139,19 @@ export default {
 		@include mixines.tabs-line-variant('neutral', 700, 200);
 
 		&#{$this}--accent {
-			@include mixines.tabs-line-variant('sky', 600, 200);
+			@include mixines.tabs-line-variant('accent', 600, 200);
 		}
 
 		&#{$this}--positive {
-			@include mixines.tabs-line-variant('emerald', 600, 200);
+			@include mixines.tabs-line-variant('positive', 600, 200);
 		}
 
 		&#{$this}--negative {
-			@include mixines.tabs-line-variant('rose', 600, 200);
+			@include mixines.tabs-line-variant('negative', 600, 200);
 		}
 
 		&#{$this}--caution {
-			@include mixines.tabs-line-variant('amber', 600, 200);
+			@include mixines.tabs-line-variant('caution', 600, 200);
 		}
 	}
 
