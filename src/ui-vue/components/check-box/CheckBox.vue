@@ -98,13 +98,13 @@ export default {
 		}
 
 		&:hover:not(:disabled) + #{$this}__container {
-			@apply border-s-neutral-500;
+			@apply border-s-neutral-600;
 		}
 	}
 
 	&__container {
 		@apply flex items-center justify-center;
-		@apply w-full h-full rounded-md border border-s-neutral-400;
+		@apply w-full h-full rounded-md border border-s-neutral-500;
 		@apply bg-white;
 		@apply transition-colors duration-150;
 
@@ -159,7 +159,7 @@ export default {
 			}
 
 			&:disabled + #{$this}__container {
-				@apply border-s-neutral-400 bg-s-neutral-400;
+				@apply border-s-neutral-100 bg-s-neutral-50;
 			}
 		}
 	}

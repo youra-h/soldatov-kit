@@ -144,7 +144,7 @@ export default {
 	&--neutral {
 		@include mixines.switch-variant(
 			$this,
-			$color: 'positive',
+			$color: 'neutral',
 			$bg-checked: 600,
 			$bg-hover: 200,
 			$bg-track: 100
