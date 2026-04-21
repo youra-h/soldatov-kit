@@ -1,11 +1,11 @@
 @mixin checkbox-variant(
 	$this,
 	$color: 'neutral',
-	$border-main: 500,
-	$border-hover: 700,
+	$border-main: 400,
+	$border-hover: 600,
 	$border-disabled: 200,
 	$bg-disabled: 100,
-	$svg-fill: 700
+	$svg-fill: 600
 ) {
 	#{$this}__container {
 		@apply #{'border-s-' + $color + '-' + $border-main};
