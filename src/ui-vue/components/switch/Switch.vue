@@ -141,16 +141,6 @@ export default {
 		);
 	}
 
-	&--neutral {
-		@include mixines.switch-variant(
-			$this,
-			$color: 'neutral',
-			$bg-checked: 600,
-			$bg-hover: 200,
-			$bg-track: 100
-		);
-	}
-
 	&--negative {
 		@include mixines.switch-variant(
 			$this,

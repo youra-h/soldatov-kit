@@ -75,10 +75,6 @@ export default {
 		@include mixines.spinner-variant(accent, 100, 600);
 	}
 
-	&--neutral {
-		@include mixines.spinner-variant(neutral, 100, 600);
-	}
-
 	&--positive {
 		@include mixines.spinner-variant(positive, 100, 600);
 	}

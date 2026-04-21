@@ -110,7 +110,6 @@ export default {
 		}
 
 		&.s-button--accent,
-		&.s-button--neutral,
 		&.s-button--positive,
 		&.s-button--negative,
 		&.s-button--caution {
@@ -119,10 +118,6 @@ export default {
 
 		&.s-button--accent {
 			@include mixines.button-variant($color: 'accent', $bg-idx: 600);
-		}
-
-		&.s-button--neutral {
-			@include mixines.button-variant($color: 'neutral', $bg-idx: 700);
 		}
 
 		&.s-button--positive {

@@ -5,6 +5,7 @@
 	$border-hover: 600,
 	$border-disabled: 100,
 	$bg-disabled: 50,
+	$bg-checked: 600,
 	$svg-fill: 700
 ) {
 	#{$this}__container {
@@ -16,12 +17,22 @@
 	}
 
 	input {
+		&:hover:not(:disabled) + #{$this}__container {
+			@apply #{'border-s-' + $color + '-' + $border-hover};
+		}
+
+		&:checked + #{$this}__container {
+			@apply #{'border-s-' + $color + '-' + $bg-checked};
+		}
+
 		&:disabled + #{$this}__container {
 			@apply #{'border-s-' + $color + '-' + $border-disabled};
 			@apply #{'bg-s-' + $color + '-' + $bg-disabled};
-		}
-		&:hover:not(:disabled) + #{$this}__container {
-			@apply #{'border-s-' + $color + '-' + $border-hover};
+			@apply opacity-50;
+
+			svg {
+				@apply #{'fill-s-' + $color + '-' + $svg-fill};
+			}
 		}
 	}
 }

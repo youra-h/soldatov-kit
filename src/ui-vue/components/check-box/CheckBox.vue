@@ -85,32 +85,16 @@ export default {
 			@apply cursor-default pointer-events-none;
 		}
 
-		&:disabled + #{$this}__container {
-			@apply border-s-neutral-200 bg-s-neutral-50;
-
-			svg {
-				@apply opacity-50;
-			}
-		}
-
 		&:focus + #{$this}__container {
 			@apply outline-2 outline-offset-2 outline-s-accent-400;
-		}
-
-		&:hover:not(:disabled) + #{$this}__container {
-			@apply border-s-neutral-600;
 		}
 	}
 
 	&__container {
 		@apply flex items-center justify-center;
-		@apply w-full h-full rounded-md border border-s-neutral-500;
+		@apply w-full h-full rounded-md border;
 		@apply bg-white;
 		@apply transition-colors duration-150;
-
-		svg {
-			@apply fill-s-neutral-700;
-		}
 	}
 
 	&--plain {
@@ -148,20 +132,8 @@ export default {
 		@apply w-8 h-8;
 	}
 
-	&--neutral {
-		input {
-			&:checked + #{$this}__container {
-				@apply bg-s-neutral-700 border-s-neutral-700;
-
-				svg {
-					@apply fill-white;
-				}
-			}
-
-			&:disabled + #{$this}__container {
-				@apply border-s-neutral-100 bg-s-neutral-50;
-			}
-		}
+	&--normal {
+		@include mixines.checkbox-variant($this, $color: 'neutral');
 	}
 
 	&--accent {
