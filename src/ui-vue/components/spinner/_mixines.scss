@@ -1,4 +1,4 @@
-@mixin spinner-variant($color, $border-idx, $border-idx-active) {
+@mixin spinner-variant($color: neutral, $border-idx: 200, $border-idx-active: 600) {
 	@apply #{'border-t-s-' + $color + '-' + $border-idx};
 	@apply #{'border-r-s-' + $color + '-' + $border-idx};
 	@apply #{'border-b-s-' + $color + '-' + $border-idx};
