@@ -22,10 +22,6 @@
 
 		&:disabled + #{$this}__container {
 			@apply #{'bg-s-' + $color + '-' + $bg-disabled};
-
-			svg {
-				@apply #{'fill-s-' + $color + '-' + $svg-fill};
-			}
 		}
 	}
 }
