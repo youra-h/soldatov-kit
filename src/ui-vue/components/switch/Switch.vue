@@ -89,22 +89,15 @@ export default {
 		}
 
 		&:checked + #{$this}__track {
-			@apply bg-s-neutral-700;
-
 			#{$this}__track--thumb {
 				@apply translate-x-4;
 			}
-		}
-
-		&:hover:not(:disabled):not(:checked) + #{$this}__track {
-			@apply bg-s-neutral-300;
 		}
 	}
 
 	&__track {
 		@apply w-10 h-6;
 		@apply relative;
-		@apply bg-s-neutral-200;
 		@apply rounded-full;
 		@apply transition-colors duration-200;
 
@@ -131,10 +124,30 @@ export default {
 		@include mixines.switch-size($this, 16, 9, 8, 7);
 	}
 
+	&--normal {
+		@include mixines.switch-variant(
+			$this,
+			$color: 'neutral',
+			$bg-checked: 600,
+			$bg-hover: 200,
+			$bg-track: 100
+		);
+	}
+
 	&--accent {
 		@include mixines.switch-variant(
 			$this,
 			$color: 'accent',
+			$bg-checked: 600,
+			$bg-hover: 200,
+			$bg-track: 100
+		);
+	}
+
+	&--positive {
+		@include mixines.switch-variant(
+			$this,
+			$color: 'positive',
 			$bg-checked: 600,
 			$bg-hover: 200,
 			$bg-track: 100
