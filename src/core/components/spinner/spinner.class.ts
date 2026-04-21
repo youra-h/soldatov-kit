@@ -34,7 +34,6 @@ export default class TSpinner extends TComponentView<ISpinnerProps, TSpinnerEven
 
 		this.variantState = new TVariantState({
 			baseClass: this._baseClass,
-			exclude: ['normal'],
 			value: (props.variant ?? TSpinner.defaultValues.variant!) as TComponentVariant,
 		})
 		this.variantState.events.on('change', (value) => {

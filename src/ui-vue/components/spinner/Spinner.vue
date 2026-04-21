@@ -53,8 +53,6 @@ export default {
 	animation-timing-function: cubic-bezier(0.53, 0.21, 0.29, 0.67);
 	transition: opacity 170ms cubic-bezier(0.53, 0.21, 0.29, 0.67);
 
-	@include mixines.spinner-variant(neutral, 100, 600);
-
 	&--size-sm {
 		@apply w-3 h-3;
 	}
@@ -71,20 +69,24 @@ export default {
 		@apply w-7 h-7;
 	}
 
+	&--normal {
+		@include mixines.spinner-variant(neutral, 200, 600);
+	}
+
 	&--accent {
-		@include mixines.spinner-variant(accent, 100, 600);
+		@include mixines.spinner-variant(accent, 200, 600);
 	}
 
 	&--positive {
-		@include mixines.spinner-variant(positive, 100, 600);
+		@include mixines.spinner-variant(positive, 200, 600);
 	}
 
 	&--negative {
-		@include mixines.spinner-variant(negative, 100, 600);
+		@include mixines.spinner-variant(negative, 200, 600);
 	}
 
 	&--caution {
-		@include mixines.spinner-variant(caution, 100, 600);
+		@include mixines.spinner-variant(caution, 200, 600);
 	}
 }
 </style>
