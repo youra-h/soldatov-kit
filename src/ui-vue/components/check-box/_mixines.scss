@@ -22,7 +22,6 @@
 
 		&:disabled + #{$this}__container {
 			@apply #{'bg-s-' + $color + '-' + $bg-disabled};
-			@apply opacity-35;
 
 			svg {
 				@apply #{'fill-s-' + $color + '-' + $svg-fill};

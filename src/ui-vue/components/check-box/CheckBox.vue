@@ -83,6 +83,10 @@ export default {
 
 		&:disabled {
 			@apply cursor-default pointer-events-none;
+
+			+ #{$this}__container {
+				@apply opacity-35;
+			}
 		}
 
 		&:focus + #{$this}__container {
