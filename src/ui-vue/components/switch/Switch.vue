@@ -78,7 +78,7 @@ export default {
 		}
 
 		&:disabled + #{$this}__track {
-			@apply opacity-50;
+			@apply opacity-35;
 		}
 
 		&:focus,
@@ -125,53 +125,23 @@ export default {
 	}
 
 	&--normal {
-		@include mixines.switch-variant(
-			$this,
-			$color: 'neutral',
-			$bg-checked: 600,
-			$bg-hover: 200,
-			$bg-track: 100
-		);
+		@include mixines.switch-variant($this, $color: 'neutral');
 	}
 
 	&--accent {
-		@include mixines.switch-variant(
-			$this,
-			$color: 'accent',
-			$bg-checked: 600,
-			$bg-hover: 200,
-			$bg-track: 100
-		);
+		@include mixines.switch-variant($this, $color: 'accent');
 	}
 
 	&--positive {
-		@include mixines.switch-variant(
-			$this,
-			$color: 'positive',
-			$bg-checked: 600,
-			$bg-hover: 200,
-			$bg-track: 100
-		);
+		@include mixines.switch-variant($this, $color: 'positive');
 	}
 
 	&--negative {
-		@include mixines.switch-variant(
-			$this,
-			$color: 'negative',
-			$bg-checked: 600,
-			$bg-hover: 200,
-			$bg-track: 100
-		);
+		@include mixines.switch-variant($this, $color: 'negative');
 	}
 
 	&--caution {
-		@include mixines.switch-variant(
-			$this,
-			$color: 'caution',
-			$bg-checked: 600,
-			$bg-hover: 200,
-			$bg-track: 100
-		);
+		@include mixines.switch-variant($this, $color: 'caution');
 	}
 
 	&--required {
