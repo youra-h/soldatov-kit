@@ -16,7 +16,7 @@ export default class TButton extends TTextable<IButtonProps, TButtonEvents> impl
 	static defaultValues: Partial<IButtonProps> = {
 		...TTextable.defaultValues,
 		variant: 'normal',
-		appearance: 'normal',
+		appearance: 'filled',
 		tag: 'button',
 		loading: false,
 	}
@@ -126,7 +126,7 @@ export default class TButton extends TTextable<IButtonProps, TButtonEvents> impl
 
 		// Добавляем класс для внешнего вида, если он задан
 		if (this._appearance) {
-			classes.push(`${this._baseClass}--${this._appearance}`)
+			classes.push(`${this._baseClass}--a-${this._appearance}`)
 		}
 
 		return classes

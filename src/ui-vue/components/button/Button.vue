@@ -62,14 +62,14 @@ export default {
 
 	&:focus,
 	&:focus-visible {
-		&:not(#{$this}--none) {
+		&:not(#{$this}--a-none) {
 			@apply duration-100;
 			@apply outline-2 outline-offset-2 outline-s-accent-400;
 			@apply bg-s-neutral-200;
 		}
 	}
 
-	&:hover:not([disabled]):not(#{$this}--none) {
+	&:hover:not([disabled]):not(#{$this}--a-none) {
 		@apply bg-s-neutral-200;
 	}
 
@@ -101,11 +101,11 @@ export default {
 		@apply gap-4;
 	}
 
-	&--normal {
+	&--a-filled {
 		@apply bg-s-neutral-100;
 		@apply dark:bg-s-neutral-900;
 
-		&:active:not([disabled]):not(#{$this}--none) {
+		&:active:not([disabled]):not(#{$this}--a-none) {
 			@apply bg-s-neutral-300;
 		}
 
@@ -133,11 +133,11 @@ export default {
 		}
 	}
 
-	&--none {
+	&--a-none {
 		@apply bg-transparent;
 	}
 
-	&--plain {
+	&--a-plain {
 		@apply bg-transparent;
 
 		@include mixines.button-variant($color: 'neutral', $hover-bg-idx: 100, $text-idx: 700);
@@ -179,7 +179,7 @@ export default {
 		}
 	}
 
-	&--outlined {
+	&--a-outlined {
 		@apply bg-transparent border;
 
 		@include mixines.button-variant(

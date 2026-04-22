@@ -28,14 +28,14 @@ const icon3 = useIconImport('/src/icons/close.svg')
 					<Button
 						:size="size"
 						:variant="variant"
-						appearance="normal"
+					appearance="filled"
 						text="Default"
 						:disabled="disabled"
 					/>
 					<Button
 						:size="size"
 						:variant="variant"
-						appearance="normal"
+					appearance="filled"
 						text="With Icon"
 						:disabled="disabled"
 					>
@@ -46,7 +46,7 @@ const icon3 = useIconImport('/src/icons/close.svg')
 					<Button
 						:size="size"
 						:variant="variant"
-						appearance="normal"
+						appearance="filled"
 						:disabled="disabled"
 					>
 						<template #before>

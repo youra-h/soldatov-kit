@@ -24,7 +24,7 @@ const propertiesSchema: TPropertiesSchema = {
 	disabled: { type: 'boolean', default: false },
 	size: { type: 'select', default: 'normal', options: SIZES },
 	variant: { type: 'select', default: 'normal', options: VARIANTS },
-	appearance: { type: 'select', default: 'normal', options: BUTTON_APPEARANCES },
+	appearance: { type: 'select', default: 'filled', options: BUTTON_APPEARANCES },
 	text: { type: 'string', default: 'Button', placeholder: 'Button text' },
 }
 
@@ -48,7 +48,7 @@ const componentProps = ref<{
 	disabled: false,
 	size: 'normal',
 	variant: 'normal',
-	appearance: 'normal',
+	appearance: 'filled',
 	text: 'Button',
 	loading: false,
 	loadingDisabled: true,

@@ -26,7 +26,7 @@ describe('TButton', () => {
 		expect(btn.classes).toContain('s-btn--size-xl')
 
 		btn.appearance = 'plain'
-		expect(btn.classes).toContain('s-btn--plain')
+		expect(btn.classes).toContain('s-btn--a-plain')
 	})
 
 	it('getProps/toJSON отражают ключевые props', () => {

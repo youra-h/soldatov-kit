@@ -13,7 +13,7 @@ export const VARIANTS: TComponentVariant[] = ['normal', 'accent', 'negative', 'c
 export const HTML_TAGS = ['div', 'span', 'section', 'article', 'header', 'footer', 'main', 'aside']
 
 /** Внешний вид кнопок */
-export const BUTTON_APPEARANCES: TButtonAppearance[] = ['normal', 'plain', 'outlined', 'none']
+export const BUTTON_APPEARANCES: TButtonAppearance[] = ['filled', 'plain', 'outlined', 'none']
 
 /** Пути к иконкам (можно расширить) */
 export const ICON_PATHS = [

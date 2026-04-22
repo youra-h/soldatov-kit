@@ -70,23 +70,23 @@ export default {
 	}
 
 	&--normal {
-		@include mixines.spinner-variant(neutral);
+		@include mixines.spinner-variant('neutral');
 	}
 
 	&--accent {
-		@include mixines.spinner-variant(accent);
+		@include mixines.spinner-variant('accent');
 	}
 
 	&--positive {
-		@include mixines.spinner-variant(positive);
+		@include mixines.spinner-variant('positive');
 	}
 
 	&--negative {
-		@include mixines.spinner-variant(negative);
+		@include mixines.spinner-variant('negative');
 	}
 
 	&--caution {
-		@include mixines.spinner-variant(caution);
+		@include mixines.spinner-variant('caution');
 	}
 }
 </style>
