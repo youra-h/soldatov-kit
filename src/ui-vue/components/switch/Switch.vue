@@ -74,7 +74,7 @@ export default {
 		@apply z-10;
 
 		&:disabled {
-			@apply cursor-not-allowed pointer-events-none;
+			@apply cursor-default pointer-events-none;
 		}
 
 		&:disabled + #{$this}__track {
