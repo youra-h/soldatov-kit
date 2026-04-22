@@ -67,7 +67,7 @@ defineProps<Props>()
 	}
 
 	&__section {
-		@apply border rounded-lg;
+		@apply border-b border-gray-300;
 		@apply p-4;
 
 		&--properties {
@@ -88,7 +88,7 @@ defineProps<Props>()
 	}
 
 	&__demo-column {
-		@apply border rounded-lg;
+		@apply border rounded-lg border-gray-300;
 		@apply p-4;
 		@apply flex flex-col;
 		@apply max-h-[800px];
