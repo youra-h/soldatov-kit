@@ -65,12 +65,7 @@ export default {
 		&:not(#{$this}--a-none) {
 			@apply duration-100;
 			@apply outline-2 outline-offset-2 outline-s-component;
-			@apply bg-s-neutral-200;
 		}
-	}
-
-	&:hover:not([disabled]):not(#{$this}--a-none) {
-		@apply bg-s-neutral-200;
 	}
 
 	svg {
@@ -104,6 +99,15 @@ export default {
 	&--a-filled {
 		@apply bg-s-neutral-100;
 		@apply dark:bg-s-neutral-900;
+
+		&:hover:not([disabled]) {
+			@apply bg-s-neutral-200;
+		}
+
+		&:focus:not([disabled]),
+		&:focus-visible:not([disabled]) {
+			@apply bg-s-neutral-200;
+		}
 
 		&:active:not([disabled]):not(#{$this}--a-none) {
 			@apply bg-s-neutral-300;
