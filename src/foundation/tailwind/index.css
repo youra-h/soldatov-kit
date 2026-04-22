@@ -1,11 +1,4 @@
 @import "tailwindcss";
 @import './../theme/default.css';
-
-@utility text-s-component {
-	color: var(--s-component-text);
-}
-
-@utility outline-s-component {
-	outline-color: var(--s-component-focus-ring);
-}
+@import './../styles/utilities.css';
 /* @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *)); */

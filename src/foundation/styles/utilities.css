@@ -1,0 +1,11 @@
+@utility text-s-component {
+	color: var(--s-component-text);
+}
+
+@utility outline-s-component {
+	outline-color: var(--s-component-focus-ring);
+}
+
+@utility opacity-s-component-disabled {
+	opacity: 0.35;
+}

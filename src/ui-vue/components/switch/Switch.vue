@@ -78,7 +78,7 @@ export default {
 		}
 
 		&:disabled + #{$this}__track {
-			@apply opacity-35;
+			@apply opacity-s-component-disabled;
 		}
 
 		&:focus,

@@ -85,7 +85,7 @@ export default {
 			@apply cursor-default pointer-events-none;
 
 			+ #{$this}__container {
-				@apply opacity-35;
+				@apply opacity-s-component-disabled;
 			}
 		}
 
