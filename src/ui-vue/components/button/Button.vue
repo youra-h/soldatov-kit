@@ -152,22 +152,22 @@ export default {
 	&--a-outlined {
 		@apply bg-transparent border;
 
-		@include mixines.button-variant-outlined('neutral', 700, 200, 100);
+		@include mixines.button-variant-outlined('neutral');
 
 		&.s-button--accent {
-			@include mixines.button-variant-outlined('accent', 600, 200, 50, 100);
+			@include mixines.button-variant-outlined('accent');
 		}
 
 		&.s-button--positive {
-			@include mixines.button-variant-outlined('positive', 600, 200, 50, 100);
+			@include mixines.button-variant-outlined('positive');
 		}
 
 		&.s-button--negative {
-			@include mixines.button-variant-outlined('negative', 600, 200, 50, 100);
+			@include mixines.button-variant-outlined('negative');
 		}
 
 		&.s-button--caution {
-			@include mixines.button-variant-outlined('caution', 600, 200, 50, 100);
+			@include mixines.button-variant-outlined('caution');
 		}
 	}
 }

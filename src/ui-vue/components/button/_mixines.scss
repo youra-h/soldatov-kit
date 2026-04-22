@@ -15,35 +15,27 @@
 // Filled: сплошной фон, hover/active вычисляются из base
 @mixin button-variant-filled($color, $bg: 500) {
 	@apply #{'bg-s-' + $color + '-' + $bg};
+
 	@include button-state-bg($color, $bg + 100, $bg + 200);
 }
 
 // Plain: прозрачный фон, цвет текста, hover/active фон
-@mixin button-variant-plain(
-	$color,
-	$text: 800,
-	$hover-bg: 100,
-) {
+@mixin button-variant-plain($color, $text: 800, $hover-bg: 100) {
 	$active-bg: $hover-bg + 100;
 
 	@apply #{'text-s-' + $color + '-' + $text};
+
 	@include button-state-bg($color, $hover-bg, $active-bg);
 }
 
 // Outlined: прозрачный фон, цвет текста + рамка, hover/active фон + рамка
-@mixin button-variant-outlined(
-	$color,
-	$text: 700,
-	$border: 200,
-	$hover-bg: 100,
-	$active-bg: null,
-	$hover-border: null
-) {
-	$active-bg: if($active-bg != null, $active-bg, $hover-bg + 100);
-	$brd-hover: if($hover-border != null, $hover-border, $border + 100);
+@mixin button-variant-outlined($color, $text: 800, $border: 400, $hover-bg: 100) {
+	$active-bg: $hover-bg + 100;
+	$brd-hover: $border + 100;
 
 	@apply #{'text-s-' + $color + '-' + $text};
 	@apply #{'border-s-' + $color + '-' + $border};
+
 	@include button-state-bg($color, $hover-bg, $active-bg);
 
 	&:hover:not([disabled]),
