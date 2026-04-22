@@ -54,7 +54,7 @@ export default {
 	@apply relative transition-colors duration-200;
 	@apply truncate;
 	@apply outline-transparent;
-	@apply text-s-neutral-800;
+	@apply text-s-component;
 
 	&[disabled] {
 		@apply opacity-50 cursor-not-allowed;
@@ -64,7 +64,7 @@ export default {
 	&:focus-visible {
 		&:not(#{$this}--a-none) {
 			@apply duration-100;
-			@apply outline-2 outline-offset-2 outline-s-accent-400;
+			@apply outline-2 outline-offset-2 outline-s-component;
 			@apply bg-s-neutral-200;
 		}
 	}
