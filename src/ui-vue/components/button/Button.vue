@@ -130,22 +130,22 @@ export default {
 	&--a-plain {
 		@apply bg-transparent;
 
-		@include mixines.button-variant-plain('neutral', 700, 100);
+		@include mixines.button-variant-plain('neutral');
 
 		&.s-button--accent {
-			@include mixines.button-variant-plain('accent', 700, 50, 100);
+			@include mixines.button-variant-plain('accent');
 		}
 
 		&.s-button--positive {
-			@include mixines.button-variant-plain('positive', 700, 50, 100);
+			@include mixines.button-variant-plain('positive');
 		}
 
 		&.s-button--negative {
-			@include mixines.button-variant-plain('negative', 700, 50, 100);
+			@include mixines.button-variant-plain('negative');
 		}
 
 		&.s-button--caution {
-			@include mixines.button-variant-plain('caution', 700, 50, 100);
+			@include mixines.button-variant-plain('caution');
 		}
 	}
 

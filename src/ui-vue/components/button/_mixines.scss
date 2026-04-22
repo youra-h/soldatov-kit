@@ -21,11 +21,10 @@
 // Plain: прозрачный фон, цвет текста, hover/active фон
 @mixin button-variant-plain(
 	$color,
-	$text: 700,
+	$text: 800,
 	$hover-bg: 100,
-	$active-bg: null
 ) {
-	$active-bg: if($active-bg != null, $active-bg, $hover-bg + 100);
+	$active-bg: $hover-bg + 100;
 
 	@apply #{'text-s-' + $color + '-' + $text};
 	@include button-state-bg($color, $hover-bg, $active-bg);
