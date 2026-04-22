@@ -1,4 +1,5 @@
 // Базовый миксин: hover + focus + active фон
+// TODO: dark mode — добавить блоки [data-theme="dark"] & с $hover-bg - 200 / $active-bg - 200
 @mixin button-state-bg($color, $hover-bg, $active-bg) {
 	&:hover:not([disabled]),
 	&:focus:not([disabled]),
