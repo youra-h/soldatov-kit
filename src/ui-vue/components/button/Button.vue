@@ -57,7 +57,7 @@ export default {
 	@apply text-s-component;
 
 	&[disabled] {
-		@apply opacity-s-component-disabled cursor-not-allowed;
+		@apply opacity-s-component-disabled cursor-default;
 	}
 
 	&:focus,
