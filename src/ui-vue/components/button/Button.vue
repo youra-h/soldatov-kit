@@ -97,21 +97,7 @@ export default {
 	}
 
 	&--a-filled {
-		@apply bg-s-neutral-100;
-		@apply dark:bg-s-neutral-900;
-
-		&:hover:not([disabled]) {
-			@apply bg-s-neutral-200;
-		}
-
-		&:focus:not([disabled]),
-		&:focus-visible:not([disabled]) {
-			@apply bg-s-neutral-200;
-		}
-
-		&:active:not([disabled]):not(#{$this}--a-none) {
-			@apply bg-s-neutral-300;
-		}
+		@include mixines.button-variant-filled('neutral', 100);
 
 		&.s-button--accent,
 		&.s-button--positive,
@@ -121,19 +107,19 @@ export default {
 		}
 
 		&.s-button--accent {
-			@include mixines.button-variant($color: 'accent', $bg-idx: 600);
+			@include mixines.button-variant-filled('accent');
 		}
 
 		&.s-button--positive {
-			@include mixines.button-variant($color: 'positive', $bg-idx: 600);
+			@include mixines.button-variant-filled('positive');
 		}
 
 		&.s-button--negative {
-			@include mixines.button-variant($color: 'negative', $bg-idx: 600);
+			@include mixines.button-variant-filled('negative');
 		}
 
 		&.s-button--caution {
-			@include mixines.button-variant($color: 'caution', $bg-idx: 600);
+			@include mixines.button-variant-filled('caution');
 		}
 	}
 
@@ -144,93 +130,44 @@ export default {
 	&--a-plain {
 		@apply bg-transparent;
 
-		@include mixines.button-variant($color: 'neutral', $hover-bg-idx: 100, $text-idx: 700);
+		@include mixines.button-variant-plain('neutral', 700, 100);
 
 		&.s-button--accent {
-			@include mixines.button-variant(
-				$color: 'accent',
-				$hover-bg-idx: 50,
-				$text-idx: 700,
-				$active-bg-idx: 100
-			);
+			@include mixines.button-variant-plain('accent', 700, 50, 100);
 		}
 
 		&.s-button--positive {
-			@include mixines.button-variant(
-				$color: 'positive',
-				$hover-bg-idx: 50,
-				$text-idx: 700,
-				$active-bg-idx: 100
-			);
+			@include mixines.button-variant-plain('positive', 700, 50, 100);
 		}
 
 		&.s-button--negative {
-			@include mixines.button-variant(
-				$color: 'negative',
-				$hover-bg-idx: 50,
-				$text-idx: 700,
-				$active-bg-idx: 100
-			);
+			@include mixines.button-variant-plain('negative', 700, 50, 100);
 		}
 
 		&.s-button--caution {
-			@include mixines.button-variant(
-				$color: 'caution',
-				$hover-bg-idx: 50,
-				$text-idx: 700,
-				$active-bg-idx: 100
-			);
+			@include mixines.button-variant-plain('caution', 700, 50, 100);
 		}
 	}
 
 	&--a-outlined {
 		@apply bg-transparent border;
 
-		@include mixines.button-variant(
-			$color: 'neutral',
-			$hover-bg-idx: 100,
-			$text-idx: 700,
-			$border-idx: 200
-		);
+		@include mixines.button-variant-outlined('neutral', 700, 200, 100);
 
 		&.s-button--accent {
-			@include mixines.button-variant(
-				$color: 'accent',
-				$hover-bg-idx: 50,
-				$text-idx: 600,
-				$active-bg-idx: 100,
-				$border-idx: 200
-			);
+			@include mixines.button-variant-outlined('accent', 600, 200, 50, 100);
 		}
 
 		&.s-button--positive {
-			@include mixines.button-variant(
-				$color: 'positive',
-				$hover-bg-idx: 50,
-				$text-idx: 600,
-				$active-bg-idx: 100,
-				$border-idx: 200
-			);
+			@include mixines.button-variant-outlined('positive', 600, 200, 50, 100);
 		}
 
 		&.s-button--negative {
-			@include mixines.button-variant(
-				$color: 'negative',
-				$hover-bg-idx: 50,
-				$text-idx: 600,
-				$active-bg-idx: 100,
-				$border-idx: 200
-			);
+			@include mixines.button-variant-outlined('negative', 600, 200, 50, 100);
 		}
 
 		&.s-button--caution {
-			@include mixines.button-variant(
-				$color: 'caution',
-				$hover-bg-idx: 50,
-				$text-idx: 600,
-				$active-bg-idx: 100,
-				$border-idx: 200
-			);
+			@include mixines.button-variant-outlined('caution', 600, 200, 50, 100);
 		}
 	}
 }

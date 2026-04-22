@@ -16,14 +16,15 @@
 @mixin switch-variant(
 	$this,
 	$color: 'neutral',
-	$bg-checked: 600,
-	$bg-hover: 300,
-	$bg-track: 200
+	$bg-checked: 500,
+	$bg: 200
 ) {
 	input {
 		&:checked + #{$this}__track {
 			@apply #{'bg-s-' + $color + '-' + $bg-checked};
 		}
+
+		$bg-hover: $bg + 100;
 
 		&:hover:not(:disabled):not(:checked) + #{$this}__track {
 			@apply #{'bg-s-' + $color + '-' + $bg-hover};
@@ -31,6 +32,6 @@
 	}
 
 	#{$this}__track {
-		@apply #{'bg-s-' + $color + '-' + $bg-track};
+		@apply #{'bg-s-' + $color + '-' + $bg};
 	}
 }

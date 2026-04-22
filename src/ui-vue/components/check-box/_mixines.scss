@@ -2,13 +2,12 @@
 	$this,
 	$color: 'neutral',
 	$border-main: 400,
-	$border-hover: 600,
-	$border-disabled: 200,
-	$bg-disabled: 100,
-	$svg-fill: 600
+	$bg-disabled: 50,
 ) {
 	#{$this}__container {
 		@apply #{'border-s-' + $color + '-' + $border-main};
+
+		$svg-fill: $border-main + 100;
 
 		svg {
 			@apply #{'fill-s-' + $color + '-' + $svg-fill};
@@ -16,6 +15,8 @@
 	}
 
 	input {
+		$border-hover: $border-main + 100;
+
 		&:hover:not(:disabled) + #{$this}__container {
 			@apply #{'border-s-' + $color + '-' + $border-hover};
 		}
