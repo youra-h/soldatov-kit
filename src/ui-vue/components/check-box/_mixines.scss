@@ -16,6 +16,11 @@
 
 	input {
 		$border-hover: $border-main + 100;
+		// TODO: dark mode
+		// $border-hover-dark: $border-main - 100;
+		// [data-theme="dark"] &:hover:not(:disabled) + #{$this}__container {
+		//     @apply #{'border-s-' + $color + '-' + $border-hover-dark};
+		// }
 
 		&:hover:not(:disabled) + #{$this}__container {
 			@apply #{'border-s-' + $color + '-' + $border-hover};

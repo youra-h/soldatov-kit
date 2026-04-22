@@ -25,6 +25,11 @@
 		}
 
 		$bg-hover: $bg + 100;
+		// TODO: dark mode
+		// $bg-hover-dark: $bg - 100;
+		// [data-theme="dark"] &:hover:not(:disabled):not(:checked) + #{$this}__track {
+		//     @apply #{'bg-s-' + $color + '-' + $bg-hover-dark};
+		// }
 
 		&:hover:not(:disabled):not(:checked) + #{$this}__track {
 			@apply #{'bg-s-' + $color + '-' + $bg-hover};
