@@ -68,6 +68,31 @@ export class TActivatableCollection<
 	}
 
 	/**
+	 * Найти первый подходящий элемент для активации.
+	 * Поиск идёт сначала вперёд от fromItem (следующий, следующий+1…), затем назад.
+	 * @param predicate Условие отбора (опционально — без условия подходит любой)
+	 * @param fromItem  Элемент-ориентир для поиска (опционально)
+	 */
+	findActivatable(predicate?: (item: TItem) => boolean, fromItem?: TItem): TItem | undefined {
+		const check = predicate ?? (() => true)
+		const fromIndex = fromItem !== undefined ? this.indexOf(fromItem) : -1
+
+		// Сначала вперёд: fromIndex+1, fromIndex+2, ...
+		for (let i = fromIndex + 1; i < this.count; i++) {
+			const item = this.getItem(i)
+			if (item && check(item)) return item
+		}
+
+		// Затем назад: fromIndex-1, fromIndex-2, ...
+		for (let i = fromIndex - 1; i >= 0; i--) {
+			const item = this.getItem(i)
+			if (item && check(item)) return item
+		}
+
+		return undefined
+	}
+
+	/**
 	 * Переопределяем хук для подписки на события элемента перед assign
 	 * @param item Элемент коллекции
 	 * @protected
@@ -110,11 +135,9 @@ export class TActivatableCollection<
 		const wasActive = isSame(this._activeItem, item)
 
 		// Если удаляется активный элемент и в коллекции есть другие элементы,
-		// активируем соседний элемент ДО удаления
+		// активируем соседний подходящий элемент ДО удаления
 		if (wasActive && this.count > 1) {
-			// Выбираем следующий элемент, если он есть, иначе предыдущий
-			const newIndex = index < this.count - 1 ? index + 1 : index - 1
-			const newActiveItem = this.getItem(newIndex)
+			const newActiveItem = this.findActivatable(undefined, item)
 
 			if (newActiveItem) {
 				this.setActive(newActiveItem)

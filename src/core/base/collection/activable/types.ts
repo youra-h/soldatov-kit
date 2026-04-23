@@ -71,4 +71,11 @@ export interface IActivatableCollection<
 	setActive(item: TItem): void
 	/** Очистить активный элемент */
 	clear(): void
+	/**
+	 * Найти первый подходящий элемент для активации.
+	 * Поиск начинается с соседних от fromItem позиций (сначала следующий, потом предыдущий).
+	 * @param predicate Условие отбора элемента (опционально — без условия подходит любой)
+	 * @param fromItem  Элемент-ориентир, от которого начинается поиск (опционально)
+	 */
+	findActivatable(predicate?: (item: TItem) => boolean, fromItem?: TItem): TItem | undefined
 }

@@ -2,6 +2,7 @@ import TControl from '../../base/control/control.class'
 import type { IComponentViewOptions } from '../../base/component-view'
 import { TComponentView } from '../../base/component-view'
 import { TActivatableCollection } from '../../base/collection'
+import { isSame } from '../../common/is-same'
 import TTabItem from './tab-item/tab-item.class'
 import type { ITabItem } from './tab-item/types'
 import type {
@@ -237,7 +238,7 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 
 	/**
 	 * Закрывает таб: проверяет возможность закрытия, эмитит событие и удаляет из коллекции.
-	 * Активация следующего таба происходит автоматически в TActivatableCollection.
+	 * Если закрывается активный таб, заранее активируем ближайший подходящий (enabled + visible + rendered).
 	 * @returns true если таб был закрыт, false если закрытие запрещено
 	 */
 	closeTab(item: ITabItem): boolean {
@@ -247,7 +248,18 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 
 		this.events.emit('tab:close', item)
 
-		// Удаление элемента - TActivatableCollection автоматически активирует следующий таб
+		// Если закрывается активный таб — находим подходящий кандидата заранее
+		if (isSame(this._collection.activeItem, item)) {
+			const nextActive = this._collection.findActivatable(
+				(tab) => !tab.disabled && tab.visible && tab.rendered,
+				item,
+			)
+
+			if (nextActive) {
+				this._collection.setActive(nextActive)
+			}
+		}
+
 		return this._collection.deleteItem(item)
 	}
 
