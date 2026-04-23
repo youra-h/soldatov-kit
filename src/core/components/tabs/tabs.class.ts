@@ -68,6 +68,11 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 			itemClass: TTabItem,
 		})
 
+		// Условие для поиска следующего активного таба при удалении
+		this._collection.events.on('resolve:_activatablePredicate', () =>
+			(tab: ITabItem) => !tab.disabled && tab.visible && tab.rendered,
+		)
+
 		// Подписка на события коллекции для проксирования
 		this._collection.events.on('item:added', (payload: { collection: any; item: ITabItem }) => {
 			const { item } = payload
@@ -247,18 +252,6 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 		}
 
 		this.events.emit('tab:close', item)
-
-		// Если закрывается активный таб — находим подходящий кандидата заранее
-		if (isSame(this._collection.activeItem, item)) {
-			const nextActive = this._collection.findActivatable(
-				(tab) => !tab.disabled && tab.visible && tab.rendered,
-				item,
-			)
-
-			if (nextActive) {
-				this._collection.setActive(nextActive)
-			}
-		}
 
 		return this._collection.deleteItem(item)
 	}

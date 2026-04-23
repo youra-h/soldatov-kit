@@ -40,4 +40,18 @@ export class TEvented<TEvents extends Record<string, (...args: any) => any>> ext
 	emitWithResult<K extends keyof TEvents>(event: K, ...args: Parameters<TEventHandler>): boolean {
 		return this._items.emitWithResult(event as string, ...args)
 	}
+
+	/**
+	 * Выполняет событие и возвращает первый не-undefined результат (short-circuit).
+	 */
+	emitResolve<T>(event: keyof TEvents, ...args: Parameters<TEventHandler>): T | undefined {
+		return this._items.emitResolve<T>(event as string, ...args)
+	}
+
+	/**
+	 * Выполняет событие и возвращает все не-undefined результаты обработчиков.
+	 */
+	emitResolveAll<T>(event: keyof TEvents, ...args: Parameters<TEventHandler>): T[] {
+		return this._items.emitResolveAll<T>(event as string, ...args)
+	}
 }

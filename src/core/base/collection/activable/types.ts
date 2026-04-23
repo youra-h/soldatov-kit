@@ -55,6 +55,12 @@ export type TActivatableCollectionEvents = TCollectionEvents & {
 	 * @param payload.collection Коллекция, в которой деактивирован элемент
 	 */
 	'item:deactivated': (payload: { collection: IActivatableCollection }) => void
+
+	/**
+	 * Внутренний запрос предиката для поиска следующего активируемого элемента.
+	 * Обработчик возвращает функцию-предикат или undefined.
+	 */
+	'resolve:_activatablePredicate': () => ((item: IActivatableCollectionItem) => boolean) | undefined
 }
 
 /**
