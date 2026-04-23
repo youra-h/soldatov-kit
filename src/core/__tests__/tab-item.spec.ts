@@ -288,4 +288,49 @@ describe('TTabItem', () => {
 			expect(spy).toHaveBeenCalledWith(item)
 		})
 	})
+
+	describe('disabled blocks activation', () => {
+		beforeEach(() => {
+			item = collection.add({ text: 'Tab 1' })
+		})
+
+		it('does not activate when setting active=true on disabled item', () => {
+			item.disabled = true
+			item.active = true
+
+			expect(item.active).toBe(undefined)
+		})
+
+		it('does not emit change:activation when disabled item is activated', () => {
+			item.disabled = true
+			const spy = vi.fn()
+			item.events.on('change:activation', spy)
+
+			item.active = true
+
+			expect(spy).not.toHaveBeenCalled()
+		})
+
+		it('does not activate on click when disabled', () => {
+			item.disabled = true
+			item.click()
+
+			expect(item.active).toBe(undefined)
+		})
+
+		it('allows deactivation even when disabled', () => {
+			item.active = true
+			item.disabled = true
+			item.active = false
+
+			expect(item.active).toBe(false)
+		})
+
+		it('activates normally when not disabled', () => {
+			item.disabled = false
+			item.active = true
+
+			expect(item.active).toBe(true)
+		})
+	})
 })

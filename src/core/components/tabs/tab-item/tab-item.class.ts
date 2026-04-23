@@ -37,7 +37,9 @@ export default class TTabItem
 
 	// При клике активируем таб и эмитим событие click с текущим элементом
 	override click(event?: Event): void {
-		this.active = true
+		if (!this.disabled) {
+			this.active = true
+		}
 		super.click(event)
 	}
 
@@ -55,6 +57,8 @@ export default class TTabItem
 	}
 
 	set active(value: boolean) {
+		if (this.disabled) return
+
 		this._collectionItem.active = value
 	}
 

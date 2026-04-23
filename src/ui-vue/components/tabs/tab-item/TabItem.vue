@@ -76,6 +76,7 @@ export default {
 	$this: &;
 
 	@apply opacity-80;
+	@apply py-2.5;
 
 	&__close {
 		@apply px-1;
