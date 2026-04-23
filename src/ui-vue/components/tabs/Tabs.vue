@@ -5,6 +5,7 @@ import BaseTabs, { syncTabs } from './base.component'
 import { useBaseSetup } from '../../composables/useBaseSetup'
 import { useElementSync } from '../../composables/useElementSync'
 import { useProvideCollection } from '../../composables/useProvideCollection'
+import { useCollectionItems } from '../../composables/useCollectionItems'
 import { TabItem } from './tab-item'
 
 export default {
@@ -22,7 +23,7 @@ export default {
 
 		useProvideCollection(instance.collection)
 
-		const items = instance.collection.getItems()
+		const items = useCollectionItems(instance.collection)
 
 		const rootRef = useElementSync(instance)
 
@@ -34,6 +35,7 @@ export default {
 </script>
 
 <template>
+	{{ console.log('render Tabs', items) }}
 	<div ref="rootRef" v-if="instance.rendered" v-show="instance.visible" :class="instance.classes">
 		<div class="s-tabs__list" role="tablist">
 			<slot>
