@@ -78,7 +78,7 @@ export default {
 
 	// Список табов
 	&__list {
-		@apply flex gap-1;
+		@apply flex gap-4;
 	}
 
 	// Панель
