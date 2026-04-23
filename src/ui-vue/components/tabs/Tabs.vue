@@ -86,7 +86,6 @@ export default {
 		@apply my-2.5;
 	}
 
-
 	// Выравнивание
 	&--center #{$this}__list {
 		@apply justify-center;
@@ -136,22 +135,24 @@ export default {
 		}
 
 		// Normal (default)
-		@include mixines.tabs-line-variant('neutral', 700, 200);
+		&#{$this}--neutral {
+			@include mixines.tabs-line-variant('neutral');
+		}
 
 		&#{$this}--accent {
-			@include mixines.tabs-line-variant('accent', 600, 200);
+			@include mixines.tabs-line-variant('accent');
 		}
 
 		&#{$this}--positive {
-			@include mixines.tabs-line-variant('positive', 600, 200);
+			@include mixines.tabs-line-variant('positive');
 		}
 
 		&#{$this}--negative {
-			@include mixines.tabs-line-variant('negative', 600, 200);
+			@include mixines.tabs-line-variant('negative');
 		}
 
 		&#{$this}--caution {
-			@include mixines.tabs-line-variant('caution', 600, 200);
+			@include mixines.tabs-line-variant('caution');
 		}
 	}
 

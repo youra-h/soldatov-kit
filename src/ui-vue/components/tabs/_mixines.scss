@@ -1,33 +1,28 @@
 // Миксин для appearance="line"
 // $color       — название цвета (sky, emerald, rose, amber, neutral)
-// $text-idx    — индекс цвета текста при hover/active (берётся из Button--outlined text-idx)
-// $border-idx  — индекс цвета линии под списком (берётся из Button--outlined border-idx)
-//                indicator = border-idx + 100 (берётся из Button--outlined hover border)
-@mixin tabs-line-variant($color, $text-idx, $border-idx) {
-	$indicator-idx: $border-idx + 100;
-
-	// Цвет разделительной линии под всем списком табов
-	.s-tabs__list {
-		@apply #{'border-s-' + $color + '-' + $border-idx};
-	}
+// $text    — индекс цвета текста при hover/active (берётся из Button--outlined text)
+// $border  — индекс цвета линии под списком (берётся из Button--outlined border)
+//                indicator = border + 100 (берётся из Button--outlined hover border)
+@mixin tabs-line-variant($color, $text: 800, $border: 200) {
+	$indicator: $border + 100;
 
 	// Цвет разделительной линии и индикатора
 	.s-tabs__list {
-		@apply #{'border-s-' + $color + '-' + $border-idx};
+		@apply #{'border-s-' + $color + '-' + $border};
 
 		&::after {
-			@apply #{'bg-s-' + $color + '-' + $indicator-idx};
+			@apply #{'bg-s-' + $color + '-' + $indicator};
 		}
 	}
 
 	// Цвет текста при hover и у активного таба
 	.s-tab-item {
 		&:hover:not([disabled]) {
-			@apply #{'text-s-' + $color + '-' + $text-idx};
+			@apply #{'text-s-' + $color + '-' + $text};
 		}
 
 		&--active {
-			@apply #{'text-s-' + $color + '-' + $text-idx};
+			@apply #{'text-s-' + $color + '-' + $text};
 		}
 	}
 }

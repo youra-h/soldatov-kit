@@ -75,8 +75,15 @@ export default {
 .s-tab-item {
 	$this: &;
 
+	@apply opacity-80;
+
 	&__close {
 		@apply px-1;
+	}
+
+	&--active,
+	&:hover:not([disabled]) {
+		@apply opacity-100;
 	}
 }
 </style>
