@@ -35,7 +35,6 @@ export default {
 </script>
 
 <template>
-	{{ console.log('render Tabs', items) }}
 	<div ref="rootRef" v-if="instance.rendered" v-show="instance.visible" :class="instance.classes">
 		<div class="s-tabs__list" role="tablist">
 			<slot>
