@@ -21,7 +21,7 @@ export type TTabItemCustomEvents = TValueControlEvents<string | number> & {
 	/** change:closable */
 	'change:closable': (value: boolean | undefined) => void
 	/** close */
-	close: () => void
+	close: (tab: ITabItemCustom) => void
 }
 
 export interface ITabItemCustomProps extends IValueControlProps<string | number> {

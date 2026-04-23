@@ -89,7 +89,7 @@ export default class TTabItemCustom<
 	}
 
 	close(): void {
-		this.events.emit('close')
+		this.events.emit('close', this)
 	}
 
 	override get classes(): string[] {

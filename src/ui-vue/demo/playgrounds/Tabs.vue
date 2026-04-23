@@ -11,8 +11,8 @@ tabs.value.variant = 'accent'
 tabs.value.appearance = 'line'
 tabs.value.orientation = 'horizontal'
 
-tabs.value.collection.add({ text: 'Tab 1', value: 'tab1' })
-tabs.value.collection.add({ text: 'Tab 2', value: 'tab2' })
+tabs.value.collection.add({ text: 'Tab 1', value: 'tab1', closable: true })
+tabs.value.collection.add({ text: 'Tab 2', value: 'tab2', closable: true })
 tabs.value.collection.add({ text: 'Tab 3', value: 'tab3', disabled: true })
 
 const item2 = tabs.value.collection.findBy('value', 'tab2')!
