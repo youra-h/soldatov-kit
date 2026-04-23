@@ -72,8 +72,8 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 			const { item } = payload
 
 			// Подписка на событие закрытия таба — вызывает closeTab с проверкой и удалением
-			item.events.on('close', (tab: ITabItem) => {
-				this.closeTab(tab)
+			item.events.on('close', () => {
+				this.closeTab(item)
 			})
 
 			// ResizeObserver: следим за изменением размера таба → пересчитываем индикатор
