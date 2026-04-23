@@ -13,7 +13,7 @@ tabs.value.orientation = 'horizontal'
 
 tabs.value.collection.add({ text: 'Tab 1', value: 'tab1' })
 tabs.value.collection.add({ text: 'Tab 2', value: 'tab2' })
-tabs.value.collection.add({ text: 'Tab 3', value: 'tab3' })
+tabs.value.collection.add({ text: 'Tab 3', value: 'tab3', disabled: true })
 
 const item2 = tabs.value.collection.findBy('value', 'tab2')!
 tabs.value.collection.setActive(item2)
@@ -39,7 +39,7 @@ const tabItems = ref([
 
 		<section>
 			<h2>Вариант 2: prop items</h2>
-			<Tabs :items="tabItems" appearance="line" variant="accent">
+			<Tabs :items="tabItems" appearance="line" variant="normal">
 				<template #panel:alpha><p>Содержимое Alpha</p></template>
 				<template #panel:beta><p>Содержимое Beta</p></template>
 				<template #panel:gamma><p>Содержимое Gamma</p></template>
@@ -48,7 +48,7 @@ const tabItems = ref([
 
 		<section>
 			<h2>Вариант 3: декларативный (TabItem в слоте)</h2>
-			<Tabs appearance="line" variant="accent">
+			<Tabs appearance="line" variant="caution">
 				<TabItem text="Профиль" value="profile" />
 				<TabItem text="Настройки" value="settings" active />
 				<TabItem text="О проекте" value="about" />

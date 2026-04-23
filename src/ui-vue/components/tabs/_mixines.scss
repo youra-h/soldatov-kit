@@ -4,7 +4,7 @@
 // $border  — индекс цвета линии под списком (берётся из Button--outlined border)
 //                indicator = border + 100 (берётся из Button--outlined hover border)
 @mixin tabs-line-variant($color, $text: 800, $border: 200) {
-	$indicator: $border + 100;
+	$indicator: $border + 400;
 
 	// Цвет разделительной линии и индикатора
 	.s-tabs__list {

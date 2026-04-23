@@ -116,7 +116,8 @@ export default {
 			&::after {
 				content: '';
 				@apply absolute left-0 h-0.5;
-				bottom: -1px;
+				@apply -bottom-px;
+				@apply rounded-full;
 				width: var(--underline-width, 0px);
 				transform: translateX(var(--underline-x, 0px));
 			}
@@ -135,7 +136,7 @@ export default {
 		}
 
 		// Normal (default)
-		&#{$this}--neutral {
+		&#{$this}--normal {
 			@include mixines.tabs-line-variant('neutral');
 		}
 
