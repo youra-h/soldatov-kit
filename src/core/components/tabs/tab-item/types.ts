@@ -15,14 +15,15 @@ import type { TCollectableOptions } from '../../../base/collection/item/types'
 
 // ============ TTabItemCustom (логика таба без коллекции) ============
 
-export type TTabItemCustomEvents = TValueControlEvents<string | number> & {
-	/** change:text */
-	'change:text': (value: string) => void
-	/** change:closable */
-	'change:closable': (value: boolean | undefined) => void
-	/** close */
-	close: (tab: ITabItemCustom) => void
-}
+export type TTabItemCustomEvents<TTab = any> =
+	TValueControlEvents<string | number> & {
+		/** change:text */
+		'change:text': (value: string) => void
+		/** change:closable */
+		'change:closable': (value: boolean | undefined) => void
+		/** close */
+		close: (tab: TTab) => void
+	}
 
 export interface ITabItemCustomProps extends IValueControlProps<string | number> {
 	/** Текст таба */
@@ -44,7 +45,7 @@ export type TTabItemCustomStatesOptions = TValueControlStatesOptions<string | nu
  */
 export interface ITabItemCustom<
 	TProps extends ITabItemCustomProps = ITabItemCustomProps,
-> extends IValueControl<string | number, TProps, TTabItemCustomEvents> {
+> extends IValueControl<string | number, TProps, TTabItemCustomEvents<any>> {
 	/** Текст таба */
 	text: string
 	/** Можно ли закрыть таб (undefined = наследовать от родителя TTabs) */
@@ -59,7 +60,7 @@ export type ITabItemOptions = TCollectableOptions<
 	IComponentViewOptions<ITabItemProps, TTabItemCustomStatesOptions>
 >
 
-export type TTabItemEvents = TActivatableItemEvents<ITabItem> & TTabItemCustomEvents
+export type TTabItemEvents = TActivatableItemEvents<ITabItem> & TTabItemCustomEvents<ITabItem>
 
 export interface ITabItemProps extends IActivatableCollectionItemProps, ITabItemCustomProps {}
 

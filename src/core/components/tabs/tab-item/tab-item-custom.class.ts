@@ -17,7 +17,7 @@ import type {
  */
 export default class TTabItemCustom<
 	TProps extends ITabItemCustomProps = ITabItemCustomProps,
-	TEvents extends TTabItemCustomEvents = TTabItemCustomEvents,
+	TEvents extends TTabItemCustomEvents<any> = TTabItemCustomEvents,
 >
 	extends TValueControl<string | number, TProps, TEvents, TTabItemCustomStatesOptions>
 	implements ITabItemCustom<TProps>
