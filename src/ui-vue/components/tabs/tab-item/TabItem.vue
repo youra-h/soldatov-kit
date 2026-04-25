@@ -75,7 +75,7 @@ export default {
 .s-tab-item {
 	$this: &;
 
-	@apply opacity-80;
+	@apply opacity-75;
 	@apply py-2.5;
 
 	&__close {
