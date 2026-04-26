@@ -126,8 +126,11 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 		this._collection.events.on(
 			'item:activated',
 			(payload: { collection: any; item: ITabItem }) => {
+				console.log('Активирован таб:', payload.item.text, payload.item)
 				// Пробрасываем событие наружу
 				this.events.emit('item:activated', payload)
+				// Индикатор: обновляем при смене внешнего вида (может влиять на размеры табов)
+				this._updateLineIndicator()
 			},
 		)
 
@@ -137,15 +140,15 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 		})
 
 		this._collection.events.on('item:moved', (payload: { collection: any }) => {
+			// Индикатор: при смене активного таба — обновляем позицию индикатора
+			this._updateLineIndicator()
 			// Пробрасываем событие наружу
 			this.events.emit('item:moved', payload)
 		})
 
 		// Индикатор: обновляем после первой отрисовки (ready) и при смене активного таба
 		this.events.on('ready', () => this._updateLineIndicator())
-		// Индикатор: обновляем при смене внешнего вида (может влиять на размеры табов)
-		this._collection.events.on('item:activated', () => this._updateLineIndicator())
-		// Индикатор: обновляем при смене внешнего вида (может влиять на размеры табов)
+				// Индикатор: обновляем при смене внешнего вида (может влиять на размеры табов)
 		this.events.on('change:appearance', () => this._updateLineIndicator())
 	}
 
