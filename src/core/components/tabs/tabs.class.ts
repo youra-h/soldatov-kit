@@ -69,8 +69,9 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 		})
 
 		// Условие для поиска следующего активного таба при удалении
-		this._collection.events.on('resolve:_activatablePredicate', () =>
-			(tab: ITabItem) => !tab.disabled && tab.visible && tab.rendered,
+		this._collection.events.on(
+			'resolve:_activatablePredicate',
+			() => (tab: ITabItem) => !tab.disabled && tab.visible && tab.rendered,
 		)
 
 		// Подписка на события коллекции для проксирования
@@ -126,11 +127,11 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 		this._collection.events.on(
 			'item:activated',
 			(payload: { collection: any; item: ITabItem }) => {
-				console.log('Активирован таб:', payload.item.text, payload.item)
 				// Пробрасываем событие наружу
 				this.events.emit('item:activated', payload)
 				// Индикатор: обновляем при смене внешнего вида (может влиять на размеры табов)
-				this._updateLineIndicator()
+				// Используем requestAnimationFrame, чтобы дождаться отрисовки активного таба (особенно важно при первой активации или при смене внешнего вида или при удалении таба)
+				requestAnimationFrame(() => this._updateLineIndicator())
 			},
 		)
 
@@ -148,7 +149,7 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 
 		// Индикатор: обновляем после первой отрисовки (ready) и при смене активного таба
 		this.events.on('ready', () => this._updateLineIndicator())
-				// Индикатор: обновляем при смене внешнего вида (может влиять на размеры табов)
+		// Индикатор: обновляем при смене внешнего вида (может влиять на размеры табов)
 		this.events.on('change:appearance', () => this._updateLineIndicator())
 	}
 
