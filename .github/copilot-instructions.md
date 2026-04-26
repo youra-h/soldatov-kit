@@ -134,6 +134,10 @@ tabs/
 - Do not add error handling for impossible scenarios
 - Do not introduce helpers or abstractions for one-time use
 
+### Crutches / Workarounds — BANNED
+- **Never introduce inline workarounds (костыли)** — duplicated logic, raw `customRef`/`onUnmounted` directly in component setup when a composable pattern already exists, ad-hoc event wiring that bypasses the established architecture, etc.
+- If the proper fix requires a new composable, a new method on a class, or a change in the core layer — **propose the architectural approach to the programmer first and wait for approval before implementing it**.
+
 ## Build & Test
 
 ```bash

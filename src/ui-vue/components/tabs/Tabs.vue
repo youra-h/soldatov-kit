@@ -1,11 +1,11 @@
 <script lang="ts">
 import { TTabs, type ITabsProps } from '@core'
-import { computed } from 'vue'
 import BaseTabs, { syncTabs } from './base.component'
 import { useBaseSetup } from '../../composables/useBaseSetup'
 import { useElementSync } from '../../composables/useElementSync'
 import { useProvideCollection } from '../../composables/useProvideCollection'
 import { useCollectionItems } from '../../composables/useCollectionItems'
+import { useEventRef } from '../../composables/useEventRef'
 import { TabItem } from './tab-item'
 
 export default {
@@ -27,7 +27,11 @@ export default {
 
 		const rootRef = useElementSync(instance)
 
-		const activeItem = computed(() => instance.collection.activeItem ?? null)
+		const activeItem = useEventRef(
+			instance.collection.events,
+			() => instance.collection.activeItem ?? null,
+			['item:activated', 'item:deactivated'],
+		)
 
 		return { instance, items, rootRef, activeItem }
 	},
