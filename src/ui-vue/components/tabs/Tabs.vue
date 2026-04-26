@@ -27,21 +27,23 @@ export default {
 
 		const rootRef = useElementSync(instance)
 
-		const activeValue = computed(() => instance.collection.activeItem?.value ?? null)
+		const activeItem = computed(() => instance.collection.activeItem ?? null)
+		const activeValue = computed(() => activeItem.value?.value ?? null)
 
-		return { instance, items, rootRef, activeValue }
+		return { instance, items, rootRef, activeItem, activeValue }
 	},
 }
 </script>
 
 <template>
+	{{  activeValue }}
 	<div ref="rootRef" v-if="instance.rendered" v-show="instance.visible" :class="instance.classes">
 		<div class="s-tabs__list" role="tablist">
 			<slot>
 				<TabItem v-for="item in items" :key="item.uid" :is="item" />
 			</slot>
 		</div>
-		<div v-if="activeValue !== null && $slots[`panel:${activeValue}`]" class="s-tabs__panel">
+		<div v-if="activeItem && $slots[`panel:${activeValue}`]" class="s-tabs__panel">
 			<slot :name="`panel:${activeValue}`" />
 		</div>
 	</div>

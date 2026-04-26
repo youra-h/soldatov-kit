@@ -121,6 +121,8 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 			(payload: { collection: any; item: ITabItem }) => {
 				// Пробрасываем событие наружу
 				this.events.emit('item:deleted', payload)
+
+				requestAnimationFrame(() => this._updateLineIndicator())
 			},
 		)
 
@@ -265,12 +267,16 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 		if (!this._el) return
 
 		const listEl = this._el.querySelector(`.${this._baseClass}__list`) as HTMLElement | null
+
+		if (!listEl) return
+
 		const activeEl = this.activeItem?.el as HTMLElement | null
 
-		if (!listEl || !activeEl) return
+		const offsetLeft = activeEl ? activeEl.offsetLeft : 0
+		const offsetWidth = activeEl ? activeEl.offsetWidth : 0
 
-		listEl.style.setProperty('--underline-x', `${activeEl.offsetLeft}px`)
-		listEl.style.setProperty('--underline-width', `${activeEl.offsetWidth}px`)
+		listEl.style.setProperty('--underline-x', `${offsetLeft}px`)
+		listEl.style.setProperty('--underline-width', `${offsetWidth}px`)
 	}
 
 	override get classes(): string[] {

@@ -133,6 +133,7 @@ export class TActivatableCollection<
 
 		const item = this.getItem(index)
 		const wasActive = isSame(this._activeItem, item)
+		let newActiveItem: TItem | undefined
 
 		// Если удаляется активный элемент и в коллекции есть другие элементы,
 		// запрашиваем предикат через событие и активируем подходящий элемент ДО удаления
@@ -140,7 +141,7 @@ export class TActivatableCollection<
 			// Запрашиваем предикат для поиска следующего активного элемента
 			const predicate = this.events.emitResolve<(item: TItem) => boolean>('resolve:_activatablePredicate')
 
-			const newActiveItem = this.findActivatable(predicate, item)
+			newActiveItem = this.findActivatable(predicate, item)
 
 			if (newActiveItem) {
 				this.setActive(newActiveItem)
@@ -151,7 +152,7 @@ export class TActivatableCollection<
 		const result = super.delete(index)
 
 		// Если удалён последний активный элемент, очищаем активность
-		if (result && wasActive && this.count === 0) {
+		if (result && wasActive && (this.count === 0 || !newActiveItem)) {
 			this._activeItem = undefined
 		}
 
