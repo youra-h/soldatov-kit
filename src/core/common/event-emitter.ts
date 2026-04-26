@@ -1,13 +1,26 @@
 // Тип обработчика события
 export type TEventHandler = (...args: unknown[]) => unknown
 
+export interface IEventSource {
+	on(event: string, handler: TEventHandler): void
+	off(event: string, handler: TEventHandler): void
+}
+
+export interface IEventEmitter extends IEventSource {
+	emit(event: string, ...args: unknown[]): void
+	emitWithResult(event: string, ...args: unknown[]): boolean
+	emitResolve<T>(event: string, ...args: unknown[]): T | undefined
+	emitResolveAll<T>(event: string, ...args: unknown[]): T[]
+	remove(event?: string): void
+}
+
 /**
  * Подписка на события
  * @example
  * const emitter = new TEventEmitter()
  * emitter.on('event', (data) => console.log(data))
  */
-export class TEventEmitter {
+export class TEventEmitter implements IEventEmitter {
 	private _items: Map<string, Set<TEventHandler>> = new Map()
 
 	on(event: string, handler: TEventHandler): void {

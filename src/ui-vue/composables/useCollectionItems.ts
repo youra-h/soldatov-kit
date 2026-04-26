@@ -9,6 +9,13 @@ interface ICollectionLike<TItem> {
 	}
 }
 
+/**
+ * Возвращает реактивный `Ref` со списком элементов коллекции.
+ * Обновляется при добавлении, удалении, очистке и перемещении элементов.
+ *
+ * @param collection Коллекция с полями `items` и `events`.
+ * @returns Реактивный `Ref<TItem[]>`.
+ */
 export function useCollectionItems<TItem>(collection: ICollectionLike<TItem>): Ref<TItem[]> {
 	return useEventRef(
 		collection.events,

@@ -1,10 +1,17 @@
 import { customRef, onUnmounted, type Ref } from 'vue'
+import type { IEventSource } from '@core'
 
-interface IEventSource {
-	on(event: string, handler: (...args: any[]) => any): void
-	off(event: string, handler: (...args: any[]) => any): void
-}
-
+/**
+ * Возвращает реактивный `Ref`, который обновляется при срабатывании указанных событий.
+ *
+ * Решает проблему: мутации внутри классов происходят на raw-объекте, минуя Vue Proxy.
+ * Вместо отслеживания через proxy используется ручной `track`/`trigger` через события.
+ *
+ * @param events        Источник событий (`TEvented`, `TEventEmitter` или любой `IEventSource`).
+ * @param getter        Функция, возвращающая актуальное значение при каждом чтении.
+ * @param triggerEvents Список имён событий, при которых `Ref` должен обновиться.
+ * @returns Реактивный `Ref<T>`.
+ */
 export function useEventRef<T>(
 	events: IEventSource,
 	getter: () => T,
