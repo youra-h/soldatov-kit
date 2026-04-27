@@ -137,7 +137,7 @@ export default {
 
 		// Табы: без скруглений, перекрывают нижнюю линию
 		.s-tab-item {
-			@apply rounded-none -mb-px;
+			@apply -mb-px;
 		}
 
 		// Normal (default)

@@ -86,5 +86,9 @@ export default {
 	&:hover:not([disabled]) {
 		@apply opacity-100;
 	}
+
+	&:focus-visible {
+		@apply outline-2 -outline-offset-2 outline-s-component;
+	}
 }
 </style>
