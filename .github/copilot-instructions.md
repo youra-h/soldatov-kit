@@ -60,6 +60,7 @@ Vue 3 (currently 3.5.x) rendering layer. Uses `reactive()` to wrap core class in
 **Composables** (`src/ui-vue/composables/`):
 - `useBaseSetup` — standard component setup
 - `useCollectionItems` — reactive list from collection events
+- `useEventRef` — reactive Ref that updates on specified events (base primitive for `useCollectionItems` and similar)
 - `useManagedInstance` — instance lifecycle
 
 **Demo** (`src/ui-vue/demo/`):
@@ -67,6 +68,7 @@ Each component has a folder under `demo/components/<name>/` with three files:
 - `Component.vue` — props-based usage
 - `Instance.vue` — instance-based usage  
 - `Slots.vue` — slots and visual variants showcase
+- Each demo page must include a **Properties panel** listing all component props and events
 
 Playgrounds (`demo/playgrounds/`) combine all three into one page.
 
@@ -122,6 +124,7 @@ tabs/
 - `core/` must stay framework-free. Never import Vue/React/Angular there.
 - Components communicate via **events**, not constructor parameters or shared variables.
 - `_underscored` event names (e.g., `resolve:_activatablePredicate`) signal internal/private events not intended for external use.
+- Event contracts (payload types, return semantics) must be documented in `types.ts` alongside the component class.
 
 ### TypeScript
 - Interfaces use `I` prefix: `ITabItem`, `IActivatableCollection`
