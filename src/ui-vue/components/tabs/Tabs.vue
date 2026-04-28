@@ -135,7 +135,6 @@ export default {
 				width 0.2s ease;
 		}
 
-		// Табы: без скруглений, перекрывают нижнюю линию
 		.s-tab-item {
 			@apply -mb-px;
 		}
