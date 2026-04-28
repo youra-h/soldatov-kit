@@ -39,7 +39,7 @@ const tabItems = ref([
 
 		<section>
 			<h2>Вариант 2: prop items</h2>
-			<Tabs :items="tabItems" appearance="line" variant="normal">
+			<Tabs :items="tabItems" appearance="pills" variant="normal">
 				<template #panel:alpha><p>Содержимое Alpha</p></template>
 				<template #panel:beta><p>Содержимое Beta</p></template>
 				<template #panel:gamma><p>Содержимое Gamma</p></template>
@@ -48,9 +48,21 @@ const tabItems = ref([
 
 		<section>
 			<h2>Вариант 3: декларативный (TabItem в слоте)</h2>
-			<Tabs appearance="line" variant="caution">
+			<Tabs appearance="contained" variant="caution">
 				<TabItem text="Профиль" value="profile" />
 				<TabItem text="Настройки" value="settings" active />
+				<TabItem text="О проекте" value="about" />
+				<template #panel:profile><p>Содержимое Профиль</p></template>
+				<template #panel:settings><p>Содержимое Настройки</p></template>
+				<template #panel:about><p>Содержимое О проекте</p></template>
+			</Tabs>
+		</section>
+
+		<section>
+			<h2>Вариант 4: вертикальные табы</h2>
+			<Tabs appearance="segmented" orientation="vertical">
+				<TabItem text="Профиль" value="profile" active />
+				<TabItem text="Настройки" value="settings" />
 				<TabItem text="О проекте" value="about" />
 				<template #panel:profile><p>Содержимое Профиль</p></template>
 				<template #panel:settings><p>Содержимое Настройки</p></template>
