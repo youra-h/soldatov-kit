@@ -32,11 +32,13 @@ export class TUiLineIndicatorBehavior extends TUiBehavior {
 		this._onItemAdded = (...args: unknown[]) => {
 			const payload = args[0] as { collection: any; item: any }
 			const tabItem = payload.item as ITabItem
+
 			tabItem.events.on('mount', ({ el }) => {
 				const observer = new ResizeObserver(() => this._update())
 				observer.observe(el)
 				this._itemObservers.set(tabItem, observer)
 			})
+
 			tabItem.events.on('unmount', () => {
 				this._itemObservers.get(tabItem)?.disconnect()
 				this._itemObservers.delete(tabItem)
