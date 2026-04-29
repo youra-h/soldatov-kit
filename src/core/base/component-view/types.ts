@@ -96,10 +96,6 @@ export interface IComponentView<
 	visible: boolean
 	/** CSS-классы (включая baseClass и динамические) */
 	readonly classes: string[]
-	/** true после первого монтирования компонента в DOM */
-	readonly ready: boolean
-	/** Сигнал об изменении layout: эмитит событие 'refresh' для заинтересованных слушателей */
-	refresh(): void
 	/** Показать компонент */
 	show(): void
 	/** Скрыть компонент */

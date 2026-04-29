@@ -2,7 +2,6 @@ import TControl from '../../base/control/control.class'
 import type { IComponentViewOptions } from '../../base/component-view'
 import { TComponentView } from '../../base/component-view'
 import { TActivatableCollection } from '../../base/collection'
-import { isSame } from '../../common/is-same'
 import TTabItem from './tab-item/tab-item.class'
 import type { ITabItem } from './tab-item/types'
 import type {
