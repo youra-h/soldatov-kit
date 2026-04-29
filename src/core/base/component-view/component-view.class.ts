@@ -38,8 +38,6 @@ export default class TComponentView<
 	protected _visibilityState: IVisibilityState
 	protected _baseClass: string
 	protected _classes: string[]
-	protected _el: Element | null = null
-	private _ready: boolean = false
 
 	static prepareOptions<
 		TProps extends IComponentViewProps = IComponentViewProps,
@@ -193,42 +191,6 @@ export default class TComponentView<
 		this._tag = value
 
 		this.events.emit('change:tag', value)
-	}
-
-	get el(): Element | null {
-		return this._el
-	}
-
-	set el(value: Element | null) {
-		if (this._el === value) return
-
-		const prev = this._el
-		this._el = value
-
-		if (value && !prev) {
-			this.events.emit('mount', { el: value, instance: this as any })
-
-			// rAF 1: даём компонентам позиционироваться (например, CSS-переменные индикатора).
-			// rAF 2: включаем transition — браузер уже отрисовал правильное начальное положение.
-			requestAnimationFrame(() => {
-				this.events.emit('ready', { instance: this as any })
-
-				requestAnimationFrame(() => {
-					this._ready = true
-				})
-			})
-		} else if (!value && prev) {
-			this._ready = false
-			this.events.emit('unmount', { instance: this as any })
-		}
-	}
-
-	get ready(): boolean {
-		return this._ready
-	}
-
-	refresh(): void {
-		this.events.emit('refresh', { instance: this as any })
 	}
 
 	get classes(): string[] {

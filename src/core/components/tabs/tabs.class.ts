@@ -83,17 +83,17 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 				this.closeTab(item)
 			})
 
-			// ResizeObserver: следим за изменением размера таба → пересчитываем индикатор
-			item.events.on('mount', ({ el }) => {
-				const observer = new ResizeObserver(() => this._updateLineIndicator())
-				observer.observe(el)
-				this._itemObservers.set(item, observer)
-			})
+			// // ResizeObserver: следим за изменением размера таба → пересчитываем индикатор
+			// item.events.on('mount', ({ el }) => {
+			// 	const observer = new ResizeObserver(() => this._updateLineIndicator())
+			// 	observer.observe(el)
+			// 	this._itemObservers.set(item, observer)
+			// })
 
-			item.events.on('unmount', () => {
-				this._itemObservers.get(item)?.disconnect()
-				this._itemObservers.delete(item)
-			})
+			// item.events.on('unmount', () => {
+			// 	this._itemObservers.get(item)?.disconnect()
+			// 	this._itemObservers.delete(item)
+			// })
 
 			// Propagation: новый таб наследует size и variant от контейнера
 			item.size = this.size
@@ -122,7 +122,7 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 				// Пробрасываем событие наружу
 				this.events.emit('item:deleted', payload)
 
-				requestAnimationFrame(() => this._updateLineIndicator())
+				// requestAnimationFrame(() => this._updateLineIndicator())
 			},
 		)
 
@@ -133,7 +133,7 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 				this.events.emit('item:activated', payload)
 				// Индикатор: обновляем при смене внешнего вида (может влиять на размеры табов)
 				// Используем requestAnimationFrame, чтобы дождаться отрисовки активного таба (особенно важно при первой активации или при смене внешнего вида или при удалении таба)
-				requestAnimationFrame(() => this._updateLineIndicator())
+				// requestAnimationFrame(() => this._updateLineIndicator())
 			},
 		)
 
@@ -144,13 +144,13 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 
 		this._collection.events.on('item:moved', (payload: { collection: any }) => {
 			// Индикатор: при смене активного таба — обновляем позицию индикатора
-			this._updateLineIndicator()
+			// this._updateLineIndicator()
 			// Пробрасываем событие наружу
 			this.events.emit('item:moved', payload)
 		})
 
 		// Индикатор: обновляем при смене внешнего вида (может влиять на размеры табов)
-		this.events.on('change:appearance', () => this._updateLineIndicator())
+		// this.events.on('change:appearance', () => this._updateLineIndicator())
 	}
 
 	// Простые геттеры/сеттеры без state
@@ -260,22 +260,22 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 		return this._collection.deleteItem(item)
 	}
 
-	private _updateLineIndicator(): void {
-		if (this._appearance !== 'line') return
-		if (!this._el) return
+	// private _updateLineIndicator(): void {
+	// 	if (this._appearance !== 'line') return
+	// 	if (!this._el) return
 
-		const listEl = this._el.querySelector(`.${this._baseClass}__list`) as HTMLElement | null
+	// 	const listEl = this._el.querySelector(`.${this._baseClass}__list`) as HTMLElement | null
 
-		if (!listEl) return
+	// 	if (!listEl) return
 
-		const activeEl = this.activeItem?.el as HTMLElement | null
+	// 	const activeEl = this.activeItem?.el as HTMLElement | null
 
-		const offsetLeft = activeEl ? activeEl.offsetLeft : 0
-		const offsetWidth = activeEl ? activeEl.offsetWidth : 0
+	// 	const offsetLeft = activeEl ? activeEl.offsetLeft : 0
+	// 	const offsetWidth = activeEl ? activeEl.offsetWidth : 0
 
-		listEl.style.setProperty('--underline-x', `${offsetLeft}px`)
-		listEl.style.setProperty('--underline-width', `${offsetWidth}px`)
-	}
+	// 	listEl.style.setProperty('--underline-x', `${offsetLeft}px`)
+	// 	listEl.style.setProperty('--underline-width', `${offsetWidth}px`)
+	// }
 
 	override get classes(): string[] {
 		const classes = [...super.classes]
@@ -301,10 +301,10 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 			classes.push(`${this._baseClass}--stretched`)
 		}
 
-		// После монтирования включаем transition на индикаторе
-		if (this.ready) {
-			classes.push(`${this._baseClass}--ready`)
-		}
+		// // После монтирования включаем transition на индикаторе
+		// if (this.ready) {
+		// 	classes.push(`${this._baseClass}--ready`)
+		// }
 
 		return classes
 	}

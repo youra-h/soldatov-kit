@@ -34,14 +34,6 @@ export type TComponentViewEvents = TComponentModelEvents & {
 	'change:tag': (value: string | object) => void
 	/** change:classes (без baseClass) */
 	'change:classes': (value: string[]) => void
-	/** mount — root-элемент присоединён к DOM фреймворком */
-	'mount': (payload: { el: Element; instance: IComponentView }) => void
-	/** ready — после первой отрисовки браузером (requestAnimationFrame после mount) */
-	'ready': (payload: { instance: IComponentView }) => void
-	/** unmount — root-элемент удалён из DOM */
-	'unmount': (payload: { instance: IComponentView }) => void
-	/** refresh — layout изменился, нужно пересчитать зависящие размеры */
-	'refresh': (payload: { instance: IComponentView }) => void
 }
 
 export interface IComponentViewProps extends IComponentModelProps {
@@ -104,8 +96,6 @@ export interface IComponentView<
 	visible: boolean
 	/** CSS-классы (включая baseClass и динамические) */
 	readonly classes: string[]
-	/** Root HTML-элемент, устанавливается фреймворком (Vue/React) после монтирования */
-	el: Element | null
 	/** true после первого монтирования компонента в DOM */
 	readonly ready: boolean
 	/** Сигнал об изменении layout: эмитит событие 'refresh' для заинтересованных слушателей */
