@@ -19,7 +19,6 @@ export const emitsComponentView: TEmits = [
 	'created',
 	'mount',
 	'unmount',
-	'refresh',
 ] as const
 
 export const propsComponentView: TProps = {
@@ -99,12 +98,14 @@ export function syncComponentView(
 		emit?.('rendered', value)
 		emit?.('update:rendered', value)
 	})
-	instance.events.on('mount' as any, (payload: { el: Element; instance: IComponentView }) => {
-		emit?.('mount', payload)
-	})
-	instance.events.on('refresh' as any, (payload: { instance: IComponentView }) => {
-		emit?.('refresh', payload)
-	})
+
+	// Удалены события из TComponentView
+	// instance.events.on('mount' as any, (payload: { el: Element; instance: IComponentView }) => {
+	// 	emit?.('mount', payload)
+	// })
+	// instance.events.on('refresh' as any, (payload: { instance: IComponentView }) => {
+	// 	emit?.('refresh', payload)
+	// })
 
 	watch<Object | string | undefined>(
 		() => props.tag,
