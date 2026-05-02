@@ -4,7 +4,9 @@ import type { IPlugin, IPluginContainer, TPluginEvents } from './types'
 export abstract class TBasePlugin<
 	TCustomEvents extends Record<string, (...args: any) => any> = {}
 > implements IPlugin<TPluginEvents<TCustomEvents>> {
-	abstract readonly key: string
+	get key(): string {
+		return (this.constructor as unknown as { key: string }).key
+	}
 
 	readonly events = new TEvented<TPluginEvents<TCustomEvents>>()
 
