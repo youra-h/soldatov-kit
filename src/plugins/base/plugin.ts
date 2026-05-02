@@ -12,12 +12,12 @@ export abstract class TBasePlugin<
 
 	protected _container: IPluginContainer | null = null
 
-	install(container: IPluginContainer): void {
+	attach(container: IPluginContainer): void {
 		this._container = container
 	}
 
-	destroy(): void {
-		this.events.emit('destroyed')
+	detach(): void {
+		this.events.emit('detached')
 		this._container = null
 	}
 }

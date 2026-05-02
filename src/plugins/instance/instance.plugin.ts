@@ -2,15 +2,21 @@ import type { IComponentView } from '../../core/base/component-view'
 import { TBasePlugin } from '../base/plugin'
 import type { TInstancePluginEvents } from './types'
 
-export class TInstancePlugin<T extends IComponentView = IComponentView>
-	extends TBasePlugin<TInstancePluginEvents<T>> {
+export class TInstancePlugin<T extends IComponentView = IComponentView> extends TBasePlugin<
+	TInstancePluginEvents<T>
+> {
 	static readonly key = 'instance'
 
 	private _instance: T | null = null
 
-	setInstance(instance: T): void {
-		this._instance = instance
-		this.events.emit('ready', { instance })
+	setInstance(value: T): void {
+		if (this._instance === value) {
+			return
+		}
+
+		this._instance = value
+
+		this.events.emit('ready', { instance: value })
 	}
 
 	getContext() {

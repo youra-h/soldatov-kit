@@ -7,11 +7,18 @@ export class TElementPlugin extends TBasePlugin<TElementPluginEvents> {
 	private _element: HTMLElement | null = null
 
 	setElement(el: HTMLElement | null): void {
+		if (this._element === el) return
+
+		const prev = this._element
 		this._element = el
 
-		if (el) {
-			this.events.emit('ready', { element: el })
-		} else {
+		if (el && !prev) {
+			requestAnimationFrame(() => {
+				if (this._element !== el) return
+
+				this.events.emit('ready', { element: el })
+			})
+		} else if (!el && prev) {
 			this.events.emit('removed')
 		}
 	}

@@ -5,8 +5,10 @@ export class TPluginContainer implements IPluginContainer {
 
 	use<P extends IPlugin>(PluginCtor: TPluginConstructor<P>): P {
 		const plugin = new PluginCtor()
+		// Если плагин с таким ключом уже существует, удаляем его
 		this._plugins.set(PluginCtor.key, plugin)
-		plugin.install(this)
+		plugin.attach(this)
+
 		return plugin
 	}
 
@@ -19,7 +21,7 @@ export class TPluginContainer implements IPluginContainer {
 
 	remove<P extends IPlugin>(PluginCtor: TPluginConstructor<P>): void {
 		const plugin = this._plugins.get(PluginCtor.key)
-		plugin?.destroy()
+		plugin?.detach()
 		this._plugins.delete(PluginCtor.key)
 	}
 }

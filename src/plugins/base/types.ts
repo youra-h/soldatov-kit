@@ -1,7 +1,7 @@
 import type { TEvented } from '../../core/common/evented'
 
 export type TBasePluginEvents = {
-	destroyed: () => void
+	detached: () => void
 }
 
 export type TPluginEvents<T extends Record<string, (...args: any) => any> = {}> =
@@ -10,8 +10,8 @@ export type TPluginEvents<T extends Record<string, (...args: any) => any> = {}> 
 export interface IPlugin<TEvents extends TBasePluginEvents = TBasePluginEvents> {
 	readonly key: string
 	readonly events: TEvented<TEvents>
-	install(container: IPluginContainer): void
-	destroy(): void
+	attach(container: IPluginContainer): void
+	detach(): void
 }
 
 export interface IPluginContainer {
