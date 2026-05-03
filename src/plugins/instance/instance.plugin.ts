@@ -9,10 +9,12 @@ export class TInstancePlugin<T extends IComponentView = IComponentView> extends 
 
 	private _instance: T | null = null
 
-	setInstance(value: T): void {
-		if (this._instance === value) {
-			return
-		}
+	get instance(): T | null {
+		return this._instance
+	}
+
+	set instance(value: T | null) {
+		if (this._instance === value) return
 
 		this._instance = value
 

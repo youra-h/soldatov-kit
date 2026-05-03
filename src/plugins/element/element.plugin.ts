@@ -6,7 +6,11 @@ export class TElementPlugin extends TBasePlugin<TElementPluginEvents> {
 
 	private _element: HTMLElement | null = null
 
-	setElement(el: HTMLElement | null): void {
+	get element(): HTMLElement | null {
+		return this._element
+	}
+
+	set element(el: HTMLElement | null) {
 		if (this._element === el) return
 
 		const prev = this._element

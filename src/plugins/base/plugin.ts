@@ -2,7 +2,7 @@ import { TEvented } from '../../core/common/evented'
 import type { IPlugin, IPluginContainer, TPluginEvents } from './types'
 
 export abstract class TBasePlugin<
-	TCustomEvents extends Record<string, (...args: any) => any> = {}
+	TCustomEvents extends Record<string, (...args: any) => any> = {},
 > implements IPlugin<TPluginEvents<TCustomEvents>> {
 	get key(): string {
 		return (this.constructor as unknown as { key: string }).key
@@ -10,14 +10,9 @@ export abstract class TBasePlugin<
 
 	readonly events = new TEvented<TPluginEvents<TCustomEvents>>()
 
-	protected _container: IPluginContainer | null = null
+	install(_container: IPluginContainer): void {}
 
-	attach(container: IPluginContainer): void {
-		this._container = container
-	}
-
-	detach(): void {
-		this.events.emit('detached')
-		this._container = null
+	destroy(): void {
+		this.events.emit('destroyed')
 	}
 }
