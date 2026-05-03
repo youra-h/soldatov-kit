@@ -1,5 +1,5 @@
-import type { IComponentView } from '../../core/base/component-view'
-import { TBasePlugin } from '../base/plugin'
+import type { IComponentView } from '../../../core/base/component-view'
+import { TBasePlugin } from '../../base/plugin'
 import type { TInstancePluginEvents } from './types'
 
 export class TInstancePlugin<T extends IComponentView = IComponentView> extends TBasePlugin<

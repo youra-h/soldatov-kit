@@ -1,4 +1,4 @@
-import { TBasePlugin } from '../base/plugin'
+import { TBasePlugin } from '../../base/plugin'
 import type { TElementPluginEvents } from './types'
 
 export class TElementPlugin extends TBasePlugin<TElementPluginEvents> {
