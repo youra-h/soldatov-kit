@@ -18,7 +18,11 @@ export class TInstancePlugin<T extends IComponentView = IComponentView> extends 
 
 		this._instance = value
 
-		this.events.emit('ready', { instance: value })
+		if (value) {
+			this.events.emit('ready', { instance: value })
+		} else {
+			this.events.emit('removed')
+		}
 	}
 
 	getContext() {
