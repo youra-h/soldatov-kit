@@ -13,6 +13,7 @@
     "test:unit": "vitest",
     "test:e2e": "playwright test",
     "test:core": "vitest --config vitest.config.core.ts",
+    "test:plugins": "vitest --config vitest.config.plugins.ts",
     "test:ui": "vitest --config vitest.config.ui.ts",
     "build-only": "vite build",
     "type-check": "vue-tsc --build",
