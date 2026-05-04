@@ -1,2 +1,2 @@
 export * from './tabs.container'
-export * from './plugins/underline'
+export * from './plugins/appearance'

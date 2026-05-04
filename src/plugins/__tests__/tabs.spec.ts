@@ -3,7 +3,7 @@ import { TTabs } from '../../core/components/tabs'
 import { TTabsContainer } from '../containers/tabs'
 import { TElementPlugin } from '../common/element'
 import { TInstancePlugin } from '../common/instance'
-import { TTabsUnderlinePlugin } from '../containers/tabs/plugins/underline'
+import { TTabsAppearancePlugin } from '../containers/tabs/plugins/appearance'
 
 function createTabsDom(): HTMLElement {
 	const root = document.createElement('div')
@@ -32,17 +32,17 @@ describe('TTabsContainer', () => {
 		tabs = new TTabs()
 	})
 
-	it('has TElementPlugin, TInstancePlugin, TTabsUnderlinePlugin pre-installed', () => {
+	it('has TElementPlugin, TInstancePlugin, TTabsAppearancePlugin pre-installed', () => {
 		expect(container.get(TElementPlugin)).toBeInstanceOf(TElementPlugin)
 		expect(container.get(TInstancePlugin)).toBeInstanceOf(TInstancePlugin)
-		expect(container.get(TTabsUnderlinePlugin)).toBeInstanceOf(TTabsUnderlinePlugin)
+		expect(container.get(TTabsAppearancePlugin)).toBeInstanceOf(TTabsAppearancePlugin)
 	})
 
-	it('underline plugin reacts to instance:ready', () => {
+	it('appearance plugin reacts to instance:ready', () => {
 		const instancePlugin = container.get(TInstancePlugin)!
 		instancePlugin.instance = tabs
 
-		expect(container.get(TTabsUnderlinePlugin)).toBeInstanceOf(TTabsUnderlinePlugin)
+		expect(container.get(TTabsAppearancePlugin)).toBeInstanceOf(TTabsAppearancePlugin)
 	})
 
 	it('full flow: delayed element + instance, no errors', async () => {
@@ -99,7 +99,7 @@ describe('TTabsContainer', () => {
 		expect(elementPlugin.element).toBeNull()
 	})
 
-	it('container.remove(TTabsUnderlinePlugin) calls destroy without error', async () => {
+	it('container.remove(TTabsAppearancePlugin) calls destroy without error', async () => {
 		const elementPlugin = container.get(TElementPlugin)!
 		const instancePlugin = container.get(TInstancePlugin)!
 
@@ -112,9 +112,9 @@ describe('TTabsContainer', () => {
 		})
 
 		expect(() => {
-			container.remove(TTabsUnderlinePlugin)
+			container.remove(TTabsAppearancePlugin)
 		}).not.toThrow()
 
-		expect(container.get(TTabsUnderlinePlugin)).toBeUndefined()
+		expect(container.get(TTabsAppearancePlugin)).toBeUndefined()
 	})
 })

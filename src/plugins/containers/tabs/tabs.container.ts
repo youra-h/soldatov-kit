@@ -1,9 +1,9 @@
 import { TComponentViewContainer } from '../component-view'
-import { TTabsUnderlinePlugin } from './plugins/underline'
+import { TTabsAppearancePlugin } from './plugins/appearance'
 
 export class TTabsContainer extends TComponentViewContainer {
 	constructor() {
 		super()
-		this.use(TTabsUnderlinePlugin)
+		this.use(TTabsAppearancePlugin)
 	}
 }
