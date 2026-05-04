@@ -4,7 +4,7 @@ import { TComponentView, type IComponentView, type IComponentViewProps } from '@
 import BaseComponentView, { syncComponentView } from './base.component'
 import { useBaseSetup } from '../../composables/useBaseSetup'
 import { TComponentViewContainer } from '@plugins'
-import { usePluginContainer } from '../../composables/usePluginContainer'
+import { usePlugins } from '../../composables/usePlugins'
 
 type TComponentViewVueProps = IComponentViewProps & {
 	ctrl?: IComponentView | UnwrapNestedRefs<IComponentView>
@@ -14,7 +14,7 @@ export default {
 	name: '_ComponentView',
 	extends: BaseComponentView,
 	setup(props: TComponentViewVueProps, { emit }) {
-		const { ctrl: instance } = useBaseSetup(TComponentView, props)
+		const { ctrl: instance, raw } = useBaseSetup(TComponentView, props)
 
 		syncComponentView({
 			props,
@@ -22,10 +22,9 @@ export default {
 			emit,
 		})
 
-		const plugins = new TComponentViewContainer()
-		const rootRef = usePluginContainer(plugins, instance)
+		const { plugins, rootRef } = usePlugins(TComponentViewContainer, raw)
 
-		return { instance, rootRef }
+		return { instance, plugins, rootRef }
 	},
 }
 </script>

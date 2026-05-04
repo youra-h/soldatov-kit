@@ -20,5 +20,5 @@ export function useBaseSetup<T extends object>(
 		isProxy(instance) ? instance : reactive(instance)
 	) as Reactive<T>
 
-	return { ctrl: reactiveInstance }
+	return { ctrl: reactiveInstance, raw: instance }
 }
