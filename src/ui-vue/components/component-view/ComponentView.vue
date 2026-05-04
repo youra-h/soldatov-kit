@@ -8,6 +8,7 @@ import { usePlugins } from '../../composables/usePlugins'
 
 type TComponentViewVueProps = IComponentViewProps & {
 	ctrl?: IComponentView | UnwrapNestedRefs<IComponentView>
+	plugins?: TComponentViewContainer | undefined
 }
 
 export default {
@@ -17,7 +18,7 @@ export default {
 		// Получение инстанса из пропсов или создание нового
 		const { ctrl: instance, raw } = useInstance(TComponentView, props)
 		// Инициализация плагинов
-		const { plugins, rootRef } = usePlugins(TComponentViewContainer, raw)
+		const { plugins, rootRef } = usePlugins(TComponentViewContainer, props?.plugins, raw)
 
 		syncComponentView({
 			props,

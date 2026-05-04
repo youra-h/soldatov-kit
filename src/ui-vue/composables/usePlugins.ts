@@ -29,23 +29,24 @@ type TComponentViewContainerCtor<T extends TComponentViewContainer> = new () => 
  */
 export function usePlugins<TContainer extends TComponentViewContainer>(
 	ContainerCtor: TComponentViewContainerCtor<TContainer>,
+	plugins: TContainer | undefined,
 	raw: IComponentView | UnwrapNestedRefs<IComponentView>,
 ) {
-	const plugins = new ContainerCtor()
+	const container = plugins ?? new ContainerCtor()
 	const elRef = ref<ComponentPublicInstance | Element | null>(null)
 	const rawInstance = toRaw(raw) as IComponentView
 
-	plugins.get(TInstancePlugin)!.instance = rawInstance
+	container.get(TInstancePlugin)!.instance = rawInstance
 
 	onMounted(() => {
 		const ref = elRef.value
-		plugins.get(TElementPlugin)!.element =
+		container.get(TElementPlugin)!.element =
 			(ref as ComponentPublicInstance)?.$el ?? (ref as Element) ?? null
 	})
 
 	onUnmounted(() => {
-		plugins.get(TElementPlugin)!.element = null
+		container.get(TElementPlugin)!.element = null
 	})
 
-	return { plugins, rootRef: elRef }
+	return { plugins: container, rootRef: elRef }
 }
