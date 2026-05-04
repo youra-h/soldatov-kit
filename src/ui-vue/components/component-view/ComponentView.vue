@@ -14,15 +14,16 @@ export default {
 	name: '_ComponentView',
 	extends: BaseComponentView,
 	setup(props: TComponentViewVueProps, { emit }) {
+		// Получение инстанса из пропсов или создание нового
 		const { ctrl: instance, raw } = useInstance(TComponentView, props)
+		// Инициализация плагинов
+		const { plugins, rootRef } = usePlugins(TComponentViewContainer, raw)
 
 		syncComponentView({
 			props,
 			instance,
 			emit,
 		})
-
-		const { plugins, rootRef } = usePlugins(TComponentViewContainer, raw)
 
 		return { instance, plugins, rootRef }
 	},
