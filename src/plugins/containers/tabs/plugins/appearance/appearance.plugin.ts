@@ -13,6 +13,7 @@ export class TTabsAppearancePlugin extends TBasePlugin<TTabsAppearancePluginEven
 	private _element: HTMLElement | null = null
 	private _tabs: ITabs | null = null
 
+	// Map для обработчиков табов в зависимости от apperance
 	private readonly _handlers: Partial<Record<TTabsAppearance, TAppearanceHandler>> = {
 		line: () => this._updateLine(),
 	}
@@ -27,6 +28,7 @@ export class TTabsAppearancePlugin extends TBasePlugin<TTabsAppearancePluginEven
 			this._element = null
 		})
 
+		// Получить instance плагин и подписаться на его событие ready, чтобы получить инстанс табов и подписаться на его события для обновления внешнего вида при изменении активного таба или внешнего вида
 		const instancePlugin = container.get(TInstancePlugin) as TInstancePlugin<ITabs> | undefined
 
 		instancePlugin?.events.on('ready', ({ instance }) => {
@@ -43,15 +45,24 @@ export class TTabsAppearancePlugin extends TBasePlugin<TTabsAppearancePluginEven
 	override destroy(): void {
 		this._element = null
 		this._tabs = null
+
 		super.destroy()
 	}
 
+	/**
+	 * Вызывает обновление внешнего вида табов в зависимости от их текущего состояния и выбранного стиля (appearance)
+	 * @returns
+	 */
 	update(): void {
 		if (!this._tabs) return
 
 		this._handlers[this._tabs.appearance]?.()
 	}
 
+	/**
+	 * Обновляет позицию и размер линии под активным табом для стиля 'line'
+	 * @returns
+	 */
 	private _updateLine(): void {
 		if (!this._element) return
 
