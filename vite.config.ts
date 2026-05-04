@@ -16,6 +16,7 @@ export default defineConfig({
 			'@icons': fileURLToPath(new URL('./src/icons', import.meta.url)),
 			'@foundation': fileURLToPath(new URL('./src/foundation', import.meta.url)),
 			'@core': fileURLToPath(new URL('./src/core', import.meta.url)),
+			'@plugins': fileURLToPath(new URL('./src/plugins', import.meta.url)),
 		},
 	},
 	css: {

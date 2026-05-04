@@ -3,7 +3,8 @@ import type { UnwrapNestedRefs } from 'vue'
 import { TComponentView, type IComponentView, type IComponentViewProps } from '@core'
 import BaseComponentView, { syncComponentView } from './base.component'
 import { useBaseSetup } from '../../composables/useBaseSetup'
-import { useElementSync } from '../../composables/useElementSync'
+import { TComponentViewContainer } from '@plugins'
+import { usePluginContainer } from '../../composables/usePluginContainer'
 
 type TComponentViewVueProps = IComponentViewProps & {
 	is?: IComponentView | UnwrapNestedRefs<IComponentView>
@@ -21,7 +22,8 @@ export default {
 			emit,
 		})
 
-		const rootRef = useElementSync(instance)
+		const plugins = new TComponentViewContainer()
+		const rootRef = usePluginContainer(plugins, instance)
 
 		return { instance, rootRef }
 	},
