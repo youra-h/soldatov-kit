@@ -2,7 +2,7 @@ import type { PropType, UnwrapNestedRefs } from 'vue'
 import { watch } from 'vue'
 import { type IComponentView, type IComponentViewProps, TComponentView } from '@core'
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types'
-import type { TComponentViewContainer } from '@plugins'
+import { type TComponentViewContainer, TElementPlugin } from '@plugins'
 
 export const emitsComponentView: TEmits = [
 	'rendered',
@@ -18,8 +18,6 @@ export const emitsComponentView: TEmits = [
 	'beforeHide',
 	'afterHide',
 	'created',
-	'mount',
-	'unmount',
 	'ready',
 ] as const
 
@@ -59,15 +57,9 @@ export default {
 		// @ts-ignore
 		this.$emit('created', { instance: this.instance, plugins: this.plugins })
 	},
-	unmounted() {
-		// @ts-ignore
-		this.$emit('unmount')
-	},
 }
 
-export function syncComponentView(
-	options: ISyncComponentModelOptions<IComponentViewProps>,
-) {
+export function syncComponentView(options: ISyncComponentModelOptions<IComponentViewProps>) {
 	const { props, instance, plugins, emit } = options
 
 	// Пробрасываем события core-инстанса наружу (Vue events).
@@ -104,13 +96,18 @@ export function syncComponentView(
 		emit?.('update:rendered', value)
 	})
 
-	// Удалены события из TComponentView
-	// instance.events.on('mount' as any, (payload: { el: Element; instance: IComponentView }) => {
-	// 	emit?.('mount', payload)
-	// })
-	// instance.events.on('refresh' as any, (payload: { instance: IComponentView }) => {
-	// 	emit?.('refresh', payload)
-	// })
+	plugins
+		.get(TElementPlugin)!
+		.events.on(
+			'ready' as any,
+			(payload: {
+				element: Element
+				instance: IComponentView
+				plugins: TComponentViewContainer
+			}) => {
+				emit?.('ready', payload)
+			},
+		)
 
 	watch<Object | string | undefined>(
 		() => props.tag,
@@ -147,6 +144,6 @@ export function syncComponentView(
 					emit?.('hide', instance)
 				}
 			}
-		}
+		},
 	)
 }
