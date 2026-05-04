@@ -9,6 +9,8 @@
             "@/*": ["./src/*"],
             "@core": ["./src/core/index.ts"],
             "@core/*": ["./src/core/*"],
+            "@plugins": ["./src/plugins/index.ts"],
+            "@plugins/*": ["./src/plugins/*"],
             "@ui/*": ["./src/ui-vue/components/*"],
             "@ui-vue/*": ["./src/ui-vue/*"],
             "@icons/*": ["./src/icons/*"],

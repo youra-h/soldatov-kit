@@ -1,4 +1,4 @@
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, type UnwrapNestedRefs, toRaw } from 'vue'
 import type { ComponentPublicInstance } from 'vue'
 import type { IComponentView } from '@core'
 import { TComponentViewContainer, TElementPlugin, TInstancePlugin } from '../../plugins'
@@ -20,10 +20,13 @@ import { TComponentViewContainer, TElementPlugin, TInstancePlugin } from '../../
  * - DOM-элемент передаётся в `TElementPlugin` после mount; сбрасывается при unmount.
  * - Если ref указывает на Vue-компонент — берётся `$el`, иначе используется напрямую.
  */
-export function usePluginContainer(plugins: TComponentViewContainer, instance: IComponentView) {
+export function usePluginContainer(
+	plugins: TComponentViewContainer,
+	instance: IComponentView | UnwrapNestedRefs<IComponentView>,
+) {
 	const elRef = ref<ComponentPublicInstance | Element | null>(null)
 
-	plugins.get(TInstancePlugin)!.instance = instance
+	plugins.get(TInstancePlugin)!.instance = toRaw(instance) as IComponentView
 
 	onMounted(() => {
 		const raw = elRef.value
