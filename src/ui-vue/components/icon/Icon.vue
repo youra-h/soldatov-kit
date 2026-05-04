@@ -1,6 +1,6 @@
 <script lang="ts">
 import { TIcon, type IIconProps } from '@core'
-import { useBaseSetup } from '../../composables/useBaseSetup'
+import { useInstance } from '../../composables/useInstance'
 import { useElementSync } from '../../composables/useElementSync'
 import BaseIcon, { syncIcon } from './base.component'
 
@@ -8,7 +8,7 @@ export default {
 	name: '_Icon',
 	extends: BaseIcon,
 	setup(props: IIconProps, { emit }) {
-		const { ctrl: instance } = useBaseSetup(TIcon, props)
+		const { ctrl: instance } = useInstance(TIcon, props)
 
 		syncIcon({
 			props,

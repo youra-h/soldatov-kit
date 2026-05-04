@@ -1,6 +1,6 @@
 <script lang="ts">
 import { TSpinner, type ISpinnerProps } from '@core'
-import { useBaseSetup } from '../../composables/useBaseSetup'
+import { useInstance } from '../../composables/useInstance'
 import { useElementSync } from '../../composables/useElementSync'
 import BaseSpinner, { syncSpinner } from './base.component'
 
@@ -8,7 +8,7 @@ export default {
 	name: '_Spinner',
 	extends: BaseSpinner,
 	setup(props: ISpinnerProps, { emit }) {
-		const { ctrl: instance } = useBaseSetup(TSpinner, props)
+		const { ctrl: instance } = useInstance(TSpinner, props)
 
 		syncSpinner({
 			props,

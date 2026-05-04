@@ -2,7 +2,7 @@
 import type { UnwrapNestedRefs } from 'vue'
 import { TComponentView, type IComponentView, type IComponentViewProps } from '@core'
 import BaseComponentView, { syncComponentView } from './base.component'
-import { useBaseSetup } from '../../composables/useBaseSetup'
+import { useInstance } from '../../composables/useInstance'
 import { TComponentViewContainer } from '@plugins'
 import { usePlugins } from '../../composables/usePlugins'
 
@@ -14,7 +14,7 @@ export default {
 	name: '_ComponentView',
 	extends: BaseComponentView,
 	setup(props: TComponentViewVueProps, { emit }) {
-		const { ctrl: instance, raw } = useBaseSetup(TComponentView, props)
+		const { ctrl: instance, raw } = useInstance(TComponentView, props)
 
 		syncComponentView({
 			props,

@@ -1,14 +1,14 @@
 <script lang="ts">
 import { TSwitch, type ISwitchProps } from '@core'
 import BaseSwitch, { syncSwitch } from './base.component'
-import { useBaseSetup } from '../../composables/useBaseSetup'
+import { useInstance } from '../../composables/useInstance'
 import { useElementSync } from '../../composables/useElementSync'
 
 export default {
 	name: '_Switch',
 	extends: BaseSwitch,
 	setup(props: ISwitchProps, { emit }) {
-		const { ctrl: instance } = useBaseSetup(TSwitch, props)
+		const { ctrl: instance } = useInstance(TSwitch, props)
 
 		syncSwitch({
 			props,

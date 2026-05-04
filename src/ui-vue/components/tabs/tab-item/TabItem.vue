@@ -1,7 +1,7 @@
 <script lang="ts">
 import { TTabItem, type ITabItemProps } from '@core'
 import BaseTabItem, { syncTabItem } from './tab-item.component'
-import { useBaseSetup } from '../../../composables/useBaseSetup'
+import { useInstance } from '../../../composables/useInstance'
 import { useElementSync } from '../../../composables/useElementSync'
 import { Icon, useIconImport } from '../../icon'
 import { Button } from '../../button'
@@ -12,7 +12,7 @@ export default {
 	extends: BaseTabItem,
 	components: { Icon, Button },
 	setup(props: ITabItemProps, { emit }) {
-		const { ctrl: instance } = useBaseSetup(TTabItem, props)
+		const { ctrl: instance } = useInstance(TTabItem, props)
 
 		syncTabItem({
 			props,

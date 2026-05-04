@@ -1,6 +1,6 @@
 <script lang="ts">
 import { TButton, type IButtonProps } from '@core'
-import { useBaseSetup } from '../../composables/useBaseSetup'
+import { useInstance } from '../../composables/useInstance'
 import { useElementSync } from '../../composables/useElementSync'
 import BaseButton, { syncButton } from './base.component'
 
@@ -8,7 +8,7 @@ export default {
 	name: '_Button',
 	extends: BaseButton,
 	setup(props: IButtonProps, { emit }) {
-		const { ctrl: instance } = useBaseSetup(TButton, props)
+		const { ctrl: instance } = useInstance(TButton, props)
 
 		syncButton({
 			props,

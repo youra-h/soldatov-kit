@@ -1,7 +1,7 @@
 <script lang="ts">
 import { TTabs, type ITabsProps } from '@core'
 import BaseTabs, { syncTabs } from './base.component'
-import { useBaseSetup } from '../../composables/useBaseSetup'
+import { useInstance } from '../../composables/useInstance'
 import { useElementSync } from '../../composables/useElementSync'
 import { useProvideCollection } from '../../composables/useProvideCollection'
 import { useCollectionItems } from '../../composables/useCollectionItems'
@@ -13,7 +13,7 @@ export default {
 	extends: BaseTabs,
 	components: { TabItem },
 	setup(props: ITabsProps, { emit }) {
-		const { ctrl: instance } = useBaseSetup(TTabs, props)
+		const { ctrl: instance } = useInstance(TTabs, props)
 
 		syncTabs({
 			props,

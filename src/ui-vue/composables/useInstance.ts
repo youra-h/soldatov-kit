@@ -9,7 +9,7 @@ import { useManagedInstance } from './useManagedInstance'
  * @param key The key to use for the component instance in the props.
  * @returns The managed instance of the component.
  */
-export function useBaseSetup<T extends object>(
+export function useInstance<T extends object>(
 	Ctor: new (options: IComponentModelOptions<any>) => T,
 	props: any,
 	key: string = 'ctrl',
