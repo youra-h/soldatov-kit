@@ -10,10 +10,9 @@ import { isProxy, toRaw } from 'vue'
  */
 export function useManagedInstance<T>(
 	Ctor: new (options: IComponentModelOptions<any>) => T,
-	props: any,
-	key: string = 'ctrl',
+	props: any
 ): T {
-	const candidate = props[key]
+	const candidate = props['ctrl']
 
 	if (
 		candidate &&

@@ -11,10 +11,9 @@ import { useManagedInstance } from './useManagedInstance'
  */
 export function useInstance<T extends object>(
 	Ctor: new (options: IComponentModelOptions<any>) => T,
-	props: any,
-	key: string = 'ctrl',
+	props: any
 ) {
-	const instance = useManagedInstance(Ctor, props, key)
+	const instance = useManagedInstance(Ctor, props)
 
 	const reactiveInstance = (
 		isProxy(instance) ? instance : reactive(instance)
