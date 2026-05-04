@@ -33,7 +33,7 @@ export default {
 <template>
 	<component
 		ref="rootRef"
-		:ctrl="instance.tag"
+		:is="instance.tag"
 		v-if="instance.rendered"
 		v-show="instance.visible"
 		:class="instance.classes"
