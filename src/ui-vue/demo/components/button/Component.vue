@@ -44,7 +44,7 @@ const { handlers } = useEventLogger(emit, emitsButton)
 			v-bind="handlers"
 		>
 			<template v-if="loading && spinner" #after>
-				<component :is="spinner" />
+				<component :ctrl="spinner" />
 			</template>
 		</Button>
 	</PanelDemo>

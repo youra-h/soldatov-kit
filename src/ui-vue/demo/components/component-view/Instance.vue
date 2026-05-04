@@ -44,7 +44,7 @@ useSyncPropsToInstance(props, instance)
 
 <template>
 	<PanelDemo info="Managed by TComponentView instance">
-		<ComponentView :is="instance" v-bind="handlers">
+		<ComponentView :ctrl="instance" v-bind="handlers">
 			<div style="text-align: center">
 				<div style="font-weight: 600">Instance Demo</div>
 				<div style="font-size: 0.875rem; color: #666">Component with instance</div>

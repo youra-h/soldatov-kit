@@ -86,7 +86,7 @@ watch(
 
 <template>
 	<PanelDemo info="Managed by TCheckBox instance">
-		<CheckBox :is="instance" v-bind="handlers">
+		<CheckBox :ctrl="instance" v-bind="handlers">
 			<template v-if="icon" #icon>
 				<Icon :tag="useIconImport(icon)" :size="instance.size" />
 			</template>

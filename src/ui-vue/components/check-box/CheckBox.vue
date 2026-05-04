@@ -9,7 +9,7 @@ export default {
 	name: '_CheckBox',
 	extends: BaseCheckBox,
 	setup(props: ICheckBoxProps, { emit }) {
-		const { is: instance } = useBaseSetup(TCheckBox, props)
+		const { ctrl: instance } = useBaseSetup(TCheckBox, props)
 
 		syncCheckBox({
 			props,

@@ -8,7 +8,7 @@ export default {
 	name: '_Spinner',
 	extends: BaseSpinner,
 	setup(props: ISpinnerProps, { emit }) {
-		const { is: instance } = useBaseSetup(TSpinner, props)
+		const { ctrl: instance } = useBaseSetup(TSpinner, props)
 
 		syncSpinner({
 			props,
@@ -29,7 +29,7 @@ export default {
 <template>
 	<component
 		ref="rootRef"
-		:is="instance.tag"
+		:ctrl="instance.tag"
 		v-if="instance.rendered"
 		v-show="instance.visible"
 		:class="instance.classes"

@@ -8,7 +8,7 @@ export default {
 	name: '_Switch',
 	extends: BaseSwitch,
 	setup(props: ISwitchProps, { emit }) {
-		const { is: instance } = useBaseSetup(TSwitch, props)
+		const { ctrl: instance } = useBaseSetup(TSwitch, props)
 
 		syncSwitch({
 			props,

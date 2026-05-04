@@ -54,6 +54,6 @@ useSyncPropsToInstance(props, instance, undefined, {
 
 <template>
 	<PanelDemo info="Managed by TIcon instance">
-		<Icon :is="instance" v-bind="handlers" />
+		<Icon :ctrl="instance" v-bind="handlers" />
 	</PanelDemo>
 </template>

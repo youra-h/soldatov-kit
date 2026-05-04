@@ -114,7 +114,7 @@ const playgroundList = computed(() => {
 				<!-- Sandbox View -->
 				<div v-if="activeView === 'sandbox'" class="pg-app__content">
 					<div v-if="Current" class="pg-app__container">
-						<component :is="Current" @log="handleLog" />
+						<component :ctrl="Current" @log="handleLog" />
 					</div>
 					<div v-else class="pg-app__error">
 						<div class="pg-app__error-content">

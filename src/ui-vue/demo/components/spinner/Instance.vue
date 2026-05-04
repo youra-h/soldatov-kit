@@ -48,6 +48,6 @@ useSyncPropsToInstance(props, instance)
 
 <template>
 	<PanelDemo info="Managed by TSpinner instance">
-		<Spinner :is="instance" v-bind="handlers" />
+		<Spinner :ctrl="instance" v-bind="handlers" />
 	</PanelDemo>
 </template>

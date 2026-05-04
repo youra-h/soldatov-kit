@@ -63,7 +63,7 @@ describe('ui-vue: ComponentView', () => {
 		expect(el.attributes('style') ?? '').toContain('display: none')
 	})
 
-	it('поддерживает :is="instance" и пробрасывает события (instance.events.on + Vue @event)', async () => {
+	it('поддерживает :ctrl="instance" и пробрасывает события (instance.events.on + Vue @event)', async () => {
 		const instance = new TComponentView({ tag: 'div', rendered: true, visible: true })
 
 		const onCreated = vi.fn()
@@ -98,7 +98,7 @@ describe('ui-vue: ComponentView', () => {
 
 		const wrapper = mount(ComponentView as any, {
 			props: {
-				is: instance,
+				ctrl: instance,
 				// Vue listeners (эквивалент @event="handler")
 				onCreated,
 				onBeforeShow,

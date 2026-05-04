@@ -22,7 +22,7 @@ export const emitsComponentView: TEmits = [
 ] as const
 
 export const propsComponentView: TProps = {
-	is: {
+	ctrl: {
 		type: Object as PropType<IComponentView | UnwrapNestedRefs<IComponentView>>,
 	},
 	id: {

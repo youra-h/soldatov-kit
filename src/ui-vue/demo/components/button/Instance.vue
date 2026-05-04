@@ -84,9 +84,9 @@ watch(
 
 <template>
 	<PanelDemo info="Managed by TButton instance">
-		<Button :is="instance" v-bind="handlers">
+		<Button :ctrl="instance" v-bind="handlers">
 			<template v-if="loading && spinner" #after>
-				<component :is="spinner" />
+				<component :ctrl="spinner" />
 			</template>
 		</Button>
 	</PanelDemo>

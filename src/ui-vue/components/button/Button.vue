@@ -8,7 +8,7 @@ export default {
 	name: '_Button',
 	extends: BaseButton,
 	setup(props: IButtonProps, { emit }) {
-		const { is: instance } = useBaseSetup(TButton, props)
+		const { ctrl: instance } = useBaseSetup(TButton, props)
 
 		syncButton({
 			props,
@@ -29,7 +29,7 @@ export default {
 <template>
 	<component
 		ref="rootRef"
-		:is="instance.tag"
+		:ctrl="instance.tag"
 		v-if="instance.rendered"
 		v-show="instance.visible"
 		:class="instance.classes"

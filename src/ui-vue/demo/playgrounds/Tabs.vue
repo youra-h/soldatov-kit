@@ -30,7 +30,7 @@ const tabItems = ref([
 	<div style="display: flex; flex-direction: column; gap: 2rem">
 		<section>
 			<h2>Вариант 1: программный (через instance)</h2>
-			<Tabs :is="tabs">
+			<Tabs :ctrl="tabs">
 				<template #panel:tab1><p>Содержимое Tab 1</p></template>
 				<template #panel:tab2><p>Содержимое Tab 2</p></template>
 				<template #panel:tab3><p>Содержимое Tab 3</p></template>

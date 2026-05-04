@@ -13,7 +13,7 @@ export default {
 	extends: BaseTabs,
 	components: { TabItem },
 	setup(props: ITabsProps, { emit }) {
-		const { is: instance } = useBaseSetup(TTabs, props)
+		const { ctrl: instance } = useBaseSetup(TTabs, props)
 
 		syncTabs({
 			props,
@@ -42,7 +42,7 @@ export default {
 	<div ref="rootRef" v-if="instance.rendered" v-show="instance.visible" :class="instance.classes">
 		<div class="s-tabs__list" role="tablist">
 			<slot>
-				<TabItem v-for="item in items" :key="item.uid" :is="item" />
+				<TabItem v-for="item in items" :key="item.uid" :ctrl="item" />
 			</slot>
 		</div>
 		<div v-if="activeItem && $slots[`panel:${activeItem?.value}`]" class="s-tabs__panel">

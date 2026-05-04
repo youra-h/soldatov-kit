@@ -12,7 +12,7 @@ import { useManagedInstance } from './useManagedInstance'
 export function useBaseSetup<T extends object>(
 	Ctor: new (options: IComponentModelOptions<any>) => T,
 	props: any,
-	key: string = 'is',
+	key: string = 'ctrl',
 ) {
 	const instance = useManagedInstance(Ctor, props, key)
 
@@ -20,5 +20,5 @@ export function useBaseSetup<T extends object>(
 		isProxy(instance) ? instance : reactive(instance)
 	) as Reactive<T>
 
-	return { is: reactiveInstance }
+	return { ctrl: reactiveInstance }
 }

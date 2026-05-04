@@ -8,7 +8,7 @@ export default {
 	name: '_Icon',
 	extends: BaseIcon,
 	setup(props: IIconProps, { emit }) {
-		const { is: instance } = useBaseSetup(TIcon, props)
+		const { ctrl: instance } = useBaseSetup(TIcon, props)
 
 		syncIcon({
 			props,
@@ -29,7 +29,7 @@ export default {
 <template>
 	<component
 		ref="rootRef"
-		:is="instance.tag"
+		:ctrl="instance.tag"
 		v-if="instance.rendered"
 		v-show="instance.visible"
 		:class="instance.classes"
