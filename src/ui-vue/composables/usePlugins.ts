@@ -14,7 +14,7 @@ type TComponentViewContainerCtor<T extends TComponentViewContainer> = new () => 
  * Использование:
  * ```ts
  * const { plugins, rootRef } = usePlugins(TComponentViewContainer, raw)
- * // или с кастомным контейнером:
+ *  или с кастомным контейнером:
  * const { plugins, rootRef } = usePlugins(TTabsContainer, raw)
  * ```
  * ```html
