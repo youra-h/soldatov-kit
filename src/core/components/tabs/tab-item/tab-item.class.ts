@@ -57,7 +57,7 @@ export default class TTabItem
 	}
 
 	set active(value: boolean) {
-		if (this.disabled) return
+		if (value && this.disabled) return
 
 		this._collectionItem.active = value
 	}
