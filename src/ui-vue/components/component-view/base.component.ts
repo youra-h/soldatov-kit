@@ -57,7 +57,7 @@ export default {
 		;(this.instance! as IComponentView).id = this.$.uid
 		// Emit 'created' event when component is created
 		// @ts-ignore
-		this.$emit('created', this.instance)
+		this.$emit('created', { instance: this.instance, plugins: this.plugins })
 	},
 	unmounted() {
 		// @ts-ignore
@@ -66,9 +66,9 @@ export default {
 }
 
 export function syncComponentView(
-	options: ISyncComponentModelOptions<IComponentViewProps, IComponentView>,
+	options: ISyncComponentModelOptions<IComponentViewProps>,
 ) {
-	const { props, instance, emit } = options
+	const { props, instance, plugins, emit } = options
 
 	// Пробрасываем события core-инстанса наружу (Vue events).
 	// instance.events.on('created' as any, (instance: IComponentView) => {

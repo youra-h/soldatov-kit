@@ -23,6 +23,7 @@ export default {
 		syncComponentView({
 			props,
 			instance,
+			plugins,
 			emit,
 		})
 
