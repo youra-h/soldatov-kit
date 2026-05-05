@@ -1,20 +1,15 @@
 <script lang="ts">
-import type { UnwrapNestedRefs } from 'vue'
-import { TComponentView, type IComponentView, type IComponentViewProps } from '@core'
+import { TComponentView, type IComponentViewProps } from '@core'
 import BaseComponentView, { syncComponentView } from './base.component'
 import { useInstance } from '../../composables/useInstance'
 import { usePlugins } from '../../composables/usePlugins'
 import { TComponentViewContainer } from '@plugins'
-
-type TComponentViewVueProps = IComponentViewProps & {
-	ctrl?: IComponentView | UnwrapNestedRefs<IComponentView>
-	plugins?: TComponentViewContainer | undefined
-}
+import type { TBaseComponentViewProps } from './types'
 
 export default {
 	name: '_ComponentView',
 	extends: BaseComponentView,
-	setup(props: TComponentViewVueProps, { emit }) {
+	setup(props: TBaseComponentViewProps<IComponentViewProps>, { emit }) {
 		// Получение инстанса из пропсов или создание нового
 		const { ctrl: instance, raw } = useInstance(TComponentView, props)
 		// Инициализация плагинов

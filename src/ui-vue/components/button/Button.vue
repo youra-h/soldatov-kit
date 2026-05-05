@@ -1,14 +1,15 @@
 <script lang="ts">
-import { TButton, type IButtonProps } from '@core'
+import { TButton, type IButton, type IButtonProps } from '@core'
 import { useInstance } from '../../composables/useInstance'
 import { usePlugins } from '../../composables/usePlugins'
 import BaseButton, { syncButton } from './base.component'
 import { TComponentViewContainer } from '@plugins'
+import type { TBaseComponentViewProps } from '../component-view'
 
 export default {
 	name: '_Button',
 	extends: BaseButton,
-	setup(props: IButtonProps, { emit }) {
+	setup(props: TBaseComponentViewProps<IButtonProps, IButton>, { emit }) {
 		const { ctrl: instance, raw } = useInstance(TButton, props)
 		const { plugins, rootRef } = usePlugins(TComponentViewContainer, props?.plugins, raw)
 
