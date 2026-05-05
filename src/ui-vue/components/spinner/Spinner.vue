@@ -1,14 +1,16 @@
 <script lang="ts">
 import { TSpinner, type ISpinnerProps } from '@core'
 import { useInstance } from '../../composables/useInstance'
-import { useElementSync } from '../../composables/useElementSync'
+import { usePlugins } from '../../composables/usePlugins'
 import BaseSpinner, { syncSpinner } from './base.component'
+import { TComponentViewContainer } from '@plugins'
 
 export default {
 	name: '_Spinner',
 	extends: BaseSpinner,
 	setup(props: ISpinnerProps, { emit }) {
 		const { ctrl: instance, raw } = useInstance(TSpinner, props)
+		const { plugins, rootRef } = usePlugins(TComponentViewContainer, props?.plugins, raw)
 
 		syncSpinner({
 			props,
@@ -19,6 +21,7 @@ export default {
 
 		return {
 			instance,
+			plugins,
 			rootRef,
 		}
 	},

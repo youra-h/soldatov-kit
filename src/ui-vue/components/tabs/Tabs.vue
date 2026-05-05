@@ -2,10 +2,11 @@
 import { TTabs, type ITabsProps } from '@core'
 import BaseTabs, { syncTabs } from './base.component'
 import { useInstance } from '../../composables/useInstance'
-import { useElementSync } from '../../composables/useElementSync'
+import { usePlugins } from '../../composables/usePlugins'
 import { useProvideCollection } from '../../composables/useProvideCollection'
 import { useCollectionItems } from '../../composables/useCollectionItems'
 import { useEventRef } from '../../composables/useEventRef'
+import { TComponentViewContainer } from '@plugins'
 import { TabItem } from './tab-item'
 
 export default {
@@ -14,6 +15,7 @@ export default {
 	components: { TabItem },
 	setup(props: ITabsProps, { emit }) {
 		const { ctrl: instance, raw } = useInstance(TTabs, props)
+		const { plugins, rootRef } = usePlugins(TComponentViewContainer, props?.plugins, raw)
 
 		syncTabs({
 			props,
@@ -32,7 +34,7 @@ export default {
 			['item:activated', 'item:deactivated'],
 		)
 
-		return { instance, items, rootRef, activeItem }
+		return { instance, items, plugins, rootRef, activeItem }
 	},
 }
 </script>

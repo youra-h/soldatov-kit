@@ -1,14 +1,16 @@
 <script lang="ts">
 import { TIcon, type IIconProps } from '@core'
 import { useInstance } from '../../composables/useInstance'
-import { useElementSync } from '../../composables/useElementSync'
+import { usePlugins } from '../../composables/usePlugins'
 import BaseIcon, { syncIcon } from './base.component'
+import { TComponentViewContainer } from '@plugins'
 
 export default {
 	name: '_Icon',
 	extends: BaseIcon,
 	setup(props: IIconProps, { emit }) {
 		const { ctrl: instance, raw } = useInstance(TIcon, props)
+		const { plugins, rootRef } = usePlugins(TComponentViewContainer, props?.plugins, raw)
 
 		syncIcon({
 			props,
@@ -19,6 +21,7 @@ export default {
 
 		return {
 			instance,
+			plugins,
 			rootRef,
 		}
 	},

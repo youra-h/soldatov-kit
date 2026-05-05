@@ -21,6 +21,7 @@ export default {
 
 		return {
 			instance,
+			plugins,
 			rootRef,
 		}
 	},

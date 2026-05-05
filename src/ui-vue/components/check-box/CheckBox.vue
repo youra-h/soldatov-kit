@@ -2,14 +2,16 @@
 import { TCheckBox, type ICheckBoxProps } from '@core'
 import BaseCheckBox, { syncCheckBox } from './base.component'
 import { useInstance } from '../../composables/useInstance'
-import { useElementSync } from '../../composables/useElementSync'
+import { usePlugins } from '../../composables/usePlugins'
 import { Icon, useIconImport } from '../icon'
+import { TComponentViewContainer } from '@plugins'
 
 export default {
 	name: '_CheckBox',
 	extends: BaseCheckBox,
 	setup(props: ICheckBoxProps, { emit }) {
 		const { ctrl: instance, raw } = useInstance(TCheckBox, props)
+		const { plugins, rootRef } = usePlugins(TComponentViewContainer, props?.plugins, raw)
 
 		syncCheckBox({
 			props,
@@ -22,7 +24,7 @@ export default {
 		const defaultIconTag = useIconImport('../../icons/check.svg')
 		const defaultIndeterminateIconTag = useIconImport('../../icons/check_indeterminate.svg')
 
-		return { instance, defaultIconTag, defaultIndeterminateIconTag, rootRef }
+		return { instance, defaultIconTag, defaultIndeterminateIconTag, plugins, rootRef }
 	},
 }
 </script>

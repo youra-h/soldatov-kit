@@ -2,7 +2,8 @@
 import { TTabItem, type ITabItemProps } from '@core'
 import BaseTabItem, { syncTabItem } from './tab-item.component'
 import { useInstance } from '../../../composables/useInstance'
-import { useElementSync } from '../../../composables/useElementSync'
+import { usePlugins } from '../../../composables/usePlugins'
+import { TComponentViewContainer } from '@plugins'
 import { Icon, useIconImport } from '../../icon'
 import { Button } from '../../button'
 import { nextTick } from 'vue'
@@ -13,6 +14,7 @@ export default {
 	components: { Icon, Button },
 	setup(props: ITabItemProps, { emit }) {
 		const { ctrl: instance, raw } = useInstance(TTabItem, props)
+		const { plugins, rootRef } = usePlugins(TComponentViewContainer, props?.plugins, raw)
 
 		syncTabItem({
 			props,
@@ -21,14 +23,13 @@ export default {
 			emit,
 		})
 
-		const rootRef = useElementSync(instance)
 		const closeIconTag = useIconImport('../../icons/close.svg')
 
 		nextTick(() => {
 			instance.refresh()
 		})
 
-		return { instance, closeIconTag, rootRef }
+		return { instance, closeIconTag, plugins, rootRef }
 	},
 }
 </script>
