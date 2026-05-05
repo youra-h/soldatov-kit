@@ -3,8 +3,8 @@ import type { UnwrapNestedRefs } from 'vue'
 import { TComponentView, type IComponentView, type IComponentViewProps } from '@core'
 import BaseComponentView, { syncComponentView } from './base.component'
 import { useInstance } from '../../composables/useInstance'
-import { TComponentViewContainer } from '@plugins'
 import { usePlugins } from '../../composables/usePlugins'
+import { TComponentViewContainer } from '@plugins'
 
 type TComponentViewVueProps = IComponentViewProps & {
 	ctrl?: IComponentView | UnwrapNestedRefs<IComponentView>
