@@ -18,11 +18,15 @@ const emit = defineEmits<{
 
 // Создаем обработчики событий через композабл
 const { handlers } = useEventLogger(emit, emitsComponentView)
+
+const onReady = (payload) => {
+	console.log(payload);
+}
 </script>
 
 <template>
 	<PanelDemo info="Controlled by props from Properties panel">
-		<ComponentView :tag="tag" :visible="visible" :rendered="rendered" v-bind="handlers">
+		<ComponentView :tag="tag" :visible="visible" :rendered="rendered" v-bind="handlers" @ready="onReady">
 			<div style="text-align: center">
 				<div style="font-weight: 600">Props Demo</div>
 				<div style="font-size: 0.875rem; color: #666">Component with props</div>

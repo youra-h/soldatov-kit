@@ -9,19 +9,18 @@ export default {
 	name: '_CheckBox',
 	extends: BaseCheckBox,
 	setup(props: ICheckBoxProps, { emit }) {
-		const { ctrl: instance } = useInstance(TCheckBox, props)
+		const { ctrl: instance, raw } = useInstance(TCheckBox, props)
 
 		syncCheckBox({
 			props,
 			instance,
+			plugins,
 			emit,
 		})
 
 		// Иконки по умолчанию
 		const defaultIconTag = useIconImport('../../icons/check.svg')
 		const defaultIndeterminateIconTag = useIconImport('../../icons/check_indeterminate.svg')
-
-		const rootRef = useElementSync(instance)
 
 		return { instance, defaultIconTag, defaultIndeterminateIconTag, rootRef }
 	},

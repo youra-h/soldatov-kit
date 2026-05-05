@@ -12,11 +12,12 @@ export default {
 	extends: BaseTabItem,
 	components: { Icon, Button },
 	setup(props: ITabItemProps, { emit }) {
-		const { ctrl: instance } = useInstance(TTabItem, props)
+		const { ctrl: instance, raw } = useInstance(TTabItem, props)
 
 		syncTabItem({
 			props,
 			instance,
+			plugins,
 			emit,
 		})
 

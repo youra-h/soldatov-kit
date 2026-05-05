@@ -13,19 +13,18 @@ export default {
 	extends: BaseTabs,
 	components: { TabItem },
 	setup(props: ITabsProps, { emit }) {
-		const { ctrl: instance } = useInstance(TTabs, props)
+		const { ctrl: instance, raw } = useInstance(TTabs, props)
 
 		syncTabs({
 			props,
 			instance,
+			plugins,
 			emit,
 		})
 
 		useProvideCollection(instance.collection)
 
 		const items = useCollectionItems(instance.collection)
-
-		const rootRef = useElementSync(instance)
 
 		const activeItem = useEventRef(
 			instance.collection.events,

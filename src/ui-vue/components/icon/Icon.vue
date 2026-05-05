@@ -8,15 +8,14 @@ export default {
 	name: '_Icon',
 	extends: BaseIcon,
 	setup(props: IIconProps, { emit }) {
-		const { ctrl: instance } = useInstance(TIcon, props)
+		const { ctrl: instance, raw } = useInstance(TIcon, props)
 
 		syncIcon({
 			props,
 			instance,
+			plugins,
 			emit,
 		})
-
-		const rootRef = useElementSync(instance)
 
 		return {
 			instance,

@@ -8,15 +8,14 @@ export default {
 	name: '_Spinner',
 	extends: BaseSpinner,
 	setup(props: ISpinnerProps, { emit }) {
-		const { ctrl: instance } = useInstance(TSpinner, props)
+		const { ctrl: instance, raw } = useInstance(TSpinner, props)
 
 		syncSpinner({
 			props,
 			instance,
+			plugins,
 			emit,
 		})
-
-		const rootRef = useElementSync(instance)
 
 		return {
 			instance,
