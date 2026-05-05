@@ -6,7 +6,6 @@ import { usePlugins } from '../../../composables/usePlugins'
 import { TComponentViewContainer } from '@plugins'
 import { Icon, useIconImport } from '../../icon'
 import { Button } from '../../button'
-import { nextTick } from 'vue'
 
 export default {
 	name: '_TabItem',
@@ -24,10 +23,6 @@ export default {
 		})
 
 		const closeIconTag = useIconImport('../../icons/close.svg')
-
-		nextTick(() => {
-			instance.refresh()
-		})
 
 		return { instance, closeIconTag, plugins, rootRef }
 	},
