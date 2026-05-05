@@ -34,6 +34,8 @@ export type TComponentViewEvents = TComponentModelEvents & {
 	'change:tag': (value: string | object) => void
 	/** change:classes (без baseClass) */
 	'change:classes': (value: string[]) => void
+	/** change:ready — срабатывает когда компонент монтируется/демонтируется из DOM */
+	'change:ready': (value: boolean) => void
 }
 
 export interface IComponentViewProps extends IComponentModelProps {
@@ -98,6 +100,8 @@ export interface IComponentView<
 	readonly baseClass: string
 	/** CSS-классы (включая baseClass и динамические) */
 	readonly classes: string[]
+	/** Компонент смонтирован в DOM и готов (устанавливается плагин-слоем) */
+	ready: boolean
 	/** Показать компонент */
 	show(): void
 	/** Скрыть компонент */

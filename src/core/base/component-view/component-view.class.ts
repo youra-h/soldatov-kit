@@ -34,6 +34,7 @@ export default class TComponentView<
 	}
 
 	protected _tag: string | object
+	protected _ready: boolean = false
 	protected _renderedState: IStateUnit<boolean>
 	protected _visibilityState: IVisibilityState
 	protected _baseClass: string
@@ -195,6 +196,17 @@ export default class TComponentView<
 		this._tag = value
 
 		this.events.emit('change:tag', value)
+	}
+
+	get ready(): boolean {
+		return this._ready
+	}
+	set ready(value: boolean) {
+		if (this._ready === value) return
+
+		this._ready = value
+
+		this.events.emit('change:ready', value)
 	}
 
 	get classes(): string[] {
