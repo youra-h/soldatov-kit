@@ -66,7 +66,10 @@ export class TTabsAppearancePlugin extends TBasePlugin<TTabsAppearancePluginEven
 	private _updateLine(): void {
 		if (!this._element) return
 
-		const listEl = this._element.querySelector('.s-tabs__list') as HTMLElement | null
+		const listEl = this._element.querySelector(
+			`.${this._tabs!.baseClass}__list`,
+		) as HTMLElement | null
+
 		if (!listEl) return
 
 		const activeItem = this._tabs!.activeItem

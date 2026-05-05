@@ -94,6 +94,8 @@ export interface IComponentView<
 	rendered: boolean
 	/** Логическая видимость */
 	visible: boolean
+	/** Базовый CSS-класс (без динамических классов) */
+	readonly baseClass: string
 	/** CSS-классы (включая baseClass и динамические) */
 	readonly classes: string[]
 	/** Показать компонент */

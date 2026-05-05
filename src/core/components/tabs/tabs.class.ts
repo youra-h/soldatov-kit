@@ -248,23 +248,6 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 		return this._collection.deleteItem(item)
 	}
 
-	// private _updateLineIndicator(): void {
-	// 	if (this._appearance !== 'line') return
-	// 	if (!this._el) return
-
-	// 	const listEl = this._el.querySelector(`.${this._baseClass}__list`) as HTMLElement | null
-
-	// 	if (!listEl) return
-
-	// 	const activeEl = this.activeItem?.el as HTMLElement | null
-
-	// 	const offsetLeft = activeEl ? activeEl.offsetLeft : 0
-	// 	const offsetWidth = activeEl ? activeEl.offsetWidth : 0
-
-	// 	listEl.style.setProperty('--underline-x', `${offsetLeft}px`)
-	// 	listEl.style.setProperty('--underline-width', `${offsetWidth}px`)
-	// }
-
 	override get classes(): string[] {
 		const classes = [...super.classes]
 

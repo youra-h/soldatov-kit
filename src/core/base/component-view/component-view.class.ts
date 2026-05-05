@@ -140,6 +140,10 @@ export default class TComponentView<
 		}
 	}
 
+	get baseClass(): string {
+		return this._baseClass
+	}
+
 	show(): void {
 		if (!this.beforeShow()) return
 
