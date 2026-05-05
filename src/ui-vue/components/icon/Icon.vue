@@ -10,8 +10,8 @@ export default {
 	name: '_Icon',
 	extends: BaseIcon,
 	setup(props: TBaseComponentViewProps<IIconProps, IIcon>, { emit }) {
-		const { ctrl: instance, raw } = useInstance(TIcon, props)
-		const { plugins, rootRef } = usePlugins(TComponentViewContainer, props?.plugins, raw)
+		const instance = useInstance(TIcon, props)
+		const { plugins, rootRef } = usePlugins(TComponentViewContainer, props?.plugins, instance)
 
 		syncIcon({
 			props,

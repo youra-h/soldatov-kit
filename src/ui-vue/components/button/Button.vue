@@ -10,8 +10,8 @@ export default {
 	name: '_Button',
 	extends: BaseButton,
 	setup(props: TBaseComponentViewProps<IButtonProps, IButton>, { emit }) {
-		const { ctrl: instance, raw } = useInstance(TButton, props)
-		const { plugins, rootRef } = usePlugins(TComponentViewContainer, props?.plugins, raw)
+		const instance = useInstance(TButton, props)
+		const { plugins, rootRef } = usePlugins(TComponentViewContainer, props?.plugins, instance)
 
 		syncButton({
 			props,

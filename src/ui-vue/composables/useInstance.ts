@@ -1,23 +1,13 @@
-import { reactive, isProxy, type Reactive } from 'vue'
-import { type IComponentModelOptions } from '@core'
-import { useManagedInstance } from './useManagedInstance'
+import { reactive, toRaw, type Reactive } from 'vue'
+import type { IComponentModelOptions } from '@core'
 
-/**
- * Use a managed instance of a component.
- * @param Ctor The constructor of the component.
- * @param props The props to pass to the component.
- * @param key The key to use for the component instance in the props.
- * @returns The managed instance of the component.
- */
 export function useInstance<T extends object>(
 	Ctor: new (options: IComponentModelOptions<any>) => T,
-	props: any
-) {
-	const instance = useManagedInstance(Ctor, props)
+	props: { ctrl?: T | Reactive<T>; [key: string]: any },
+): Reactive<T> {
+	const provided = props.ctrl
 
-	const reactiveInstance = (
-		isProxy(instance) ? instance : reactive(instance)
-	) as Reactive<T>
+	const raw: T = provided ? (toRaw(provided) as T) : new Ctor({ props })
 
-	return { ctrl: reactiveInstance, raw: instance }
+	return reactive(raw) as Reactive<T>
 }

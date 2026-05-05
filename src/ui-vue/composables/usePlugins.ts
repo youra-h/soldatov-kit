@@ -1,4 +1,4 @@
-import { ref, onMounted, onUnmounted, toRaw, type UnwrapNestedRefs } from 'vue'
+import { ref, onMounted, onUnmounted, toRaw, type Reactive } from 'vue'
 import type { ComponentPublicInstance } from 'vue'
 import type { IComponentView } from '@core'
 import { TComponentViewContainer } from '../../plugins/containers/component-view'
@@ -30,13 +30,12 @@ type TComponentViewContainerCtor<T extends TComponentViewContainer> = new () => 
 export function usePlugins<TContainer extends TComponentViewContainer>(
 	ContainerCtor: TComponentViewContainerCtor<TContainer>,
 	plugins: TContainer | undefined,
-	raw: IComponentView | UnwrapNestedRefs<IComponentView>,
+	instance: Reactive<IComponentView>,
 ) {
 	const container = plugins ?? new ContainerCtor()
 	const elRef = ref<ComponentPublicInstance | Element | null>(null)
-	const rawInstance = toRaw(raw) as IComponentView
 
-	container.get(TInstancePlugin)!.instance = rawInstance
+	container.get(TInstancePlugin)!.instance = toRaw(instance) as IComponentView
 
 	onMounted(() => {
 		const ref = elRef.value

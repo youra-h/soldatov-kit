@@ -11,8 +11,8 @@ export default {
 	name: '_CheckBox',
 	extends: BaseCheckBox,
 	setup(props: TBaseComponentViewProps<ICheckBoxProps, ICheckBox>, { emit }) {
-		const { ctrl: instance, raw } = useInstance(TCheckBox, props)
-		const { plugins, rootRef } = usePlugins(TComponentViewContainer, props?.plugins, raw)
+		const instance = useInstance(TCheckBox, props)
+		const { plugins, rootRef } = usePlugins(TComponentViewContainer, props?.plugins, instance)
 
 		syncCheckBox({
 			props,

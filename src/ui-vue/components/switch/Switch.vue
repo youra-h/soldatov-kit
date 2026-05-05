@@ -10,8 +10,8 @@ export default {
 	name: '_Switch',
 	extends: BaseSwitch,
 	setup(props: TBaseComponentViewProps<ISwitchProps, ISwitch>, { emit }) {
-		const { ctrl: instance, raw } = useInstance(TSwitch, props)
-		const { plugins, rootRef } = usePlugins(TComponentViewContainer, props?.plugins, raw)
+		const instance = useInstance(TSwitch, props)
+		const { plugins, rootRef } = usePlugins(TComponentViewContainer, props?.plugins, instance)
 
 		syncSwitch({
 			props,

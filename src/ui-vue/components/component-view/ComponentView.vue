@@ -11,9 +11,9 @@ export default {
 	extends: BaseComponentView,
 	setup(props: TBaseComponentViewProps<IComponentViewProps>, { emit }) {
 		// Получение инстанса из пропсов или создание нового
-		const { ctrl: instance, raw } = useInstance(TComponentView, props)
+		const instance = useInstance(TComponentView, props)
 		// Инициализация плагинов
-		const { plugins, rootRef } = usePlugins(TComponentViewContainer, props?.plugins, raw)
+		const { plugins, rootRef } = usePlugins(TComponentViewContainer, props?.plugins, instance)
 
 		syncComponentView({
 			props,

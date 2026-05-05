@@ -15,8 +15,8 @@ export default {
 	extends: BaseTabs,
 	components: { TabItem },
 	setup(props: TBaseComponentViewProps<ITabsProps, ITabs>, { emit }) {
-		const { ctrl: instance, raw } = useInstance(TTabs, props)
-		const { plugins, rootRef } = usePlugins(TComponentViewContainer, props?.plugins, raw)
+		const instance = useInstance(TTabs, props)
+		const { plugins, rootRef } = usePlugins(TComponentViewContainer, props?.plugins, instance)
 
 		syncTabs({
 			props,

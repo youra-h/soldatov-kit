@@ -10,8 +10,8 @@ export default {
 	name: '_Spinner',
 	extends: BaseSpinner,
 	setup(props: TBaseComponentViewProps<ISpinnerProps, ISpinner>, { emit }) {
-		const { ctrl: instance, raw } = useInstance(TSpinner, props)
-		const { plugins, rootRef } = usePlugins(TComponentViewContainer, props?.plugins, raw)
+		const instance = useInstance(TSpinner, props)
+		const { plugins, rootRef } = usePlugins(TComponentViewContainer, props?.plugins, instance)
 
 		syncSpinner({
 			props,
