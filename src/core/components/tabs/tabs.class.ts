@@ -120,8 +120,6 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 			(payload: { collection: any; item: ITabItem }) => {
 				// Пробрасываем событие наружу
 				this.events.emit('item:deleted', payload)
-
-				// requestAnimationFrame(() => this._updateLineIndicator())
 			},
 		)
 
@@ -130,9 +128,6 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 			(payload: { collection: any; item: ITabItem }) => {
 				// Пробрасываем событие наружу
 				this.events.emit('item:activated', payload)
-				// Индикатор: обновляем при смене внешнего вида (может влиять на размеры табов)
-				// Используем requestAnimationFrame, чтобы дождаться отрисовки активного таба (особенно важно при первой активации или при смене внешнего вида или при удалении таба)
-				// requestAnimationFrame(() => this._updateLineIndicator())
 			},
 		)
 
@@ -142,18 +137,12 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 		})
 
 		this._collection.events.on('item:moved', (payload: { collection: any }) => {
-			// Индикатор: при смене активного таба — обновляем позицию индикатора
-			// this._updateLineIndicator()
 			// Пробрасываем событие наружу
 			this.events.emit('item:moved', payload)
 		})
-
-		// Индикатор: обновляем при смене внешнего вида (может влиять на размеры табов)
-		// this.events.on('change:appearance', () => this._updateLineIndicator())
 	}
 
 	// Простые геттеры/сеттеры без state
-
 	get orientation(): TTabsOrientation {
 		return this._orientation
 	}

@@ -35,10 +35,10 @@ export class TTabsAppearancePlugin extends TBasePlugin<TTabsAppearancePluginEven
 			this._tabs = instance
 
 			instance.events.on('item:activated', () => this.update())
+			instance.events.on('item:deleted', () => this.update())
+			instance.events.on('item:moved', () => this.update())
 			instance.events.on('item:deactivated', () => this.update())
 			instance.events.on('change:appearance', () => this.update())
-
-			this.update()
 		})
 	}
 
