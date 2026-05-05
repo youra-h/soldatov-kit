@@ -1,14 +1,15 @@
 <script lang="ts">
-import { TSwitch, type ISwitchProps } from '@core'
+import { TSwitch, type ISwitchProps, type ISwitch } from '@core'
 import BaseSwitch, { syncSwitch } from './base.component'
 import { useInstance } from '../../composables/useInstance'
 import { usePlugins } from '../../composables/usePlugins'
 import { TComponentViewContainer } from '@plugins'
+import type { TBaseComponentViewProps } from '../component-view'
 
 export default {
 	name: '_Switch',
 	extends: BaseSwitch,
-	setup(props: ISwitchProps, { emit }) {
+	setup(props: TBaseComponentViewProps<ISwitchProps, ISwitch>, { emit }) {
 		const { ctrl: instance, raw } = useInstance(TSwitch, props)
 		const { plugins, rootRef } = usePlugins(TComponentViewContainer, props?.plugins, raw)
 

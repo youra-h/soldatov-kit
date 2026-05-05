@@ -1,15 +1,16 @@
 <script lang="ts">
-import { TCheckBox, type ICheckBoxProps } from '@core'
+import { TCheckBox, type ICheckBox, type ICheckBoxProps } from '@core'
 import BaseCheckBox, { syncCheckBox } from './base.component'
 import { useInstance } from '../../composables/useInstance'
 import { usePlugins } from '../../composables/usePlugins'
 import { Icon, useIconImport } from '../icon'
 import { TComponentViewContainer } from '@plugins'
+import type { TBaseComponentViewProps } from '../component-view'
 
 export default {
 	name: '_CheckBox',
 	extends: BaseCheckBox,
-	setup(props: ICheckBoxProps, { emit }) {
+	setup(props: TBaseComponentViewProps<ICheckBoxProps, ICheckBox>, { emit }) {
 		const { ctrl: instance, raw } = useInstance(TCheckBox, props)
 		const { plugins, rootRef } = usePlugins(TComponentViewContainer, props?.plugins, raw)
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-import { TTabs, type ITabsProps } from '@core'
+import { TTabs, type ITabsProps, type ITabs } from '@core'
 import BaseTabs, { syncTabs } from './base.component'
 import { useInstance } from '../../composables/useInstance'
 import { usePlugins } from '../../composables/usePlugins'
@@ -8,12 +8,13 @@ import { useCollectionItems } from '../../composables/useCollectionItems'
 import { useEventRef } from '../../composables/useEventRef'
 import { TComponentViewContainer } from '@plugins'
 import { TabItem } from './tab-item'
+import type { TBaseComponentViewProps } from '../component-view'
 
 export default {
 	name: '_Tabs',
 	extends: BaseTabs,
 	components: { TabItem },
-	setup(props: ITabsProps, { emit }) {
+	setup(props: TBaseComponentViewProps<ITabsProps, ITabs>, { emit }) {
 		const { ctrl: instance, raw } = useInstance(TTabs, props)
 		const { plugins, rootRef } = usePlugins(TComponentViewContainer, props?.plugins, raw)
 
