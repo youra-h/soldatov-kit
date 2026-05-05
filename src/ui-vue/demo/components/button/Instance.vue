@@ -36,7 +36,7 @@ const instance = reactive(
 		visible: props.visible ?? true,
 		size: props.size || 'normal',
 		variant: props.variant || 'normal',
-		appearance: props.appearance || 'normal',
+		appearance: props.appearance || 'filled',
 		disabled: props.disabled ?? false,
 		text: props.text || 'Button',
 	}),
@@ -86,7 +86,7 @@ watch(
 	<PanelDemo info="Managed by TButton instance">
 		<Button :ctrl="instance" v-bind="handlers">
 			<template v-if="loading && spinner" #after>
-				<component :ctrl="spinner" />
+				<component :is="spinner" />
 			</template>
 		</Button>
 	</PanelDemo>
