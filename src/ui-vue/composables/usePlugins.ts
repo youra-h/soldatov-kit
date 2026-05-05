@@ -32,7 +32,7 @@ export function usePlugins<TContainer extends TComponentViewContainer>(
 	plugins: TContainer | undefined,
 	instance: Reactive<IComponentView>,
 ) {
-	const container = plugins ?? new ContainerCtor()
+	const container = (plugins ?? new ContainerCtor()) as TContainer
 	const elRef = ref<ComponentPublicInstance | Element | null>(null)
 
 	container.get(TInstancePlugin)!.instance = toRaw(instance) as IComponentView
