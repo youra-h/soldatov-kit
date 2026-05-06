@@ -40,10 +40,9 @@ export default class TInputControl<
 	constructor(options: IComponentViewOptions<TProps, TStates> | Partial<TProps> = {}) {
 		super(options)
 
-		const { props = {} as Partial<TProps>, states } = TComponentView.prepareOptions<
-			TProps,
-			TStates
-		>(options)
+		const { props = {} as Partial<TProps> } = TComponentView.prepareOptions<TProps, TStates>(
+			options,
+		)
 
 		// Простые свойства
 		this._readonly = props.readonly ?? (TInputControl.defaultValues.readonly as boolean)
@@ -65,6 +64,8 @@ export default class TInputControl<
 
 		this._readonly = value
 
+		this._classes.toggle(`--readonly`, value)
+
 		this.events.emit('change:readonly', value)
 	}
 
@@ -75,6 +76,8 @@ export default class TInputControl<
 		if (this._required === value) return
 
 		this._required = value
+
+		this._classes.toggle(`--required`, value)
 
 		this.events.emit('change:required', value)
 	}
@@ -105,20 +108,6 @@ export default class TInputControl<
 		this._state = value
 
 		this.events.emit('change:state', value)
-	}
-
-	get classes(): string[] {
-		const classes = [...super.classes]
-
-		if (this._required) {
-			classes.push(`${this._baseClass}--required`)
-		}
-
-		if (this._readonly) {
-			classes.push(`${this._baseClass}--readonly`)
-		}
-
-		return classes
 	}
 
 	getProps(): TProps {

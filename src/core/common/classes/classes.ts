@@ -32,43 +32,62 @@ export class TClasses {
 	/** Заменяет базовый класс. Эмитит `change` если значение изменилось. */
 	setBase(base: string): this {
 		if (this._base === base) return this
+
 		this._base = base
 		this.events.emit('change')
+
+		return this
+	}
+
+	/** Если `withBase === true` — возвращает `base + entry`, иначе `entry` как есть. */
+	private _resolve(entry: string, withBase: boolean): string {
+		return withBase ? `${this._base}${entry}` : entry
+	}
+
+	/**
+	 * Добавляет статический класс (строку) или динамическую функцию.
+	 * Статический класс добавляется только если его ещё нет.
+	 * Динамическая функция добавляется всегда (дубликаты не проверяются).
+	 * Эмитит `change` если запись была добавлена.
+	 * @param withBase — если `true`, строка автоматически предваряется базовым классом
+	 */
+	add(entry: TClassEntry, withBase = true): this {
+		if (typeof entry === 'function') {
+			this._dynamics.push(entry)
+			this.events.emit('change')
+		} else {
+			const cls = this._resolve(entry, withBase)
+
+			if (!this._statics.has(cls)) {
+				this._statics.add(cls)
+				this.events.emit('change')
+			}
+		}
+
 		return this
 	}
 
 	/**
-	 * Добавляет статические классы (строки) или динамические (функции).
-	 * Статический класс добавляется только если его ещё нет.
-	 * Динамическая функция добавляется всегда (дубликаты не проверяются).
-	 * Эмитит `change` если хотя бы одна запись была добавлена.
+	 * Удаляет статический класс. Эмитит `change` если класс присутствовал.
+	 * @param withBase — если `true`, строка автоматически предваряется базовым классом
 	 */
-	add(...entries: TClassEntry[]): this {
-		let changed = false
+	remove(entry: string, withBase = true): this {
+		const cls = this._resolve(entry, withBase)
 
-		for (const entry of entries) {
-			if (typeof entry === 'function') {
-				this._dynamics.push(entry)
-				changed = true
-			} else if (!this._statics.has(entry)) {
-				this._statics.add(entry)
-				changed = true
-			}
-		}
-
-		if (changed) this.events.emit('change')
-
-		return this
-	}
-
-	/** Удаляет статический класс. Эмитит `change` если класс присутствовал. */
-	remove(entry: string): this {
-		if (this._statics.has(entry)) {
-			this._statics.delete(entry)
+		if (this._statics.has(cls)) {
+			this._statics.delete(cls)
 			this.events.emit('change')
 		}
 
 		return this
+	}
+
+	/**
+	 * Добавляет класс если `value === true`, удаляет если `false`.
+	 * @param withBase — если `true`, строка автоматически предваряется базовым классом
+	 */
+	toggle(entry: string, value: boolean, withBase = true): this {
+		return value ? this.add(entry, withBase) : this.remove(entry, withBase)
 	}
 
 	/** Возвращает итоговый список классов: `[base, ...statics, ...computed dynamics]`. */
