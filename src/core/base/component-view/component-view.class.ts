@@ -66,6 +66,7 @@ export default class TComponentView<
 
 		// Иначе это plain props
 		const props = options as Partial<TProps>
+
 		return {
 			props,
 		}
