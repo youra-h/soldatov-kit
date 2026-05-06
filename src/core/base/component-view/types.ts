@@ -1,3 +1,4 @@
+import type { TClasses } from '@/core/common/classes'
 import type {
 	IComponentModel,
 	IComponentModelOptions,
@@ -47,25 +48,13 @@ export interface IComponentViewProps extends IComponentModelProps {
 }
 
 /**
- * Конфигурация рендеринга компонента (НЕ сериализуется в props/JSON).
- */
-export interface IComponentViewRenderConfig {
-	/** Базовый CSS-класс компонента (переопределяет дефолтный из класса) */
-	baseClass?: string
-	/** Дополнительные CSS-классы (без baseClass) */
-	classes?: string[]
-}
-
-/**
  * Опции для component-view-слоя.
- * props — начальные свойства, renderConfig — конфигурация отображения, states — инъекция state-объектов.
+ * props — начальные свойства, states — инъекция state-объектов.
  */
 export interface IComponentViewOptions<
 	TProps extends IComponentViewProps = IComponentViewProps,
 	TStates extends TComponentViewStatesOptions = TComponentViewStatesOptions,
 > extends IComponentModelOptions<TProps> {
-	/** Конфигурация рендеринга (baseClass, classes) */
-	renderConfig?: IComponentViewRenderConfig
 	/**
 	 * Инъекция state-реализаций для rendered/visible.
 	 * Нужна, чтобы менять поведение state свойств без оверрайда геттеров/сеттеров.
@@ -75,14 +64,12 @@ export interface IComponentViewOptions<
 
 /**
  * Результат нормализации опций component-view-слоя.
- * renderConfig всегда определен с дефолтными значениями.
  */
 export type TComponentViewPreparedOptions<
 	TProps extends IComponentViewProps = IComponentViewProps,
 	TStates extends TComponentViewStatesOptions = TComponentViewStatesOptions,
 > = {
 	props: Partial<TProps>
-	renderConfig: Required<IComponentViewRenderConfig>
 	states?: TStates
 }
 
@@ -96,10 +83,8 @@ export interface IComponentView<
 	rendered: boolean
 	/** Логическая видимость */
 	visible: boolean
-	/** Базовый CSS-класс (без динамических классов) */
-	readonly baseClass: string
 	/** CSS-классы (включая baseClass и динамические) */
-	readonly classes: string[]
+	readonly classes: TClasses | string[]
 	/** Компонент смонтирован в DOM и готов (устанавливается плагин-слоем) */
 	ready: boolean
 	/** Показать компонент */

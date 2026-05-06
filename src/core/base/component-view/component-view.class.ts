@@ -10,6 +10,7 @@ import type {
 	TComponentViewPreparedOptions,
 } from './types'
 import { type IStateUnit, TStateUnit } from '../state-unit'
+import { TClasses } from '../../common/classes'
 
 /**
  * Web-component-view слой: tag/classes.
@@ -34,11 +35,10 @@ export default class TComponentView<
 	}
 
 	protected _tag: string | object
+	protected _classes: TClasses
 	protected _ready: boolean = false
 	protected _renderedState: IStateUnit<boolean>
 	protected _visibilityState: IVisibilityState
-	protected _baseClass: string
-	protected _classes: string[]
 
 	static prepareOptions<
 		TProps extends IComponentViewProps = IComponentViewProps,
@@ -46,8 +46,6 @@ export default class TComponentView<
 	>(
 		options: IComponentViewOptions<TProps, TStates> | Partial<TProps>,
 	): TComponentViewPreparedOptions<TProps, TStates> {
-		const defaultBaseClass = (this as typeof TComponentView).baseClass
-
 		const raw = options as Record<string, unknown>
 		const hasPropsKey = Object.prototype.hasOwnProperty.call(raw, 'props')
 		const hasStatesKey = Object.prototype.hasOwnProperty.call(raw, 'states')
@@ -59,14 +57,9 @@ export default class TComponentView<
 		if (isOptionsObject) {
 			const opt = options as IComponentViewOptions<TProps, TStates>
 			const props = (opt.props ?? {}) as Partial<TProps>
-			const renderConfig = opt.renderConfig ?? {}
 
 			return {
 				props,
-				renderConfig: {
-					baseClass: renderConfig.baseClass ?? defaultBaseClass,
-					classes: renderConfig.classes ?? [],
-				},
 				states: opt.states,
 			}
 		}
@@ -75,21 +68,15 @@ export default class TComponentView<
 		const props = options as Partial<TProps>
 		return {
 			props,
-			renderConfig: {
-				baseClass: defaultBaseClass,
-				classes: [],
-			},
 		}
 	}
 
 	constructor(options: IComponentViewOptions<TProps, TStates> | Partial<TProps> = {}) {
 		const ctor = new.target as typeof TComponentView
 
-		const {
-			props = {} as Partial<TProps>,
-			renderConfig,
-			states,
-		} = ctor.prepareOptions<TProps, TStates>(options)
+		const { props = {} as Partial<TProps>, states } = ctor.prepareOptions<TProps, TStates>(
+			options,
+		)
 
 		super({ props })
 
@@ -117,8 +104,13 @@ export default class TComponentView<
 			this.events.emit('change:visible', value),
 		)
 
-		this._baseClass = renderConfig.baseClass!
-		this._classes = renderConfig.classes!
+		this._classes = new TClasses(ctor.baseClass)
+
+		this._classes.events.on('change', () => this.events.emit('change:classes', this._classes))
+	}
+
+	get classes(): TClasses | string[] {
+		return this._classes
 	}
 
 	get rendered(): boolean {
@@ -139,10 +131,6 @@ export default class TComponentView<
 		} else {
 			this.hide()
 		}
-	}
-
-	get baseClass(): string {
-		return this._baseClass
 	}
 
 	show(): void {
@@ -207,18 +195,6 @@ export default class TComponentView<
 		this._ready = value
 
 		this.events.emit('change:ready', value)
-	}
-
-	get classes(): string[] {
-		return [this._baseClass, ...this._classes]
-	}
-
-	setClasses(value: string[]): void {
-		if (this._classes === value) return
-
-		this._classes = value
-
-		this.events.emit('change:classes', value)
 	}
 
 	getProps(): TProps {
