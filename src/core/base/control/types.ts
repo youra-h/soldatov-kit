@@ -5,7 +5,7 @@ import type {
 	TStylableStatesOptions,
 } from '../stylable'
 import type { IStateUnit } from '../../common/state-unit'
-import type { TStateCtor } from '../states'
+import type { TStateCtor } from '../../common/states'
 
 export type TControlEvents = TStylableEvents & {
 	/** change:disabled */

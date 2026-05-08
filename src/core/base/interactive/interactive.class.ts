@@ -2,6 +2,7 @@ import { TStateUnit, type IStateUnit } from '../../common/state-unit'
 import { TComponentView, type IComponentViewOptions } from '../component-view'
 import { resolveState } from '../../common/resolve-state'
 import type { IInteractiveProps, TInteractiveEvents, TInteractiveStatesOptions } from './types'
+import { type TValuePayload } from '../../common/types'
 
 /**
  * База для интерактивных компонентов: disabled + focused.
@@ -40,8 +41,8 @@ export default class TInteractive<
 			initial: disabled,
 		})
 
-		this._disableable.events.on('change', (value) => {
-			this.events.emit('change:disabled' as any, value)
+		this._disableable.events.on('change', (payload: TValuePayload<boolean>) => {
+			this.events.emit('change:disabled', payload.newValue)
 		})
 
 		this._focusable = resolveState<IStateUnit<boolean>, boolean>({
@@ -50,8 +51,8 @@ export default class TInteractive<
 			initial: focused,
 		})
 
-		this._focusable.events.on('change', (value) => {
-			this.events.emit('change:focused' as any, value)
+		this._focusable.events.on('change', (payload: TValuePayload<boolean>) => {
+			this.events.emit('change:focused', payload.newValue)
 		})
 	}
 

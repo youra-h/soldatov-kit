@@ -1,14 +1,15 @@
 import type { TComponentSize, TComponentVariant } from '../../common/types'
 import type { IComponentView, IComponentViewProps, TComponentViewEvents } from '../component-view'
 import type { TComponentViewStatesOptions } from '../component-view'
-import type { IStylableModifierState, TSizeStateOptions, TVariantStateOptions } from '../states'
-import type { TStateCtor } from '../states/types'
+import type { IStateUnit } from '../../common/state-unit'
+import type { TStateCtor } from '../../common/states'
+import { type TValuePayload } from '../../common/types'
 
 export type TStylableEvents = TComponentViewEvents & {
 	/** change:size */
-	'change:size': (value: TComponentSize) => void
+	'change:size': (payload: TValuePayload<TComponentSize>) => void
 	/** change:variant */
-	'change:variant': (value: TComponentVariant) => void
+	'change:variant': (payload: TValuePayload<TComponentVariant>) => void
 }
 
 export interface IStylableProps extends IComponentViewProps {
@@ -17,8 +18,10 @@ export interface IStylableProps extends IComponentViewProps {
 }
 
 export type TStylableStatesOptions = TComponentViewStatesOptions & {
-	size?: TStateCtor<IStylableModifierState<TComponentSize>, TSizeStateOptions> | IStylableModifierState<TComponentSize>
-	variant?: TStateCtor<IStylableModifierState<TComponentVariant>, TVariantStateOptions> | IStylableModifierState<TComponentVariant>
+	size?: TStateCtor<IStateUnit<TComponentSize>, TComponentSize> | IStateUnit<TComponentSize>
+	variant?:
+		| TStateCtor<IStateUnit<TComponentVariant>, TComponentVariant>
+		| IStateUnit<TComponentVariant>
 }
 
 export interface IStylable<

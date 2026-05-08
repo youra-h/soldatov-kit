@@ -1,7 +1,7 @@
 import type { IComponentView, IComponentViewProps, TComponentViewEvents } from '../component-view'
 import type { TComponentViewStatesOptions } from '../component-view'
 import type { IStateUnit } from '../../common/state-unit'
-import type { TStateCtor } from '../states'
+import type { TStateCtor } from '../../common/states'
 
 export type TInteractiveEvents = TComponentViewEvents & {
 	/** change:disabled */
