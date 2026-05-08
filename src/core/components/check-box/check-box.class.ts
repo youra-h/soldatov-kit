@@ -42,7 +42,10 @@ export default class TCheckBox
 	set indeterminate(value: boolean) {
 		if (this._indeterminate !== value) {
 			this._indeterminate = value
+
 			this.events.emit('changeIndeterminate', value)
+
+			this._classes.toggle(`--indeterminate`, value)
 		}
 	}
 
@@ -53,21 +56,9 @@ export default class TCheckBox
 	set plain(value: boolean) {
 		if (this._plain !== value) {
 			this._plain = value
+
+			this._classes.toggle(`--plain`, value)
 		}
-	}
-
-	get classes(): string[] {
-		const classes = [...super.classes]
-
-		if (this._indeterminate) {
-			classes.push(`${this._baseClass}--indeterminate`)
-		}
-
-		if (this._plain) {
-			classes.push(`${this._baseClass}--plain`)
-		}
-
-		return classes
 	}
 
 	/**
