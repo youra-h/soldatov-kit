@@ -1,7 +1,7 @@
 import { TEvented } from '../../common/evented'
 
 export type TStateUnitValueEvents<TValue> = {
-	change: (value: TValue) => void
+	change: (payload: { newValue: TValue; oldValue: TValue }) => void
 }
 
 /**

@@ -62,17 +62,14 @@ export class TLoadingState extends TStateUnit<ILoadingStateValue> implements ILo
 	constructor(initial: boolean | ILoadingBehavior = false) {
 		const isBoolean = typeof initial === 'boolean'
 
-		const behavior: ILoadingBehavior = isBoolean
-			? {}
-			: {
-					shouldDisable: initial.shouldDisable,
-				}
+		const behavior: ILoadingBehavior = isBoolean ? {} : { shouldDisable: initial.shouldDisable }
 
 		const value: ILoadingStateValue = {
 			loading: isBoolean ? initial : false,
 		}
 
 		super(value)
+
 		this.behavior = behavior
 	}
 
@@ -93,14 +90,18 @@ export class TLoadingState extends TStateUnit<ILoadingStateValue> implements ILo
 	startLoading(): void {
 		if (this._value.loading) return
 
+		const oldValue = { ...this._value }
 		this._value.loading = true
-		this.events.emit('change', { ...this._value })
+
+		this.events.emit('change', { newValue: { ...this._value }, oldValue } as any)
 	}
 
 	stopLoading(): void {
 		if (!this._value.loading) return
 
+		const oldValue = { ...this._value }
 		this._value.loading = false
-		this.events.emit('change', { ...this._value })
+
+		this.events.emit('change', { newValue: { ...this._value }, oldValue } as any)
 	}
 }

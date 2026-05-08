@@ -27,8 +27,9 @@ export class TStateUnit<
 	set value(value: TValue) {
 		if (this._value === value) return
 
+		const oldValue = this._value
 		this._value = value
 
-		this.events.emit('change', value)
+		this.events.emit('change', { newValue: value, oldValue: oldValue } as any)
 	}
 }
