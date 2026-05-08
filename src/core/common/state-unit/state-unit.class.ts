@@ -1,5 +1,6 @@
 import { TEvented } from '../evented'
 import type { TStateUnitValueEvents, IStateUnit } from './types'
+import type { TValuePayload } from '../types'
 
 /**
  * Универсальная единица состояния со значением.
@@ -30,6 +31,6 @@ export class TStateUnit<
 		const oldValue = this._value
 		this._value = value
 
-		this.events.emit('change', { newValue: value, oldValue: oldValue } as any)
+		this.events.emit('change', { newValue: value, oldValue } as TValuePayload<TValue> as any)
 	}
 }

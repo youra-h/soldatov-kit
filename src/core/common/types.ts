@@ -10,3 +10,8 @@ export type TComponentVariant =
 	| 'caution'
 
 export type TComponentSize = 'sm' | 'normal' | 'auto' | 'lg' | 'xl' | '2xl'
+
+export type TValuePayload<TValue> = {
+	newValue: TValue
+	oldValue: TValue
+}

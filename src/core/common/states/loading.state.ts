@@ -1,5 +1,6 @@
 import { TStateUnit, type IStateUnit } from '../../common/state-unit'
 import type { TStateCtor } from './types'
+import type { TValuePayload } from '../types'
 
 /**
  * Конфигурация поведения при loading
@@ -93,7 +94,10 @@ export class TLoadingState extends TStateUnit<ILoadingStateValue> implements ILo
 		const oldValue = { ...this._value }
 		this._value.loading = true
 
-		this.events.emit('change', { newValue: { ...this._value }, oldValue } as any)
+		this.events.emit('change', {
+			newValue: { ...this._value },
+			oldValue,
+		} as TValuePayload<ILoadingStateValue> as any)
 	}
 
 	stopLoading(): void {
@@ -102,6 +106,9 @@ export class TLoadingState extends TStateUnit<ILoadingStateValue> implements ILo
 		const oldValue = { ...this._value }
 		this._value.loading = false
 
-		this.events.emit('change', { newValue: { ...this._value }, oldValue } as any)
+		this.events.emit('change', {
+			newValue: { ...this._value },
+			oldValue,
+		} as TValuePayload<ILoadingStateValue> as any)
 	}
 }

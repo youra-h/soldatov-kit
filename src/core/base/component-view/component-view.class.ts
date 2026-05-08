@@ -1,6 +1,5 @@
 import { TComponentModel } from '../component-model'
-import { TVisibilityState } from '../states'
-import type { IVisibilityState } from '../states'
+import { TVisibilityState, type IVisibilityState } from '../../common/states'
 import { resolveState } from '../../common/resolve-state'
 import type {
 	IComponentViewOptions,
@@ -11,6 +10,7 @@ import type {
 } from './types'
 import { type IStateUnit, TStateUnit } from '../../common/state-unit'
 import { TClasses } from '../../common/classes'
+import { type TValuePayload } from '../../common/types'
 
 /**
  * Web-component-view слой: tag/classes.
@@ -98,11 +98,11 @@ export default class TComponentView<
 			visible,
 		)
 
-		this._renderedState.events.on('change', (value) =>
-			this.events.emit('change:rendered', value),
+		this._renderedState.events.on('change', (payload: TValuePayload<boolean>) =>
+			this.events.emit('change:rendered', payload),
 		)
-		this._visibilityState.events.on('change', (value) =>
-			this.events.emit('change:visible', value),
+		this._visibilityState.events.on('change', (payload: TValuePayload<boolean>) =>
+			this.events.emit('change:visible', payload),
 		)
 
 		this._classes = new TClasses(ctor.baseClass)
