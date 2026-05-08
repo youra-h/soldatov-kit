@@ -48,6 +48,8 @@ export default class TStylable<
 			})
 		})
 
+		this._classes.add(`--size-${this._sizeState.value}`)
+
 		this._variantState = resolveState<IStateUnit<TComponentVariant>, TComponentVariant>({
 			state: states?.variant,
 			ctor: TStateUnit,
@@ -62,6 +64,8 @@ export default class TStylable<
 				newClass: `--variant-${payload.newValue}`,
 			})
 		})
+
+		this._classes.add(`--variant-${this._variantState.value}`)
 	}
 
 	get size(): TComponentSize {

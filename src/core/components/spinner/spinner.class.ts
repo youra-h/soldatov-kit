@@ -50,6 +50,8 @@ export default class TSpinner
 			})
 		})
 
+		this._classes.add(`--size-${this._sizeState.value}`)
+
 		this._variantState = resolveState<IStateUnit<TComponentVariant>, TComponentVariant>({
 			state: states?.variant,
 			ctor: TStateUnit,
@@ -64,6 +66,8 @@ export default class TSpinner
 				newClass: `--variant-${payload.newValue}`,
 			})
 		})
+
+		this._classes.add(`--variant-${this._variantState.value}`)
 
 		this._tag = props.tag ?? TSpinner.defaultValues.tag!
 		this._borderWidth = props.borderWidth ?? TSpinner.defaultValues.borderWidth!
