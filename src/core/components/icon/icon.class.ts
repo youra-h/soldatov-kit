@@ -6,7 +6,10 @@ import { resolveState } from '../../common/resolve-state'
 import { type IStateUnit, TStateUnit } from '../../common/state-unit'
 import type { TValuePayload } from '../../common/types'
 
-export default class TIcon extends TComponentView<IIconProps, TIconEvents, TIconStatesOptions> implements IIcon {
+export default class TIcon
+	extends TComponentView<IIconProps, TIconEvents, TIconStatesOptions>
+	implements IIcon
+{
 	static override baseClass = 's-icon'
 
 	static defaultValues: Partial<IIconProps> = {
@@ -19,10 +22,15 @@ export default class TIcon extends TComponentView<IIconProps, TIconEvents, TIcon
 	protected _height: string | number | undefined
 	protected _sizeState: IStateUnit<TComponentSize>
 
-	constructor(options: IComponentViewOptions<IIconProps, TIconStatesOptions> | Partial<IIconProps> = {}) {
+	constructor(
+		options: IComponentViewOptions<IIconProps, TIconStatesOptions> | Partial<IIconProps> = {},
+	) {
 		super(options)
 
-		const { props = {} as Partial<IIconProps>, states } = TComponentView.prepareOptions<IIconProps, TIconStatesOptions>(options)
+		const { props = {} as Partial<IIconProps>, states } = TComponentView.prepareOptions<
+			IIconProps,
+			TIconStatesOptions
+		>(options)
 
 		this._sizeState = resolveState<IStateUnit<TComponentSize>, TComponentSize>({
 			state: states?.size,
@@ -32,6 +40,7 @@ export default class TIcon extends TComponentView<IIconProps, TIconEvents, TIcon
 
 		this._sizeState.events.on('change', (payload: TValuePayload<TComponentSize>) => {
 			this.events.emit('change:size' as any, payload)
+
 			this._classes.swapClass({
 				oldClass: `--size-${payload.oldValue}`,
 				newClass: `--size-${payload.newValue}`,
@@ -70,6 +79,8 @@ export default class TIcon extends TComponentView<IIconProps, TIconEvents, TIcon
 	}
 
 	set size(value: TComponentSize) {
+		if (value === this._sizeState.value) return
+
 		this._sizeState.value = value
 	}
 
