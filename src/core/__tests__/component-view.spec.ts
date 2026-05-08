@@ -14,19 +14,19 @@ describe('TComponentView', () => {
 		vi.useRealTimers()
 	})
 
-	it('принимает { props } и renderConfig с baseClass', () => {
-		const p = new TComponentView({ props: { id: 'x', tag: 'span', visible: false }, renderConfig: { baseClass: 'my' } })
+	it('принимает { props } корректно', () => {
+		const p = new TComponentView({ props: { id: 'x', tag: 'span', visible: false } })
 		expect(p.id).toBe('x')
 		expect(p.tag).toBe('span')
 		expect(p.visible).toBe(false)
-		expect(p.classes).toContain('my')
+		expect(p.classes.toArray()).toContain(TComponentView.baseClass)
 	})
 
 	it('принимает "голые" props без ключа props', () => {
 		const p = new TComponentView({ id: 'x', tag: 'section' })
 		expect(p.id).toBe('x')
 		expect(p.tag).toBe('section')
-		expect(p.classes).toContain(TComponentView.baseClass)
+		expect(p.classes.toArray()).toContain(TComponentView.baseClass)
 	})
 
 	it('getProps возвращает бизнес-свойства (без baseClass/classes)', () => {
@@ -89,7 +89,7 @@ describe('TComponentView', () => {
 		expect(hide).toHaveBeenCalled()
 	})
 
-	it('tag/setClasses эмитят change:*', () => {
+	it('tag/classes эмитят change:*', () => {
 		const p = new TComponentView()
 		const tagHandler = vi.fn()
 		const classesHandler = vi.fn()
@@ -99,8 +99,8 @@ describe('TComponentView', () => {
 		p.tag = 'section'
 		expect(tagHandler).toHaveBeenCalledWith('section')
 
-		p.setClasses(['x'])
-		expect(classesHandler).toHaveBeenCalledWith(['x'])
+		;(p.classes as any).add('x', false)
+		expect(classesHandler).toHaveBeenCalled()
 	})
 
 	it('toJSON сериализует getProps()', () => {

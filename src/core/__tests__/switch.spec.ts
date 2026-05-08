@@ -2,21 +2,18 @@ import { describe, it, expect, vi } from 'vitest'
 import { TSwitch } from '../components/switch'
 
 describe('TSwitch', () => {
-	it('создаётся через { props } и через plain props; baseClass override только через { baseClass, props }', () => {
+	it('создаётся через { props } и через plain props', () => {
 		const a = new TSwitch({ props: { value: true } })
 		expect(a.value).toBe(true)
-		expect(a.classes).toContain('s-switch')
+		expect(a.classes.toArray()).toContain('s-switch')
 
 		const b = new TSwitch({ value: false })
 		expect(b.value).toBe(false)
 
 		const c = new TSwitch({
-			renderConfig: { baseClass: 's-sw' },
 			props: { value: true, size: 'xl', variant: 'accent' },
 		})
-		expect(c.classes).toContain('s-sw')
-		expect(c.classes).toContain('s-sw--accent')
-		expect(c.classes).toContain('s-sw--size-xl')
+		expect(c.classes.toArray()).toContain('s-switch')
 	})
 
 	it('value: value setter эмитит change:value', () => {

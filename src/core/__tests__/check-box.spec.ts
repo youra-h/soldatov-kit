@@ -2,39 +2,35 @@ import { describe, it, expect, vi } from 'vitest'
 import { TCheckBox } from '../components/check-box'
 
 describe('TCheckBox', () => {
-	it('создаётся через { props } и через plain props; baseClass override только через { baseClass, props }', () => {
+	it('создаётся через { props } и через plain props', () => {
 		const a = new TCheckBox({ props: { value: true } })
 		expect(a.value).toBe(true)
-		expect(a.classes).toContain('s-check-box')
+		expect(a.classes.toArray()).toContain('s-check-box')
 
 		const b = new TCheckBox({ value: false })
 		expect(b.value).toBe(false)
 
 		const c = new TCheckBox({
-			renderConfig: { baseClass: 's-cb' },
 			props: { value: true, size: 'xl', variant: 'accent', plain: true },
 		})
-		expect(c.classes).toContain('s-cb')
-		expect(c.classes).toContain('s-cb--accent')
-		expect(c.classes).toContain('s-cb--size-xl')
-		expect(c.classes).toContain('s-cb--plain')
+		expect(c.classes.toArray()).toContain('s-check-box')
 	})
 
 	it('classes меняются от indeterminate/plain + variant/size', () => {
 		const cb = new TCheckBox({ props: { variant: 'normal', size: 'normal' } })
-		expect(cb.classes).toContain('s-check-box')
+		expect(cb.classes.toArray()).toContain('s-check-box')
 
 		cb.variant = 'positive'
-		expect(cb.classes).toContain('s-check-box--positive')
+		expect(cb.classes.toArray()).toContain('s-check-box--variant-positive')
 
 		cb.size = 'xl'
-		expect(cb.classes).toContain('s-check-box--size-xl')
+		expect(cb.classes.toArray()).toContain('s-check-box--size-xl')
 
 		cb.indeterminate = true
-		expect(cb.classes).toContain('s-check-box--indeterminate')
+		expect(cb.classes.toArray()).toContain('s-check-box--indeterminate')
 
 		cb.plain = true
-		expect(cb.classes).toContain('s-check-box--plain')
+		expect(cb.classes.toArray()).toContain('s-check-box--plain')
 	})
 
 	it('value: value setter эмитит change:value', () => {

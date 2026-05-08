@@ -84,7 +84,7 @@ export interface IComponentView<
 	/** Логическая видимость */
 	visible: boolean
 	/** CSS-классы (включая baseClass и динамические) */
-	readonly classes: TClasses | string[]
+	readonly classes: TClasses
 	/** Компонент смонтирован в DOM и готов (устанавливается плагин-слоем) */
 	ready: boolean
 	/** Показать компонент */

@@ -1,7 +1,8 @@
 import { describe, it, expect, vi } from 'vitest'
 import { TStylable } from '../base/stylable'
 import type { IStylableProps } from '../base/stylable'
-import { TSizeState } from '../common/states'
+import { TStateUnit } from '../common/state-unit'
+import type { TComponentSize } from '../common/types'
 
 describe('TStylable', () => {
 	it('size и variant выставляются и эмитят события', () => {
@@ -12,35 +13,32 @@ describe('TStylable', () => {
 		stylable.events.on('change:variant', variantHandler)
 
 		stylable.size = 'xl'
-		expect(sizeHandler).toHaveBeenCalledWith('xl')
-		expect(stylable.classes).toContain('s-component-view--size-xl')
+		expect(sizeHandler).toHaveBeenCalledWith({ newValue: 'xl', oldValue: 'normal' })
+		expect(stylable.classes.toArray()).toContain('s-component-view--size-xl')
 
 		stylable.variant = 'accent'
-		expect(variantHandler).toHaveBeenCalledWith('accent')
-		expect(stylable.classes).toContain('s-component-view--accent')
+		expect(variantHandler).toHaveBeenCalledWith({ newValue: 'accent', oldValue: 'normal' })
+		expect(stylable.classes.toArray()).toContain('s-component-view--variant-accent')
 	})
 
 	it('getProps отражает size и variant', () => {
 		const stylable = new TStylable<IStylableProps>({
 			props: { size: 'lg', variant: 'accent' },
-			renderConfig: { baseClass: 's-test' },
 		})
 		expect(stylable.getProps()).toMatchObject({ size: 'lg', variant: 'accent' })
 	})
 
-	it('states.size позволяет подменить size-state и влияет на classes', () => {
-		class TCustomSizeState extends TSizeState {
-			override getClass(): string[] {
-				return [`${this.baseClass}--size-custom`]
-			}
-		}
+	it('states.size позволяет передать внешний TStateUnit и классы обновляются при его изменении', () => {
+		const customSizeState = new TStateUnit<TComponentSize>('xl')
 
 		const stylable = new TStylable<IStylableProps>({
-			props: { size: 'xl' },
-			renderConfig: { baseClass: 's-test' },
-			states: { size: TCustomSizeState },
+			states: { size: customSizeState },
 		})
 
-		expect(stylable.classes).toContain('s-test--size-custom')
+		expect(stylable.size).toBe('xl')
+
+		customSizeState.value = 'sm'
+		expect(stylable.size).toBe('sm')
+		expect(stylable.classes.toArray()).toContain('s-component-view--size-sm')
 	})
 })

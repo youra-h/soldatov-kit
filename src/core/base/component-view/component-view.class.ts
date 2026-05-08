@@ -110,7 +110,7 @@ export default class TComponentView<
 		this._classes.events.on('change', () => this.events.emit('change:classes', this._classes))
 	}
 
-	get classes(): TClasses | string[] {
+	get classes(): TClasses {
 		return this._classes
 	}
 

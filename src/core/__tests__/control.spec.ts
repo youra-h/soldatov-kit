@@ -6,7 +6,6 @@ describe('TControl', () => {
 	it('дисейбл/фокус трекают state и эмитят события', () => {
 		const ctrl = new TControl<IControlProps>({
 			props: { disabled: false, focused: false },
-			renderConfig: { baseClass: 's-test' },
 		})
 		const disabledHandler = vi.fn()
 		const focusedHandler = vi.fn()
@@ -26,11 +25,11 @@ describe('TControl', () => {
 		const ctrl = new TControl<IControlProps>({ size: 'normal', variant: 'normal' })
 		ctrl.size = 'xl'
 		ctrl.variant = 'accent'
-		const classes = ctrl.classes
+		const classes = ctrl.classes.toArray()
 
 		expect(classes).toContain('s-component-view')
 		expect(classes).toContain('s-component-view--size-xl')
-		expect(classes).toContain('s-component-view--accent')
+		expect(classes).toContain('s-component-view--variant-accent')
 	})
 
 	it('getProps возвращает variant/size/disabled/focused', () => {
@@ -41,7 +40,6 @@ describe('TControl', () => {
 				disabled: true,
 				focused: false,
 			},
-			renderConfig: { baseClass: 's-test' },
 		})
 		expect(ctrl.getProps()).toMatchObject({
 			variant: 'accent',

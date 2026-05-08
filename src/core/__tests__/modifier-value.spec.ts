@@ -1,31 +1,75 @@
 import { describe, it, expect, vi } from 'vitest'
-import { TStylableModifierState } from '../common/states'
+import { TClasses } from '../common/classes'
 
-type TMode = 'normal' | 'x'
+describe('TClasses', () => {
+	it('toArray возвращает base + statics + dynamics', () => {
+		const c = new TClasses('s-test', ['static1'])
+		expect(c.toArray()).toEqual(['s-test', 'static1'])
 
-class TModeState extends TStylableModifierState<TMode> {
-	getClass(): string[] {
-		return this.value && !this._exclude.includes(this.value) ? [`${this._baseClass}--${this.value}`] : []
-	}
-}
+		c.add('--mod', true)
+		expect(c.toArray()).toContain('s-test--mod')
 
-describe('TStylableModifierState', () => {
-	it('эмитит change и поддерживает exclude', () => {
-		const s = new TModeState({ baseClass: 's-test', exclude: ['normal'], value: 'normal' })
-		const handler = vi.fn()
-		s.events.on('change', handler)
-
-		expect(s.getClass()).toEqual([])
-
-		s.value = 'x'
-		expect(handler).toHaveBeenCalledWith('x')
-		expect(s.getClass()).toEqual(['s-test--x'])
+		c.add(() => 's-dynamic')
+		expect(c.toArray()).toContain('s-dynamic')
 	})
 
-	it('baseClass setter влияет на getClass()', () => {
-		const s = new TModeState({ baseClass: 'a', value: 'x' })
-		expect(s.getClass()).toEqual(['a--x'])
-		s.baseClass = 'b'
-		expect(s.getClass()).toEqual(['b--x'])
+	it('add/remove эмитят change и управляют статическими классами', () => {
+		const c = new TClasses('s-test')
+		const handler = vi.fn()
+		c.events.on('change', handler)
+
+		c.add('--x', true)
+		expect(c.toArray()).toContain('s-test--x')
+		expect(handler).toHaveBeenCalledTimes(1)
+
+		c.remove('--x', true)
+		expect(c.toArray()).not.toContain('s-test--x')
+		expect(handler).toHaveBeenCalledTimes(2)
+
+		// повторное удаление не эмитит change
+		c.remove('--x', true)
+		expect(handler).toHaveBeenCalledTimes(2)
+	})
+
+	it('toggle управляет классом по булевому значению', () => {
+		const c = new TClasses('s-test')
+		c.toggle('--active', true)
+		expect(c.toArray()).toContain('s-test--active')
+
+		c.toggle('--active', false)
+		expect(c.toArray()).not.toContain('s-test--active')
+	})
+
+	it('swapClass меняет один класс на другой', () => {
+		const c = new TClasses('s-test')
+		c.add('--size-normal', true)
+		expect(c.toArray()).toContain('s-test--size-normal')
+
+		c.swapClass({ oldClass: '--size-normal', newClass: '--size-xl' })
+		expect(c.toArray()).toContain('s-test--size-xl')
+		expect(c.toArray()).not.toContain('s-test--size-normal')
+	})
+
+	it('swap меняет класс по prefix+value', () => {
+		const c = new TClasses('s-test')
+		c.add('--variant-normal', true)
+
+		c.swap({ prefix: '--variant-', oldValue: 'normal', newValue: 'accent' })
+		expect(c.toArray()).toContain('s-test--variant-accent')
+		expect(c.toArray()).not.toContain('s-test--variant-normal')
+	})
+
+	it('setBase обновляет базовый класс и эмитит change', () => {
+		const c = new TClasses('a')
+		const handler = vi.fn()
+		c.events.on('change', handler)
+
+		c.setBase('b')
+		expect(c.base).toBe('b')
+		expect(handler).toHaveBeenCalledTimes(1)
+
+		// тот же базовый — change не эмитится
+		c.setBase('b')
+		expect(handler).toHaveBeenCalledTimes(1)
 	})
 })

@@ -3,29 +3,29 @@ import { TButton } from '../components/button'
 import { TLoadingState } from '../common/states'
 
 describe('TButton', () => {
-	it('создаётся через { props }, через plain props и с override baseClass', () => {
+	it('создаётся через { props } и через plain props', () => {
 		const a = new TButton({ props: { text: 'button 1' } })
 		expect(a.text).toBe('button 1')
-		expect(a.classes).toContain('s-button')
+		expect(a.classes.toArray()).toContain('s-button')
 
 		const b = new TButton({ text: 'button 2' })
 		expect(b.text).toBe('button 2')
 
-		const c = new TButton({ props: { text: 'x' }, renderConfig: { baseClass: 's-btn' } })
-		expect(c.classes).toContain('s-btn')
+		const c = new TButton({ props: { text: 'x' } })
+		expect(c.classes.toArray()).toContain('s-button')
 	})
 
 	it('classes меняются при смене variant/size/appearance', () => {
-		const btn = new TButton({ renderConfig: { baseClass: 's-btn' } })
+		const btn = new TButton()
 
 		btn.variant = 'accent'
-		expect(btn.classes).toContain('s-btn--accent')
+		expect(btn.classes.toArray()).toContain('s-button--variant-accent')
 
 		btn.size = 'xl'
-		expect(btn.classes).toContain('s-btn--size-xl')
+		expect(btn.classes.toArray()).toContain('s-button--size-xl')
 
 		btn.appearance = 'plain'
-		expect(btn.classes).toContain('s-btn--a-plain')
+		expect(btn.classes.toArray()).toContain('s-button--a-plain')
 	})
 
 	it('getProps/toJSON отражают ключевые props', () => {
@@ -37,8 +37,7 @@ describe('TButton', () => {
 				appearance: 'outlined',
 				loading: true,
 			},
-			baseClass: 's-btn',
-		} as any)
+		})
 
 		const props = btn.getProps()
 		expect(props).toMatchObject({

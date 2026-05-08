@@ -35,7 +35,7 @@ describe('TLoadingState', () => {
 		state.startLoading()
 
 		expect(state.loading).toBe(true)
-		expect(handler).toHaveBeenCalledWith({ loading: true })
+		expect(handler).toHaveBeenCalledWith({ newValue: { loading: true }, oldValue: { loading: false } })
 	})
 
 	it('stopLoading() устанавливает loading = false и эмитит change', () => {
@@ -46,7 +46,7 @@ describe('TLoadingState', () => {
 		state.stopLoading()
 
 		expect(state.loading).toBe(false)
-		expect(handler).toHaveBeenCalledWith({ loading: false })
+		expect(handler).toHaveBeenCalledWith({ newValue: { loading: false }, oldValue: { loading: true } })
 	})
 
 	it('повторный вызов startLoading() не эмитит change', () => {

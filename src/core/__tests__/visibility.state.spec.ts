@@ -11,10 +11,10 @@ describe('TVisibilityState', () => {
 
 		s.show()
 		expect(s.value).toBe(true)
-		expect(handler).toHaveBeenCalledWith(true)
+		expect(handler).toHaveBeenCalledWith({ newValue: true, oldValue: false })
 
 		s.hide()
 		expect(s.value).toBe(false)
-		expect(handler).toHaveBeenCalledWith(false)
+		expect(handler).toHaveBeenCalledWith({ newValue: false, oldValue: true })
 	})
 })

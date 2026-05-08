@@ -8,7 +8,7 @@ describe('TStateUnit', () => {
 		s.events.on('change', handler)
 
 		s.value = 2
-		expect(handler).toHaveBeenCalledWith(2)
+		expect(handler).toHaveBeenCalledWith({ newValue: 2, oldValue: 1 })
 
 		handler.mockClear()
 		s.value = 2
