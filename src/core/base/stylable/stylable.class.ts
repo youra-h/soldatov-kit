@@ -42,20 +42,21 @@ export default class TStylable<
 			value: (props.variant ?? TStylable.defaultValues.variant) as TComponentVariant,
 		}
 
-		this._sizeState = resolveState<IStylableModifierState<TComponentSize>, TSizeStateOptions>(
-			states?.size,
-			TSizeState,
-			sizeOptions,
-		)
+		this._sizeState = resolveState<IStylableModifierState<TComponentSize>, TSizeStateOptions>({
+			state: states?.size,
+			ctor: TSizeState,
+			initial: sizeOptions,
+		})
 
 		this._sizeState.events.on('change', (value) => {
 			this.events.emit('change:size' as any, value)
 		})
 
-		this._variantState = resolveState<
-			IStylableModifierState<TComponentVariant>,
-			TVariantStateOptions
-		>(states?.variant, TVariantState, variantOptions)
+		this._variantState = resolveState<IStylableModifierState<TComponentVariant>, TVariantStateOptions>({
+			state: states?.variant,
+			ctor: TVariantState,
+			initial: variantOptions,
+		})
 
 		this._variantState.events.on('change', (value) => {
 			this.events.emit('change:variant' as any, value)

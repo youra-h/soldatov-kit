@@ -41,11 +41,11 @@ export default class TValueControl<
 
 		const value = props.value ?? (TValueControl.defaultValues.value as TValue)
 
-		this._valueState = resolveState<IStateUnit<TValue>, TValue>(
-			states?.value,
-			TStateUnit,
-			value,
-		)
+		this._valueState = resolveState<IStateUnit<TValue>, TValue>({
+			state: states?.value,
+			ctor: TStateUnit,
+			initial: value,
+		})
 
 		this._valueState.events.on('change', (value) => {
 			this.events.emit('change:value' as any, value)

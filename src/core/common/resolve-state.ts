@@ -3,35 +3,32 @@ export type TStateCtor<TState, TInitial> = new (initial: TInitial) => TState
 export type TStateInput<TState, TInitial> = TStateCtor<TState, TInitial> | TState | undefined
 
 export type TResolveStateOptions<TState, TInitial> = {
-	/**
-	 * Called only when an instance is provided.
-	 * Useful if you want to sync instance with the passed initial value.
-	 */
-	applyInitialToInstance?: (state: TState, initial: TInitial) => void
+	/** Конструктор, инстанс или undefined. Если undefined — используется `ctor`. */
+	state: TStateInput<TState, TInitial>
+	/** Конструктор по умолчанию — используется если `state` не передан. */
+	ctor: TStateCtor<TState, TInitial>
+	/** Начальное значение — передаётся в конструктор при создании нового инстанса. */
+	initial: TInitial
 }
 
 /**
- * Resolves state dependency from either:
- * - a constructor (class)
- * - a ready instance
- * - undefined (falls back to default ctor)
+ * Инжектирует state-зависимость:
+ * - конструктор → создаёт новый инстанс через `new state(initial)`
+ * - готовый инстанс → возвращает его как есть
+ * - undefined → создаёт инстанс через `new ctor(initial)`
  */
-export function resolveState<TState, TInitial>(
-	input: TStateInput<TState, TInitial>,
-	defaultCtor: TStateCtor<TState, TInitial>,
-	initial: TInitial,
-	options?: TResolveStateOptions<TState, TInitial>,
-): TState {
-	if (typeof input === 'function') {
-		// TS can't know that a generic TState isn't also a Function,
-		// so we cast the runtime-checked branch to a newable ctor.
-		return new (input as TStateCtor<TState, TInitial>)(initial)
+export function resolveState<TState, TInitial>({
+	state,
+	ctor,
+	initial,
+}: TResolveStateOptions<TState, TInitial>): TState {
+	if (typeof state === 'function') {
+		return new (state as TStateCtor<TState, TInitial>)(initial)
 	}
 
-	if (input) {
-		options?.applyInitialToInstance?.(input, initial)
-		return input
+	if (state) {
+		return state
 	}
 
-	return new defaultCtor(initial)
+	return new ctor(initial)
 }

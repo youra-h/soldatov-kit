@@ -87,16 +87,16 @@ export default class TComponentView<
 		const rendered = props.rendered ?? (TComponentView.defaultValues.rendered as boolean)
 		const visible = props.visible ?? (TComponentView.defaultValues.visible as boolean)
 
-		this._renderedState = resolveState<IStateUnit<boolean>, boolean>(
-			states?.rendered,
-			TStateUnit,
-			rendered,
-		)
-		this._visibilityState = resolveState<IVisibilityState, boolean>(
-			states?.visible,
-			TVisibilityState,
-			visible,
-		)
+		this._renderedState = resolveState<IStateUnit<boolean>, boolean>({
+			state: states?.rendered,
+			ctor: TStateUnit,
+			initial: rendered,
+		})
+		this._visibilityState = resolveState<IVisibilityState, boolean>({
+			state: states?.visible,
+			ctor: TVisibilityState,
+			initial: visible,
+		})
 
 		this._renderedState.events.on('change', (payload: TValuePayload<boolean>) =>
 			this.events.emit('change:rendered', payload),

@@ -34,11 +34,11 @@ export default class TTextable<
 
 		const text = props.text ?? (TTextable.defaultValues.text as string)
 
-		this._textState = resolveState<IStateUnit<string>, string>(
-			states?.text,
-			TStateUnit,
-			text,
-		)
+		this._textState = resolveState<IStateUnit<string>, string>({
+			state: states?.text,
+			ctor: TStateUnit,
+			initial: text,
+		})
 
 		this._textState.events.on('change', (value) => {
 			this.events.emit('change:text' as any, value)

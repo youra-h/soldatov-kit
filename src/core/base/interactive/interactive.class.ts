@@ -34,21 +34,21 @@ export default class TInteractive<
 		const disabled = props.disabled ?? (TInteractive.defaultValues.disabled as boolean)
 		const focused = props.focused ?? (TInteractive.defaultValues.focused as boolean)
 
-		this._disableable = resolveState<IStateUnit<boolean>, boolean>(
-			states?.disableable,
-			TStateUnit,
-			disabled,
-		)
+		this._disableable = resolveState<IStateUnit<boolean>, boolean>({
+			state: states?.disableable,
+			ctor: TStateUnit,
+			initial: disabled,
+		})
 
 		this._disableable.events.on('change', (value) => {
 			this.events.emit('change:disabled' as any, value)
 		})
 
-		this._focusable = resolveState<IStateUnit<boolean>, boolean>(
-			states?.focusable,
-			TStateUnit,
-			focused,
-		)
+		this._focusable = resolveState<IStateUnit<boolean>, boolean>({
+			state: states?.focusable,
+			ctor: TStateUnit,
+			initial: focused,
+		})
 
 		this._focusable.events.on('change', (value) => {
 			this.events.emit('change:focused' as any, value)

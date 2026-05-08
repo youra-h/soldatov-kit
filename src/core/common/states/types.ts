@@ -3,7 +3,7 @@
  * @template TState Тип интерфейса стейта.
  * @template TInitial Тип начального значения (по умолчанию boolean).
  */
-import type { TStateCtor as TResolveStateCtor } from '../../common/resolve-state'
+import type { TStateCtor as TInjectStateCtor } from '../../common/resolve-state'
 
 /**
  * Универсальный тип конструктора стейта.
@@ -13,4 +13,4 @@ import type { TStateCtor as TResolveStateCtor } from '../../common/resolve-state
  * При этом реальные классы могут иметь `constructor(initial?: ...)` —
  * это остаётся совместимым.
  */
-export type TStateCtor<TState, TInitial = boolean> = TResolveStateCtor<TState, TInitial>
+export type TStateCtor<TState, TInitial = boolean> = TInjectStateCtor<TState, TInitial>
