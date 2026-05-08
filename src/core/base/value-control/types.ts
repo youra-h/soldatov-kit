@@ -1,10 +1,11 @@
 import type { IControl, IControlProps, TControlEvents, TControlStatesOptions } from '../control'
 import type { IStateUnit } from '../../common/state-unit'
 import type { TStateCtor } from '../../common/states'
+import { type TValuePayload } from '../../common/types'
 
 export type TValueControlEvents<T> = TControlEvents & {
 	/** change:value */
-	'change:value': (value: T) => void
+	'change:value': (payload: TValuePayload<T>) => void
 	/** input:value (опционально) */
 	'input:value': (value: T) => void
 	/** change:name */

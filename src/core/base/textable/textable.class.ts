@@ -4,6 +4,7 @@ import type { IComponentViewOptions } from '../component-view'
 import { TComponentView } from '../component-view'
 import { resolveState } from '../../common/resolve-state'
 import type { ITextableProps, TTextableEvents, TTextableStatesOptions } from './types'
+import { type TValuePayload } from '../../common/types'
 
 /**
  * Слой "textable": добавляет отображаемое текстовое значение `text`.
@@ -40,8 +41,8 @@ export default class TTextable<
 			initial: text,
 		})
 
-		this._textState.events.on('change', (value) => {
-			this.events.emit('change:text' as any, value)
+		this._textState.events.on('change', (payload: TValuePayload<string>) => {
+			this.events.emit('change:text', payload)
 		})
 	}
 

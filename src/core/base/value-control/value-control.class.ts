@@ -4,6 +4,7 @@ import { TComponentView } from '../component-view'
 import { resolveState } from '../../common/resolve-state'
 import type { IValueControlProps, TValueControlEvents, TValueControlStatesOptions } from './types'
 import { TStateUnit, type IStateUnit } from '../../common/state-unit'
+import { type TValuePayload } from '../../common/types'
 
 /**
  * База для контролов со значением.
@@ -47,8 +48,8 @@ export default class TValueControl<
 			initial: value,
 		})
 
-		this._valueState.events.on('change', (value) => {
-			this.events.emit('change:value' as any, value)
+		this._valueState.events.on('change', (payload: TValuePayload<TValue>) => {
+			this.events.emit('change:value', payload)
 		})
 	}
 

@@ -1,10 +1,11 @@
 import type { IControl, IControlProps, TControlEvents, TControlStatesOptions } from '../control'
 import type { IStateUnit } from '../../common/state-unit'
 import type { TStateCtor } from '../../common/states'
+import { type TValuePayload } from '../../common/types'
 
 export type TTextableEvents = TControlEvents & {
 	/** change:text */
-	'change:text': (value: string) => void
+	'change:text': (payload: TValuePayload<string>) => void
 }
 
 export interface ITextableProps extends IControlProps {
