@@ -41,6 +41,9 @@ export default class TStylable<
 
 		this._sizeState.events.on('change', (payload: TValuePayload<TComponentSize>) => {
 			this.events.emit('change:size', payload)
+
+			this._classes.remove(`--size-${payload.oldValue}`)
+			this._classes.add(`--size-${payload.newValue}`)
 		})
 
 		this._variantState = resolveState<IStateUnit<TComponentVariant>, TComponentVariant>({
@@ -51,6 +54,9 @@ export default class TStylable<
 
 		this._variantState.events.on('change', (payload: TValuePayload<TComponentVariant>) => {
 			this.events.emit('change:variant', payload)
+
+			this._classes.remove(`--variant-${payload.oldValue}`)
+			this._classes.add(`--variant-${payload.newValue}`)
 		})
 	}
 
