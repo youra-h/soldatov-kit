@@ -29,10 +29,6 @@ export default class TCheckBox
 		this._indeterminate = props.indeterminate ?? TCheckBox.defaultValues.indeterminate!
 		this._plain = props.plain ?? TCheckBox.defaultValues.plain!
 
-		// legacy compat: UI layer historically listens to changeValue
-		this.events.on('change:value', (value: boolean | undefined) => {
-			this.events.emit('changeValue', value)
-		})
 	}
 
 	get indeterminate(): boolean {

@@ -22,10 +22,6 @@ export default class TSwitch
 
 		this.value = props.value ?? (TSwitch.defaultValues.value as boolean)
 
-		// legacy compat: UI layer historically listens to changeValue
-		this.events.on('change:value', (value: boolean | undefined) => {
-			this.events.emit('changeValue', value)
-		})
 	}
 
 	/**

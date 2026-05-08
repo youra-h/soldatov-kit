@@ -19,19 +19,14 @@ describe('TSwitch', () => {
 		expect(c.classes).toContain('s-sw--size-xl')
 	})
 
-	it('value/input: value setter эмитит change:value (+legacy changeValue), input() эмитит input:value', () => {
+	it('value: value setter эмитит change:value', () => {
 		const sw = new TSwitch({ value: false })
 		const changeValue = vi.fn()
-		const legacy = vi.fn()
-		const input = vi.fn()
 
 		sw.events.on('change:value' as any, changeValue)
-		sw.events.on('changeValue' as any, legacy)
-		sw.events.on('input:value' as any, input)
 
 		sw.value = true
-		expect(changeValue).toHaveBeenCalledWith(true)
-		expect(legacy).toHaveBeenCalledWith(true)
+		expect(changeValue).toHaveBeenCalledWith({ newValue: true, oldValue: false })
 	})
 
 	it('change(event) переключает значение и эмитит change', () => {

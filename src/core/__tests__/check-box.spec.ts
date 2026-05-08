@@ -37,19 +37,14 @@ describe('TCheckBox', () => {
 		expect(cb.classes).toContain('s-check-box--plain')
 	})
 
-	it('value/input: value setter эмитит change:value (+legacy changeValue), input() эмитит input:value', () => {
+	it('value: value setter эмитит change:value', () => {
 		const cb = new TCheckBox({ value: false })
 		const changeValue = vi.fn()
-		const legacy = vi.fn()
-		const input = vi.fn()
 
 		cb.events.on('change:value' as any, changeValue)
-		cb.events.on('changeValue' as any, legacy)
-		cb.events.on('input:value' as any, input)
 
 		cb.value = true
-		expect(changeValue).toHaveBeenCalledWith(true)
-		expect(legacy).toHaveBeenCalledWith(true)
+		expect(changeValue).toHaveBeenCalledWith({ newValue: true, oldValue: false })
 	})
 
 	it('change(event) переключает значение и эмитит change', () => {
