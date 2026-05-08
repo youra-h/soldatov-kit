@@ -1,9 +1,11 @@
 import { TComponentView, type IComponentViewOptions } from '../../base/component-view'
 import type { TComponentSize, TComponentVariant } from '../../common/types'
-import type { ISpinner, ISpinnerProps, TSpinnerEvents } from './types'
-import { TSizeState, TVariantState } from '../../base/states'
+import type { ISpinner, ISpinnerProps, TSpinnerEvents, TSpinnerStatesOptions } from './types'
+import { resolveState } from '../../common/resolve-state'
+import { type IStateUnit, TStateUnit } from '../../common/state-unit'
+import type { TValuePayload } from '../../common/types'
 
-export default class TSpinner extends TComponentView<ISpinnerProps, TSpinnerEvents> implements ISpinner {
+export default class TSpinner extends TComponentView<ISpinnerProps, TSpinnerEvents, TSpinnerStatesOptions> implements ISpinner {
 	static override baseClass = 's-spinner'
 
 	static defaultValues: Partial<ISpinnerProps> = {
@@ -14,30 +16,42 @@ export default class TSpinner extends TComponentView<ISpinnerProps, TSpinnerEven
 		borderWidth: 'auto',
 	}
 
-	readonly sizeState: TSizeState
-	readonly variantState: TVariantState
+	protected _sizeState: IStateUnit<TComponentSize>
+	protected _variantState: IStateUnit<TComponentVariant>
 	protected _borderWidth: number | 'auto'
 
-	constructor(options: IComponentViewOptions<ISpinnerProps> | Partial<ISpinnerProps> = {}) {
+	constructor(options: IComponentViewOptions<ISpinnerProps, TSpinnerStatesOptions> | Partial<ISpinnerProps> = {}) {
 		super(options)
 
-		const { props = {} } = TComponentView.prepareOptions(options)
+		const { props = {} as Partial<ISpinnerProps>, states } = TComponentView.prepareOptions<ISpinnerProps, TSpinnerStatesOptions>(options)
 
-		this.sizeState = new TSizeState({
-			baseClass: this._baseClass,
-			exclude: ['normal'],
-			value: (props.size ?? TSpinner.defaultValues.size!) as TComponentSize,
-		})
-		this.sizeState.events.on('change', (value) => {
-			this.events.emit('change:size' as any, value)
+		this._sizeState = resolveState<IStateUnit<TComponentSize>, TComponentSize>({
+			state: states?.size,
+			ctor: TStateUnit,
+			initial: (props.size ?? TSpinner.defaultValues.size!) as TComponentSize,
 		})
 
-		this.variantState = new TVariantState({
-			baseClass: this._baseClass,
-			value: (props.variant ?? TSpinner.defaultValues.variant!) as TComponentVariant,
+		this._sizeState.events.on('change', (payload: TValuePayload<TComponentSize>) => {
+			this.events.emit('change:size', payload)
+
+			this._classes.swapClass({
+				oldClass: `--size-${payload.oldValue}`,
+				newClass: `--size-${payload.newValue}`,
+			})
 		})
-		this.variantState.events.on('change', (value) => {
-			this.events.emit('change:variant' as any, value)
+
+		this._variantState = resolveState<IStateUnit<TComponentVariant>, TComponentVariant>({
+			state: states?.variant,
+			ctor: TStateUnit,
+			initial: (props.variant ?? TSpinner.defaultValues.variant!) as TComponentVariant,
+		})
+
+		this._variantState.events.on('change', (payload: TValuePayload<TComponentVariant>) => {
+			this.events.emit('change:variant', payload)
+			this._classes.swapClass({
+				oldClass: `--variant-${payload.oldValue}`,
+				newClass: `--variant-${payload.newValue}`,
+			})
 		})
 
 		this._tag = props.tag ?? TSpinner.defaultValues.tag!
@@ -45,19 +59,19 @@ export default class TSpinner extends TComponentView<ISpinnerProps, TSpinnerEven
 	}
 
 	get variant(): TComponentVariant {
-		return this.variantState.value as TComponentVariant
+		return this._variantState.value
 	}
 
 	set variant(value: TComponentVariant) {
-		this.variantState.value = value as any
+		this._variantState.value = value
 	}
 
 	get size(): TComponentSize {
-		return this.sizeState.value as TComponentSize
+		return this._sizeState.value
 	}
 
 	set size(value: TComponentSize) {
-		this.sizeState.value = value as any
+		this._sizeState.value = value
 	}
 
 	get borderWidth(): number | 'auto' {
@@ -83,10 +97,6 @@ export default class TSpinner extends TComponentView<ISpinnerProps, TSpinnerEven
 		if (this.size === '2xl') return 2
 
 		return 1
-	}
-
-	get classes(): string[] {
-		return [...super.classes, ...this.sizeState.getClass(), ...this.variantState.getClass()]
 	}
 
 	/**
