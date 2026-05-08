@@ -60,6 +60,8 @@ export default class TTabItem
 		if (value && this.disabled) return
 
 		this._collectionItem.active = value
+
+		this._classes.toggle(`--active`, value)
 	}
 
 	toggleActive(): void {
@@ -71,16 +73,6 @@ export default class TTabItem
 			...super.getProps(), // Все UI-свойства от TTabItemCustom
 			active: this.active, // Добавляем active из _collectionItem
 		}
-	}
-
-	override get classes(): string[] {
-		const classes = [...super.classes]
-
-		if (this.active) {
-			classes.push(`${this._baseClass}--active`)
-		}
-
-		return classes
 	}
 
 	override assign(source: Partial<ITabItem>): void {

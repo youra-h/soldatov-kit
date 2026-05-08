@@ -3,6 +3,7 @@ import type { IComponentViewOptions } from '../../../base/component-view'
 import { TComponentView } from '../../../base/component-view'
 import { resolveState } from '../../../common/resolve-state'
 import { TStateUnit, type IStateUnit } from '../../../common/state-unit'
+import { type TValuePayload } from '../../../common/types'
 import type {
 	ITabItemCustom,
 	ITabItemCustomProps,
@@ -50,17 +51,17 @@ export default class TTabItemCustom<
 		const customProps = props as Partial<ITabItemCustomProps>
 
 		// Инициализация state-объектов
-		this._textState = resolveState<IStateUnit<string>, string>(
-			states?.text,
-			TStateUnit,
-			customProps.text ?? TTabItemCustom.defaultValues.text!,
-		)
+		this._textState = resolveState<IStateUnit<string>, string>({
+			state: states?.text,
+			ctor: TStateUnit,
+			initial: customProps.text ?? TTabItemCustom.defaultValues.text!,
+		})
 
-		this._closableState = resolveState<IStateUnit<boolean | undefined>, boolean | undefined>(
-			states?.closable,
-			TStateUnit,
-			customProps.closable ?? TTabItemCustom.defaultValues.closable,
-		)
+		this._closableState = resolveState<IStateUnit<boolean | undefined>, boolean | undefined>({
+			state: states?.closable,
+			ctor: TStateUnit,
+			initial: customProps.closable ?? TTabItemCustom.defaultValues.closable,
+		})
 
 		// Подписка на изменения state-объектов
 		this._textState.events.on('change', (value) => {
@@ -85,21 +86,15 @@ export default class TTabItemCustom<
 	}
 
 	set closable(value: boolean | undefined) {
+		if (this._closableState.value === value) return
+
 		this._closableState.value = value
+
+		this._classes.toggle(`--closable`, !!value)
 	}
 
 	close(): void {
 		this.events.emit('close', this)
-	}
-
-	override get classes(): string[] {
-		const classes = [...super.classes]
-
-		if (this.closable) {
-			classes.push(`${this._baseClass}--closable`)
-		}
-
-		return classes
 	}
 
 	override getProps(): TProps {
