@@ -1,10 +1,12 @@
 import { TComponentView } from '../../base/component-view'
-import type { IIcon, IIconProps, TIconEvents } from './types'
-import { TSizeState } from '../../base/states/size.state'
+import type { IIcon, IIconProps, TIconEvents, TIconStatesOptions } from './types'
 import type { TComponentSize } from '../../common/types'
 import type { IComponentViewOptions } from '../../base/component-view'
+import { resolveState } from '../../common/resolve-state'
+import { type IStateUnit, TStateUnit } from '../../common/state-unit'
+import type { TValuePayload } from '../../common/types'
 
-export default class TIcon extends TComponentView<IIconProps, TIconEvents> implements IIcon {
+export default class TIcon extends TComponentView<IIconProps, TIconEvents, TIconStatesOptions> implements IIcon {
 	static override baseClass = 's-icon'
 
 	static defaultValues: Partial<IIconProps> = {
@@ -15,21 +17,28 @@ export default class TIcon extends TComponentView<IIconProps, TIconEvents> imple
 
 	protected _width: string | number | undefined
 	protected _height: string | number | undefined
-	readonly sizeState: TSizeState
+	protected _sizeState: IStateUnit<TComponentSize>
 
-	constructor(options: IComponentViewOptions<IIconProps> | Partial<IIconProps> = {}) {
+	constructor(options: IComponentViewOptions<IIconProps, TIconStatesOptions> | Partial<IIconProps> = {}) {
 		super(options)
 
-		const { props = {} } = TComponentView.prepareOptions(options)
+		const { props = {} as Partial<IIconProps>, states } = TComponentView.prepareOptions<IIconProps, TIconStatesOptions>(options)
 
-		this.sizeState = new TSizeState({
-			baseClass: this._baseClass,
-			exclude: ['auto'],
-			value: (props.size ?? TIcon.defaultValues.size!) as TComponentSize,
+		this._sizeState = resolveState<IStateUnit<TComponentSize>, TComponentSize>({
+			state: states?.size,
+			ctor: TStateUnit,
+			initial: (props.size ?? TIcon.defaultValues.size!) as TComponentSize,
 		})
-		this.sizeState.events.on('change', (value) => {
-			this.events.emit('change:size' as any, value)
+
+		this._sizeState.events.on('change', (payload: TValuePayload<TComponentSize>) => {
+			this.events.emit('change:size' as any, payload)
+			this._classes.swapClass({
+				oldClass: `--size-${payload.oldValue}`,
+				newClass: `--size-${payload.newValue}`,
+			})
 		})
+
+		this._classes.add(`--size-${this._sizeState.value}`, true)
 
 		this._tag = props.tag ?? TIcon.defaultValues.tag!
 		this._width = props.width
@@ -57,15 +66,11 @@ export default class TIcon extends TComponentView<IIconProps, TIconEvents> imple
 	}
 
 	get size(): TComponentSize {
-		return this.sizeState.value
+		return this._sizeState.value
 	}
 
 	set size(value: TComponentSize) {
-		this.sizeState.value = value
-	}
-
-	get classes(): string[] {
-		return [...super.classes, ...this.sizeState.getClass()]
+		this._sizeState.value = value
 	}
 
 	/**
@@ -90,7 +95,7 @@ export default class TIcon extends TComponentView<IIconProps, TIconEvents> imple
 	getProps(): IIconProps {
 		return {
 			...super.getProps(),
-			size: this.sizeState.value,
+			size: this._sizeState.value,
 			width: this._width,
 			height: this._height,
 		}
