@@ -7,8 +7,9 @@ import type {
 	TButtonStatesOptions,
 } from './types'
 import { TComponentView, type IComponentViewOptions } from '../../base/component-view'
-import { TLoadingState, type ILoadingState } from '../../base/states'
+import { TLoadingState, type ILoadingState, type ILoadingStateValue } from '../../common/states'
 import { resolveState } from '../../common/resolve-state'
+import { type TValuePayload } from '../../common/types'
 
 export default class TButton extends TTextable<IButtonProps, TButtonEvents> implements IButton {
 	static override baseClass = 's-button'
@@ -53,11 +54,11 @@ export default class TButton extends TTextable<IButtonProps, TButtonEvents> impl
 					shouldDisable: true, // Кнопка становится disabled при loading
 				}
 
-		this._loadingState = resolveState<ILoadingState, boolean | any>(
-			states?.loading,
-			TLoadingState,
-			loadingInitial,
-		)
+		this._loadingState = resolveState<ILoadingState, boolean | any>({
+			state: states?.loading,
+			ctor: TLoadingState,
+			initial: loadingInitial,
+		})
 
 		// Устанавливаем начальное значение loading из props
 		if (props.loading !== undefined) {
@@ -65,9 +66,9 @@ export default class TButton extends TTextable<IButtonProps, TButtonEvents> impl
 		}
 
 		// При изменении loading умно управляем disabled с учетом источника
-		this._loadingState.events.on('change', (value) => {
+		this._loadingState.events.on('change', (payload: TValuePayload<ILoadingStateValue>) => {
 			if (this._loadingState.behavior.shouldDisable) {
-				if (value.loading) {
+				if (payload.newValue.loading) {
 					// Loading активируется - устанавливаем disabled только если он не был установлен вручную
 					if (!this._disableable.value || this._disabledByLoading) {
 						this._disableable.value = true
@@ -82,7 +83,7 @@ export default class TButton extends TTextable<IButtonProps, TButtonEvents> impl
 					}
 				}
 			}
-			this.events.emit('change:loading', value.loading)
+			this.events.emit('change:loading', payload.newValue.loading)
 		})
 	}
 
@@ -90,9 +91,16 @@ export default class TButton extends TTextable<IButtonProps, TButtonEvents> impl
 		return this._appearance
 	}
 
-	set appearance(value: TButtonAppearance) {
-		if (value && this._appearance !== value) {
-			this._appearance = value
+	set appearance(newValue: TButtonAppearance) {
+		if (newValue && this._appearance !== newValue) {
+			const oldValue = this._appearance
+
+			this._appearance = newValue
+
+			this._classes.swapClass({
+				oldClass: `--a-${oldValue}`,
+				newClass: `--a-${newValue}`,
+			})
 		}
 	}
 
@@ -119,17 +127,6 @@ export default class TButton extends TTextable<IButtonProps, TButtonEvents> impl
 			this._disabledByLoading = false
 		}
 		this._disableable.value = value
-	}
-
-	get classes(): string[] {
-		const classes = [...super.classes]
-
-		// Добавляем класс для внешнего вида, если он задан
-		if (this._appearance) {
-			classes.push(`${this._baseClass}--a-${this._appearance}`)
-		}
-
-		return classes
 	}
 
 	getProps(): IButtonProps {

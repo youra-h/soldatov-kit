@@ -90,6 +90,49 @@ export class TClasses {
 		return value ? this.add(entry, withBase) : this.remove(entry, withBase)
 	}
 
+	/**
+	 * Удаляет класс со старым значением и добавляет с новым.
+	 * @param prefix — префикс для класса
+	 * @param oldValue — старое значение
+	 * @param newValue — новое значение
+	 * @param withBase — если `true`, строка автоматически предваряется базовым классом
+	 */
+	swap({
+		prefix,
+		oldValue,
+		newValue,
+		withBase = true,
+	}: {
+		prefix: string
+		oldValue: string
+		newValue: string
+		withBase?: boolean
+	}): this {
+		this.remove(`${prefix}${oldValue}`, withBase)
+		this.add(`${prefix}${newValue}`, withBase)
+
+		return this
+	}
+
+	/**
+	 * Удаляет `oldClass` и добавляет `newClass`.
+	 * @param withBase — если `true`, оба класса автоматически предваряются базовым классом
+	 */
+	swapClass({
+		oldClass,
+		newClass,
+		withBase = true,
+	}: {
+		oldClass: string
+		newClass: string
+		withBase?: boolean
+	}): this {
+		this.remove(oldClass, withBase)
+		this.add(newClass, withBase)
+
+		return this
+	}
+
 	/** Возвращает итоговый список классов: `[base, ...statics, ...computed dynamics]`. */
 	toArray(): string[] {
 		const result: string[] = [this._base, ...this._statics]

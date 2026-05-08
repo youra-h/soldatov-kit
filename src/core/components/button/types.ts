@@ -1,7 +1,11 @@
-import type { ITextable, ITextableProps, TTextableEvents, TTextableStatesOptions } from '../../base/textable'
+import type {
+	ITextable,
+	ITextableProps,
+	TTextableEvents,
+	TTextableStatesOptions,
+} from '../../base/textable'
 import type { TComponentVariant } from '../../common/types'
-import type { TStateCtor } from '../../base/states'
-import type { ILoadingState, ILoadingBehavior } from '../../base/states'
+import type { TStateCtor, ILoadingState, ILoadingBehavior } from '../../common/states'
 
 export type TButtonAppearance = 'filled' | 'plain' | 'outlined' | 'none'
 
