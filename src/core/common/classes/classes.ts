@@ -109,7 +109,10 @@ export class TClasses {
 		withBase?: boolean
 	}): this {
 		this.remove(`${prefix}${oldValue}`, withBase)
-		this.add(`${prefix}${newValue}`, withBase)
+
+		if (newValue.trim() !== '' && newValue !== oldValue) {
+			this.add(`${prefix}${newValue}`, withBase)
+		}
 
 		return this
 	}
@@ -128,7 +131,10 @@ export class TClasses {
 		withBase?: boolean
 	}): this {
 		this.remove(oldClass, withBase)
-		this.add(newClass, withBase)
+
+		if (newClass.trim() !== '' && newClass !== oldClass) {
+			this.add(newClass, withBase)
+		}
 
 		return this
 	}

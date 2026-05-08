@@ -4,6 +4,8 @@ import { TComponentView } from '../../base/component-view'
 import { TActivatableCollection } from '../../base/collection'
 import TTabItem from './tab-item/tab-item.class'
 import type { ITabItem } from './tab-item/types'
+import type { TComponentSize, TComponentVariant } from '../../common/types'
+import { type TValuePayload } from '../../common/types'
 import type {
 	ITabs,
 	ITabsProps,
@@ -103,15 +105,15 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 		})
 
 		// Propagation: при изменении size/variant у контейнера — обновляем все существующие итемы
-		this.events.on('change:size', (value) => {
+		this.events.on('change:size', (payload: TValuePayload<TComponentSize>) => {
 			this._collection.forEach((item) => {
-				item.size = value
+				item.size = payload.newValue
 			})
 		})
 
-		this.events.on('change:variant', (value) => {
+		this.events.on('change:variant', (payload: TValuePayload<TComponentVariant>) => {
 			this._collection.forEach((item) => {
-				item.variant = value
+				item.variant = payload.newValue
 			})
 		})
 
@@ -149,7 +151,13 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 
 	set orientation(value: TTabsOrientation) {
 		if (this._orientation !== value) {
+			this._classes.swapClass({
+				oldClass: `--${this._orientation}`,
+				newClass: `--${value}`,
+			})
+
 			this._orientation = value
+
 			this.events.emit('change:orientation', value)
 		}
 	}
@@ -160,7 +168,13 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 
 	set alignment(value: TTabsAlignment) {
 		if (this._alignment !== value) {
+			this._classes.swapClass({
+				oldClass: `--${this._alignment}`,
+				newClass: value !== 'start' ? `--${value}` : '',
+			})
+
 			this._alignment = value
+
 			this.events.emit('change:alignment', value)
 		}
 	}
@@ -171,6 +185,12 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 
 	set position(value: TTabsPosition) {
 		if (this._position !== value) {
+			this._classes.remove(`--position-${this._position}`)
+
+			if (this._orientation === 'vertical' && value !== 'start') {
+				this._classes.add(`--position-${value}`)
+			}
+
 			this._position = value
 			this.events.emit('change:position', value)
 		}
@@ -182,7 +202,13 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 
 	set appearance(value: TTabsAppearance) {
 		if (this._appearance !== value) {
+			this._classes.swapClass({
+				oldClass: `--${this._appearance}`,
+				newClass: `--${value}`,
+			})
+
 			this._appearance = value
+
 			this.events.emit('change:appearance', value)
 		}
 	}
@@ -194,6 +220,9 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 	set stretched(value: boolean) {
 		if (this._stretched !== value) {
 			this._stretched = value
+
+			this._classes.toggle(`--stretched`, value)
+
 			this.events.emit('change:stretched', value)
 		}
 	}
@@ -246,38 +275,6 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 		this.events.emit('tab:close', item)
 
 		return this._collection.deleteItem(item)
-	}
-
-	override get classes(): string[] {
-		const classes = [...super.classes]
-
-		// Добавляем классы для ориентации
-		classes.push(`${this._baseClass}--${this._orientation}`)
-
-		// Добавляем классы для выравнивания
-		if (this._alignment !== 'start') {
-			classes.push(`${this._baseClass}--${this._alignment}`)
-		}
-
-		// Добавляем классы для позиции (только для vertical)
-		if (this._orientation === 'vertical' && this._position !== 'start') {
-			classes.push(`${this._baseClass}--position-${this._position}`)
-		}
-
-		// Добавляем классы для внешнего вида
-		classes.push(`${this._baseClass}--${this._appearance}`)
-
-		// Добавляем класс для stretched
-		if (this._stretched) {
-			classes.push(`${this._baseClass}--stretched`)
-		}
-
-		// // После монтирования включаем transition на индикаторе
-		// if (this.ready) {
-		// 	classes.push(`${this._baseClass}--ready`)
-		// }
-
-		return classes
 	}
 
 	override getProps(): ITabsProps {
