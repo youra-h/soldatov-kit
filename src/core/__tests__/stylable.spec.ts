@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest'
 import { TStylable } from '../base/stylable'
 import type { IStylableProps } from '../base/stylable'
-import { TSizeState } from '../base/states'
+import { TSizeState } from '../common/states'
 
 describe('TStylable', () => {
 	it('size и variant выставляются и эмитят события', () => {

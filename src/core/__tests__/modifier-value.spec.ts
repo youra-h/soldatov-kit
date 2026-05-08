@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import { TStylableModifierState } from '../base/states'
+import { TStylableModifierState } from '../common/states'
 
 type TMode = 'normal' | 'x'
 

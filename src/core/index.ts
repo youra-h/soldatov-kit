@@ -9,7 +9,7 @@ export * from './base/textable'
 export * from './base/value-control'
 export * from './base/input-control'
 export * from './common/state-unit'
-export * from './base/states'
+export * from './common/states'
 export * from './base/collection'
 
 // behaviors (пока используются деревом)

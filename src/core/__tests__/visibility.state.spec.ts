@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import { TVisibilityState } from '../base/states'
+import { TVisibilityState } from '../common/states'
 
 describe('TVisibilityState', () => {
 	it('show/hide меняют visible и эмитят change', () => {

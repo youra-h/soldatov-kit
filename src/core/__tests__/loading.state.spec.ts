@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import { TLoadingState } from '../base/states'
+import { TLoadingState } from '../common/states'
 
 describe('TLoadingState', () => {
 	it('создается с булевым значением', () => {

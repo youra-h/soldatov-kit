@@ -1,7 +1,6 @@
 import { describe, it, expect, vi } from 'vitest'
 import { TButton } from '../components/button'
-import { TLoadingState } from '../base/states'
-import type { IButtonProps } from '../components/button'
+import { TLoadingState } from '../common/states'
 
 describe('TButton', () => {
 	it('создаётся через { props }, через plain props и с override baseClass', () => {

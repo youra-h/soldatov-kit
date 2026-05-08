@@ -1,8 +1,8 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { TComponentView } from '../base/component-view'
 import type { IComponentViewProps } from '../base/component-view'
-import { TVisibilityState } from '../base/states'
-import type { IVisibilityState } from '../base/states'
+import { TVisibilityState } from '../common/states'
+import type { IVisibilityState } from '../common/states'
 import { TStateUnit } from '../base/state-unit'
 import type { TStateUnitValueEvents } from '../base/state-unit/types'
 

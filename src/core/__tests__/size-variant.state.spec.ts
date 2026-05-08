@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import { TSizeState, TVariantState } from '../base/states'
+import { TSizeState, TVariantState } from '../common/states'
 
 describe('TSizeState', () => {
 	it('возвращает пустой массив для значений из exclude', () => {
