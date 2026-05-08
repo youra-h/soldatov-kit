@@ -1,6 +1,5 @@
 import { describe, it, expect } from 'vitest'
 import { TSpinner } from '../components/spinner'
-import type { ISpinnerProps } from '../components/spinner'
 
 describe('TSpinner', () => {
 	it('создаётся через { props }, через plain props и с override baseClass', () => {

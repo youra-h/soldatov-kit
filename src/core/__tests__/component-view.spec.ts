@@ -3,8 +3,7 @@ import { TComponentView } from '../base/component-view'
 import type { IComponentViewProps } from '../base/component-view'
 import { TVisibilityState } from '../common/states'
 import type { IVisibilityState } from '../common/states'
-import { TStateUnit } from '../base/state-unit'
-import type { TStateUnitValueEvents } from '../base/state-unit/types'
+import { TStateUnit } from '../common/state-unit'
 
 describe('TComponentView', () => {
 	beforeEach(() => {

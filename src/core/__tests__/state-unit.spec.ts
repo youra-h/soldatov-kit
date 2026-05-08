@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import { TStateUnit } from '../base/state-unit'
+import { TStateUnit } from '../common/state-unit'
 
 describe('TStateUnit', () => {
 	it('хранит value и эмитит change(value) при изменении', () => {

@@ -1,6 +1,5 @@
 import { describe, it, expect } from 'vitest'
 import { TIcon } from '../components/icon'
-import type { IIconProps } from '../components/icon'
 
 describe('TIcon', () => {
 	it('создаётся через { props }, через plain props и с override baseClass', () => {

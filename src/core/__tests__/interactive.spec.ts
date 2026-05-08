@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest'
 import { TInteractive } from '../base/interactive'
-import { TStateUnit } from '../base/state-unit'
+import { TStateUnit } from '../common/state-unit'
 
 describe('TInteractive', () => {
 	it('меняет disabled/focused и эмитит события', () => {
