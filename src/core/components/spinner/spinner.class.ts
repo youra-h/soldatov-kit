@@ -43,6 +43,11 @@ export default class TSpinner
 
 		this._sizeState.events.on('change', (payload: TValuePayload<TComponentSize>) => {
 			this.events.emit('change:size', payload)
+
+			this._classes.swapClass({
+				oldClass: `--size-${payload.oldValue}`,
+				newClass: `--size-${payload.newValue}`,
+			})
 		})
 
 		this._variantState = resolveState<IStateUnit<TComponentVariant>, TComponentVariant>({
@@ -53,6 +58,11 @@ export default class TSpinner
 
 		this._variantState.events.on('change', (payload: TValuePayload<TComponentVariant>) => {
 			this.events.emit('change:variant', payload)
+
+			this._classes.swapClass({
+				oldClass: `--variant-${payload.oldValue}`,
+				newClass: `--variant-${payload.newValue}`,
+			})
 		})
 
 		this._tag = props.tag ?? TSpinner.defaultValues.tag!
@@ -66,11 +76,6 @@ export default class TSpinner
 	set variant(value: TComponentVariant) {
 		if (value === this._variantState.value) return
 
-		this._classes.swapClass({
-			oldClass: `--variant-${this._variantState.value}`,
-			newClass: `--variant-${value}`,
-		})
-
 		this._variantState.value = value
 	}
 
@@ -80,11 +85,6 @@ export default class TSpinner
 
 	set size(value: TComponentSize) {
 		if (value === this._sizeState.value) return
-
-		this._classes.swapClass({
-			oldClass: `--size-${this._sizeState.value}`,
-			newClass: `--size-${value}`,
-		})
 
 		this._sizeState.value = value
 	}
