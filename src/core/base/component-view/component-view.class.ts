@@ -99,10 +99,10 @@ export default class TComponentView<
 		})
 
 		this._renderedState.events.on('change', (payload: TValuePayload<boolean>) =>
-			this.events.emit('change:rendered', payload),
+			this.events.emit('change:rendered', payload.newValue),
 		)
 		this._visibilityState.events.on('change', (payload: TValuePayload<boolean>) =>
-			this.events.emit('change:visible', payload),
+			this.events.emit('change:visible', payload.newValue),
 		)
 
 		this._classes = new TClasses(ctor.baseClass)

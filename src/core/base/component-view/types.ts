@@ -5,7 +5,7 @@ import type {
 	IComponentModelProps,
 	TComponentModelEvents,
 } from '../component-model'
-import type { IVisibilityState, TVisibilityStateCtor } from '../states'
+import type { IVisibilityState, TVisibilityStateCtor } from '../../common/states'
 
 export type TComponentViewStatesOptions = {
 	/** Класс state для `rendered`. */

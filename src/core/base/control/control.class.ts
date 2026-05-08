@@ -4,6 +4,7 @@ import type { IComponentViewOptions } from '../component-view'
 import { TStylable } from '../stylable'
 import { resolveState } from '../../common/resolve-state'
 import type { IControlProps, TControlEvents, TControlStatesOptions } from './types'
+import { type TValuePayload } from '../../common/types'
 
 /**
  * База для Ui-контролов: stylable (size/variant) + интерактивность (disabled/focused/click).
@@ -43,8 +44,8 @@ export default class TControl<
 			initial: disabled,
 		})
 
-		this._disableable.events.on('change', (value) => {
-			this.events.emit('change:disabled' as any, value)
+		this._disableable.events.on('change', (payload: TValuePayload<boolean>) => {
+			this.events.emit('change:disabled', payload.newValue)
 		})
 
 		this._focusable = resolveState<IStateUnit<boolean>, boolean>({
@@ -53,8 +54,8 @@ export default class TControl<
 			initial: focused,
 		})
 
-		this._focusable.events.on('change', (value) => {
-			this.events.emit('change:focused' as any, value)
+		this._focusable.events.on('change', (payload: TValuePayload<boolean>) => {
+			this.events.emit('change:focused', payload.newValue)
 		})
 	}
 
