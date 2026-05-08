@@ -1,4 +1,4 @@
-import { TStateUnit, type IStateUnit } from '../state-unit'
+import { TStateUnit, type IStateUnit } from '../../common/state-unit'
 import { TComponentView } from '../component-view'
 import type { IComponentViewOptions } from '../component-view'
 import { TStylable } from '../stylable'

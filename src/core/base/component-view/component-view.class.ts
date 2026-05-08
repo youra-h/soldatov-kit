@@ -9,7 +9,7 @@ import type {
 	TComponentViewStatesOptions,
 	TComponentViewPreparedOptions,
 } from './types'
-import { type IStateUnit, TStateUnit } from '../state-unit'
+import { type IStateUnit, TStateUnit } from '../../common/state-unit'
 import { TClasses } from '../../common/classes'
 
 /**

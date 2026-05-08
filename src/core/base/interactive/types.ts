@@ -1,6 +1,6 @@
 import type { IComponentView, IComponentViewProps, TComponentViewEvents } from '../component-view'
 import type { TComponentViewStatesOptions } from '../component-view'
-import type { IStateUnit } from '../state-unit'
+import type { IStateUnit } from '../../common/state-unit'
 import type { TStateCtor } from '../states'
 
 export type TInteractiveEvents = TComponentViewEvents & {

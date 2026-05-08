@@ -1,4 +1,4 @@
-import { TStateUnit, type IStateUnit, type TStateUnitValueEvents } from '../state-unit'
+import { TStateUnit, type IStateUnit, type TStateUnitValueEvents } from '../../common/state-unit'
 import type { TStateCtor } from './types'
 
 export interface IVisibilityState extends IStateUnit<boolean> {

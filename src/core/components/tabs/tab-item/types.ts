@@ -4,7 +4,7 @@ import type {
 	TValueControlEvents,
 	TValueControlStatesOptions,
 } from '../../../base/value-control'
-import type { IStateUnit } from '../../../base/state-unit'
+import type { IStateUnit } from '../../../common/state-unit'
 import type { TStateCtor } from '../../../base/states'
 import type {
 	IActivatableCollectionItemProps,

@@ -1,4 +1,4 @@
-import { TEvented } from '../../common/evented'
+import { TEvented } from '../evented'
 import type { TStateUnitValueEvents, IStateUnit } from './types'
 
 /**

@@ -8,7 +8,7 @@ export * from './base/control'
 export * from './base/textable'
 export * from './base/value-control'
 export * from './base/input-control'
-export * from './base/state-unit'
+export * from './common/state-unit'
 export * from './base/states'
 export * from './base/collection'
 

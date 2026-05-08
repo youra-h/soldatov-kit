@@ -1,4 +1,4 @@
-import { TStateUnit, type IStateUnit } from '../state-unit'
+import { TStateUnit, type IStateUnit } from '../../common/state-unit'
 import { TComponentView, type IComponentViewOptions } from '../component-view'
 import { resolveState } from '../../common/resolve-state'
 import type { IInteractiveProps, TInteractiveEvents, TInteractiveStatesOptions } from './types'

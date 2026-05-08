@@ -3,7 +3,7 @@ import type { IComponentViewOptions } from '../component-view'
 import { TComponentView } from '../component-view'
 import { resolveState } from '../../common/resolve-state'
 import type { IValueControlProps, TValueControlEvents, TValueControlStatesOptions } from './types'
-import { TStateUnit, type IStateUnit } from '../state-unit'
+import { TStateUnit, type IStateUnit } from '../../common/state-unit'
 
 /**
  * База для контролов со значением.

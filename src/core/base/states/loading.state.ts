@@ -1,4 +1,4 @@
-import { TStateUnit, type IStateUnit } from '../state-unit'
+import { TStateUnit, type IStateUnit } from '../../common/state-unit'
 import type { TStateCtor } from './types'
 
 /**

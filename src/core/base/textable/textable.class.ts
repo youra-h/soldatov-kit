@@ -1,4 +1,4 @@
-import { TStateUnit, type IStateUnit } from '../state-unit'
+import { TStateUnit, type IStateUnit } from '../../common/state-unit'
 import { TControl } from '../control'
 import type { IComponentViewOptions } from '../component-view'
 import { TComponentView } from '../component-view'

@@ -1,5 +1,5 @@
 import type { IControl, IControlProps, TControlEvents, TControlStatesOptions } from '../control'
-import type { IStateUnit } from '../state-unit'
+import type { IStateUnit } from '../../common/state-unit'
 import type { TStateCtor } from '../states'
 
 export type TTextableEvents = TControlEvents & {
