@@ -39,7 +39,7 @@ describe('TTabItemCustom', () => {
 
 			item.text = 'New Text'
 
-			expect(spy).toHaveBeenCalledWith('New Text')
+			expect(spy).toHaveBeenCalledWith({ newValue: 'New Text', oldValue: '' })
 			expect(item.text).toBe('New Text')
 		})
 
@@ -76,7 +76,7 @@ describe('TTabItemCustom', () => {
 		it('includes closable class when closable is true', () => {
 			item.closable = true
 
-			const classes = item.classes
+			const classes = item.classes.toArray()
 
 			expect(classes).toContain('s-tab-item--closable')
 		})
@@ -84,7 +84,7 @@ describe('TTabItemCustom', () => {
 		it('does not include closable class when closable is false/undefined', () => {
 			item.closable = false
 
-			const classes = item.classes
+			const classes = item.classes.toArray()
 
 			expect(classes).not.toContain('s-tab-item--closable')
 		})
@@ -219,7 +219,7 @@ describe('TTabItem', () => {
 			item.text = 'New Text'
 			item.closable = false
 
-			expect(textSpy).toHaveBeenCalledWith('New Text')
+			expect(textSpy).toHaveBeenCalledWith({ newValue: 'New Text', oldValue: 'My Tab' })
 			expect(closableSpy).toHaveBeenCalledWith(false)
 		})
 

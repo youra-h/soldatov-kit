@@ -68,9 +68,13 @@ export default class TTabItemCustom<
 			this.events.emit('change:text', value)
 		})
 
-		this._closableState.events.on('change', (value) => {
-			this.events.emit('change:closable', value)
+		this._closableState.events.on('change', (payload: TValuePayload<boolean | undefined>) => {
+			this.events.emit('change:closable', payload.newValue)
+
+			this._classes.toggle(`--closable`, !!payload.newValue)
 		})
+
+		this._classes.toggle(`--closable`, !!this._closableState.value)
 	}
 
 	get text(): string {

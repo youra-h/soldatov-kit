@@ -24,7 +24,7 @@ describe('TValueControl', () => {
 		c.events.on('input:value', inputHandler)
 
 		c.value = 'y'
-		expect(changeHandler).toHaveBeenCalledWith('y')
+		expect(changeHandler).toHaveBeenCalledWith({ newValue: 'y', oldValue: 'x' })
 		expect(c.value).toBe('y')
 	})
 

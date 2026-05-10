@@ -17,7 +17,7 @@ describe('TTextable', () => {
 		t.events.on('change:text', handler)
 
 		t.text = 'y'
-		expect(handler).toHaveBeenCalledWith('y')
+		expect(handler).toHaveBeenCalledWith({ newValue: 'y', oldValue: 'x' })
 		expect(t.text).toBe('y')
 	})
 

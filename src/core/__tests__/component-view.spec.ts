@@ -119,10 +119,14 @@ describe('TComponentView', () => {
 			get value(): boolean {
 				return this._value
 			}
+
 			set value(val: boolean) {
 				if (this._value === val) return
+
 				this._value = val
+
 				this.events.emit('change', val)
+
 				if (val) {
 					this._log.push('state:value=true')
 				}
@@ -146,6 +150,7 @@ describe('TComponentView', () => {
 			log.push(`component-view:change:visible=${value}`)
 		})
 		p1.visible = true
+
 		expect(log).toContain('state:value=true')
 		expect(log).toContain('component-view:change:visible=true')
 

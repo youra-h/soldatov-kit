@@ -285,7 +285,7 @@ describe('TTabs', () => {
 			tabs.appearance = 'pills'
 			tabs.stretched = true
 
-			const classes = tabs.classes
+			const classes = tabs.classes.toArray()
 
 			expect(classes).toContain('s-tabs')
 			expect(classes).toContain('s-tabs--vertical')
@@ -298,7 +298,7 @@ describe('TTabs', () => {
 			tabs.orientation = 'horizontal'
 			tabs.position = 'end'
 
-			const classes = tabs.classes
+			const classes = tabs.classes.toArray()
 
 			expect(classes).not.toContain('s-tabs--position-end')
 		})
@@ -307,7 +307,7 @@ describe('TTabs', () => {
 			tabs.orientation = 'vertical'
 			tabs.position = 'end'
 
-			const classes = tabs.classes
+			const classes = tabs.classes.toArray()
 
 			expect(classes).toContain('s-tabs--position-end')
 		})

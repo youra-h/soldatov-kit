@@ -57,7 +57,7 @@ describe('TCheckBox', () => {
 	})
 
 	it('если indeterminate=true, change() сначала снимает indeterminate и ставит value=true', () => {
-		const cb = new TCheckBox({ props: { value: null, indeterminate: true } })
+		const cb = new TCheckBox({ props: { value: undefined, indeterminate: true } })
 		expect(cb.indeterminate).toBe(true)
 
 		cb.change()
