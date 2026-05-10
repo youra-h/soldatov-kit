@@ -1,5 +1,8 @@
-import type { IInputControl, IInputControlProps, TInputControlEvents } from '../../base/input-control'
-
+import type {
+	IInputControl,
+	IInputControlProps,
+	TInputControlEvents,
+} from '../../base/input-control'
 
 export interface ICheckBoxProps extends IInputControlProps<boolean | undefined> {
 	// value наследуется от IInputControlProps<boolean | undefined>
@@ -10,11 +13,15 @@ export interface ICheckBoxProps extends IInputControlProps<boolean | undefined> 
 }
 
 export type TCheckBoxEvents = TInputControlEvents<boolean | undefined> & {
-	change: ({ event, value }: { event: Event; value: boolean | undefined }) => void
+	change: ({ event, value }: { event: Event | undefined; value: boolean | undefined }) => void
 	'change:indeterminate': (value: boolean) => void
 }
 
-export interface ICheckBox extends IInputControl<boolean | undefined, ICheckBoxProps, TCheckBoxEvents> {
+export interface ICheckBox extends IInputControl<
+	boolean | undefined,
+	ICheckBoxProps,
+	TCheckBoxEvents
+> {
 	/** Состояние "не определено" */
 	indeterminate: boolean
 	/** Упрощенный вид */

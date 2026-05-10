@@ -10,7 +10,7 @@ export interface ISwitchProps extends IInputControlProps<boolean | undefined> {
 
 export type TSwitchEvents = TInputControlEvents<boolean | undefined> & {
 	// Событие изменения значения
-	change: ({ event, value }: { event: Event; value: boolean | undefined }) => void
+	change: ({ event, value }: { event: Event | undefined; value: boolean | undefined }) => void
 }
 
 export interface ISwitch extends IInputControl<boolean | undefined, ISwitchProps, TSwitchEvents> {
