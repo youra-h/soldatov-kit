@@ -12,7 +12,7 @@ import { Icon } from '../icon'
 export const emitsCheckBox: TEmits = [
 	...emitsInputControl,
 	'update:indeterminate',
-	'changeIndeterminate',
+	'change:indeterminate',
 ] as const
 
 export const propsCheckBox: TProps = {
@@ -56,7 +56,7 @@ export function syncCheckBox(options: ISyncComponentModelOptions<ICheckBoxProps,
 				instance.indeterminate = value
 
 				emit?.('update:indeterminate', value)
-				emit?.('changeIndeterminate', value)
+				emit?.('change:indeterminate', value)
 			}
 		},
 	)
