@@ -14,7 +14,7 @@ export class TreeActivationController {
 	constructor(tree: TTree) {
 		this._tree = tree
 		// Слушаем глобальные изменения
-		this._tree.events.on('itemChange', this._handleItemChange.bind(this))
+		this._tree.events.on('item:change', this._handleItemChange.bind(this))
 	}
 
 	private _handleItemChange(payload: { item: ITreeItem; event: string }) {

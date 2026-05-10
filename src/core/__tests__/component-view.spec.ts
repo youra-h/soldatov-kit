@@ -98,7 +98,6 @@ describe('TComponentView', () => {
 
 		p.tag = 'section'
 		expect(tagHandler).toHaveBeenCalledWith('section')
-
 		;(p.classes as any).add('x', false)
 		expect(classesHandler).toHaveBeenCalled()
 	})
@@ -112,7 +111,10 @@ describe('TComponentView', () => {
 		const log: string[] = []
 
 		class TLoggedVisibilityState extends TStateUnit<boolean> implements IVisibilityState {
-			constructor(initial: boolean, private readonly _log: string[]) {
+			constructor(
+				initial: boolean,
+				private readonly _log: string[],
+			) {
 				super(initial)
 			}
 
@@ -125,7 +127,7 @@ describe('TComponentView', () => {
 
 				this._value = val
 
-				this.events.emit('change', val)
+				this.events.emit('change', { newValue: val, oldValue: !val })
 
 				if (val) {
 					this._log.push('state:value=true')
@@ -145,7 +147,10 @@ describe('TComponentView', () => {
 		const instanceVisible = new TLoggedVisibilityState(false, log)
 		const instanceRendered = new TVisibilityState(true)
 
-		const p1 = new TComponentView({ props: { visible: false }, states: { rendered: instanceRendered, visible: instanceVisible } })
+		const p1 = new TComponentView({
+			props: { visible: false },
+			states: { rendered: instanceRendered, visible: instanceVisible },
+		})
 		p1.events.on('change:visible', (value) => {
 			log.push(`component-view:change:visible=${value}`)
 		})
@@ -156,7 +161,16 @@ describe('TComponentView', () => {
 
 		// 2) Передаём конструктор/класс — TComponentView создаст экземпляр сам
 		log.length = 0
-		const p2 = new TComponentView({ props: { visible: false }, states: { visible: class TLoggedCtor extends TLoggedVisibilityState { constructor(initial = false) { super(initial, log) } } } })
+		const p2 = new TComponentView({
+			props: { visible: false },
+			states: {
+				visible: class TLoggedCtor extends TLoggedVisibilityState {
+					constructor(initial = false) {
+						super(initial, log)
+					}
+				},
+			},
+		})
 		p2.events.on('change:visible', (value) => {
 			log.push(`component-view2:change:visible=${value}`)
 		})

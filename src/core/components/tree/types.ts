@@ -43,7 +43,7 @@ export type TTreeEvents = TCollectionEvents & {
 	 * @param payload.item Элемент, который изменился
 	 * @param payload.event Имя события (например, 'activeChange')
 	 */
-	itemChange: (payload: { item: ITreeItem; event: string }) => void
+	'item:change': (payload: { item: ITreeItem; event: string }) => void
 }
 
 /**

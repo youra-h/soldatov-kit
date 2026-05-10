@@ -2,6 +2,7 @@ import { TTreeCollection } from './tree-collection.class'
 import type { ITree, TTreeEvents } from './types'
 import type { ITreeItem } from './item/types'
 import type { TConstructor } from '../../common/types'
+import { TEvented } from '../../common/evented'
 
 export class TTree<TItem extends ITreeItem = ITreeItem, TEvents extends TTreeEvents = TTreeEvents>
 	extends TTreeCollection<TItem, TEvents>
@@ -20,7 +21,7 @@ export class TTree<TItem extends ITreeItem = ITreeItem, TEvents extends TTreeEve
 	 * Сюда приходят события от всех элементов дерева.
 	 */
 	public notifyItemChange(item: ITreeItem, event: string): void {
-		this.events.emit('itemChange', { item, event })
+		;(this.events as TEvented<TTreeEvents>).emit('item:change', { item, event })
 	}
 
 	/**

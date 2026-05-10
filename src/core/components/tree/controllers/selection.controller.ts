@@ -10,7 +10,7 @@ interface IItemWithSelectable {
 /**
  * Контроллер глобального выбора для дерева.
  *
- * Слушает всплывающие события `itemChange` от корня дерева и поддерживает
+ * Слушает всплывающие события `item:change` от корня дерева и поддерживает
  * актуальный набор выбранных элементов (включая вложенные уровни).
  *
  * Ожидаемый контракт:
@@ -26,7 +26,7 @@ export class TreeSelectionController {
 
 	constructor(tree: TTree & { mode?: TSelectionMode }) {
 		this._tree = tree
-		this._tree.events.on('itemChange', this._handleItemChange.bind(this))
+		this._tree.events.on('item:change', this._handleItemChange.bind(this))
 	}
 
 	private _handleItemChange(payload: { item: ITreeItem; event: string }) {
