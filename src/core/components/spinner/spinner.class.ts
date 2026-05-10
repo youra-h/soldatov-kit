@@ -4,6 +4,7 @@ import type { ISpinner, ISpinnerProps, TSpinnerEvents, TSpinnerStatesOptions } f
 import { resolveState } from '../../common/resolve-state'
 import { type IStateUnit, TStateUnit } from '../../common/state-unit'
 import type { TValuePayload } from '../../common/types'
+import { TEvented } from '../../common/evented'
 
 export default class TSpinner
 	extends TComponentView<ISpinnerProps, TSpinnerEvents, TSpinnerStatesOptions>
@@ -42,7 +43,7 @@ export default class TSpinner
 		})
 
 		this._sizeState.events.on('change', (payload: TValuePayload<TComponentSize>) => {
-			this.events.emit('change:size', payload)
+			;(this.events as TEvented<TSpinnerEvents>).emit('change:size', payload)
 
 			this._classes.swapClass({
 				oldClass: `--size-${payload.oldValue}`,
@@ -59,7 +60,7 @@ export default class TSpinner
 		})
 
 		this._variantState.events.on('change', (payload: TValuePayload<TComponentVariant>) => {
-			this.events.emit('change:variant', payload)
+			;(this.events as TEvented<TSpinnerEvents>).emit('change:variant', payload)
 
 			this._classes.swapClass({
 				oldClass: `--variant-${payload.oldValue}`,

@@ -5,6 +5,7 @@ import type { IComponentViewOptions } from '../../base/component-view'
 import { resolveState } from '../../common/resolve-state'
 import { type IStateUnit, TStateUnit } from '../../common/state-unit'
 import type { TValuePayload } from '../../common/types'
+import { TEvented } from '../../common/evented'
 
 export default class TIcon
 	extends TComponentView<IIconProps, TIconEvents, TIconStatesOptions>
@@ -39,7 +40,7 @@ export default class TIcon
 		})
 
 		this._sizeState.events.on('change', (payload: TValuePayload<TComponentSize>) => {
-			this.events.emit('change:size' as any, payload)
+			;(this.events as TEvented<TIconEvents>).emit('change:size' as any, payload)
 
 			this._classes.swapClass({
 				oldClass: `--size-${payload.oldValue}`,

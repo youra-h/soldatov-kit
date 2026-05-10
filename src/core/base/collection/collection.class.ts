@@ -174,8 +174,7 @@ export class TCollection<
 
 		this._items.splice(index, 0, item)
 		item.collection = this
-
-		this.events.emit('item:added', { collection: this, item })
+		;(this.events as TEvented<TCollectionEvents>).emit('item:added', { collection: this, item })
 
 		this._onAfterItemAdd(item)
 
@@ -196,18 +195,26 @@ export class TCollection<
 		const item = this._items[index]
 
 		if (
-			this.events.emitWithResult('item:beforeDelete', { collection: this, index, item }) ===
-			false
+			(this.events as TEvented<TCollectionEvents>).emitWithResult('item:beforeDelete', {
+				collection: this,
+				index,
+				item,
+			}) === false
 		) {
 			return false
 		}
 
 		const removed = this._items.splice(index, 1)[0]
 		removed?.free()
-
-		this.events.emit('item:deleted', { collection: this, item })
-
-		this.events.emit('item:afterDelete', { collection: this, index, item })
+		;(this.events as TEvented<TCollectionEvents>).emit('item:deleted', {
+			collection: this,
+			item,
+		})
+		;(this.events as TEvented<TCollectionEvents>).emit('item:afterDelete', {
+			collection: this,
+			index,
+			item,
+		})
 
 		return true
 	}
@@ -233,8 +240,7 @@ export class TCollection<
 	clear(): void {
 		this._items.forEach((it) => it.free())
 		this._items = []
-
-		this.events.emit('cleared', { collection: this })
+		;(this.events as TEvented<TCollectionEvents>).emit('cleared', { collection: this })
 	}
 
 	/**
@@ -249,7 +255,7 @@ export class TCollection<
 		if (oldIndex === -1 || oldIndex === newIndex) return
 
 		if (
-			this.events.emitWithResult('item:beforeMove', {
+			(this.events as TEvented<TCollectionEvents>).emitWithResult('item:beforeMove', {
 				collection: this,
 				oldIndex,
 				newIndex,
@@ -264,10 +270,18 @@ export class TCollection<
 
 		this._items.splice(oldIndex, 1)
 		this._items.splice(ni, 0, item)
-
-		this.events.emit('item:moved', { collection: this, item, oldIndex, newIndex: ni })
-
-		this.events.emit('item:afterMove', { collection: this, item, oldIndex, newIndex })
+		;(this.events as TEvented<TCollectionEvents>).emit('item:moved', {
+			collection: this,
+			item,
+			oldIndex,
+			newIndex: ni,
+		})
+		;(this.events as TEvented<TCollectionEvents>).emit('item:afterMove', {
+			collection: this,
+			item,
+			oldIndex,
+			newIndex,
+		})
 	}
 
 	/**

@@ -1,5 +1,10 @@
 import { TCollection } from '../collection.class'
-import type { ICollectionItem, ICollectionItemOptions, ICollectionItemProps, TCollectionItemEvents } from './types'
+import type {
+	ICollectionItem,
+	ICollectionItemOptions,
+	ICollectionItemProps,
+	TCollectionItemEvents,
+} from './types'
 import { TEntity } from '../../../base/entity'
 import { TEvented } from '../../../common/evented'
 
@@ -7,9 +12,9 @@ import { TEvented } from '../../../common/evented'
  * Элемент коллекции.
  */
 export abstract class TCollectionItem<
-		TProps extends ICollectionItemProps = ICollectionItemProps,
-		TEvents extends TCollectionItemEvents = TCollectionItemEvents,
-	>
+	TProps extends ICollectionItemProps = ICollectionItemProps,
+	TEvents extends TCollectionItemEvents = TCollectionItemEvents,
+>
 	extends TEntity<TProps>
 	implements ICollectionItem
 {
@@ -45,6 +50,6 @@ export abstract class TCollectionItem<
 	 */
 	free(): void {
 		this._collection = null
-		this.events.emit('free', this)
+		;(this.events as TEvented<TCollectionItemEvents>).emit('free', this)
 	}
 }

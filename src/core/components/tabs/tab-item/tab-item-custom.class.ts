@@ -10,6 +10,7 @@ import type {
 	TTabItemCustomEvents,
 	TTabItemCustomStatesOptions,
 } from './types'
+import { TEvented } from '../../../common/evented'
 
 /**
  * Кастомная логика элемента таба (без коллекционной части).
@@ -65,11 +66,11 @@ export default class TTabItemCustom<
 
 		// Подписка на изменения state-объектов
 		this._textState.events.on('change', (value) => {
-			this.events.emit('change:text', value)
+			;(this.events as TEvented<TTabItemCustomEvents>).emit('change:text', value)
 		})
 
 		this._closableState.events.on('change', (payload: TValuePayload<boolean | undefined>) => {
-			this.events.emit('change:closable', payload.newValue)
+			;(this.events as TEvented<TTabItemCustomEvents>).emit('change:closable', payload.newValue)
 
 			this._classes.toggle(`--closable`, !!payload.newValue)
 		})
@@ -98,7 +99,7 @@ export default class TTabItemCustom<
 	}
 
 	close(): void {
-		this.events.emit('close', this)
+		;(this.events as TEvented<TTabItemCustomEvents>).emit('close', this)
 	}
 
 	override getProps(): TProps {

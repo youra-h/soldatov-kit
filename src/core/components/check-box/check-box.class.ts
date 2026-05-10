@@ -1,6 +1,7 @@
 import { TInputControl } from '../../base/input-control'
 import { TComponentView, type IComponentViewOptions } from '../../base/component-view'
 import type { ICheckBox, ICheckBoxProps, TCheckBoxEvents } from './types'
+import { TEvented } from '../../common/evented'
 
 export default class TCheckBox
 	extends TInputControl<boolean | undefined, ICheckBoxProps, TCheckBoxEvents>
@@ -39,7 +40,7 @@ export default class TCheckBox
 		if (this._indeterminate !== value) {
 			this._indeterminate = value
 
-			this.events.emit('changeIndeterminate', value)
+			;(this.events as TEvented<TCheckBoxEvents>).emit('changeIndeterminate', value)
 
 			this._classes.toggle(`--indeterminate`, value)
 		}
@@ -52,6 +53,8 @@ export default class TCheckBox
 	set plain(value: boolean) {
 		if (this._plain !== value) {
 			this._plain = value
+
+			;(this.events as TEvented<TCheckBoxEvents>).emit('changePlain', value)
 
 			this._classes.toggle(`--plain`, value)
 		}
@@ -78,7 +81,7 @@ export default class TCheckBox
 		}
 
 		if (oldValue !== this.value) {
-			this.events.emit('change', {
+			;(this.events as TEvented<TCheckBoxEvents>).emit('change', {
 				event,
 				value: this.value,
 			})

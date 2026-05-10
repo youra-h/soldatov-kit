@@ -8,6 +8,7 @@ import type {
 import type { TConstructor } from '../../../common/types'
 import { TActivatableCollectionItem } from './activable-collection-item.class'
 import { isSame } from '../../../common/is-same'
+import { TEvented } from '../../../common/evented'
 
 /**
  * Коллекция элементов с поддержкой активности.
@@ -53,7 +54,10 @@ export class TActivatableCollection<
 			item.active = true
 		}
 
-		this.events.emit('item:activated', { collection: this, item })
+		;(this.events as TEvented<TActivatableCollectionEvents>).emit('item:activated', {
+			collection: this,
+			item,
+		})
 	}
 
 	/** Очистить активный элемент */
@@ -62,8 +66,9 @@ export class TActivatableCollection<
 			this._activeItem.active = false
 
 			this._activeItem = undefined
-
-			this.events.emit('item:deactivated', { collection: this })
+			;(this.events as TEvented<TActivatableCollectionEvents>).emit('item:deactivated', {
+				collection: this,
+			})
 		}
 	}
 
@@ -139,7 +144,9 @@ export class TActivatableCollection<
 		// запрашиваем предикат через событие и активируем подходящий элемент ДО удаления
 		if (wasActive && this.count > 1) {
 			// Запрашиваем предикат для поиска следующего активного элемента
-			const predicate = this.events.emitResolve<(item: TItem) => boolean>('resolve:_activatablePredicate')
+			const predicate = (this.events as TEvented<TActivatableCollectionEvents>).emitResolve<
+				(item: TItem) => boolean
+			>('resolve:_activatablePredicate')
 
 			newActiveItem = this.findActivatable(predicate, item)
 

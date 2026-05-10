@@ -2,6 +2,7 @@ import { TActivatableCollectionItem } from '../../../base/collection/activable/a
 import TTabItemCustom from './tab-item-custom.class'
 import type { ITabItem, ITabItemOptions, ITabItemProps, TTabItemEvents } from './types'
 import type { TCollection } from '../../../base/collection'
+import { TEvented } from '../../../common/evented'
 
 /**
  * Элемент таба для работы в коллекции.
@@ -27,11 +28,11 @@ export default class TTabItem
 
 		// Проксируем события коллекции на this.events
 		this._collectionItem.events.on('change:activation', () => {
-			this.events.emit('change:activation', this)
+			;(this.events as TEvented<TTabItemEvents>).emit('change:activation', this)
 		})
 
 		this._collectionItem.events.on('free', () => {
-			this.events.emit('free', this)
+			;(this.events as TEvented<TTabItemEvents>).emit('free', this)
 		})
 	}
 

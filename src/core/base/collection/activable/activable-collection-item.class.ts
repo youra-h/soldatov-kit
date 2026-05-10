@@ -4,6 +4,7 @@ import type {
 	IActivatableCollectionItemProps,
 	TActivatableItemEvents,
 } from './types'
+import { TEvented } from '../../../common/evented'
 
 /**
  * Элемент коллекции с поддержкой активности.
@@ -36,8 +37,10 @@ export class TActivatableCollectionItem<
 	set active(value: boolean) {
 		if (this._active !== value) {
 			this._active = value
-
-			this.events.emit('change:activation', this)
+			;(this.events as TEvented<TActivatableItemEvents<IActivatableCollectionItem>>).emit(
+				'change:activation',
+				this,
+			)
 		}
 	}
 

@@ -8,6 +8,7 @@ import type {
 	TSelectionMode,
 } from './types'
 import type { TConstructor } from '../../../common/types'
+import { TEvented } from '../../../common/evented'
 
 /**
  * Коллекция элементов с поддержкой выбора.
@@ -85,7 +86,7 @@ export class TSelectableCollection<
 
 		// assign() мог установить selected:true до подписки — обрабатываем начальное состояние явно
 		if (item.selected) {
-			item.events.emit('change:selection', item)
+			;(item.events as TEvented<TSelectableCollectionEvents>).emit('change:selection', item)
 		}
 	}
 
@@ -113,10 +114,16 @@ export class TSelectableCollection<
 				}
 
 				this._selected.add(changedItem)
-				this.events.emit('item:selected', { collection: this, item: changedItem })
+				;(this.events as TEvented<TSelectableCollectionEvents>).emit('item:selected', {
+					collection: this,
+					item: changedItem,
+				})
 			} else {
 				this._selected.delete(changedItem)
-				this.events.emit('item:unselected', { collection: this, item: changedItem })
+				;(this.events as TEvented<TSelectableCollectionEvents>).emit('item:unselected', {
+					collection: this,
+					item: changedItem,
+				})
 			}
 		})
 	}
@@ -125,7 +132,8 @@ export class TSelectableCollection<
 		this._selected.forEach((it) => (it.selected = false))
 
 		this._selected.clear()
-
-		this.events.emit('selection:cleared', { collection: this })
+		;(this.events as TEvented<TSelectableCollectionEvents>).emit('selection:cleared', {
+			collection: this,
+		})
 	}
 }

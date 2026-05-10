@@ -4,6 +4,7 @@ import type {
 	ISelectableCollectionItemProps,
 	TSelectableItemEvents,
 } from './types'
+import { TEvented } from '../../../common/evented'
 
 /**
  * Элемент коллекции с поддержкой выбранности.
@@ -41,8 +42,10 @@ export class TSelectableCollectionItem<
 	set selected(value: boolean) {
 		if (this._selected !== value) {
 			this._selected = value
-
-			this.events.emit('change:selection', this)
+			;(this.events as TEvented<TSelectableItemEvents<ISelectableCollectionItem>>).emit(
+				'change:selection',
+				this,
+			)
 		}
 	}
 

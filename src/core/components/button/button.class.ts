@@ -10,6 +10,7 @@ import { TComponentView, type IComponentViewOptions } from '../../base/component
 import { TLoadingState, type ILoadingState, type ILoadingStateValue } from '../../common/states'
 import { resolveState } from '../../common/resolve-state'
 import { type TValuePayload } from '../../common/types'
+import { TEvented } from '../../common/evented'
 
 export default class TButton extends TTextable<IButtonProps, TButtonEvents> implements IButton {
 	static override baseClass = 's-button'
@@ -83,7 +84,7 @@ export default class TButton extends TTextable<IButtonProps, TButtonEvents> impl
 					}
 				}
 			}
-			this.events.emit('change:loading', payload.newValue.loading)
+			;(this.events as TEvented<TButtonEvents>).emit('change:loading', payload.newValue.loading)
 		})
 	}
 

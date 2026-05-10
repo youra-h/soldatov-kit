@@ -16,6 +16,7 @@ import type {
 	TTabsPosition,
 	TTabsAppearance,
 } from './types'
+import { TEvented } from '../../common/evented'
 
 /**
  * Компонент табов (TTabs).

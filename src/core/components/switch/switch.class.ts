@@ -1,6 +1,7 @@
 import { TInputControl } from '../../base/input-control'
 import { TComponentView, type IComponentViewOptions } from '../../base/component-view'
 import type { ISwitch, ISwitchProps, TSwitchEvents } from './types'
+import { TEvented } from '../../common/evented'
 
 export default class TSwitch
 	extends TInputControl<boolean | undefined, ISwitchProps, TSwitchEvents>
@@ -39,7 +40,7 @@ export default class TSwitch
 		this.value = this.value === true ? false : true
 
 		if (oldValue !== this.value) {
-			this.events.emit('change', {
+			;(this.events as TEvented<TSwitchEvents>).emit('change', {
 				event,
 				value: this.value,
 			})
