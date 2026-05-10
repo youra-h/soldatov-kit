@@ -102,7 +102,7 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 			item.variant = this.variant
 
 			// Пробрасываем событие наружу
-			this.events.emit('item:added', payload)
+			;(this.events as TEvented<TTabsEvents>).emit('item:added', payload)
 		})
 
 		// Propagation: при изменении size/variant у контейнера — обновляем все существующие итемы
@@ -122,7 +122,7 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 			'item:deleted',
 			(payload: { collection: any; item: ITabItem }) => {
 				// Пробрасываем событие наружу
-				this.events.emit('item:deleted', payload)
+				;(this.events as TEvented<TTabsEvents>).emit('item:deleted', payload)
 			},
 		)
 
@@ -130,19 +130,22 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 			'item:activated',
 			(payload: { collection: any; item: ITabItem }) => {
 				// Пробрасываем событие наружу
-				this.events.emit('item:activated', payload)
+				;(this.events as TEvented<TTabsEvents>).emit('item:activated', payload)
 			},
 		)
 
 		this._collection.events.on('item:deactivated', (payload: { collection: any }) => {
 			// Пробрасываем событие наружу
-			this.events.emit('item:deactivated', payload)
+			;(this.events as TEvented<TTabsEvents>).emit('item:deactivated', payload)
 		})
 
-		this._collection.events.on('item:moved', (payload: { collection: any }) => {
-			// Пробрасываем событие наружу
-			this.events.emit('item:moved', payload)
-		})
+		this._collection.events.on(
+			'item:moved',
+			(payload: { collection: any; item: ITabItem; oldIndex: number; newIndex: number }) => {
+				// Пробрасываем событие наружу
+				;(this.events as TEvented<TTabsEvents>).emit('item:moved', payload)
+			},
+		)
 	}
 
 	// Простые геттеры/сеттеры без state
@@ -158,8 +161,7 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 			})
 
 			this._orientation = value
-
-			this.events.emit('change:orientation', value)
+			;(this.events as TEvented<TTabsEvents>).emit('change:orientation', value)
 		}
 	}
 
@@ -175,8 +177,7 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 			})
 
 			this._alignment = value
-
-			this.events.emit('change:alignment', value)
+			;(this.events as TEvented<TTabsEvents>).emit('change:alignment', value)
 		}
 	}
 
@@ -193,7 +194,7 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 			}
 
 			this._position = value
-			this.events.emit('change:position', value)
+			;(this.events as TEvented<TTabsEvents>).emit('change:position', value)
 		}
 	}
 
@@ -209,8 +210,7 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 			})
 
 			this._appearance = value
-
-			this.events.emit('change:appearance', value)
+			;(this.events as TEvented<TTabsEvents>).emit('change:appearance', value)
 		}
 	}
 
@@ -223,8 +223,7 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 			this._stretched = value
 
 			this._classes.toggle(`--stretched`, value)
-
-			this.events.emit('change:stretched', value)
+			;(this.events as TEvented<TTabsEvents>).emit('change:stretched', value)
 		}
 	}
 
@@ -235,7 +234,7 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 	set closable(value: boolean) {
 		if (this._closable !== value) {
 			this._closable = value
-			this.events.emit('change:closable', value)
+			;(this.events as TEvented<TTabsEvents>).emit('change:closable', value)
 		}
 	}
 
@@ -273,7 +272,7 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 			return false
 		}
 
-		this.events.emit('tab:close', item)
+		;(this.events as TEvented<TTabsEvents>).emit('tab:close', item)
 
 		return this._collection.deleteItem(item)
 	}
