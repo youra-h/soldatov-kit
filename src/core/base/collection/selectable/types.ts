@@ -24,8 +24,8 @@ export interface ISelectableCollectionItem<
 	TProps extends ISelectableCollectionItemProps = ISelectableCollectionItemProps,
 	// @ts-ignore
 	TEvents extends TSelectableItemEvents = TSelectableItemEvents,
-> extends ICollectionItem<TProps, TEvents>,
-		ISelectableCollectionItemProps {}
+>
+	extends ICollectionItem<TProps, TEvents>, ISelectableCollectionItemProps {}
 
 export type TSelectionMode = 'none' | 'single' | 'multiple'
 
@@ -72,8 +72,7 @@ export interface ISelectableCollection<
 	TProps extends ISelectableCollectionProps = ISelectableCollectionProps,
 	TEvents extends TSelectableCollectionEvents = TSelectableCollectionEvents,
 	TItem extends ISelectableCollectionItem = ISelectableCollectionItem,
-> extends ICollection<TProps, TEvents, TItem>,
-		ISelectableCollectionProps {
+> extends ICollection<TProps, TEvents, TItem> {
 	readonly selected: ISelectableCollectionItem[]
 	/** Количество выбранных элементов */
 	readonly selectedCount: number

@@ -6,6 +6,7 @@ import type {
 	TSelectableCollectionEvents,
 	ISelectableCollectionItem,
 	TSelectionMode,
+	TSelectableItemEvents,
 } from './types'
 import type { TConstructor } from '../../../common/types'
 import { TEvented } from '../../../common/evented'
@@ -86,7 +87,7 @@ export class TSelectableCollection<
 
 		// assign() мог установить selected:true до подписки — обрабатываем начальное состояние явно
 		if (item.selected) {
-			;(item.events as TEvented<TSelectableCollectionEvents>).emit('change:selection', item)
+			;(item.events as TEvented<TSelectableItemEvents<TItem>>).emit('change:selection', item)
 		}
 	}
 

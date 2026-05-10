@@ -144,9 +144,9 @@ export class TActivatableCollection<
 		// запрашиваем предикат через событие и активируем подходящий элемент ДО удаления
 		if (wasActive && this.count > 1) {
 			// Запрашиваем предикат для поиска следующего активного элемента
-			const predicate = (this.events as TEvented<TActivatableCollectionEvents>).emitResolve<
-				(item: TItem) => boolean
-			>('resolve:_activatablePredicate')
+			const predicate = (this.events as TEvented<TActivatableCollectionEvents>).emitResolve(
+				'resolve:_activatablePredicate',
+			) as ((item: TItem) => boolean) | undefined
 
 			newActiveItem = this.findActivatable(predicate, item)
 
