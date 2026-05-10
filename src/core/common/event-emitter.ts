@@ -1,6 +1,7 @@
 // Тип обработчика события
 export type TEventHandler = (...args: unknown[]) => unknown
 
+// Базовый интерфейс для совместимости
 export interface IEventSource {
 	on(event: string, handler: TEventHandler): void
 	off(event: string, handler: TEventHandler): void
@@ -15,43 +16,43 @@ export interface IEventEmitter extends IEventSource {
 }
 
 /**
- * Подписка на события
+ * Обобщённый эмиттер, где Events — словарь событий и их сигнатур.
  * @example
- * const emitter = new TEventEmitter()
- * emitter.on('event', (data) => console.log(data))
+ * const emitter = new TEventEmitter<{ greet: (msg: string) => void }>()
+ * emitter.emit('greet', 123) // Ошибка
  */
-export class TEventEmitter implements IEventEmitter {
+export class TEventEmitter<
+	Events extends Record<string, (...args: any[]) => any> = Record<
+		string,
+		(...args: any[]) => any
+	>,
+> implements IEventEmitter {
 	private _items: Map<string, Set<TEventHandler>> = new Map()
 
-	on(event: string, handler: TEventHandler): void {
-		let handlers = this._items.get(event)
-
+	on<K extends keyof Events>(event: K, handler: Events[K]): void {
+		let handlers = this._items.get(event as string)
 		if (!handlers) {
 			handlers = new Set()
-			this._items.set(event, handlers)
+			this._items.set(event as string, handlers)
 		}
-
-		handlers.add(handler)
+		handlers.add(handler as TEventHandler)
 	}
 
-	off(event: string, handler: TEventHandler): void {
-		this._items.get(event)?.delete(handler)
+	off<K extends keyof Events>(event: K, handler: Events[K]): void {
+		this._items.get(event as string)?.delete(handler as TEventHandler)
 	}
 
-	emit(event: string, ...args: unknown[]): void {
-		this._items.get(event)?.forEach((handler) => handler(...args))
+	emit<K extends keyof Events>(event: K, ...args: Parameters<Events[K]>): void {
+		this._items.get(event as string)?.forEach((handler) => handler(...args))
 	}
 
 	/**
 	 * Выполняет событие и возвращает результат выполнения обработчиков.
 	 * Если хотя бы один обработчик вернул false — возвращает false.
 	 */
-	emitWithResult(event: string, ...args: unknown[]): boolean {
-		const handlers = this._items.get(event)
-
-		if (!handlers) {
-			return true
-		}
+	emitWithResult<K extends keyof Events>(event: K, ...args: Parameters<Events[K]>): boolean {
+		const handlers = this._items.get(event as string)
+		if (!handlers) return true
 
 		let result = true
 
@@ -68,8 +69,11 @@ export class TEventEmitter implements IEventEmitter {
 	 * Выполняет событие и возвращает первый не-undefined результат (short-circuit).
 	 * Если ни один обработчик не вернул значение — возвращает undefined.
 	 */
-	emitResolve<T>(event: string, ...args: unknown[]): T | undefined {
-		const handlers = this._items.get(event)
+	emitResolve<T, K extends keyof Events>(
+		event: K,
+		...args: Parameters<Events[K]>
+	): T | undefined {
+		const handlers = this._items.get(event as string)
 
 		if (!handlers) {
 			return undefined
@@ -82,15 +86,14 @@ export class TEventEmitter implements IEventEmitter {
 				return result as T
 			}
 		}
-
 		return undefined
 	}
 
 	/**
 	 * Выполняет событие и возвращает все не-undefined результаты обработчиков.
 	 */
-	emitResolveAll<T>(event: string, ...args: unknown[]): T[] {
-		const handlers = this._items.get(event)
+	emitResolveAll<T, K extends keyof Events>(event: K, ...args: Parameters<Events[K]>): T[] {
+		const handlers = this._items.get(event as string)
 
 		if (!handlers) {
 			return []
@@ -117,4 +120,3 @@ export class TEventEmitter implements IEventEmitter {
 		}
 	}
 }
-

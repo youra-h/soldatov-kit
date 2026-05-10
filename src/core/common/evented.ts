@@ -2,7 +2,7 @@ import { TEventEmitter, type TEventHandler } from './event-emitter'
 import { TEntity } from '../base/entity'
 
 export class TEvented<TEvents extends Record<string, (...args: any) => any>> extends TEntity {
-	private _items: TEventEmitter = new TEventEmitter()
+	private _items: TEventEmitter<TEvents> = new TEventEmitter()
 
 	/**
 	 * Подписка на событие
@@ -10,7 +10,7 @@ export class TEvented<TEvents extends Record<string, (...args: any) => any>> ext
 	 * @param handler - обработчик события
 	 */
 	on<K extends keyof TEvents>(event: K, handler: TEvents[K]): void {
-		this._items.on(event as string, handler)
+		this._items.on(event, handler)
 	}
 
 	/**
@@ -18,8 +18,8 @@ export class TEvented<TEvents extends Record<string, (...args: any) => any>> ext
 	 * @param event - имя события
 	 * @param handler - обработчик события
 	 */
-	off<K extends keyof TEvents>(event: K, handler: TEventHandler): void {
-		this._items.off(event as string, handler)
+	off<K extends keyof TEvents>(event: K, handler: TEvents[K]): void {
+		this._items.off(event, handler)
 	}
 
 	/**
@@ -27,8 +27,8 @@ export class TEvented<TEvents extends Record<string, (...args: any) => any>> ext
 	 * @param event - имя события
 	 * @param args - аргументы события
 	 */
-	emit<K extends keyof TEvents>(event: K, ...args: Parameters<TEventHandler>): void {
-		this._items.emit(event as string, ...args)
+	emit<K extends keyof TEvents>(event: K, ...args: Parameters<TEvents[K]>): void {
+		this._items.emit(event, ...args)
 	}
 
 	/**
@@ -37,21 +37,24 @@ export class TEvented<TEvents extends Record<string, (...args: any) => any>> ext
 	 * @param args
 	 * @returns {boolean}
 	 */
-	emitWithResult<K extends keyof TEvents>(event: K, ...args: Parameters<TEventHandler>): boolean {
-		return this._items.emitWithResult(event as string, ...args)
+	emitWithResult<K extends keyof TEvents>(event: K, ...args: Parameters<TEvents[K]>): boolean {
+		return this._items.emitWithResult(event, ...args)
 	}
 
 	/**
 	 * Выполняет событие и возвращает первый не-undefined результат (short-circuit).
 	 */
-	emitResolve<T>(event: keyof TEvents, ...args: Parameters<TEventHandler>): T | undefined {
-		return this._items.emitResolve<T>(event as string, ...args)
+	emitResolve<T, K extends keyof TEvents>(
+		event: K,
+		...args: Parameters<TEvents[K]>
+	): T | undefined {
+		return this._items.emitResolve<T, K>(event, ...args)
 	}
 
 	/**
 	 * Выполняет событие и возвращает все не-undefined результаты обработчиков.
 	 */
-	emitResolveAll<T>(event: keyof TEvents, ...args: Parameters<TEventHandler>): T[] {
-		return this._items.emitResolveAll<T>(event as string, ...args)
+	emitResolveAll<T, K extends keyof TEvents>(event: K, ...args: Parameters<TEvents[K]>): T[] {
+		return this._items.emitResolveAll<T, K>(event, ...args)
 	}
 }
