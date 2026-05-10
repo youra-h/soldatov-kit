@@ -11,6 +11,7 @@ import type {
 import { type IStateUnit, TStateUnit } from '../../common/state-unit'
 import { TClasses } from '../../common/classes'
 import { type TValuePayload } from '../../common/types'
+import { TEvented } from '../../common/evented'
 
 /**
  * Web-component-view слой: tag/classes.
@@ -99,15 +100,26 @@ export default class TComponentView<
 		})
 
 		this._renderedState.events.on('change', (payload: TValuePayload<boolean>) =>
-			this.events.emit('change:rendered', payload.newValue),
+			(this.events as TEvented<TComponentViewEvents>).emit(
+				'change:rendered',
+				payload.newValue,
+			),
 		)
 		this._visibilityState.events.on('change', (payload: TValuePayload<boolean>) =>
-			this.events.emit('change:visible', payload.newValue),
+			(this.events as TEvented<TComponentViewEvents>).emit(
+				'change:visible',
+				payload.newValue,
+			),
 		)
 
 		this._classes = new TClasses(ctor.baseClass)
 
-		this._classes.events.on('change', () => this.events.emit('change:classes', this._classes))
+		this._classes.events.on('change', () =>
+			(this.events as TEvented<TComponentViewEvents>).emit(
+				'change:classes',
+				this._classes.toArray(),
+			),
+		)
 	}
 
 	get classes(): TClasses {
@@ -137,31 +149,29 @@ export default class TComponentView<
 	show(): void {
 		if (!this.beforeShow()) return
 
-		const canShow = this.events.emitWithResult('beforeShow')
+		const canShow = (this.events as TEvented<TComponentViewEvents>).emitWithResult('beforeShow')
 		if (!canShow) return
 
 		if (this.visible) return
 		this._visibilityState.show()
-
-		this.events.emit('show')
+		;(this.events as TEvented<TComponentViewEvents>).emit('show')
 
 		this.afterShow()
-		this.events.emit('afterShow')
+		;(this.events as TEvented<TComponentViewEvents>).emit('afterShow')
 	}
 
 	hide(): void {
 		if (!this.beforeHide()) return
 
-		const canHide = this.events.emitWithResult('beforeHide')
+		const canHide = (this.events as TEvented<TComponentViewEvents>).emitWithResult('beforeHide')
 		if (!canHide) return
 
 		if (!this.visible) return
 		this._visibilityState.hide()
-
-		this.events.emit('hide')
+		;(this.events as TEvented<TComponentViewEvents>).emit('hide')
 
 		this.afterHide()
-		this.events.emit('afterHide')
+		;(this.events as TEvented<TComponentViewEvents>).emit('afterHide')
 	}
 
 	protected beforeShow(): boolean {
@@ -183,8 +193,7 @@ export default class TComponentView<
 		if (this._tag === value) return
 
 		this._tag = value
-
-		this.events.emit('change:tag', value)
+		;(this.events as TEvented<TComponentViewEvents>).emit('change:tag', value)
 	}
 
 	get ready(): boolean {
@@ -194,8 +203,7 @@ export default class TComponentView<
 		if (this._ready === value) return
 
 		this._ready = value
-
-		this.events.emit('change:ready', value)
+		;(this.events as TEvented<TComponentViewEvents>).emit('change:ready', value)
 	}
 
 	getProps(): TProps {

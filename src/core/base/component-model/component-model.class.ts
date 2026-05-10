@@ -14,9 +14,9 @@ import type {
  * Хранит `id` и единый emitter `events`.
  */
 export default class TComponentModel<
-		TProps extends IComponentModelProps = IComponentModelProps,
-		TEvents extends TComponentModelEvents = TComponentModelEvents,
-	>
+	TProps extends IComponentModelProps = IComponentModelProps,
+	TEvents extends TComponentModelEvents = TComponentModelEvents,
+>
 	extends TEntity<TProps>
 	implements IComponentModel<TProps, TEvents>
 {
@@ -35,7 +35,7 @@ export default class TComponentModel<
 		this.events = new TEvented<TEvents>()
 		this._id = props.id ?? TComponentModel.defaultValues.id!
 
-		setTimeout(() => this.events.emit('created', this), 0)
+		setTimeout(() => (this.events as TEvented<TComponentModelEvents>).emit('created', this), 0)
 	}
 
 	static prepareOptions<TProps extends IComponentModelProps>(
