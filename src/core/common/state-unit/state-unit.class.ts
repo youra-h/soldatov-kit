@@ -31,6 +31,6 @@ export class TStateUnit<
 		const oldValue = this._value
 		this._value = value
 
-		this.events.emit('change', { newValue: value, oldValue } as TValuePayload<TValue> as any)
+		;(this.events as TEvented<TEvents>).emit('change', { newValue: value, oldValue } as TValuePayload<TValue> as any)
 	}
 }

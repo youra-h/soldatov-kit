@@ -5,6 +5,7 @@ import { TStylable } from '../stylable'
 import { resolveState } from '../../common/resolve-state'
 import type { IControlProps, TControlEvents, TControlStatesOptions } from './types'
 import { type TValuePayload } from '../../common/types'
+import { TEvented } from '../../common/evented'
 
 /**
  * База для Ui-контролов: stylable (size/variant) + интерактивность (disabled/focused/click).
@@ -45,7 +46,7 @@ export default class TControl<
 		})
 
 		this._disableable.events.on('change', (payload: TValuePayload<boolean>) => {
-			this.events.emit('change:disabled', payload.newValue)
+			;(this.events as TEvented<TControlEvents>).emit('change:disabled', payload.newValue)
 		})
 
 		this._focusable = resolveState<IStateUnit<boolean>, boolean>({
@@ -55,7 +56,7 @@ export default class TControl<
 		})
 
 		this._focusable.events.on('change', (payload: TValuePayload<boolean>) => {
-			this.events.emit('change:focused', payload.newValue)
+			;(this.events as TEvented<TControlEvents>).emit('change:focused', payload.newValue)
 		})
 	}
 
@@ -74,7 +75,7 @@ export default class TControl<
 	}
 
 	click(event?: Event): void {
-		this.events.emit('click' as any, event)
+		;(this.events as TEvented<TControlEvents>).emit('click' as any, event)
 	}
 
 	getProps(): TProps {

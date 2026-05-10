@@ -3,6 +3,7 @@ import { TComponentView, type IComponentViewOptions } from '../component-view'
 import { resolveState } from '../../common/resolve-state'
 import type { IInteractiveProps, TInteractiveEvents, TInteractiveStatesOptions } from './types'
 import { type TValuePayload } from '../../common/types'
+import { TEvented } from '../../common/evented'
 
 /**
  * База для интерактивных компонентов: disabled + focused.
@@ -42,7 +43,7 @@ export default class TInteractive<
 		})
 
 		this._disableable.events.on('change', (payload: TValuePayload<boolean>) => {
-			this.events.emit('change:disabled', payload.newValue)
+			;(this.events as TEvented<TInteractiveEvents>).emit('change:disabled', payload.newValue)
 		})
 
 		this._focusable = resolveState<IStateUnit<boolean>, boolean>({
@@ -52,7 +53,7 @@ export default class TInteractive<
 		})
 
 		this._focusable.events.on('change', (payload: TValuePayload<boolean>) => {
-			this.events.emit('change:focused', payload.newValue)
+			;(this.events as TEvented<TInteractiveEvents>).emit('change:focused', payload.newValue)
 		})
 	}
 
@@ -71,7 +72,7 @@ export default class TInteractive<
 	}
 
 	click(event: Event): void {
-		this.events.emit('click' as any, event)
+		;(this.events as TEvented<TInteractiveEvents>).emit('click' as any, event)
 	}
 
 	getProps(): TProps {

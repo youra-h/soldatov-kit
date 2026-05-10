@@ -5,6 +5,7 @@ import { resolveState } from '../../common/resolve-state'
 import type { IValueControlProps, TValueControlEvents, TValueControlStatesOptions } from './types'
 import { TStateUnit, type IStateUnit } from '../../common/state-unit'
 import { type TValuePayload } from '../../common/types'
+import { TEvented } from '../../common/evented'
 
 /**
  * База для контролов со значением.
@@ -49,7 +50,7 @@ export default class TValueControl<
 		})
 
 		this._valueState.events.on('change', (payload: TValuePayload<TValue>) => {
-			this.events.emit('change:value', payload)
+			;(this.events as TEvented<TValueControlEvents<TValue>>).emit('change:value', payload)
 		})
 	}
 
@@ -60,8 +61,7 @@ export default class TValueControl<
 		if (this._name === value) return
 
 		this._name = value
-
-		this.events.emit('change:name' as any, value)
+		;(this.events as TEvented<TValueControlEvents<TValue>>).emit('change:name' as any, value)
 	}
 
 	get value(): TValue {

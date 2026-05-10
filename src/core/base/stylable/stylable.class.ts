@@ -4,6 +4,7 @@ import { resolveState } from '../../common/resolve-state'
 import type { IStylableProps, TStylableEvents, TStylableStatesOptions } from './types'
 import { type IStateUnit, TStateUnit } from '../../common/state-unit'
 import { type TValuePayload } from '../../common/types'
+import { TEvented } from '../../common/evented'
 
 /**
  * Слой "stylable": унифицированные `size` и `variant`.
@@ -40,7 +41,7 @@ export default class TStylable<
 		})
 
 		this._sizeState.events.on('change', (payload: TValuePayload<TComponentSize>) => {
-			this.events.emit('change:size', payload)
+			;(this.events as TEvented<TStylableEvents>).emit('change:size', payload)
 
 			this._classes.swapClass({
 				oldClass: `--size-${payload.oldValue}`,
@@ -57,7 +58,7 @@ export default class TStylable<
 		})
 
 		this._variantState.events.on('change', (payload: TValuePayload<TComponentVariant>) => {
-			this.events.emit('change:variant', payload)
+			;(this.events as TEvented<TStylableEvents>).emit('change:variant', payload)
 
 			this._classes.swapClass({
 				oldClass: `--variant-${payload.oldValue}`,

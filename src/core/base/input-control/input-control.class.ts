@@ -7,6 +7,7 @@ import type {
 } from './types'
 import type { IComponentViewOptions } from '../component-view'
 import { TComponentView } from '../component-view'
+import { TEvented } from '../../common/evented'
 
 /**
  * База для input-элементов (текстовые поля, checkbox, switch и т.д.).
@@ -65,8 +66,7 @@ export default class TInputControl<
 		this._readonly = value
 
 		this._classes.toggle(`--readonly`, value)
-
-		this.events.emit('change:readonly', value)
+		;(this.events as TEvented<TInputControlEvents<TValue>>).emit('change:readonly', value)
 	}
 
 	get required(): boolean {
@@ -78,8 +78,7 @@ export default class TInputControl<
 		this._required = value
 
 		this._classes.toggle(`--required`, value)
-
-		this.events.emit('change:required', value)
+		;(this.events as TEvented<TInputControlEvents<TValue>>).emit('change:required', value)
 	}
 
 	get invalid(): boolean {
@@ -93,10 +92,13 @@ export default class TInputControl<
 		// Автоматически устанавливаем state = 'error' при invalid = true
 		if (value && this._state !== 'error') {
 			this._state = 'error'
-			this.events.emit('change:state', this._state)
+			;(this.events as TEvented<TInputControlEvents<TValue>>).emit(
+				'change:state',
+				this._state,
+			)
 		}
 
-		this.events.emit('change:invalid', value)
+		;(this.events as TEvented<TInputControlEvents<TValue>>).emit('change:invalid', value)
 	}
 
 	get state(): TInputControlState {
@@ -106,8 +108,7 @@ export default class TInputControl<
 		if (this._state === value) return
 
 		this._state = value
-
-		this.events.emit('change:state', value)
+		;(this.events as TEvented<TInputControlEvents<TValue>>).emit('change:state', value)
 	}
 
 	getProps(): TProps {
