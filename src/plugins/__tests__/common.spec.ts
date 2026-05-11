@@ -9,7 +9,7 @@ describe('TElementPlugin', () => {
 
 	beforeEach(() => {
 		bundle = new TPluginBundle()
-		plugin = bundle.use(TElementPlugin)
+		plugin = bundle.use(TElementPlugin).get(TElementPlugin) as TElementPlugin
 	})
 
 	it('element is null initially', () => {
@@ -23,7 +23,7 @@ describe('TElementPlugin', () => {
 		const el = document.createElement('div')
 		plugin.element = el
 
-		await new Promise(resolve => requestAnimationFrame(resolve))
+		await new Promise((resolve) => requestAnimationFrame(resolve))
 
 		expect(spy).toHaveBeenCalledOnce()
 		expect(spy).toHaveBeenCalledWith({ element: el })
@@ -33,7 +33,7 @@ describe('TElementPlugin', () => {
 	it('emits removed when element is set to null', async () => {
 		const el = document.createElement('div')
 		plugin.element = el
-		await new Promise(resolve => requestAnimationFrame(resolve))
+		await new Promise((resolve) => requestAnimationFrame(resolve))
 
 		const spy = vi.fn()
 		plugin.events.on('removed', spy)
@@ -47,14 +47,14 @@ describe('TElementPlugin', () => {
 	it('does not emit if same element set twice', async () => {
 		const el = document.createElement('div')
 		plugin.element = el
-		await new Promise(resolve => requestAnimationFrame(resolve))
+		await new Promise((resolve) => requestAnimationFrame(resolve))
 
 		const spy = vi.fn()
 		plugin.events.on('ready', spy)
 
 		plugin.element = el
 
-		await new Promise(resolve => requestAnimationFrame(resolve))
+		await new Promise((resolve) => requestAnimationFrame(resolve))
 
 		expect(spy).not.toHaveBeenCalled()
 	})
@@ -62,7 +62,7 @@ describe('TElementPlugin', () => {
 	it('getContext() returns current element', async () => {
 		const el = document.createElement('div')
 		plugin.element = el
-		await new Promise(resolve => requestAnimationFrame(resolve))
+		await new Promise((resolve) => requestAnimationFrame(resolve))
 
 		expect(plugin.getContext()).toEqual({ element: el })
 	})
@@ -74,7 +74,7 @@ describe('TInstancePlugin', () => {
 
 	beforeEach(() => {
 		bundle = new TPluginBundle()
-		plugin = bundle.use(TInstancePlugin)
+		plugin = bundle.use(TInstancePlugin).get(TInstancePlugin) as TInstancePlugin
 	})
 
 	it('instance is null initially', () => {
