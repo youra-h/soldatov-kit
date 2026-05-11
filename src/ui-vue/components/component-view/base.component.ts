@@ -2,7 +2,7 @@ import type { PropType, UnwrapNestedRefs } from 'vue'
 import { watch } from 'vue'
 import { type IComponentView, type IComponentViewProps, TComponentView } from '@core'
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types'
-import { type TComponentViewBundle, TElementPlugin } from '@plugins'
+import { type IPluginBundle, TElementPlugin } from '@plugins'
 
 export const emitsComponentView: TEmits = [
 	'rendered',
@@ -26,7 +26,7 @@ export const propsComponentView: TProps = {
 		type: Object as PropType<IComponentView | UnwrapNestedRefs<IComponentView>>,
 	},
 	plugins: {
-		type: Object as PropType<TComponentViewBundle>,
+		type: Object as PropType<IPluginBundle>,
 	},
 	id: {
 		type: [String, Number] as PropType<IComponentViewProps['id']>,

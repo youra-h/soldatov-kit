@@ -2,8 +2,12 @@
 import { TComponentView, type IComponentViewProps } from '@core'
 import BaseComponentView, { syncComponentView } from './base.component'
 import { useInstance } from '../../composables/useInstance'
-import { usePlugins } from '../../composables/usePlugins'
-import { TComponentViewBundle } from '@plugins'
+// import { usePlugins } from '../../composables/usePlugins'
+// import { TComponentViewBundle } from '@plugins'
+import { useBundle } from '../../composables/useBundle'
+import { useElementBinding } from '../../composables/useElementBinding'
+import { useInstanceBinding } from '../../composables/useInstanceBinding'
+import { createComponentViewBundle } from '@plugins'
 import type { TBaseComponentViewProps } from './types'
 
 export default {
@@ -13,7 +17,11 @@ export default {
 		// Получение инстанса из пропсов или создание нового
 		const instance = useInstance(TComponentView, props)
 		// Инициализация плагинов
-		const { plugins, rootRef } = usePlugins(TComponentViewBundle, props?.plugins, instance)
+		const plugins = useBundle(createComponentViewBundle, props?.plugins)
+		// Привязка инстанса к плагинам
+		useInstanceBinding(plugins, instance)
+		// Привязка элемента и инстанса к плагинам
+		const rootRef = useElementBinding(plugins)
 
 		syncComponentView({
 			props,
