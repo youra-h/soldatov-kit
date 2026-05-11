@@ -32,20 +32,20 @@ export function usePlugins<TBundle extends TComponentViewBundle>(
 	plugins: TBundle | undefined,
 	instance: Reactive<IComponentView>,
 ) {
-	const container = (plugins ?? new BundleCtor()) as TBundle
+	const bundle = (plugins ?? new BundleCtor()) as TBundle
 	const elRef = ref<ComponentPublicInstance | Element | null>(null)
 
-	container.get(TInstancePlugin)!.instance = toRaw(instance) as IComponentView
+	bundle.get(TInstancePlugin)!.instance = toRaw(instance) as IComponentView
 
 	onMounted(() => {
 		const ref = elRef.value
-		container.get(TElementPlugin)!.element =
+		bundle.get(TElementPlugin)!.element =
 			(ref as ComponentPublicInstance)?.$el ?? (ref as Element) ?? null
 	})
 
 	onUnmounted(() => {
-		container.get(TElementPlugin)!.element = null
+		bundle.get(TElementPlugin)!.element = null
 	})
 
-	return { plugins: container, rootRef: elRef }
+	return { plugins: bundle, rootRef: elRef }
 }
