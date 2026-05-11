@@ -24,30 +24,30 @@ function createTabsDom(): HTMLElement {
 }
 
 describe('TTabsBundle', () => {
-	let container: TTabsBundle
+	let bundle: TTabsBundle
 	let tabs: TTabs
 
 	beforeEach(() => {
-		container = new TTabsBundle()
+		bundle = new TTabsBundle()
 		tabs = new TTabs()
 	})
 
 	it('has TElementPlugin, TInstancePlugin, TTabsAppearancePlugin pre-installed', () => {
-		expect(container.get(TElementPlugin)).toBeInstanceOf(TElementPlugin)
-		expect(container.get(TInstancePlugin)).toBeInstanceOf(TInstancePlugin)
-		expect(container.get(TTabsAppearancePlugin)).toBeInstanceOf(TTabsAppearancePlugin)
+		expect(bundle.get(TElementPlugin)).toBeInstanceOf(TElementPlugin)
+		expect(bundle.get(TInstancePlugin)).toBeInstanceOf(TInstancePlugin)
+		expect(bundle.get(TTabsAppearancePlugin)).toBeInstanceOf(TTabsAppearancePlugin)
 	})
 
 	it('appearance plugin reacts to instance:ready', () => {
-		const instancePlugin = container.get(TInstancePlugin)!
+		const instancePlugin = bundle.get(TInstancePlugin)!
 		instancePlugin.instance = tabs
 
-		expect(container.get(TTabsAppearancePlugin)).toBeInstanceOf(TTabsAppearancePlugin)
+		expect(bundle.get(TTabsAppearancePlugin)).toBeInstanceOf(TTabsAppearancePlugin)
 	})
 
 	it('full flow: delayed element + instance, no errors', async () => {
-		const instancePlugin = container.get(TInstancePlugin)!
-		const elementPlugin = container.get(TElementPlugin)!
+		const instancePlugin = bundle.get(TInstancePlugin)!
+		const elementPlugin = bundle.get(TElementPlugin)!
 
 		tabs.collection.add({ text: 'Tab 1' })
 		tabs.collection.add({ text: 'Tab 2' })
@@ -66,8 +66,8 @@ describe('TTabsBundle', () => {
 	})
 
 	it('underline update runs without error when active tab changes', async () => {
-		const elementPlugin = container.get(TElementPlugin)!
-		const instancePlugin = container.get(TInstancePlugin)!
+		const elementPlugin = bundle.get(TElementPlugin)!
+		const instancePlugin = bundle.get(TInstancePlugin)!
 
 		instancePlugin.instance = tabs
 
@@ -87,7 +87,7 @@ describe('TTabsBundle', () => {
 	})
 
 	it('element removed: plugin clears reference', async () => {
-		const elementPlugin = container.get(TElementPlugin)!
+		const elementPlugin = bundle.get(TElementPlugin)!
 		const el = createTabsDom()
 
 		await new Promise<void>(resolve => {
@@ -99,9 +99,9 @@ describe('TTabsBundle', () => {
 		expect(elementPlugin.element).toBeNull()
 	})
 
-	it('container.remove(TTabsAppearancePlugin) calls destroy without error', async () => {
-		const elementPlugin = container.get(TElementPlugin)!
-		const instancePlugin = container.get(TInstancePlugin)!
+	it('bundle.remove(TTabsAppearancePlugin) calls destroy without error', async () => {
+		const elementPlugin = bundle.get(TElementPlugin)!
+		const instancePlugin = bundle.get(TInstancePlugin)!
 
 		instancePlugin.instance = tabs
 
@@ -112,9 +112,9 @@ describe('TTabsBundle', () => {
 		})
 
 		expect(() => {
-			container.remove(TTabsAppearancePlugin)
+			bundle.remove(TTabsAppearancePlugin)
 		}).not.toThrow()
 
-		expect(container.get(TTabsAppearancePlugin)).toBeUndefined()
+		expect(bundle.get(TTabsAppearancePlugin)).toBeUndefined()
 	})
 })

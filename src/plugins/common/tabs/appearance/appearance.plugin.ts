@@ -18,18 +18,18 @@ export class TTabsAppearancePlugin extends TBasePlugin<TTabsAppearancePluginEven
 		line: () => this._updateLine(),
 	}
 
-	override install(container: IPluginBundle): void {
-		container.get(TElementPlugin)?.events.on('ready', ({ element }) => {
+	override install(bundle: IPluginBundle): void {
+		bundle.get(TElementPlugin)?.events.on('ready', ({ element }) => {
 			this._element = element
 			this.update()
 		})
 
-		container.get(TElementPlugin)?.events.on('removed', () => {
+		bundle.get(TElementPlugin)?.events.on('removed', () => {
 			this._element = null
 		})
 
 		// Получить instance плагин и подписаться на его событие ready, чтобы получить инстанс табов и подписаться на его события для обновления внешнего вида при изменении активного таба или внешнего вида
-		const instancePlugin = container.get(TInstancePlugin) as TInstancePlugin<ITabs> | undefined
+		const instancePlugin = bundle.get(TInstancePlugin) as TInstancePlugin<ITabs> | undefined
 
 		instancePlugin?.events.on('ready', ({ instance }) => {
 			this._tabs = instance

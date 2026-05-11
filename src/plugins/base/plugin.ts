@@ -10,7 +10,7 @@ export abstract class TBasePlugin<
 
 	readonly events = new TEvented<TPluginEvents<TCustomEvents>>()
 
-	install(_container: IPluginBundle): void {}
+	install(_bundle: IPluginBundle): void {}
 
 	destroy(): void {
 		(this.events as TEvented<TBasePluginEvents>).emit('destroyed');

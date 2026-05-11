@@ -12,10 +12,10 @@ import { TInstancePlugin } from '../instance'
 export class TReadyBridgePlugin extends TBasePlugin {
 	static readonly key = 'ready-bridge'
 
-	override install(container: IPluginBundle): void {
-		const elementPlugin = container.get(TElementPlugin)
+	override install(bundle: IPluginBundle): void {
+		const elementPlugin = bundle.get(TElementPlugin)
 
-		const instancePlugin = container.get(TInstancePlugin) as
+		const instancePlugin = bundle.get(TInstancePlugin) as
 			| TInstancePlugin<IComponentView>
 			| undefined
 

@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { TBasePlugin } from '../base/plugin'
-import { TPluginBundle } from '../base/container'
+import { TPluginBundle } from '../base/bundle'
 import type { IPluginBundle } from '../base/types'
 
 // --- helpers ---
@@ -12,7 +12,7 @@ class TTestPlugin extends TBasePlugin<TTestEvents> {
 	installed = false
 	destroyed = false
 
-	override install(container: IPluginBundle): void {
+	override install(bundle: IPluginBundle): void {
 		this.installed = true
 	}
 
@@ -49,55 +49,55 @@ describe('TBasePlugin', () => {
 })
 
 describe('TPluginBundle', () => {
-	let container: TPluginBundle
+	let bundle: TPluginBundle
 
 	beforeEach(() => {
-		container = new TPluginBundle()
+		bundle = new TPluginBundle()
 	})
 
 	it('use() adds plugin and calls install()', () => {
-		const plugin = container.use(TTestPlugin)
+		const plugin = bundle.use(TTestPlugin)
 		expect(plugin).toBeInstanceOf(TTestPlugin)
 		expect(plugin.installed).toBe(true)
 	})
 
 	it('get() by constructor returns plugin', () => {
-		container.use(TTestPlugin)
-		expect(container.get(TTestPlugin)).toBeInstanceOf(TTestPlugin)
+		bundle.use(TTestPlugin)
+		expect(bundle.get(TTestPlugin)).toBeInstanceOf(TTestPlugin)
 	})
 
 	it('get() by string key returns plugin', () => {
-		container.use(TTestPlugin)
-		expect(container.get('test')).toBeInstanceOf(TTestPlugin)
+		bundle.use(TTestPlugin)
+		expect(bundle.get('test')).toBeInstanceOf(TTestPlugin)
 	})
 
 	it('get() returns undefined for missing plugin', () => {
-		expect(container.get(TTestPlugin)).toBeUndefined()
+		expect(bundle.get(TTestPlugin)).toBeUndefined()
 	})
 
 	it('remove() calls destroy() and removes plugin', () => {
-		const plugin = container.use(TTestPlugin)
+		const plugin = bundle.use(TTestPlugin)
 		const spy = vi.fn()
 		plugin.events.on('destroyed', spy)
 
-		container.remove(TTestPlugin)
+		bundle.remove(TTestPlugin)
 
 		expect(plugin.destroyed).toBe(true)
 		expect(spy).toHaveBeenCalledOnce()
-		expect(container.get(TTestPlugin)).toBeUndefined()
+		expect(bundle.get(TTestPlugin)).toBeUndefined()
 	})
 
 	it('use() replaces existing plugin with same key', () => {
-		const first = container.use(TTestPlugin)
-		const second = container.use(TTestPlugin)
+		const first = bundle.use(TTestPlugin)
+		const second = bundle.use(TTestPlugin)
 		expect(first).not.toBe(second)
-		expect(container.get(TTestPlugin)).toBe(second)
+		expect(bundle.get(TTestPlugin)).toBe(second)
 	})
 
 	it('multiple plugins coexist', () => {
-		container.use(TTestPlugin)
-		container.use(TAnotherPlugin)
-		expect(container.get(TTestPlugin)).toBeInstanceOf(TTestPlugin)
-		expect(container.get(TAnotherPlugin)).toBeInstanceOf(TAnotherPlugin)
+		bundle.use(TTestPlugin)
+		bundle.use(TAnotherPlugin)
+		expect(bundle.get(TTestPlugin)).toBeInstanceOf(TTestPlugin)
+		expect(bundle.get(TAnotherPlugin)).toBeInstanceOf(TAnotherPlugin)
 	})
 })

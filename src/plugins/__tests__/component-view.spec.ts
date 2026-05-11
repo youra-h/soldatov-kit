@@ -4,27 +4,27 @@ import { TElementPlugin } from '../common/element'
 import { TInstancePlugin } from '../common/instance'
 
 describe('TComponentViewBundle', () => {
-	let container: TComponentViewBundle
+	let bundle: TComponentViewBundle
 
 	beforeEach(() => {
-		container = new TComponentViewBundle()
+		bundle = new TComponentViewBundle()
 	})
 
 	it('has TElementPlugin pre-installed', () => {
-		expect(container.get(TElementPlugin)).toBeInstanceOf(TElementPlugin)
+		expect(bundle.get(TElementPlugin)).toBeInstanceOf(TElementPlugin)
 	})
 
 	it('has TInstancePlugin pre-installed', () => {
-		expect(container.get(TInstancePlugin)).toBeInstanceOf(TInstancePlugin)
+		expect(bundle.get(TInstancePlugin)).toBeInstanceOf(TInstancePlugin)
 	})
 
 	it('element and instance start as null', () => {
-		expect(container.get(TElementPlugin)!.element).toBeNull()
-		expect(container.get(TInstancePlugin)!.instance).toBeNull()
+		expect(bundle.get(TElementPlugin)!.element).toBeNull()
+		expect(bundle.get(TInstancePlugin)!.instance).toBeNull()
 	})
 
 	it('element plugin reacts after delayed rAF', async () => {
-		const plugin = container.get(TElementPlugin)!
+		const plugin = bundle.get(TElementPlugin)!
 
 		const el = document.createElement('div')
 

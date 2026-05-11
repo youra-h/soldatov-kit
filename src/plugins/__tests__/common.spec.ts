@@ -1,15 +1,15 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { TPluginBundle } from '../base/container'
+import { TPluginBundle } from '../base/bundle'
 import { TElementPlugin } from '../common/element'
 import { TInstancePlugin } from '../common/instance'
 
 describe('TElementPlugin', () => {
-	let container: TPluginBundle
+	let bundle: TPluginBundle
 	let plugin: TElementPlugin
 
 	beforeEach(() => {
-		container = new TPluginBundle()
-		plugin = container.use(TElementPlugin)
+		bundle = new TPluginBundle()
+		plugin = bundle.use(TElementPlugin)
 	})
 
 	it('element is null initially', () => {
@@ -69,12 +69,12 @@ describe('TElementPlugin', () => {
 })
 
 describe('TInstancePlugin', () => {
-	let container: TPluginBundle
+	let bundle: TPluginBundle
 	let plugin: TInstancePlugin
 
 	beforeEach(() => {
-		container = new TPluginBundle()
-		plugin = container.use(TInstancePlugin)
+		bundle = new TPluginBundle()
+		plugin = bundle.use(TInstancePlugin)
 	})
 
 	it('instance is null initially', () => {

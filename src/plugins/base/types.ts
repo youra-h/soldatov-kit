@@ -11,7 +11,7 @@ export interface IPlugin<TEvents extends TBasePluginEvents = TBasePluginEvents> 
 	readonly key: string
 	readonly events: TEvented<TEvents>
 	/** Вызывается контейнером при добавлении плагина через use(). Используй для подписки на другие плагины. */
-	install(container: IPluginBundle): void
+	install(bundle: IPluginBundle): void
 	/** Вызывается контейнером при удалении через remove(). Используй для отписки от событий и очистки ресурсов. */
 	destroy(): void
 }
