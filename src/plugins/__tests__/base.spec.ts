@@ -56,7 +56,8 @@ describe('TPluginBundle', () => {
 	})
 
 	it('use() adds plugin and calls install()', () => {
-		const plugin = bundle.use(TTestPlugin)
+		const plugin = bundle.use(TTestPlugin).get(TTestPlugin)!
+
 		expect(plugin).toBeInstanceOf(TTestPlugin)
 		expect(plugin.installed).toBe(true)
 	})
@@ -76,7 +77,7 @@ describe('TPluginBundle', () => {
 	})
 
 	it('remove() calls destroy() and removes plugin', () => {
-		const plugin = bundle.use(TTestPlugin)
+		const plugin = bundle.use(TTestPlugin).get(TTestPlugin)!
 		const spy = vi.fn()
 		plugin.events.on('destroyed', spy)
 
@@ -88,8 +89,8 @@ describe('TPluginBundle', () => {
 	})
 
 	it('use() replaces existing plugin with same key', () => {
-		const first = bundle.use(TTestPlugin)
-		const second = bundle.use(TTestPlugin)
+		const first = bundle.use(TTestPlugin).get(TTestPlugin)!
+		const second = bundle.use(TTestPlugin).get(TTestPlugin)!
 		expect(first).not.toBe(second)
 		expect(bundle.get(TTestPlugin)).toBe(second)
 	})
