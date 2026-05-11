@@ -5,7 +5,7 @@ import { useBundle } from '../../composables/useBundle'
 import { useElementBinding } from '../../composables/useElementBinding'
 import { useInstanceBinding } from '../../composables/useInstanceBinding'
 import BaseSpinner, { syncSpinner } from './base.component'
-import { createComponentViewBundle } from '@plugins'
+import { createComponentViewBundle, TSpinnerStylePlugin } from '@plugins'
 import type { TBaseComponentViewProps } from '../component-view'
 
 export default {
@@ -14,7 +14,12 @@ export default {
 	setup(props: TBaseComponentViewProps<ISpinnerProps, ISpinner>, { emit }) {
 		const instance = useInstance(TSpinner, props)
 		// Инициализация плагинов
-		const plugins = useBundle(createComponentViewBundle, props?.plugins)
+		const plugins = useBundle(createComponentViewBundle, props?.plugins).use(
+			TSpinnerStylePlugin,
+		)
+
+		const spinnerPlugin = plugins.get(TSpinnerStylePlugin)!
+
 		// Привязка инстанса к плагинам
 		useInstanceBinding(plugins, instance)
 		// Привязка элемента и инстанса к плагинам
@@ -31,6 +36,7 @@ export default {
 			instance,
 			plugins,
 			rootRef,
+			spinnerPlugin,
 		}
 	},
 }
@@ -43,7 +49,7 @@ export default {
 		v-if="instance.rendered"
 		v-show="instance.visible"
 		:class="instance.classes"
-		:style="instance.styles"
+		:style="spinnerPlugin.styles"
 	>
 		<slot />
 	</component>
