@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { describe, it, expect, beforeEach } from 'vitest'
 import { TTabs } from '../../core/components/tabs'
 import { createTabsBundle } from '../bundles'
 import { TElementPlugin } from '../common/element'
@@ -12,9 +12,9 @@ function createTabsDom(): HTMLElement {
 	list.className = 's-tabs__list'
 
 	const tab1 = document.createElement('div')
-	tab1.style.offsetLeft = ''
-	tab1.style.offsetWidth = ''
-
+	// offsetLeft/offsetWidth — не в style, задаём как числовые свойства элемента
+	Object.defineProperty(tab1, 'offsetLeft', { value: 0, configurable: true })
+	Object.defineProperty(tab1, 'offsetWidth', { value: 0, configurable: true })
 	const tab2 = document.createElement('div')
 
 	list.appendChild(tab1)
@@ -57,7 +57,7 @@ describe('TTabsBundle', () => {
 
 		const el = createTabsDom()
 
-		await new Promise<void>(resolve => {
+		await new Promise<void>((resolve) => {
 			elementPlugin.events.on('ready', () => resolve())
 			elementPlugin.element = el
 		})
@@ -77,7 +77,7 @@ describe('TTabsBundle', () => {
 
 		const el = createTabsDom()
 
-		await new Promise<void>(resolve => {
+		await new Promise<void>((resolve) => {
 			elementPlugin.events.on('ready', () => resolve())
 			elementPlugin.element = el
 		})
@@ -91,7 +91,7 @@ describe('TTabsBundle', () => {
 		const elementPlugin = bundle.get(TElementPlugin)!
 		const el = createTabsDom()
 
-		await new Promise<void>(resolve => {
+		await new Promise<void>((resolve) => {
 			elementPlugin.events.on('ready', () => resolve())
 			elementPlugin.element = el
 		})
@@ -107,7 +107,7 @@ describe('TTabsBundle', () => {
 		instancePlugin.instance = tabs
 
 		const el = createTabsDom()
-		await new Promise<void>(resolve => {
+		await new Promise<void>((resolve) => {
 			elementPlugin.events.on('ready', () => resolve())
 			elementPlugin.element = el
 		})
