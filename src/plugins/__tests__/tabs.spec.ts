@@ -1,9 +1,9 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { TTabs } from '../../core/components/tabs'
-import { TTabsBundle } from '../containers/tabs'
+import { TTabsBundle } from '../bundles/tabs'
 import { TElementPlugin } from '../common/element'
 import { TInstancePlugin } from '../common/instance'
-import { TTabsAppearancePlugin } from '../containers/tabs/plugins/appearance'
+import { TTabsAppearancePlugin } from '../common/tabs/appearance'
 
 function createTabsDom(): HTMLElement {
 	const root = document.createElement('div')

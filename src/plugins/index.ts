@@ -1,3 +1,3 @@
 export * from './base'
 export * from './common'
-export * from './containers'
+export * from './bundles'

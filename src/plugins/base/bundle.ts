@@ -3,13 +3,13 @@ import type { IPlugin, IPluginBundle, TPluginConstructor } from './types'
 export class TPluginBundle implements IPluginBundle {
 	private _plugins = new Map<string, IPlugin>()
 
-	use<P extends IPlugin>(PluginCtor: TPluginConstructor<P>): P {
+	use<P extends IPlugin>(PluginCtor: TPluginConstructor<P>): IPluginBundle {
 		const plugin = new PluginCtor()
 		// Если плагин с таким ключом уже существует, удаляем его
 		this._plugins.set(PluginCtor.key, plugin)
 		plugin.install(this)
 
-		return plugin
+		return this
 	}
 
 	get<P extends IPlugin>(ctor: TPluginConstructor<P>): P | undefined

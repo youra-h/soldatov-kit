@@ -1,7 +1,7 @@
 import { ref, onMounted, onUnmounted, toRaw, type Reactive } from 'vue'
 import type { ComponentPublicInstance } from 'vue'
 import type { IComponentView } from '@core'
-import { TComponentViewBundle } from '../../plugins/containers/component-view'
+import { TComponentViewBundle } from '../../plugins/bundles/component-view'
 import { TElementPlugin } from '../../plugins/common/element'
 import { TInstancePlugin } from '../../plugins/common/instance'
 

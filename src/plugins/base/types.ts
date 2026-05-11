@@ -4,8 +4,8 @@ export type TBasePluginEvents = {
 	destroyed: () => void
 }
 
-export type TPluginEvents<T extends Record<string, (...args: any) => any> = {}> =
-	T & TBasePluginEvents
+export type TPluginEvents<T extends Record<string, (...args: any) => any> = {}> = T &
+	TBasePluginEvents
 
 export interface IPlugin<TEvents extends TBasePluginEvents = TBasePluginEvents> {
 	readonly key: string
@@ -17,13 +17,13 @@ export interface IPlugin<TEvents extends TBasePluginEvents = TBasePluginEvents> 
 }
 
 export interface IPluginBundle {
-	use<P extends IPlugin>(PluginCtor: TPluginConstructor<P>): P
+	use<P extends IPlugin>(PluginCtor: TPluginConstructor<P>): IPluginBundle
 	get<P extends IPlugin>(ctor: TPluginConstructor<P>): P | undefined
 	get(key: string): IPlugin | undefined
 	remove<P extends IPlugin>(PluginCtor: TPluginConstructor<P>): void
 }
 
 export type TPluginConstructor<P extends IPlugin = IPlugin> = {
-	new(): P
+	new (): P
 	readonly key: string
 }

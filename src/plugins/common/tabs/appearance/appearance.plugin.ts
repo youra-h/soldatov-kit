@@ -1,8 +1,8 @@
-import type { ITabs, TTabsAppearance } from '../../../../../core/components/tabs'
-import type { IPluginBundle } from '../../../../base/types'
-import { TBasePlugin } from '../../../../base/plugin'
-import { TElementPlugin } from '../../../../common/element'
-import { TInstancePlugin } from '../../../../common/instance'
+import type { ITabs, TTabsAppearance } from '../../../../core/components/tabs'
+import type { IPluginBundle } from '../../../base/types'
+import { TBasePlugin } from '../../../base/plugin'
+import { TElementPlugin } from '../../element'
+import { TInstancePlugin } from '../../instance'
 import type { TTabsAppearancePluginEvents } from './types'
 
 type TAppearanceHandler = () => void

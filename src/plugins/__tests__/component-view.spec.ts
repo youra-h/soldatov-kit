@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest'
-import { TComponentViewBundle } from '../containers/component-view'
+import { TComponentViewBundle } from '../bundles/component-view'
 import { TElementPlugin } from '../common/element'
 import { TInstancePlugin } from '../common/instance'
 
