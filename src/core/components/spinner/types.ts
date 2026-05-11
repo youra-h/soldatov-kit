@@ -25,6 +25,7 @@ export type TSpinnerStatesOptions = TComponentViewStatesOptions & {
 export type TSpinnerEvents = TComponentViewEvents & {
 	'change:size': (payload: TValuePayload<TComponentSize>) => void
 	'change:variant': (payload: TValuePayload<TComponentVariant>) => void
+	'change:borderWidth': (value: number | 'auto') => void
 }
 
 export interface ISpinner extends IComponentView<ISpinnerProps, TSpinnerEvents> {

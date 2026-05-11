@@ -1,7 +1,6 @@
-import type { IComponentView } from '../../../core'
+import type { ISpinner } from '../../../core'
 import type { IPluginBundle } from '../../base/types'
 import { TBasePlugin } from '../../base/plugin'
-import { TElementPlugin } from '../element'
 import { TInstancePlugin } from '../instance'
 
 /**
@@ -10,15 +9,20 @@ import { TInstancePlugin } from '../instance'
 export class TSpinnerStylePlugin extends TBasePlugin {
 	static readonly key = 'spinner-style'
 
+	protected _styles: Record<string, string | number> = {}
+
 	override install(bundle: IPluginBundle): void {
-		const elementPlugin = bundle.get(TElementPlugin)
+		const instancePlugin = bundle.get(TInstancePlugin) as TInstancePlugin<ISpinner> | undefined
 
-		const instancePlugin = bundle.get(TInstancePlugin) as
-			| TInstancePlugin<IComponentView>
-			| undefined
-
-		elementPlugin?.events.on('ready', () => {
-
+		instancePlugin?.events.on('ready', ({ instance }) => {
+			;(instance as unknown as ISpinner).events.on('change:borderWidth', (value) => {
+				this._styles['--spinner-border-width'] =
+					typeof value === 'number' ? `${value}px` : 'auto'
+			})
 		})
+	}
+
+	get styles(): Record<string, string | number> {
+		return this._styles
 	}
 }

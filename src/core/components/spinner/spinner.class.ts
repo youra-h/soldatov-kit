@@ -105,6 +105,7 @@ export default class TSpinner
 	set borderWidth(value: number | 'auto') {
 		if (this._borderWidth !== value) {
 			this._borderWidth = value
+			;(this.events as TEvented<TSpinnerEvents>).emit('change:borderWidth', value)
 		}
 	}
 
@@ -117,21 +118,6 @@ export default class TSpinner
 		if (this.size === '2xl') return 2
 
 		return 1
-	}
-
-	/**
-	 * Стили для компонента
-	 * @return {Record<string, string | number>} Объект со стилями
-	 */
-	get styles(): Record<string, string | number> {
-		const styles: Record<string, string | number> = {}
-
-		// Добавляем толщину бордера
-		styles['--spinner-border-width'] = `${this.borderWidth}px`
-
-		return {
-			...styles,
-		}
 	}
 
 	getProps(): ISpinnerProps {
