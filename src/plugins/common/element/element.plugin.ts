@@ -1,5 +1,6 @@
 import { TBasePlugin } from '../../base'
 import type { TElementPluginEvents } from './types'
+import { TEvented } from '../../../core/common/evented'
 
 export class TElementPlugin extends TBasePlugin<TElementPluginEvents> {
 	static readonly key = 'element'
@@ -20,10 +21,10 @@ export class TElementPlugin extends TBasePlugin<TElementPluginEvents> {
 			requestAnimationFrame(() => {
 				if (this._element !== el) return
 
-				this.events.emit('ready', { element: el })
+				;(this.events as TEvented<TElementPluginEvents>).emit('ready', { element: el })
 			})
 		} else if (!el && prev) {
-			this.events.emit('removed')
+			;(this.events as TEvented<TElementPluginEvents>).emit('removed')
 		}
 	}
 

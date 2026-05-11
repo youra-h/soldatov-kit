@@ -1,5 +1,5 @@
 import { TEvented } from '../../core/common/evented'
-import type { IPlugin, IPluginContainer, TPluginEvents } from './types'
+import type { IPlugin, IPluginContainer, TPluginEvents, TBasePluginEvents } from './types'
 
 export abstract class TBasePlugin<
 	TCustomEvents extends Record<string, (...args: any) => any> = {},
@@ -13,6 +13,6 @@ export abstract class TBasePlugin<
 	install(_container: IPluginContainer): void {}
 
 	destroy(): void {
-		this.events.emit('destroyed')
+		(this.events as TEvented<TBasePluginEvents>).emit('destroyed');
 	}
 }

@@ -16,6 +16,7 @@ export class TPluginContainer implements IPluginContainer {
 	get(key: string): IPlugin | undefined
 	get<P extends IPlugin>(ctorOrKey: TPluginConstructor<P> | string): P | IPlugin | undefined {
 		const key = typeof ctorOrKey === 'string' ? ctorOrKey : ctorOrKey.key
+
 		return this._plugins.get(key) as P | undefined
 	}
 
