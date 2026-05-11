@@ -42,7 +42,7 @@ export default {
 		:is="instance.tag"
 		v-if="instance.rendered"
 		v-show="instance.visible"
-		:class="instance.classes"
+		:class="instance.classes.list"
 		:disabled="instance.disabled || undefined"
 		@click="instance.events.emit('click', $event)"
 	>

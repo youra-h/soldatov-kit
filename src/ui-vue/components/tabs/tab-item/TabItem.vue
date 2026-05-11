@@ -46,7 +46,7 @@ export default {
 		appearance="none"
 		:size="instance.size"
 		:variant="instance.variant"
-		:class="instance.classes"
+		:class="instance.classes.list"
 		@click="instance.click()"
 		role="tab"
 	>

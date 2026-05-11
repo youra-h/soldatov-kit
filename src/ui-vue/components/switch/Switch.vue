@@ -33,7 +33,7 @@ export default {
 </script>
 
 <template>
-	<div ref="rootRef" v-if="instance.rendered" v-show="instance.visible" :class="instance.classes">
+	<div ref="rootRef" v-if="instance.rendered" v-show="instance.visible" :class="instance.classes.list">
 		<input
 			type="checkbox"
 			:id="instance.id.toString()"

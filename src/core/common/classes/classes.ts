@@ -170,6 +170,11 @@ export class TClasses {
 		return undefined
 	}
 
+	/** Список всех классов в виде массива строк. */
+	get list(): string[] {
+		return this.toArray()
+	}
+
 	/** Возвращает итоговый список классов: `[base, ...statics, ...computed dynamics]`. */
 	toArray(): string[] {
 		const result: string[] = [this._base, ...this._statics]
