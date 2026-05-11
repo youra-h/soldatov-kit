@@ -66,9 +66,14 @@ export class TTabsAppearancePlugin extends TBasePlugin<TTabsAppearancePluginEven
 	private _updateLine(): void {
 		if (!this._element) return
 
-		const listEl = this._element.querySelector(
-			`.${this._tabs!.baseClass}__list`,
-		) as HTMLElement | null
+		const listCls = this._tabs?.classes.get(`__list`)
+
+		if (!listCls) {
+			console.error('TabsAppearancePlugin: .__list element not found in tabs classes')
+			return
+		}
+
+		const listEl = this._element.querySelector(listCls) as HTMLElement | null
 
 		if (!listEl) return
 

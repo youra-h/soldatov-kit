@@ -139,6 +139,37 @@ export class TClasses {
 		return this
 	}
 
+	/**
+	 * Поиск по классум. Проверяет только статические классы, динамические игнорирует.
+	 * @param suffix — текст для поиска. Если `withBase === true`, строка автоматически предваряется базовым классом
+	 * @param withBase — если `true`, строка автоматически предваряется базовым классом
+	 * @return `true` если класс присутствует, `false` если нет
+	 */
+	has(suffix: string, withBase = true): boolean {
+		const cls = this._resolve(suffix, withBase)
+
+		return this._statics.has(cls)
+	}
+
+	/**
+	 * Вернуть полное наименование класса по его суффиксу. Например, при базовом классе `tk-btn` и наличии в статических классах `tk-btn--size-s` вызов `get('--size-s')` вернёт `tk-btn--size-s`.
+	 * Проверяет только статические классы, динамические игнорирует.
+	 * @param suffix — суффикс класса. Если `withBase === true`, строка автоматически предваряется базовым классом
+	 * @param withBase — если `true`, строка автоматически предваряется базовым классом
+	 * @return полное наименование класса или `undefined` если класс не найден
+	 */
+	get(suffix: string, withBase = true): string | undefined {
+		const target = this._resolve(suffix, withBase)
+
+		for (const cls of this._statics) {
+			if (cls.endsWith(target)) {
+				return cls
+			}
+		}
+
+		return undefined
+	}
+
 	/** Возвращает итоговый список классов: `[base, ...statics, ...computed dynamics]`. */
 	toArray(): string[] {
 		const result: string[] = [this._base, ...this._statics]
