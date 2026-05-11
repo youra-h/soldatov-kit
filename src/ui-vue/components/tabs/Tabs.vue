@@ -8,7 +8,7 @@ import { useInstanceBinding } from '../../composables/useInstanceBinding'
 import { useProvideCollection } from '../../composables/useProvideCollection'
 import { useCollectionItems } from '../../composables/useCollectionItems'
 import { useEventRef } from '../../composables/useEventRef'
-import { TTabsBundle } from '@plugins'
+import { createTabsBundle } from '@plugins'
 import { TabItem } from './tab-item'
 import type { TBaseComponentViewProps } from '../component-view'
 
@@ -18,11 +18,12 @@ export default {
 	components: { TabItem },
 	setup(props: TBaseComponentViewProps<ITabsProps, ITabs>, { emit }) {
 		const instance = useInstance(TTabs, props)
-		const { plugins, rootRef } = usePlugins<TTabsBundle>(
-			TTabsBundle,
-			props?.plugins,
-			instance,
-		)
+		// Инициализация плагинов
+		const plugins = useBundle(createTabsBundle, props?.plugins)
+		// Привязка инстанса к плагинам
+		useInstanceBinding(plugins, instance)
+		// Привязка элемента и инстанса к плагинам
+		const rootRef = useElementBinding(plugins)
 
 		syncTabs({
 			props,
