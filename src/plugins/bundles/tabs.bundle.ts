@@ -1,4 +1,4 @@
-import { createComponentViewBundle } from './component-view.bundles'
+import { createComponentViewBundle } from './component-view.bundle'
 import { TTabsAppearancePlugin } from '../common/tabs/appearance'
 
 export function createTabsBundle() {
