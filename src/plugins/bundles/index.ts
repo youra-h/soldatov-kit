@@ -1,2 +1,2 @@
-export * from './component-view'
-export * from './tabs'
+export * from './component-view.bundle'
+export * from './tabs.bundle'

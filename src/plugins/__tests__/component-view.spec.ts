@@ -1,13 +1,14 @@
 import { describe, it, expect, beforeEach } from 'vitest'
-import { TComponentViewBundle } from '../bundles/component-view'
+import { createComponentViewBundle } from '../bundles'
 import { TElementPlugin } from '../common/element'
 import { TInstancePlugin } from '../common/instance'
+import { type IPluginBundle } from '../base'
 
 describe('TComponentViewBundle', () => {
-	let bundle: TComponentViewBundle
+	let bundle: IPluginBundle
 
 	beforeEach(() => {
-		bundle = new TComponentViewBundle()
+		bundle = createComponentViewBundle()
 	})
 
 	it('has TElementPlugin pre-installed', () => {
@@ -28,7 +29,7 @@ describe('TComponentViewBundle', () => {
 
 		const el = document.createElement('div')
 
-		await new Promise<void>(resolve => {
+		await new Promise<void>((resolve) => {
 			plugin.events.on('ready', () => resolve())
 			plugin.element = el
 		})

@@ -1,9 +1,10 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { TTabs } from '../../core/components/tabs'
-import { TTabsBundle } from '../bundles/tabs'
+import { createTabsBundle } from '../bundles'
 import { TElementPlugin } from '../common/element'
 import { TInstancePlugin } from '../common/instance'
 import { TTabsAppearancePlugin } from '../common/tabs/appearance'
+import { type IPluginBundle } from '../base'
 
 function createTabsDom(): HTMLElement {
 	const root = document.createElement('div')
@@ -24,11 +25,11 @@ function createTabsDom(): HTMLElement {
 }
 
 describe('TTabsBundle', () => {
-	let bundle: TTabsBundle
+	let bundle: IPluginBundle
 	let tabs: TTabs
 
 	beforeEach(() => {
-		bundle = new TTabsBundle()
+		bundle = createTabsBundle()
 		tabs = new TTabs()
 	})
 

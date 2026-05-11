@@ -27,3 +27,5 @@ export type TPluginConstructor<P extends IPlugin = IPlugin> = {
 	new (): P
 	readonly key: string
 }
+
+export type TBundleFactory = () => IPluginBundle
