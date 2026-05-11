@@ -3,7 +3,7 @@ import { TSpinner, type ISpinnerProps, type ISpinner } from '@core'
 import { useInstance } from '../../composables/useInstance'
 import { usePlugins } from '../../composables/usePlugins'
 import BaseSpinner, { syncSpinner } from './base.component'
-import { TComponentViewContainer } from '@plugins'
+import { TComponentViewBundle } from '@plugins'
 import type { TBaseComponentViewProps } from '../component-view'
 
 export default {
@@ -11,7 +11,7 @@ export default {
 	extends: BaseSpinner,
 	setup(props: TBaseComponentViewProps<ISpinnerProps, ISpinner>, { emit }) {
 		const instance = useInstance(TSpinner, props)
-		const { plugins, rootRef } = usePlugins(TComponentViewContainer, props?.plugins, instance)
+		const { plugins, rootRef } = usePlugins(TComponentViewBundle, props?.plugins, instance)
 
 		syncSpinner({
 			props,

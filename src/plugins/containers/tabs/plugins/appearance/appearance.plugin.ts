@@ -1,5 +1,5 @@
 import type { ITabs, TTabsAppearance } from '../../../../../core/components/tabs'
-import type { IPluginContainer } from '../../../../base/types'
+import type { IPluginBundle } from '../../../../base/types'
 import { TBasePlugin } from '../../../../base/plugin'
 import { TElementPlugin } from '../../../../common/element'
 import { TInstancePlugin } from '../../../../common/instance'
@@ -18,7 +18,7 @@ export class TTabsAppearancePlugin extends TBasePlugin<TTabsAppearancePluginEven
 		line: () => this._updateLine(),
 	}
 
-	override install(container: IPluginContainer): void {
+	override install(container: IPluginBundle): void {
 		container.get(TElementPlugin)?.events.on('ready', ({ element }) => {
 			this._element = element
 			this.update()

@@ -3,7 +3,7 @@ import { TComponentView, type IComponentViewProps } from '@core'
 import BaseComponentView, { syncComponentView } from './base.component'
 import { useInstance } from '../../composables/useInstance'
 import { usePlugins } from '../../composables/usePlugins'
-import { TComponentViewContainer } from '@plugins'
+import { TComponentViewBundle } from '@plugins'
 import type { TBaseComponentViewProps } from './types'
 
 export default {
@@ -13,7 +13,7 @@ export default {
 		// Получение инстанса из пропсов или создание нового
 		const instance = useInstance(TComponentView, props)
 		// Инициализация плагинов
-		const { plugins, rootRef } = usePlugins(TComponentViewContainer, props?.plugins, instance)
+		const { plugins, rootRef } = usePlugins(TComponentViewBundle, props?.plugins, instance)
 
 		syncComponentView({
 			props,

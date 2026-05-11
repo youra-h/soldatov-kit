@@ -1,14 +1,14 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { TPluginContainer } from '../base/container'
+import { TPluginBundle } from '../base/container'
 import { TElementPlugin } from '../common/element'
 import { TInstancePlugin } from '../common/instance'
 
 describe('TElementPlugin', () => {
-	let container: TPluginContainer
+	let container: TPluginBundle
 	let plugin: TElementPlugin
 
 	beforeEach(() => {
-		container = new TPluginContainer()
+		container = new TPluginBundle()
 		plugin = container.use(TElementPlugin)
 	})
 
@@ -69,11 +69,11 @@ describe('TElementPlugin', () => {
 })
 
 describe('TInstancePlugin', () => {
-	let container: TPluginContainer
+	let container: TPluginBundle
 	let plugin: TInstancePlugin
 
 	beforeEach(() => {
-		container = new TPluginContainer()
+		container = new TPluginBundle()
 		plugin = container.use(TInstancePlugin)
 	})
 

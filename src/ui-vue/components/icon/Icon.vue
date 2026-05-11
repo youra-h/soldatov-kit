@@ -3,7 +3,7 @@ import { TIcon, type IIconProps, type IIcon } from '@core'
 import { useInstance } from '../../composables/useInstance'
 import { usePlugins } from '../../composables/usePlugins'
 import BaseIcon, { syncIcon } from './base.component'
-import { TComponentViewContainer } from '@plugins'
+import { TComponentViewBundle } from '@plugins'
 import type { TBaseComponentViewProps } from '../component-view'
 
 export default {
@@ -11,7 +11,7 @@ export default {
 	extends: BaseIcon,
 	setup(props: TBaseComponentViewProps<IIconProps, IIcon>, { emit }) {
 		const instance = useInstance(TIcon, props)
-		const { plugins, rootRef } = usePlugins(TComponentViewContainer, props?.plugins, instance)
+		const { plugins, rootRef } = usePlugins(TComponentViewBundle, props?.plugins, instance)
 
 		syncIcon({
 			props,

@@ -1,13 +1,13 @@
 import { describe, it, expect, beforeEach } from 'vitest'
-import { TComponentViewContainer } from '../containers/component-view'
+import { TComponentViewBundle } from '../containers/component-view'
 import { TElementPlugin } from '../common/element'
 import { TInstancePlugin } from '../common/instance'
 
-describe('TComponentViewContainer', () => {
-	let container: TComponentViewContainer
+describe('TComponentViewBundle', () => {
+	let container: TComponentViewBundle
 
 	beforeEach(() => {
-		container = new TComponentViewContainer()
+		container = new TComponentViewBundle()
 	})
 
 	it('has TElementPlugin pre-installed', () => {

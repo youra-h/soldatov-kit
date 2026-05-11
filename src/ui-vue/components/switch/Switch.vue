@@ -3,7 +3,7 @@ import { TSwitch, type ISwitchProps, type ISwitch } from '@core'
 import BaseSwitch, { syncSwitch } from './base.component'
 import { useInstance } from '../../composables/useInstance'
 import { usePlugins } from '../../composables/usePlugins'
-import { TComponentViewContainer } from '@plugins'
+import { TComponentViewBundle } from '@plugins'
 import type { TBaseComponentViewProps } from '../component-view'
 
 export default {
@@ -11,7 +11,7 @@ export default {
 	extends: BaseSwitch,
 	setup(props: TBaseComponentViewProps<ISwitchProps, ISwitch>, { emit }) {
 		const instance = useInstance(TSwitch, props)
-		const { plugins, rootRef } = usePlugins(TComponentViewContainer, props?.plugins, instance)
+		const { plugins, rootRef } = usePlugins(TComponentViewBundle, props?.plugins, instance)
 
 		syncSwitch({
 			props,

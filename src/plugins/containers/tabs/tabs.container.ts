@@ -1,7 +1,7 @@
-import { TComponentViewContainer } from '../component-view'
+import { TComponentViewBundle } from '../component-view'
 import { TTabsAppearancePlugin } from './plugins/appearance'
 
-export class TTabsContainer extends TComponentViewContainer {
+export class TTabsBundle extends TComponentViewBundle {
 	constructor() {
 		super()
 		this.use(TTabsAppearancePlugin)

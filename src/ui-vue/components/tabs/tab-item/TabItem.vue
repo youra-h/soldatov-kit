@@ -3,7 +3,7 @@ import { TTabItem, type ITabItemProps, type ITabItem } from '@core'
 import BaseTabItem, { syncTabItem } from './tab-item.component'
 import { useInstance } from '../../../composables/useInstance'
 import { usePlugins } from '../../../composables/usePlugins'
-import { TComponentViewContainer } from '@plugins'
+import { TComponentViewBundle } from '@plugins'
 import { Icon, useIconImport } from '../../icon'
 import { Button } from '../../button'
 import type { TBaseComponentViewProps } from '../../component-view'
@@ -14,7 +14,7 @@ export default {
 	components: { Icon, Button },
 	setup(props: TBaseComponentViewProps<ITabItemProps, ITabItem>, { emit }) {
 		const instance = useInstance(TTabItem, props)
-		const { plugins, rootRef } = usePlugins(TComponentViewContainer, props?.plugins, instance)
+		const { plugins, rootRef } = usePlugins(TComponentViewBundle, props?.plugins, instance)
 
 		syncTabItem({
 			props,

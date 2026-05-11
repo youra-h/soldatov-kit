@@ -1,3 +1,3 @@
 export * from './types'
 export * from './plugin'
-export * from './container'
+export * from './bundle'

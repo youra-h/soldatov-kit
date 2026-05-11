@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { TBasePlugin } from '../base/plugin'
-import { TPluginContainer } from '../base/container'
-import type { IPluginContainer } from '../base/types'
+import { TPluginBundle } from '../base/container'
+import type { IPluginBundle } from '../base/types'
 
 // --- helpers ---
 
@@ -12,7 +12,7 @@ class TTestPlugin extends TBasePlugin<TTestEvents> {
 	installed = false
 	destroyed = false
 
-	override install(container: IPluginContainer): void {
+	override install(container: IPluginBundle): void {
 		this.installed = true
 	}
 
@@ -48,11 +48,11 @@ describe('TBasePlugin', () => {
 	})
 })
 
-describe('TPluginContainer', () => {
-	let container: TPluginContainer
+describe('TPluginBundle', () => {
+	let container: TPluginBundle
 
 	beforeEach(() => {
-		container = new TPluginContainer()
+		container = new TPluginBundle()
 	})
 
 	it('use() adds plugin and calls install()', () => {

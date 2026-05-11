@@ -1,5 +1,5 @@
 import type { IComponentView } from '../../../core'
-import type { IPluginContainer } from '../../base/types'
+import type { IPluginBundle } from '../../base/types'
 import { TBasePlugin } from '../../base/plugin'
 import { TElementPlugin } from '../element'
 import { TInstancePlugin } from '../instance'
@@ -12,7 +12,7 @@ import { TInstancePlugin } from '../instance'
 export class TReadyBridgePlugin extends TBasePlugin {
 	static readonly key = 'ready-bridge'
 
-	override install(container: IPluginContainer): void {
+	override install(container: IPluginBundle): void {
 		const elementPlugin = container.get(TElementPlugin)
 
 		const instancePlugin = container.get(TInstancePlugin) as

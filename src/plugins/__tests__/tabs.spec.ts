@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { TTabs } from '../../core/components/tabs'
-import { TTabsContainer } from '../containers/tabs'
+import { TTabsBundle } from '../containers/tabs'
 import { TElementPlugin } from '../common/element'
 import { TInstancePlugin } from '../common/instance'
 import { TTabsAppearancePlugin } from '../containers/tabs/plugins/appearance'
@@ -23,12 +23,12 @@ function createTabsDom(): HTMLElement {
 	return root
 }
 
-describe('TTabsContainer', () => {
-	let container: TTabsContainer
+describe('TTabsBundle', () => {
+	let container: TTabsBundle
 	let tabs: TTabs
 
 	beforeEach(() => {
-		container = new TTabsContainer()
+		container = new TTabsBundle()
 		tabs = new TTabs()
 	})
 

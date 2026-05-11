@@ -6,7 +6,7 @@ import { usePlugins } from '../../composables/usePlugins'
 import { useProvideCollection } from '../../composables/useProvideCollection'
 import { useCollectionItems } from '../../composables/useCollectionItems'
 import { useEventRef } from '../../composables/useEventRef'
-import { TTabsContainer } from '@plugins'
+import { TTabsBundle } from '@plugins'
 import { TabItem } from './tab-item'
 import type { TBaseComponentViewProps } from '../component-view'
 
@@ -16,8 +16,8 @@ export default {
 	components: { TabItem },
 	setup(props: TBaseComponentViewProps<ITabsProps, ITabs>, { emit }) {
 		const instance = useInstance(TTabs, props)
-		const { plugins, rootRef } = usePlugins<TTabsContainer>(
-			TTabsContainer,
+		const { plugins, rootRef } = usePlugins<TTabsBundle>(
+			TTabsBundle,
 			props?.plugins,
 			instance,
 		)

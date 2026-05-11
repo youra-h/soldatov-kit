@@ -3,7 +3,7 @@ import { TButton, type IButton, type IButtonProps } from '@core'
 import { useInstance } from '../../composables/useInstance'
 import { usePlugins } from '../../composables/usePlugins'
 import BaseButton, { syncButton } from './base.component'
-import { TComponentViewContainer } from '@plugins'
+import { TComponentViewBundle } from '@plugins'
 import type { TBaseComponentViewProps } from '../component-view'
 
 export default {
@@ -11,7 +11,7 @@ export default {
 	extends: BaseButton,
 	setup(props: TBaseComponentViewProps<IButtonProps, IButton>, { emit }) {
 		const instance = useInstance(TButton, props)
-		const { plugins, rootRef } = usePlugins(TComponentViewContainer, props?.plugins, instance)
+		const { plugins, rootRef } = usePlugins(TComponentViewBundle, props?.plugins, instance)
 
 		syncButton({
 			props,
