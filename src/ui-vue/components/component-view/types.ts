@@ -1,6 +1,6 @@
 import type { UnwrapNestedRefs } from 'vue'
 import type { IComponentView } from '@core'
-import { TComponentViewBundle } from '@plugins'
+import { createComponentViewBundle } from '@plugins'
 
 export type TBaseComponentViewProps<
 	TCoreProps,

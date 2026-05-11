@@ -2,8 +2,6 @@
 import { TComponentView, type IComponentViewProps } from '@core'
 import BaseComponentView, { syncComponentView } from './base.component'
 import { useInstance } from '../../composables/useInstance'
-// import { usePlugins } from '../../composables/usePlugins'
-// import { TComponentViewBundle } from '@plugins'
 import { useBundle } from '../../composables/useBundle'
 import { useElementBinding } from '../../composables/useElementBinding'
 import { useInstanceBinding } from '../../composables/useInstanceBinding'

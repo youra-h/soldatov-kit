@@ -2,9 +2,11 @@
 import { TCheckBox, type ICheckBox, type ICheckBoxProps } from '@core'
 import BaseCheckBox, { syncCheckBox } from './base.component'
 import { useInstance } from '../../composables/useInstance'
-import { usePlugins } from '../../composables/usePlugins'
+import { useBundle } from '../../composables/useBundle'
+import { useElementBinding } from '../../composables/useElementBinding'
+import { useInstanceBinding } from '../../composables/useInstanceBinding'
 import { Icon, useIconImport } from '../icon'
-import { TComponentViewBundle } from '@plugins'
+import { createComponentViewBundle } from '@plugins'
 import type { TBaseComponentViewProps } from '../component-view'
 
 export default {
@@ -12,7 +14,12 @@ export default {
 	extends: BaseCheckBox,
 	setup(props: TBaseComponentViewProps<ICheckBoxProps, ICheckBox>, { emit }) {
 		const instance = useInstance(TCheckBox, props)
-		const { plugins, rootRef } = usePlugins(TComponentViewBundle, props?.plugins, instance)
+		// Инициализация плагинов
+		const plugins = useBundle(createComponentViewBundle, props?.plugins)
+		// Привязка инстанса к плагинам
+		useInstanceBinding(plugins, instance)
+		// Привязка элемента и инстанса к плагинам
+		const rootRef = useElementBinding(plugins)
 
 		syncCheckBox({
 			props,

@@ -1,5 +1,5 @@
 import type { UnwrapNestedRefs } from 'vue'
-import { TComponentViewBundle } from '@plugins'
+import { createComponentViewBundle } from '@plugins'
 import type { IComponentView } from '@core'
 
 export type TEmits = readonly string[]
