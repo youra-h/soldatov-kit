@@ -104,13 +104,15 @@ export class TClasses {
 		withBase = true,
 	}: {
 		prefix: string
-		oldValue: string
-		newValue: string
+		oldValue?: string
+		newValue?: string
 		withBase?: boolean
 	}): this {
-		this.remove(`${prefix}${oldValue}`, withBase)
+		if (oldValue) {
+			this.remove(`${prefix}${oldValue}`, withBase)
+		}
 
-		if (newValue.trim() !== '' && newValue !== oldValue) {
+		if (newValue && newValue.trim() !== '' && newValue !== oldValue) {
 			this.add(`${prefix}${newValue}`, withBase)
 		}
 

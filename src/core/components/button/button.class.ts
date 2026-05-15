@@ -46,7 +46,7 @@ export default class TButton extends TTextable<IButtonProps, TButtonEvents> impl
 
 		this._tag = props.tag ?? TButton.defaultValues.tag!
 
-		this._appearance = props.appearance ?? TButton.defaultValues.appearance!
+		this._applyAppearance(props.appearance ?? TButton.defaultValues.appearance!)
 
 		// Создаем loading state с shouldDisable: true для кнопки
 		const loadingInitial = states?.loading
@@ -84,7 +84,10 @@ export default class TButton extends TTextable<IButtonProps, TButtonEvents> impl
 					}
 				}
 			}
-			;(this.events as TEvented<TButtonEvents>).emit('change:loading', payload.newValue.loading)
+			;(this.events as TEvented<TButtonEvents>).emit(
+				'change:loading',
+				payload.newValue.loading,
+			)
 		})
 	}
 
@@ -92,16 +95,19 @@ export default class TButton extends TTextable<IButtonProps, TButtonEvents> impl
 		return this._appearance
 	}
 
-	set appearance(newValue: TButtonAppearance) {
-		if (newValue && this._appearance !== newValue) {
-			const oldValue = this._appearance
+	private _applyAppearance(newValue: TButtonAppearance, oldValue?: TButtonAppearance) {
+		this._classes.swap({
+			prefix: '--a-',
+			oldValue,
+			newValue,
+		})
 
-			this._appearance = newValue
+		this._appearance = newValue
+	}
 
-			this._classes.swapClass({
-				oldClass: `--a-${oldValue}`,
-				newClass: `--a-${newValue}`,
-			})
+	set appearance(value: TButtonAppearance) {
+		if (value && this._appearance !== value) {
+			this._applyAppearance(value, this._appearance)
 		}
 	}
 
