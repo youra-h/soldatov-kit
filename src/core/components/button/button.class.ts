@@ -23,7 +23,7 @@ export default class TButton extends TTextable<IButtonProps, TButtonEvents> impl
 		loading: false,
 	}
 
-	protected _appearance: TButtonAppearance
+	protected _appearance!: TButtonAppearance
 	protected _loadingState: ILoadingState
 	/**
 	 * Флаг отслеживания источника disabled состояния.
@@ -46,6 +46,7 @@ export default class TButton extends TTextable<IButtonProps, TButtonEvents> impl
 
 		this._tag = props.tag ?? TButton.defaultValues.tag!
 
+		// Устанавливаем начальное значение appearance из props или дефолта
 		this._applyAppearance(props.appearance ?? TButton.defaultValues.appearance!)
 
 		// Создаем loading state с shouldDisable: true для кнопки
