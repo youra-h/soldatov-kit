@@ -42,11 +42,6 @@ export default class TStylable<
 
 		this._sizeState.events.on('change', (payload: TValuePayload<TComponentSize>) => {
 			;(this.events as TEvented<TStylableEvents>).emit('change:size', payload)
-
-			this._classes.swapClass({
-				oldClass: `--size-${payload.oldValue}`,
-				newClass: `--size-${payload.newValue}`,
-			})
 		})
 
 		this._classes.add(`--size-${this._sizeState.value}`)
@@ -59,11 +54,6 @@ export default class TStylable<
 
 		this._variantState.events.on('change', (payload: TValuePayload<TComponentVariant>) => {
 			;(this.events as TEvented<TStylableEvents>).emit('change:variant', payload)
-
-			this._classes.swapClass({
-				oldClass: `--${payload.oldValue}`,
-				newClass: `--${payload.newValue}`,
-			})
 		})
 
 		this._classes.add(`--${this._variantState.value}`)
@@ -73,20 +63,38 @@ export default class TStylable<
 		return this._sizeState.value
 	}
 
+	protected _applySize(newValue: TComponentSize, oldValue?: TComponentSize) {
+		this._classes.swapClass({
+			oldClass: `--size-${oldValue}`,
+			newClass: `--size-${newValue}`,
+		})
+
+		this._sizeState.value = newValue
+	}
+
 	set size(value: TComponentSize) {
 		if (value === this._sizeState.value) return
 
-		this._sizeState.value = value
+		this._applySize(value, this._sizeState.value)
 	}
 
 	get variant(): TComponentVariant {
 		return this._variantState.value
 	}
 
+	protected _applyVariant(newValue: TComponentVariant, oldValue?: TComponentVariant) {
+		this._classes.swapClass({
+			oldClass: `--${oldValue}`,
+			newClass: `--${newValue}`,
+		})
+
+		this._variantState.value = newValue
+	}
+
 	set variant(value: TComponentVariant) {
 		if (value === this._variantState.value) return
 
-		this._variantState.value = value
+		this._applyVariant(value, this._variantState.value)
 	}
 
 	getProps(): TProps {

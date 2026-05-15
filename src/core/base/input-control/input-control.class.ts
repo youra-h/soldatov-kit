@@ -62,7 +62,7 @@ export default class TInputControl<
 		return this._readonly
 	}
 
-	private _applyReadonly(value: boolean) {
+	protected _applyReadonly(value: boolean) {
 		this._classes.toggle(`--readonly`, value)
 
 		this._readonly = value
@@ -79,7 +79,7 @@ export default class TInputControl<
 		return this._required
 	}
 
-	private _applyRequired(value: boolean) {
+	protected _applyRequired(value: boolean) {
 		this._classes.toggle(`--required`, value)
 
 		this._required = value

@@ -96,7 +96,7 @@ export default class TButton extends TTextable<IButtonProps, TButtonEvents> impl
 		return this._appearance
 	}
 
-	private _applyAppearance(newValue: TButtonAppearance, oldValue?: TButtonAppearance) {
+	protected _applyAppearance(newValue: TButtonAppearance, oldValue?: TButtonAppearance) {
 		this._classes.swap({
 			prefix: '--a-',
 			oldValue,
