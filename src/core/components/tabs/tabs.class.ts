@@ -37,11 +37,11 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 	}
 
 	// Простые свойства (не state, только для отображения)
-	protected _orientation: TTabsOrientation
-	protected _alignment: TTabsAlignment
-	protected _position: TTabsPosition
-	protected _appearance: TTabsAppearance
-	protected _stretched: boolean
+	protected _orientation!: TTabsOrientation
+	protected _alignment!: TTabsAlignment
+	protected _position!: TTabsPosition
+	protected _appearance!: TTabsAppearance
+	protected _stretched!: boolean
 	protected _closable: boolean
 
 	// Композиция: коллекция табов
@@ -58,11 +58,12 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 		)
 
 		// Инициализация простых свойств
-		this._orientation = props.orientation ?? TTabs.defaultValues.orientation!
-		this._alignment = props.alignment ?? TTabs.defaultValues.alignment!
-		this._position = props.position ?? TTabs.defaultValues.position!
-		this._appearance = props.appearance ?? TTabs.defaultValues.appearance!
-		this._stretched = props.stretched ?? TTabs.defaultValues.stretched!
+		this._applyOrientation(props.orientation ?? TTabs.defaultValues.orientation!)
+		this._applyAlignment(props.alignment ?? TTabs.defaultValues.alignment!)
+		this._applyPosition(props.position ?? TTabs.defaultValues.position!)
+		this._applyAppearance(props.appearance ?? TTabs.defaultValues.appearance!)
+		this._applyStretched(props.stretched ?? TTabs.defaultValues.stretched!)
+
 		this._closable = props.closable ?? TTabs.defaultValues.closable!
 
 		// Создаем коллекцию табов
@@ -153,14 +154,18 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 		return this._orientation
 	}
 
+	protected _applyOrientation(newValue: TTabsOrientation, oldValue?: TTabsOrientation) {
+		this._classes.swapClass({
+			oldClass: `--${oldValue}`,
+			newClass: `--${newValue}`,
+		})
+
+		this._orientation = newValue
+	}
+
 	set orientation(value: TTabsOrientation) {
 		if (this._orientation !== value) {
-			this._classes.swapClass({
-				oldClass: `--${this._orientation}`,
-				newClass: `--${value}`,
-			})
-
-			this._orientation = value
+			this._applyOrientation(value, this._orientation)
 			;(this.events as TEvented<TTabsEvents>).emit('change:orientation', value)
 		}
 	}
@@ -169,14 +174,18 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 		return this._alignment
 	}
 
+	protected _applyAlignment(newValue: TTabsAlignment, oldValue?: TTabsAlignment) {
+		this._classes.swapClass({
+			oldClass: `--${oldValue}`,
+			newClass: newValue !== 'start' ? `--${newValue}` : '',
+		})
+
+		this._alignment = newValue
+	}
+
 	set alignment(value: TTabsAlignment) {
 		if (this._alignment !== value) {
-			this._classes.swapClass({
-				oldClass: `--${this._alignment}`,
-				newClass: value !== 'start' ? `--${value}` : '',
-			})
-
-			this._alignment = value
+			this._applyAlignment(value, this._alignment)
 			;(this.events as TEvented<TTabsEvents>).emit('change:alignment', value)
 		}
 	}
@@ -185,15 +194,19 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 		return this._position
 	}
 
+	protected _applyPosition(newValue: TTabsPosition, oldValue?: TTabsPosition) {
+		this._classes.remove(`--position-${oldValue}`)
+
+		if (this._orientation === 'vertical' && newValue !== 'start') {
+			this._classes.add(`--position-${newValue}`)
+		}
+
+		this._position = newValue
+	}
+
 	set position(value: TTabsPosition) {
 		if (this._position !== value) {
-			this._classes.remove(`--position-${this._position}`)
-
-			if (this._orientation === 'vertical' && value !== 'start') {
-				this._classes.add(`--position-${value}`)
-			}
-
-			this._position = value
+			this._applyPosition(value, this._position)
 			;(this.events as TEvented<TTabsEvents>).emit('change:position', value)
 		}
 	}
@@ -202,14 +215,18 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 		return this._appearance
 	}
 
+	protected _applyAppearance(newValue: TTabsAppearance, oldValue?: TTabsAppearance) {
+		this._classes.swapClass({
+			oldClass: `--${oldValue}`,
+			newClass: `--${newValue}`,
+		})
+
+		this._appearance = newValue
+	}
+
 	set appearance(value: TTabsAppearance) {
 		if (this._appearance !== value) {
-			this._classes.swapClass({
-				oldClass: `--${this._appearance}`,
-				newClass: `--${value}`,
-			})
-
-			this._appearance = value
+			this._applyAppearance(value, this._appearance)
 			;(this.events as TEvented<TTabsEvents>).emit('change:appearance', value)
 		}
 	}
@@ -218,11 +235,15 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 		return this._stretched
 	}
 
+	protected _applyStretched(value: boolean) {
+		this._classes.toggle(`--stretched`, value)
+
+		this._stretched = value
+	}
+
 	set stretched(value: boolean) {
 		if (this._stretched !== value) {
-			this._stretched = value
-
-			this._classes.toggle(`--stretched`, value)
+			this._applyStretched(value)
 			;(this.events as TEvented<TTabsEvents>).emit('change:stretched', value)
 		}
 	}

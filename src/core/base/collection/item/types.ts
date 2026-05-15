@@ -11,8 +11,8 @@ export interface ICollectionItemOptions {
  * Utility-тип: добавляет `collection` к любым опциям компонента.
  * Используется в компонентах, которые являются элементами коллекции (например, TTabItem, TTreeItem).
  */
-export type TCollectableOptions<TOptions extends object = object> =
-	TOptions & ICollectionItemOptions
+export type TCollectableOptions<TOptions extends object = object> = TOptions &
+	ICollectionItemOptions
 
 export interface ICollectionItemProps {}
 
@@ -21,15 +21,15 @@ export interface ICollectionItemMethods {
 	free(): void
 }
 
-export type TCollectionItemEvents = {
-	free: (item: TCollectionItem) => void
+export type TCollectionItemEvents<TItem = any> = {
+	free: (item: TItem) => void
 }
 
 export interface ICollectionItem<
 	TProps extends ICollectionItemProps = ICollectionItemProps,
 	TEvents extends Record<string, (...args: any) => any> = TCollectionItemEvents,
-> extends IEntity<TProps>,
-		ICollectionItemMethods {
+>
+	extends IEntity<TProps>, ICollectionItemMethods {
 	// Ссылка на коллекцию-владелец.
 	collection: TCollection | null
 	// События компонента

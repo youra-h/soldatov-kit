@@ -17,8 +17,8 @@ export default class TCheckBox
 		variant: 'normal',
 	}
 
-	protected _indeterminate: boolean
-	protected _plain: boolean
+	protected _indeterminate!: boolean
+	protected _plain!: boolean
 
 	constructor(options: IComponentViewOptions<ICheckBoxProps> | Partial<ICheckBoxProps> = {}) {
 		super(options)
@@ -27,22 +27,24 @@ export default class TCheckBox
 			TComponentView.prepareOptions<ICheckBoxProps>(options)
 
 		this.value = props.value ?? (TCheckBox.defaultValues.value as boolean)
-		this._indeterminate = props.indeterminate ?? TCheckBox.defaultValues.indeterminate!
-		this._plain = props.plain ?? TCheckBox.defaultValues.plain!
-
+		this._applyIndeterminate(props.indeterminate ?? TCheckBox.defaultValues.indeterminate!)
+		this._applyPlain(props.plain ?? TCheckBox.defaultValues.plain!)
 	}
 
 	get indeterminate(): boolean {
 		return this._indeterminate
 	}
 
+	protected _applyIndeterminate(value: boolean) {
+		this._classes.toggle(`--indeterminate`, value)
+
+		this._indeterminate = value
+	}
+
 	set indeterminate(value: boolean) {
 		if (this._indeterminate !== value) {
-			this._indeterminate = value
-
+			this._applyIndeterminate(value)
 			;(this.events as TEvented<TCheckBoxEvents>).emit('change:indeterminate', value)
-
-			this._classes.toggle(`--indeterminate`, value)
 		}
 	}
 
@@ -50,11 +52,15 @@ export default class TCheckBox
 		return this._plain
 	}
 
+	protected _applyPlain(value: boolean) {
+		this._classes.toggle(`--plain`, value)
+
+		this._plain = value
+	}
+
 	set plain(value: boolean) {
 		if (this._plain !== value) {
-			this._plain = value
-
-			this._classes.toggle(`--plain`, value)
+			this._applyPlain(value)
 		}
 	}
 

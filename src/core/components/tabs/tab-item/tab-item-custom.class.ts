@@ -65,14 +65,15 @@ export default class TTabItemCustom<
 		})
 
 		// Подписка на изменения state-объектов
-		this._textState.events.on('change', (value) => {
-			;(this.events as TEvented<TTabItemCustomEvents>).emit('change:text', value)
+		this._textState.events.on('change', (payload: TValuePayload<string>) => {
+			;(this.events as TEvented<TTabItemCustomEvents>).emit('change:text', payload.newValue)
 		})
 
 		this._closableState.events.on('change', (payload: TValuePayload<boolean | undefined>) => {
-			;(this.events as TEvented<TTabItemCustomEvents>).emit('change:closable', payload.newValue)
-
-			this._classes.toggle(`--closable`, !!payload.newValue)
+			;(this.events as TEvented<TTabItemCustomEvents>).emit(
+				'change:closable',
+				payload.newValue,
+			)
 		})
 
 		this._classes.toggle(`--closable`, !!this._closableState.value)
@@ -90,12 +91,16 @@ export default class TTabItemCustom<
 		return this._closableState.value
 	}
 
+	protected _applyClosable(value: boolean | undefined) {
+		this._classes.toggle(`--closable`, !!value)
+
+		this._closableState.value = value
+	}
+
 	set closable(value: boolean | undefined) {
 		if (this._closableState.value === value) return
 
-		this._closableState.value = value
-
-		this._classes.toggle(`--closable`, !!value)
+		this._applyClosable(value)
 	}
 
 	close(): void {

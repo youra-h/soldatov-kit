@@ -12,7 +12,7 @@ export interface IActivatableCollectionItemProps extends ICollectionItemProps {
 /**
  * События элемента коллекции с поддержкой активности.
  */
-export type TActivatableItemEvents<TItem> = TCollectionItemEvents & {
+export type TActivatableItemEvents<TItem> = TCollectionItemEvents<TItem> & {
 	/**
 	 * После изменения состояния активности.
 	 * @param item Элемент, у которого изменился active
