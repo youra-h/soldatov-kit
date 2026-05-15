@@ -63,12 +63,12 @@ export default class TSpinner
 			;(this.events as TEvented<TSpinnerEvents>).emit('change:variant', payload)
 
 			this._classes.swapClass({
-				oldClass: `--variant-${payload.oldValue}`,
-				newClass: `--variant-${payload.newValue}`,
+				oldClass: `--${payload.oldValue}`,
+				newClass: `--${payload.newValue}`,
 			})
 		})
 
-		this._classes.add(`--variant-${this._variantState.value}`)
+		this._classes.add(`--${this._variantState.value}`)
 
 		this._tag = props.tag ?? TSpinner.defaultValues.tag!
 		this._borderWidth = props.borderWidth ?? TSpinner.defaultValues.borderWidth!
