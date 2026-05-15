@@ -33,8 +33,8 @@ export default class TInputControl<
 		state: 'normal',
 	}
 
-	protected _readonly: boolean
-	protected _required: boolean
+	protected _readonly!: boolean
+	protected _required!: boolean
 	protected _invalid: boolean
 	protected _state: TInputControlState
 
@@ -46,8 +46,9 @@ export default class TInputControl<
 		)
 
 		// Простые свойства
-		this._readonly = props.readonly ?? (TInputControl.defaultValues.readonly as boolean)
-		this._required = props.required ?? (TInputControl.defaultValues.required as boolean)
+		// this._readonly = props.readonly ?? (TInputControl.defaultValues.readonly as boolean)
+		this._applyReadonly(props.readonly ?? (TInputControl.defaultValues.readonly as boolean))
+		this._applyRequired(props.required ?? (TInputControl.defaultValues.required as boolean))
 		this._invalid = props.invalid ?? (TInputControl.defaultValues.invalid as boolean)
 		this._state = props.state ?? (TInputControl.defaultValues.state as TInputControlState)
 
@@ -60,24 +61,34 @@ export default class TInputControl<
 	get readonly(): boolean {
 		return this._readonly
 	}
+
+	private _applyReadonly(value: boolean) {
+		this._classes.toggle(`--readonly`, value)
+
+		this._readonly = value
+	}
+
 	set readonly(value: boolean) {
 		if (this._readonly === value) return
 
-		this._readonly = value
-
-		this._classes.toggle(`--readonly`, value)
+		this._applyReadonly(value)
 		;(this.events as TEvented<TInputControlEvents<TValue>>).emit('change:readonly', value)
 	}
 
 	get required(): boolean {
 		return this._required
 	}
+
+	private _applyRequired(value: boolean) {
+		this._classes.toggle(`--required`, value)
+
+		this._required = value
+	}
+
 	set required(value: boolean) {
 		if (this._required === value) return
 
-		this._required = value
-
-		this._classes.toggle(`--required`, value)
+		this._applyRequired(value)
 		;(this.events as TEvented<TInputControlEvents<TValue>>).emit('change:required', value)
 	}
 
