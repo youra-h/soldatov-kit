@@ -48,7 +48,12 @@ export default {
 </script>
 
 <template>
-	<div ref="rootRef" v-if="instance.rendered" v-show="instance.visible" :class="instance.classes.list">
+	<div
+		ref="rootRef"
+		v-if="instance.rendered"
+		v-show="instance.visible"
+		:class="instance.classes.list"
+	>
 		<div class="s-tabs__list" role="tablist">
 			<slot>
 				<TabItem v-for="item in items" :key="item.uid" :ctrl="item" />

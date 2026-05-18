@@ -39,9 +39,21 @@ export class TClasses {
 		return this
 	}
 
-	/** Если `withBase === true` — возвращает `base + entry`, иначе `entry` как есть. */
-	private _resolve(entry: string, withBase: boolean): string {
-		return withBase ? `${this._base}${entry}` : entry
+	/**
+	 * Формирует CSS-класс из `entry` с учётом опций.
+	 *
+	 * @param entry — суффикс или полное имя класса
+	 * @param options.withBase — если `true` (по умолчанию), предваряет результат базовым классом
+	 * @param options.point — если `true`, добавляет `.` в начале (для использования в `querySelector`)
+	 * @returns итоговый CSS-класс
+	 */
+	resolve(entry: string, options?: { withBase?: boolean; point?: boolean }): string {
+		const withBase = options?.withBase ?? true
+		const point = options?.point ?? false
+
+		const cls = withBase ? `${this._base}${entry}` : entry
+
+		return point ? `.${cls}` : cls
 	}
 
 	/**
@@ -56,7 +68,7 @@ export class TClasses {
 			this._dynamics.push(entry)
 			this.events.emit('change')
 		} else {
-			const cls = this._resolve(entry, withBase)
+			const cls = this.resolve(entry, { withBase })
 
 			if (!this._statics.has(cls)) {
 				this._statics.add(cls)
@@ -72,7 +84,7 @@ export class TClasses {
 	 * @param withBase — если `true`, строка автоматически предваряется базовым классом
 	 */
 	remove(entry: string, withBase = true): this {
-		const cls = this._resolve(entry, withBase)
+		const cls = this.resolve(entry, { withBase })
 
 		if (this._statics.has(cls)) {
 			this._statics.delete(cls)
@@ -148,7 +160,7 @@ export class TClasses {
 	 * @return `true` если класс присутствует, `false` если нет
 	 */
 	has(suffix: string, withBase = true): boolean {
-		const cls = this._resolve(suffix, withBase)
+		const cls = this.resolve(suffix, { withBase })
 
 		return this._statics.has(cls)
 	}
@@ -161,7 +173,7 @@ export class TClasses {
 	 * @return полное наименование класса или `undefined` если класс не найден
 	 */
 	get(suffix: string, withBase = true): string | undefined {
-		const target = this._resolve(suffix, withBase)
+		const target = this.resolve(suffix, { withBase })
 
 		for (const cls of this._statics) {
 			if (cls.endsWith(target)) {

@@ -66,16 +66,14 @@ export class TTabsAppearancePlugin extends TBasePlugin<TTabsAppearancePluginEven
 	private _updateLine(): void {
 		if (!this._element) return
 
-		const listCls = this._tabs?.classes.get(`__list`)
-
-		if (!listCls) {
-			console.error('TabsAppearancePlugin: .__list element not found in tabs classes')
-			return
-		}
+		const listCls = this._tabs!.classes.resolve(`__list`, { point: true })!
 
 		const listEl = this._element.querySelector(listCls) as HTMLElement | null
 
-		if (!listEl) return
+		if (!listEl) {
+			console.warn('TabsAppearancePlugin: List element not found with class', listCls)
+			return
+		}
 
 		const activeItem = this._tabs!.activeItem
 		const activeIndex = activeItem ? this._tabs!.collection.items.indexOf(activeItem) : -1
@@ -83,6 +81,8 @@ export class TTabsAppearancePlugin extends TBasePlugin<TTabsAppearancePluginEven
 
 		const offsetLeft = activeEl ? activeEl.offsetLeft : 0
 		const offsetWidth = activeEl ? activeEl.offsetWidth : 0
+
+		console.log('Updating line appearance:', { offsetLeft, offsetWidth })
 
 		listEl.style.setProperty('--underline-x', `${offsetLeft}px`)
 		listEl.style.setProperty('--underline-width', `${offsetWidth}px`)
