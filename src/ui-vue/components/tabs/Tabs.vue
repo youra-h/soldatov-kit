@@ -143,7 +143,7 @@ export default {
 		}
 
 		// Transition включается только после монтирования (--ready добавляется core через el setter)
-		&#{$this}--ready #{$this}__list::after {
+		&#{$this}--ready-animation #{$this}__list::after {
 			transition:
 				transform 0.2s ease,
 				width 0.2s ease;

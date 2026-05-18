@@ -21,6 +21,11 @@ export class TTabsAppearancePlugin extends TBasePlugin<TTabsAppearancePluginEven
 	override install(bundle: IPluginBundle): void {
 		bundle.get(TElementPlugin)?.events.on('ready', ({ element }) => {
 			this._element = element
+
+			if (this._tabs?.appearance === 'line') {
+				this._tabs.classes.add('--ready-animation')
+			}
+
 			this.update()
 		})
 
@@ -81,8 +86,6 @@ export class TTabsAppearancePlugin extends TBasePlugin<TTabsAppearancePluginEven
 
 		const offsetLeft = activeEl ? activeEl.offsetLeft : 0
 		const offsetWidth = activeEl ? activeEl.offsetWidth : 0
-
-		console.log('Updating line appearance:', { offsetLeft, offsetWidth })
 
 		listEl.style.setProperty('--underline-x', `${offsetLeft}px`)
 		listEl.style.setProperty('--underline-width', `${offsetWidth}px`)
