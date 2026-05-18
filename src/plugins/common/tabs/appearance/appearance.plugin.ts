@@ -3,6 +3,7 @@ import type { IPluginBundle } from '../../../base/types'
 import { TBasePlugin } from '../../../base/plugin'
 import { TElementPlugin } from '../../element'
 import { TInstancePlugin } from '../../instance'
+import { TTabsLayoutPlugin } from '../layout'
 import type { TTabsAppearancePluginEvents } from './types'
 
 type TAppearanceHandler = () => void
@@ -25,13 +26,13 @@ export class TTabsAppearancePlugin extends TBasePlugin<TTabsAppearancePluginEven
 			if (this._tabs?.appearance === 'line') {
 				this._tabs.classes.add('--ready-animation')
 			}
-
-			this.update()
 		})
 
 		bundle.get(TElementPlugin)?.events.on('removed', () => {
 			this._element = null
 		})
+
+		bundle.get(TTabsLayoutPlugin)?.events.on('layout:change', () => this.update())
 
 		// Получить instance плагин и подписаться на его событие ready, чтобы получить инстанс табов и подписаться на его события для обновления внешнего вида при изменении активного таба или внешнего вида
 		const instancePlugin = bundle.get(TInstancePlugin) as TInstancePlugin<ITabs> | undefined
