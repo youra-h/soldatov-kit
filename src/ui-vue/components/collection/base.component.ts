@@ -1,6 +1,9 @@
 import type { PropType } from 'vue'
 import { watch } from 'vue'
 import { type ICollection, type ICollectionProps, type ICollectionItem } from '@core'
+import { TCollectionElementsPlugin } from '@plugins'
+import { useProvideCollection } from '../../composables/useProvideCollection'
+import { useProvideCollectionPlugins } from '../../composables/useProvideCollectionPlugins'
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types'
 
 export const emitsCollection: TEmits = [
@@ -32,7 +35,15 @@ export default {
  * Синхронизация props и событий для Collection
  */
 export function syncCollection(options: ISyncComponentModelOptions<ICollectionProps, ICollection>) {
-	const { instance, emit, props } = options
+	const { instance, emit, props, plugins } = options
+
+	useProvideCollection(instance)
+
+	const collectionPlugin = plugins.get(TCollectionElementsPlugin)
+
+	if (collectionPlugin) {
+		useProvideCollectionPlugins((uid, bundle) => collectionPlugin.register(uid, bundle))
+	}
 
 	// Наполняем коллекцию из prop items через сеттер instance.items
 	watch(

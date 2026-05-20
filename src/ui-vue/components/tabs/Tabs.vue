@@ -5,11 +5,9 @@ import { useInstance } from '../../composables/useInstance'
 import { useBundle } from '../../composables/useBundle'
 import { useElementBinding } from '../../composables/useElementBinding'
 import { useInstanceBinding } from '../../composables/useInstanceBinding'
-import { useProvideCollection } from '../../composables/useProvideCollection'
 import { useCollectionItems } from '../../composables/useCollectionItems'
 import { useEventRef } from '../../composables/useEventRef'
-import { createTabsBundle, TCollectionElementsPlugin } from '@plugins'
-import { useProvideCollectionPlugins } from '../../composables/useProvideCollectionPlugins'
+import { createTabsBundle } from '@plugins'
 import { TabItem } from './tab-item'
 import type { TBaseComponentViewProps } from '../component-view'
 
@@ -33,12 +31,7 @@ export default {
 			emit,
 		})
 
-		useProvideCollection(instance.collection)
-
 		const items = useCollectionItems(instance.collection)
-		const collectionPlugin = plugins.get(TCollectionElementsPlugin)!
-
-		useProvideCollectionPlugins((uid, bundle) => collectionPlugin.register(uid, bundle))
 
 		const activeItem = useEventRef(
 			instance.collection.events,
