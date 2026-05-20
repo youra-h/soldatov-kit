@@ -5,7 +5,7 @@ import type { ITabItem } from './tab-item/types'
 export type TTabsOrientation = 'horizontal' | 'vertical'
 export type TTabsAlignment = 'start' | 'center' | 'end' | 'stretch'
 export type TTabsPosition = 'start' | 'end'
-export type TTabsAppearance = 'line' | 'pills' | 'contained' | 'segmented'
+export type TTabsAppearance = 'line' | 'contained' | 'outline'
 
 export type TTabsEvents = TControlEvents &
 	TActivatableCollectionEvents & {

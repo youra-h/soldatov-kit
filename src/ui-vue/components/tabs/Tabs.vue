@@ -172,30 +172,61 @@ export default {
 		}
 	}
 
-	&--pills {
-		.s-tab-item {
-			&--active {
-			}
-		}
-	}
-
 	&--contained {
-		#{$this}__list {
+		&#{$this}--normal {
+			@include mixines.tabs-contained-variant('neutral');
 		}
 
-		.s-tab-item {
-			&--active {
-			}
+		&#{$this}--accent {
+			@include mixines.tabs-contained-variant('accent');
+		}
+
+		&#{$this}--positive {
+			@include mixines.tabs-contained-variant('positive');
+		}
+
+		&#{$this}--negative {
+			@include mixines.tabs-contained-variant('negative');
+		}
+
+		&#{$this}--caution {
+			@include mixines.tabs-contained-variant('caution');
 		}
 	}
 
-	&--segmented {
+	&--outline {
+		// Структурные стили (не зависят от варианта)
 		#{$this}__list {
+			@apply border-b gap-1;
 		}
 
 		.s-tab-item {
+			@apply border rounded-t-lg bg-s-neutral-100;
+
 			&--active {
+				@apply bg-white -mb-px border-b-white;
 			}
+		}
+
+		// Цветовые варианты
+		&#{$this}--normal {
+			@include mixines.tabs-outline-variant('neutral');
+		}
+
+		&#{$this}--accent {
+			@include mixines.tabs-outline-variant('accent');
+		}
+
+		&#{$this}--positive {
+			@include mixines.tabs-outline-variant('positive');
+		}
+
+		&#{$this}--negative {
+			@include mixines.tabs-outline-variant('negative');
+		}
+
+		&#{$this}--caution {
+			@include mixines.tabs-outline-variant('caution');
 		}
 	}
 

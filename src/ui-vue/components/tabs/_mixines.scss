@@ -26,3 +26,46 @@
 		}
 	}
 }
+
+// Миксин для appearance="contained"
+// Список обёрнут в контейнер. Активный таб — белая карточка с тенью внутри контейнера.
+@mixin tabs-contained-variant($color, $text: 800, $container-bg: 100) {
+	.s-tabs__list {
+		@apply #{'bg-s-' + $color + '-' + $container-bg} rounded-xl p-1 gap-1;
+	}
+
+	.s-tab-item {
+		@apply rounded-lg;
+
+		&:hover:not([disabled]) {
+			@apply #{'text-s-' + $color + '-' + $text};
+		}
+
+		&--active {
+			@apply bg-white shadow-sm #{'text-s-' + $color + '-' + $text};
+		}
+	}
+}
+
+// Миксин для appearance="outline"
+// Классический вид «папочных вкладок» с внешним бордером.
+// Неактивные: серый фон, бордер со всех сторон.
+// Активная: белый фон, бордер только сверху/слева/справа (нет снизу).
+// Только цвет бордера и текста зависят от варианта.
+@mixin tabs-outline-variant($color, $text: 800, $border: 200) {
+	.s-tabs__list {
+		@apply #{'border-s-' + $color + '-' + $border};
+	}
+
+	.s-tab-item {
+		@apply #{'border-s-' + $color + '-' + $border};
+
+		&:hover:not([disabled]) {
+			@apply #{'text-s-' + $color + '-' + $text};
+		}
+
+		&--active {
+			@apply #{'text-s-' + $color + '-' + $text};
+		}
+	}
+}

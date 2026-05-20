@@ -27,7 +27,7 @@ describe('TTabs', () => {
 					orientation: 'vertical',
 					alignment: 'center',
 					position: 'end',
-					appearance: 'pills',
+					appearance: 'outline',
 					stretched: true,
 					closable: true,
 				},
@@ -36,7 +36,7 @@ describe('TTabs', () => {
 			expect(customTabs.orientation).toBe('vertical')
 			expect(customTabs.alignment).toBe('center')
 			expect(customTabs.position).toBe('end')
-			expect(customTabs.appearance).toBe('pills')
+			expect(customTabs.appearance).toBe('outline')
 			expect(customTabs.stretched).toBe(true)
 			expect(customTabs.closable).toBe(true)
 		})
@@ -254,9 +254,9 @@ describe('TTabs', () => {
 			const spy = vi.fn()
 			tabs.events.on('change:appearance', spy)
 
-			tabs.appearance = 'pills'
+			tabs.appearance = 'outline'
 
-			expect(spy).toHaveBeenCalledWith('pills')
+			expect(spy).toHaveBeenCalledWith('outline')
 		})
 
 		it('emits change:stretched when stretched changes', () => {
@@ -282,7 +282,7 @@ describe('TTabs', () => {
 		it('generates base class with modifiers', () => {
 			tabs.orientation = 'vertical'
 			tabs.alignment = 'center'
-			tabs.appearance = 'pills'
+			tabs.appearance = 'outline'
 			tabs.stretched = true
 
 			const classes = tabs.classes.toArray()
@@ -290,7 +290,7 @@ describe('TTabs', () => {
 			expect(classes).toContain('s-tabs')
 			expect(classes).toContain('s-tabs--vertical')
 			expect(classes).toContain('s-tabs--center')
-			expect(classes).toContain('s-tabs--pills')
+			expect(classes).toContain('s-tabs--outline')
 			expect(classes).toContain('s-tabs--stretched')
 		})
 
