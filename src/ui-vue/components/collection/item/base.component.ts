@@ -1,5 +1,6 @@
 import { type ICollectionItem, type ICollectionItemProps } from '@core'
 import { useInjectCollectionItem } from '../../../composables/useInjectCollectionItem'
+import { useInjectCollectionItemPlugins } from '../../../composables/useInjectCollectionItemPlugins'
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../../types'
 
 export const emitsCollectionItem: TEmits = ['free', 'change:collection'] as const
@@ -22,6 +23,7 @@ export function syncCollectionItem(
 
 	// Использовать inject для получения коллекции родителя и автоматической регистрации в ней (если декларативный режим)
 	useInjectCollectionItem(instance)
+	useInjectCollectionItemPlugins(instance.uid, plugins)
 
 	// Пробрасываем события core-инстанса наружу (Vue events)
 	instance.events.on('free', (item: ICollectionItem) => {
