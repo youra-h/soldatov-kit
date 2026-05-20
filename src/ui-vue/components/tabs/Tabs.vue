@@ -8,7 +8,7 @@ import { useInstanceBinding } from '../../composables/useInstanceBinding'
 import { useProvideCollection } from '../../composables/useProvideCollection'
 import { useCollectionItems } from '../../composables/useCollectionItems'
 import { useEventRef } from '../../composables/useEventRef'
-import { createTabsBundle } from '@plugins'
+	import { createTabsBundle, TCollectionElementsPlugin } from '@plugins'
 import { TabItem } from './tab-item'
 import type { TBaseComponentViewProps } from '../component-view'
 
@@ -35,6 +35,11 @@ export default {
 		useProvideCollection(instance.collection)
 
 		const items = useCollectionItems(instance.collection)
+		const collectionPlugin = plugins.get(TCollectionElementsPlugin)!
+
+		const onItemReady = ({ instance: item, plugins: itemPlugins }: { instance: any; plugins: any }) => {
+			collectionPlugin.register(item.uid, itemPlugins)
+		}
 
 		const activeItem = useEventRef(
 			instance.collection.events,
@@ -42,7 +47,7 @@ export default {
 			['item:activated', 'item:deactivated'],
 		)
 
-		return { instance, items, plugins, rootRef, activeItem }
+		return { instance, items, plugins, rootRef, activeItem, onItemReady }
 	},
 }
 </script>
@@ -56,7 +61,7 @@ export default {
 	>
 		<div class="s-tabs__list" role="tablist">
 			<slot>
-				<TabItem v-for="item in items" :key="item.uid" :ctrl="item" />
+				<TabItem v-for="item in items" :key="item.uid" :ctrl="item" @ready="onItemReady" />
 			</slot>
 		</div>
 		<div v-if="activeItem && $slots[`panel:${activeItem?.value}`]" class="s-tabs__panel">

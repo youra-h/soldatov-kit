@@ -4,6 +4,7 @@ import { TBasePlugin } from '../../../base/plugin'
 import { TElementPlugin } from '../../element'
 import { TInstancePlugin } from '../../instance'
 import { TTabsLayoutPlugin } from '../layout'
+import { TCollectionElementsPlugin } from '../../collection'
 import type { TTabsAppearancePluginEvents } from './types'
 
 type TAppearanceHandler = () => void
@@ -13,6 +14,7 @@ export class TTabsAppearancePlugin extends TBasePlugin<TTabsAppearancePluginEven
 
 	private _element: HTMLElement | null = null
 	private _tabs: ITabs | null = null
+	private _collectionElements: TCollectionElementsPlugin | null = null
 
 	// Map для обработчиков табов в зависимости от apperance
 	private readonly _handlers: Partial<Record<TTabsAppearance, TAppearanceHandler>> = {
@@ -34,6 +36,8 @@ export class TTabsAppearancePlugin extends TBasePlugin<TTabsAppearancePluginEven
 
 		bundle.get(TTabsLayoutPlugin)?.events.on('layout:change', () => this.update())
 
+		this._collectionElements = bundle.get(TCollectionElementsPlugin) ?? null
+
 		// Получить instance плагин и подписаться на его событие ready, чтобы получить инстанс табов и подписаться на его события для обновления внешнего вида при изменении активного таба или внешнего вида
 		const instancePlugin = bundle.get(TInstancePlugin) as TInstancePlugin<ITabs> | undefined
 
@@ -51,6 +55,7 @@ export class TTabsAppearancePlugin extends TBasePlugin<TTabsAppearancePluginEven
 	override destroy(): void {
 		this._element = null
 		this._tabs = null
+		this._collectionElements = null
 
 		super.destroy()
 	}
@@ -70,7 +75,7 @@ export class TTabsAppearancePlugin extends TBasePlugin<TTabsAppearancePluginEven
 	 * @returns
 	 */
 	private _updateLine(): void {
-		if (!this._element) return
+		if (!this._element || !this._collectionElements) return
 
 		const listCls = this._tabs!.classes.resolve(`__list`, { point: true })!
 
@@ -82,8 +87,7 @@ export class TTabsAppearancePlugin extends TBasePlugin<TTabsAppearancePluginEven
 		}
 
 		const activeItem = this._tabs!.activeItem
-		const activeIndex = activeItem ? this._tabs!.collection.items.indexOf(activeItem) : -1
-		const activeEl = activeIndex >= 0 ? (listEl.children[activeIndex] as HTMLElement) : null
+		const activeEl = activeItem ? this._collectionElements.getByUid(activeItem.uid) : null
 
 		const offsetLeft = activeEl ? activeEl.offsetLeft : 0
 		const offsetWidth = activeEl ? activeEl.offsetWidth : 0

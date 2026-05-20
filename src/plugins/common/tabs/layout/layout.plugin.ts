@@ -1,30 +1,52 @@
 import type { IPluginBundle } from '../../../base/types'
 import { TBasePlugin } from '../../../base/plugin'
 import { TElementPlugin } from '../../element'
+import { TCollectionElementsPlugin } from '../../collection'
 import type { TTabsLayoutPluginEvents } from './types'
 
 export class TTabsLayoutPlugin extends TBasePlugin<TTabsLayoutPluginEvents> {
 	static readonly key = 'tabs-layout'
 
-	private _observer: ResizeObserver | null = null
+	private _rootObserver: ResizeObserver | null = null
+	private readonly _itemObservers = new Map<string | number, ResizeObserver>()
 
 	override install(bundle: IPluginBundle): void {
 		bundle.get(TElementPlugin)?.events.on('ready', ({ element }) => {
-			this._observer = new ResizeObserver(() => {
-				this.events.emit('layout:change')
-			})
-			this._observer.observe(element)
+			this._rootObserver = new ResizeObserver(() => this.events.emit('layout:change'))
+			this._rootObserver.observe(element)
 		})
 
 		bundle.get(TElementPlugin)?.events.on('removed', () => {
-			this._observer?.disconnect()
-			this._observer = null
+			this._rootObserver?.disconnect()
+			this._rootObserver = null
+		})
+
+		const collectionPlugin = bundle.get(TCollectionElementsPlugin)
+
+		collectionPlugin?.events.on('element:added', ({ uid, element }) => {
+			this._itemObservers.get(uid)?.disconnect()
+
+			const observer = new ResizeObserver(() => this.events.emit('layout:change'))
+			observer.observe(element)
+
+			this._itemObservers.set(uid, observer)
+		})
+
+		collectionPlugin?.events.on('element:removed', ({ uid }) => {
+			this._itemObservers.get(uid)?.disconnect()
+			this._itemObservers.delete(uid)
 		})
 	}
 
 	override destroy(): void {
-		this._observer?.disconnect()
-		this._observer = null
+		this._rootObserver?.disconnect()
+		this._rootObserver = null
+
+		for (const observer of this._itemObservers.values()) {
+			observer.disconnect()
+		}
+		this._itemObservers.clear()
+
 		super.destroy()
 	}
 }
