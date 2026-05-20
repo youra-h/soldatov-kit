@@ -87,6 +87,12 @@ export class TTabsAppearancePlugin extends TBasePlugin<TTabsAppearancePluginEven
 		}
 
 		const activeItem = this._tabs!.activeItem
+
+		// Срабатывает событие deactivated, activeItem уже сброшен, чтобы анимация не скакала, когда offsetLeft/offsetWidth активного таба становятся 0, заранее проверяем, есть ли еще enabled табы, если нет — не обновляем позицию underline, чтобы он не прыгал в начало при деактивации последнего активного таба
+		if (!activeItem && this._tabs!.hasEnabledTabs()) {
+			return
+		}
+
 		const activeEl = activeItem ? this._collectionElements.getByUid(activeItem.uid) : null
 
 		const offsetLeft = activeEl ? activeEl.offsetLeft : 0

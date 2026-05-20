@@ -46,7 +46,6 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 
 	// Композиция: коллекция табов
 	protected _collection: TActivatableCollection<any, any, ITabItem>
-	private _itemObservers = new Map<ITabItem, ResizeObserver>()
 
 	constructor(
 		options: IComponentViewOptions<ITabsProps, TTabsStatesOptions> | Partial<ITabsProps> = {},
@@ -85,18 +84,6 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 			item.events.on('close', () => {
 				this.closeTab(item)
 			})
-
-			// // ResizeObserver: следим за изменением размера таба → пересчитываем индикатор
-			// item.events.on('mount', ({ el }) => {
-			// 	const observer = new ResizeObserver(() => this._updateLineIndicator())
-			// 	observer.observe(el)
-			// 	this._itemObservers.set(item, observer)
-			// })
-
-			// item.events.on('unmount', () => {
-			// 	this._itemObservers.get(item)?.disconnect()
-			// 	this._itemObservers.delete(item)
-			// })
 
 			// Propagation: новый таб наследует size и variant от контейнера
 			item.size = this.size
@@ -296,6 +283,18 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 		;(this.events as TEvented<TTabsEvents>).emit('tab:close', item)
 
 		return this._collection.deleteItem(item)
+	}
+
+	/**
+	 * Возвращает true, если в коллекции есть хотя бы один таб с disabled = false и visible = true и rendered = true (т.е. который может быть активирован и отображается), иначе false.
+	 * Используется для проверки наличия активных табов при удалении текущего активного таба, чтобы понять, нужно ли искать новый активный таб или оставлять неактивным.
+	 * Также может использоваться в UI для отображения состояния "нет доступных табов" или отключения кнопки "закрыть" при единственном оставшемся неактивном табе.
+	 * @returns boolean
+	 */
+	hasEnabledTabs(): boolean {
+		return this._collection.items.some(
+			(item) => !item.disabled && item.visible && item.rendered,
+		)
 	}
 
 	override getProps(): ITabsProps {

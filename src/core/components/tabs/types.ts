@@ -65,5 +65,7 @@ export interface ITabs extends IControl<ITabsProps, TTabsEvents> {
 	isTabClosable(item: ITabItem): boolean
 	/** Закрывает таб: проверяет возможность, эмитит событие, удаляет из коллекции */
 	closeTab(item: ITabItem): boolean
+	/** Возвращает true, если в коллекции есть хотя бы один таб с disabled = false */
+	hasEnabledTabs(): boolean
 }
 
