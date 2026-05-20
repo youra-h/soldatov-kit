@@ -21,6 +21,7 @@ export class TTabsLayoutPlugin extends TBasePlugin<TTabsLayoutPluginEvents> {
 			this._rootObserver = null
 		})
 
+		// Подписываемся на изменения элементов табов через TCollectionElementsPlugin, чтобы отслеживать изменения их размеров и эмитить событие layout:change для обновления внешнего вида при изменении размера табов (актуально для appearance: line, чтобы обновлять позицию и размер underline) и при изменении количества табов (для всех видов отображения, т.к. может влиять на перенос табов на другую строку)
 		const collectionPlugin = bundle.get(TCollectionElementsPlugin)
 
 		collectionPlugin?.events.on('element:added', ({ uid, element }) => {

@@ -18,7 +18,7 @@ export default {
 export function syncCollectionItem(
 	options: ISyncComponentModelOptions<ICollectionItemProps, ICollectionItem>,
 ) {
-	const { instance, emit } = options
+	const { instance, emit, plugins } = options
 
 	// Использовать inject для получения коллекции родителя и автоматической регистрации в ней (если декларативный режим)
 	useInjectCollectionItem(instance)

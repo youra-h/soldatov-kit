@@ -6,6 +6,7 @@ import { useBundle } from '../../../composables/useBundle'
 import { useInstanceBinding } from '../../../composables/useInstanceBinding'
 import { useElementBinding } from '../../../composables/useElementBinding'
 import { createComponentViewBundle } from '@plugins'
+import { useInjectCollectionItemPlugins } from '../../../composables/useInjectCollectionItemPlugins'
 import { Icon, useIconImport } from '../../icon'
 import { Button } from '../../button'
 import type { TBaseComponentViewProps } from '../../component-view'
@@ -29,6 +30,8 @@ export default {
 			plugins,
 			emit,
 		})
+
+		useInjectCollectionItemPlugins(instance.uid, plugins)
 
 		const closeIconTag = useIconImport('../../icons/close.svg')
 
