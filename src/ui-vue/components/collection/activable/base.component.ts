@@ -19,7 +19,7 @@ export const emitsActivatableCollection: TEmits = [
 ] as const
 
 export const propsActivatableCollection: TProps = {
-	...propsCollection
+	...propsCollection,
 }
 
 export default {
@@ -48,11 +48,8 @@ export function syncActivatableCollection(
 		},
 	)
 
-	instance.events.on(
-		'item:deactivated',
-		(payload: { collection: IActivatableCollection }) => {
-			emit?.('item:deactivated', payload)
-			emit?.('change:activeItem', instance.activeItem)
-		},
-	)
+	instance.events.on('item:deactivated', (payload: { collection: IActivatableCollection }) => {
+		emit?.('item:deactivated', payload)
+		emit?.('change:activeItem', instance.activeItem)
+	})
 }

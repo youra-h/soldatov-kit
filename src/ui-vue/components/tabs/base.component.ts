@@ -12,7 +12,11 @@ import {
 	type ITabItem,
 } from '@core'
 import { BaseControl, emitsControl, propsControl, syncControl } from '../control'
-import { emitsActivatableCollection, syncActivatableCollection, propsActivatableCollection } from '../collection/activable'
+import {
+	emitsActivatableCollection,
+	syncActivatableCollection,
+	propsActivatableCollection,
+} from '../collection/activable'
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types'
 
 export const emitsTabs: TEmits = [
@@ -72,16 +76,19 @@ export default {
 /**
  * Синхронизация props и событий для Tabs
  */
-export function syncTabs(options: ISyncComponentModelOptions<ITabsProps & ICollectionProps, ITabs>) {
+export function syncTabs(
+	options: ISyncComponentModelOptions<ITabsProps & ICollectionProps, ITabs>,
+) {
 	syncControl(options)
 
-	const { props, instance, emit } = options
+	const { props, instance, emit, plugins } = options
 
 	// Проксируем события коллекции через syncActivatableCollection
 	syncActivatableCollection({
+		props: { items: props.items },
 		instance: instance.collection,
 		emit,
-		props: { items: props.items },
+		plugins,
 	})
 
 	// Пробрасываем события core-инстанса наружу (Vue events)
