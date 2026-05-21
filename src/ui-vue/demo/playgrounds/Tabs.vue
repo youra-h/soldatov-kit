@@ -20,9 +20,9 @@ tabs.value.collection.setActive(item2)
 
 // --- Вариант 2: через prop items ---
 const tabItems = ref([
-	{ text: 'Alpha', value: 'alpha' },
-	{ text: 'Beta', value: 'beta', active: true },
-	{ text: 'Gamma', value: 'gamma' },
+	{ text: 'Alpha', value: 'alpha', closable: true },
+	{ text: 'Beta', value: 'beta', active: true, closable: true },
+	{ text: 'Gamma', value: 'gamma', closable: true },
 ])
 </script>
 
@@ -40,9 +40,11 @@ const tabItems = ref([
 		<section>
 			<h2>Вариант 2: prop items</h2>
 			<Tabs :items="tabItems" appearance="outline" variant="normal">
+				<template #prefix>prefix</template>
 				<template #panel:alpha><p>Содержимое Alpha</p></template>
 				<template #panel:beta><p>Содержимое Beta</p></template>
 				<template #panel:gamma><p>Содержимое Gamma</p></template>
+				<template #suffix>suffix</template>
 			</Tabs>
 		</section>
 

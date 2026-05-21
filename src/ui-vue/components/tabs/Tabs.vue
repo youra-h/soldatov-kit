@@ -52,9 +52,15 @@ export default {
 		:class="instance.classes.list"
 	>
 		<div class="s-tabs__list" role="tablist">
+			<div class="s-tabs__list--prefix">
+				<slot name="prefix"></slot>
+			</div>
 			<slot>
 				<TabItem v-for="item in items" :key="item.uid" :ctrl="item" />
 			</slot>
+			<div class="s-tabs__list--suffix">
+				<slot name="suffix"></slot>
+			</div>
 		</div>
 		<div v-if="activeItem && $slots[`panel:${activeItem?.value}`]" class="s-tabs__panel">
 			<slot :name="`panel:${activeItem?.value}`" />
@@ -95,6 +101,14 @@ export default {
 	// Список табов
 	&__list {
 		@apply flex gap-4;
+
+		&--prefix, &--suffix {
+			@apply flex items-center;
+		}
+
+		&--suffix {
+			@apply ml-auto;
+		}
 	}
 
 	// Панель
@@ -197,14 +211,25 @@ export default {
 	&--outline {
 		// Структурные стили (не зависят от варианта)
 		#{$this}__list {
-			@apply border-b gap-1;
+			@apply relative border-b gap-1.5;
+
+			// Индикатор через ::after, позиция через CSS custom properties
+			&::after {
+				content: '';
+				@apply absolute left-0 h-px;
+				@apply -bottom-px;
+				width: 100%;
+			}
 		}
 
 		.s-tab-item {
-			@apply border rounded-t-lg bg-s-neutral-100;
+			@apply bg-s-neutral-100;
+			@apply border rounded-t-md rounded-b-none;
+			@apply border-s-neutral-200;
+			@apply -mb-px;
 
 			&--active {
-				@apply bg-white -mb-px border-b-white;
+				@apply bg-transparent border-b-transparent;
 			}
 		}
 
