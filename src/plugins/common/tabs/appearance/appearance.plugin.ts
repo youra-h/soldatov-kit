@@ -19,6 +19,7 @@ export class TTabsAppearancePlugin extends TBasePlugin<TTabsAppearancePluginEven
 	// Map для обработчиков табов в зависимости от apperance
 	private readonly _handlers: Partial<Record<TTabsAppearance, TAppearanceHandler>> = {
 		line: () => this._updateLine(),
+		outline: () => this._updateOutline(),
 	}
 
 	override install(bundle: IPluginBundle): void {
@@ -70,33 +71,42 @@ export class TTabsAppearancePlugin extends TBasePlugin<TTabsAppearancePluginEven
 		this._handlers[this._tabs.appearance]?.()
 	}
 
-	/**
-	 * Обновляет позицию и размер линии под активным табом для стиля 'line'
-	 * @returns
-	 */
-	private _updateLine(): void {
-		if (!this._element || !this._collectionElements) return
+	private _getActiveTabOffset(): { listEl: HTMLElement; offsetLeft: number; offsetWidth: number } | null {
+		if (!this._element || !this._collectionElements) return null
 
 		const listCls = this._tabs!.classes.resolve(`__list`, { point: true })!
-
 		const listEl = this._element.querySelector(listCls) as HTMLElement | null
 
-		if (!listEl) {
-			console.warn('TabsAppearancePlugin: List element not found with class', listCls)
-			return
-		}
+		if (!listEl) return null
 
 		const activeItem = this._tabs!.activeItem
-
-		// Срабатывает событие deactivated, activeItem уже сброшен, чтобы анимация не скакала, когда offsetLeft/offsetWidth активного таба становятся 0, заранее проверяем, есть ли еще enabled табы, если нет — не обновляем позицию underline, чтобы он не прыгал в начало при деактивации последнего активного таба
-		if (!activeItem && this._tabs!.hasEnabledTabs()) {
-			return
-		}
-
 		const activeEl = activeItem ? this._collectionElements.getByUid(activeItem.uid) : null
 
-		const offsetLeft = activeEl ? activeEl.offsetLeft : 0
-		const offsetWidth = activeEl ? activeEl.offsetWidth : 0
+		return {
+			listEl,
+			offsetLeft: activeEl ? activeEl.offsetLeft : 0,
+			offsetWidth: activeEl ? activeEl.offsetWidth : 0,
+		}
+	}
+
+	private _updateOutline(): void {
+		const result = this._getActiveTabOffset()
+		if (!result) return
+
+		const { listEl, offsetLeft, offsetWidth } = result
+
+		listEl.style.setProperty('--gap-x', `${offsetLeft + 1}px`)
+		listEl.style.setProperty('--gap-width', `${offsetWidth - 2}px`)
+	}
+
+	private _updateLine(): void {
+		// Срабатывает событие deactivated, activeItem уже сброшен, чтобы анимация не скакала, когда offsetLeft/offsetWidth активного таба становятся 0, заранее проверяем, есть ли еще enabled табы, если нет — не обновляем позицию underline, чтобы он не прыгал в начало при деактивации последнего активного таба
+		if (!this._tabs!.activeItem && this._tabs!.hasEnabledTabs()) return
+
+		const result = this._getActiveTabOffset()
+		if (!result) return
+
+		const { listEl, offsetLeft, offsetWidth } = result
 
 		listEl.style.setProperty('--underline-x', `${offsetLeft}px`)
 		listEl.style.setProperty('--underline-width', `${offsetWidth}px`)

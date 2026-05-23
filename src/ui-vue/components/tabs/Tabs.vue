@@ -102,7 +102,8 @@ export default {
 	&__list {
 		@apply flex gap-4;
 
-		&--prefix, &--suffix {
+		&--prefix,
+		&--suffix {
 			@apply flex items-center;
 		}
 
@@ -212,24 +213,26 @@ export default {
 		// Структурные стили (не зависят от варианта)
 		#{$this}__list {
 			@apply relative border-b gap-1.5;
+			@apply border-solid border-b-1;
 
-			// Индикатор через ::after, позиция через CSS custom properties
-			&::after {
-				content: '';
-				@apply absolute left-0 h-px;
-				@apply -bottom-px;
-				width: 100%;
-			}
+			border-image: linear-gradient(
+					to right,
+					currentColor 0px,
+					currentColor var(--gap-x, 0px),
+					transparent var(--gap-x, 0px),
+					transparent calc(var(--gap-x, 0px) + var(--gap-width, 0px)),
+					currentColor calc(var(--gap-x, 0px) + var(--gap-width, 0px)),
+					currentColor 100%
+				)
+				0 0 1 0;
 		}
 
 		.s-tab-item {
-			@apply bg-s-neutral-100;
 			@apply border rounded-t-md rounded-b-none;
-			@apply border-s-neutral-200;
+			@apply bg-transparent border-b-transparent;
 			@apply -mb-px;
 
 			&--active {
-				@apply bg-transparent border-b-transparent;
 			}
 		}
 

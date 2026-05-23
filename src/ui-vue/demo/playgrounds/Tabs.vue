@@ -39,7 +39,7 @@ const tabItems = ref([
 
 		<section>
 			<h2>Вариант 2: prop items</h2>
-			<Tabs :items="tabItems" appearance="outline" variant="normal">
+			<Tabs :items="tabItems" appearance="outline" variant="accent">
 				<template #prefix>prefix</template>
 				<template #panel:alpha><p>Содержимое Alpha</p></template>
 				<template #panel:beta><p>Содержимое Beta</p></template>
