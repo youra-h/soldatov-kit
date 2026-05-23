@@ -105,6 +105,7 @@ export default {
 		&--prefix,
 		&--suffix {
 			@apply flex items-center;
+			@apply px-1.5;
 		}
 
 		&--suffix {

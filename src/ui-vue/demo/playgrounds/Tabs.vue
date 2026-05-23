@@ -51,12 +51,14 @@ const tabItems = ref([
 		<section>
 			<h2>Вариант 3: декларативный (TabItem в слоте)</h2>
 			<Tabs appearance="contained">
+				<template #prefix>prefix</template>
 				<TabItem text="Профиль" value="profile" />
 				<TabItem text="Настройки" value="settings" active />
 				<TabItem text="О проекте" value="about" />
 				<template #panel:profile><p>Содержимое Профиль</p></template>
 				<template #panel:settings><p>Содержимое Настройки</p></template>
 				<template #panel:about><p>Содержимое О проекте</p></template>
+				<template #suffix>suffix</template>
 			</Tabs>
 		</section>
 
