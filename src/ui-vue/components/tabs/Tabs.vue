@@ -212,27 +212,44 @@ export default {
 	&--outline {
 		// Структурные стили (не зависят от варианта)
 		#{$this}__list {
-			@apply relative border-b gap-1.5;
-			@apply border-solid border-b-1;
+			@apply relative gap-1.5;
 
-			border-image: linear-gradient(
-					to right,
-					currentColor 0px,
-					currentColor var(--gap-x, 0px),
-					transparent var(--gap-x, 0px),
-					transparent calc(var(--gap-x, 0px) + var(--gap-width, 0px)),
-					currentColor calc(var(--gap-x, 0px) + var(--gap-width, 0px)),
-					currentColor 100%
-				)
-				0 0 1 0;
+			&::before,
+			&::after {
+				content: '';
+				@apply absolute bottom-0 h-px;
+			}
+
+			// Левая часть бордера (до активного таба)
+			&::before {
+				left: 0;
+				width: var(--gap-x, 0px);
+			}
+
+			// Правая часть бордера (после активного таба)
+			&::after {
+				left: calc(var(--gap-x, 0px) + var(--gap-width, 0px));
+				right: 0;
+			}
 		}
 
 		.s-tab-item {
-			@apply border rounded-t-md rounded-b-none;
-			@apply bg-transparent border-b-transparent;
-			@apply -mb-px;
+			@apply relative border rounded-t-md rounded-b-none;
+			@apply bg-transparent;
+			@apply border-b-0;
 
-			&--active {
+			// Затемнение для неактивных табов
+			&::before {
+				content: '';
+				@apply absolute inset-0;
+				@apply pointer-events-none;
+				@apply opacity-10;
+				@apply bg-neutral-400;
+				transition: opacity 0.1s ease;
+			}
+
+			&--active::before {
+				@apply opacity-0;
 			}
 		}
 

@@ -52,10 +52,17 @@
 // Только цвет бордера и текста зависят от варианта.
 @mixin tabs-outline-variant($color, $text: 800, $border: 200) {
 	.s-tabs__list {
-		@apply #{'border-s-' + $color + '-' + $border};
+		&::before,
+		&::after {
+			@apply #{'bg-s-' + $color + '-' + $border};
+		}
 	}
 
 	.s-tab-item {
+		@apply #{'border-s-' + $color + '-' + $border};
+
+		// @apply border-b-transparent;
+
 		&:hover:not([disabled]) {
 			@apply #{'text-s-' + $color + '-' + $text};
 		}

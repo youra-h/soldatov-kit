@@ -96,7 +96,7 @@ export class TTabsAppearancePlugin extends TBasePlugin<TTabsAppearancePluginEven
 		const { listEl, offsetLeft, offsetWidth } = result
 
 		listEl.style.setProperty('--gap-x', `${offsetLeft + 1}px`)
-		listEl.style.setProperty('--gap-width', `${offsetWidth - 2}px`)
+		listEl.style.setProperty('--gap-width', `${offsetWidth - 1}px`)
 	}
 
 	private _updateLine(): void {
