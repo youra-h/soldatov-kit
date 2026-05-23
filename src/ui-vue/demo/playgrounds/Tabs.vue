@@ -22,7 +22,7 @@ tabs.value.collection.setActive(item2)
 const tabItems = ref([
 	{ text: 'Alpha', value: 'alpha', closable: true },
 	{ text: 'Beta', value: 'beta', active: true, closable: true },
-	{ text: 'Gamma', value: 'gamma', closable: true },
+	{ text: 'Gamma', value: 'gamma', closable: true, disabled: true },
 ])
 </script>
 

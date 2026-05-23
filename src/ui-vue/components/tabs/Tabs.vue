@@ -52,13 +52,13 @@ export default {
 		:class="instance.classes.list"
 	>
 		<div class="s-tabs__list" role="tablist">
-			<div class="s-tabs__list--prefix">
+			<div class="s-tabs__list--prefix" v-if="$slots.prefix">
 				<slot name="prefix"></slot>
 			</div>
 			<slot>
 				<TabItem v-for="item in items" :key="item.uid" :ctrl="item" />
 			</slot>
-			<div class="s-tabs__list--suffix">
+			<div class="s-tabs__list--suffix" v-if="$slots.suffix">
 				<slot name="suffix"></slot>
 			</div>
 		</div>
