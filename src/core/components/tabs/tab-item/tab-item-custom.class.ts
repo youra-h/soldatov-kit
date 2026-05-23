@@ -77,6 +77,16 @@ export default class TTabItemCustom<
 		})
 
 		this._classes.toggle(`--closable`, !!this._closableState.value)
+
+		this.events.on('change:disabled', () => {
+			// Если таб стал disabled, убираем возможность закрывать его
+			if (this.disabled) {
+				this._applyClosable(false)
+			} else {
+				// Если таб стал enabled, восстанавливаем closable в исходное значение (или дефолтное)
+				this._applyClosable(customProps.closable ?? TTabItemCustom.defaultValues.closable)
+			}
+		})
 	}
 
 	get text(): string {
@@ -98,7 +108,7 @@ export default class TTabItemCustom<
 	}
 
 	set closable(value: boolean | undefined) {
-		if (this._closableState.value === value) return
+		if (this._closableState.value === value || this.disabled) return
 
 		this._applyClosable(value)
 	}
