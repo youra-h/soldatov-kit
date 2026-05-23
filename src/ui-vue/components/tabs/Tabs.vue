@@ -188,6 +188,11 @@ export default {
 	}
 
 	&--contained {
+		#{$this}__list {
+			@apply p-1 gap-1.5;
+			@apply rounded-md;
+		}
+
 		&#{$this}--normal {
 			@include mixines.tabs-contained-variant('neutral');
 		}
@@ -245,7 +250,7 @@ export default {
 				@apply pointer-events-none;
 				@apply opacity-10;
 				@apply bg-neutral-400;
-				transition: opacity 0.1s ease;
+				transition: opacity 0.2s ease;
 			}
 
 			&--active::before {

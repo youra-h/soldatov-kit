@@ -31,7 +31,7 @@
 // Список обёрнут в контейнер. Активный таб — белая карточка с тенью внутри контейнера.
 @mixin tabs-contained-variant($color, $text: 800, $container-bg: 100) {
 	.s-tabs__list {
-		@apply #{'bg-s-' + $color + '-' + $container-bg} p-1 gap-1;
+		@apply #{'bg-s-' + $color + '-' + $container-bg};
 	}
 
 	.s-tab-item {
@@ -40,7 +40,8 @@
 		}
 
 		&--active {
-			@apply bg-white shadow-sm #{'text-s-' + $color + '-' + $text};
+			@apply bg-white shadow-sm;
+			@apply #{'text-s-' + $color + '-' + $text};
 		}
 	}
 }
