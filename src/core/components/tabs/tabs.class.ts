@@ -42,7 +42,7 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 	protected _position!: TTabsPosition
 	protected _appearance!: TTabsAppearance
 	protected _stretched!: boolean
-	protected _closable: boolean
+	protected _closable!: boolean
 
 	// Композиция: коллекция табов
 	protected _collection: TActivatableCollection<any, any, ITabItem>
@@ -56,19 +56,18 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 			options,
 		)
 
+		// Создаем коллекцию табов
+		this._collection = new TActivatableCollection<any, any, ITabItem>({
+			itemClass: TTabItem,
+		})
+
 		// Инициализация простых свойств
 		this._applyOrientation(props.orientation ?? TTabs.defaultValues.orientation!)
 		this._applyAlignment(props.alignment ?? TTabs.defaultValues.alignment!)
 		this._applyPosition(props.position ?? TTabs.defaultValues.position!)
 		this._applyAppearance(props.appearance ?? TTabs.defaultValues.appearance!)
 		this._applyStretched(props.stretched ?? TTabs.defaultValues.stretched!)
-
-		this._closable = props.closable ?? TTabs.defaultValues.closable!
-
-		// Создаем коллекцию табов
-		this._collection = new TActivatableCollection<any, any, ITabItem>({
-			itemClass: TTabItem,
-		})
+		this._applyClosable(props.closable ?? TTabs.defaultValues.closable!)
 
 		// Условие для поиска следующего активного таба при удалении
 		this._collection.events.on(
@@ -83,6 +82,11 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 			// Подписка на событие закрытия таба — вызывает closeTab с проверкой и удалением
 			item.events.on('close', () => {
 				this.closeTab(item)
+			})
+
+			// Проброс change:closable → item:closable
+			item.events.on('change:closable', (value: boolean | undefined) => {
+				;(this.events as TEvented<TTabsEvents>).emit('item:closable', item, !!value)
 			})
 
 			// Propagation: новый таб наследует size и variant от контейнера
@@ -134,6 +138,8 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 				;(this.events as TEvented<TTabsEvents>).emit('item:moved', payload)
 			},
 		)
+
+
 	}
 
 	// Простые геттеры/сеттеры без state
@@ -239,9 +245,13 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 		return this._closable
 	}
 
+	protected _applyClosable(value: boolean) {
+		this._closable = value
+	}
+
 	set closable(value: boolean) {
 		if (this._closable !== value) {
-			this._closable = value
+			this._applyClosable(value)
 			;(this.events as TEvented<TTabsEvents>).emit('change:closable', value)
 		}
 	}

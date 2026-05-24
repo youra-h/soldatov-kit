@@ -1,4 +1,9 @@
-import type { IControl, IControlProps, TControlEvents, TControlStatesOptions } from '../../base/control'
+import type {
+	IControl,
+	IControlProps,
+	TControlEvents,
+	TControlStatesOptions,
+} from '../../base/control'
 import type { TActivatableCollection, TActivatableCollectionEvents } from '../../base/collection'
 import type { ITabItem } from './tab-item/types'
 
@@ -9,21 +14,23 @@ export type TTabsAppearance = 'line' | 'contained' | 'outline'
 
 export type TTabsEvents = TControlEvents &
 	TActivatableCollectionEvents & {
-	/** change:orientation */
-	'change:orientation': (value: TTabsOrientation) => void
-	/** change:alignment */
-	'change:alignment': (value: TTabsAlignment) => void
-	/** change:position */
-	'change:position': (value: TTabsPosition) => void
-	/** change:appearance */
-	'change:appearance': (value: TTabsAppearance) => void
-	/** change:stretched */
-	'change:stretched': (value: boolean) => void
-	/** change:closable */
-	'change:closable': (value: boolean) => void
-	/** tab:close — эмитится перед удалением таба при закрытии */
-	'tab:close': (item: ITabItem) => void
-}
+		/** change:orientation */
+		'change:orientation': (value: TTabsOrientation) => void
+		/** change:alignment */
+		'change:alignment': (value: TTabsAlignment) => void
+		/** change:position */
+		'change:position': (value: TTabsPosition) => void
+		/** change:appearance */
+		'change:appearance': (value: TTabsAppearance) => void
+		/** change:stretched */
+		'change:stretched': (value: boolean) => void
+		/** change:closable */
+		'change:closable': (value: boolean) => void
+		/** tab:close — эмитится перед удалением таба при закрытии */
+		'tab:close': (item: ITabItem) => void
+		/** item:closable — эмитится при изменении свойства closable у таба (item.closable) */
+		'item:closable': (item: ITabItem, value: boolean) => void
+	}
 
 export interface ITabsProps extends IControlProps {
 	/** Ориентация табов */
@@ -68,4 +75,3 @@ export interface ITabs extends IControl<ITabsProps, TTabsEvents> {
 	/** Возвращает true, если в коллекции есть хотя бы один таб с disabled = false */
 	hasEnabledTabs(): boolean
 }
-

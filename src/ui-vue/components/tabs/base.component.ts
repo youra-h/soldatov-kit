@@ -172,11 +172,11 @@ export function syncTabs(
 		},
 	)
 
-	watch<boolean | undefined>(
+	watch(
 		() => props.closable,
 		(value) => {
-			if (value !== undefined && value !== instance.closable) {
-				instance.closable = value
+			if (value !== instance.closable) {
+				instance.closable = !!value
 			}
 		},
 	)
