@@ -106,7 +106,7 @@ const tabItems = ref([
 
 		<section>
 			<h2>Вариант 8: alignment — stretch (justify-between)</h2>
-			<Tabs appearance="outline" alignment="stretch">
+			<Tabs appearance="contained" alignment="stretch">
 				<TabItem text="Tab 1" value="t1" active />
 				<TabItem text="Tab 2" value="t2" />
 				<TabItem text="Tab 3" value="t3" />

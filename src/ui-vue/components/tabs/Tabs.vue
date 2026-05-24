@@ -132,7 +132,9 @@ export default {
 	}
 
 	&--stretch #{$this}__list {
-		@apply justify-between;
+		.s-tab-item {
+			@apply flex-1 justify-center;
+		}
 	}
 
 	// Stretched - табы занимают всю ширину
