@@ -72,8 +72,6 @@ export interface ITabs extends IControl<ITabsProps, TTabsEvents> {
 	readonly count: number
 	/** Доступ к коллекции табов */
 	readonly collection: TActivatableCollection<any, any, ITabItem>
-	/** Проверяет, может ли конкретный таб быть закрыт (item.closable ?? this.closable) */
-	isTabClosable(item: ITabItem): boolean
 	/** Закрывает таб: проверяет возможность, эмитит событие, удаляет из коллекции */
 	closeTab(item: ITabItem): boolean
 	/** Возвращает true, если в коллекции есть хотя бы один таб с disabled = false */

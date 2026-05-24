@@ -282,25 +282,11 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 	}
 
 	/**
-	 * Проверяет, может ли конкретный таб быть закрыт.
-	 * Логика: item.closable ?? this.closable
-	 * - Если у таба явно задан closable (true/false) — используется значение таба.
-	 * - Если у таба closable = undefined — наследуется от родителя (TTabs.closable).
-	 */
-	isTabClosable(item: ITabItem): boolean {
-		return item.isClosable
-	}
-
-	/**
 	 * Закрывает таб: проверяет возможность закрытия, эмитит событие и удаляет из коллекции.
 	 * Если закрывается активный таб, заранее активируем ближайший подходящий (enabled + visible + rendered).
 	 * @returns true если таб был закрыт, false если закрытие запрещено
 	 */
 	closeTab(item: ITabItem): boolean {
-		if (!this.isTabClosable(item)) {
-			return false
-		}
-
 		;(this.events as TEvented<TTabsEvents>).emit('tab:close', item)
 
 		return this._collection.deleteItem(item)
