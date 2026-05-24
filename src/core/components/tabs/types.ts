@@ -28,8 +28,12 @@ export type TTabsEvents = TControlEvents &
 		'change:closable': (value: boolean) => void
 		/** tab:close — эмитится перед удалением таба при закрытии */
 		'tab:close': (item: ITabItem) => void
-		/** item:closable — эмитится при изменении свойства closable у таба (item.closable) */
-		'item:closable': (item: ITabItem, value: boolean) => void
+		/** tab:closable — эмитится при изменении свойства closable у таба (item.closable) */
+		'tab:closable': (item: ITabItem, value: boolean) => void
+		/** tab:disabled — эмитится при изменении свойства disabled у таба (item.disabled) */
+		'tab:disabled': (item: ITabItem, value: boolean) => void
+		/** tab:text — эмитится при изменении текста таба (item.text) */
+		'tab:text': (item: ITabItem, value: string) => void
 	}
 
 export interface ITabsProps extends IControlProps {

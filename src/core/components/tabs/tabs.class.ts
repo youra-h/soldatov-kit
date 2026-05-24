@@ -84,9 +84,19 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 				this.closeTab(item)
 			})
 
-			// Проброс change:closable → item:closable
+			// Проброс change:closable → tab:closable
 			item.events.on('change:closable', (value: boolean | undefined) => {
-				;(this.events as TEvented<TTabsEvents>).emit('item:closable', item, !!value)
+				;(this.events as TEvented<TTabsEvents>).emit('tab:closable', item, !!value)
+			})
+
+			// Проброс change:disabled → tab:disabled
+			item.events.on('change:disabled', (value: boolean) => {
+				;(this.events as TEvented<TTabsEvents>).emit('tab:disabled', item, value)
+			})
+
+			// Проброс change:text → tab:text
+			item.events.on('change:text', (value: string) => {
+				;(this.events as TEvented<TTabsEvents>).emit('tab:text', item, value)
 			})
 
 			// Propagation: новый таб наследует size и variant от контейнера
@@ -138,8 +148,6 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 				;(this.events as TEvented<TTabsEvents>).emit('item:moved', payload)
 			},
 		)
-
-
 	}
 
 	// Простые геттеры/сеттеры без state
