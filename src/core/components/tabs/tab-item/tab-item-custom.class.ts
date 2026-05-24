@@ -99,7 +99,7 @@ export default class TTabItemCustom<
 	}
 
 	get closable(): boolean | undefined {
-		return this._closableState.value
+		return this._closableState.resolved
 	}
 
 	protected _applyClosable(value: boolean | undefined) {
@@ -112,11 +112,6 @@ export default class TTabItemCustom<
 		if (this._closableState.value === value || this.disabled) return
 
 		this._applyClosable(value)
-	}
-
-	/** Итоговое значение closable с учётом родительского контейнера */
-	get isClosable(): boolean {
-		return this._closableState.resolved
 	}
 
 	/** Инжектируется из TTabs при добавлении таба в коллекцию */

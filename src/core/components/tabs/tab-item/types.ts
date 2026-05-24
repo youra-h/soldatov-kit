@@ -49,8 +49,6 @@ export interface ITabItemCustom<
 	text: string
 	/** Можно ли закрыть таб (undefined = наследовать от родителя TTabs) */
 	closable: boolean | undefined
-	/** Итоговое значение closable с учётом родительского контейнера */
-	isClosable: boolean
 	/** Инжектирует резолвер для наследования через TTabs */
 	setClosableParent(resolver: () => boolean): void
 	/** Закрыть таб (emit close event) */
