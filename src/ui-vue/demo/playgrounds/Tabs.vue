@@ -63,14 +63,53 @@ const tabItems = ref([
 		</section>
 
 		<section>
-			<h2>Вариант 4: вертикальные табы</h2>
-			<Tabs appearance="contained" variant="positive">
+			<h2>Вариант 4: вертикальные табы (position: start — по умолчанию)</h2>
+			<Tabs appearance="contained" variant="positive" orientation="vertical">
 				<TabItem text="Профиль" value="profile" active />
 				<TabItem text="Настройки" value="settings" />
 				<TabItem text="О проекте" value="about" />
 				<template #panel:profile><p>Содержимое Профиль</p></template>
 				<template #panel:settings><p>Содержимое Настройки</p></template>
 				<template #panel:about><p>Содержимое О проекте</p></template>
+			</Tabs>
+		</section>
+
+		<section>
+			<h2>Вариант 5: вертикальные табы (position: end — список справа)</h2>
+			<Tabs appearance="contained" variant="positive" orientation="vertical" position="end">
+				<TabItem text="Профиль" value="profile" active />
+				<TabItem text="Настройки" value="settings" />
+				<TabItem text="О проекте" value="about" />
+				<template #panel:profile><p>Содержимое Профиль</p></template>
+				<template #panel:settings><p>Содержимое Настройки</p></template>
+				<template #panel:about><p>Содержимое О проекте</p></template>
+			</Tabs>
+		</section>
+
+		<section>
+			<h2>Вариант 6: alignment — center</h2>
+			<Tabs appearance="line" alignment="center">
+				<TabItem text="Tab 1" value="t1" active />
+				<TabItem text="Tab 2" value="t2" />
+				<TabItem text="Tab 3" value="t3" />
+			</Tabs>
+		</section>
+
+		<section>
+			<h2>Вариант 7: alignment — end</h2>
+			<Tabs appearance="contained" alignment="end">
+				<TabItem text="Tab 1" value="t1" active />
+				<TabItem text="Tab 2" value="t2" />
+				<TabItem text="Tab 3" value="t3" />
+			</Tabs>
+		</section>
+
+		<section>
+			<h2>Вариант 8: alignment — stretch (justify-between)</h2>
+			<Tabs appearance="outline" alignment="stretch">
+				<TabItem text="Tab 1" value="t1" active />
+				<TabItem text="Tab 2" value="t2" />
+				<TabItem text="Tab 3" value="t3" />
 			</Tabs>
 		</section>
 	</div>

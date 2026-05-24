@@ -87,10 +87,14 @@ export default {
 	}
 
 	&--vertical {
-		@apply flex-row;
+		@apply flex-row gap-4;
 
 		#{$this}__list {
 			@apply flex-col;
+		}
+
+		#{$this}__panel {
+			@apply my-0 flex-1;
 		}
 
 		&#{$this}--position-end {
