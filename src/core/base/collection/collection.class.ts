@@ -130,7 +130,7 @@ export class TCollection<
 	 * @returns Индекс элемента или -1, если элемент не найден.
 	 */
 	indexOf(item: TItem): number {
-		return this._items.indexOf(item)
+		return this._items.findIndex((i) => i.uid === item.uid)
 	}
 
 	/**
@@ -225,7 +225,7 @@ export class TCollection<
 	 * @returns true, если удаление прошло успешно, иначе false
 	 */
 	deleteItem(item: TItem): boolean {
-		const index = this._items.indexOf(item)
+		const index = this.indexOf(item)
 
 		if (index === -1) {
 			return false
@@ -250,7 +250,7 @@ export class TCollection<
 	 * @param newIndex Новая позиция элемента.
 	 */
 	setItemIndex(item: TItem, newIndex: number): void {
-		const oldIndex = this._items.indexOf(item)
+		const oldIndex = this.indexOf(item)
 
 		if (oldIndex === -1 || oldIndex === newIndex) return
 
@@ -305,7 +305,7 @@ export class TCollection<
 	 * @returns void
 	 */
 	moveItem(fromItem: TItem, toIndex: number): void {
-		const fromIndex = this._items.indexOf(fromItem)
+		const fromIndex = this.indexOf(fromItem)
 
 		if (fromIndex === -1) return
 
