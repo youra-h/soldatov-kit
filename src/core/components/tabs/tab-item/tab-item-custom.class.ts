@@ -11,6 +11,7 @@ import type {
 	TTabItemCustomStatesOptions,
 } from './types'
 import { TEvented } from '../../../common/evented'
+import { TTabClosableState } from './tab-closable.state'
 
 /**
  * Кастомная логика элемента таба (без коллекционной части).
@@ -36,7 +37,7 @@ export default class TTabItemCustom<
 	}
 
 	protected _textState: IStateUnit<string>
-	protected _closableState: IStateUnit<boolean | undefined>
+	protected _closableState: TTabClosableState
 
 	constructor(
 		options: IComponentViewOptions<TProps, TTabItemCustomStatesOptions> | Partial<TProps> = {},
@@ -58,15 +59,15 @@ export default class TTabItemCustom<
 			initial: customProps.text ?? TTabItemCustom.defaultValues.text!,
 		})
 
-		this._closableState = resolveState<IStateUnit<boolean | undefined>, boolean | undefined>({
+		this._closableState = resolveState<TTabClosableState, boolean | undefined>({
 			state: states?.closable,
-			ctor: TStateUnit,
+			ctor: TTabClosableState,
 			initial: customProps.closable ?? TTabItemCustom.defaultValues.closable,
 		})
 
 		// Подписка на изменения state-объектов
 		this._textState.events.on('change', (payload: TValuePayload<string>) => {
-			;(this.events as TEvented<TTabItemCustomEvents>).emit('change:text', payload.newValue)
+			;(this.events as TEvented<TTabItemCustomEvents>).emit('change:text', payload)
 		})
 
 		this._closableState.events.on('change', (payload: TValuePayload<boolean | undefined>) => {
@@ -111,6 +112,16 @@ export default class TTabItemCustom<
 		if (this._closableState.value === value || this.disabled) return
 
 		this._applyClosable(value)
+	}
+
+	/** Итоговое значение closable с учётом родительского контейнера */
+	get isClosable(): boolean {
+		return this._closableState.resolved
+	}
+
+	/** Инжектируется из TTabs при добавлении таба в коллекцию */
+	setClosableParent(resolver: () => boolean): void {
+		this._closableState.setParentResolver(resolver)
 	}
 
 	close(): void {

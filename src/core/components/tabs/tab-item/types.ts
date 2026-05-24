@@ -12,18 +12,19 @@ import type {
 } from '../../../base/collection/activable/types'
 import type { IComponentViewOptions } from '../../../base/component-view'
 import type { TCollectableOptions } from '../../../base/collection/item/types'
+import type { TTabClosableState } from './tab-closable.state'
+import { type TValuePayload } from '../../../common/types'
 
 // ============ TTabItemCustom (логика таба без коллекции) ============
 
-export type TTabItemCustomEvents<TTab = any> =
-	TValueControlEvents<string | number> & {
-		/** change:text */
-		'change:text': (value: string) => void
-		/** change:closable */
-		'change:closable': (value: boolean | undefined) => void
-		/** close */
-		close: (tab: TTab) => void
-	}
+export type TTabItemCustomEvents<TTab = any> = TValueControlEvents<string | number> & {
+	/** change:text */
+	'change:text': (payload: TValuePayload<string>) => void
+	/** change:closable */
+	'change:closable': (value: boolean | undefined) => void
+	/** close */
+	close: (tab: TTab) => void
+}
 
 export interface ITabItemCustomProps extends IValueControlProps<string | number> {
 	/** Текст таба */
@@ -34,9 +35,7 @@ export interface ITabItemCustomProps extends IValueControlProps<string | number>
 
 export type TTabItemCustomStatesOptions = TValueControlStatesOptions<string | number> & {
 	text?: TStateCtor<IStateUnit<string>, string> | IStateUnit<string>
-	closable?:
-		| TStateCtor<IStateUnit<boolean | undefined>, boolean | undefined>
-		| IStateUnit<boolean | undefined>
+	closable?: TStateCtor<TTabClosableState, boolean | undefined> | TTabClosableState
 }
 
 /**
@@ -50,6 +49,10 @@ export interface ITabItemCustom<
 	text: string
 	/** Можно ли закрыть таб (undefined = наследовать от родителя TTabs) */
 	closable: boolean | undefined
+	/** Итоговое значение closable с учётом родительского контейнера */
+	isClosable: boolean
+	/** Инжектирует резолвер для наследования через TTabs */
+	setClosableParent(resolver: () => boolean): void
 	/** Закрыть таб (emit close event) */
 	close(): void
 }

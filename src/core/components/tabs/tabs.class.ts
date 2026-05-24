@@ -84,6 +84,9 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 				this.closeTab(item)
 			})
 
+			// Инжектируем резолвер для closable: таб узнает о дефолте родительского контейнера
+			item.setClosableParent(() => this._closable)
+
 			// Проброс change:closable → tab:closable
 			item.events.on('change:closable', (value: boolean | undefined) => {
 				;(this.events as TEvented<TTabsEvents>).emit('tab:closable', item, !!value)
@@ -95,8 +98,8 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 			})
 
 			// Проброс change:text → tab:text
-			item.events.on('change:text', (value: string) => {
-				;(this.events as TEvented<TTabsEvents>).emit('tab:text', item, value)
+			item.events.on('change:text', (payload: TValuePayload<string>) => {
+				;(this.events as TEvented<TTabsEvents>).emit('tab:text', item, payload.newValue)
 			})
 
 			// Propagation: новый таб наследует size и variant от контейнера
@@ -285,7 +288,7 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 	 * - Если у таба closable = undefined — наследуется от родителя (TTabs.closable).
 	 */
 	isTabClosable(item: ITabItem): boolean {
-		return item.closable ?? this._closable
+		return item.isClosable
 	}
 
 	/**
