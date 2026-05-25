@@ -83,6 +83,7 @@ export default class TTabItem
 	}
 
 	free(): void {
+		this.rendered = false
 		this._collectionItem.free()
 	}
 }
