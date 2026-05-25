@@ -27,6 +27,11 @@ export function syncCollectionItem(
 
 	// Пробрасываем события core-инстанса наружу (Vue events)
 	instance.events.on('free', (item: ICollectionItem) => {
+		// Скрываем компонент через Vue proxy — иначе реактивность не сработает,
+		// т.к. free() вызывается на raw-объекте, а не через proxy
+		if ('rendered' in instance) {
+			;(instance as ICollectionItem & { rendered: boolean }).rendered = false
+		}
 		emit?.('free', item)
 	})
 }
