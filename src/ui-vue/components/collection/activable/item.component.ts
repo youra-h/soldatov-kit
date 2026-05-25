@@ -49,6 +49,10 @@ export function syncActivatableCollectionItem(
 
 	// Пробрасываем события core-инстанса наружу (Vue events)
 	instance.events.on('change:activation', (item: IActivatableCollectionItem) => {
+		// Переприменяем active через proxy — иначе _classes.toggle('--active', ...) вызывается
+		// на raw-объекте и мутация Set не видна Vue (нет реактивного триггера)
+		instance.active = (item as unknown as { active: boolean }).active
+
 		emit?.('change:activation', item)
 		emit?.('update:active', instance.active)
 	})
