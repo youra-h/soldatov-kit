@@ -23,7 +23,6 @@ type Props = {
 	alignment?: TTabsAlignment
 	position?: TTabsPosition
 	appearance?: TTabsAppearance
-	stretched?: boolean
 	closable?: boolean
 	// Tab item props
 	tabDisabled?: boolean
@@ -56,7 +55,6 @@ const applyAll = computed(() => props.tabApplyTarget === 'all')
 			:alignment="alignment"
 			:position="position"
 			:appearance="appearance"
-			:stretched="stretched"
 			:closable="closable"
 			v-bind="handlers"
 		>

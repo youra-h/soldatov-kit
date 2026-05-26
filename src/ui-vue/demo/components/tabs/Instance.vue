@@ -25,7 +25,6 @@ type Props = {
 	alignment?: TTabsAlignment
 	position?: TTabsPosition
 	appearance?: TTabsAppearance
-	stretched?: boolean
 	closable?: boolean
 	// Tab item props
 	tabDisabled?: boolean
@@ -55,7 +54,6 @@ const instance = reactive(
 		alignment: props.alignment ?? 'start',
 		position: props.position ?? 'start',
 		appearance: props.appearance ?? 'line',
-		stretched: props.stretched ?? false,
 		closable: props.closable ?? false,
 	}),
 )
@@ -77,7 +75,6 @@ useSyncPropsToInstance(props, instance, [
 	'alignment',
 	'position',
 	'appearance',
-	'stretched',
 	'closable',
 ])
 

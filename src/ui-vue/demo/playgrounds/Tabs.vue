@@ -36,7 +36,6 @@ appearance: { type: 'select', default: 'line', options: TABS_APPEARANCES },
 orientation: { type: 'select', default: 'horizontal', options: TABS_ORIENTATIONS },
 alignment: { type: 'select', default: 'start', options: TABS_ALIGNMENTS },
 position: { type: 'select', default: 'start', options: TABS_POSITIONS },
-stretched: { type: 'boolean', default: false },
 closable: { type: 'boolean', default: false },
 }
 
@@ -63,7 +62,6 @@ appearance: TTabsAppearance
 orientation: TTabsOrientation
 alignment: TTabsAlignment
 position: TTabsPosition
-stretched: boolean
 closable: boolean
 tabApplyTarget: 'all' | 'first'
 tabDisabled: boolean
@@ -78,7 +76,6 @@ appearance: 'line',
 orientation: 'horizontal',
 alignment: 'start',
 position: 'start',
-stretched: false,
 closable: false,
 tabApplyTarget: 'first',
 tabDisabled: false,

@@ -137,13 +137,6 @@ export default {
 		}
 	}
 
-	// Stretched - табы занимают всю ширину
-	&--stretched {
-		.s-tab-item {
-			@apply flex-1 justify-center;
-		}
-	}
-
 	// Внешний вид
 	&--line {
 		// Список: разделитель, relative для ::after
