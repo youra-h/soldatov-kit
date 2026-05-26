@@ -271,7 +271,6 @@ describe('TTabs', () => {
 			tabs.orientation = 'vertical'
 			tabs.alignment = 'center'
 			tabs.appearance = 'outline'
-			tabs.stretched = true
 
 			const classes = tabs.classes.toArray()
 
@@ -279,7 +278,6 @@ describe('TTabs', () => {
 			expect(classes).toContain('s-tabs--vertical')
 			expect(classes).toContain('s-tabs--center')
 			expect(classes).toContain('s-tabs--outline')
-			expect(classes).toContain('s-tabs--stretched')
 		})
 
 		it('does not include position class for horizontal orientation', () => {

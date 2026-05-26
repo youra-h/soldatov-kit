@@ -30,8 +30,6 @@ export const emitsTabs: TEmits = [
 	'update:position',
 	'change:appearance',
 	'update:appearance',
-	'change:stretched',
-	'update:stretched',
 	'change:closable',
 	'update:closable',
 	'tab:close',
@@ -58,10 +56,6 @@ export const propsTabs: TProps = {
 	appearance: {
 		type: String as PropType<TTabsAppearance>,
 		default: TTabs.defaultValues.appearance,
-	},
-	stretched: {
-		type: Boolean as PropType<ITabsProps['stretched']>,
-		default: TTabs.defaultValues.stretched,
 	},
 	closable: {
 		type: Boolean as PropType<ITabsProps['closable']>,
@@ -113,11 +107,6 @@ export function syncTabs(
 	instance.events.on('change:appearance', (value: TTabsAppearance) => {
 		emit?.('change:appearance', value)
 		emit?.('update:appearance', value)
-	})
-
-	instance.events.on('change:stretched', (value: boolean) => {
-		emit?.('change:stretched', value)
-		emit?.('update:stretched', value)
 	})
 
 	instance.events.on('change:closable', (value: boolean) => {
@@ -174,15 +163,6 @@ export function syncTabs(
 		(value) => {
 			if (value !== undefined && value !== instance.appearance) {
 				instance.appearance = value
-			}
-		},
-	)
-
-	watch<boolean | undefined>(
-		() => props.stretched,
-		(value) => {
-			if (value !== undefined && value !== instance.stretched) {
-				instance.stretched = value
 			}
 		},
 	)
