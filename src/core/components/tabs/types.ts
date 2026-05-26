@@ -22,8 +22,6 @@ export type TTabsEvents = TControlEvents &
 		'change:position': (value: TTabsPosition) => void
 		/** change:appearance */
 		'change:appearance': (value: TTabsAppearance) => void
-		/** change:stretched */
-		'change:stretched': (value: boolean) => void
 		/** change:closable */
 		'change:closable': (value: boolean) => void
 		/** tab:close — эмитится перед удалением таба при закрытии */
@@ -45,8 +43,6 @@ export interface ITabsProps extends IControlProps {
 	position?: TTabsPosition
 	/** Стиль отображения */
 	appearance?: TTabsAppearance
-	/** Растягивать табы на всю ширину/высоту */
-	stretched?: boolean
 	/** Разрешить закрытие табов (по умолчанию false) */
 	closable?: boolean
 }
@@ -62,8 +58,6 @@ export interface ITabs extends IControl<ITabsProps, TTabsEvents> {
 	position: TTabsPosition
 	/** Стиль отображения */
 	appearance: TTabsAppearance
-	/** Растягивать табы на всю ширину/высоту */
-	stretched: boolean
 	/** Разрешить закрытие табов */
 	closable: boolean
 	/** Активный таб (из коллекции) */

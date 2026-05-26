@@ -24,6 +24,7 @@ defineProps<Props>()
 	$this: &;
 
 	@apply p-6 bg-white rounded-lg shadow-sm;
+	@apply w-full;
 
 	&__title {
 		@apply text-base font-semibold mb-4;

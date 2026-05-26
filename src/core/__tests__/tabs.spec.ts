@@ -15,7 +15,6 @@ describe('TTabs', () => {
 			expect(tabs.alignment).toBe('start')
 			expect(tabs.position).toBe('start')
 			expect(tabs.appearance).toBe('line')
-			expect(tabs.stretched).toBe(false)
 			expect(tabs.closable).toBe(false)
 			expect(tabs.count).toBe(0)
 			expect(tabs.activeItem).toBeUndefined()
@@ -28,7 +27,6 @@ describe('TTabs', () => {
 					alignment: 'center',
 					position: 'end',
 					appearance: 'outline',
-					stretched: true,
 					closable: true,
 				},
 			})
@@ -37,7 +35,6 @@ describe('TTabs', () => {
 			expect(customTabs.alignment).toBe('center')
 			expect(customTabs.position).toBe('end')
 			expect(customTabs.appearance).toBe('outline')
-			expect(customTabs.stretched).toBe(true)
 			expect(customTabs.closable).toBe(true)
 		})
 	})
@@ -257,15 +254,6 @@ describe('TTabs', () => {
 			tabs.appearance = 'outline'
 
 			expect(spy).toHaveBeenCalledWith('outline')
-		})
-
-		it('emits change:stretched when stretched changes', () => {
-			const spy = vi.fn()
-			tabs.events.on('change:stretched', spy)
-
-			tabs.stretched = true
-
-			expect(spy).toHaveBeenCalledWith(true)
 		})
 
 		it('emits change:closable when closable changes', () => {

@@ -31,7 +31,6 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 		alignment: 'start',
 		position: 'start',
 		appearance: 'line',
-		stretched: false,
 		closable: false,
 		variant: 'normal',
 	}
@@ -41,7 +40,6 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 	protected _alignment!: TTabsAlignment
 	protected _position!: TTabsPosition
 	protected _appearance!: TTabsAppearance
-	protected _stretched!: boolean
 	protected _closable!: boolean
 
 	// Композиция: коллекция табов
@@ -66,7 +64,6 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 		this._applyAlignment(props.alignment ?? TTabs.defaultValues.alignment!)
 		this._applyPosition(props.position ?? TTabs.defaultValues.position!)
 		this._applyAppearance(props.appearance ?? TTabs.defaultValues.appearance!)
-		this._applyStretched(props.stretched ?? TTabs.defaultValues.stretched!)
 		this._applyClosable(props.closable ?? TTabs.defaultValues.closable!)
 
 		// Условие для поиска следующего активного таба при удалении
@@ -235,23 +232,6 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 		}
 	}
 
-	get stretched(): boolean {
-		return this._stretched
-	}
-
-	protected _applyStretched(value: boolean) {
-		this._classes.toggle(`--stretched`, value)
-
-		this._stretched = value
-	}
-
-	set stretched(value: boolean) {
-		if (this._stretched !== value) {
-			this._applyStretched(value)
-			;(this.events as TEvented<TTabsEvents>).emit('change:stretched', value)
-		}
-	}
-
 	get closable(): boolean {
 		return this._closable
 	}
@@ -311,7 +291,6 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 			alignment: this._alignment,
 			position: this._position,
 			appearance: this._appearance,
-			stretched: this._stretched,
 			closable: this._closable,
 		}
 	}
