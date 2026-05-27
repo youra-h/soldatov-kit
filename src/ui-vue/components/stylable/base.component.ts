@@ -91,7 +91,7 @@ export function syncStylable(
 
 	return {
 		...syncProps,
-		...useSyncProps(instance.events as any, {
+		...useSyncProps(instance.events, {
 			size: () => instance.size,
 			variant: () => instance.variant,
 		}),
