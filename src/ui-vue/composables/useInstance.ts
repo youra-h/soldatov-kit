@@ -1,10 +1,10 @@
-import { reactive, toRaw, type Reactive } from 'vue'
+import { toRaw } from 'vue'
 import type { IComponentModelOptions } from '@core'
 
 /**
  * Returns a raw (non-reactive) instance of a component.
  * Use in event-based reactive components where reactivity is managed
- * explicitly via useEventSync inside sync* functions.
+ * explicitly via useEventState inside sync* functions.
  * @param Ctor The constructor of the component.
  * @param props The props to pass to the component.
  * @returns The managed instance of the component.

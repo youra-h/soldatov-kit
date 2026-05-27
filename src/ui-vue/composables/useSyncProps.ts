@@ -1,6 +1,6 @@
 import { type Ref } from 'vue'
 import type { IEventSource } from '@core'
-import { useEventSync } from './useEventSync'
+import { useEventState } from './useEventState'
 
 /** Явная спецификация: кастомный геттер и список событий. */
 export type PropSpec<T> = {
@@ -51,9 +51,9 @@ export function useSyncProps<TMap extends PropSpecMap>(
 	for (const key in map) {
 		const spec = map[key]
 		if (typeof spec === 'function') {
-			result[key] = useEventSync(events, spec, [`change:${key}`])
+			result[key] = useEventState(events, spec, [`change:${key}`])
 		} else {
-			result[key] = useEventSync(events, spec.value, spec.events)
+			result[key] = useEventState(events, spec.value, spec.events)
 		}
 	}
 

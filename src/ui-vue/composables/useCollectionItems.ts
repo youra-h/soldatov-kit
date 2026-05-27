@@ -1,5 +1,5 @@
 import { type Ref } from 'vue'
-import { useEventSync } from './useEventSync'
+import { useEventState } from './useEventState'
 
 interface ICollectionLike<TItem> {
 	readonly items: TItem[]
@@ -17,7 +17,7 @@ interface ICollectionLike<TItem> {
  * @returns Реактивный `Ref<TItem[]>`.
  */
 export function useCollectionItems<TItem>(collection: ICollectionLike<TItem>): Ref<TItem[]> {
-	return useEventSync(
+	return useEventState(
 		collection.events,
 		() => collection.items,
 		['item:added', 'item:deleted', 'cleared', 'item:moved'],
