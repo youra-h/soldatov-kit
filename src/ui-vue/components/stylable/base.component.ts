@@ -1,4 +1,4 @@
-import type { PropType } from 'vue'
+import type { PropType, Ref } from 'vue'
 import { watch } from 'vue'
 import { TStylable } from '@core'
 import type { IStylable, IStylableProps, TComponentSize, TComponentVariant } from '@core'
@@ -7,8 +7,10 @@ import {
 	emitsComponentView,
 	propsComponentView,
 	syncComponentView,
+	type IComponentViewState,
 } from '../component-view'
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types'
+import { useEventRef } from '../../composables/useEventRef'
 
 export const emitsStylable: TEmits = [
 	...emitsComponentView,
@@ -39,13 +41,20 @@ export default {
 	props: propsStylable,
 }
 
+export interface IStylableState extends IComponentViewState {
+	size: Ref<TComponentSize>
+	variant: Ref<TComponentVariant>
+}
+
 /**
  * Bind props to instance properties.
  * @param props
  * @param instance
  */
-export function syncStylable(options: ISyncComponentModelOptions<IStylableProps, IStylable>) {
-	syncComponentView(options)
+export function syncStylable(
+	options: ISyncComponentModelOptions<IStylableProps, IStylable>,
+): IStylableState {
+	const base = syncComponentView(options)
 
 	const { instance, props, emit } = options
 
@@ -79,4 +88,10 @@ export function syncStylable(options: ISyncComponentModelOptions<IStylableProps,
 			}
 		},
 	)
+
+	return {
+		...base,
+		size: useEventRef(instance.events as any, () => instance.size, ['change:size']),
+		variant: useEventRef(instance.events as any, () => instance.variant, ['change:variant']),
+	}
 }

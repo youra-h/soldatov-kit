@@ -1,5 +1,6 @@
-import type { PropType, UnwrapNestedRefs } from 'vue'
+import type { PropType, Ref, UnwrapNestedRefs } from 'vue'
 import { watch } from 'vue'
+import { useEventRef } from '../../composables/useEventRef'
 import { type IComponentView, type IComponentViewProps, TComponentView } from '@core'
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types'
 import { type IPluginBundle, TElementPlugin } from '@plugins'
@@ -59,7 +60,16 @@ export default {
 	},
 }
 
-export function syncComponentView(options: ISyncComponentModelOptions<IComponentViewProps>) {
+export interface IComponentViewState {
+	rendered: Ref<boolean>
+	visible: Ref<boolean>
+	tag: Ref<string | object>
+	classes: Ref<string[]>
+}
+
+export function syncComponentView(
+	options: ISyncComponentModelOptions<IComponentViewProps>,
+): IComponentViewState {
 	const { props, instance, plugins, emit } = options
 
 	// Пробрасываем события core-инстанса наружу (Vue events).
@@ -138,4 +148,11 @@ export function syncComponentView(options: ISyncComponentModelOptions<IComponent
 			}
 		},
 	)
+
+	return {
+		rendered: useEventRef(instance.events as any, () => instance.rendered, ['change:rendered']),
+		visible: useEventRef(instance.events as any, () => instance.visible, ['change:visible']),
+		tag: useEventRef(instance.events as any, () => instance.tag, ['change:tag']),
+		classes: useEventRef(instance.events as any, () => instance.classes.list, ['change:classes']),
+	}
 }

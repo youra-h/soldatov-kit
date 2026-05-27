@@ -12,7 +12,6 @@ export default {
 	name: '_ComponentView',
 	extends: BaseComponentView,
 	setup(props: TBaseComponentViewProps<IComponentViewProps>, { emit }) {
-		// Получение инстанса из пропсов или создание нового
 		const instance = useInstance(TComponentView, props)
 		// Инициализация плагинов
 		const plugins = useBundle(createComponentViewBundle, props?.plugins)
@@ -21,14 +20,14 @@ export default {
 		// Привязка элемента и инстанса к плагинам
 		const rootRef = useElementBinding(plugins)
 
-		syncComponentView({
+		const { rendered, visible, tag, classes } = syncComponentView({
 			props,
 			instance,
 			plugins,
 			emit,
 		})
 
-		return { instance, plugins, rootRef }
+		return { instance, rendered, visible, tag, classes, plugins, rootRef }
 	},
 }
 </script>
@@ -36,10 +35,10 @@ export default {
 <template>
 	<component
 		ref="rootRef"
-		:is="instance.tag"
-		v-if="instance.rendered"
-		v-show="instance.visible"
-		:class="instance.classes.list"
+		:is="tag"
+		v-if="rendered"
+		v-show="visible"
+		:class="classes"
 	>
 		<slot />
 	</component>

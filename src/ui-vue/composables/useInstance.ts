@@ -2,7 +2,9 @@ import { reactive, toRaw, type Reactive } from 'vue'
 import type { IComponentModelOptions } from '@core'
 
 /**
- * Use a managed instance of a component.
+ * Returns a raw (non-reactive) instance of a component.
+ * Use in event-based reactive components where reactivity is managed
+ * explicitly via useEventRef inside sync* functions.
  * @param Ctor The constructor of the component.
  * @param props The props to pass to the component.
  * @returns The managed instance of the component.
@@ -10,10 +12,7 @@ import type { IComponentModelOptions } from '@core'
 export function useInstance<T extends object>(
 	Ctor: new (options: IComponentModelOptions<any>) => T,
 	props: any,
-): Reactive<T> {
+): T {
 	const provided = props.ctrl
-
-	const raw: T = provided ? (toRaw(provided) as T) : new Ctor({ props })
-
-	return reactive(raw) as Reactive<T>
+	return provided ? (toRaw(provided) as T) : new Ctor({ props })
 }
