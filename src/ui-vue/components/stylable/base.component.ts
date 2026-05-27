@@ -10,7 +10,7 @@ import {
 	type IComponentViewState,
 } from '../component-view'
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types'
-import { useEventSync } from '../../composables/useEventSync'
+import { useSyncProps } from '../../composables/useSyncProps'
 
 export const emitsStylable: TEmits = [
 	...emitsComponentView,
@@ -54,7 +54,7 @@ export interface IStylableState extends IComponentViewState {
 export function syncStylable(
 	options: ISyncComponentModelOptions<IStylableProps, IStylable>,
 ): IStylableState {
-	const base = syncComponentView(options)
+	const syncProps = syncComponentView(options)
 
 	const { instance, props, emit } = options
 
@@ -90,8 +90,10 @@ export function syncStylable(
 	)
 
 	return {
-		...base,
-		size: useEventSync(instance.events as any, () => instance.size, ['change:size']),
-		variant: useEventSync(instance.events as any, () => instance.variant, ['change:variant']),
+		...syncProps,
+		...useSyncProps(instance.events as any, {
+			size: () => instance.size,
+			variant: () => instance.variant,
+		}),
 	}
 }
