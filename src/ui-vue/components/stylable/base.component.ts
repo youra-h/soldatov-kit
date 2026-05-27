@@ -10,7 +10,7 @@ import {
 	type IComponentViewState,
 } from '../component-view'
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types'
-import { useEventRef } from '../../composables/useEventRef'
+import { useEventSync } from '../../composables/useEventSync'
 
 export const emitsStylable: TEmits = [
 	...emitsComponentView,
@@ -91,7 +91,7 @@ export function syncStylable(
 
 	return {
 		...base,
-		size: useEventRef(instance.events as any, () => instance.size, ['change:size']),
-		variant: useEventRef(instance.events as any, () => instance.variant, ['change:variant']),
+		size: useEventSync(instance.events as any, () => instance.size, ['change:size']),
+		variant: useEventSync(instance.events as any, () => instance.variant, ['change:variant']),
 	}
 }

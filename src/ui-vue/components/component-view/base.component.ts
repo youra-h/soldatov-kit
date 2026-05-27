@@ -1,6 +1,6 @@
 import type { PropType, Ref, UnwrapNestedRefs } from 'vue'
 import { watch } from 'vue'
-import { useEventRef } from '../../composables/useEventRef'
+import { useEventSync } from '../../composables/useEventSync'
 import { type IComponentView, type IComponentViewProps, TComponentView } from '@core'
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types'
 import { type IPluginBundle, TElementPlugin } from '@plugins'
@@ -150,9 +150,9 @@ export function syncComponentView(
 	)
 
 	return {
-		rendered: useEventRef(instance.events as any, () => instance.rendered, ['change:rendered']),
-		visible: useEventRef(instance.events as any, () => instance.visible, ['change:visible']),
-		tag: useEventRef(instance.events as any, () => instance.tag, ['change:tag']),
-		classes: useEventRef(instance.events as any, () => instance.classes.list, ['change:classes']),
+		rendered: useEventSync(instance.events as any, () => instance.rendered, ['change:rendered']),
+		visible: useEventSync(instance.events as any, () => instance.visible, ['change:visible']),
+		tag: useEventSync(instance.events as any, () => instance.tag, ['change:tag']),
+		classes: useEventSync(instance.events as any, () => instance.classes.list, ['change:classes']),
 	}
 }

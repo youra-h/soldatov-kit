@@ -4,7 +4,7 @@ import type { IComponentModelOptions } from '@core'
 /**
  * Returns a raw (non-reactive) instance of a component.
  * Use in event-based reactive components where reactivity is managed
- * explicitly via useEventRef inside sync* functions.
+ * explicitly via useEventSync inside sync* functions.
  * @param Ctor The constructor of the component.
  * @param props The props to pass to the component.
  * @returns The managed instance of the component.

@@ -12,7 +12,7 @@ import type { IEventSource } from '@core'
  * @param triggerEvents Список имён событий, при которых `Ref` должен обновиться.
  * @returns Реактивный `Ref<T>`.
  */
-export function useEventRef<T>(
+export function useEventSync<T>(
 	events: IEventSource,
 	getter: () => T,
 	triggerEvents: string[],

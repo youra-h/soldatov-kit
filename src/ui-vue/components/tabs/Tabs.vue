@@ -6,7 +6,7 @@ import { useBundle } from '../../composables/useBundle'
 import { useElementBinding } from '../../composables/useElementBinding'
 import { useInstanceBinding } from '../../composables/useInstanceBinding'
 import { useCollectionItems } from '../../composables/useCollectionItems'
-import { useEventRef } from '../../composables/useEventRef'
+import { useEventSync } from '../../composables/useEventSync'
 import { createTabsBundle } from '@plugins'
 import { TabItem } from './tab-item'
 import type { TBaseComponentViewProps } from '../component-view'
@@ -33,7 +33,7 @@ export default {
 
 		const items = useCollectionItems(instance.collection)
 
-		const activeItem = useEventRef(
+		const activeItem = useEventSync(
 			instance.collection.events,
 			() => instance.collection.activeItem ?? null,
 			['item:activated', 'item:deactivated'],
