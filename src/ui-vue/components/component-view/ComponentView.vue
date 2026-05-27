@@ -20,26 +20,20 @@ export default {
 		// Привязка элемента и инстанса к плагинам
 		const rootRef = useElementBinding(plugins)
 
-		const { rendered, visible, tag, classes } = syncComponentView({
+		const { tag, rendered, visible, classes } = syncComponentView({
 			props,
 			instance,
 			plugins,
 			emit,
 		})
 
-		return { instance, rendered, visible, tag, classes, plugins, rootRef }
+		return { instance, plugins, rootRef, tag, rendered, visible, classes }
 	},
 }
 </script>
 
 <template>
-	<component
-		ref="rootRef"
-		:is="tag"
-		v-if="rendered"
-		v-show="visible"
-		:class="classes"
-	>
+	<component ref="rootRef" :is="tag" v-if="rendered" v-show="visible" :class="classes">
 		<slot />
 	</component>
 </template>
