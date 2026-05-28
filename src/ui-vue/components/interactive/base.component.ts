@@ -1,4 +1,4 @@
-import type { PropType } from 'vue'
+import type { PropType, Ref } from 'vue'
 import { watch } from 'vue'
 import { type IInteractive, type IInteractiveProps, TInteractive } from '@core'
 import {
@@ -6,8 +6,10 @@ import {
 	emitsComponentView,
 	propsComponentView,
 	syncComponentView,
+	type IComponentViewState,
 } from '../component-view'
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types'
+import { useSyncProps } from '../../composables/useSyncProps'
 
 export const emitsInteractive: TEmits = [
 	...emitsComponentView,
@@ -39,6 +41,11 @@ export default {
 	props: propsInteractive,
 }
 
+export interface IInteractiveState extends IComponentViewState {
+	disabled: Ref<boolean>
+	focused: Ref<boolean>
+}
+
 /**
  * Bind props to instance properties.
  * @param props
@@ -46,8 +53,8 @@ export default {
  */
 export function syncInteractive(
 	options: ISyncComponentModelOptions<IInteractiveProps, IInteractive>,
-) {
-	syncComponentView(options)
+): IInteractiveState {
+	const base = syncComponentView(options)
 
 	const { instance, props, emit } = options
 
@@ -85,4 +92,12 @@ export function syncInteractive(
 			}
 		},
 	)
+
+	return {
+		...base,
+		...useSyncProps(instance.events as any, {
+			disabled: () => instance.disabled,
+			focused: () => instance.focused,
+		}),
+	}
 }

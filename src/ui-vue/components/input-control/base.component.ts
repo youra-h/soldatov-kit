@@ -1,4 +1,4 @@
-import type { PropType } from 'vue'
+import type { PropType, Ref } from 'vue'
 import { watch } from 'vue'
 import {
 	type IInputControl,
@@ -11,8 +11,10 @@ import {
 	emitsValueControl,
 	propsValueControl,
 	syncValueControl,
+	type IValueControlState,
 } from '../value-control'
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types'
+import { useSyncProps } from '../../composables/useSyncProps'
 
 export const emitsInputControl: TEmits = [
 	...emitsValueControl,
@@ -60,6 +62,13 @@ export default {
 	props: propsInputControl,
 }
 
+export interface IInputControlState<TValue = any> extends IValueControlState<TValue> {
+	readonly: Ref<boolean>
+	required: Ref<boolean>
+	invalid: Ref<boolean>
+	state: Ref<TInputControlState>
+}
+
 /**
  * Bind props to instance properties.
  * @param props
@@ -67,8 +76,8 @@ export default {
  */
 export function syncInputControl<TValue = string>(
 	options: ISyncComponentModelOptions<IInputControlProps<TValue>, IInputControl<TValue>>,
-) {
-	syncValueControl(options)
+): IInputControlState<TValue> {
+	const base = syncValueControl(options)
 
 	const { instance, props, emit } = options
 
@@ -138,4 +147,14 @@ export function syncInputControl<TValue = string>(
 			}
 		},
 	)
+
+	return {
+		...base,
+		...useSyncProps(instance.events as any, {
+			readonly: () => instance.readonly,
+			required: () => instance.required,
+			invalid: () => instance.invalid,
+			state: () => instance.state,
+		}),
+	}
 }

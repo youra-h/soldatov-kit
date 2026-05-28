@@ -109,6 +109,7 @@ export default class TButton extends TTextable<IButtonProps, TButtonEvents> impl
 	set appearance(value: TButtonAppearance) {
 		if (value && this._appearance !== value) {
 			this._applyAppearance(value, this._appearance)
+			;(this.events as TEvented<TButtonEvents>).emit('change:appearance', value)
 		}
 	}
 

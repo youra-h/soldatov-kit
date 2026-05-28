@@ -61,6 +61,7 @@ export default class TCheckBox
 	set plain(value: boolean) {
 		if (this._plain !== value) {
 			this._applyPlain(value)
+			;(this.events as TEvented<TCheckBoxEvents>).emit('change:plain', value)
 		}
 	}
 

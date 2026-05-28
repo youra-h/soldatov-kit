@@ -20,6 +20,7 @@ export interface IButtonProps extends ITextableProps {
 
 export type TButtonEvents = TTextableEvents & {
 	'change:loading': (value: boolean) => void
+	'change:appearance': (value: TButtonAppearance) => void
 }
 
 export type TButtonStatesOptions = TTextableStatesOptions & {

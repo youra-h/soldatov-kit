@@ -1,8 +1,9 @@
-import type { PropType } from 'vue'
+import type { PropType, Ref } from 'vue'
 import { watch } from 'vue'
 import { type ITextable, type ITextableProps, TTextable } from '@core'
-import { BaseControl, emitsControl, propsControl, syncControl } from '../control'
+import { BaseControl, emitsControl, propsControl, syncControl, type IControlState } from '../control'
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types'
+import { useSyncProps } from '../../composables/useSyncProps'
 
 export const emitsTextable: TEmits = [
 	...emitsControl,
@@ -26,13 +27,17 @@ export default {
 	props: propsTextable,
 }
 
+export interface ITextableState extends IControlState {
+	text: Ref<string>
+}
+
 /**
  * Bind props to instance properties.
  * @param props
  * @param instance
  */
-export function syncTextable(options: ISyncComponentModelOptions<ITextableProps, ITextable>) {
-	syncControl(options)
+export function syncTextable(options: ISyncComponentModelOptions<ITextableProps, ITextable>): ITextableState {
+	const base = syncControl(options)
 
 	const { instance, props, emit } = options
 
@@ -51,4 +56,11 @@ export function syncTextable(options: ISyncComponentModelOptions<ITextableProps,
 			}
 		},
 	)
+
+	return {
+		...base,
+		...useSyncProps(instance.events as any, {
+			text: () => instance.text,
+		}),
+	}
 }
