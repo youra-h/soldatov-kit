@@ -141,6 +141,9 @@ export function syncCollection(
 			value: () => instance.items,
 			events: ['item:added', 'item:deleted', 'cleared', 'item:moved'],
 		},
-		count: () => instance.count,
+		count: {
+			value: () => instance.count,
+			events: ['item:added', 'item:deleted', 'cleared', 'item:moved'],
+		},
 	})
 }
