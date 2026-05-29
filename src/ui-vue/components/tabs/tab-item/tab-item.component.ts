@@ -5,11 +5,13 @@ import {
 	emitsTabItemCustom,
 	propsTabItemCustom,
 	syncTabItemCustom,
+	type ITabItemCustomState,
 } from './tab-item-custom.component'
 import {
 	emitsActivatableCollectionItem,
 	syncActivatableCollectionItem,
 	propsActivatableCollectionItem,
+	type IActivatableCollectionItemState,
 } from '../../collection/activable'
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../../types'
 
@@ -30,7 +32,8 @@ export default {
 	props: propsTabItem,
 }
 
-export interface ITabItemState extends IActivatableCollectionItemState<ITabItem> {}
+export interface ITabItemState
+	extends ITabItemCustomState, IActivatableCollectionItemState<ITabItem> {}
 
 /**
  * Синхронизация props и событий для TabItem

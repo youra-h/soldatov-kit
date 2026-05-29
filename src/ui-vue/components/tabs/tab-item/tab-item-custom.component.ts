@@ -1,12 +1,20 @@
-import type { PropType } from 'vue'
+import type { PropType, Ref } from 'vue'
 import { watch } from 'vue'
 import {
 	type ITabItemCustom,
 	type ITabItemCustomProps,
 	TTabItemCustom,
+	type TValuePayload,
 } from '@core'
-import { BaseValueControl, emitsValueControl, propsValueControl, syncValueControl } from '../../value-control'
+import {
+	BaseValueControl,
+	emitsValueControl,
+	propsValueControl,
+	syncValueControl,
+	type IValueControlState,
+} from '../../value-control'
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../../types'
+import { useSyncProps } from '../../../composables/useSyncProps'
 
 export const emitsTabItemCustom: TEmits = [
 	...emitsValueControl,
@@ -40,20 +48,25 @@ export default {
 	props: propsTabItemCustom,
 }
 
+export interface ITabItemCustomState extends IValueControlState {
+	text: Ref<string>
+	closable: Ref<boolean | undefined>
+}
+
 /**
  * Синхронизация props и событий для TabItemCustom
  */
 export function syncTabItemCustom(
 	options: ISyncComponentModelOptions<ITabItemCustomProps, ITabItemCustom>,
 ) {
-	syncValueControl(options)
+	const syncProps = syncValueControl(options)
 
 	const { props, instance, emit } = options
 
 	// Пробрасываем события core-инстанса наружу (Vue events)
-	instance.events.on('change:text', (value: string) => {
-		emit?.('change:text', value)
-		emit?.('update:text', value)
+	instance.events.on('change:text', (payload: TValuePayload<string>) => {
+		emit?.('change:text', payload)
+		emit?.('update:text', payload)
 	})
 
 	instance.events.on('change:closable', (value: boolean | undefined) => {
@@ -82,4 +95,12 @@ export function syncTabItemCustom(
 			}
 		},
 	)
+
+	return {
+		...syncProps,
+		...useSyncProps(instance.events as any, {
+			text: () => instance.text,
+			closable: () => instance.closable,
+		}),
+	}
 }

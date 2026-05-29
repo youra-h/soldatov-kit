@@ -23,7 +23,7 @@ export default {
 		// Привязка элемента и инстанса к плагинам
 		const rootRef = useElementBinding(plugins)
 
-		const { rendered, visible, classes, size, variant } = syncTabItem({
+		const { rendered, visible, classes, size, variant, text, active, closable } = syncTabItem({
 			props,
 			instance,
 			plugins,
@@ -42,6 +42,9 @@ export default {
 			classes,
 			size,
 			variant,
+			text,
+			active,
+			closable,
 		}
 	},
 }
@@ -64,20 +67,20 @@ export default {
 			<slot name="before" />
 		</template>
 
-		<slot :text="instance.text" :active="instance.active">
-			{{ instance.text }}
+		<slot :text="text" :active="active">
+			{{ text }}
 		</slot>
 
 		<template #after>
 			<slot name="after" />
 			<Button
-				:rendered="!!instance.closable"
+				:rendered="!!closable"
 				class="s-tab-item__close"
 				@click.stop="instance.close()"
 				appearance="plain"
 			>
 				<slot name="close-icon">
-					<Icon :tag="closeIconTag" :size="instance.size" />
+					<Icon :tag="closeIconTag" :size="size" />
 				</slot>
 			</Button>
 		</template>
