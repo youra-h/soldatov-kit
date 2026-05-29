@@ -5,6 +5,7 @@ import { useBundle } from '../../composables/useBundle'
 import { useElementBinding } from '../../composables/useElementBinding'
 import { useInstanceBinding } from '../../composables/useInstanceBinding'
 import BaseIcon, { syncIcon } from './base.component'
+import { useEventState } from '../../composables/useEventState'
 import { createComponentViewBundle, TIconStylePlugin } from '@plugins'
 import type { TBaseComponentViewProps } from '../component-view'
 
@@ -30,11 +31,13 @@ export default {
 			emit,
 		})
 
+		const styles = useEventState(iconPlugin.events, () => iconPlugin.styles, ['change:styles'])
+
 		return {
 			instance,
 			plugins,
 			rootRef,
-			styles: iconPlugin.styles,
+			styles,
 			tag,
 			rendered,
 			visible,
