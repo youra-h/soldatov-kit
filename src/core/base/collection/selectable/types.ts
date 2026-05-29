@@ -88,6 +88,8 @@ export interface ISelectableCollection<
 	TEvents extends TSelectableCollectionEvents = TSelectableCollectionEvents,
 	TItem extends ISelectableCollectionItem = ISelectableCollectionItem,
 > extends ICollection<TProps, TEvents, TItem> {
+	/** Текущий режим выбора */
+	mode: TSelectionMode
 	readonly selected: ISelectableCollectionItem[]
 	/** Количество выбранных элементов */
 	readonly selectedCount: number
