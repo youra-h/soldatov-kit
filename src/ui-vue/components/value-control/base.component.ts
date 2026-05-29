@@ -1,4 +1,4 @@
-import type { PropType, Ref } from 'vue'
+import type { PropType, Ref, UnwrapRef } from 'vue'
 import { watch } from 'vue'
 import { type IValueControl, type IValueControlProps, TValueControl } from '@core'
 import { BaseControl, emitsControl, propsControl, syncControl, type IControlState } from '../control'
@@ -37,7 +37,7 @@ export default {
 }
 
 export interface IValueControlState<TValue = any> extends IControlState {
-	value: Ref<TValue>
+	value: Ref<TValue | UnwrapRef<TValue>>
 	name: Ref<string>
 }
 
