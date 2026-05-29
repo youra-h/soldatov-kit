@@ -3,4 +3,5 @@ export {
 	emitsInteractive,
 	syncInteractive,
 	propsInteractive,
+	type IInteractiveState,
 } from './base.component'
