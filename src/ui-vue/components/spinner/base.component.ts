@@ -16,7 +16,18 @@ import {
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types/common'
 import { useSyncProps } from '../../composables/useSyncProps'
 
-export const emitsSpinner: TEmits = [...emitsComponentView] as const
+export const emitsSpinner: TEmits = [
+	...emitsComponentView,
+	'change:variant',
+	'update:variant',
+	'variant',
+	'change:size',
+	'update:size',
+	'size',
+	'change:borderWidth',
+	'update:borderWidth',
+	'borderWidth',
+] as const
 
 export const propsSpinner: TProps = {
 	...propsComponentView,
@@ -56,10 +67,29 @@ export interface ISpinnerState extends IComponentViewState {
  * @param props
  * @param instance
  */
-export function syncSpinner(options: ISyncComponentModelOptions<ISpinnerProps, ISpinner>): ISpinnerState {
+export function syncSpinner(
+	options: ISyncComponentModelOptions<ISpinnerProps, ISpinner>,
+): ISpinnerState {
 	const syncProps = syncComponentView(options)
 
-	const { instance, props } = options
+	const { instance, props, emit } = options
+
+	// Пробрасываем события core-инстанса наружу (Vue events).
+	instance.events.on('change:variant' as any, (value: TComponentVariant) => {
+		emit?.('change:variant', value)
+		emit?.('variant', value)
+		emit?.('update:variant', value)
+	})
+	instance.events.on('change:size' as any, (value: TComponentSize) => {
+		emit?.('change:size', value)
+		emit?.('size', value)
+		emit?.('update:size', value)
+	})
+	instance.events.on('change:borderWidth' as any, (value: number | 'auto') => {
+		emit?.('change:borderWidth', value)
+		emit?.('borderWidth', value)
+		emit?.('update:borderWidth', value)
+	})
 
 	watch<TComponentVariant | undefined>(
 		() => props.variant,
