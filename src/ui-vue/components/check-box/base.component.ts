@@ -54,7 +54,7 @@ export interface ICheckBoxState extends IInputControlState<boolean | undefined> 
 }
 
 export function syncCheckBox(options: ISyncComponentModelOptions<ICheckBoxProps, ICheckBox>): ICheckBoxState {
-	const base = syncInputControl(options)
+	const syncProps = syncInputControl(options)
 
 	const { instance, props, emit } = options
 
@@ -91,7 +91,7 @@ export function syncCheckBox(options: ISyncComponentModelOptions<ICheckBoxProps,
 	)
 
 	return {
-		...base,
+		...syncProps,
 		...useSyncProps(instance.events as any, {
 			indeterminate: () => instance.indeterminate,
 			plain: () => instance.plain,

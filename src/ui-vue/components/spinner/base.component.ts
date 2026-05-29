@@ -57,7 +57,7 @@ export interface ISpinnerState extends IComponentViewState {
  * @param instance
  */
 export function syncSpinner(options: ISyncComponentModelOptions<ISpinnerProps, ISpinner>): ISpinnerState {
-	const base = syncComponentView(options)
+	const syncProps = syncComponentView(options)
 
 	const { instance, props } = options
 
@@ -89,7 +89,7 @@ export function syncSpinner(options: ISyncComponentModelOptions<ISpinnerProps, I
 	)
 
 	return {
-		...base,
+		...syncProps,
 		...useSyncProps(instance.events as any, {
 			variant: () => instance.variant,
 			size: () => instance.size,

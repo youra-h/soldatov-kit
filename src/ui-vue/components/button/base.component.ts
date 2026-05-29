@@ -55,7 +55,7 @@ export function syncButton(
 		props: { loadingShouldDisable?: boolean }
 	},
 ): IButtonState {
-	const base = syncTextable(options)
+	const syncProps = syncTextable(options)
 
 	const { instance, props, emit } = options
 
@@ -104,7 +104,7 @@ export function syncButton(
 	)
 
 	return {
-		...base,
+		...syncProps,
 		...useSyncProps(instance.events as any, {
 			appearance: () => instance.appearance,
 			loading: () => instance.loading,

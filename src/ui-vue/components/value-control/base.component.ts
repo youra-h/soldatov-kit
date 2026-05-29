@@ -49,7 +49,7 @@ export interface IValueControlState<TValue = any> extends IControlState {
 export function syncValueControl<TValue>(
 	options: ISyncComponentModelOptions<IValueControlProps<TValue>, IValueControl<TValue>>,
 ): IValueControlState<TValue> {
-	const base = syncControl(options)
+	const syncProps = syncControl(options)
 
 	const { instance, props, emit } = options
 
@@ -90,7 +90,7 @@ export function syncValueControl<TValue>(
 	)
 
 	return {
-		...base,
+		...syncProps,
 		...useSyncProps(instance.events, {
 			value: () => instance.value,
 			name: () => instance.name,

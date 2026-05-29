@@ -51,7 +51,7 @@ export interface IIconState extends IComponentViewState {
  * @param instance
  */
 export function syncIcon(options: ISyncComponentModelOptions<IIconProps, IIcon>): IIconState {
-	const base = syncComponentView(options)
+	const syncProps = syncComponentView(options)
 
 	const { instance, props } = options
 
@@ -83,7 +83,7 @@ export function syncIcon(options: ISyncComponentModelOptions<IIconProps, IIcon>)
 	)
 
 	return {
-		...base,
+		...syncProps,
 		...useSyncProps(instance.events as any, {
 			size: () => instance.size,
 			width: () => instance.width,

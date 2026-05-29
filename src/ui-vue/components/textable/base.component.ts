@@ -37,7 +37,7 @@ export interface ITextableState extends IControlState {
  * @param instance
  */
 export function syncTextable(options: ISyncComponentModelOptions<ITextableProps, ITextable>): ITextableState {
-	const base = syncControl(options)
+	const syncProps = syncControl(options)
 
 	const { instance, props, emit } = options
 
@@ -58,7 +58,7 @@ export function syncTextable(options: ISyncComponentModelOptions<ITextableProps,
 	)
 
 	return {
-		...base,
+		...syncProps,
 		...useSyncProps(instance.events as any, {
 			text: () => instance.text,
 		}),

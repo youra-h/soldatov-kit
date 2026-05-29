@@ -46,7 +46,7 @@ export interface IControlState extends IStylableState {
  * @param instance
  */
 export function syncControl(options: ISyncComponentModelOptions<IControlProps, IControl>): IControlState {
-	const base = syncStylable(options)
+	const syncProps = syncStylable(options)
 
 	const { instance, props, emit } = options
 
@@ -86,7 +86,7 @@ export function syncControl(options: ISyncComponentModelOptions<IControlProps, I
 	)
 
 	return {
-		...base,
+		...syncProps,
 		...useSyncProps(instance.events as any, {
 			disabled: () => instance.disabled,
 			focused: () => instance.focused,

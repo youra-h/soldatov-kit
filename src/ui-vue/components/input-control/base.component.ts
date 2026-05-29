@@ -77,7 +77,7 @@ export interface IInputControlState<TValue = any> extends IValueControlState<TVa
 export function syncInputControl<TValue = string>(
 	options: ISyncComponentModelOptions<IInputControlProps<TValue>, IInputControl<TValue>>,
 ): IInputControlState<TValue> {
-	const base = syncValueControl(options)
+	const syncProps = syncValueControl(options)
 
 	const { instance, props, emit } = options
 
@@ -149,7 +149,7 @@ export function syncInputControl<TValue = string>(
 	)
 
 	return {
-		...base,
+		...syncProps,
 		...useSyncProps(instance.events as any, {
 			readonly: () => instance.readonly,
 			required: () => instance.required,

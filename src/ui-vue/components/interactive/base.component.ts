@@ -54,7 +54,7 @@ export interface IInteractiveState extends IComponentViewState {
 export function syncInteractive(
 	options: ISyncComponentModelOptions<IInteractiveProps, IInteractive>,
 ): IInteractiveState {
-	const base = syncComponentView(options)
+	const syncProps = syncComponentView(options)
 
 	const { instance, props, emit } = options
 
@@ -94,7 +94,7 @@ export function syncInteractive(
 	)
 
 	return {
-		...base,
+		...syncProps,
 		...useSyncProps(instance.events as any, {
 			disabled: () => instance.disabled,
 			focused: () => instance.focused,
