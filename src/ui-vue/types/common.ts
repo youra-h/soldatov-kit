@@ -1,4 +1,3 @@
-import type { UnwrapNestedRefs } from 'vue'
 import { type IPluginBundle } from '@plugins'
 import type { IComponentView } from '@core'
 
@@ -11,7 +10,7 @@ export interface ISyncComponentModelOptions<
 	TPlugins = IPluginBundle,
 > {
 	props: TProps
-	instance: TInstance | UnwrapNestedRefs<TInstance>
+	instance: TInstance
 	plugins: TPlugins
 	emit?: (...args: any[]) => void
 }
