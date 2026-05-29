@@ -23,7 +23,7 @@ export default {
 		// Привязка элемента и инстанса к плагинам
 		const rootRef = useElementBinding(plugins)
 
-		syncTabItem({
+		const { rendered, visible, classes, size, variant } = syncTabItem({
 			props,
 			instance,
 			plugins,
@@ -32,7 +32,17 @@ export default {
 
 		const closeIconTag = useIconImport('../../icons/close.svg')
 
-		return { instance, closeIconTag, plugins, rootRef }
+		return {
+			instance,
+			closeIconTag,
+			plugins,
+			rootRef,
+			rendered,
+			visible,
+			classes,
+			size,
+			variant,
+		}
 	},
 }
 </script>
@@ -40,13 +50,13 @@ export default {
 <template>
 	<Button
 		ref="rootRef"
-		:visible="instance.visible"
-		:rendered="instance.rendered"
-		:disabled="instance.disabled"
+		:visible="visible"
+		:rendered="rendered"
+		:disabled="disabled"
 		appearance="none"
-		:size="instance.size"
-		:variant="instance.variant"
-		:class="instance.classes.list"
+		:size="size"
+		:variant="variant"
+		:class="classes"
 		@click="instance.click()"
 		role="tab"
 	>

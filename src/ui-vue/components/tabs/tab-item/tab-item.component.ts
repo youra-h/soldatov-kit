@@ -30,10 +30,14 @@ export default {
 	props: propsTabItem,
 }
 
+export interface ITabItemState extends IActivatableCollectionItemState<ITabItem> {}
+
 /**
  * Синхронизация props и событий для TabItem
  */
 export function syncTabItem(options: ISyncComponentModelOptions<ITabItemProps, ITabItem>) {
-	syncTabItemCustom(options)
-	syncActivatableCollectionItem(options)
+	return {
+		...syncTabItemCustom(options),
+		...syncActivatableCollectionItem(options),
+	}
 }

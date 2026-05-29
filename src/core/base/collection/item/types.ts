@@ -1,5 +1,4 @@
 import { TCollection } from './../collection.class'
-import { TCollectionItem } from './../item/collection-item.class'
 import type { IEntity } from '../../../base/entity'
 import { TEvented } from '../../../common/evented'
 

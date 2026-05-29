@@ -13,12 +13,14 @@ export default {
 	props: propsCollectionItem,
 }
 
+export interface ICollectionItemState<T extends ICollectionItem = ICollectionItem> {}
+
 /**
  * Синхронизация props и событий для CollectionItem
  */
 export function syncCollectionItem(
 	options: ISyncComponentModelOptions<ICollectionItemProps, ICollectionItem>,
-) {
+): ICollectionItemState {
 	const { instance, emit, plugins } = options
 
 	// Использовать inject для получения коллекции родителя и автоматической регистрации в ней (если декларативный режим)
@@ -34,4 +36,6 @@ export function syncCollectionItem(
 		}
 		emit?.('free', item)
 	})
+
+	return {}
 }

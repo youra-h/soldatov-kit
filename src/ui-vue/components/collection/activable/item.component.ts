@@ -10,8 +10,10 @@ import {
 	emitsCollectionItem,
 	propsCollectionItem,
 	syncCollectionItem,
+	type ICollectionItemState,
 } from '../item'
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../../types'
+import { useSyncProps } from '../../../composables/useSyncProps'
 
 export const emitsActivatableCollectionItem: TEmits = [
 	...emitsCollectionItem,
@@ -34,6 +36,12 @@ export default {
 	props: propsActivatableCollectionItem,
 }
 
+export interface IActivatableCollectionItemState<
+	T extends IActivatableCollectionItem = IActivatableCollectionItem,
+> extends ICollectionItemState<T> {
+	active?: boolean
+}
+
 /**
  * Синхронизация props и событий для ActivatableCollectionItem
  */
@@ -42,8 +50,8 @@ export function syncActivatableCollectionItem(
 		IActivatableCollectionItemProps,
 		IActivatableCollectionItem
 	>,
-) {
-	syncCollectionItem(options)
+): IActivatableCollectionItemState {
+	const syncProps = syncCollectionItem(options)
 
 	const { props, instance, emit } = options
 
@@ -66,4 +74,11 @@ export function syncActivatableCollectionItem(
 		},
 		{ immediate: true },
 	)
+
+	return {
+		...syncProps,
+		...useSyncProps(instance.events as any, {
+			active: () => instance.active,
+		}),
+	}
 }

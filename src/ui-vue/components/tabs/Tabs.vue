@@ -23,14 +23,14 @@ export default {
 		// Привязка элемента и инстанса к плагинам
 		const rootRef = useElementBinding(plugins)
 
-		const { items, activeItem } = syncTabs({
+		const { rendered, visible, classes, items, activeItem } = syncTabs({
 			props,
 			instance,
 			plugins,
 			emit,
 		})
 
-		return { instance, plugins, rootRef, activeItem, items }
+		return { instance, plugins, rootRef, rendered, visible, classes, activeItem, items }
 	},
 }
 </script>
@@ -38,9 +38,9 @@ export default {
 <template>
 	<div
 		ref="rootRef"
-		v-if="instance.rendered"
-		v-show="instance.visible"
-		:class="instance.classes.list"
+		v-if="rendered"
+		v-show="visible"
+		:class="classes"
 	>
 		<div class="s-tabs__list" role="tablist">
 			<div class="s-tabs__list--prefix" v-if="$slots.prefix">

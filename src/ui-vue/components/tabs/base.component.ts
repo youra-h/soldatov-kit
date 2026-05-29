@@ -1,4 +1,4 @@
-import type { PropType } from 'vue'
+import type { PropType, Ref } from 'vue'
 import { watch } from 'vue'
 import { useSyncProps } from '../../composables/useSyncProps'
 import {
@@ -12,11 +12,18 @@ import {
 	type TTabsAppearance,
 	type ITabItem,
 } from '@core'
-import { BaseControl, emitsControl, propsControl, syncControl } from '../control'
+import {
+	BaseControl,
+	emitsControl,
+	propsControl,
+	syncControl,
+	type IControlState,
+} from '../control'
 import {
 	emitsActivatableCollection,
 	syncActivatableCollection,
 	propsActivatableCollection,
+	type IActivatableCollectionState,
 } from '../collection/activable'
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types'
 
@@ -71,12 +78,20 @@ export default {
 	props: propsTabs,
 }
 
+export interface ITabsState extends IControlState, IActivatableCollectionState<ITabItem> {
+	orientation: Ref<TTabsOrientation>
+	alignment: Ref<TTabsAlignment>
+	position: Ref<TTabsPosition>
+	appearance: Ref<TTabsAppearance>
+	closable: Ref<boolean>
+}
+
 /**
  * Синхронизация props и событий для Tabs
  */
 export function syncTabs(
 	options: ISyncComponentModelOptions<ITabsProps & ICollectionProps, ITabs>,
-) {
+): ITabsState {
 	const synPropsControl = syncControl(options)
 
 	const { props, instance, emit, plugins } = options
