@@ -96,6 +96,7 @@ export function syncSelectableCollection(
 		(value) => {
 			if (value !== undefined && value !== instance.mode) {
 				instance.mode = value
+
 				emit?.('change:mode', value)
 				emit?.('update:mode', value)
 			}
