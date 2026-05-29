@@ -91,7 +91,7 @@ export function syncValueControl<TValue>(
 
 	return {
 		...base,
-		...useSyncProps(instance.events as any, {
+		...useSyncProps(instance.events, {
 			value: () => instance.value,
 			name: () => instance.name,
 		}),

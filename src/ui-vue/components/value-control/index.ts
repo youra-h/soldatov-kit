@@ -3,4 +3,5 @@ export {
 	emitsValueControl,
 	syncValueControl,
 	propsValueControl,
+	type IValueControlState,
 } from './base.component'

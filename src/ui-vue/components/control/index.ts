@@ -1,1 +1,7 @@
-export { default as BaseControl, emitsControl, syncControl, propsControl } from './base.component'
+export {
+	default as BaseControl,
+	emitsControl,
+	syncControl,
+	propsControl,
+	type IControlState,
+} from './base.component'

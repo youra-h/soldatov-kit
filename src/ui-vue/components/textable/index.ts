@@ -1,1 +1,7 @@
-export { default as BaseTextable, emitsTextable, syncTextable, propsTextable } from './base.component'
+export {
+	default as BaseTextable,
+	emitsTextable,
+	syncTextable,
+	propsTextable,
+	type ITextableState,
+} from './base.component'
