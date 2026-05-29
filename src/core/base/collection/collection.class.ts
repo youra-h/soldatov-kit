@@ -75,6 +75,24 @@ export class TCollection<
 	}
 
 	/**
+	 * Вспомогательный метод, собирает и эмитит общие события коллекции:
+	 * 'changed', 'change:items' и опционально 'change:count'.
+	 * @param item Опционально — элемент, связанный с изменением.
+	 * @param emitCount По умолчанию true — эмитить 'change:count'.
+	 * @protected
+	 */
+	protected _notifyItems(item?: TItem, emitCount = true): void {
+		const ev = this.events as TEvented<TCollectionEvents>
+
+		ev.emit('changed', { collection: this, item })
+		ev.emit('change:items', this._items)
+
+		if (emitCount) {
+			ev.emit('change:count', this.count)
+		}
+	}
+
+	/**
 	 * Создаёт и добавляет новый элемент в конец коллекции.
 	 * Возвращает созданный элемент.
 	 */
@@ -178,6 +196,9 @@ export class TCollection<
 
 		this._onAfterItemAdd(item)
 
+		// Общий сигнал об изменении коллекции
+		this._notifyItems(item)
+
 		return true
 	}
 
@@ -216,6 +237,9 @@ export class TCollection<
 			item,
 		})
 
+		// Общий сигнал об изменении коллекции
+		this._notifyItems(item)
+
 		return true
 	}
 
@@ -241,6 +265,8 @@ export class TCollection<
 		this._items.forEach((it) => it.free())
 		this._items = []
 		;(this.events as TEvented<TCollectionEvents>).emit('cleared', { collection: this })
+		// Общий сигнал об изменении коллекции
+		this._notifyItems()
 	}
 
 	/**
@@ -282,6 +308,9 @@ export class TCollection<
 			oldIndex,
 			newIndex,
 		})
+
+		// Сигнал об изменении порядка/списка элементов
+		this._notifyItems(item, false)
 	}
 
 	/**

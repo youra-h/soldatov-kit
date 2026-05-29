@@ -25,7 +25,21 @@ export type TCollectionEvents = {
 	 * @param payload.collection  Коллекция, в которой произошло изменение.
 	 * @param payload.item        Опционально: элемент, который был добавлен, удалён или перемещён.
 	 */
+	/**
+	 * Устаревшее/общее событие изменения коллекции.
+	 * Вызывается после операций добавления/удаления/перемещения/очистки.
+	 */
 	changed: (payload: { collection: TCollection; item?: ICollectionItem }) => void
+
+	/**
+	 * После изменения списка элементов (items). Передаётся актуальный массив элементов.
+	 */
+	'change:items': (items: ICollectionItem[]) => void
+
+	/**
+	 * После изменения количества элементов в коллекции.
+	 */
+	'change:count': (count: number) => void
 
 	/**
 	 * После очистки коллекции.

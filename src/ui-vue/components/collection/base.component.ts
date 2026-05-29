@@ -1,10 +1,11 @@
-import type { PropType } from 'vue'
+import type { PropType, Ref } from 'vue'
 import { watch } from 'vue'
 import { type ICollection, type ICollectionProps, type ICollectionItem } from '@core'
 import { TCollectionElementsPlugin } from '@plugins'
 import { useProvideCollection } from '../../composables/useProvideCollection'
 import { useProvideCollectionPlugins } from '../../composables/useProvideCollectionPlugins'
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types'
+import { useSyncProps } from '../../composables/useSyncProps'
 
 export const emitsCollection: TEmits = [
 	'item:added',
@@ -31,10 +32,17 @@ export default {
 	props: propsCollection,
 }
 
+export interface ICollectionState<TItem = any> {
+	items: Ref<TItem[]>
+	count: Ref<number>
+}
+
 /**
  * Синхронизация props и событий для Collection
  */
-export function syncCollection(options: ISyncComponentModelOptions<ICollectionProps, ICollection>) {
+export function syncCollection(
+	options: ISyncComponentModelOptions<ICollectionProps, ICollection>,
+): ICollectionState {
 	const { instance, emit, props, plugins } = options
 
 	useProvideCollection(instance)
@@ -126,4 +134,10 @@ export function syncCollection(options: ISyncComponentModelOptions<ICollectionPr
 			emit?.('changed', payload)
 		},
 	)
+
+	// Возвращаем реактивные Ref-ы для items и count
+	return useSyncProps(instance.events as any, {
+		items: () => instance.items,
+		count: () => instance.count,
+	})
 }
