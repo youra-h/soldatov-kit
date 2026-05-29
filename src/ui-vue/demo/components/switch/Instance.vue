@@ -31,20 +31,18 @@ const emit = defineEmits<{
 }>()
 
 // Создаем инстанс компонента
-const instance = reactive(
-	new TSwitch({
-		rendered: props.rendered ?? true,
-		visible: props.visible ?? true,
-		size: props.size || 'normal',
-		variant: props.variant || 'normal',
-		disabled: props.disabled ?? false,
-		readonly: props.readonly ?? false,
-		required: props.required ?? false,
-		invalid: props.invalid ?? false,
-		state: props.state || 'normal',
-		value: props.value ?? false,
-	}),
-)
+const instance = new TSwitch({
+	rendered: props.rendered ?? true,
+	visible: props.visible ?? true,
+	size: props.size || 'normal',
+	variant: props.variant || 'normal',
+	disabled: props.disabled ?? false,
+	readonly: props.readonly ?? false,
+	required: props.required ?? false,
+	invalid: props.invalid ?? false,
+	state: props.state || 'normal',
+	value: props.value ?? false,
+})
 
 defineExpose({
 	show: () => instance.show(),

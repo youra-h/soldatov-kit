@@ -33,22 +33,20 @@ const emit = defineEmits<{
 }>()
 
 // Создаем инстанс компонента
-const instance = reactive(
-	new TCheckBox({
-		rendered: props.rendered ?? true,
-		visible: props.visible ?? true,
-		size: props.size || 'normal',
-		variant: props.variant || 'normal',
-		disabled: props.disabled ?? false,
-		readonly: props.readonly ?? false,
-		required: props.required ?? false,
-		invalid: props.invalid ?? false,
-		state: props.state || 'normal',
-		value: props.value ?? false,
-		indeterminate: props.indeterminate ?? false,
-		plain: props.plain ?? false,
-	}),
-)
+const instance = new TCheckBox({
+	rendered: props.rendered ?? true,
+	visible: props.visible ?? true,
+	size: props.size || 'normal',
+	variant: props.variant || 'normal',
+	disabled: props.disabled ?? false,
+	readonly: props.readonly ?? false,
+	required: props.required ?? false,
+	invalid: props.invalid ?? false,
+	state: props.state || 'normal',
+	value: props.value ?? false,
+	indeterminate: props.indeterminate ?? false,
+	plain: props.plain ?? false,
+})
 
 defineExpose({
 	show: () => instance.show(),

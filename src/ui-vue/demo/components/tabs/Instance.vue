@@ -43,20 +43,18 @@ defineExpose({
 	hide: () => instance.hide(),
 })
 
-const instance = reactive(
-	new TTabs({
-		visible: props.visible ?? true,
-		rendered: props.rendered ?? true,
-		disabled: props.disabled ?? false,
-		size: props.size ?? 'normal',
-		variant: props.variant ?? 'normal',
-		orientation: props.orientation ?? 'horizontal',
-		alignment: props.alignment ?? 'start',
-		position: props.position ?? 'start',
-		appearance: props.appearance ?? 'line',
-		closable: props.closable ?? false,
-	}),
-)
+const instance = new TTabs({
+	visible: props.visible ?? true,
+	rendered: props.rendered ?? true,
+	disabled: props.disabled ?? false,
+	size: props.size ?? 'normal',
+	variant: props.variant ?? 'normal',
+	orientation: props.orientation ?? 'horizontal',
+	alignment: props.alignment ?? 'start',
+	position: props.position ?? 'start',
+	appearance: props.appearance ?? 'line',
+	closable: props.closable ?? false,
+})
 
 instance.collection.add({ text: 'Tab 1', value: 'tab1', active: true })
 instance.collection.add({ text: 'Tab 2', value: 'tab2' })

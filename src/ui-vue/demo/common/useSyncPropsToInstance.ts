@@ -11,7 +11,7 @@ import { watch, type UnwrapRef } from 'vue'
  *
  * @example
  * ```ts
- * const instance = reactive(new TIcon({ ... }))
+ * const instance = new TIcon({ ... })
  *
  * // Синхронизировать все props
  * useSyncPropsToInstance(props, instance)

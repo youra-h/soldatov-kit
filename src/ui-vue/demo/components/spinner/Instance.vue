@@ -22,14 +22,12 @@ const emit = defineEmits<{
 }>()
 
 // Создаем инстанс компонента
-const instance = reactive(
-	new TSpinner({
-		rendered: props.rendered ?? true,
-		visible: props.visible ?? true,
-		size: props.size || 'normal',
-		variant: props.variant || 'normal',
-	}),
-)
+const instance = new TSpinner({
+	rendered: props.rendered ?? true,
+	visible: props.visible ?? true,
+	size: props.size || 'normal',
+	variant: props.variant || 'normal',
+})
 
 defineExpose({
 	show: () => instance.show(),

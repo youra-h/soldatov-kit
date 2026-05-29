@@ -24,13 +24,11 @@ defineExpose({
 	hide: () => instance.hide(),
 })
 
-const instance = reactive(
-	new TComponentView({
-		tag: props.tag || 'div',
-		rendered: props.rendered ?? true,
-		visible: props.visible ?? true,
-	}),
-)
+const instance = new TComponentView({
+	tag: props.tag || 'div',
+	rendered: props.rendered ?? true,
+	visible: props.visible ?? true,
+})
 
 // Создаем обработчики событий через композабл
 const { handlers, logEvent } = useEventLogger(emit, emitsComponentView)

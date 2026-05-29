@@ -30,17 +30,15 @@ const emit = defineEmits<{
 }>()
 
 // Создаем инстанс компонента
-const instance = reactive(
-	new TButton({
-		rendered: props.rendered ?? true,
-		visible: props.visible ?? true,
-		size: props.size || 'normal',
-		variant: props.variant || 'normal',
-		appearance: props.appearance || 'filled',
-		disabled: props.disabled ?? false,
-		text: props.text || 'Button',
-	}),
-)
+const instance = new TButton({
+	rendered: props.rendered ?? true,
+	visible: props.visible ?? true,
+	size: props.size || 'normal',
+	variant: props.variant || 'normal',
+	appearance: props.appearance || 'filled',
+	disabled: props.disabled ?? false,
+	text: props.text || 'Button',
+})
 
 defineExpose({
 	show: () => instance.show(),

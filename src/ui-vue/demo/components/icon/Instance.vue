@@ -24,16 +24,14 @@ const emit = defineEmits<{
 }>()
 
 // Используем new TIcon вместо TIcon.create, так как передаем Partial<IIconProps>
-const instance = reactive(
-	new TIcon({
-		tag: useIconImport(props.tag || '/src/icons/home.svg'),
-		rendered: props.rendered ?? true,
-		visible: props.visible ?? true,
-		size: props.size || 'normal',
-		width: props.width,
-		height: props.height,
-	}),
-)
+const instance = new TIcon({
+	tag: useIconImport(props.tag || '/src/icons/home.svg'),
+	rendered: props.rendered ?? true,
+	visible: props.visible ?? true,
+	size: props.size || 'normal',
+	width: props.width,
+	height: props.height,
+})
 
 defineExpose({
 	show: () => instance.show(),
