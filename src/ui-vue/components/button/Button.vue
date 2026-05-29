@@ -20,7 +20,7 @@ export default {
 		// Привязка элемента и инстанса к плагинам
 		const rootRef = useElementBinding(plugins)
 
-		syncButton({
+		const { tag, rendered, visible, classes, disabled, loading, text } = syncButton({
 			props,
 			instance,
 			plugins,
@@ -31,6 +31,13 @@ export default {
 			instance,
 			plugins,
 			rootRef,
+			tag,
+			rendered,
+			visible,
+			classes,
+			disabled,
+			loading,
+			text,
 		}
 	},
 }
@@ -39,16 +46,16 @@ export default {
 <template>
 	<component
 		ref="rootRef"
-		:is="instance.tag"
-		v-if="instance.rendered"
-		v-show="instance.visible"
-		:class="instance.classes.list"
-		:disabled="instance.disabled || undefined"
+		:is="tag"
+		v-if="rendered"
+		v-show="visible"
+		:class="classes"
+		:disabled="disabled || undefined"
 		@click="instance.events.emit('click', $event)"
 	>
 		<slot name="before"> </slot>
-		<slot>{{ instance.text }}</slot>
-		<slot name="after" :loading="instance.loading"> </slot>
+		<slot>{{ text }}</slot>
+		<slot name="after" :loading="loading"> </slot>
 	</component>
 </template>
 
