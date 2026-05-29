@@ -1,4 +1,4 @@
-import type { PropType } from 'vue'
+import type { PropType, Ref } from 'vue'
 import { watch } from 'vue'
 import {
 	type ISelectableCollection,
@@ -12,8 +12,10 @@ import {
 	emitsCollection,
 	propsCollection,
 	syncCollection,
+	type ICollectionState,
 } from '../base.component'
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../../types'
+import { useSyncProps } from '../../../composables/useSyncProps'
 
 export const emitsSelectableCollection: TEmits = [
 	...emitsCollection,
@@ -41,13 +43,19 @@ export default {
 	props: propsSelectableCollection,
 }
 
+export interface ISelectableCollectionState extends ICollectionState {
+	selected: Ref<ISelectableCollectionItem[]>
+	selectedCount: Ref<number>
+	mode: Ref<TSelectionMode>
+}
+
 /**
  * Синхронизация props и событий для SelectableCollection
  */
 export function syncSelectableCollection(
 	options: ISyncComponentModelOptions<ISelectableCollectionProps, ISelectableCollection>,
-) {
-	syncCollection(options)
+): ISelectableCollectionState {
+	const base = syncCollection(options)
 
 	const { props, instance, emit } = options
 
@@ -56,8 +64,6 @@ export function syncSelectableCollection(
 		'item:selected',
 		(payload: { collection: ISelectableCollection; item: ISelectableCollectionItem }) => {
 			emit?.('item:selected', payload)
-			emit?.('change:selected', instance.selected)
-			emit?.('change:selectedCount', instance.selectedCount)
 		},
 	)
 
@@ -65,19 +71,25 @@ export function syncSelectableCollection(
 		'item:unselected',
 		(payload: { collection: ISelectableCollection; item: ISelectableCollectionItem }) => {
 			emit?.('item:unselected', payload)
-			emit?.('change:selected', instance.selected)
-			emit?.('change:selectedCount', instance.selectedCount)
 		},
 	)
 
-	instance.events.on(
-		'selection:cleared',
-		(payload: { collection: ISelectableCollection }) => {
-			emit?.('selection:cleared', payload)
-			emit?.('change:selected', instance.selected)
-			emit?.('change:selectedCount', instance.selectedCount)
-		},
-	)
+	instance.events.on('selection:cleared', (payload: { collection: ISelectableCollection }) => {
+		emit?.('selection:cleared', payload)
+	})
+
+	instance.events.on('change:selected' as any, (items: ISelectableCollectionItem[]) => {
+		emit?.('change:selected', items)
+	})
+
+	instance.events.on('change:selectedCount' as any, (count: number) => {
+		emit?.('change:selectedCount', count)
+	})
+
+	instance.events.on('change:mode' as any, (mode: TSelectionMode) => {
+		emit?.('change:mode', mode)
+		emit?.('update:mode', mode)
+	})
 
 	watch<TSelectionMode | undefined>(
 		() => props.mode,
@@ -89,4 +101,13 @@ export function syncSelectableCollection(
 			}
 		},
 	)
+
+	return {
+		...base,
+		...useSyncProps(instance.events, {
+			selected: () => instance.selected,
+			selectedCount: () => instance.selectedCount,
+			mode: () => instance.mode,
+		}),
+	}
 }
