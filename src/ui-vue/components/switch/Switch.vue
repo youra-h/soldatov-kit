@@ -20,42 +20,50 @@ export default {
 		// Привязка элемента и инстанса к плагинам
 		const rootRef = useElementBinding(plugins)
 
-		syncSwitch({
-			props,
+		const { rendered, visible, classes, disabled, name, size, value, readonly, required } =
+			syncSwitch({
+				props,
+				instance,
+				plugins,
+				emit,
+			})
+
+		return {
 			instance,
 			plugins,
-			emit,
-		})
-
-		return { instance, plugins, rootRef }
+			rootRef,
+			rendered,
+			visible,
+			classes,
+			disabled,
+			name,
+			size,
+			value,
+			readonly,
+			required,
+		}
 	},
 }
 </script>
 
 <template>
-	<div ref="rootRef" v-if="instance.rendered" v-show="instance.visible" :class="instance.classes.list">
+	<div ref="rootRef" v-if="rendered" v-show="visible" :class="classes">
 		<input
 			type="checkbox"
 			:id="instance.id.toString()"
-			:checked="instance.value"
-			:name="instance.name"
-			:disabled="instance.disabled"
-			:required="instance.required"
-			:aria-checked="Boolean(instance.value)"
-			@click="instance.readonly ? $event.preventDefault() : null"
+			:checked="value"
+			:name="name"
+			:disabled="disabled"
+			:required="required"
+			:aria-checked="Boolean(value)"
+			@click="readonly ? $event.preventDefault() : null"
 			@change="instance.change($event)"
 		/>
 		<div class="s-switch__track">
 			<div class="s-switch__track--thumb">
 				<transition name="fade" mode="out-in">
-					<slot
-						v-if="!instance.value"
-						name="off"
-						:value="instance.value"
-						:instance="instance"
-					>
-					</slot>
-					<slot v-else name="on" :value="instance.value" :instance="instance"> </slot>
+					<slot v-if="!value" name="off" :value="value" :instance="instance"> </slot>
+					<slot v-else name="on" :value="value" :instance="instance"> </slot>
 				</transition>
 			</div>
 		</div>

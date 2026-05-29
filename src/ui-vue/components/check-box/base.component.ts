@@ -14,8 +14,10 @@ import { useSyncProps } from '../../composables/useSyncProps'
 export const emitsCheckBox: TEmits = [
 	...emitsInputControl,
 	'update:indeterminate',
+	'indeterminate',
 	'change:indeterminate',
 	'update:plain',
+	'plain',
 	'change:plain',
 ] as const
 
@@ -53,7 +55,9 @@ export interface ICheckBoxState extends IInputControlState<boolean | undefined> 
 	plain: Ref<boolean>
 }
 
-export function syncCheckBox(options: ISyncComponentModelOptions<ICheckBoxProps, ICheckBox>): ICheckBoxState {
+export function syncCheckBox(
+	options: ISyncComponentModelOptions<ICheckBoxProps, ICheckBox>,
+): ICheckBoxState {
 	const syncProps = syncInputControl(options)
 
 	const { instance, props, emit } = options
@@ -61,11 +65,13 @@ export function syncCheckBox(options: ISyncComponentModelOptions<ICheckBoxProps,
 	// Пробрасываем события core-инстанса наружу (Vue events)
 	instance.events.on('change:indeterminate' as any, (value: boolean) => {
 		emit?.('change:indeterminate', value)
+		emit?.('indeterminate', value)
 		emit?.('update:indeterminate', value)
 	})
 
 	instance.events.on('change:plain' as any, (value: boolean) => {
 		emit?.('change:plain', value)
+		emit?.('plain', value)
 		emit?.('update:plain', value)
 	})
 
@@ -74,9 +80,6 @@ export function syncCheckBox(options: ISyncComponentModelOptions<ICheckBoxProps,
 		(value) => {
 			if (value !== undefined && value !== instance.indeterminate) {
 				instance.indeterminate = value
-
-				emit?.('update:indeterminate', value)
-				emit?.('change:indeterminate', value)
 			}
 		},
 	)

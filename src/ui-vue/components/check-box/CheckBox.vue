@@ -21,7 +21,19 @@ export default {
 		// Привязка элемента и инстанса к плагинам
 		const rootRef = useElementBinding(plugins)
 
-		syncCheckBox({
+		const {
+			rendered,
+			visible,
+			classes,
+			disabled,
+			name,
+			size,
+			indeterminate,
+			plain,
+			value,
+			readonly,
+			required,
+		} = syncCheckBox({
 			props,
 			instance,
 			plugins,
@@ -32,42 +44,59 @@ export default {
 		const defaultIconTag = useIconImport('../../icons/check.svg')
 		const defaultIndeterminateIconTag = useIconImport('../../icons/check_indeterminate.svg')
 
-		return { instance, defaultIconTag, defaultIndeterminateIconTag, plugins, rootRef }
+		return {
+			instance,
+			defaultIconTag,
+			defaultIndeterminateIconTag,
+			plugins,
+			rootRef,
+			rendered,
+			visible,
+			classes,
+			disabled,
+			name,
+			size,
+			indeterminate,
+			plain,
+			value,
+			readonly,
+			required,
+		}
 	},
 }
 </script>
 
 <template>
-	<div ref="rootRef" v-if="instance.rendered" v-show="instance.visible" :class="instance.classes.list">
+	<div ref="rootRef" v-if="rendered" v-show="visible" :class="classes">
 		<input
 			type="checkbox"
 			:id="instance.id.toString()"
-			:checked="instance.value"
-			:name="instance.name"
-			:disabled="instance.disabled"
-			:required="instance.required"
+			:checked="value"
+			:name="name"
+			:disabled="disabled"
+			:required="required"
 			:aria-checked="instance.getAriaChecked()"
-			@click="instance.readonly ? $event.preventDefault() : null"
+			@click="readonly ? $event.preventDefault() : null"
 			@change="instance.change($event)"
 		/>
 		<div class="s-check-box__container">
 			<!-- Слот для checked иконки -->
 			<slot
-				v-if="instance.value && !instance.indeterminate"
+				v-if="value && !indeterminate"
 				name="icon"
-				:value="instance.value"
-				:indeterminate="instance.indeterminate"
+				:value="value"
+				:indeterminate="indeterminate"
 			>
-				<Icon :tag="defaultIconTag" :size="instance.size" />
+				<Icon :tag="defaultIconTag" :size="size" />
 			</slot>
 			<!-- Слот для indeterminate иконки -->
 			<slot
-				v-else-if="instance.indeterminate"
+				v-else-if="indeterminate"
 				name="indeterminate-icon"
-				:value="instance.value"
-				:indeterminate="instance.indeterminate"
+				:value="value"
+				:indeterminate="indeterminate"
 			>
-				<Icon :tag="defaultIndeterminateIconTag" :size="instance.size" />
+				<Icon :tag="defaultIndeterminateIconTag" :size="size" />
 			</slot>
 		</div>
 	</div>
