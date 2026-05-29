@@ -20,7 +20,7 @@ export default {
 		// Привязка элемента и инстанса к плагинам
 		const rootRef = useElementBinding(plugins)
 
-		syncIcon({
+		const { tag, rendered, visible, classes } = syncIcon({
 			props,
 			instance,
 			plugins,
@@ -31,19 +31,17 @@ export default {
 			instance,
 			plugins,
 			rootRef,
+			tag,
+			rendered,
+			visible,
+			classes,
 		}
 	},
 }
 </script>
 
 <template>
-	<component
-		ref="rootRef"
-		:is="instance.tag"
-		v-if="instance.rendered"
-		v-show="instance.visible"
-		:class="instance.classes.list"
-	>
+	<component ref="rootRef" :is="tag" v-if="rendered" v-show="visible" :class="classes">
 	</component>
 </template>
 
