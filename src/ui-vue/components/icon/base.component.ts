@@ -1,12 +1,14 @@
-import { type PropType, watch } from 'vue'
+import { type PropType, watch, type Ref } from 'vue'
 import { type IIconProps, TIcon, type TComponentSize, type IIcon } from '@core'
 import {
 	ComponentView,
 	emitsComponentView,
 	propsComponentView,
 	syncComponentView,
+	type IComponentViewState,
 } from '../component-view'
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types/common'
+import { useSyncProps } from '../../composables/useSyncProps'
 
 export const emitsIcon: TEmits = [...emitsComponentView] as const
 
@@ -37,13 +39,19 @@ export default {
 	props: propsIcon,
 }
 
+export interface IIconState extends IComponentViewState {
+	size: Ref<TComponentSize>
+	width: Ref<string | number | undefined>
+	height: Ref<string | number | undefined>
+}
+
 /**
  * Bind props to instance properties.
  * @param props
  * @param instance
  */
-export function syncIcon(options: ISyncComponentModelOptions<IIconProps, IIcon>) {
-	syncComponentView(options)
+export function syncIcon(options: ISyncComponentModelOptions<IIconProps, IIcon>): IIconState {
+	const base = syncComponentView(options)
 
 	const { instance, props } = options
 
@@ -73,4 +81,13 @@ export function syncIcon(options: ISyncComponentModelOptions<IIconProps, IIcon>)
 			}
 		},
 	)
+
+	return {
+		...base,
+		...useSyncProps(instance.events as any, {
+			size: () => instance.size,
+			width: () => instance.width,
+			height: () => instance.height,
+		}),
+	}
 }

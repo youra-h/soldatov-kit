@@ -1,18 +1,22 @@
-import { type PropType, watch } from 'vue'
+import { type PropType, watch, type Ref } from 'vue'
 import { type ICheckBoxProps, type ICheckBox, TCheckBox } from '@core'
 import {
 	BaseInputControl,
 	emitsInputControl,
 	propsInputControl,
 	syncInputControl,
+	type IInputControlState,
 } from '../input-control'
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types/common'
 import { Icon } from '../icon'
+import { useSyncProps } from '../../composables/useSyncProps'
 
 export const emitsCheckBox: TEmits = [
 	...emitsInputControl,
 	'update:indeterminate',
 	'change:indeterminate',
+	'update:plain',
+	'change:plain',
 ] as const
 
 export const propsCheckBox: TProps = {
@@ -44,10 +48,26 @@ export default {
  * @param props
  * @param instance
  */
-export function syncCheckBox(options: ISyncComponentModelOptions<ICheckBoxProps, ICheckBox>): void {
-	syncInputControl(options)
+export interface ICheckBoxState extends IInputControlState<boolean | undefined> {
+	indeterminate: Ref<boolean>
+	plain: Ref<boolean>
+}
+
+export function syncCheckBox(options: ISyncComponentModelOptions<ICheckBoxProps, ICheckBox>): ICheckBoxState {
+	const base = syncInputControl(options)
 
 	const { instance, props, emit } = options
+
+	// Пробрасываем события core-инстанса наружу (Vue events)
+	instance.events.on('change:indeterminate' as any, (value: boolean) => {
+		emit?.('change:indeterminate', value)
+		emit?.('update:indeterminate', value)
+	})
+
+	instance.events.on('change:plain' as any, (value: boolean) => {
+		emit?.('change:plain', value)
+		emit?.('update:plain', value)
+	})
 
 	watch<boolean | undefined>(
 		() => props.indeterminate,
@@ -69,4 +89,12 @@ export function syncCheckBox(options: ISyncComponentModelOptions<ICheckBoxProps,
 			}
 		},
 	)
+
+	return {
+		...base,
+		...useSyncProps(instance.events as any, {
+			indeterminate: () => instance.indeterminate,
+			plain: () => instance.plain,
+		}),
+	}
 }

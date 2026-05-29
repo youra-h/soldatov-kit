@@ -1,13 +1,14 @@
-import { type PropType, watch } from 'vue'
+import { type PropType, watch, type Ref } from 'vue'
 import {
 	type IButtonProps,
 	type TButtonAppearance,
 	TButton,
 	type IButton,
 } from '@core'
-import { BaseTextable, emitsTextable, propsTextable, syncTextable } from '../textable'
+import { BaseTextable, emitsTextable, propsTextable, syncTextable, type ITextableState } from '../textable'
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types'
 import { Spinner } from '../spinner'
+import { useSyncProps } from '../../composables/useSyncProps'
 
 export const emitsButton: TEmits = [...emitsTextable, 'change:loading', 'update:loading'] as const
 
@@ -39,6 +40,11 @@ export default {
 	props: propsButton,
 }
 
+export interface IButtonState extends ITextableState {
+	appearance: Ref<TButtonAppearance>
+	loading: Ref<boolean>
+}
+
 /**
  * Bind props to instance properties.
  * @param props
@@ -48,8 +54,8 @@ export function syncButton(
 	options: ISyncComponentModelOptions<IButtonProps, IButton> & {
 		props: { loadingShouldDisable?: boolean }
 	},
-) {
-	syncTextable(options)
+): IButtonState {
+	const base = syncTextable(options)
 
 	const { instance, props, emit } = options
 
@@ -62,6 +68,12 @@ export function syncButton(
 	instance.events.on('change:loading', (value: boolean) => {
 		emit?.('change:loading', value)
 		emit?.('update:loading', value)
+	})
+
+	// Пробрасываем событие appearance
+	instance.events.on('change:appearance' as any, (value: TButtonAppearance) => {
+		emit?.('change:appearance', value)
+		emit?.('update:appearance', value)
 	})
 
 	watch<TButtonAppearance | undefined>(
@@ -90,4 +102,12 @@ export function syncButton(
 			}
 		},
 	)
+
+	return {
+		...base,
+		...useSyncProps(instance.events as any, {
+			appearance: () => instance.appearance,
+			loading: () => instance.loading,
+		}),
+	}
 }

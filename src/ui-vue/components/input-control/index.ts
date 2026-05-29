@@ -3,4 +3,5 @@ export {
 	emitsInputControl,
 	syncInputControl,
 	propsInputControl,
+	type IInputControlState,
 } from './base.component'

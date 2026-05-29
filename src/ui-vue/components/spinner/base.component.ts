@@ -1,4 +1,4 @@
-import { type PropType, watch } from 'vue'
+import { type PropType, watch, type Ref } from 'vue'
 import {
 	type ISpinnerProps,
 	TSpinner,
@@ -11,8 +11,10 @@ import {
 	emitsComponentView,
 	propsComponentView,
 	syncComponentView,
+	type IComponentViewState,
 } from '../component-view'
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types/common'
+import { useSyncProps } from '../../composables/useSyncProps'
 
 export const emitsSpinner: TEmits = [...emitsComponentView] as const
 
@@ -43,13 +45,19 @@ export default {
 	props: propsSpinner,
 }
 
+export interface ISpinnerState extends IComponentViewState {
+	size: Ref<TComponentSize>
+	variant: Ref<TComponentVariant>
+	borderWidth: Ref<number | 'auto'>
+}
+
 /**
  * Bind props to instance properties.
  * @param props
  * @param instance
  */
-export function syncSpinner(options: ISyncComponentModelOptions<ISpinnerProps, ISpinner>) {
-	syncComponentView(options)
+export function syncSpinner(options: ISyncComponentModelOptions<ISpinnerProps, ISpinner>): ISpinnerState {
+	const base = syncComponentView(options)
 
 	const { instance, props } = options
 
@@ -79,4 +87,13 @@ export function syncSpinner(options: ISyncComponentModelOptions<ISpinnerProps, I
 			}
 		},
 	)
+
+	return {
+		...base,
+		...useSyncProps(instance.events as any, {
+			variant: () => instance.variant,
+			size: () => instance.size,
+			borderWidth: () => instance.borderWidth,
+		}),
+	}
 }
