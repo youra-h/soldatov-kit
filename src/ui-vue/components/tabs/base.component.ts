@@ -82,7 +82,7 @@ export function syncTabs(
 	const { props, instance, emit, plugins } = options
 
 	// Синхронизируем коллекцию (items, count, activeItem)
-	const synPropsActivatableCollection = syncActivatableCollection({
+	const synPropsActivatableCollection = syncActivatableCollection<ITabItem>({
 		props: { items: props.items },
 		instance: instance.collection,
 		emit,

@@ -1,8 +1,9 @@
-import type { PropType, Ref } from 'vue'
+import type { Ref } from 'vue'
 import {
 	type IActivatableCollection,
 	type IActivatableCollectionProps,
 	type IActivatableCollectionItem,
+	type TActivatableCollectionEvents,
 } from '@core'
 import {
 	default as BaseCollection,
@@ -32,16 +33,21 @@ export default {
 	props: propsActivatableCollection,
 }
 
-export interface IActivatableCollectionState extends ICollectionState {
-	activeItem: Ref<IActivatableCollectionItem | undefined>
+export interface IActivatableCollectionState<TItem = any> extends ICollectionState {
+	activeItem: Ref<TItem | undefined>
 }
 
 /**
  * Синхронизация props и событий для ActivatableCollection
  */
-export function syncActivatableCollection(
-	options: ISyncComponentModelOptions<IActivatableCollectionProps, IActivatableCollection>,
-): IActivatableCollectionState {
+export function syncActivatableCollection<
+	TItem extends IActivatableCollectionItem = IActivatableCollectionItem,
+>(
+	options: ISyncComponentModelOptions<
+		IActivatableCollectionProps,
+		IActivatableCollection<IActivatableCollectionProps, TActivatableCollectionEvents, TItem>
+	>,
+): IActivatableCollectionState<TItem> {
 	const syncProps = syncCollection(options)
 
 	const { instance, emit } = options
