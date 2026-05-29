@@ -1,4 +1,4 @@
-import type { PropType } from 'vue'
+import type { PropType, Ref } from 'vue'
 import { watch } from 'vue'
 import {
 	type IActivatableCollectionItem,
@@ -39,7 +39,7 @@ export default {
 export interface IActivatableCollectionItemState<
 	T extends IActivatableCollectionItem = IActivatableCollectionItem,
 > extends ICollectionItemState<T> {
-	active?: boolean
+	active: Ref<boolean | undefined>
 }
 
 /**
@@ -78,7 +78,10 @@ export function syncActivatableCollectionItem(
 	return {
 		...syncProps,
 		...useSyncProps(instance.events as any, {
-			active: () => instance.active,
+			active: {
+				value: () => instance.active,
+				events: ['change:activation'],
+			},
 		}),
 	}
 }

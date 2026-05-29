@@ -1,17 +1,19 @@
-import type { PropType } from 'vue'
+import type { PropType, Ref } from 'vue'
 import { watch } from 'vue'
 import {
 	type ISelectableCollectionItem,
 	type ISelectableCollectionItemProps,
-	TSelectableCollectionItem
+	TSelectableCollectionItem,
 } from '@core'
 import {
 	BaseCollectionItem,
 	emitsCollectionItem,
 	propsCollectionItem,
 	syncCollectionItem,
+	type ICollectionItemState,
 } from '../item'
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../../types'
+import { useSyncProps } from '../../../composables/useSyncProps'
 
 export const emitsSelectableCollectionItem: TEmits = [
 	...emitsCollectionItem,
@@ -34,16 +36,19 @@ export default {
 	props: propsSelectableCollectionItem,
 }
 
+export interface ISelectableCollectionItemState<
+	T extends ISelectableCollectionItem = ISelectableCollectionItem,
+> extends ICollectionItemState<T> {
+	selected: Ref<boolean | undefined>
+}
+
 /**
  * Синхронизация props и событий для SelectableCollectionItem
  */
 export function syncSelectableCollectionItem(
-	options: ISyncComponentModelOptions<
-		ISelectableCollectionItemProps,
-		ISelectableCollectionItem
-	>,
-) {
-	syncCollectionItem(options)
+	options: ISyncComponentModelOptions<ISelectableCollectionItemProps, ISelectableCollectionItem>,
+): ISelectableCollectionItemState {
+	const syncProps = syncCollectionItem(options)
 
 	const { props, instance, emit } = options
 
@@ -61,4 +66,14 @@ export function syncSelectableCollectionItem(
 			}
 		},
 	)
+
+	return {
+		...syncProps,
+		...useSyncProps(instance.events as any, {
+			selected: {
+				value: () => instance.selected,
+				events: ['change:selection'],
+			},
+		}),
+	}
 }
