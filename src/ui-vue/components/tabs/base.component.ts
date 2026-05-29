@@ -77,12 +77,12 @@ export default {
 export function syncTabs(
 	options: ISyncComponentModelOptions<ITabsProps & ICollectionProps, ITabs>,
 ) {
-	const controlState = syncControl(options)
+	const synPropsControl = syncControl(options)
 
 	const { props, instance, emit, plugins } = options
 
 	// Синхронизируем коллекцию (items, count, activeItem)
-	const collectionState = syncActivatableCollection({
+	const synPropsActivatableCollection = syncActivatableCollection({
 		props: { items: props.items },
 		instance: instance.collection,
 		emit,
@@ -179,8 +179,8 @@ export function syncTabs(
 
 	// Возвращаем объединённое состояние (control + collection + локальные props)
 	return {
-		...controlState,
-		...collectionState,
+		...synPropsControl,
+		...synPropsActivatableCollection,
 		...useSyncProps(instance.events as any, {
 			orientation: () => instance.orientation,
 			alignment: () => instance.alignment,
