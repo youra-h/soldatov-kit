@@ -11,7 +11,7 @@ export interface ISyncComponentModelOptions<
 	TPlugins = IPluginBundle,
 > {
 	props: TProps
-	instance: TInstance & UnwrapNestedRefs<TInstance>
+	instance: TInstance | UnwrapNestedRefs<TInstance>
 	plugins: TPlugins
 	emit?: (...args: any[]) => void
 }

@@ -42,7 +42,7 @@ export interface IActivatableCollectionState extends ICollectionState {
 export function syncActivatableCollection(
 	options: ISyncComponentModelOptions<IActivatableCollectionProps, IActivatableCollection>,
 ): IActivatableCollectionState {
-	const base = syncCollection(options)
+	const syncProps = syncCollection(options)
 
 	const { instance, emit } = options
 
@@ -59,7 +59,7 @@ export function syncActivatableCollection(
 	})
 
 	return {
-		...base,
+		...syncProps,
 		...useSyncProps(instance.events, {
 			activeItem: {
 				value: () => instance.activeItem,

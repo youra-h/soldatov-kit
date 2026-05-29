@@ -55,7 +55,7 @@ export interface ISelectableCollectionState extends ICollectionState {
 export function syncSelectableCollection(
 	options: ISyncComponentModelOptions<ISelectableCollectionProps, ISelectableCollection>,
 ): ISelectableCollectionState {
-	const base = syncCollection(options)
+	const syncProps = syncCollection(options)
 
 	const { props, instance, emit } = options
 
@@ -104,7 +104,7 @@ export function syncSelectableCollection(
 	)
 
 	return {
-		...base,
+		...syncProps,
 		...useSyncProps(instance.events, {
 			selected: () => instance.selected,
 			selectedCount: () => instance.selectedCount,
