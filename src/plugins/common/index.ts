@@ -1,6 +1,7 @@
 export * from './element'
 export * from './instance'
 export * from './ready-bridge'
+export * from './icon'
 export * from './spinner'
 export * from './tabs/appearance'
 export * from './tabs/layout'

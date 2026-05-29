@@ -5,7 +5,7 @@ import { useBundle } from '../../composables/useBundle'
 import { useElementBinding } from '../../composables/useElementBinding'
 import { useInstanceBinding } from '../../composables/useInstanceBinding'
 import BaseIcon, { syncIcon } from './base.component'
-import { createComponentViewBundle } from '@plugins'
+import { createComponentViewBundle, TIconStylePlugin } from '@plugins'
 import type { TBaseComponentViewProps } from '../component-view'
 
 export default {
@@ -14,7 +14,10 @@ export default {
 	setup(props: TBaseComponentViewProps<IIconProps, IIcon>, { emit }) {
 		const instance = useInstance(TIcon, props)
 		// Инициализация плагинов
-		const plugins = useBundle(createComponentViewBundle, props?.plugins)
+		const plugins = useBundle(createComponentViewBundle, props?.plugins).use(TIconStylePlugin)
+
+		const iconPlugin = plugins.get(TIconStylePlugin)!
+
 		// Привязка инстанса к плагинам
 		useInstanceBinding(plugins, instance)
 		// Привязка элемента и инстанса к плагинам
@@ -31,6 +34,7 @@ export default {
 			instance,
 			plugins,
 			rootRef,
+			styles: iconPlugin.styles,
 			tag,
 			rendered,
 			visible,
@@ -41,7 +45,14 @@ export default {
 </script>
 
 <template>
-	<component ref="rootRef" :is="tag" v-if="rendered" v-show="visible" :class="classes">
+	<component
+		ref="rootRef"
+		:is="tag"
+		v-if="rendered"
+		v-show="visible"
+		:class="classes"
+		:style="styles"
+	>
 	</component>
 </template>
 
