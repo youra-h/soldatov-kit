@@ -5,8 +5,7 @@ import { useInstance } from '../../composables/useInstance'
 import { useBundle } from '../../composables/useBundle'
 import { useElementBinding } from '../../composables/useElementBinding'
 import { useInstanceBinding } from '../../composables/useInstanceBinding'
-import { useCollectionItems } from '../../composables/useCollectionItems'
-import { useEventState } from '../../composables/useEventState'
+// items/activeItem are provided by syncTabs
 import { createTabsBundle } from '@plugins'
 import { TabItem } from './tab-item'
 import type { TBaseComponentViewProps } from '../component-view'
@@ -24,22 +23,14 @@ export default {
 		// Привязка элемента и инстанса к плагинам
 		const rootRef = useElementBinding(plugins)
 
-		syncTabs({
+		const { items, activeItem } = syncTabs({
 			props,
 			instance,
 			plugins,
 			emit,
 		})
 
-		const items = useCollectionItems(instance.collection)
-
-		const activeItem = useEventState(
-			instance.collection.events,
-			() => instance.collection.activeItem ?? null,
-			['item:activated', 'item:deactivated'],
-		)
-
-		return { instance, items, plugins, rootRef, activeItem }
+		return { instance, plugins, rootRef, activeItem, items }
 	},
 }
 </script>

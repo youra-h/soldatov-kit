@@ -1,5 +1,6 @@
 import type { PropType } from 'vue'
 import { watch } from 'vue'
+import { useSyncProps } from '../../composables/useSyncProps'
 import {
 	type ITabs,
 	type ITabsProps,
@@ -76,12 +77,12 @@ export default {
 export function syncTabs(
 	options: ISyncComponentModelOptions<ITabsProps & ICollectionProps, ITabs>,
 ) {
-	syncControl(options)
+	const controlState = syncControl(options)
 
 	const { props, instance, emit, plugins } = options
 
-	// Проксируем события коллекции через syncActivatableCollection
-	syncActivatableCollection({
+	// Синхронизируем коллекцию (items, count, activeItem)
+	const collectionState = syncActivatableCollection({
 		props: { items: props.items },
 		instance: instance.collection,
 		emit,
@@ -175,4 +176,17 @@ export function syncTabs(
 			}
 		},
 	)
+
+	// Возвращаем объединённое состояние (control + collection + локальные props)
+	return {
+		...controlState,
+		...collectionState,
+		...useSyncProps(instance.events as any, {
+			orientation: () => instance.orientation,
+			alignment: () => instance.alignment,
+			position: () => instance.position,
+			appearance: () => instance.appearance,
+			closable: () => instance.closable,
+		}),
+	}
 }

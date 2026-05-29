@@ -136,8 +136,11 @@ export function syncCollection(
 	)
 
 	// Возвращаем реактивные Ref-ы для items и count
-	return useSyncProps(instance.events as any, {
-		items: () => instance.items,
+	return useSyncProps(instance.events, {
+		items: {
+			value: () => instance.items,
+			events: ['item:added', 'item:deleted', 'cleared', 'item:moved'],
+		},
 		count: () => instance.count,
 	})
 }

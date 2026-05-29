@@ -59,8 +59,7 @@ Vue 3 (currently 3.5.x) rendering layer. Uses `reactive()` to wrap core class in
 
 **Composables** (`src/ui-vue/composables/`):
 - `useBaseSetup` — standard component setup
-- `useCollectionItems` — reactive list from collection events
-- `useEventRef` — reactive Ref that updates on specified events (base primitive for `useCollectionItems` and similar)
+- `useEventRef` — reactive Ref that updates on specified events
 - `useManagedInstance` — instance lifecycle
 
 **Demo** (`src/ui-vue/demo/`):
