@@ -225,46 +225,97 @@ export default {
 	}
 
 	&--outline {
-		// Структурные стили (не зависят от варианта)
 		#{$this}__list {
 			@apply relative gap-1.5;
 
 			&::before,
 			&::after {
 				content: '';
-				@apply absolute bottom-0 h-px;
+				@apply absolute;
 			}
 
-			// Левая часть бордера (до активного таба)
-			&::before {
-				left: 0;
-				width: var(--gap-pos, 0px);
-			}
+			.s-tab-item {
+				@apply relative border rounded-t-md rounded-b-none;
+				@apply bg-transparent;
+				@apply border-b-0;
 
-			// Правая часть бордера (после активного таба)
-			&::after {
-				left: calc(var(--gap-pos, 0px) + var(--gap-size, 0px));
-				right: 0;
+				// Затемнение для неактивных табов
+				&::before {
+					content: '';
+					@apply absolute inset-0;
+					@apply pointer-events-none;
+					@apply opacity-10;
+					@apply bg-neutral-400;
+					transition: opacity 0.2s ease;
+				}
+
+				&--active::before {
+					@apply opacity-0;
+				}
 			}
 		}
 
-		.s-tab-item {
-			@apply relative border rounded-t-md rounded-b-none;
-			@apply bg-transparent;
-			@apply border-b-0;
+		&#{$this}--horizontal {
+			// Структурные стили (не зависят от варианта)
+			#{$this}__list {
+				&::before,
+				&::after {
+					@apply bottom-0 h-px;
+				}
 
-			// Затемнение для неактивных табов
-			&::before {
-				content: '';
-				@apply absolute inset-0;
-				@apply pointer-events-none;
-				@apply opacity-10;
-				@apply bg-neutral-400;
-				transition: opacity 0.2s ease;
+				// Левая часть бордера (до активного таба)
+				&::before {
+					left: 0;
+					width: var(--gap-pos, 0px);
+				}
+
+				// Правая часть бордера (после активного таба)
+				&::after {
+					left: calc(var(--gap-pos, 0px) + var(--gap-size, 0px));
+					right: 0;
+				}
 			}
 
-			&--active::before {
-				@apply opacity-0;
+			.s-tab-item {
+				@apply rounded-t-md rounded-b-none border-b-0;
+			}
+		}
+
+		&#{$this}--vertical {
+			#{$this}__list {
+				&::before,
+				&::after {
+					@apply right-0 w-px h-auto;
+				}
+
+				// Левая часть бордера (до активного таба)
+				&::before {
+					top: 0;
+					height: var(--gap-pos, 0px);
+				}
+
+				// Правая часть бордера (после активного таба)
+				&::after {
+					top: calc(var(--gap-pos, 0px) + var(--gap-size, 0px));
+					bottom: 0;
+				}
+			}
+
+			.s-tab-item {
+				@apply rounded-l-md rounded-r-none border-r-0 border-b;
+			}
+
+			&#{$this}--position-end {
+				#{$this}__list {
+					&::before,
+					&::after {
+						@apply left-0 right-auto;
+					}
+
+					.s-tab-item {
+						@apply rounded-r-md rounded-l-none border-l-0 border-r;
+					}
+				}
 			}
 		}
 
