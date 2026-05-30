@@ -238,12 +238,12 @@ export default {
 			// Левая часть бордера (до активного таба)
 			&::before {
 				left: 0;
-				width: var(--gap-x, 0px);
+				width: var(--gap-pos, 0px);
 			}
 
 			// Правая часть бордера (после активного таба)
 			&::after {
-				left: calc(var(--gap-x, 0px) + var(--gap-width, 0px));
+				left: calc(var(--gap-pos, 0px) + var(--gap-size, 0px));
 				right: 0;
 			}
 		}
