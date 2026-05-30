@@ -23,7 +23,7 @@ export default {
 		// Привязка элемента и инстанса к плагинам
 		const rootRef = useElementBinding(plugins)
 
-		const { rendered, visible, classes, size, variant, text, active, closable } = syncTabItem({
+		const { rendered, disabled, visible, classes, size, variant, text, active, closable } = syncTabItem({
 			props,
 			instance,
 			plugins,
@@ -38,6 +38,7 @@ export default {
 			plugins,
 			rootRef,
 			rendered,
+			disabled,
 			visible,
 			classes,
 			size,

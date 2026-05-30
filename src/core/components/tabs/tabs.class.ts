@@ -147,6 +147,13 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 				;(this.events as TEvented<TTabsEvents>).emit('item:moved', payload)
 			},
 		)
+
+		this.events.on('change:disabled', (value) => {
+			// При изменении disabled у контейнера — обновляем доступность всех табов
+			this._collection.items.forEach((item) => {
+				item.disabled = value
+			})
+		})
 	}
 
 	// Простые геттеры/сеттеры без state
