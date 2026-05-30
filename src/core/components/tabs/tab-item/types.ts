@@ -12,7 +12,6 @@ import type {
 } from '../../../base/collection/activable/types'
 import type { IComponentViewOptions } from '../../../base/component-view'
 import type { TCollectableOptions } from '../../../base/collection/item/types'
-import type { TTabClosableState } from './tab-closable.state'
 import { type TValuePayload } from '../../../common/types'
 
 // ============ TTabItemCustom (логика таба без коллекции) ============
@@ -35,7 +34,9 @@ export interface ITabItemCustomProps extends IValueControlProps<string | number>
 
 export type TTabItemCustomStatesOptions = TValueControlStatesOptions<string | number> & {
 	text?: TStateCtor<IStateUnit<string>, string> | IStateUnit<string>
-	closable?: TStateCtor<TTabClosableState, boolean | undefined> | TTabClosableState
+	closable?:
+		| TStateCtor<IStateUnit<boolean | undefined>, boolean | undefined>
+		| IStateUnit<boolean | undefined>
 }
 
 /**
@@ -49,8 +50,6 @@ export interface ITabItemCustom<
 	text: string
 	/** Можно ли закрыть таб (undefined = наследовать от родителя TTabs) */
 	closable: boolean | undefined
-	/** Инжектирует резолвер для наследования через TTabs */
-	setClosableParent(resolver: () => boolean): void
 	/** Закрыть таб (emit close event) */
 	close(): void
 }

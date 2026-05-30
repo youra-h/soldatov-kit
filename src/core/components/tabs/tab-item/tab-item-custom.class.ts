@@ -11,7 +11,6 @@ import type {
 	TTabItemCustomStatesOptions,
 } from './types'
 import { TEvented } from '../../../common/evented'
-import { TTabClosableState } from './tab-closable.state'
 
 /**
  * Кастомная логика элемента таба (без коллекционной части).
@@ -37,7 +36,7 @@ export default class TTabItemCustom<
 	}
 
 	protected _textState: IStateUnit<string>
-	protected _closableState: TTabClosableState
+	protected _closableState: IStateUnit<boolean | undefined>
 
 	constructor(
 		options: IComponentViewOptions<TProps, TTabItemCustomStatesOptions> | Partial<TProps> = {},
@@ -59,9 +58,9 @@ export default class TTabItemCustom<
 			initial: customProps.text ?? TTabItemCustom.defaultValues.text!,
 		})
 
-		this._closableState = resolveState<TTabClosableState, boolean | undefined>({
+		this._closableState = resolveState<IStateUnit<boolean | undefined>, boolean | undefined>({
 			state: states?.closable,
-			ctor: TTabClosableState,
+			ctor: TStateUnit,
 			initial: customProps.closable ?? TTabItemCustom.defaultValues.closable,
 		})
 
@@ -71,10 +70,7 @@ export default class TTabItemCustom<
 		})
 
 		this._closableState.events.on('change', (payload: TValuePayload<boolean | undefined>) => {
-			;(this.events as TEvented<TTabItemCustomEvents>).emit(
-				'change:closable',
-				payload.newValue,
-			)
+			this.notifyClosableChange(payload.newValue)
 		})
 
 		this._classes.toggle(`--closable`, !!this._closableState.value)
@@ -99,7 +95,7 @@ export default class TTabItemCustom<
 	}
 
 	get closable(): boolean | undefined {
-		return this._closableState.resolved
+		return this._closableState.value
 	}
 
 	protected _applyClosable(value: boolean | undefined) {
@@ -114,9 +110,12 @@ export default class TTabItemCustom<
 		this._applyClosable(value)
 	}
 
-	/** Инжектируется из TTabs при добавлении таба в коллекцию */
-	setClosableParent(resolver: () => boolean): void {
-		this._closableState.setParentResolver(resolver)
+	/**
+	 * Уведомляет UI об изменении closable, чтобы отобразить или скрыть крестик. Вызывается при изменении локального closable или при изменении родительского (через resolved).
+	 * @param value Новое значение closable, которое нужно отразить в UI (например, показать или скрыть крестик).
+	 */
+	notifyClosableChange(value: boolean | undefined) {
+		;(this.events as TEvented<TTabItemCustomEvents>).emit('change:closable', value)
 	}
 
 	close(): void {

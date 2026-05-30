@@ -100,7 +100,10 @@ export function syncTabItemCustom(
 		...syncProps,
 		...useSyncProps(instance.events as any, {
 			text: () => instance.text,
-			closable: () => instance.closable,
+			closable: () => {
+				console.log('instance.closable', instance.closable)
+				return instance.closable
+			},
 		}),
 	}
 }
