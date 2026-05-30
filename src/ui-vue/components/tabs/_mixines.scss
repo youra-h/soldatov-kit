@@ -13,16 +13,16 @@
 		&::after {
 			@apply #{'bg-s-' + $color + '-' + $indicator};
 		}
-	}
 
-	// Цвет текста при hover и у активного таба
-	.s-tab-item {
-		&:hover:not([disabled]) {
-			@apply #{'text-s-' + $color + '-' + $text};
-		}
+		// Цвет текста при hover и у активного таба
+		.s-tab-item {
+			&:hover:not([disabled]) {
+				@apply #{'text-s-' + $color + '-' + $text};
+			}
 
-		&--active {
-			@apply #{'text-s-' + $color + '-' + $text};
+			&--active {
+				@apply #{'text-s-' + $color + '-' + $text};
+			}
 		}
 	}
 }

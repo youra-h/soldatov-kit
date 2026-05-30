@@ -71,7 +71,13 @@ export class TTabsAppearancePlugin extends TBasePlugin<TTabsAppearancePluginEven
 		this._handlers[this._tabs.appearance]?.()
 	}
 
-	private _getActiveTabOffset(): { listEl: HTMLElement; offsetLeft: number; offsetWidth: number } | null {
+	private _getActiveTabOffset(): {
+		listEl: HTMLElement
+		offsetLeft: number
+		offsetWidth: number
+		offsetTop: number
+		offsetHeight: number
+	} | null {
 		if (!this._element || !this._collectionElements) return null
 
 		const listCls = this._tabs!.classes.resolve(`__list`, { point: true })!
@@ -86,6 +92,8 @@ export class TTabsAppearancePlugin extends TBasePlugin<TTabsAppearancePluginEven
 			listEl,
 			offsetLeft: activeEl ? activeEl.offsetLeft : 0,
 			offsetWidth: activeEl ? activeEl.offsetWidth : 0,
+			offsetTop: activeEl ? activeEl.offsetTop : 0,
+			offsetHeight: activeEl ? activeEl.offsetHeight : 0,
 		}
 	}
 
@@ -106,9 +114,16 @@ export class TTabsAppearancePlugin extends TBasePlugin<TTabsAppearancePluginEven
 		const result = this._getActiveTabOffset()
 		if (!result) return
 
-		const { listEl, offsetLeft, offsetWidth } = result
+		const { listEl, offsetLeft, offsetWidth, offsetTop, offsetHeight } = result
 
-		listEl.style.setProperty('--underline-x', `${offsetLeft}px`)
-		listEl.style.setProperty('--underline-width', `${offsetWidth}px`)
+		if (this._tabs!.orientation === 'vertical') {
+			// Vertical tabs: set indicator top and size (height)
+			listEl.style.setProperty('--underline-pos', `${offsetTop}px`)
+			listEl.style.setProperty('--underline-size', `${offsetHeight}px`)
+		} else {
+			// Horizontal tabs: set indicator left and size (width)
+			listEl.style.setProperty('--underline-pos', `${offsetLeft}px`)
+			listEl.style.setProperty('--underline-size', `${offsetWidth}px`)
+		}
 	}
 }

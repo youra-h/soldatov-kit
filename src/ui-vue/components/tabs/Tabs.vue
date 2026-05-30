@@ -36,12 +36,7 @@ export default {
 </script>
 
 <template>
-	<div
-		ref="rootRef"
-		v-if="rendered"
-		v-show="visible"
-		:class="classes"
-	>
+	<div ref="rootRef" v-if="rendered" v-show="visible" :class="classes">
 		<div class="s-tabs__list" role="tablist">
 			<div class="s-tabs__list--prefix" v-if="$slots.prefix">
 				<slot name="prefix"></slot>
@@ -130,30 +125,54 @@ export default {
 
 	// Внешний вид
 	&--line {
-		// Список: разделитель, relative для ::after
-		#{$this}__list {
-			@apply relative border-b;
+		// Horizontal list: separator + indicator via ::after (uses --underline-pos and --underline-size)
+		&#{$this}--horizontal {
+			#{$this}__list {
+				@apply relative border-b;
 
-			// Индикатор через ::after, позиция через CSS custom properties
-			&::after {
-				content: '';
-				@apply absolute left-0 h-0.5;
-				@apply -bottom-px;
-				@apply rounded-full;
-				width: var(--underline-width, 0px);
-				transform: translateX(var(--underline-x, 0px));
+				&::after {
+					content: '';
+					@apply absolute left-0 h-0.5;
+					@apply -bottom-px;
+					@apply rounded-full;
+					width: var(--underline-size, 0px);
+					transform: translateX(var(--underline-pos, 0px));
+				}
 			}
 		}
 
-		// Transition включается только после монтирования (--ready добавляется core через el setter)
+		/* Vertical orientation: indicator is a vertical bar beside the list (uses --underline-pos and --underline-size) */
+		&#{$this}--vertical {
+			#{$this}__list {
+				@apply relative border-r;
+
+				&::after {
+					content: '';
+					@apply absolute top-0 w-0.5;
+					@apply -right-px;
+					@apply rounded-full;
+					height: var(--underline-size, 0px);
+					transform: translateY(var(--underline-pos, 0px));
+				}
+			}
+
+			/* If tabs positioned to the end, place border/indicator on the right */
+			&#{$this}--position-end {
+				#{$this}__list {
+					@apply border-r-0 border-l;
+
+					&::after {
+						@apply -left-px;
+					}
+				}
+			}
+		}
+
+		/* Transition включается только после монтирования (--ready добавляется core через el setter) */
 		&#{$this}--ready-animation #{$this}__list::after {
 			transition:
 				transform 0.2s ease,
 				width 0.2s ease;
-		}
-
-		.s-tab-item {
-			@apply -mb-px;
 		}
 
 		// Normal (default)
