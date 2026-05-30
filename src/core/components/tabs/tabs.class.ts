@@ -81,7 +81,7 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 				this.closeTab(item)
 			})
 
-			// item.setClosableParent(() => this._closable)
+			item.setClosableParent(() => this._closable)
 
 			// Проброс change:closable → tab:closable
 			item.events.on('change:closable', (value: boolean | undefined) => {
