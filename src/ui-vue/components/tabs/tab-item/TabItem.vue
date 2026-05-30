@@ -51,7 +51,6 @@ export default {
 </script>
 
 <template>
-	{{ closable }}
 	<Button
 		ref="rootRef"
 		:visible="visible"
