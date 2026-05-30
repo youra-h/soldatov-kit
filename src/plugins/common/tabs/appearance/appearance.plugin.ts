@@ -101,10 +101,15 @@ export class TTabsAppearancePlugin extends TBasePlugin<TTabsAppearancePluginEven
 		const result = this._getActiveTabOffset()
 		if (!result) return
 
-		const { listEl, offsetLeft, offsetWidth } = result
+		const { listEl, offsetLeft, offsetWidth, offsetTop, offsetHeight } = result
 
-		listEl.style.setProperty('--gap-x', `${offsetLeft + 1}px`)
-		listEl.style.setProperty('--gap-width', `${offsetWidth - 1}px`)
+		if (this._tabs!.orientation === 'vertical') {
+			listEl.style.setProperty('--gap-pos', `${offsetTop + 1}px`)
+			listEl.style.setProperty('--gap-size', `${offsetHeight - 1}px`)
+		} else {
+			listEl.style.setProperty('--gap-pos', `${offsetLeft + 1}px`)
+			listEl.style.setProperty('--gap-size', `${offsetWidth - 1}px`)
+		}
 	}
 
 	private _updateLine(): void {
