@@ -14,10 +14,8 @@ import { useSyncProps } from '../../composables/useSyncProps'
 export const emitsCheckBox: TEmits = [
 	...emitsInputControl,
 	'update:indeterminate',
-	'indeterminate',
 	'change:indeterminate',
 	'update:plain',
-	'plain',
 	'change:plain',
 ] as const
 
@@ -65,13 +63,11 @@ export function syncCheckBox(
 	// Пробрасываем события core-инстанса наружу (Vue events)
 	instance.events.on('change:indeterminate' as any, (value: boolean) => {
 		emit?.('change:indeterminate', value)
-		emit?.('indeterminate', value)
 		emit?.('update:indeterminate', value)
 	})
 
 	instance.events.on('change:plain' as any, (value: boolean) => {
 		emit?.('change:plain', value)
-		emit?.('plain', value)
 		emit?.('update:plain', value)
 	})
 

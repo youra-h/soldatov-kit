@@ -125,8 +125,6 @@ export function syncComponentView(
 		(value) => {
 			if (value !== undefined && value !== instance.rendered) {
 				instance.rendered = value
-				emit?.('rendered', value)
-				emit?.('update:rendered', value)
 			}
 		},
 	)
@@ -136,15 +134,6 @@ export function syncComponentView(
 		(value) => {
 			if (value !== undefined && value !== instance.visible) {
 				instance.visible = value
-
-				emit?.('visible', value)
-				emit?.('update:visible', value)
-
-				if (value) {
-					emit?.('show', instance)
-				} else {
-					emit?.('hide', instance)
-				}
 			}
 		},
 	)

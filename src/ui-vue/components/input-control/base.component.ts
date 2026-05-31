@@ -20,19 +20,14 @@ export const emitsInputControl: TEmits = [
 	...emitsValueControl,
 	'change:readonly',
 	'update:readonly',
-	'readonly',
 	'change:required',
 	'update:required',
-	'required',
 	'change:invalid',
 	'update:invalid',
-	'invalid',
 	'change:state',
 	'update:state',
-	'state',
 	'change:loading',
 	'update:loading',
-	'loading',
 ] as const
 
 export const propsInputControl: TProps = {
@@ -84,31 +79,26 @@ export function syncInputControl<TValue = string>(
 	// Пробрасываем события core-инстанса наружу (Vue events).
 	instance.events.on('change:readonly' as any, (value: boolean) => {
 		emit?.('change:readonly', value)
-		emit?.('readonly', value)
 		emit?.('update:readonly', value)
 	})
 
 	instance.events.on('change:required' as any, (value: boolean) => {
 		emit?.('change:required', value)
-		emit?.('required', value)
 		emit?.('update:required', value)
 	})
 
 	instance.events.on('change:invalid' as any, (value: boolean) => {
 		emit?.('change:invalid', value)
-		emit?.('invalid', value)
 		emit?.('update:invalid', value)
 	})
 
 	instance.events.on('change:state' as any, (value: TInputControlState) => {
 		emit?.('change:state', value)
-		emit?.('state', value)
 		emit?.('update:state', value)
 	})
 
 	instance.events.on('change:loading' as any, (value: boolean) => {
 		emit?.('change:loading', value)
-		emit?.('loading', value)
 		emit?.('update:loading', value)
 	})
 

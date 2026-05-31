@@ -15,7 +15,6 @@ export const emitsInteractive: TEmits = [
 	...emitsComponentView,
 	'change:disabled',
 	'update:disabled',
-	'disabled',
 	'change:focused',
 	'update:focused',
 	'focused',
@@ -61,7 +60,6 @@ export function syncInteractive(
 	// Пробрасываем события core-инстанса наружу (Vue events).
 	instance.events.on('change:disabled' as any, (value: boolean) => {
 		emit?.('change:disabled', value)
-		emit?.('disabled', value)
 		emit?.('update:disabled', value)
 	})
 

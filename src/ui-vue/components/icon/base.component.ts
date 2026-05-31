@@ -14,13 +14,10 @@ export const emitsIcon: TEmits = [
 	...emitsComponentView,
 	'change:size',
 	'update:size',
-	'size',
 	'change:width',
 	'update:width',
-	'width',
 	'change:height',
 	'update:height',
-	'height',
 ] as const
 
 export const propsIcon: TProps = {
@@ -69,19 +66,16 @@ export function syncIcon(options: ISyncComponentModelOptions<IIconProps, IIcon>)
 	// Пробрасываем события core-инстанса наружу (Vue events).
 	instance.events.on('change:size' as any, (value: TComponentSize) => {
 		emit?.('change:size', value)
-		emit?.('size', value)
 		emit?.('update:size', value)
 	})
 
 	instance.events.on('change:width' as any, (value: string | number | undefined) => {
 		emit?.('change:width', value)
-		emit?.('width', value)
 		emit?.('update:width', value)
 	})
 
 	instance.events.on('change:height' as any, (value: string | number | undefined) => {
 		emit?.('change:height', value)
-		emit?.('height', value)
 		emit?.('update:height', value)
 	})
 

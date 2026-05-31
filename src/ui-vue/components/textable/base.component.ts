@@ -9,7 +9,6 @@ export const emitsTextable: TEmits = [
 	...emitsControl,
 	'change:text',
 	'update:text',
-	'text',
 ] as const
 
 export const propsTextable: TProps = {
@@ -44,7 +43,6 @@ export function syncTextable(options: ISyncComponentModelOptions<ITextableProps,
 	// Пробрасываем события core-инстанса наружу (Vue events).
 	instance.events.on('change:text' as any, (value: string) => {
 		emit?.('change:text', value)
-		emit?.('text', value)
 		emit?.('update:text', value)
 	})
 

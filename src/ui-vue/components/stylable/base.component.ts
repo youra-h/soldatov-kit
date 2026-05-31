@@ -16,10 +16,8 @@ export const emitsStylable: TEmits = [
 	...emitsComponentView,
 	'change:size',
 	'update:size',
-	'size',
 	'change:variant',
 	'update:variant',
-	'variant',
 ] as const
 
 export const propsStylable: TProps = {
@@ -61,13 +59,11 @@ export function syncStylable(
 	// Пробрасываем события core-инстанса наружу (Vue events).
 	instance.events.on('change:size' as any, (value: TComponentSize) => {
 		emit?.('change:size', value)
-		emit?.('size', value)
 		emit?.('update:size', value)
 	})
 
 	instance.events.on('change:variant' as any, (value: TComponentVariant) => {
 		emit?.('change:variant', value)
-		emit?.('variant', value)
 		emit?.('update:variant', value)
 	})
 

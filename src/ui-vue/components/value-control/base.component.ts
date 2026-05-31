@@ -9,12 +9,10 @@ export const emitsValueControl: TEmits = [
 	...emitsControl,
 	'change:value',
 	'update:value',
-	'value',
 	'input:value',
 	'input',
 	'change:name',
 	'update:name',
-	'name',
 ] as const
 
 export const propsValueControl: TProps = {
@@ -56,7 +54,6 @@ export function syncValueControl<TValue>(
 	// Пробрасываем события core-инстанса наружу (Vue events).
 	instance.events.on('change:value' as any, (value: TValue) => {
 		emit?.('change:value', value)
-		emit?.('value', value)
 		emit?.('update:value', value)
 	})
 
@@ -67,7 +64,6 @@ export function syncValueControl<TValue>(
 
 	instance.events.on('change:name' as any, (value: string) => {
 		emit?.('change:name', value)
-		emit?.('name', value)
 		emit?.('update:name', value)
 	})
 

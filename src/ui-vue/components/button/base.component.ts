@@ -14,10 +14,8 @@ export const emitsButton: TEmits = [
 	...emitsTextable,
 	'change:appearance',
 	'update:appearance',
-	'appearance',
 	'change:loading',
 	'update:loading',
-	'loading'
 ] as const
 
 export const propsButton: TProps = {
@@ -75,14 +73,12 @@ export function syncButton(
 	// Пробрасываем событие loading
 	instance.events.on('change:loading', (value: boolean) => {
 		emit?.('change:loading', value)
-		emit?.('loading', value)
 		emit?.('update:loading', value)
 	})
 
 	// Пробрасываем событие appearance
 	instance.events.on('change:appearance' as any, (value: TButtonAppearance) => {
 		emit?.('change:appearance', value)
-		emit?.('appearance', value)
 		emit?.('update:appearance', value)
 	})
 
