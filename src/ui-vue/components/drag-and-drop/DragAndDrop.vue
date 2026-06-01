@@ -10,7 +10,9 @@ export default {
 	extends: BaseDragAndDrop,
 	setup(props: TBaseComponentModelProps<IComponentModelProps>) {
 		const instance = useInstance(TComponentModel, props)
+
 		useProvideDragContext()
+
 		return { instance }
 	},
 }

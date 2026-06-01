@@ -1,10 +1,13 @@
-import type { PropType, Ref, UnwrapNestedRefs } from 'vue'
+import type { PropType, Ref } from 'vue'
 import { watch } from 'vue'
 import { useSyncProps } from '../../composables/useSyncProps'
-import { type IComponentView, type IComponentViewProps, TComponentView } from '@core'
+import { type IComponentViewProps, TComponentView } from '@core'
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types'
 import { type IPluginBundle, TElementPlugin } from '@plugins'
-import BaseComponentModel, { emitsComponentModel, propsComponentModel } from '../component-model/base.component'
+import BaseComponentModel, {
+	emitsComponentModel,
+	propsComponentModel,
+} from '../component-model/base.component'
 
 export const emitsComponentView: TEmits = [
 	...emitsComponentModel,
