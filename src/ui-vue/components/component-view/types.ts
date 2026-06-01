@@ -1,11 +1,10 @@
-import type { UnwrapNestedRefs } from 'vue'
 import type { IComponentView } from '@core'
-import { createComponentViewBundle } from '@plugins'
+import type { IPluginBundle } from '@plugins'
+import type { TBaseComponentModelProps } from '../component-model'
 
 export type TBaseComponentViewProps<
 	TCoreProps,
 	TInstance extends IComponentView = IComponentView,
-> = TCoreProps & {
-	ctrl?: TInstance | UnwrapNestedRefs<TInstance>
-	plugins?: TComponentViewBundle | undefined
+> = TBaseComponentModelProps<TCoreProps, TInstance> & {
+	plugins?: IPluginBundle | undefined
 }

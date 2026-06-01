@@ -4,8 +4,10 @@ import { useSyncProps } from '../../composables/useSyncProps'
 import { type IComponentView, type IComponentViewProps, TComponentView } from '@core'
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types'
 import { type IPluginBundle, TElementPlugin } from '@plugins'
+import BaseComponentModel, { emitsComponentModel, propsComponentModel } from '../component-model/base.component'
 
 export const emitsComponentView: TEmits = [
+	...emitsComponentModel,
 	'rendered',
 	'update:rendered',
 	'change:rendered',
@@ -18,20 +20,16 @@ export const emitsComponentView: TEmits = [
 	'afterShow',
 	'beforeHide',
 	'afterHide',
-	'created',
 	'ready',
 ] as const
 
 export const propsComponentView: TProps = {
+	...propsComponentModel,
 	ctrl: {
 		type: Object as PropType<IComponentView | UnwrapNestedRefs<IComponentView>>,
 	},
 	plugins: {
 		type: Object as PropType<IPluginBundle>,
-	},
-	id: {
-		type: [String, Number] as PropType<IComponentViewProps['id']>,
-		default: TComponentView.defaultValues.id,
 	},
 	tag: {
 		type: [Object, String] as PropType<IComponentViewProps['tag']>,
@@ -49,15 +47,9 @@ export const propsComponentView: TProps = {
 
 export default {
 	name: 'BaseComponentView',
+	extends: BaseComponentModel,
 	emits: emitsComponentView,
 	props: propsComponentView,
-	created() {
-		// @ts-ignore
-		;(this.instance! as IComponentView).id = this.$.uid
-		// Emit 'created' event when component is created
-		// @ts-ignore
-		this.$emit('created', { instance: this.instance, plugins: this.plugins })
-	},
 }
 
 export interface IComponentViewState {

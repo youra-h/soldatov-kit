@@ -8,6 +8,10 @@ export class TCollectionElementsPlugin extends TBasePlugin<TCollectionElementsPl
 
 	private readonly _elements = new Map<string | number, HTMLElement>()
 
+	get elements(): ReadonlyMap<string | number, HTMLElement> {
+		return this._elements
+	}
+
 	/**
 	 * Регистрирует дочерний bundle: подписывается на TElementPlugin этого bundle
 	 * и отслеживает появление/исчезновение элемента.
@@ -47,6 +51,16 @@ export class TCollectionElementsPlugin extends TBasePlugin<TCollectionElementsPl
 	 */
 	getByIndex(index: number): HTMLElement | null {
 		return Array.from(this._elements.values())[index] ?? null
+	}
+
+	/**
+	 * Возвращает uid по HTML-элементу (reverse lookup).
+	 */
+	getUidByElement(el: HTMLElement): string | number | null {
+		for (const [uid, element] of this._elements) {
+			if (element === el) return uid
+		}
+		return null
 	}
 
 	/**

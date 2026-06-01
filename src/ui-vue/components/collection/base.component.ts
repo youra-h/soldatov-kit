@@ -1,9 +1,10 @@
 import type { PropType, Ref } from 'vue'
 import { watch } from 'vue'
 import { type ICollection, type ICollectionProps, type ICollectionItem } from '@core'
-import { TCollectionElementsPlugin } from '@plugins'
+import { TCollectionElementsPlugin, TDragPlugin } from '@plugins'
 import { useProvideCollection } from '../../composables/useProvideCollection'
 import { useProvideCollectionPlugins } from '../../composables/useProvideCollectionPlugins'
+import { useInjectDragContext } from '../../composables/useDragContext'
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types'
 import { useSyncProps } from '../../composables/useSyncProps'
 
@@ -51,6 +52,10 @@ export function syncCollection(
 
 	if (collectionPlugin) {
 		useProvideCollectionPlugins((uid, bundle) => collectionPlugin.register(uid, bundle))
+	}
+
+	if (useInjectDragContext()) {
+		plugins.get(TDragPlugin)?.activate(instance)
 	}
 
 	// Наполняем коллекцию из prop items через сеттер instance.items
