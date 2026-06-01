@@ -25,9 +25,6 @@ export const emitsComponentView: TEmits = [
 
 export const propsComponentView: TProps = {
 	...propsComponentModel,
-	ctrl: {
-		type: Object as PropType<IComponentView | UnwrapNestedRefs<IComponentView>>,
-	},
 	plugins: {
 		type: Object as PropType<IPluginBundle>,
 	},
