@@ -7,6 +7,7 @@ import Button from './playgrounds/Button.vue'
 import CheckBox from './playgrounds/CheckBox.vue'
 import Switch from './playgrounds/Switch.vue'
 import Tabs from './playgrounds/Tabs.vue'
+import DragAndDrop from './playgrounds/DragAndDrop.vue'
 import EventLog from './common/EventLog.vue'
 import type { EventLogEntry } from './common/EventLog.vue'
 
@@ -28,10 +29,11 @@ const playgrounds = {
 	'check-box': { component: markRaw(CheckBox), label: 'CheckBox' },
 	switch: { component: markRaw(Switch), label: 'Switch' },
 	tabs: { component: markRaw(Tabs), label: 'Tabs' },
+	'drag-and-drop': { component: markRaw(DragAndDrop), label: 'DragAndDrop' },
 } as const
 
 // Активный playground (можно управлять через меню)
-const active = ref<keyof typeof playgrounds>('tabs')
+const active = ref<keyof typeof playgrounds>('drag-and-drop')
 
 // View mode: 'sandbox' | 'logs'
 const activeView = ref<'sandbox' | 'logs'>('sandbox')

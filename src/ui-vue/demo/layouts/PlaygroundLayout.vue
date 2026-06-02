@@ -20,9 +20,9 @@ defineProps<Props>()
 		</div>
 
 		<!-- Row 2: Three Column Demo -->
-		<div class="pg-layout__demo-grid">
+		<div class="pg-layout__demo-grid" >
 			<!-- Column 1: Props Demo -->
-			<div class="pg-layout__demo-column">
+			<div class="pg-layout__demo-column" v-if="$slots['props-demo']">
 				<h3 class="pg-layout__demo-title">Props Demo</h3>
 				<div class="pg-layout__demo-content">
 					<slot name="props-demo" />
@@ -30,7 +30,7 @@ defineProps<Props>()
 			</div>
 
 			<!-- Column 2: Instance Demo -->
-			<div class="pg-layout__demo-column">
+			<div class="pg-layout__demo-column" v-if="$slots['instance-demo']">
 				<h3 class="pg-layout__demo-title">Instance Demo</h3>
 				<div class="pg-layout__demo-content">
 					<slot name="instance-demo" />
@@ -38,7 +38,7 @@ defineProps<Props>()
 			</div>
 
 			<!-- Column 3: Slots Demo -->
-			<div class="pg-layout__demo-column">
+			<div class="pg-layout__demo-column" v-if="$slots['slots-demo']">
 				<h3 class="pg-layout__demo-title">Slots Demo</h3>
 				<div class="pg-layout__demo-content">
 					<slot name="slots-demo" />
@@ -82,9 +82,7 @@ defineProps<Props>()
 	}
 
 	&__demo-grid {
-		@apply grid;
-		@apply gap-4;
-		grid-template-columns: 1fr 1fr 2fr;
+		@apply flex gap-4;
 	}
 
 	&__demo-column {
@@ -95,6 +93,7 @@ defineProps<Props>()
 
 		&:nth-child(3) {
 			@apply overflow-y-auto;
+			@apply flex-1;
 		}
 	}
 
