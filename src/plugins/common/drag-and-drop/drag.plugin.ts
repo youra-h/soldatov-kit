@@ -174,13 +174,13 @@ export class TDragPlugin extends TBasePlugin<TDragPluginEvents> {
 			e.dataTransfer!.effectAllowed = 'move'
 			// Предпочитаем менять classes у instance; это безопаснее для реактивного слоя.
 			// DOM-класс оставляем fallback на случай, если instance недоступен.
-			// const instance = collectionInstancesPlugin?.getByUid(uid)
+			const instance = collectionInstancesPlugin?.getByUid(uid)
 
-			// if (instance) {
-			// 	instance.classes.add(TDragPlugin.DRAGGING_CLASS, false)
-			// } else {
-			// 	target.classList.add(TDragPlugin.DRAGGING_CLASS)
-			// }
+			if (instance) {
+				instance.classes.add(TDragPlugin.DRAGGING_CLASS, false)
+			} else {
+				target.classList.add(TDragPlugin.DRAGGING_CLASS)
+			}
 			;(this.events as TEvented<TDragPluginEvents>).emit('drag:start', {
 				index: draggingIndex,
 				uid: uid as number,
