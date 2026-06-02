@@ -7,8 +7,8 @@ import { DragAndDrop } from '@ui/drag-and-drop'
 // --- Вариант 1: через instance (программный) ---
 
 const tabs = new TTabs()
-tabs.variant = 'accent'
-// tabs.appearance = 'line'
+// tabs.variant = 'accent'
+tabs.appearance = 'outline'
 // tabs.orientation = 'horizontal'
 
 tabs.collection.add({ text: 'Tab 1', value: 'tab1', closable: true })
@@ -47,7 +47,7 @@ const tabItems = ref([
 		<div class="tabs-slots-demo__section">
 			<h4 class="tabs-slots-demo__subtitle">Closable tabs</h4>
 			<DragAndDrop>
-				<Tabs :ctrl="tabs" appearance="contained" :closable="true">
+				<Tabs :ctrl="tabs">
 					<!-- <TabItem text="Tab 1" value="t1" active />
 				<TabItem text="Tab 2" value="t2" />
 				<TabItem text="Tab 3 (not closable)" value="t3" :closable="false" /> -->
