@@ -306,7 +306,7 @@ export class TCollection<
 			collection: this,
 			item,
 			oldIndex,
-			newIndex,
+			newIndex: ni,
 		})
 
 		// Сигнал об изменении порядка/списка элементов

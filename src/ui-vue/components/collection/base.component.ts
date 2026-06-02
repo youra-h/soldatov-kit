@@ -145,11 +145,11 @@ export function syncCollection(
 	return useSyncProps(instance.events, {
 		items: {
 			value: () => instance.items,
-			events: ['item:added', 'item:deleted', 'cleared', 'item:moved'],
+			events: ['item:added', 'cleared', 'item:afterMove', 'item:afterDelete'],
 		},
 		count: {
 			value: () => instance.count,
-			events: ['item:added', 'item:deleted', 'cleared', 'item:moved'],
+			events: ['item:added', 'cleared', 'item:afterMove', 'item:afterDelete'],
 		},
 	})
 }

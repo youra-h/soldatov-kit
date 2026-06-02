@@ -126,7 +126,12 @@ export class TDragPlugin extends TBasePlugin<TDragPluginEvents> {
 		collectionPlugin.getAll().forEach((el) => el.setAttribute('draggable', 'true'))
 
 		// Новые узлы, добавленные в коллекцию после активации, тоже должны быть draggable
-		const onElementAdded = ({ element: itemEl }: { uid: string | number; element: HTMLElement }) => {
+		const onElementAdded = ({
+			element: itemEl,
+		}: {
+			uid: string | number
+			element: HTMLElement
+		}) => {
 			itemEl.setAttribute('draggable', 'true')
 		}
 
@@ -139,7 +144,9 @@ export class TDragPlugin extends TBasePlugin<TDragPluginEvents> {
 		 * и генерирует событие `drag:start`.
 		 */
 		const onDragStart = (e: DragEvent) => {
-			const target = (e.target as HTMLElement).closest('[draggable="true"]') as HTMLElement | null
+			const target = (e.target as HTMLElement).closest(
+				'[draggable="true"]',
+			) as HTMLElement | null
 			if (!target || !element.contains(target)) return
 
 			const uid = collectionPlugin.getUidByElement(target)
@@ -165,7 +172,9 @@ export class TDragPlugin extends TBasePlugin<TDragPluginEvents> {
 		 * Восстанавливает прозрачность элемента и сбрасывает `draggingIndex`.
 		 */
 		const onDragEnd = (e: DragEvent) => {
-			const target = (e.target as HTMLElement).closest('[draggable="true"]') as HTMLElement | null
+			const target = (e.target as HTMLElement).closest(
+				'[draggable="true"]',
+			) as HTMLElement | null
 			// Убираем визуальный эффект перетаскивания
 			if (target) target.style.opacity = ''
 			draggingIndex = null
@@ -183,7 +192,9 @@ export class TDragPlugin extends TBasePlugin<TDragPluginEvents> {
 			e.dataTransfer!.dropEffect = 'move'
 			if (draggingIndex === null) return
 
-			const target = (e.target as HTMLElement).closest('[draggable="true"]') as HTMLElement | null
+			const target = (e.target as HTMLElement).closest(
+				'[draggable="true"]',
+			) as HTMLElement | null
 			if (!target || !element.contains(target)) return
 
 			const targetUid = collectionPlugin.getUidByElement(target)
@@ -192,6 +203,8 @@ export class TDragPlugin extends TBasePlugin<TDragPluginEvents> {
 			const targetIndex = collection.getItems().findIndex((item) => item.uid === targetUid)
 			// Пропускаем, если навели на тот же элемент или индекс не найден
 			if (targetIndex === -1 || targetIndex === draggingIndex) return
+
+			// console.log(`Moving item from index ${draggingIndex} to ${targetIndex}`)
 
 			// Перемещаем элемент в коллекции; фреймворк реактивно обновит DOM
 			collection.move(draggingIndex, targetIndex)

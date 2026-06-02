@@ -120,10 +120,26 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 		})
 
 		this._collection.events.on(
+			'item:beforeDelete',
+			(payload: { collection: any; index: number; item: ITabItem }) => {
+				// Пробрасываем событие наружу
+				;(this.events as TEvented<TTabsEvents>).emit('item:beforeDelete', payload)
+			},
+		)
+
+		this._collection.events.on(
 			'item:deleted',
 			(payload: { collection: any; item: ITabItem }) => {
 				// Пробрасываем событие наружу
 				;(this.events as TEvented<TTabsEvents>).emit('item:deleted', payload)
+			},
+		)
+
+		this._collection.events.on(
+			'item:afterDelete',
+			(payload: { collection: any; index: number; item: ITabItem }) => {
+				// Пробрасываем событие наружу
+				;(this.events as TEvented<TTabsEvents>).emit('item:afterDelete', payload)
 			},
 		)
 
@@ -141,12 +157,33 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 		})
 
 		this._collection.events.on(
+			'item:beforeMove',
+			(payload: { collection: any; oldIndex: number; newIndex: number }) => {
+				// Пробрасываем событие наружу
+				;(this.events as TEvented<TTabsEvents>).emit('item:beforeMove', payload)
+			},
+		)
+
+		this._collection.events.on(
 			'item:moved',
 			(payload: { collection: any; item: ITabItem; oldIndex: number; newIndex: number }) => {
 				// Пробрасываем событие наружу
 				;(this.events as TEvented<TTabsEvents>).emit('item:moved', payload)
 			},
 		)
+
+		this._collection.events.on(
+			'item:afterMove',
+			(payload: { collection: any; item: ITabItem; oldIndex: number; newIndex: number }) => {
+				// Пробрасываем событие наружу
+				;(this.events as TEvented<TTabsEvents>).emit('item:afterMove', payload)
+			},
+		)
+
+		this._collection.events.on('cleared', (payload: { collection: any }) => {
+			// Пробрасываем событие наружу
+			;(this.events as TEvented<TTabsEvents>).emit('cleared', payload)
+		})
 
 		this.events.on('change:disabled', (value) => {
 			// При изменении disabled у контейнера — обновляем доступность всех табов
