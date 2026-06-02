@@ -23,23 +23,22 @@ export default {
 </template>
 
 <style lang="scss">
-.s-drag-and-drop__dragging-item {
-	position: relative;
-	// isolation: isolate;
+@reference "./../../../foundation/tailwind";
 
-	&::before {
+.s-drag-and-drop__dragging-item {
+	@apply select-none;
+	@apply relative rounded-lg;
+	@apply isolate;
+	@apply shadow-sm;
+	@apply #{'!opacity-60'};
+
+	&::after {
 		content: '';
-		position: absolute;
-		inset: 0;
-		pointer-events: none;
-		border-radius: inherit;
-		opacity: var(--s-drag-overlay-opacity, 0.4);
-		background-image: radial-gradient(
-			var(--s-drag-overlay-dot-color, currentColor) var(--s-drag-overlay-dot-size, 1px),
-			transparent var(--s-drag-overlay-dot-size, 1px)
-		);
-		background-size: var(--s-drag-overlay-gap, 8px) var(--s-drag-overlay-gap, 8px);
-		background-position: center;
+		@apply absolute inset-0;
+		@apply pointer-events-none;
+		@apply rounded-lg;
+		@apply opacity-10;
+		@apply bg-neutral-100;
 	}
 }
 </style>

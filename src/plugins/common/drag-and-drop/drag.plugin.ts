@@ -195,6 +195,7 @@ export class TDragPlugin extends TBasePlugin<TDragPluginEvents> {
 			// Убираем визуальный эффект перетаскивания
 			if (draggingUid !== null) {
 				const instance = collectionInstancesPlugin?.getByUid(draggingUid)
+
 				if (instance) {
 					instance.classes.remove(TDragPlugin.DRAGGING_CLASS, false)
 				} else {
@@ -204,6 +205,7 @@ export class TDragPlugin extends TBasePlugin<TDragPluginEvents> {
 					if (target) target.classList.remove(TDragPlugin.DRAGGING_CLASS)
 				}
 			}
+
 			draggingIndex = null
 			draggingUid = null
 			;(this.events as TEvented<TDragPluginEvents>).emit('drag:end')
