@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { TTabs } from '@core'
 import { Tabs, TabItem } from '@ui/tabs'
+import { DragAndDrop } from '@ui/drag-and-drop'
 
 // --- Вариант 1: через instance (программный) ---
 
@@ -12,25 +13,26 @@ tabs.orientation = 'horizontal'
 
 tabs.collection.add({ text: 'Tab 1', value: 'tab1', closable: true })
 tabs.collection.add({ text: 'Tab 2', value: 'tab2', closable: true })
-tabs.collection.add({ text: 'Tab 3', value: 'tab3', disabled: true })
+tabs.collection.add({ text: 'Tab 3', value: 'tab3' })
+tabs.collection.add({ text: 'Tab 4', value: 'tab4' })
+tabs.collection.add({ text: 'Tab 5', value: 'tab5' })
+tabs.collection.add({ text: 'Tab 6', value: 'tab6' })
 
 const item2 = tabs.collection.findBy('value', 'tab1')!
 tabs.collection.setActive(item2)
 
-setTimeout(() => {
-	console.log('Moving Tab 1 to the end...')
-	tabs.collection.move(0, 2) // Переместить первую вкладку в конец
+// setTimeout(() => {
+// 	console.log('Moving Tab 1 to the end...')
+// 	tabs.collection.move(0, 2) // Переместить первую вкладку в конец
 
-	const item2 = tabs.collection.findBy('value', 'tab2')!
-	tabs.collection.setActive(item2)
-}, 1000)
+// 	const item2 = tabs.collection.findBy('value', 'tab2')!
+// 	tabs.collection.setActive(item2)
+// }, 1000)
 
-setTimeout(() => {
-	console.log('Closing Tab 2...')
-	tabs.collection.delete(0) // Удалить вторую вкладку
-}, 2000)
-
-
+// setTimeout(() => {
+// 	console.log('Closing Tab 2...')
+// 	tabs.collection.delete(0) // Удалить вторую вкладку
+// }, 2000)
 
 // --- Вариант 2: через prop items ---
 const tabItems = ref([
@@ -44,14 +46,16 @@ const tabItems = ref([
 	<div style="display: flex; flex-direction: column; gap: 2rem">
 		<div class="tabs-slots-demo__section">
 			<h4 class="tabs-slots-demo__subtitle">Closable tabs</h4>
-			<Tabs :ctrl="tabs" appearance="contained" :closable="true">
-				<!-- <TabItem text="Tab 1" value="t1" active />
+			<DragAndDrop>
+				<Tabs :ctrl="tabs" appearance="contained" :closable="true">
+					<!-- <TabItem text="Tab 1" value="t1" active />
 				<TabItem text="Tab 2" value="t2" />
 				<TabItem text="Tab 3 (not closable)" value="t3" :closable="false" /> -->
-				<template #panel:t1><p>Content 1</p></template>
-				<template #panel:t2><p>Content 2</p></template>
-				<template #panel:t3><p>Content 3</p></template>
-			</Tabs>
+					<template #panel:t1><p>Content 1</p></template>
+					<template #panel:t2><p>Content 2</p></template>
+					<template #panel:t3><p>Content 3</p></template>
+				</Tabs>
+			</DragAndDrop>
 		</div>
 
 		<!-- <section>

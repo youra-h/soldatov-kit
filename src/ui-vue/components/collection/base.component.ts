@@ -1,7 +1,7 @@
 import type { PropType, Ref } from 'vue'
 import { watch } from 'vue'
 import { type ICollection, type ICollectionProps, type ICollectionItem } from '@core'
-import { TCollectionElementsPlugin, TDragPlugin } from '@plugins'
+import { TCollectionElementsPlugin, TCollectionInstancesPlugin, TDragPlugin } from '@plugins'
 import { useProvideCollection } from '../../composables/useProvideCollection'
 import { useProvideCollectionPlugins } from '../../composables/useProvideCollectionPlugins'
 import { useInjectDragContext } from '../../composables/useDragContext'
@@ -49,9 +49,13 @@ export function syncCollection(
 	useProvideCollection(instance)
 
 	const collectionPlugin = plugins.get(TCollectionElementsPlugin)
+	const collectionInstancesPlugin = plugins.get(TCollectionInstancesPlugin)
 
-	if (collectionPlugin) {
-		useProvideCollectionPlugins((uid, bundle) => collectionPlugin.register(uid, bundle))
+	if (collectionPlugin || collectionInstancesPlugin) {
+		useProvideCollectionPlugins((uid, bundle) => {
+			collectionPlugin?.register(uid, bundle)
+			collectionInstancesPlugin?.register(uid, bundle)
+		})
 	}
 
 	// Если компонент находится внутри контекста DragAndDrop, активируем плагин для этой коллекции
