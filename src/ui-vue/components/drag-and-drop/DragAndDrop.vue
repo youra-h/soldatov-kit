@@ -39,6 +39,9 @@ export default {
 		@apply rounded-lg;
 		@apply opacity-10;
 		@apply bg-neutral-100;
+
+		background-image: radial-gradient(currentColor 1px, transparent 1px);
+		background-size: 6px 6px;
 	}
 }
 </style>

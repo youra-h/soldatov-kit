@@ -8,8 +8,8 @@ import { DragAndDrop } from '@ui/drag-and-drop'
 
 const tabs = new TTabs()
 tabs.variant = 'accent'
-tabs.appearance = 'line'
-tabs.orientation = 'horizontal'
+// tabs.appearance = 'line'
+// tabs.orientation = 'horizontal'
 
 tabs.collection.add({ text: 'Tab 1', value: 'tab1', closable: true })
 tabs.collection.add({ text: 'Tab 2', value: 'tab2', closable: true })
