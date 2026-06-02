@@ -54,6 +54,7 @@ export function syncCollection(
 		useProvideCollectionPlugins((uid, bundle) => collectionPlugin.register(uid, bundle))
 	}
 
+	// Если компонент находится внутри контекста DragAndDrop, активируем плагин для этой коллекции
 	if (useInjectDragContext()) {
 		plugins.get(TDragPlugin)?.activate(instance)
 	}
