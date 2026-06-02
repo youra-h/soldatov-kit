@@ -1,7 +1,7 @@
 import type { ICollection } from '../../../core'
 import { TBasePlugin } from '../../base/plugin'
 import { TElementPlugin } from '../element'
-import { TCollectionElementsPlugin } from '../collection'
+import { TCollectionElementsPlugin, TCollectionInstancesPlugin } from '../collection'
 import type { IPluginBundle } from '../../base/types'
 import type { TDragPluginEvents } from './types'
 import { TEvented } from '../../../core/common/evented'
@@ -16,6 +16,7 @@ import { TEvented } from '../../../core/common/evented'
  * Зависит от двух других плагинов, которые должны присутствовать в том же бандле:
  * - {@link TElementPlugin} — предоставляет корневой DOM-элемент компонента.
  * - {@link TCollectionElementsPlugin} — отображает uid элементов коллекции на их DOM-узлы.
+ * - {@link TCollectionInstancesPlugin} — отображает uid элементов коллекции на их instance.
  *
  * @example
  * ```ts
@@ -38,6 +39,9 @@ export class TDragPlugin extends TBasePlugin<TDragPluginEvents> {
 	/** Уникальный ключ плагина в бандле. */
 	static readonly key = 'drag'
 
+	/** CSS-класс для визуального состояния перетаскиваемого элемента. */
+	private static readonly DRAGGING_CLASS = 's-drag-and-drop__dragging-item'
+
 	/** Флаг: плагин активирован и ожидает/обрабатывает перетаскивание. */
 	private _active = false
 
@@ -51,7 +55,10 @@ export class TDragPlugin extends TBasePlugin<TDragPluginEvents> {
 	private _elementPlugin: TElementPlugin | null = null
 
 	/** Ссылка на плагин, отображающий uid ↔ DOM-узел для каждого элемента коллекции. */
-	private _collectionPlugin: TCollectionElementsPlugin | null = null
+	private _collectionElementsPlugin: TCollectionElementsPlugin | null = null
+
+	/** Ссылка на плагин, отображающий uid ↔ instance для каждого элемента коллекции. */
+	private _collectionInstancesPlugin: TCollectionInstancesPlugin | null = null
 
 	/** Функция очистки: снимает слушателей событий и атрибуты draggable. */
 	private _cleanup: (() => void) | null = null
@@ -66,7 +73,8 @@ export class TDragPlugin extends TBasePlugin<TDragPluginEvents> {
 	 */
 	override install(bundle: IPluginBundle): void {
 		this._elementPlugin = bundle.get(TElementPlugin) ?? null
-		this._collectionPlugin = bundle.get(TCollectionElementsPlugin) ?? null
+		this._collectionElementsPlugin = bundle.get(TCollectionElementsPlugin) ?? null
+		this._collectionInstancesPlugin = bundle.get(TCollectionInstancesPlugin) ?? null
 
 		this._elementPlugin?.events.on('ready', ({ element }) => {
 			this._element = element
@@ -117,13 +125,15 @@ export class TDragPlugin extends TBasePlugin<TDragPluginEvents> {
 	private _setup(): void {
 		const element = this._element!
 		const collection = this._collection!
-		const collectionPlugin = this._collectionPlugin!
+		const collectionElementsPlugin = this._collectionElementsPlugin!
+		const collectionInstancesPlugin = this._collectionInstancesPlugin
 
 		// Индекс перетаскиваемого элемента в коллекции; null — перетаскивание не активно
 		let draggingIndex: number | null = null
+		let draggingUid: string | number | null = null
 
 		// Помечаем уже существующие DOM-узлы как перетаскиваемые
-		collectionPlugin.getAll().forEach((el) => el.setAttribute('draggable', 'true'))
+		collectionElementsPlugin.getAll().forEach((el) => el.setAttribute('draggable', 'true'))
 
 		// Новые узлы, добавленные в коллекцию после активации, тоже должны быть draggable
 		const onElementAdded = ({
@@ -135,12 +145,12 @@ export class TDragPlugin extends TBasePlugin<TDragPluginEvents> {
 			itemEl.setAttribute('draggable', 'true')
 		}
 
-		collectionPlugin.events.on('element:added', onElementAdded)
+		collectionElementsPlugin.events.on('element:added', onElementAdded)
 
 		/**
 		 * Обработчик начала перетаскивания.
 		 * Определяет перетаскиваемый узел, запоминает его индекс в коллекции,
-		 * снижает прозрачность элемента для визуальной обратной связи
+		 * включает визуальное состояние перетаскивания через CSS-класс
 		 * и генерирует событие `drag:start`.
 		 */
 		const onDragStart = (e: DragEvent) => {
@@ -149,18 +159,28 @@ export class TDragPlugin extends TBasePlugin<TDragPluginEvents> {
 			) as HTMLElement | null
 			if (!target || !element.contains(target)) return
 
-			const uid = collectionPlugin.getUidByElement(target)
+			const uid = collectionElementsPlugin.getUidByElement(target)
 			if (uid === null) return
 
 			draggingIndex = collection.getItems().findIndex((item) => item.uid === uid)
 			if (draggingIndex === -1) {
 				draggingIndex = null
+				draggingUid = null
 				return
 			}
 
+			draggingUid = uid
+
 			e.dataTransfer!.effectAllowed = 'move'
-			// Визуальная индикация: полупрозрачный элемент в процессе перетаскивания
-			target.style.opacity = '0.4'
+			// Предпочитаем менять classes у instance; это безопаснее для реактивного слоя.
+			// DOM-класс оставляем fallback на случай, если instance недоступен.
+			// const instance = collectionInstancesPlugin?.getByUid(uid)
+
+			// if (instance) {
+			// 	instance.classes.add(TDragPlugin.DRAGGING_CLASS, false)
+			// } else {
+			// 	target.classList.add(TDragPlugin.DRAGGING_CLASS)
+			// }
 			;(this.events as TEvented<TDragPluginEvents>).emit('drag:start', {
 				index: draggingIndex,
 				uid: uid as number,
@@ -169,15 +189,23 @@ export class TDragPlugin extends TBasePlugin<TDragPluginEvents> {
 
 		/**
 		 * Обработчик окончания перетаскивания.
-		 * Восстанавливает прозрачность элемента и сбрасывает `draggingIndex`.
+		 * Снимает визуальное состояние перетаскивания и сбрасывает внутренние маркеры drag.
 		 */
 		const onDragEnd = (e: DragEvent) => {
-			const target = (e.target as HTMLElement).closest(
-				'[draggable="true"]',
-			) as HTMLElement | null
 			// Убираем визуальный эффект перетаскивания
-			if (target) target.style.opacity = ''
+			if (draggingUid !== null) {
+				const instance = collectionInstancesPlugin?.getByUid(draggingUid)
+				if (instance) {
+					instance.classes.remove(TDragPlugin.DRAGGING_CLASS, false)
+				} else {
+					const target = (e.target as HTMLElement).closest(
+						'[draggable="true"]',
+					) as HTMLElement | null
+					if (target) target.classList.remove(TDragPlugin.DRAGGING_CLASS)
+				}
+			}
 			draggingIndex = null
+			draggingUid = null
 			;(this.events as TEvented<TDragPluginEvents>).emit('drag:end')
 		}
 
@@ -197,14 +225,12 @@ export class TDragPlugin extends TBasePlugin<TDragPluginEvents> {
 			) as HTMLElement | null
 			if (!target || !element.contains(target)) return
 
-			const targetUid = collectionPlugin.getUidByElement(target)
+			const targetUid = collectionElementsPlugin.getUidByElement(target)
 			if (targetUid === null) return
 
 			const targetIndex = collection.getItems().findIndex((item) => item.uid === targetUid)
 			// Пропускаем, если навели на тот же элемент или индекс не найден
 			if (targetIndex === -1 || targetIndex === draggingIndex) return
-
-			// console.log(`Moving item from index ${draggingIndex} to ${targetIndex}`)
 
 			// Перемещаем элемент в коллекции; фреймворк реактивно обновит DOM
 			collection.move(draggingIndex, targetIndex)
@@ -221,9 +247,15 @@ export class TDragPlugin extends TBasePlugin<TDragPluginEvents> {
 			element.removeEventListener('dragstart', onDragStart)
 			element.removeEventListener('dragend', onDragEnd)
 			element.removeEventListener('dragover', onDragOver)
-			collectionPlugin.events.off('element:added', onElementAdded)
+			collectionElementsPlugin.events.off('element:added', onElementAdded)
+			collectionInstancesPlugin?.getAll().forEach((instance) => {
+				instance.classes.remove(TDragPlugin.DRAGGING_CLASS, false)
+			})
 			// Убираем атрибут draggable со всех элементов коллекции
-			collectionPlugin.getAll().forEach((el) => el.removeAttribute('draggable'))
+			collectionElementsPlugin.getAll().forEach((el) => {
+				el.removeAttribute('draggable')
+				el.classList.remove(TDragPlugin.DRAGGING_CLASS)
+			})
 		}
 	}
 
