@@ -233,11 +233,9 @@ export class TDragPlugin extends TBasePlugin<TDragPluginEvents> {
 				'[draggable="true"]',
 			) as HTMLElement | null
 
-
-
 			if (!target || !element.contains(target)) return
 
-			// Курсор остался над тем же узлом — все дальнейшие проверки бессмысленны
+			// Курсор остался над тем же узлом (или над его дочерним элементом) — пропускаем
 			if (target === lastDragOverTarget) return
 			lastDragOverTarget = target
 
@@ -252,8 +250,8 @@ export class TDragPlugin extends TBasePlugin<TDragPluginEvents> {
 			collection.move(draggingIndex, targetIndex)
 			// Обновляем текущий индекс перетаскиваемого элемента
 			draggingIndex = targetIndex
-			// После reorder элементы в DOM пересортированы — сбрасываем кэш последнего target
-			lastDragOverTarget = null
+			// target остаётся закэшированным — следующие dragover над тем же элементом
+			// (включая дочерние кнопки) будут пропущены без лишних пересчётов
 		}
 
 		element.addEventListener('dragstart', onDragStart)
