@@ -131,6 +131,9 @@ export class TDragPlugin extends TBasePlugin<TDragPluginEvents> {
 		// Индекс перетаскиваемого элемента в коллекции; null — перетаскивание не активно
 		let draggingIndex: number | null = null
 		let draggingUid: string | number | null = null
+		// Последний DOM-узел над которым находился курсор; позволяет пропустить
+		// повторные срабатывания dragover когда курсор не покидал элемент
+		let lastDragOverTarget: HTMLElement | null = null
 
 		// Помечаем уже существующие DOM-узлы как перетаскиваемые
 		collectionElementsPlugin.getAll().forEach((el) => el.setAttribute('draggable', 'true'))
@@ -157,6 +160,7 @@ export class TDragPlugin extends TBasePlugin<TDragPluginEvents> {
 			const target = (e.target as HTMLElement).closest(
 				'[draggable="true"]',
 			) as HTMLElement | null
+
 			if (!target || !element.contains(target)) return
 
 			const uid = collectionElementsPlugin.getUidByElement(target)
@@ -170,6 +174,7 @@ export class TDragPlugin extends TBasePlugin<TDragPluginEvents> {
 			}
 
 			draggingUid = uid
+			lastDragOverTarget = null
 
 			e.dataTransfer!.effectAllowed = 'move'
 			// Предпочитаем менять classes у instance; это безопаснее для реактивного слоя.
@@ -208,6 +213,7 @@ export class TDragPlugin extends TBasePlugin<TDragPluginEvents> {
 
 			draggingIndex = null
 			draggingUid = null
+			lastDragOverTarget = null
 			;(this.events as TEvented<TDragPluginEvents>).emit('drag:end')
 		}
 
@@ -220,12 +226,20 @@ export class TDragPlugin extends TBasePlugin<TDragPluginEvents> {
 			// Разрешаем drop (без этого браузер не вызовет drop-событие)
 			e.preventDefault()
 			e.dataTransfer!.dropEffect = 'move'
+
 			if (draggingIndex === null) return
 
 			const target = (e.target as HTMLElement).closest(
 				'[draggable="true"]',
 			) as HTMLElement | null
+
+
+
 			if (!target || !element.contains(target)) return
+
+			// Курсор остался над тем же узлом — все дальнейшие проверки бессмысленны
+			if (target === lastDragOverTarget) return
+			lastDragOverTarget = target
 
 			const targetUid = collectionElementsPlugin.getUidByElement(target)
 			if (targetUid === null) return
@@ -238,6 +252,8 @@ export class TDragPlugin extends TBasePlugin<TDragPluginEvents> {
 			collection.move(draggingIndex, targetIndex)
 			// Обновляем текущий индекс перетаскиваемого элемента
 			draggingIndex = targetIndex
+			// После reorder элементы в DOM пересортированы — сбрасываем кэш последнего target
+			lastDragOverTarget = null
 		}
 
 		element.addEventListener('dragstart', onDragStart)
