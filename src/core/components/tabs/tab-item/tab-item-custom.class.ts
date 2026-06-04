@@ -71,6 +71,8 @@ export default class TTabItemCustom<
 		})
 
 		this._closableState.events.on('change', (payload: TValuePayload<boolean | undefined>) => {
+			this._classes.toggle(`--closable`, !!payload.newValue)
+
 			this.notifyClosableChange(payload.newValue)
 		})
 
@@ -79,10 +81,11 @@ export default class TTabItemCustom<
 		this.events.on('change:disabled', () => {
 			// Если таб стал disabled, убираем возможность закрывать его
 			if (this.disabled) {
-				this._applyClosable(false)
+				this._closableState.value = false
 			} else {
 				// Если таб стал enabled, восстанавливаем closable в исходное значение (или дефолтное)
-				this._applyClosable(customProps.closable ?? TTabItemCustom.defaultValues.closable)
+				this._closableState.value =
+					customProps.closable ?? TTabItemCustom.defaultValues.closable
 			}
 		})
 	}
@@ -99,16 +102,10 @@ export default class TTabItemCustom<
 		return this._closableState.resolved
 	}
 
-	protected _applyClosable(value: boolean | undefined) {
-		this._classes.toggle(`--closable`, !!value)
-
-		this._closableState.value = value
-	}
-
 	set closable(value: boolean | undefined) {
 		if (this._closableState.value === value || this.disabled) return
 
-		this._applyClosable(value)
+		this._closableState.value = value
 	}
 
 	/** Инжектируется из TTabs при добавлении таба в коллекцию */
