@@ -98,8 +98,12 @@ export default {
 			@apply px-1.5;
 		}
 
+		&--prefix {
+			@apply order-first;
+		}
+
 		&--suffix {
-			@apply ml-auto;
+			@apply ml-auto order-last;
 		}
 	}
 
