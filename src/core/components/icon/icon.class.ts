@@ -40,6 +40,10 @@ export default class TIcon
 		})
 
 		this._sizeState.events.on('change', (payload: TValuePayload<TComponentSize>) => {
+			this._classes.swapClass({
+				oldClass: `--size-${payload.oldValue}`,
+				newClass: `--size-${payload.newValue}`,
+			})
 			;(this.events as TEvented<TIconEvents>).emit('change:size' as any, payload)
 		})
 
@@ -76,19 +80,10 @@ export default class TIcon
 		return this._sizeState.value
 	}
 
-	protected _applySize(newValue: TComponentSize, oldValue?: TComponentSize) {
-		this._classes.swapClass({
-			oldClass: `--size-${oldValue}`,
-			newClass: `--size-${newValue}`,
-		})
-
-		this._sizeState.value = newValue
-	}
-
 	set size(value: TComponentSize) {
 		if (value === this._sizeState.value) return
 
-		this._applySize(value, this._sizeState.value)
+		this._sizeState.value = value
 	}
 
 	/**
