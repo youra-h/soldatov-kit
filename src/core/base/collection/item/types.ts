@@ -13,15 +13,15 @@ export interface ICollectionItemOptions {
 export type TCollectableOptions<TOptions extends object = object> = TOptions &
 	ICollectionItemOptions
 
-export interface ICollectionItemProps {}
+export interface ICollectionItemOrderable {
+	order: number
+}
+
+export interface ICollectionItemProps extends ICollectionItemOrderable {}
 
 export interface ICollectionItemMethods {
 	// Освобождает ресурсы, отписывается от событий и т.д.
 	free(): void
-}
-
-export interface ICollectionItemOrderable {
-	order: number
 }
 
 export type TCollectionItemEvents<TItem = any> = {

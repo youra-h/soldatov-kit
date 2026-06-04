@@ -31,6 +31,10 @@ export default class TTabItem
 			;(this.events as TEvented<TTabItemEvents>).emit('change:activation', this)
 		})
 
+		this._collectionItem.events.on('change:order', (value: number) => {
+			;(this.events as TEvented<TTabItemEvents>).emit('change:order', value)
+		})
+
 		this._collectionItem.events.on('free', () => {
 			;(this.events as TEvented<TTabItemEvents>).emit('free', this)
 		})
@@ -65,6 +69,14 @@ export default class TTabItem
 		this._classes.toggle(`--active`, value)
 	}
 
+	get order(): number {
+		return this._collectionItem.order
+	}
+
+	set order(value: number) {
+		this._collectionItem.order = value
+	}
+
 	toggleActive(): void {
 		this._collectionItem.toggleActive()
 	}
@@ -73,6 +85,7 @@ export default class TTabItem
 		return {
 			...super.getProps(), // Все UI-свойства от TTabItemCustom
 			active: this.active, // Добавляем active из _collectionItem
+			order: this.order, // Добавляем order из _collectionItem
 		}
 	}
 
