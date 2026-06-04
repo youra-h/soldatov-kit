@@ -19,7 +19,7 @@ describe('TButton', () => {
 		const btn = new TButton()
 
 		btn.variant = 'accent'
-		expect(btn.classes.toArray()).toContain('s-button--variant-accent')
+		expect(btn.classes.toArray()).toContain('s-button--accent')
 
 		btn.size = 'xl'
 		expect(btn.classes.toArray()).toContain('s-button--size-xl')

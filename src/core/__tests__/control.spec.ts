@@ -29,7 +29,7 @@ describe('TControl', () => {
 
 		expect(classes).toContain('s-component-view')
 		expect(classes).toContain('s-component-view--size-xl')
-		expect(classes).toContain('s-component-view--variant-accent')
+		expect(classes).toContain('s-component-view--accent')
 	})
 
 	it('getProps возвращает variant/size/disabled/focused', () => {

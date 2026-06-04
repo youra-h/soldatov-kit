@@ -21,7 +21,7 @@ describe('TCheckBox', () => {
 		expect(cb.classes.toArray()).toContain('s-check-box')
 
 		cb.variant = 'positive'
-		expect(cb.classes.toArray()).toContain('s-check-box--variant-positive')
+		expect(cb.classes.toArray()).toContain('s-check-box--positive')
 
 		cb.size = 'xl'
 		expect(cb.classes.toArray()).toContain('s-check-box--size-xl')

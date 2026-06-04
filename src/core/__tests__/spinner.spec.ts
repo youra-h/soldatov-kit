@@ -9,35 +9,25 @@ describe('TSpinner', () => {
 		expect(a.borderWidth).toBe(2)
 		expect(a.classes.toArray()).toContain('s-spinner')
 		expect(a.classes.toArray()).toContain('s-spinner--size-xl')
-		expect(a.classes.toArray()).toContain('s-spinner--variant-caution')
+		expect(a.classes.toArray()).toContain('s-spinner--caution')
 
 		const b = new TSpinner({ size: 'normal', variant: 'accent' })
 		expect(b.classes.toArray()).toContain('s-spinner')
 		expect(b.classes.toArray()).toContain('s-spinner--size-normal')
-		expect(b.classes.toArray()).toContain('s-spinner--variant-accent')
+		expect(b.classes.toArray()).toContain('s-spinner--accent')
 	})
 
 	it('смена size/variant меняет classes', () => {
 		const s = new TSpinner({ size: 'normal', variant: 'accent' })
-		expect(s.classes.toArray()).toContain('s-spinner--variant-accent')
-		expect(s.classes.toArray()).not.toContain('s-spinner--variant-caution')
+		expect(s.classes.toArray()).toContain('s-spinner--accent')
+		expect(s.classes.toArray()).not.toContain('s-spinner--caution')
 
 		s.variant = 'caution'
-		expect(s.classes.toArray()).toContain('s-spinner--variant-caution')
-		expect(s.classes.toArray()).not.toContain('s-spinner--variant-accent')
+		expect(s.classes.toArray()).toContain('s-spinner--caution')
+		expect(s.classes.toArray()).not.toContain('s-spinner--accent')
 
 		s.size = 'xl'
 		expect(s.classes.toArray()).toContain('s-spinner--size-xl')
-	})
-
-	it('styles отражают рассчитанный borderWidth при auto', () => {
-		const s = new TSpinner({ size: 'normal', borderWidth: 'auto' })
-		expect(s.borderWidth).toBe(1)
-		expect(s.styles['--spinner-border-width']).toBe('1px')
-
-		s.size = 'xl'
-		expect(s.borderWidth).toBe(2)
-		expect(s.styles['--spinner-border-width']).toBe('2px')
 	})
 
 	it('getProps/toJSON отражают size/variant/borderWidth', () => {

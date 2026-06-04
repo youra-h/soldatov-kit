@@ -52,11 +52,11 @@ describe('TClasses', () => {
 
 	it('swap меняет класс по prefix+value', () => {
 		const c = new TClasses('s-test')
-		c.add('--variant-normal', true)
+		c.add('--normal', true)
 
-		c.swap({ prefix: '--variant-', oldValue: 'normal', newValue: 'accent' })
-		expect(c.toArray()).toContain('s-test--variant-accent')
-		expect(c.toArray()).not.toContain('s-test--variant-normal')
+		c.swap({ prefix: '--', oldValue: 'normal', newValue: 'accent' })
+		expect(c.toArray()).toContain('s-test--accent')
+		expect(c.toArray()).not.toContain('s-test--normal')
 	})
 
 	it('setBase обновляет базовый класс и эмитит change', () => {

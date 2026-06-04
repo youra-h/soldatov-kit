@@ -18,7 +18,7 @@ describe('TStylable', () => {
 
 		stylable.variant = 'accent'
 		expect(variantHandler).toHaveBeenCalledWith({ newValue: 'accent', oldValue: 'normal' })
-		expect(stylable.classes.toArray()).toContain('s-component-view--variant-accent')
+		expect(stylable.classes.toArray()).toContain('s-component-view--accent')
 	})
 
 	it('getProps отражает size и variant', () => {
