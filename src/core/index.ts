@@ -23,6 +23,7 @@ export * from './components/check-box'
 export * from './components/switch'
 export * from './components/tabs'
 export * from './components/tree'
+export * from './components/collapse'
 
 // common (вспомогательные утилиты)
 export * from './common/is-same'
