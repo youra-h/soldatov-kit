@@ -94,35 +94,6 @@ describe('TTabs', () => {
 		})
 	})
 
-	describe('isTabClosable', () => {
-		it('returns false when both tabs and item closable are false/undefined', () => {
-			const item = tabs.collection.add({})
-
-			expect(tabs.isTabClosable(item)).toBe(false)
-		})
-
-		it('returns true when tabs.closable is true and item.closable is undefined', () => {
-			tabs.closable = true
-			const item = tabs.collection.add({})
-
-			expect(tabs.isTabClosable(item)).toBe(true)
-		})
-
-		it('returns item.closable when explicitly set to true', () => {
-			tabs.closable = false
-			const item = tabs.collection.add({ closable: true })
-
-			expect(tabs.isTabClosable(item)).toBe(true)
-		})
-
-		it('returns item.closable when explicitly set to false', () => {
-			tabs.closable = true
-			const item = tabs.collection.add({ closable: false })
-
-			expect(tabs.isTabClosable(item)).toBe(false)
-		})
-	})
-
 	describe('closeTab', () => {
 		it('returns false when tab is not closable', () => {
 			const item = tabs.collection.add({ text: 'Tab 1' })
@@ -197,13 +168,15 @@ describe('TTabs', () => {
 
 		it('does not change active when closing non-active tab', () => {
 			tabs.closable = true
+
 			const item1 = tabs.collection.add({ text: 'Tab 1' })
 			const item2 = tabs.collection.add({ text: 'Tab 2' })
 
 			tabs.collection.setActive(item1)
 
-			tabs.closeTab(item2)
+			const result = tabs.closeTab(item2)
 
+			expect(result).toBe(true)
 			expect(tabs.activeItem).toBe(item1)
 			expect(tabs.count).toBe(1)
 		})

@@ -316,6 +316,7 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 	 * @returns true если таб был закрыт, false если закрытие запрещено
 	 */
 	closeTab(item: ITabItem): boolean {
+		if (!item.closable) return false
 		;(this.events as TEvented<TTabsEvents>).emit('tab:close', item)
 
 		return this._collection.deleteItem(item)

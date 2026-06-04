@@ -14,7 +14,7 @@ describe('TTabItemCustom', () => {
 		it('creates tab item with default values', () => {
 			expect(item.text).toBe('')
 			expect(item.value).toBeUndefined()
-			expect(item.closable).toBeUndefined()
+			expect(item.closable).toBe(false)
 		})
 
 		it('creates tab item with custom props', () => {
@@ -53,11 +53,11 @@ describe('TTabItemCustom', () => {
 			expect(item.closable).toBe(true)
 		})
 
-		it('can set closable to undefined', () => {
+		it('can set closable to false', () => {
 			item.closable = true
-			item.closable = undefined
+			item.closable = false
 
-			expect(item.closable).toBeUndefined()
+			expect(item.closable).toBe(false)
 		})
 	})
 
