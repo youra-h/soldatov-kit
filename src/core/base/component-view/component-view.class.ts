@@ -82,11 +82,11 @@ export default class TComponentView<
 
 		super({ props })
 
-		this._tag = props.tag ?? TComponentView.defaultValues.tag!
+		this._tag = props.tag ?? ctor.defaultValues.tag!
 
 		// Инициализируем состояния видимости
-		const rendered = props.rendered ?? (TComponentView.defaultValues.rendered as boolean)
-		const visible = props.visible ?? (TComponentView.defaultValues.visible as boolean)
+		const rendered = props.rendered ?? (ctor.defaultValues.rendered as boolean)
+		const visible = props.visible ?? (ctor.defaultValues.visible as boolean)
 
 		this._renderedState = resolveState<IStateUnit<boolean>, boolean>({
 			state: states?.rendered,
