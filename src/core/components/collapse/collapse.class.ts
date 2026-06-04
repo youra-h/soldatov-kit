@@ -61,15 +61,15 @@ export class TCollapse
 			;(this.events as TEvented<TCollapseEvents>).emit('selection:cleared', payload)
 		})
 
-		this._collection.events.on('change:selected', (items) => {
+		this._collection.events.on('change:selected', (items: ICollapseItem[]) => {
 			;(this.events as TEvented<TCollapseEvents>).emit('change:selected', items)
 		})
 
-		this._collection.events.on('change:selectedCount', (count) => {
+		this._collection.events.on('change:selectedCount', (count: number) => {
 			;(this.events as TEvented<TCollapseEvents>).emit('change:selectedCount', count)
 		})
 
-		this._collection.events.on('change:mode', (value) => {
+		this._collection.events.on('change:mode', (value: TSelectionMode) => {
 			;(this.events as TEvented<TCollapseEvents>).emit('change:mode', value)
 		})
 
