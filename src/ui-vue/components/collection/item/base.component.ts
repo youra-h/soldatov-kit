@@ -16,7 +16,7 @@ export default {
 }
 
 export interface ICollectionItemState<T extends ICollectionItem = ICollectionItem> {
-	order: Ref<number>
+	order: Ref<number | undefined>
 }
 
 /**

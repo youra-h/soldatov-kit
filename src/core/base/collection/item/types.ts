@@ -14,7 +14,7 @@ export type TCollectableOptions<TOptions extends object = object> = TOptions &
 	ICollectionItemOptions
 
 export interface ICollectionItemOrderable {
-	order: number
+	order?: number
 }
 
 export interface ICollectionItemProps extends ICollectionItemOrderable {}
