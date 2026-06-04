@@ -31,7 +31,7 @@ export default class TTabItemCustom<
 		...TValueControl.defaultValues,
 		text: '',
 		value: '',
-		closable: false,
+		closable: undefined,
 		variant: 'normal',
 		tag: 'button',
 	}

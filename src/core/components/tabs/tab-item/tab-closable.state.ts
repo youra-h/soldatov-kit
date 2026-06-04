@@ -23,6 +23,6 @@ export class TTabClosableState extends TStateUnit<boolean | undefined> {
 
 	/** Итоговое значение: собственное ?? родительское ?? false */
 	get resolved(): boolean {
-		return this._value || this._parentResolver?.() || false
+		return this._value ?? this._parentResolver?.() ?? false
 	}
 }
