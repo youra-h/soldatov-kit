@@ -20,15 +20,20 @@ export interface ICollectionItemMethods {
 	free(): void
 }
 
+export interface ICollectionItemOrderable {
+	order: number
+}
+
 export type TCollectionItemEvents<TItem = any> = {
 	free: (item: TItem) => void
+	'change:order': (value: number) => void
 }
 
 export interface ICollectionItem<
 	TProps extends ICollectionItemProps = ICollectionItemProps,
 	TEvents extends Record<string, (...args: any) => any> = TCollectionItemEvents,
 >
-	extends IEntity<TProps>, ICollectionItemMethods {
+	extends IEntity<TProps>, ICollectionItemMethods, ICollectionItemOrderable {
 	// Ссылка на коллекцию-владелец.
 	collection: TCollection | null
 	// События компонента

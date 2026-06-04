@@ -23,6 +23,12 @@ export abstract class TCollectionItem<
 	 * @readonly
 	 */
 	private _collection: TCollection | null = null
+
+	/**
+	 * Позиционный индекс элемента в коллекции. Проставляется коллекцией автоматически.
+	 */
+	protected _order: number = 0
+
 	// События
 	public readonly events: TEvented<TEvents>
 
@@ -42,6 +48,17 @@ export abstract class TCollectionItem<
 
 	set collection(value: TCollection | null) {
 		this._collection = value
+	}
+
+	get order(): number {
+		return this._order
+	}
+
+	set order(value: number) {
+		if (this._order === value) return
+
+		this._order = value
+		;(this.events as TEvented<TCollectionItemEvents>).emit('change:order', value)
 	}
 
 	/**

@@ -1,9 +1,11 @@
 import { type ICollectionItem, type ICollectionItemProps } from '@core'
 import { useInjectCollectionItem } from '../../../composables/useInjectCollectionItem'
 import { useInjectCollectionItemPlugins } from '../../../composables/useInjectCollectionItemPlugins'
+import { useSyncProps } from '../../../composables/useSyncProps'
+import type { Ref } from 'vue'
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../../types'
 
-export const emitsCollectionItem: TEmits = ['free', 'change:collection'] as const
+export const emitsCollectionItem: TEmits = ['free', 'change:order'] as const
 
 export const propsCollectionItem: TProps = {}
 
@@ -13,7 +15,9 @@ export default {
 	props: propsCollectionItem,
 }
 
-export interface ICollectionItemState<T extends ICollectionItem = ICollectionItem> {}
+export interface ICollectionItemState<T extends ICollectionItem = ICollectionItem> {
+	order: Ref<number>
+}
 
 /**
  * Синхронизация props и событий для CollectionItem
@@ -37,5 +41,13 @@ export function syncCollectionItem(
 		emit?.('free', item)
 	})
 
-	return {}
+	instance.events.on('change:order', (value: number) => {
+		emit?.('change:order', value)
+	})
+
+	return {
+		...useSyncProps(instance.events, {
+			order: () => instance.order,
+		}),
+	}
 }

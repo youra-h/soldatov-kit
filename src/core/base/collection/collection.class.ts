@@ -93,6 +93,16 @@ export class TCollection<
 	}
 
 	/**
+	 * Пересчитывает `order` у всех элементов начиная с fromIndex.
+	 * Вызывается после любой операции, меняющей позиции элементов.
+	 */
+	protected _recalculateOrder(fromIndex = 0): void {
+		for (let i = fromIndex; i < this._items.length; i++) {
+			this._items[i].order = i
+		}
+	}
+
+	/**
 	 * Создаёт и добавляет новый элемент в конец коллекции.
 	 * Возвращает созданный элемент.
 	 */
@@ -192,6 +202,9 @@ export class TCollection<
 
 		this._items.splice(index, 0, item)
 		item.collection = this
+
+		// После вставки элемента пересчитываем order для всех элементов, начиная с позиции вставки
+		this._recalculateOrder(index)
 		;(this.events as TEvented<TCollectionEvents>).emit('item:added', { collection: this, item })
 
 		this._onAfterItemAdd(item)
@@ -227,6 +240,9 @@ export class TCollection<
 
 		const removed = this._items.splice(index, 1)[0]
 		removed?.free()
+
+		// После удаления элемента пересчитываем order для всех элементов, начиная с позиции удалённого элемента
+		this._recalculateOrder(index)
 		;(this.events as TEvented<TCollectionEvents>).emit('item:deleted', {
 			collection: this,
 			item,
@@ -296,6 +312,9 @@ export class TCollection<
 
 		this._items.splice(oldIndex, 1)
 		this._items.splice(ni, 0, item)
+
+		// После перемещения элемента пересчитываем order для всех элементов, начиная с позиции min(oldIndex, newIndex)
+		this._recalculateOrder(Math.min(oldIndex, ni))
 		;(this.events as TEvented<TCollectionEvents>).emit('item:moved', {
 			collection: this,
 			item,
