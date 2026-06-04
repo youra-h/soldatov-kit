@@ -1,22 +1,13 @@
-import TValueControl from '../../../base/value-control/value-control.class'
-import type { IComponentViewOptions } from '../../../base/component-view'
 import { TSelectableCollectionItem } from '../../../base/collection'
-import type { TCollection } from '../../../base/collection'
+import TCollapseItemCustom from './collapse-item-custom.class'
 import type { ICollapseItem, ICollapseItemOptions, ICollapseItemProps, TCollapseItemEvents } from './types'
+import type { TCollection } from '../../../base/collection'
 import { TEvented } from '../../../common/evented'
 
 export default class TCollapseItem
-	extends TValueControl<string | number, ICollapseItemProps, TCollapseItemEvents>
+	extends TCollapseItemCustom<ICollapseItemProps, TCollapseItemEvents>
 	implements ICollapseItem
 {
-	static override baseClass = 's-collapse-item'
-
-	static defaultValues: Partial<ICollapseItemProps> = {
-		...TValueControl.defaultValues,
-		value: '',
-		tag: 'div',
-	}
-
 	protected _collectionItem: TSelectableCollectionItem
 
 	constructor(options: ICollapseItemOptions | Partial<ICollapseItemProps> = {}) {
@@ -82,6 +73,20 @@ export default class TCollapseItem
 
 	toggleSelected(): void {
 		this._collectionItem.toggleSelected()
+	}
+
+	override getProps(): ICollapseItemProps {
+		return {
+			...super.getProps(),
+			selected: this.selected,
+			order: this.order,
+		}
+	}
+
+	override assign(source: Partial<ICollapseItem>): void {
+		super.assign(source)
+
+		if (source.selected !== undefined) this.selected = source.selected
 	}
 
 	free(): void {

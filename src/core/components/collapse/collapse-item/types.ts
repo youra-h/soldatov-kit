@@ -11,23 +11,48 @@ import type {
 } from '../../../base/collection/selectable/types'
 import type { TCollectableOptions } from '../../../base/collection/item/types'
 import type { IComponentViewOptions } from '../../../base/component-view'
+import type { IStateUnit } from '../../../common/state-unit'
+import type { TStateCtor } from '../../../common/states'
+import type { TValuePayload } from '../../../common/types'
 
-export type TCollapseItemEvents = TValueControlEvents<string | number> &
-	TSelectableItemEvents<ICollapseItem> & {
-		free: (item: ICollapseItem) => void
-		'change:order': (value: number) => void
-	}
+// ============ TCollapseItemCustom (UI-логика без коллекции) ============
+
+export type TCollapseItemCustomEvents<TItem = any> = TValueControlEvents<string | number> & {
+	/** change:text */
+	'change:text': (payload: TValuePayload<string>) => void
+}
+
+export interface ICollapseItemCustomProps extends IValueControlProps<string | number> {
+	/** Текст заголовка элемента */
+	text?: string
+}
+
+export type TCollapseItemCustomStatesOptions = TValueControlStatesOptions<string | number> & {
+	text?: TStateCtor<IStateUnit<string>, string> | IStateUnit<string>
+}
+
+export interface ICollapseItemCustom<
+	TProps extends ICollapseItemCustomProps = ICollapseItemCustomProps,
+> extends IValueControl<string | number, TProps, TCollapseItemCustomEvents<any>> {
+	/** Текст заголовка элемента */
+	text: string
+}
+
+// ============ TCollapseItem (коллекционный элемент с композицией) ============
+
+export type ICollapseItemOptions = TCollectableOptions<
+	IComponentViewOptions<ICollapseItemProps, TCollapseItemCustomStatesOptions>
+>
+
+export type TCollapseItemEvents = TSelectableItemEvents<ICollapseItem> &
+	TCollapseItemCustomEvents<ICollapseItem>
 
 export interface ICollapseItemProps
 	extends ISelectableCollectionItemProps,
-		IValueControlProps<string | number> {}
-
-export type ICollapseItemOptions = TCollectableOptions<
-	IComponentViewOptions<ICollapseItemProps, TValueControlStatesOptions<string | number>>
->
+		ICollapseItemCustomProps {}
 
 export interface ICollapseItem
-	extends IValueControl<string | number, ICollapseItemProps, TCollapseItemEvents>,
+	extends ICollapseItemCustom<ICollapseItemProps>,
 		ISelectableCollectionItemProps {
 	collection: any | null
 	toggleSelected(): void
