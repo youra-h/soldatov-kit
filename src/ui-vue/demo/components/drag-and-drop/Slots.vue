@@ -112,7 +112,7 @@ const tabItems = ref([
 	}
 
 	&__section {
-		@apply flex flex-col gap-10;
+		@apply flex flex-col gap-4;
 	}
 
 	&__title {
