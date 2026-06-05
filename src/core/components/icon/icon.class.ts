@@ -28,6 +28,8 @@ export default class TIcon
 	) {
 		super(options)
 
+		const ctor = new.target as typeof TIcon
+
 		const { props = {} as Partial<IIconProps>, states } = TComponentView.prepareOptions<
 			IIconProps,
 			TIconStatesOptions
@@ -36,7 +38,7 @@ export default class TIcon
 		this._sizeState = resolveState<IStateUnit<TComponentSize>, TComponentSize>({
 			state: states?.size,
 			ctor: TStateUnit,
-			initial: (props.size ?? TIcon.defaultValues.size!) as TComponentSize,
+			initial: (props.size ?? ctor.defaultValues.size!) as TComponentSize,
 		})
 
 		this._sizeState.events.on('change', (payload: TValuePayload<TComponentSize>) => {
@@ -49,7 +51,7 @@ export default class TIcon
 
 		this._classes.add(`--size-${this._sizeState.value}`, true)
 
-		this._tag = props.tag ?? TIcon.defaultValues.tag!
+		this._tag = props.tag ?? ctor.defaultValues.tag!
 		this._width = props.width
 		this._height = props.height
 	}

@@ -13,7 +13,7 @@ describe('TTabItemCustom', () => {
 	describe('initialization', () => {
 		it('creates tab item with default values', () => {
 			expect(item.text).toBe('')
-			expect(item.value).toBeUndefined()
+			expect(item.value).toBe('')
 			expect(item.closable).toBe(false)
 		})
 

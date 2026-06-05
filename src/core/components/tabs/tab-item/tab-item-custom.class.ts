@@ -44,6 +44,8 @@ export default class TTabItemCustom<
 	) {
 		super(options)
 
+		const ctor = new.target as typeof TTabItemCustom
+
 		const { props = {}, states } = TComponentView.prepareOptions<
 			TProps,
 			TTabItemCustomStatesOptions
@@ -56,13 +58,13 @@ export default class TTabItemCustom<
 		this._textState = resolveState<IStateUnit<string>, string>({
 			state: states?.text,
 			ctor: TStateUnit,
-			initial: customProps.text ?? TTabItemCustom.defaultValues.text!,
+			initial: customProps.text ?? ctor.defaultValues.text!,
 		})
 
 		this._closableState = resolveState<TTabClosableState, boolean | undefined>({
 			state: states?.closable,
 			ctor: TTabClosableState,
-			initial: customProps.closable ?? TTabItemCustom.defaultValues.closable,
+			initial: customProps.closable ?? ctor.defaultValues.closable,
 		})
 
 		// Подписка на изменения state-объектов
@@ -84,8 +86,7 @@ export default class TTabItemCustom<
 				this._closableState.value = false
 			} else {
 				// Если таб стал enabled, восстанавливаем closable в исходное значение (или дефолтное)
-				this._closableState.value =
-					customProps.closable ?? TTabItemCustom.defaultValues.closable
+				this._closableState.value = customProps.closable ?? ctor.defaultValues.closable
 			}
 		})
 	}

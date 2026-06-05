@@ -29,12 +29,14 @@ export default class TTextable<
 	constructor(options: IComponentViewOptions<TProps, TStates> | Partial<TProps> = {}) {
 		super(options)
 
+		const ctor = new.target as typeof TTextable
+
 		const { props = {} as Partial<TProps>, states } = TComponentView.prepareOptions<
 			TProps,
 			TStates
 		>(options)
 
-		const text = props.text ?? (TTextable.defaultValues.text as string)
+		const text = props.text ?? (ctor.defaultValues.text as string)
 
 		this._textState = resolveState<IStateUnit<string>, string>({
 			state: states?.text,

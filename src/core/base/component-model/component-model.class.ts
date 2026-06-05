@@ -29,11 +29,12 @@ export default class TComponentModel<
 
 	constructor(options: IComponentModelOptions<TProps> | Partial<TProps> = {}) {
 		const ctor = new.target as typeof TComponentModel
+
 		const { props = {} as Partial<TProps> } = ctor.prepareOptions<TProps>(options)
 		super()
 
 		this.events = new TEvented<TEvents>()
-		this._id = props.id ?? TComponentModel.defaultValues.id!
+		this._id = props.id ?? ctor.defaultValues.id!
 
 		setTimeout(() => (this.events as TEvented<TComponentModelEvents>).emit('created', this), 0)
 	}

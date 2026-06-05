@@ -14,7 +14,7 @@ describe('TCollapseItemCustom', () => {
 	describe('initialization', () => {
 		it('creates item with default values', () => {
 			expect(item.text).toBe('')
-			expect(item.value).toBeUndefined()
+			expect(item.value).toBe('')
 			expect(item.tag).toBe('button')
 			expect(item.variant).toBe('normal')
 		})

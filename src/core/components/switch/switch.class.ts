@@ -18,11 +18,12 @@ export default class TSwitch
 	constructor(options: IComponentViewOptions<ISwitchProps> | Partial<ISwitchProps> = {}) {
 		super(options)
 
+		const ctor = new.target as typeof TSwitch
+
 		const { props = {} as Partial<ISwitchProps> } =
 			TComponentView.prepareOptions<ISwitchProps>(options)
 
-		this.value = props.value ?? (TSwitch.defaultValues.value as boolean)
-
+		this.value = props.value ?? (ctor.defaultValues.value as boolean)
 	}
 
 	/**

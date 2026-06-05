@@ -39,15 +39,17 @@ export default class TButton extends TTextable<IButtonProps, TButtonEvents> impl
 	) {
 		super(options)
 
+		const ctor = new.target as typeof TButton
+
 		const { props = {}, states } = TComponentView.prepareOptions<
 			IButtonProps,
 			TButtonStatesOptions
 		>(options)
 
-		this._tag = props.tag ?? TButton.defaultValues.tag!
+		this._tag = props.tag ?? ctor.defaultValues.tag!
 
 		// Устанавливаем начальное значение appearance из props или дефолта
-		this._applyAppearance(props.appearance ?? TButton.defaultValues.appearance!)
+		this._applyAppearance(props.appearance ?? ctor.defaultValues.appearance!)
 
 		// Создаем loading state с shouldDisable: true для кнопки
 		const loadingInitial = states?.loading

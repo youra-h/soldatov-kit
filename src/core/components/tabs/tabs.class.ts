@@ -50,6 +50,8 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 	) {
 		super(options)
 
+		const ctor = new.target as typeof TTabs
+
 		const { props = {} } = TComponentView.prepareOptions<ITabsProps, TTabsStatesOptions>(
 			options,
 		)
@@ -60,11 +62,11 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 		})
 
 		// Инициализация простых свойств
-		this._applyOrientation(props.orientation ?? TTabs.defaultValues.orientation!)
-		this._applyAlignment(props.alignment ?? TTabs.defaultValues.alignment!)
-		this._applyPosition(props.position ?? TTabs.defaultValues.position!)
-		this._applyAppearance(props.appearance ?? TTabs.defaultValues.appearance!)
-		this._applyClosable(props.closable ?? TTabs.defaultValues.closable!)
+		this._applyOrientation(props.orientation ?? ctor.defaultValues.orientation!)
+		this._applyAlignment(props.alignment ?? ctor.defaultValues.alignment!)
+		this._applyPosition(props.position ?? ctor.defaultValues.position!)
+		this._applyAppearance(props.appearance ?? ctor.defaultValues.appearance!)
+		this._applyClosable(props.closable ?? ctor.defaultValues.closable!)
 
 		// Условие для поиска следующего активного таба при удалении
 		this._collection.events.on(

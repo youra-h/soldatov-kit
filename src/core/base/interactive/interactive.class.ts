@@ -28,13 +28,15 @@ export default class TInteractive<
 	constructor(options: IComponentViewOptions<TProps, TStates> | Partial<TProps> = {}) {
 		super(options)
 
+		const ctor = new.target as typeof TInteractive
+
 		const { props = {} as Partial<TProps>, states } = TComponentView.prepareOptions<
 			TProps,
 			TStates
 		>(options)
 
-		const disabled = props.disabled ?? (TInteractive.defaultValues.disabled as boolean)
-		const focused = props.focused ?? (TInteractive.defaultValues.focused as boolean)
+		const disabled = props.disabled ?? (ctor.defaultValues.disabled as boolean)
+		const focused = props.focused ?? (ctor.defaultValues.focused as boolean)
 
 		this._disableable = resolveState<IStateUnit<boolean>, boolean>({
 			state: states?.disableable,

@@ -31,13 +31,15 @@ export default class TControl<
 	constructor(options: IComponentViewOptions<TProps, TStates> | Partial<TProps> = {}) {
 		super(options)
 
+		const ctor = new.target as typeof TControl
+
 		const { props = {} as Partial<TProps>, states } = TComponentView.prepareOptions<
 			TProps,
 			TStates
 		>(options)
 
-		const disabled = props.disabled ?? (TControl.defaultValues.disabled as boolean)
-		const focused = props.focused ?? (TControl.defaultValues.focused as boolean)
+		const disabled = props.disabled ?? (ctor.defaultValues.disabled as boolean)
+		const focused = props.focused ?? (ctor.defaultValues.focused as boolean)
 
 		this._disableable = resolveState<IStateUnit<boolean>, boolean>({
 			state: states?.disableable,

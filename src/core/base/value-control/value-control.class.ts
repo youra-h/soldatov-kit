@@ -34,14 +34,16 @@ export default class TValueControl<
 	constructor(options: IComponentViewOptions<TProps, TStates> | Partial<TProps> = {}) {
 		super(options)
 
+		const ctor = new.target as typeof TValueControl
+
 		const { props = {} as Partial<TProps>, states } = TComponentView.prepareOptions<
 			TProps,
 			TStates
 		>(options)
 
-		this._name = props.name ?? (TValueControl.defaultValues.name as string)
+		this._name = props.name ?? (ctor.defaultValues.name as string)
 
-		const value = props.value ?? (TValueControl.defaultValues.value as TValue)
+		const value = props.value ?? (ctor.defaultValues.value as TValue)
 
 		this._valueState = resolveState<IStateUnit<TValue>, TValue>({
 			state: states?.value,

@@ -23,12 +23,14 @@ export default class TCheckBox
 	constructor(options: IComponentViewOptions<ICheckBoxProps> | Partial<ICheckBoxProps> = {}) {
 		super(options)
 
+		const ctor = new.target as typeof TCheckBox
+
 		const { props = {} as Partial<ICheckBoxProps> } =
 			TComponentView.prepareOptions<ICheckBoxProps>(options)
 
-		this.value = props.value ?? (TCheckBox.defaultValues.value as boolean)
-		this._applyIndeterminate(props.indeterminate ?? TCheckBox.defaultValues.indeterminate!)
-		this._applyPlain(props.plain ?? TCheckBox.defaultValues.plain!)
+		this.value = props.value ?? (ctor.defaultValues.value as boolean)
+		this._applyIndeterminate(props.indeterminate ?? ctor.defaultValues.indeterminate!)
+		this._applyPlain(props.plain ?? ctor.defaultValues.plain!)
 	}
 
 	get indeterminate(): boolean {

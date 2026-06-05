@@ -34,7 +34,9 @@ export class TSelectableCollection<
 			itemClass: (options?.itemClass ?? TSelectableCollectionItem) as TConstructor<TItem>,
 		})
 
-		this._mode = options?.mode ?? TSelectableCollection.defaultValues.mode!
+		const ctor = new.target as typeof TSelectableCollection
+
+		this._mode = options?.mode ?? ctor.defaultValues.mode!
 	}
 
 	get mode(): TSelectionMode {

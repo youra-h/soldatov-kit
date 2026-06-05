@@ -31,6 +31,8 @@ export default class TSpinner
 	) {
 		super(options)
 
+		const ctor = new.target as typeof TSpinner
+
 		const { props = {} as Partial<ISpinnerProps>, states } = TComponentView.prepareOptions<
 			ISpinnerProps,
 			TSpinnerStatesOptions
@@ -39,7 +41,7 @@ export default class TSpinner
 		this._sizeState = resolveState<IStateUnit<TComponentSize>, TComponentSize>({
 			state: states?.size,
 			ctor: TStateUnit,
-			initial: (props.size ?? TSpinner.defaultValues.size!) as TComponentSize,
+			initial: (props.size ?? ctor.defaultValues.size!) as TComponentSize,
 		})
 
 		this._sizeState.events.on('change', (payload: TValuePayload<TComponentSize>) => {
@@ -55,7 +57,7 @@ export default class TSpinner
 		this._variantState = resolveState<IStateUnit<TComponentVariant>, TComponentVariant>({
 			state: states?.variant,
 			ctor: TStateUnit,
-			initial: (props.variant ?? TSpinner.defaultValues.variant!) as TComponentVariant,
+			initial: (props.variant ?? ctor.defaultValues.variant!) as TComponentVariant,
 		})
 
 		this._variantState.events.on('change', (payload: TValuePayload<TComponentVariant>) => {
@@ -68,8 +70,8 @@ export default class TSpinner
 
 		this._classes.add(`--${this._variantState.value}`)
 
-		this._tag = props.tag ?? TSpinner.defaultValues.tag!
-		this._borderWidth = props.borderWidth ?? TSpinner.defaultValues.borderWidth!
+		this._tag = props.tag ?? ctor.defaultValues.tag!
+		this._borderWidth = props.borderWidth ?? ctor.defaultValues.borderWidth!
 	}
 
 	get variant(): TComponentVariant {

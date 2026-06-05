@@ -41,16 +41,18 @@ export default class TInputControl<
 	constructor(options: IComponentViewOptions<TProps, TStates> | Partial<TProps> = {}) {
 		super(options)
 
+		const ctor = new.target as typeof TInputControl
+
 		const { props = {} as Partial<TProps> } = TComponentView.prepareOptions<TProps, TStates>(
 			options,
 		)
 
 		// Простые свойства
-		// this._readonly = props.readonly ?? (TInputControl.defaultValues.readonly as boolean)
-		this._applyReadonly(props.readonly ?? (TInputControl.defaultValues.readonly as boolean))
-		this._applyRequired(props.required ?? (TInputControl.defaultValues.required as boolean))
-		this._invalid = props.invalid ?? (TInputControl.defaultValues.invalid as boolean)
-		this._state = props.state ?? (TInputControl.defaultValues.state as TInputControlState)
+		// this._readonly = props.readonly ?? (ctor.defaultValues.readonly as boolean)
+		this._applyReadonly(props.readonly ?? (ctor.defaultValues.readonly as boolean))
+		this._applyRequired(props.required ?? (ctor.defaultValues.required as boolean))
+		this._invalid = props.invalid ?? (ctor.defaultValues.invalid as boolean)
+		this._state = props.state ?? (ctor.defaultValues.state as TInputControlState)
 
 		// Инвариант: invalid=true -> state='error'
 		if (this._invalid && this._state !== 'error') {

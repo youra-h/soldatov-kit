@@ -38,6 +38,8 @@ export default class TCollapseItemCustom<
 	) {
 		super(options)
 
+		const ctor = new.target as typeof TCollapseItemCustom
+
 		const { props = {}, states } = TComponentView.prepareOptions<
 			TProps,
 			TCollapseItemCustomStatesOptions
@@ -48,7 +50,7 @@ export default class TCollapseItemCustom<
 		this._textState = resolveState<IStateUnit<string>, string>({
 			state: states?.text,
 			ctor: TStateUnit,
-			initial: customProps.text ?? TCollapseItemCustom.defaultValues.text!,
+			initial: customProps.text ?? ctor.defaultValues.text!,
 		})
 
 		this._textState.events.on('change', (payload: TValuePayload<string>) => {

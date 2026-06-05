@@ -30,18 +30,25 @@ export class TCollapse
 	protected _collection: TSelectableCollection<any, any, ICollapseItem>
 
 	constructor(
-		options: IComponentViewOptions<ICollapseProps, TCollapseStatesOptions> | Partial<ICollapseProps> = {},
+		options:
+			| IComponentViewOptions<ICollapseProps, TCollapseStatesOptions>
+			| Partial<ICollapseProps> = {},
 	) {
 		super(options)
 
-		const { props = {} } = TComponentView.prepareOptions<ICollapseProps, TCollapseStatesOptions>(options)
+		const ctor = new.target as typeof TCollapse
+
+		const { props = {} } = TComponentView.prepareOptions<
+			ICollapseProps,
+			TCollapseStatesOptions
+		>(options)
 
 		this._collection = new TSelectableCollection<any, any, ICollapseItem>({
 			itemClass: TCollapseItem,
-			mode: props.mode ?? TCollapse.defaultValues.mode!,
+			mode: props.mode ?? ctor.defaultValues.mode!,
 		})
 
-		this._applyAppearance(props.appearance ?? TCollapse.defaultValues.appearance!)
+		this._applyAppearance(props.appearance ?? ctor.defaultValues.appearance!)
 
 		this._collection.events.on(
 			'item:selected',

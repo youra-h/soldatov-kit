@@ -29,6 +29,8 @@ export default class TStylable<
 	constructor(options: IComponentViewOptions<TProps, TStates> | Partial<TProps> = {}) {
 		super(options)
 
+		const ctor = new.target as typeof TStylable
+
 		const { props = {} as Partial<TProps>, states } = TComponentView.prepareOptions<
 			TProps,
 			TStates
@@ -37,7 +39,7 @@ export default class TStylable<
 		this._sizeState = resolveState<IStateUnit<TComponentSize>, TComponentSize>({
 			state: states?.size,
 			ctor: TStateUnit,
-			initial: props.size ?? (TStylable.defaultValues.size as TComponentSize),
+			initial: props.size ?? (ctor.defaultValues.size as TComponentSize),
 		})
 
 		this._sizeState.events.on('change', (payload: TValuePayload<TComponentSize>) => {
@@ -53,7 +55,7 @@ export default class TStylable<
 		this._variantState = resolveState<IStateUnit<TComponentVariant>, TComponentVariant>({
 			state: states?.variant,
 			ctor: TStateUnit,
-			initial: props.variant ?? (TStylable.defaultValues.variant as TComponentVariant),
+			initial: props.variant ?? (ctor.defaultValues.variant as TComponentVariant),
 		})
 
 		this._variantState.events.on('change', (payload: TValuePayload<TComponentVariant>) => {
