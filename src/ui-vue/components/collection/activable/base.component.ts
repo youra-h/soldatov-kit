@@ -33,7 +33,7 @@ export default {
 	props: propsActivatableCollection,
 }
 
-export interface IActivatableCollectionState<TItem = any> extends ICollectionState {
+export interface IActivatableCollectionState<TItem = any> extends ICollectionState<TItem> {
 	activeItem: Ref<TItem | undefined>
 }
 

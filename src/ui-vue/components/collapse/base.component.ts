@@ -65,7 +65,7 @@ export function syncCollapse(
 	const { props, instance, emit, plugins } = options
 
 	const syncPropsSelectableCollection = syncSelectableCollection({
-		props: { items: props.items, mode: props.mode },
+		props: { items: props.items, mode: props.mode! },
 		instance: instance.collection,
 		emit,
 		plugins,

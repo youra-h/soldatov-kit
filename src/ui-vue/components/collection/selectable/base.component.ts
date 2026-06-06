@@ -44,8 +44,8 @@ export default {
 }
 
 export interface ISelectableCollectionState<
-	TItem = ISelectableCollectionItem,
-> extends ICollectionState {
+	TItem = any,
+> extends ICollectionState<TItem> {
 	selected: Ref<TItem[]>
 	selectedCount: Ref<number>
 	mode: Ref<TSelectionMode>
