@@ -63,7 +63,7 @@ export function syncSelectableCollection<
 		ISelectableCollection<ISelectableCollectionProps, TSelectableCollectionEvents, TItem>
 	>,
 ): ISelectableCollectionState<TItem> {
-	const syncProps = syncCollection<TItem>(options)
+	const syncProps = syncCollection(options)
 
 	const { props, instance, emit } = options
 

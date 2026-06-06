@@ -1,6 +1,6 @@
 import type { PropType, Ref } from 'vue'
 import { watch, provide } from 'vue'
-import { type ICollection, type ICollectionProps, type ICollectionItem } from '@core'
+import { type ICollection, type ICollectionProps, type ICollectionItem, type TCollectionEvents } from '@core'
 import { TCollectionElementsPlugin, TCollectionInstancesPlugin, TDragPlugin } from '@plugins'
 import { useProvideCollection } from '../../composables/useProvideCollection'
 import { useProvideCollectionPlugins } from '../../composables/useProvideCollectionPlugins'
@@ -42,9 +42,12 @@ export interface ICollectionState<TItem = any> {
 /**
  * Синхронизация props и событий для Collection
  */
-export function syncCollection(
-	options: ISyncComponentModelOptions<ICollectionProps, ICollection>,
-): ICollectionState {
+export function syncCollection<TItem extends ICollectionItem = ICollectionItem>(
+	options: ISyncComponentModelOptions<
+		ICollectionProps,
+		ICollection<ICollectionProps, TCollectionEvents, TItem>
+	>,
+): ICollectionState<TItem> {
 	const { instance, emit, props, plugins } = options
 
 	useProvideCollection(instance)
