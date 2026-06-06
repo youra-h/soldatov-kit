@@ -87,105 +87,41 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 			() => (tab: ITabItem) => !tab.disabled && tab.visible && tab.rendered,
 		)
 
-		this._collection.events.on(
+		this.events.relay(this._collection.events, [
+			{
+				from: 'item:added',
+				then: (payload: any) => {
+					const { item } = payload as { collection: any; item: ITabItem }
+
+					item.events.on('close', () => this.closeTab(item))
+					item.setClosableParent(() => this._closable)
+
+					item.events.on('change:closable', (value: boolean | undefined) => {
+						;(this.events as TEvented<TTabsEvents>).emit('item:closable', item, !!value)
+					})
+
+					item.events.on('change:disabled', (value: boolean) => {
+						;(this.events as TEvented<TTabsEvents>).emit('item:disabled', item, value)
+					})
+
+					item.events.on('change:text', (payload: TValuePayload<string>) => {
+						;(this.events as TEvented<TTabsEvents>).emit('item:text', item, payload.newValue)
+					})
+
+					item.size = this.size
+					item.variant = this.variant
+				},
+			},
 			'item:activated',
-			(payload: { collection: any; item: ITabItem }) => {
-				// Пробрасываем событие наружу
-				;(this.events as TEvented<TTabsEvents>).emit('item:activated', payload)
-			},
-		)
-
-		// Подписка на события коллекции для проксирования
-		this._collection.events.on('item:added', (payload: { collection: any; item: ITabItem }) => {
-			const { item } = payload
-
-			// Подписка на событие закрытия таба — вызывает closeTab с проверкой и удалением
-			item.events.on('close', () => {
-				this.closeTab(item)
-			})
-
-			item.setClosableParent(() => this._closable)
-
-			// Проброс change:closable → item:closable
-			item.events.on('change:closable', (value: boolean | undefined) => {
-				;(this.events as TEvented<TTabsEvents>).emit('item:closable', item, !!value)
-			})
-
-			// Проброс change:disabled → item:disabled
-			item.events.on('change:disabled', (value: boolean) => {
-				;(this.events as TEvented<TTabsEvents>).emit('item:disabled', item, value)
-			})
-
-			// Проброс change:text → item:text
-			item.events.on('change:text', (payload: TValuePayload<string>) => {
-				;(this.events as TEvented<TTabsEvents>).emit('item:text', item, payload.newValue)
-			})
-
-			// Propagation: новый таб наследует size и variant от контейнера
-			item.size = this.size
-			item.variant = this.variant
-
-			// Пробрасываем событие наружу
-			;(this.events as TEvented<TTabsEvents>).emit('item:added', payload)
-		})
-
-		this._collection.events.on(
+			'item:deactivated',
 			'item:beforeDelete',
-			(payload: { collection: any; index: number; item: ITabItem }) => {
-				// Пробрасываем событие наружу
-				;(this.events as TEvented<TTabsEvents>).emit('item:beforeDelete', payload)
-			},
-		)
-
-		this._collection.events.on(
 			'item:deleted',
-			(payload: { collection: any; item: ITabItem }) => {
-				// Пробрасываем событие наружу
-				;(this.events as TEvented<TTabsEvents>).emit('item:deleted', payload)
-			},
-		)
-
-		this._collection.events.on(
 			'item:afterDelete',
-			(payload: { collection: any; index: number; item: ITabItem }) => {
-				// Пробрасываем событие наружу
-				;(this.events as TEvented<TTabsEvents>).emit('item:afterDelete', payload)
-			},
-		)
-
-		this._collection.events.on('item:deactivated', (payload: { collection: any }) => {
-			// Пробрасываем событие наружу
-			;(this.events as TEvented<TTabsEvents>).emit('item:deactivated', payload)
-		})
-
-		this._collection.events.on(
 			'item:beforeMove',
-			(payload: { collection: any; oldIndex: number; newIndex: number }) => {
-				// Пробрасываем событие наружу
-				;(this.events as TEvented<TTabsEvents>).emit('item:beforeMove', payload)
-			},
-		)
-
-		this._collection.events.on(
 			'item:moved',
-			(payload: { collection: any; item: ITabItem; oldIndex: number; newIndex: number }) => {
-				// Пробрасываем событие наружу
-				;(this.events as TEvented<TTabsEvents>).emit('item:moved', payload)
-			},
-		)
-
-		this._collection.events.on(
 			'item:afterMove',
-			(payload: { collection: any; item: ITabItem; oldIndex: number; newIndex: number }) => {
-				// Пробрасываем событие наружу
-				;(this.events as TEvented<TTabsEvents>).emit('item:afterMove', payload)
-			},
-		)
-
-		this._collection.events.on('cleared', (payload: { collection: any }) => {
-			// Пробрасываем событие наружу
-			;(this.events as TEvented<TTabsEvents>).emit('cleared', payload)
-		})
+			'cleared',
+		])
 
 		this.events.on('change:disabled', (value) => {
 			// При изменении disabled у контейнера — обновляем доступность всех табов

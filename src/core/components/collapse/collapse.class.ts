@@ -50,104 +50,31 @@ export class TCollapse
 
 		this._applyAppearance(props.appearance ?? ctor.defaultValues.appearance!)
 
-		this._collection.events.on(
+		this.events.relay(this._collection.events, [
 			'item:selected',
-			(payload: { collection: any; item: ICollapseItem }) => {
-				;(this.events as TEvented<TCollapseEvents>).emit('item:selected', payload)
-			},
-		)
-
-		this._collection.events.on(
 			'item:unselected',
-			(payload: { collection: any; item: ICollapseItem }) => {
-				;(this.events as TEvented<TCollapseEvents>).emit('item:unselected', payload)
+			'selection:cleared',
+			'change:selected',
+			'change:selectedCount',
+			'change:mode',
+			{
+				from: 'item:added',
+				then: (payload: any) => {
+					const { item } = payload as { collection: any; item: ICollapseItem }
+
+					item.events.on('change:disabled', (value: boolean) => {
+						;(this.events as TEvented<TCollapseEvents>).emit('item:disabled', item, value)
+					})
+				},
 			},
-		)
-
-		this._collection.events.on('selection:cleared', (payload: { collection: any }) => {
-			;(this.events as TEvented<TCollapseEvents>).emit('selection:cleared', payload)
-		})
-
-		this._collection.events.on('change:selected', (items: ICollapseItem[]) => {
-			;(this.events as TEvented<TCollapseEvents>).emit('change:selected', items)
-		})
-
-		this._collection.events.on('change:selectedCount', (count: number) => {
-			;(this.events as TEvented<TCollapseEvents>).emit('change:selectedCount', count)
-		})
-
-		this._collection.events.on('change:mode', (value: TSelectionMode) => {
-			;(this.events as TEvented<TCollapseEvents>).emit('change:mode', value)
-		})
-
-		this._collection.events.on(
-			'item:added',
-			(payload: { collection: any; item: ICollapseItem }) => {
-				const { item } = payload
-
-				// Проброс change:disabled → item:disabled
-				item.events.on('change:disabled', (value: boolean) => {
-					;(this.events as TEvented<TCollapseEvents>).emit('item:disabled', item, value)
-				})
-				;(this.events as TEvented<TCollapseEvents>).emit('item:added', payload)
-			},
-		)
-
-		this._collection.events.on(
 			'item:beforeDelete',
-			(payload: { collection: any; index: number; item: ICollapseItem }) => {
-				;(this.events as TEvented<TCollapseEvents>).emit('item:beforeDelete', payload)
-			},
-		)
-
-		this._collection.events.on(
 			'item:deleted',
-			(payload: { collection: any; item: ICollapseItem }) => {
-				;(this.events as TEvented<TCollapseEvents>).emit('item:deleted', payload)
-			},
-		)
-
-		this._collection.events.on(
 			'item:afterDelete',
-			(payload: { collection: any; index: number; item: ICollapseItem }) => {
-				;(this.events as TEvented<TCollapseEvents>).emit('item:afterDelete', payload)
-			},
-		)
-
-		this._collection.events.on(
 			'item:beforeMove',
-			(payload: { collection: any; oldIndex: number; newIndex: number }) => {
-				;(this.events as TEvented<TCollapseEvents>).emit('item:beforeMove', payload)
-			},
-		)
-
-		this._collection.events.on(
 			'item:moved',
-			(payload: {
-				collection: any
-				item: ICollapseItem
-				oldIndex: number
-				newIndex: number
-			}) => {
-				;(this.events as TEvented<TCollapseEvents>).emit('item:moved', payload)
-			},
-		)
-
-		this._collection.events.on(
 			'item:afterMove',
-			(payload: {
-				collection: any
-				item: ICollapseItem
-				oldIndex: number
-				newIndex: number
-			}) => {
-				;(this.events as TEvented<TCollapseEvents>).emit('item:afterMove', payload)
-			},
-		)
-
-		this._collection.events.on('cleared', (payload: { collection: any }) => {
-			;(this.events as TEvented<TCollapseEvents>).emit('cleared', payload)
-		})
+			'cleared',
+		])
 
 		this.events.on('change:disabled', (value) => {
 			this._collection.items.forEach((item) => {
