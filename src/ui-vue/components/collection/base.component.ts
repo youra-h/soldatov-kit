@@ -1,10 +1,11 @@
 import type { PropType, Ref } from 'vue'
-import { watch } from 'vue'
+import { watch, provide } from 'vue'
 import { type ICollection, type ICollectionProps, type ICollectionItem } from '@core'
 import { TCollectionElementsPlugin, TCollectionInstancesPlugin, TDragPlugin } from '@plugins'
 import { useProvideCollection } from '../../composables/useProvideCollection'
 import { useProvideCollectionPlugins } from '../../composables/useProvideCollectionPlugins'
 import { useInjectDragContext } from '../../composables/useDragContext'
+import { useEventState } from '../../composables/useEventState'
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types'
 import { useSyncProps } from '../../composables/useSyncProps'
 

@@ -5,6 +5,7 @@ import {
 	type ISelectableCollectionProps,
 	type ISelectableCollectionItem,
 	type TSelectionMode,
+	type TSelectableCollectionEvents,
 	TSelectableCollection,
 } from '@core'
 import {
@@ -44,7 +45,7 @@ export default {
 }
 
 export interface ISelectableCollectionState<
-	TItem = any,
+	TItem = ISelectableCollectionItem,
 > extends ICollectionState<TItem> {
 	selected: Ref<TItem[]>
 	selectedCount: Ref<number>
@@ -54,10 +55,15 @@ export interface ISelectableCollectionState<
 /**
  * Синхронизация props и событий для SelectableCollection
  */
-export function syncSelectableCollection(
-	options: ISyncComponentModelOptions<ISelectableCollectionProps, ISelectableCollection>,
-): ISelectableCollectionState {
-	const syncProps = syncCollection(options)
+export function syncSelectableCollection<
+	TItem extends ISelectableCollectionItem = ISelectableCollectionItem,
+>(
+	options: ISyncComponentModelOptions<
+		ISelectableCollectionProps,
+		ISelectableCollection<ISelectableCollectionProps, TSelectableCollectionEvents, TItem>
+	>,
+): ISelectableCollectionState<TItem> {
+	const syncProps = syncCollection<TItem>(options)
 
 	const { props, instance, emit } = options
 
