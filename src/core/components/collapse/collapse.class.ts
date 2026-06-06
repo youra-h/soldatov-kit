@@ -89,7 +89,6 @@ export class TCollapse
 				item.events.on('change:disabled', (value: boolean) => {
 					;(this.events as TEvented<TCollapseEvents>).emit('item:disabled', item, value)
 				})
-
 				;(this.events as TEvented<TCollapseEvents>).emit('item:added', payload)
 			},
 		)

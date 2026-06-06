@@ -68,10 +68,31 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 		this._applyAppearance(props.appearance ?? ctor.defaultValues.appearance!)
 		this._applyClosable(props.closable ?? ctor.defaultValues.closable!)
 
+		// Propagation: при изменении size/variant у контейнера — обновляем все существующие итемы
+		this.events.on('change:size', (payload: TValuePayload<TComponentSize>) => {
+			this._collection.forEach((item) => {
+				item.size = payload.newValue
+			})
+		})
+
+		this.events.on('change:variant', (payload: TValuePayload<TComponentVariant>) => {
+			this._collection.forEach((item) => {
+				item.variant = payload.newValue
+			})
+		})
+
 		// Условие для поиска следующего активного таба при удалении
 		this._collection.events.on(
 			'resolve:_activatablePredicate',
 			() => (tab: ITabItem) => !tab.disabled && tab.visible && tab.rendered,
+		)
+
+		this._collection.events.on(
+			'item:activated',
+			(payload: { collection: any; item: ITabItem }) => {
+				// Пробрасываем событие наружу
+				;(this.events as TEvented<TTabsEvents>).emit('item:activated', payload)
+			},
 		)
 
 		// Подписка на события коллекции для проксирования
@@ -108,19 +129,6 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 			;(this.events as TEvented<TTabsEvents>).emit('item:added', payload)
 		})
 
-		// Propagation: при изменении size/variant у контейнера — обновляем все существующие итемы
-		this.events.on('change:size', (payload: TValuePayload<TComponentSize>) => {
-			this._collection.forEach((item) => {
-				item.size = payload.newValue
-			})
-		})
-
-		this.events.on('change:variant', (payload: TValuePayload<TComponentVariant>) => {
-			this._collection.forEach((item) => {
-				item.variant = payload.newValue
-			})
-		})
-
 		this._collection.events.on(
 			'item:beforeDelete',
 			(payload: { collection: any; index: number; item: ITabItem }) => {
@@ -142,14 +150,6 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 			(payload: { collection: any; index: number; item: ITabItem }) => {
 				// Пробрасываем событие наружу
 				;(this.events as TEvented<TTabsEvents>).emit('item:afterDelete', payload)
-			},
-		)
-
-		this._collection.events.on(
-			'item:activated',
-			(payload: { collection: any; item: ITabItem }) => {
-				// Пробрасываем событие наружу
-				;(this.events as TEvented<TTabsEvents>).emit('item:activated', payload)
 			},
 		)
 
