@@ -32,7 +32,7 @@ export default {
 			arrowPlacement,
 		} = syncCollapseItem({ props, instance, plugins, emit })
 
-		const arrowIconTag = useIconImport('../../icons/arrow_right.svg')
+		const arrowIconTag = useIconImport('../../../icons/arrow_right.svg')
 
 		return {
 			instance,

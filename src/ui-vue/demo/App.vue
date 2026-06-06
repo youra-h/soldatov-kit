@@ -7,6 +7,7 @@ import Button from './playgrounds/Button.vue'
 import CheckBox from './playgrounds/CheckBox.vue'
 import Switch from './playgrounds/Switch.vue'
 import Tabs from './playgrounds/Tabs.vue'
+import Collapse from './playgrounds/Collapse.vue'
 import DragAndDrop from './playgrounds/DragAndDrop.vue'
 import EventLog from './common/EventLog.vue'
 import type { EventLogEntry } from './common/EventLog.vue'
@@ -15,8 +16,8 @@ import type { EventLogEntry } from './common/EventLog.vue'
  *  Manager
  *
  * Как добавить новый playground:
- * 1. Создайте <ComponentName>.vue
- * 2. Импортируйте его: import Button from './Button.vue'
+ * 1. Создайте <ComponentName>.vue в src/ui-vue/demo/playgrounds/
+ * 2. Импортируйте его: import Collapse from './playgrounds/Collapse.vue'
  * 3. Добавьте в объект playgrounds с label
  */
 
@@ -29,11 +30,12 @@ const playgrounds = {
 	'check-box': { component: markRaw(CheckBox), label: 'CheckBox' },
 	switch: { component: markRaw(Switch), label: 'Switch' },
 	tabs: { component: markRaw(Tabs), label: 'Tabs' },
+	collapse: { component: markRaw(Collapse), label: 'Collapse' },
 	'drag-and-drop': { component: markRaw(DragAndDrop), label: 'DragAndDrop' },
 } as const
 
 // Активный playground (можно управлять через меню)
-const active = ref<keyof typeof playgrounds>('tabs')
+const active = ref<keyof typeof playgrounds>('collapse')
 
 // View mode: 'sandbox' | 'logs'
 const activeView = ref<'sandbox' | 'logs'>('sandbox')
