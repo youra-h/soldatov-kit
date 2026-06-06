@@ -130,6 +130,15 @@ export type TCollectionEvents = {
 	}) => void
 }
 
+/**
+ * Общие события для компонентов, содержащих коллекцию элементов.
+ * Описывают проброс изменений свойств элементов наружу (к родительскому компоненту).
+ */
+export type TItemProxyEvents<TItem> = {
+	/** item:disabled — эмитится при изменении свойства disabled у элемента */
+	'item:disabled': (item: TItem, value: boolean) => void
+}
+
 export interface ICollectionMethods<TItem extends ICollectionItem = ICollectionItem> {
 	/** Добавляет новый элемент и возвращает его */
 	add(source?: Partial<TItem>): TItem

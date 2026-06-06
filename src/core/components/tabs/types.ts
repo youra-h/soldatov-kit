@@ -4,7 +4,12 @@ import type {
 	TControlEvents,
 	TControlStatesOptions,
 } from '../../base/control'
-import type { TActivatableCollection, TActivatableCollectionEvents } from '../../base/collection'
+import type {} from '../../common/types'
+import type {
+	TActivatableCollection,
+	TActivatableCollectionEvents,
+	TItemProxyEvents,
+} from '../../base/collection'
 import type { ITabItem } from './tab-item/types'
 
 export type TTabsOrientation = 'horizontal' | 'vertical'
@@ -13,7 +18,8 @@ export type TTabsPosition = 'start' | 'end'
 export type TTabsAppearance = 'line' | 'contained' | 'outline'
 
 export type TTabsEvents = TControlEvents &
-	TActivatableCollectionEvents & {
+	TActivatableCollectionEvents &
+	TItemProxyEvents<ITabItem> & {
 		/** change:orientation */
 		'change:orientation': (value: TTabsOrientation) => void
 		/** change:alignment */
@@ -24,14 +30,12 @@ export type TTabsEvents = TControlEvents &
 		'change:appearance': (value: TTabsAppearance) => void
 		/** change:closable */
 		'change:closable': (value: boolean) => void
-		/** tab:close — эмитится перед удалением таба при закрытии */
-		'tab:close': (item: ITabItem) => void
-		/** tab:closable — эмитится при изменении свойства closable у таба (item.closable) */
-		'tab:closable': (item: ITabItem, value: boolean) => void
-		/** tab:disabled — эмитится при изменении свойства disabled у таба (item.disabled) */
-		'tab:disabled': (item: ITabItem, value: boolean) => void
-		/** tab:text — эмитится при изменении текста таба (item.text) */
-		'tab:text': (item: ITabItem, value: string) => void
+		/** item:close — эмитится перед удалением таба при закрытии */
+		'item:close': (item: ITabItem) => void
+		/** item:closable — эмитится при изменении свойства closable у таба */
+		'item:closable': (item: ITabItem, value: boolean) => void
+		/** item:text — эмитится при изменении текста таба */
+		'item:text': (item: ITabItem, value: string) => void
 	}
 
 export interface ITabsProps extends IControlProps {

@@ -83,6 +83,13 @@ export class TCollapse
 		this._collection.events.on(
 			'item:added',
 			(payload: { collection: any; item: ICollapseItem }) => {
+				const { item } = payload
+
+				// Проброс change:disabled → item:disabled
+				item.events.on('change:disabled', (value: boolean) => {
+					;(this.events as TEvented<TCollapseEvents>).emit('item:disabled', item, value)
+				})
+
 				;(this.events as TEvented<TCollapseEvents>).emit('item:added', payload)
 			},
 		)

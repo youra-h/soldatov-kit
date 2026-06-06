@@ -104,12 +104,12 @@ describe('TTabs', () => {
 			expect(tabs.count).toBe(1)
 		})
 
-		it('emits tab:close event before removing', () => {
+		it('emits item:close event before removing', () => {
 			tabs.closable = true
 			const item = tabs.collection.add({ text: 'Tab 1' })
 
 			const spy = vi.fn()
-			tabs.events.on('tab:close', spy)
+			tabs.events.on('item:close', spy)
 
 			tabs.closeTab(item)
 
