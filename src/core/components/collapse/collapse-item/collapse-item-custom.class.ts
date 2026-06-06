@@ -7,6 +7,7 @@ import type { TValuePayload } from '../../../common/types'
 import type {
 	ICollapseItemCustom,
 	ICollapseItemCustomProps,
+	TCollapseArrowPlacement,
 	TCollapseItemCustomEvents,
 	TCollapseItemCustomStatesOptions,
 } from './types'
@@ -27,9 +28,11 @@ export default class TCollapseItemCustom<
 		value: '',
 		variant: 'normal',
 		tag: 'button',
+		arrowPlacement: 'end',
 	}
 
 	protected _textState: IStateUnit<string>
+	protected _arrowPlacement!: TCollapseArrowPlacement
 
 	constructor(
 		options:
@@ -56,6 +59,8 @@ export default class TCollapseItemCustom<
 		this._textState.events.on('change', (payload: TValuePayload<string>) => {
 			;(this.events as TEvented<TCollapseItemCustomEvents>).emit('change:text', payload)
 		})
+
+		this._arrowPlacement = customProps.arrowPlacement ?? ctor.defaultValues.arrowPlacement!
 	}
 
 	get text(): string {
@@ -66,10 +71,25 @@ export default class TCollapseItemCustom<
 		this._textState.value = value
 	}
 
+	get arrowPlacement(): TCollapseArrowPlacement {
+		return this._arrowPlacement
+	}
+
+	set arrowPlacement(value: TCollapseArrowPlacement) {
+		if (this._arrowPlacement !== value) {
+			this._arrowPlacement = value
+			;(this.events as TEvented<TCollapseItemCustomEvents>).emit(
+				'change:arrowPlacement',
+				value,
+			)
+		}
+	}
+
 	override getProps(): TProps {
 		return {
 			...super.getProps(),
 			text: this.text,
+			arrowPlacement: this._arrowPlacement,
 		} as TProps
 	}
 }

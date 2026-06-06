@@ -17,14 +17,20 @@ import type { TValuePayload } from '../../../common/types'
 
 // ============ TCollapseItemCustom (UI-логика без коллекции) ============
 
+export type TCollapseArrowPlacement = 'start' | 'end'
+
 export type TCollapseItemCustomEvents<TItem = any> = TValueControlEvents<string | number> & {
 	/** change:text */
 	'change:text': (payload: TValuePayload<string>) => void
+	/** change:arrowPlacement */
+	'change:arrowPlacement': (value: TCollapseArrowPlacement) => void
 }
 
 export interface ICollapseItemCustomProps extends IValueControlProps<string | number> {
 	/** Текст заголовка элемента */
 	text?: string
+	/** Позиция иконки */
+	arrowPlacement?: TCollapseArrowPlacement
 }
 
 export type TCollapseItemCustomStatesOptions = TValueControlStatesOptions<string | number> & {
@@ -36,6 +42,8 @@ export interface ICollapseItemCustom<
 > extends IValueControl<string | number, TProps, TCollapseItemCustomEvents<any>> {
 	/** Текст заголовка элемента */
 	text: string
+	/** Позиция иконки */
+	arrowPlacement: TCollapseArrowPlacement
 }
 
 // ============ TCollapseItem (коллекционный элемент с композицией) ============

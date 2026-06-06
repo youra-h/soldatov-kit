@@ -17,6 +17,7 @@ describe('TCollapseItemCustom', () => {
 			expect(item.value).toBe('')
 			expect(item.tag).toBe('button')
 			expect(item.variant).toBe('normal')
+			expect(item.arrowPlacement).toBe('end')
 		})
 
 		it('creates item with custom props', () => {
@@ -41,6 +42,39 @@ describe('TCollapseItemCustom', () => {
 
 			expect(spy).toHaveBeenCalledWith({ newValue: 'New Text', oldValue: '' })
 			expect(item.text).toBe('New Text')
+		})
+	})
+
+	describe('arrowPlacement', () => {
+		it('defaults to end', () => {
+			expect(item.arrowPlacement).toBe('end')
+		})
+
+		it('can be set to start', () => {
+			item.arrowPlacement = 'start'
+
+			expect(item.arrowPlacement).toBe('start')
+		})
+
+		it('emits change:arrowPlacement when changed', () => {
+			const spy = vi.fn()
+			item.events.on('change:arrowPlacement', spy)
+
+			item.arrowPlacement = 'start'
+
+			expect(spy).toHaveBeenCalledWith('start')
+		})
+
+		it('does not add --arrow-end class (end is default, no modifier)', () => {
+			expect(item.classes.toArray()).not.toContain('s-collapse-item--arrow-end')
+		})
+
+		it('removes --arrow-start class when switching back to end', () => {
+			item.arrowPlacement = 'start'
+			item.arrowPlacement = 'end'
+
+			expect(item.classes.toArray()).not.toContain('s-collapse-item--arrow-start')
+			expect(item.classes.toArray()).not.toContain('s-collapse-item--arrow-end')
 		})
 	})
 
