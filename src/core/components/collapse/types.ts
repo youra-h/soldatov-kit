@@ -4,7 +4,12 @@ import type {
 	TControlEvents,
 	TControlStatesOptions,
 } from '../../base/control'
-import type { TSelectableCollection, TSelectableCollectionEvents, TSelectionMode, TItemProxyEvents } from '../../base/collection'
+import type {
+	TSelectableCollection,
+	TSelectableCollectionEvents,
+	TSelectionMode,
+	TItemProxyEvents,
+} from '../../base/collection'
 import type { ICollapseItem } from './collapse-item/types'
 
 export type TCollapseAppearance = 'plain' | 'outlined' | 'filled'
@@ -14,6 +19,7 @@ export type TCollapseEvents = TControlEvents &
 	TItemProxyEvents<ICollapseItem> & {
 		/** change:appearance */
 		'change:appearance': (value: TCollapseAppearance) => void
+		'item:text': (item: ICollapseItem, value: string) => void
 	}
 
 export interface ICollapseProps extends IControlProps {

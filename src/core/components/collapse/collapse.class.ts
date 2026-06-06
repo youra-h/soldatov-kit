@@ -13,6 +13,7 @@ import type {
 } from './types'
 import { TEvented } from '../../common/evented'
 import type { TSelectionMode } from '../../base/collection'
+import { type TValuePayload } from '../../common/types'
 
 export class TCollapse
 	extends TControl<ICollapseProps, TCollapseEvents, TCollapseStatesOptions>
@@ -63,7 +64,19 @@ export class TCollapse
 					const { item } = payload as { collection: any; item: ICollapseItem }
 
 					item.events.on('change:disabled', (value: boolean) => {
-						;(this.events as TEvented<TCollapseEvents>).emit('item:disabled', item, value)
+						;(this.events as TEvented<TCollapseEvents>).emit(
+							'item:disabled',
+							item,
+							value,
+						)
+					})
+
+					item.events.on('change:text', (payload: TValuePayload<string>) => {
+						;(this.events as TEvented<TCollapseEvents>).emit(
+							'item:text',
+							item,
+							payload.newValue,
+						)
 					})
 				},
 			},
