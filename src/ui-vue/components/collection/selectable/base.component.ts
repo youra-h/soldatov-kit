@@ -43,8 +43,10 @@ export default {
 	props: propsSelectableCollection,
 }
 
-export interface ISelectableCollectionState extends ICollectionState {
-	selected: Ref<ISelectableCollectionItem[]>
+export interface ISelectableCollectionState<
+	TItem = ISelectableCollectionItem,
+> extends ICollectionState {
+	selected: Ref<TItem[]>
 	selectedCount: Ref<number>
 	mode: Ref<TSelectionMode>
 }

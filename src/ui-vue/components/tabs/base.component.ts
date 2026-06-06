@@ -40,10 +40,10 @@ export const emitsTabs: TEmits = [
 	'update:appearance',
 	'change:closable',
 	'update:closable',
-	'tab:close',
-	'tab:closable',
-	'tab:disabled',
-	'tab:text',
+	'item:close',
+	'item:closable',
+	'item:disabled',
+	'item:text',
 ] as const
 
 export const propsTabs: TProps = {
@@ -130,20 +130,20 @@ export function syncTabs(
 		emit?.('update:closable', value)
 	})
 
-	instance.events.on('tab:close', (item: ITabItem) => {
-		emit?.('tab:close', item)
+	instance.events.on('item:close', (item: ITabItem) => {
+		emit?.('item:close', item)
 	})
 
-	instance.events.on('tab:closable', (item: ITabItem, value: boolean) => {
-		emit?.('tab:closable', item, value)
+	instance.events.on('item:closable', (item: ITabItem, value: boolean) => {
+		emit?.('item:closable', item, value)
 	})
 
-	instance.events.on('tab:disabled', (item: ITabItem, value: boolean) => {
-		emit?.('tab:disabled', item, value)
+	instance.events.on('item:disabled', (item: ITabItem, value: boolean) => {
+		emit?.('item:disabled', item, value)
 	})
 
-	instance.events.on('tab:text', (item: ITabItem, value: string) => {
-		emit?.('tab:text', item, value)
+	instance.events.on('item:text', (item: ITabItem, value: string) => {
+		emit?.('item:text', item, value)
 	})
 
 	// Watch props

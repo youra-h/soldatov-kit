@@ -53,22 +53,18 @@ export default {
 	props: propsCollapse,
 }
 
-export interface ICollapseState extends IControlState {
+export interface ICollapseState extends IControlState, ISelectableCollectionState<ICollapseItem> {
 	appearance: Ref<TCollapseAppearance>
-	mode: Ref<TSelectionMode>
-	selected: Ref<ICollapseItem[]>
-	selectedCount: Ref<number>
-	items: Ref<ICollapseItem[]>
 }
 
 export function syncCollapse(
 	options: ISyncComponentModelOptions<ICollapseProps & ICollectionProps, ICollapse>,
 ): ICollapseState {
-	const syncProps = syncControl(options)
+	const syncPropsControl = syncControl(options)
 
 	const { props, instance, emit, plugins } = options
 
-	const syncPropsSelectable = syncSelectableCollection({
+	const syncPropsSelectableCollection = syncSelectableCollection({
 		props: { items: props.items, mode: props.mode },
 		instance: instance.collection,
 		emit,
@@ -103,16 +99,10 @@ export function syncCollapse(
 	)
 
 	return {
-		...syncProps,
+		...syncPropsControl,
+		...syncPropsSelectableCollection,
 		...useSyncProps(instance.events as any, {
-			appearance: {
-				value: () => instance.appearance,
-				events: ['change:appearance'],
-			},
+			appearance: () => instance.appearance,
 		}),
-		mode: syncPropsSelectable.mode,
-		selected: syncPropsSelectable.selected,
-		selectedCount: syncPropsSelectable.selectedCount,
-		items: syncPropsSelectable.items as Ref<ICollapseItem[]>,
 	}
 }

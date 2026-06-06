@@ -5,8 +5,6 @@ import { useInstance } from '../../../composables/useInstance'
 import { useBundle } from '../../../composables/useBundle'
 import { useInstanceBinding } from '../../../composables/useInstanceBinding'
 import { useElementBinding } from '../../../composables/useElementBinding'
-import { useInjectCollectionItem } from '../../../composables/useInjectCollectionItem'
-import { useInjectCollectionItemPlugins } from '../../../composables/useInjectCollectionItemPlugins'
 import { createComponentViewBundle } from '@plugins'
 import { Icon, useIconImport } from '../../icon'
 import { Button } from '../../button'
@@ -21,9 +19,6 @@ export default {
 		const plugins = useBundle(createComponentViewBundle, props?.plugins)
 		useInstanceBinding(plugins, instance)
 		const rootRef = useElementBinding(plugins)
-
-		useInjectCollectionItem(instance)
-		useInjectCollectionItemPlugins(plugins)
 
 		const {
 			rendered,

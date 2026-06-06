@@ -91,14 +91,8 @@ export function syncCollapseItemCustom(
 	return {
 		...syncProps,
 		...useSyncProps(instance.events as any, {
-			text: {
-				value: () => instance.text,
-				events: ['change:text'],
-			},
-			arrowPlacement: {
-				value: () => instance.arrowPlacement,
-				events: ['change:arrowPlacement'],
-			},
+			text: () => instance.text,
+			arrowPlacement: () => instance.arrowPlacement,
 		}),
 	}
 }
