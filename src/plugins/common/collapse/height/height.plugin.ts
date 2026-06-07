@@ -34,10 +34,12 @@ export class TCollapseHeightPlugin extends TBasePlugin<TCollapseHeightPluginEven
 
 			const observer = new ResizeObserver(() => {
 				const body = element.querySelector<HTMLElement>('.s-collapse-item__body')
+
 				if (body) {
 					this._itemHeights.set(uid, body.scrollHeight)
 					element.style.setProperty('--s-collapse-item-height', `${body.scrollHeight}px`)
 				}
+
 				this.events.emit('height:change')
 			})
 
@@ -45,6 +47,7 @@ export class TCollapseHeightPlugin extends TBasePlugin<TCollapseHeightPluginEven
 
 			// Измерить сразу при добавлении
 			const body = element.querySelector<HTMLElement>('.s-collapse-item__body')
+
 			if (body) {
 				element.style.setProperty('--s-collapse-item-height', `${body.scrollHeight}px`)
 			}
