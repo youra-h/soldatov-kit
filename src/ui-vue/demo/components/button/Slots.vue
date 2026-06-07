@@ -39,7 +39,7 @@ const icon3 = useIconImport('/src/icons/close.svg')
 						text="With Icon"
 						:disabled="disabled"
 					>
-						<template #before>
+						<template #leading>
 							<Icon :tag="icon1" :size="size" />
 						</template>
 					</Button>
@@ -49,11 +49,11 @@ const icon3 = useIconImport('/src/icons/close.svg')
 						appearance="filled"
 						:disabled="disabled"
 					>
-						<template #before>
+						<template #leading>
 							<Icon :tag="icon2" :size="size" />
 						</template>
 						Icon Both
-						<template #after>
+						<template #trailing>
 							<Icon :tag="icon3" :size="size" />
 						</template>
 					</Button>
@@ -78,16 +78,16 @@ const icon3 = useIconImport('/src/icons/close.svg')
 						text="With Icon"
 						:disabled="disabled"
 					>
-						<template #before>
+						<template #leading>
 							<Icon :tag="icon1" :size="size" />
 						</template>
 					</Button>
 					<Button :size="size" :variant="variant" appearance="plain" :disabled="disabled">
-						<template #before>
+						<template #leading>
 							<Icon :tag="icon2" :size="size" />
 						</template>
 						Icon Both
-						<template #after>
+						<template #trailing>
 							<Icon :tag="icon3" :size="size" />
 						</template>
 					</Button>
@@ -112,7 +112,7 @@ const icon3 = useIconImport('/src/icons/close.svg')
 						text="With Icon"
 						:disabled="disabled"
 					>
-						<template #before>
+						<template #leading>
 							<Icon :tag="icon1" :size="size" />
 						</template>
 					</Button>
@@ -122,11 +122,11 @@ const icon3 = useIconImport('/src/icons/close.svg')
 						appearance="outlined"
 						:disabled="disabled"
 					>
-						<template #before>
+						<template #leading>
 							<Icon :tag="icon2" :size="size" />
 						</template>
 						Icon Both
-						<template #after>
+						<template #trailing>
 							<Icon :tag="icon3" :size="size" />
 						</template>
 					</Button>

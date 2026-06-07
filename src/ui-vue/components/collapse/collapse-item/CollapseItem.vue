@@ -63,8 +63,8 @@ export default {
 			:variant="variant"
 			@click="instance.click()"
 		>
-			<template #before>
-				<slot name="before" />
+			<template #leading>
+				<slot name="leading" />
 				<Icon
 					v-if="arrowPlacement === 'start'"
 					:tag="arrowIconTag"
@@ -78,8 +78,8 @@ export default {
 				{{ text }}
 			</slot>
 
-			<template #after>
-				<slot name="after" />
+			<template #trailing>
+				<slot name="trailing" />
 				<Icon
 					v-if="arrowPlacement === 'end'"
 					:tag="arrowIconTag"

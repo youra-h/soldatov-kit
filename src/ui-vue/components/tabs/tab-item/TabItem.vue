@@ -77,16 +77,16 @@ export default {
 		@click="instance.click()"
 		role="tab"
 	>
-		<template #before>
-			<slot name="before" />
+		<template #leading>
+			<slot name="leading" />
 		</template>
 
 		<slot :text="text" :active="active">
 			{{ text }}
 		</slot>
 
-		<template #after>
-			<slot name="after" />
+		<template #trailing>
+			<slot name="trailing" />
 			<Button
 				:rendered="!!closable"
 				class="s-tab-item__close"

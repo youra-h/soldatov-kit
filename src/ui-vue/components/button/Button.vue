@@ -53,9 +53,9 @@ export default {
 		:disabled="disabled || undefined"
 		@click="instance.events.emit('click', $event)"
 	>
-		<slot name="before"> </slot>
+		<slot name="leading"> </slot>
 		<slot>{{ text }}</slot>
-		<slot name="after" :loading="loading"> </slot>
+		<slot name="trailing" :loading="loading"> </slot>
 	</component>
 </template>
 

@@ -70,25 +70,25 @@ const tabItems = ref([
 		<section>
 			<h2>Вариант 2: prop items</h2>
 			<Tabs :items="tabItems" appearance="outline" variant="normal">
-				<template #prefix>prefix</template>
+				<template #leading>leading</template>
 				<template #panel:alpha><p>Содержимое Alpha</p></template>
 				<template #panel:beta><p>Содержимое Beta</p></template>
 				<template #panel:gamma><p>Содержимое Gamma</p></template>
-				<template #suffix>suffix</template>
+				<template #trailing>trailing</template>
 			</Tabs>
 		</section>
 
 		<section>
 			<h2>Вариант 3: декларативный (TabItem в слоте)</h2>
 			<Tabs appearance="contained">
-				<template #prefix>prefix</template>
+				<template #leading>leading</template>
 				<TabItem text="Профиль" value="profile" />
 				<TabItem text="Настройки" value="settings" active />
 				<TabItem text="О проекте" value="about" />
 				<template #panel:profile><p>Содержимое Профиль</p></template>
 				<template #panel:settings><p>Содержимое Настройки</p></template>
 				<template #panel:about><p>Содержимое О проекте</p></template>
-				<template #suffix>suffix</template>
+				<template #trailing>trailing</template>
 			</Tabs>
 		</section>
 

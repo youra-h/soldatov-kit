@@ -38,14 +38,14 @@ export default {
 <template>
 	<div ref="rootRef" v-if="rendered" v-show="visible" :class="classes">
 		<div class="s-tabs__list" role="tablist">
-			<div class="s-tabs__list--prefix" v-if="$slots.prefix">
-				<slot name="prefix"></slot>
+			<div class="s-tabs__list--leading" v-if="$slots.leading">
+				<slot name="leading"></slot>
 			</div>
 			<slot>
 				<TabItem v-for="item in items" :key="item.uid" :ctrl="item" />
 			</slot>
-			<div class="s-tabs__list--suffix" v-if="$slots.suffix">
-				<slot name="suffix"></slot>
+			<div class="s-tabs__list--trailing" v-if="$slots.trailing">
+				<slot name="trailing"></slot>
 			</div>
 		</div>
 		<div v-if="activeItem && $slots[`panel:${activeItem?.value}`]" class="s-tabs__panel">
@@ -92,17 +92,17 @@ export default {
 	&__list {
 		@apply flex gap-4;
 
-		&--prefix,
-		&--suffix {
+		&--leading,
+		&--trailing {
 			@apply flex items-center;
 			@apply px-1.5;
 		}
 
-		&--prefix {
+		&--leading {
 			@apply order-first;
 		}
 
-		&--suffix {
+		&--trailing {
 			@apply ml-auto order-last;
 		}
 	}

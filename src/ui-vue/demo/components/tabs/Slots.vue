@@ -30,18 +30,18 @@ const APPEARANCES = ['line', 'contained', 'outline'] as const
 			</div>
 		</div>
 
-		<!-- Prefix / Suffix slots -->
+		<!-- Leading / Trailing slots -->
 		<div class="tabs-slots-demo__section">
-			<h4 class="tabs-slots-demo__subtitle">Prefix & Suffix slots</h4>
+			<h4 class="tabs-slots-demo__subtitle">Leading & Trailing slots</h4>
 			<Tabs appearance="line" :size="size" :variant="variant">
-				<template #prefix>
-					<span class="tabs-slots-demo__badge">prefix</span>
+				<template #leading>
+					<span class="tabs-slots-demo__badge">leading</span>
 				</template>
 				<TabItem text="Tab 1" value="t1" active />
 				<TabItem text="Tab 2" value="t2" />
 				<TabItem text="Tab 3" value="t3" />
-				<template #suffix>
-					<span class="tabs-slots-demo__badge">suffix</span>
+				<template #trailing>
+					<span class="tabs-slots-demo__badge">trailing</span>
 				</template>
 				<template #panel:t1><p>Content 1</p></template>
 				<template #panel:t2><p>Content 2</p></template>

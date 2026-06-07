@@ -69,21 +69,21 @@ const APPEARANCES = ['plain', 'outlined', 'filled'] as const
 			</div>
 		</div>
 
-		<!-- Custom content -->
+		<!-- Custom leading/trailing slots -->
 		<div class="collapse-slots-demo__section">
-			<h4 class="collapse-slots-demo__subtitle">Custom before/after slots</h4>
+			<h4 class="collapse-slots-demo__subtitle">Custom leading/trailing slots</h4>
 			<Collapse appearance="outlined" :size="size" :variant="variant" mode="multiple">
-				<CollapseItem text="With icon before" value="s1">
-					<template #before>
+				<CollapseItem text="With icon leading" value="s1">
+					<template #leading>
 						<span class="collapse-slots-demo__badge">⭐</span>
 					</template>
-					<template #content><p>Custom slot before the text</p></template>
+					<template #content><p>Custom slot leading the text</p></template>
 				</CollapseItem>
-				<CollapseItem text="With icon after" value="s2">
-					<template #after>
+				<CollapseItem text="With icon trailing" value="s2">
+					<template #trailing>
 						<span class="collapse-slots-demo__badge">3</span>
 					</template>
-					<template #content><p>Custom slot after the text</p></template>
+					<template #content><p>Custom slot trailing the text</p></template>
 				</CollapseItem>
 			</Collapse>
 		</div>
