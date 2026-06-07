@@ -5,16 +5,9 @@ import { useInstance } from '../../composables/useInstance'
 import { useBundle } from '../../composables/useBundle'
 import { useElementBinding } from '../../composables/useElementBinding'
 import { useInstanceBinding } from '../../composables/useInstanceBinding'
-import { useProvideCollection } from '../../composables/useProvideCollection'
-import { useProvideCollectionPlugins } from '../../composables/useProvideCollectionPlugins'
 import { createCollapseBundle } from '@plugins'
 import { CollapseItem } from './collapse-item'
-import {
-	TCollectionElementsPlugin,
-	TCollectionInstancesPlugin,
-} from '../../../plugins/common/collection'
 import type { TBaseComponentViewProps } from '../component-view'
-import type { IPluginBundle } from '../../../plugins/base'
 
 export default {
 	name: '_Collapse',
@@ -25,14 +18,6 @@ export default {
 		const plugins = useBundle(createCollapseBundle, props?.plugins)
 		useInstanceBinding(plugins, instance)
 		const rootRef = useElementBinding(plugins)
-
-		useProvideCollection(instance.collection)
-
-		// Регистрируем дочерние элементы в плагинах коллекции
-		useProvideCollectionPlugins((uid: string | number, childBundle: IPluginBundle) => {
-			plugins.get(TCollectionElementsPlugin)?.register(uid, childBundle)
-			plugins.get(TCollectionInstancesPlugin)?.register(uid, childBundle)
-		})
 
 		const { rendered, visible, classes, items, appearance, mode, selected } = syncCollapse({
 			props,
