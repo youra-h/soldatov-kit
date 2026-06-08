@@ -52,7 +52,11 @@ export default {
 				:key="item.uid"
 				:ctrl="item"
 				:appearance="appearance"
-			/>
+			>
+				<template #content>
+					<slot :name="`panel:${item.value}`" />
+				</template>
+			</CollapseItem>
 		</slot>
 	</div>
 </template>

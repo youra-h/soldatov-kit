@@ -84,6 +84,20 @@ watch(
 
 <template>
 	<PanelDemo info="Instance-based demo">
-		<Collapse :ctrl="instance" v-bind="handlers" />
+		<Collapse :ctrl="instance" v-bind="handlers">
+			<template #panel:sec1>
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
+				incididunt ut labore et dolore magna aliqua.
+			</template>
+			<template #panel:sec2>
+				lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
+				incididunt ut labore et dolore magna aliqua.
+			</template>
+			<template #panel:sec3>
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
+				incididunt ut labore et dolore magna aliqua. lorem ipsum dolor sit amet, consectetur
+				adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+			</template>
+		</Collapse>
 	</PanelDemo>
 </template>
