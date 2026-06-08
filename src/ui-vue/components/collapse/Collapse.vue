@@ -68,7 +68,7 @@ export default {
 .s-collapse {
 	$this: &;
 
-	@apply flex flex-col w-full;
+	@apply flex flex-col gap-1;
 
 	// Appearance: plain — без рамки, без фона
 	// &--plain {

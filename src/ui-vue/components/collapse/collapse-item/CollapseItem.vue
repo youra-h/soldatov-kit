@@ -110,7 +110,7 @@ export default {
 
 	&__header {
 		@apply w-full justify-start;
-		// @apply px-3 py-2.5;
+		@apply py-2;
 	}
 
 	&__arrow {
@@ -132,7 +132,8 @@ export default {
 	}
 
 	&__content {
-		@apply overflow-hidden;
+		@apply overflow-hidden py-0;
+		transition: padding 300ms ease;
 	}
 
 	&--open &__content {
