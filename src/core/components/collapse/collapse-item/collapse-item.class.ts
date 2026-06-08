@@ -17,6 +17,7 @@ export default class TCollapseItem
 		this._collectionItem = new TSelectableCollectionItem({ collection })
 
 		this._collectionItem.events.on('change:selection', () => {
+			this._classes.toggle('--open', this._collectionItem.selected)
 			;(this.events as TEvented<TCollapseItemEvents>).emit('change:selection', this)
 		})
 
@@ -52,7 +53,6 @@ export default class TCollapseItem
 		if (value && this.disabled) return
 
 		this._collectionItem.selected = value
-		this._classes.toggle('--open', value)
 	}
 
 	get order(): number {

@@ -126,7 +126,6 @@ export default {
 		display: grid;
 		grid-template-rows: 0fr;
 		transition: grid-template-rows 300ms ease;
-		overflow: hidden;
 	}
 
 	&--open > &__body {
@@ -134,7 +133,7 @@ export default {
 	}
 
 	&__content {
-		min-height: 0;
+		overflow: hidden;
 		@apply px-3 py-2;
 	}
 }
