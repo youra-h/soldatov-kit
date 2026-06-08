@@ -77,9 +77,11 @@ export default {
 				/>
 			</template>
 
-			<slot :text="text" :selected="selected">
-				{{ text }}
-			</slot>
+			<span class="s-collapse-item__text">
+				<slot :text="text" :selected="selected">
+					{{ text }}
+				</slot>
+			</span>
 
 			<template #trailing>
 				<slot name="trailing" />
@@ -111,6 +113,10 @@ export default {
 	&__header {
 		@apply w-full justify-start;
 		@apply py-2;
+	}
+
+	&__text {
+		@apply grow text-left;
 	}
 
 	&__arrow {
