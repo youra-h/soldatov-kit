@@ -90,10 +90,10 @@ defineProps<Props>()
 		@apply p-4;
 		@apply flex flex-col;
 		@apply max-h-[800px];
+		@apply flex-1 min-w-0;
 
 		&:nth-child(3) {
 			@apply overflow-y-auto;
-			@apply flex-1;
 		}
 	}
 

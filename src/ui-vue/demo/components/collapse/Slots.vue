@@ -89,3 +89,31 @@ const APPEARANCES = ['plain', 'outlined', 'filled'] as const
 		</div>
 	</div>
 </template>
+
+<style lang="scss" scoped>
+@reference "./../../../../foundation/tailwind/index.css";
+
+.collapse-slots-demo {
+	@apply flex flex-col gap-8;
+
+	&__section {
+		@apply flex flex-col gap-3;
+	}
+
+	&__subtitle {
+		@apply text-sm font-semibold text-gray-600 uppercase tracking-wide;
+	}
+
+	&__group {
+		@apply flex flex-col gap-2;
+	}
+
+	&__label {
+		@apply text-xs text-gray-400;
+	}
+
+	&__badge {
+		@apply px-2 py-0.5 bg-gray-100 text-gray-500 rounded text-xs;
+	}
+}
+</style>
