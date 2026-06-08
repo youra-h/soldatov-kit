@@ -1,1 +1,1 @@
-export { TSpinnerStylePlugin } from './spinner-style.plugin'
+export { TSpinnerStylePlugin } from './style.plugin'

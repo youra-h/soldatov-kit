@@ -1,3 +1,3 @@
 export * from './types'
-export * from './collection-elements.plugin'
-export * from './collection-instances.plugin'
+export * from './elements.plugin'
+export * from './instances.plugin'
