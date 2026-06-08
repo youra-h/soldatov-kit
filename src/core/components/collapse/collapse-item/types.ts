@@ -14,6 +14,7 @@ import type { IComponentViewOptions } from '../../../base/component-view'
 import type { IStateUnit } from '../../../common/state-unit'
 import type { TStateCtor } from '../../../common/states'
 import type { TValuePayload } from '../../../common/types'
+import type { TCollapseAppearance } from '../types'
 
 // ============ TCollapseItemCustom (UI-логика без коллекции) ============
 
@@ -24,6 +25,8 @@ export type TCollapseItemCustomEvents<TItem = any> = TValueControlEvents<string 
 	'change:text': (payload: TValuePayload<string>) => void
 	/** change:arrowPlacement */
 	'change:arrowPlacement': (value: TCollapseArrowPlacement) => void
+	/** change:appearance */
+	'change:appearance': (value: TCollapseAppearance) => void
 }
 
 export interface ICollapseItemCustomProps extends IValueControlProps<string | number> {
@@ -44,6 +47,10 @@ export interface ICollapseItemCustom<
 	text: string
 	/** Позиция иконки */
 	arrowPlacement: TCollapseArrowPlacement
+	/** Внешний вид (readonly, наследуется от TCollapse) */
+	readonly appearance: TCollapseAppearance
+	/** Инжектирует резолвер appearance из TCollapse */
+	setAppearanceResolver(resolver: () => TCollapseAppearance): void
 }
 
 // ============ TCollapseItem (коллекционный элемент с композицией) ============

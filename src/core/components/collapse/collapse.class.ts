@@ -63,6 +63,8 @@ export class TCollapse
 				then: (payload: any) => {
 					const { item } = payload as { collection: any; item: ICollapseItem }
 
+					item.setAppearanceResolver(() => this._appearance)
+
 					item.events.on('change:disabled', (value: boolean) => {
 						;(this.events as TEvented<TCollapseEvents>).emit(
 							'item:disabled',
@@ -112,6 +114,11 @@ export class TCollapse
 	set appearance(value: TCollapseAppearance) {
 		if (this._appearance !== value) {
 			this._applyAppearance(value, this._appearance)
+
+			this._collection.forEach((item) => {
+				item.events.emit('change:appearance', value)
+			})
+
 			;(this.events as TEvented<TCollapseEvents>).emit('change:appearance', value)
 		}
 	}
