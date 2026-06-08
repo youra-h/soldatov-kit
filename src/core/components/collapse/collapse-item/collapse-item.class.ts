@@ -1,6 +1,11 @@
 import { TSelectableCollectionItem } from '../../../base/collection'
 import TCollapseItemCustom from './collapse-item-custom.class'
-import type { ICollapseItem, ICollapseItemOptions, ICollapseItemProps, TCollapseItemEvents } from './types'
+import type {
+	ICollapseItem,
+	ICollapseItemOptions,
+	ICollapseItemProps,
+	TCollapseItemEvents,
+} from './types'
 import type { TCollection } from '../../../base/collection'
 import { TEvented } from '../../../common/evented'
 
@@ -63,14 +68,23 @@ export default class TCollapseItem
 		this._collectionItem.order = value
 	}
 
+	/**
+	 * Открывает элемент, устанавливая его в состояние selected = true. Если элемент уже открыт (selected = true), метод не выполняет никаких действий.
+	 */
 	open(): void {
 		this.selected = true
 	}
 
+	/**
+	 * Закрывает элемент, устанавливая его в состояние selected = false. Если элемент уже закрыт (selected = false), метод не выполняет никаких действий.
+	 */
 	close(): void {
 		this.selected = false
 	}
 
+	/**
+	 * Переключает состояние элемента между открытым (selected = true) и закрытым (selected = false). Если элемент открыт, он будет закрыт, и наоборот. Этот метод обеспечивает удобный способ изменения состояния элемента без необходимости явно проверять его текущее состояние.
+	 */
 	toggleSelected(): void {
 		this._collectionItem.toggleSelected()
 	}
