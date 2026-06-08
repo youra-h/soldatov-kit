@@ -124,7 +124,6 @@ export default {
 
 	&__body {
 		@apply grid grid-rows-[0fr];
-
 		transition: grid-template-rows 300ms ease;
 	}
 
@@ -134,6 +133,9 @@ export default {
 
 	&__content {
 		@apply overflow-hidden;
+	}
+
+	&--open &__content {
 		@apply py-2;
 	}
 }
