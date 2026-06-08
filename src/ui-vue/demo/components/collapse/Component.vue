@@ -59,7 +59,8 @@ const applyAll = computed(() => props.itemApplyTarget === 'all')
 				:selected="true"
 			>
 				<template #content>
-					<p>Content for Section 1</p>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
+					incididunt ut labore et dolore magna aliqua.
 				</template>
 			</CollapseItem>
 			<CollapseItem
@@ -69,7 +70,8 @@ const applyAll = computed(() => props.itemApplyTarget === 'all')
 				:arrowPlacement="arrowPlacement"
 			>
 				<template #content>
-					<p>Content for Section 2</p>
+					lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
+					incididunt ut labore et dolore magna aliqua.
 				</template>
 			</CollapseItem>
 			<CollapseItem
@@ -79,7 +81,10 @@ const applyAll = computed(() => props.itemApplyTarget === 'all')
 				:arrowPlacement="arrowPlacement"
 			>
 				<template #content>
-					<p>Content for Section 3</p>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
+					incididunt ut labore et dolore magna aliqua.
+					lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
+					incididunt ut labore et dolore magna aliqua.
 				</template>
 			</CollapseItem>
 		</Collapse>

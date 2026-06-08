@@ -32,7 +32,7 @@ const collapseSchema: TPropertiesSchema = {
 	variant: { type: 'select', default: 'normal', options: VARIANTS },
 	appearance: { type: 'select', default: 'plain', options: COLLAPSE_APPEARANCES },
 	mode: { type: 'select', default: 'multiple', options: COLLAPSE_MODES },
-	arrowPlacement: { type: 'select', default: 'end', options: ARROW_PLACEMENTS },
+	arrowPlacement: { type: 'select', default: 'start', options: ARROW_PLACEMENTS },
 }
 
 const itemSchema: TPropertiesSchema = {
@@ -66,7 +66,7 @@ const componentProps = ref<{
 	variant: 'normal',
 	appearance: 'plain',
 	mode: 'multiple',
-	arrowPlacement: 'end',
+	arrowPlacement: 'start',
 	itemApplyTarget: 'first',
 	itemDisabled: false,
 })

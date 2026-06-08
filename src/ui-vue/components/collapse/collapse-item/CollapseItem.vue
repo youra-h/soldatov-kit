@@ -125,18 +125,17 @@ export default {
 	}
 
 	&__body {
-		display: grid;
-		grid-template-rows: 0fr;
+		@apply grid grid-rows-[0fr];
+		@apply py-2;
 		transition: grid-template-rows 300ms ease;
 	}
 
 	&--open > &__body {
-		grid-template-rows: 1fr;
+		@apply grid-rows-[1fr];
 	}
 
 	&__content {
-		overflow: hidden;
-		@apply px-3 py-2;
+		@apply overflow-hidden;
 	}
 }
 </style>
