@@ -32,7 +32,7 @@ export default {
 		const loader = useParentLoader()
 
 		const mergedDisabled = computed(() =>
-			disabled.value || (loader?.visible ?? false),
+			disabled.value || (loader?.shouldDisable && loader?.visible) || false,
 		)
 
 		// Two-way sync: Button size/variant → Loader
@@ -76,13 +76,14 @@ export default {
 		<slot>{{ text }}</slot>
 		<slot name="loader">
 			<Spinner
-				v-if="loader?.visible"
+				v-if="loader?.shouldIndicator && loader?.visible"
 				:size="loader?.size"
 				:variant="loader?.variant"
 			/>
 		</slot>
 		<slot name="trailing"> </slot>
 	</component>
+</template>
 </template>
 
 <style lang="scss">

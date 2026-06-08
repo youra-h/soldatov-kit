@@ -1,4 +1,4 @@
-import TComponentView, { type IComponentViewOptions } from '../../base/component-view'
+import TComponentView from '../../base/component-view'
 import type {
 	ILoader,
 	ILoaderProps,
@@ -18,25 +18,29 @@ export class TLoader
 		loader: 'spinner',
 		size: 'normal',
 		variant: 'normal',
+		shouldDisable: true,
+		shouldIndicator: true,
 	}
 
 	protected _loader!: TLoaderIndicator
 	protected _size!: TComponentSize
 	protected _variant!: TComponentVariant
+	protected _shouldDisable!: boolean
+	protected _shouldIndicator!: boolean
 
 	constructor(
-		options:
-			| IComponentViewOptions<ILoaderProps>
-			| Partial<ILoaderProps> = {},
+		options: Partial<ILoaderProps> = {},
 	) {
 		super(options)
 
 		const ctor = new.target as typeof TLoader
-		const { props = {} } = TComponentView.prepareOptions<ILoaderProps>(options)
+		const { props = {} } = TComponentView.prepareOptions(options)
 
 		this._loader = props.loader ?? ctor.defaultValues.loader!
 		this._size = props.size ?? ctor.defaultValues.size!
 		this._variant = props.variant ?? ctor.defaultValues.variant!
+		this._shouldDisable = props.shouldDisable ?? ctor.defaultValues.shouldDisable!
+		this._shouldIndicator = props.shouldIndicator ?? ctor.defaultValues.shouldIndicator!
 	}
 
 	get loader(): TLoaderIndicator {
@@ -69,6 +73,28 @@ export class TLoader
 		if (this._variant !== value) {
 			this._variant = value
 			this.events.emit('change:variant', value)
+		}
+	}
+
+	get shouldDisable(): boolean {
+		return this._shouldDisable
+	}
+
+	set shouldDisable(value: boolean) {
+		if (this._shouldDisable !== value) {
+			this._shouldDisable = value
+			this.events.emit('change:shouldDisable', value)
+		}
+	}
+
+	get shouldIndicator(): boolean {
+		return this._shouldIndicator
+	}
+
+	set shouldIndicator(value: boolean) {
+		if (this._shouldIndicator !== value) {
+			this._shouldIndicator = value
+			this.events.emit('change:shouldIndicator', value)
 		}
 	}
 }

@@ -1,9 +1,9 @@
 <script lang="ts">
-import type { PropType } from 'vue'
 import { inject, provide, type InjectionKey } from 'vue'
-import type { ILoader, TLoaderIndicator } from '@core'
-import { TLoader } from '@core'
+import { TLoader, type ILoader, type ILoaderProps } from '@core'
 import { useInstance } from '../../composables/useInstance'
+import BaseLoader from './base.component'
+import type { TBaseComponentViewProps } from '../component-view'
 
 export const LOADER_KEY: InjectionKey<ILoader> = Symbol('loader')
 
@@ -13,13 +13,9 @@ export function useParentLoader(): ILoader | undefined {
 
 export default {
 	name: '_Loader',
-	props: {
-		ctrl: { type: Object as PropType<ILoader>, default: undefined },
-		visible: { type: Boolean, default: undefined },
-		loader: { type: String as PropType<TLoaderIndicator>, default: undefined },
-	},
-	setup(props: { ctrl?: ILoader; visible?: boolean; loader?: TLoaderIndicator }) {
-		const instance = useInstance(TLoader, props) as ILoader
+	extends: BaseLoader,
+	setup(props: TBaseComponentViewProps<ILoaderProps, ILoader>) {
+		const instance = useInstance(TLoader, props)
 		provide(LOADER_KEY, instance)
 		return { instance }
 	},
@@ -29,3 +25,4 @@ export default {
 <template>
 	<slot />
 </template>
+
