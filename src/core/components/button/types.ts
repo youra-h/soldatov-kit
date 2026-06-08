@@ -5,33 +5,20 @@ import type {
 	TTextableStatesOptions,
 } from '../../base/textable'
 import type { TComponentVariant } from '../../common/types'
-import type { TStateCtor, ILoadingState, ILoadingBehavior } from '../../common/states'
 
 export type TButtonAppearance = 'filled' | 'plain' | 'outlined' | 'none'
 
 export interface IButtonProps extends ITextableProps {
-	// Вариант отображения кнопки
 	variant?: TComponentVariant
-	// Внешний вид кнопки
 	appearance?: TButtonAppearance
-	// Показать индикатор загрузки
-	loading?: boolean
 }
 
 export type TButtonEvents = TTextableEvents & {
-	'change:loading': (value: boolean) => void
 	'change:appearance': (value: TButtonAppearance) => void
 }
 
-export type TButtonStatesOptions = TTextableStatesOptions & {
-	loading?: TStateCtor<ILoadingState, boolean | ILoadingBehavior> | ILoadingState
-}
+export type TButtonStatesOptions = TTextableStatesOptions
 
 export interface IButton extends ITextable<IButtonProps, TButtonEvents> {
-	/** Внешний вид кнопки */
 	appearance: TButtonAppearance
-	/** Показывается ли индикатор загрузки */
-	loading: boolean
-	/** State объект управления загрузкой */
-	readonly loadingState: ILoadingState
 }

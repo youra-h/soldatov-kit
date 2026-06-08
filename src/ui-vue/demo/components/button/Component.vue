@@ -4,7 +4,6 @@ import PanelDemo from '../../common/PanelDemo.vue'
 import { useEventLogger } from '../../common/useEventLogger'
 import type { EventLogEntry } from '../../common/EventLog.vue'
 import type { TComponentSize, TComponentVariant, TButtonAppearance } from '@core'
-import type { VNode } from 'vue'
 
 type Props = {
 	visible?: boolean
@@ -14,10 +13,6 @@ type Props = {
 	appearance?: TButtonAppearance
 	disabled?: boolean
 	text?: string
-	// Loading props
-	loading?: boolean
-	loadingDisabled?: boolean
-	spinner?: VNode | null
 }
 
 const props = defineProps<Props>()
@@ -38,14 +33,9 @@ const { handlers } = useEventLogger(emit, emitsButton)
 			:size="size"
 			:variant="variant"
 			:appearance="appearance"
-			:disabled="loadingDisabled && loading ? true : disabled"
+			:disabled="disabled"
 			:text="text"
-			:loading="loading"
 			v-bind="handlers"
-		>
-			<template v-if="loading && spinner" #trailing>
-				<component :is="spinner" />
-			</template>
-		</Button>
+		/>
 	</PanelDemo>
 </template>

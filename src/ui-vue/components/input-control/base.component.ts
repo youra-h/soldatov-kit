@@ -26,8 +26,6 @@ export const emitsInputControl: TEmits = [
 	'update:invalid',
 	'change:state',
 	'update:state',
-	'change:loading',
-	'update:loading',
 ] as const
 
 export const propsInputControl: TProps = {
@@ -95,11 +93,6 @@ export function syncInputControl<TValue = string>(
 	instance.events.on('change:state' as any, (value: TInputControlState) => {
 		emit?.('change:state', value)
 		emit?.('update:state', value)
-	})
-
-	instance.events.on('change:loading' as any, (value: boolean) => {
-		emit?.('change:loading', value)
-		emit?.('update:loading', value)
 	})
 
 	watch<boolean | undefined>(

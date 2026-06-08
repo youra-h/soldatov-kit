@@ -1,21 +1,19 @@
 import { type PropType, watch, type Ref } from 'vue'
+import { type IButtonProps, type TButtonAppearance, TButton, type IButton } from '@core'
 import {
-	type IButtonProps,
-	type TButtonAppearance,
-	TButton,
-	type IButton,
-} from '@core'
-import { BaseTextable, emitsTextable, propsTextable, syncTextable, type ITextableState } from '../textable'
+	BaseTextable,
+	emitsTextable,
+	propsTextable,
+	syncTextable,
+	type ITextableState,
+} from '../textable'
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types'
-import { Spinner } from '../spinner'
 import { useSyncProps } from '../../composables/useSyncProps'
 
 export const emitsButton: TEmits = [
 	...emitsTextable,
 	'change:appearance',
 	'update:appearance',
-	'change:loading',
-	'update:loading',
 ] as const
 
 export const propsButton: TProps = {
@@ -28,55 +26,26 @@ export const propsButton: TProps = {
 		type: String as PropType<IButtonProps['appearance']>,
 		default: TButton.defaultValues.appearance,
 	},
-	loading: {
-		type: Boolean as PropType<IButtonProps['loading']>,
-		default: TButton.defaultValues.loading,
-	},
-	loadingShouldDisable: {
-		type: Boolean,
-		default: true,
-	},
 }
 
 export default {
 	name: 'BaseButton',
 	extends: BaseTextable,
-	components: { Spinner },
 	emits: emitsButton,
 	props: propsButton,
 }
 
 export interface IButtonState extends ITextableState {
 	appearance: Ref<TButtonAppearance>
-	loading: Ref<boolean>
 }
 
-/**
- * Bind props to instance properties.
- * @param props
- * @param instance
- */
 export function syncButton(
-	options: ISyncComponentModelOptions<IButtonProps, IButton> & {
-		props: { loadingShouldDisable?: boolean }
-	},
+	options: ISyncComponentModelOptions<IButtonProps, IButton>,
 ): IButtonState {
 	const syncProps = syncTextable(options)
 
 	const { instance, props, emit } = options
 
-	// Синхронизируем loadingShouldDisable с behavior
-	if (props.loadingShouldDisable !== undefined) {
-		instance.loadingState.behavior.shouldDisable = props.loadingShouldDisable
-	}
-
-	// Пробрасываем событие loading
-	instance.events.on('change:loading', (value: boolean) => {
-		emit?.('change:loading', value)
-		emit?.('update:loading', value)
-	})
-
-	// Пробрасываем событие appearance
 	instance.events.on('change:appearance' as any, (value: TButtonAppearance) => {
 		emit?.('change:appearance', value)
 		emit?.('update:appearance', value)
@@ -91,29 +60,10 @@ export function syncButton(
 		},
 	)
 
-	watch<boolean | undefined>(
-		() => props.loading,
-		(value) => {
-			if (value !== undefined && value !== instance.loading) {
-				instance.loading = value
-			}
-		},
-	)
-
-	watch(
-		() => props.loadingShouldDisable,
-		(value) => {
-			if (value !== undefined) {
-				instance.loadingState.behavior.shouldDisable = value
-			}
-		},
-	)
-
 	return {
 		...syncProps,
 		...useSyncProps(instance.events as any, {
 			appearance: () => instance.appearance,
-			loading: () => instance.loading,
 		}),
 	}
 }

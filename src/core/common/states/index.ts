@@ -7,5 +7,4 @@
  * - обычно используется компонентом-агрегатом, который подписывается и пробрасывает события наружу
  */
 export * from './visibility.state'
-export * from './loading.state'
 export * from './types'
