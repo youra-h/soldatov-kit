@@ -5,7 +5,6 @@ import { useInstance } from '../../composables/useInstance'
 import { useBundle } from '../../composables/useBundle'
 import { useElementBinding } from '../../composables/useElementBinding'
 import { useInstanceBinding } from '../../composables/useInstanceBinding'
-// items/activeItem are provided by syncTabs
 import { createTabsBundle } from '@plugins'
 import { TabItem } from './tab-item'
 import type { TBaseComponentViewProps } from '../component-view'

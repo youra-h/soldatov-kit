@@ -15,8 +15,10 @@ export default {
 	components: { CollapseItem },
 	setup(props: TBaseComponentViewProps<ICollapseProps, ICollapse>, { emit }) {
 		const instance = useInstance(TCollapse, props)
+
 		const plugins = useBundle(createCollapseBundle, props?.plugins)
 		useInstanceBinding(plugins, instance)
+
 		const rootRef = useElementBinding(plugins)
 
 		const { rendered, visible, classes, items, appearance, mode, selected } = syncCollapse({
