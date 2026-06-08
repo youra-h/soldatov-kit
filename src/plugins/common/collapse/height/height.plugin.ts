@@ -30,29 +30,29 @@ export class TCollapseHeightPlugin extends TBasePlugin<TCollapseHeightPluginEven
 		const collectionPlugin = bundle.get(TCollectionElementsPlugin)
 
 		collectionPlugin?.events.on('element:added', ({ uid, element }) => {
-			this._itemObservers.get(uid)?.disconnect()
+			// this._itemObservers.get(uid)?.disconnect()
 
-			const observer = new ResizeObserver(() => {
-				const body = element.querySelector<HTMLElement>('.s-collapse-item__body')
+			// const observer = new ResizeObserver(() => {
+			// 	const body = element.querySelector<HTMLElement>('.s-collapse-item__body')
 
-				if (body) {
-					this._itemHeights.set(uid, body.scrollHeight)
-					element.style.setProperty('--s-collapse-item-height', `${body.scrollHeight}px`)
-				}
+			// 	if (body) {
+			// 		this._itemHeights.set(uid, body.scrollHeight)
+			// 		element.style.setProperty('--s-collapse-item-height', `${body.scrollHeight}px`)
+			// 	}
 
-				this.events.emit('height:change')
-			})
+			// 	this.events.emit('height:change')
+			// })
 
-			observer.observe(element)
+			// observer.observe(element)
 
-			// Измерить сразу при добавлении
-			const body = element.querySelector<HTMLElement>('.s-collapse-item__body')
+			// // Измерить сразу при добавлении
+			// const body = element.querySelector<HTMLElement>('.s-collapse-item__body')
 
-			if (body) {
-				element.style.setProperty('--s-collapse-item-height', `${body.scrollHeight}px`)
-			}
+			// if (body) {
+			// 	element.style.setProperty('--s-collapse-item-height', `${body.scrollHeight}px`)
+			// }
 
-			this._itemObservers.set(uid, observer)
+			// this._itemObservers.set(uid, observer)
 		})
 
 		collectionPlugin?.events.on('element:removed', ({ uid }) => {

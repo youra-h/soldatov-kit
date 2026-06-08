@@ -16,8 +16,10 @@ export default {
 	components: { Icon, Button },
 	setup(props: TBaseComponentViewProps<ICollapseItemProps, ICollapseItem>, { emit }) {
 		const instance = useInstance(TCollapseItem, props)
+
 		const plugins = useBundle(createComponentViewBundle, props?.plugins)
 		useInstanceBinding(plugins, instance)
+
 		const rootRef = useElementBinding(plugins)
 
 		const {
