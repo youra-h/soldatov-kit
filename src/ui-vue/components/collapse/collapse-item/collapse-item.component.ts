@@ -1,5 +1,10 @@
-import type { Ref } from 'vue'
-import { type ICollapseItem, type ICollapseItemProps, type TCollapseAppearance } from '@core'
+import type { PropType, Ref } from 'vue'
+import {
+	type ICollapse,
+	type ICollapseItem,
+	type ICollapseItemProps,
+	type TCollapseAppearance,
+} from '@core'
 import {
 	default as BaseCollapseItemCustom,
 	emitsCollapseItemCustom,
@@ -24,6 +29,10 @@ export const emitsCollapseItem: TEmits = [
 export const propsCollapseItem: TProps = {
 	...propsCollapseItemCustom,
 	...propsSelectableCollectionItem,
+	appearance: {
+		type: String as PropType<ICollapse['appearance']>,
+		default: 'plain',
+	},
 }
 
 export default {
@@ -46,8 +55,14 @@ export function syncCollapseItem(
 	return {
 		...syncCollapseItemCustom(options),
 		...syncSelectableCollectionItem(options),
-		...useSyncProps(instance.events as any, {
-			appearance: () => instance.collection?.appearance,
+		...useSyncProps(instance.collection?.events as any, {
+			appearance: {
+				value: () => {
+					console.log(instance.collection?.appearance)
+					return instance.collection?.appearance
+				},
+				events: ['change:appearance'],
+			},
 		}),
 	}
 }

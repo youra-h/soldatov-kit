@@ -32,6 +32,7 @@ export default {
 			text,
 			selected,
 			arrowPlacement,
+			appearance,
 		} = syncCollapseItem({ props, instance, plugins, emit })
 
 		const arrowIconTag = useIconImport('../../../icons/arrow_right.svg')
@@ -50,16 +51,18 @@ export default {
 			text,
 			selected,
 			arrowPlacement,
+			appearance,
 		}
 	},
 }
 </script>
 
 <template>
+	{{ console.log(appearance) }}
 	<div ref="rootRef" v-if="rendered" v-show="visible" :class="classes">
 		<Button
 			class="s-collapse-item__header"
-			appearance="none"
+			appearance="appearance"
 			:disabled="disabled"
 			:size="size"
 			:variant="variant"

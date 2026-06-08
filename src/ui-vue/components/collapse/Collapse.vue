@@ -45,9 +45,15 @@ export default {
 </script>
 
 <template>
+	{{ appearance }}
 	<div ref="rootRef" v-if="rendered" v-show="visible" :class="classes">
 		<slot>
-			<CollapseItem v-for="item in items" :key="item.uid" :ctrl="item" />
+			<CollapseItem
+				v-for="item in items"
+				:key="item.uid"
+				:ctrl="item"
+				:appearance="appearance"
+			/>
 		</slot>
 	</div>
 </template>
