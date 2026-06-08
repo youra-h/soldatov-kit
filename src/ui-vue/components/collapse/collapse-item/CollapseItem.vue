@@ -74,7 +74,6 @@ export default {
 					:tag="arrowIconTag"
 					:size="size"
 					class="s-collapse-item__arrow"
-					:class="{ 's-collapse-item__arrow--open': selected }"
 				/>
 			</template>
 
@@ -89,7 +88,6 @@ export default {
 					:tag="arrowIconTag"
 					:size="size"
 					class="s-collapse-item__arrow"
-					:class="{ 's-collapse-item__arrow--open': selected }"
 				/>
 			</template>
 		</Button>
@@ -118,15 +116,15 @@ export default {
 	&__arrow {
 		@apply transition-transform duration-300;
 		@apply shrink-0;
+	}
 
-		&--open {
-			@apply rotate-90;
-		}
+	&--open &__arrow {
+		@apply rotate-90;
 	}
 
 	&__body {
 		@apply grid grid-rows-[0fr];
-		@apply py-2;
+
 		transition: grid-template-rows 300ms ease;
 	}
 
@@ -136,6 +134,7 @@ export default {
 
 	&__content {
 		@apply overflow-hidden;
+		@apply py-2;
 	}
 }
 </style>
