@@ -89,7 +89,7 @@ defineProps<Props>()
 		@apply border rounded-lg border-gray-300;
 		@apply p-4;
 		@apply flex flex-col;
-		@apply max-h-[800px];
+		// @apply max-h-[800px];
 		@apply flex-1 min-w-0;
 
 		&:nth-child(3) {
