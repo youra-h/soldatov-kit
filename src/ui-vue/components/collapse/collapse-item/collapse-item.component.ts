@@ -19,7 +19,6 @@ import {
 	type ISelectableCollectionItemState,
 } from '../../collection/selectable'
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../../types'
-import { useSyncProps } from '../../../composables/useSyncProps'
 
 export const emitsCollapseItem: TEmits = [
 	...emitsCollapseItemCustom,
@@ -50,19 +49,8 @@ export interface ICollapseItemState
 export function syncCollapseItem(
 	options: ISyncComponentModelOptions<ICollapseItemProps, ICollapseItem>,
 ): ICollapseItemState {
-	const { instance } = options
-
 	return {
 		...syncCollapseItemCustom(options),
 		...syncSelectableCollectionItem(options),
-		...useSyncProps(instance.collection?.events as any, {
-			appearance: {
-				value: () => {
-					console.log(instance.collection?.appearance)
-					return instance.collection?.appearance
-				},
-				events: ['change:appearance'],
-			},
-		}),
 	}
 }

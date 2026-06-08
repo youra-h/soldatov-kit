@@ -58,11 +58,10 @@ export default {
 </script>
 
 <template>
-	{{ console.log(appearance) }}
 	<div ref="rootRef" v-if="rendered" v-show="visible" :class="classes">
 		<Button
 			class="s-collapse-item__header"
-			appearance="appearance"
+			:appearance="appearance"
 			:disabled="disabled"
 			:size="size"
 			:variant="variant"
@@ -112,8 +111,8 @@ export default {
 	@apply flex flex-col w-full;
 
 	&__header {
-		@apply w-full justify-between rounded-none;
-		@apply px-3 py-2.5;
+		@apply w-full justify-start;
+		// @apply px-3 py-2.5;
 	}
 
 	&__arrow {

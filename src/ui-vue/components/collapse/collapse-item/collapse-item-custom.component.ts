@@ -5,6 +5,7 @@ import {
 	type ICollapseItemCustomProps,
 	TCollapseItemCustom,
 	type TCollapseArrowPlacement,
+	type TCollapseAppearance,
 	type TValuePayload,
 } from '@core'
 import {
@@ -51,6 +52,7 @@ export default {
 export interface ICollapseItemCustomState extends IValueControlState {
 	text: Ref<string>
 	arrowPlacement: Ref<TCollapseArrowPlacement>
+	appearance: Ref<TCollapseAppearance>
 }
 
 export function syncCollapseItemCustom(
@@ -93,6 +95,7 @@ export function syncCollapseItemCustom(
 		...useSyncProps(instance.events as any, {
 			text: () => instance.text,
 			arrowPlacement: () => instance.arrowPlacement,
+			appearance: () => instance.appearance,
 		}),
 	}
 }
