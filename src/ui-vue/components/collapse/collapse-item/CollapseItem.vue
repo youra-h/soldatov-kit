@@ -78,7 +78,7 @@ export default {
 			</template>
 
 			<span class="s-collapse-item__text">
-				<slot :text="text" :selected="selected">
+				<slot name="header" :text="text" :selected="selected">
 					{{ text }}
 				</slot>
 			</span>
@@ -96,7 +96,7 @@ export default {
 
 		<div class="s-collapse-item__body">
 			<div class="s-collapse-item__content">
-				<slot name="content" />
+				<slot />
 			</div>
 		</div>
 	</div>

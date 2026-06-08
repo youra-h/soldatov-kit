@@ -20,19 +20,13 @@ const APPEARANCES = ['plain', 'outlined', 'filled'] as const
 
 			<Collapse :appearance="appearance" :size="size" :variant="variant" mode="multiple">
 				<CollapseItem text="Section 1" value="s1" :selected="true">
-					<template #content>
-						<p>Content for section 1 — {{ appearance }} appearance</p>
-					</template>
+					<p>Content for section 1 — {{ appearance }} appearance</p>
 				</CollapseItem>
 				<CollapseItem text="Section 2" value="s2">
-					<template #content>
-						<p>Content for section 2</p>
-					</template>
+					<p>Content for section 2</p>
 				</CollapseItem>
 				<CollapseItem text="Section 3" value="s3">
-					<template #content>
-						<p>Content for section 3</p>
-					</template>
+					<p>Content for section 3</p>
 				</CollapseItem>
 			</Collapse>
 		</div>
@@ -42,13 +36,13 @@ const APPEARANCES = ['plain', 'outlined', 'filled'] as const
 			<h4 class="collapse-slots-demo__subtitle">mode: single</h4>
 			<Collapse appearance="outlined" :size="size" :variant="variant" mode="single">
 				<CollapseItem text="Single mode — only one open" value="s1" :selected="true">
-					<template #content><p>Only one section can be open at a time</p></template>
+					<p>Only one section can be open at a time</p>
 				</CollapseItem>
 				<CollapseItem text="Section 2" value="s2">
-					<template #content><p>Opening this will close Section 1</p></template>
+					<p>Opening this will close Section 1</p>
 				</CollapseItem>
 				<CollapseItem text="Section 3" value="s3">
-					<template #content><p>Section 3 content</p></template>
+					<p>Section 3 content</p>
 				</CollapseItem>
 			</Collapse>
 		</div>
@@ -60,10 +54,10 @@ const APPEARANCES = ['plain', 'outlined', 'filled'] as const
 				<span class="collapse-slots-demo__label">start (default: end)</span>
 				<Collapse appearance="plain" :size="size" :variant="variant" mode="multiple">
 					<CollapseItem text="Arrow start" value="s1" arrow-placement="start">
-						<template #content><p>Arrow is on the left</p></template>
+						<p>Arrow is on the left</p>
 					</CollapseItem>
 					<CollapseItem text="Arrow end" value="s2" arrow-placement="end">
-						<template #content><p>Arrow is on the right</p></template>
+						<p>Arrow is on the right</p>
 					</CollapseItem>
 				</Collapse>
 			</div>
@@ -77,13 +71,13 @@ const APPEARANCES = ['plain', 'outlined', 'filled'] as const
 					<template #leading>
 						<span class="collapse-slots-demo__badge">⭐</span>
 					</template>
-					<template #content><p>Custom slot leading the text</p></template>
+					<p>Custom slot leading the text</p>
 				</CollapseItem>
 				<CollapseItem text="With icon trailing" value="s2">
 					<template #trailing>
 						<span class="collapse-slots-demo__badge">3</span>
 					</template>
-					<template #content><p>Custom slot trailing the text</p></template>
+					<p>Custom slot trailing the text</p>
 				</CollapseItem>
 			</Collapse>
 		</div>

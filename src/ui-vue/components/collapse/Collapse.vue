@@ -53,9 +53,7 @@ export default {
 				:ctrl="item"
 				:appearance="appearance"
 			>
-				<template #content>
-					<slot :name="`panel:${item.value}`" />
-				</template>
+				<slot :name="`panel:${item.value}`" />
 			</CollapseItem>
 		</slot>
 	</div>

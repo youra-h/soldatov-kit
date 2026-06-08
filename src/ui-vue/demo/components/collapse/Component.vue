@@ -58,10 +58,8 @@ const applyAll = computed(() => props.itemApplyTarget === 'all')
 				:arrowPlacement="arrowPlacement"
 				:selected="true"
 			>
-				<template #content>
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
-					incididunt ut labore et dolore magna aliqua.
-				</template>
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
+				incididunt ut labore et dolore magna aliqua.
 			</CollapseItem>
 			<CollapseItem
 				text="Section 2"
@@ -69,10 +67,8 @@ const applyAll = computed(() => props.itemApplyTarget === 'all')
 				:disabled="applyAll ? itemDisabled : false"
 				:arrowPlacement="arrowPlacement"
 			>
-				<template #content>
-					lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
-					incididunt ut labore et dolore magna aliqua.
-				</template>
+				lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
+				incididunt ut labore et dolore magna aliqua.
 			</CollapseItem>
 			<CollapseItem
 				text="Section 3"
@@ -80,12 +76,10 @@ const applyAll = computed(() => props.itemApplyTarget === 'all')
 				:disabled="applyAll ? itemDisabled : false"
 				:arrowPlacement="arrowPlacement"
 			>
-				<template #content>
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
-					incididunt ut labore et dolore magna aliqua.
-					lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
-					incididunt ut labore et dolore magna aliqua.
-				</template>
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
+				incididunt ut labore et dolore magna aliqua.
+				lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
+				incididunt ut labore et dolore magna aliqua.
 			</CollapseItem>
 		</Collapse>
 	</PanelDemo>
