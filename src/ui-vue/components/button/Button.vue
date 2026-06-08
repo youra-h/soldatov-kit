@@ -1,4 +1,5 @@
 <script lang="ts">
+import { computed, watch } from 'vue'
 import { TButton, type IButton, type IButtonProps } from '@core'
 import { useInstance } from '../../composables/useInstance'
 import { useBundle } from '../../composables/useBundle'
@@ -6,26 +7,44 @@ import { useElementBinding } from '../../composables/useElementBinding'
 import { useInstanceBinding } from '../../composables/useInstanceBinding'
 import BaseButton, { syncButton } from './base.component'
 import { createComponentViewBundle } from '@plugins'
+import { Spinner } from '../spinner'
+import { useParentLoader } from '../loader'
 import type { TBaseComponentViewProps } from '../component-view'
 
 export default {
 	name: '_Button',
 	extends: BaseButton,
+	components: { Spinner },
 	setup(props: TBaseComponentViewProps<IButtonProps, IButton>, { emit }) {
 		const instance = useInstance(TButton, props)
-		// Инициализация плагинов
 		const plugins = useBundle(createComponentViewBundle, props?.plugins)
-		// Привязка инстанса к плагинам
 		useInstanceBinding(plugins, instance)
-		// Привязка элемента и инстанса к плагинам
 		const rootRef = useElementBinding(plugins)
 
-		const { tag, rendered, visible, classes, disabled, loading, text } = syncButton({
+		const { tag, rendered, visible, classes, disabled, text } = syncButton({
 			props,
 			instance,
 			plugins,
 			emit,
 		})
+
+		// --- Loader integration ---
+		const loader = useParentLoader()
+
+		const mergedDisabled = computed(() =>
+			disabled.value || (loader?.visible ?? false),
+		)
+
+		// Two-way sync: Button size/variant → Loader
+		watch(
+			() => [instance.size, instance.variant] as const,
+			([size, variant]) => {
+				if (!loader) return
+				if (size) loader.size = size
+				if (variant) loader.variant = variant
+			},
+			{ immediate: true },
+		)
 
 		return {
 			instance,
@@ -35,9 +54,9 @@ export default {
 			rendered,
 			visible,
 			classes,
-			disabled,
-			loading,
+			mergedDisabled,
 			text,
+			loader,
 		}
 	},
 }
@@ -50,12 +69,19 @@ export default {
 		v-if="rendered"
 		v-show="visible"
 		:class="classes"
-		:disabled="disabled || undefined"
+		:disabled="mergedDisabled || undefined"
 		@click="instance.events.emit('click', $event)"
 	>
 		<slot name="leading"> </slot>
 		<slot>{{ text }}</slot>
-		<slot name="trailing" :loading="loading"> </slot>
+		<slot name="loader">
+			<Spinner
+				v-if="loader?.visible"
+				:size="loader?.size"
+				:variant="loader?.variant"
+			/>
+		</slot>
+		<slot name="trailing"> </slot>
 	</component>
 </template>
 
