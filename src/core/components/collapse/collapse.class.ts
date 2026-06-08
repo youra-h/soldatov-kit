@@ -14,6 +14,7 @@ import type {
 import { TEvented } from '../../common/evented'
 import type { TSelectionMode } from '../../base/collection'
 import { type TValuePayload } from '../../common/types'
+import type { TComponentSize, TComponentVariant } from '../../common/types'
 
 export class TCollapse
 	extends TControl<ICollapseProps, TCollapseEvents, TCollapseStatesOptions>
@@ -50,6 +51,18 @@ export class TCollapse
 		})
 
 		this._applyAppearance(props.appearance ?? ctor.defaultValues.appearance!)
+
+		this.events.on('change:size', (payload: TValuePayload<TComponentSize>) => {
+			this._collection.forEach((item) => {
+				item.size = payload.newValue
+			})
+		})
+
+		this.events.on('change:variant', (payload: TValuePayload<TComponentVariant>) => {
+			this._collection.forEach((item) => {
+				item.variant = payload.newValue
+			})
+		})
 
 		this.events.relay(this._collection.events, [
 			'item:selected',
@@ -118,7 +131,6 @@ export class TCollapse
 			this._collection.forEach((item) => {
 				item.events.emit('change:appearance', value)
 			})
-
 			;(this.events as TEvented<TCollapseEvents>).emit('change:appearance', value)
 		}
 	}
