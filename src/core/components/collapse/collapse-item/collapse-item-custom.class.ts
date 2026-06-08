@@ -29,7 +29,7 @@ export default class TCollapseItemCustom<
 		value: '',
 		variant: 'normal',
 		tag: 'button',
-		arrowPlacement: 'end',
+		arrowPlacement: 'start',
 	}
 
 	protected _textState: IStateUnit<string>
