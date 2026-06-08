@@ -45,7 +45,6 @@ export default {
 </script>
 
 <template>
-	{{ appearance }}
 	<div ref="rootRef" v-if="rendered" v-show="visible" :class="classes">
 		<slot>
 			<CollapseItem

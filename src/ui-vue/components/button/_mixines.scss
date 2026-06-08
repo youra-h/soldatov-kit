@@ -29,7 +29,7 @@
 }
 
 // Outlined: прозрачный фон, цвет текста + рамка, hover/active фон + рамка
-@mixin button-variant-outlined($color, $text: 800, $border: 400, $hover-bg: 100) {
+@mixin button-variant-outlined($color, $text: 800, $border: 200, $hover-bg: 100) {
 	$active-bg: $hover-bg + 100;
 	$brd-hover: $border + 100;
 
