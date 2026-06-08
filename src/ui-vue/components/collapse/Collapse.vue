@@ -62,53 +62,53 @@ export default {
 	@apply flex flex-col w-full;
 
 	// Appearance: plain — без рамки, без фона
-	&--plain {
-		.s-collapse-item {
-			@apply border-b border-s-neutral-200 last:border-b-0;
-		}
+	// &--plain {
+	// 	.s-collapse-item {
+	// 		@apply border-b border-s-neutral-200 last:border-b-0;
+	// 	}
 
-		.s-collapse-item__header {
-			@apply bg-transparent;
+	// 	.s-collapse-item__header {
+	// 		@apply bg-transparent;
 
-			&:hover:not([disabled]) {
-				@apply bg-s-neutral-100;
-			}
-		}
-	}
+	// 		&:hover:not([disabled]) {
+	// 			@apply bg-s-neutral-100;
+	// 		}
+	// 	}
+	// }
 
-	// Appearance: outlined — общая рамка вокруг + разделители
-	&--outlined {
-		@apply border border-s-neutral-200 rounded-md overflow-hidden;
+	// // Appearance: outlined — общая рамка вокруг + разделители
+	// &--outlined {
+	// 	@apply border border-s-neutral-200 rounded-md overflow-hidden;
 
-		.s-collapse-item {
-			@apply border-b border-s-neutral-200 last:border-b-0;
-		}
+	// 	.s-collapse-item {
+	// 		@apply border-b border-s-neutral-200 last:border-b-0;
+	// 	}
 
-		.s-collapse-item__header {
-			@apply bg-transparent;
+	// 	.s-collapse-item__header {
+	// 		@apply bg-transparent;
 
-			&:hover:not([disabled]) {
-				@apply bg-s-neutral-100;
-			}
-		}
-	}
+	// 		&:hover:not([disabled]) {
+	// 			@apply bg-s-neutral-100;
+	// 		}
+	// 	}
+	// }
 
-	// Appearance: filled — фоновые карточки
-	&--filled {
-		@apply gap-2;
+	// // Appearance: filled — фоновые карточки
+	// &--filled {
+	// 	@apply gap-2;
 
-		.s-collapse-item {
-			@apply rounded-md overflow-hidden;
-			@apply bg-s-neutral-100;
-		}
+	// 	.s-collapse-item {
+	// 		@apply rounded-md overflow-hidden;
+	// 		@apply bg-s-neutral-100;
+	// 	}
 
-		.s-collapse-item__header {
-			@apply bg-transparent;
+	// 	.s-collapse-item__header {
+	// 		@apply bg-transparent;
 
-			&:hover:not([disabled]) {
-				@apply bg-s-neutral-200;
-			}
-		}
-	}
+	// 		&:hover:not([disabled]) {
+	// 			@apply bg-s-neutral-200;
+	// 		}
+	// 	}
+	// }
 }
 </style>
