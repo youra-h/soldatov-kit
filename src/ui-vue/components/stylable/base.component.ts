@@ -1,7 +1,13 @@
 import type { PropType, Ref } from 'vue'
 import { watch } from 'vue'
 import { TStylable } from '@core'
-import type { IStylable, IStylableProps, TComponentSize, TComponentVariant } from '@core'
+import type {
+	IStylable,
+	IStylableProps,
+	TComponentSize,
+	TComponentVariant,
+	TValuePayload,
+} from '@core'
 import {
 	BaseComponentView,
 	emitsComponentView,
@@ -57,14 +63,14 @@ export function syncStylable(
 	const { instance, props, emit } = options
 
 	// Пробрасываем события core-инстанса наружу (Vue events).
-	instance.events.on('change:size' as any, (value: TComponentSize) => {
-		emit?.('change:size', value)
-		emit?.('update:size', value)
+	instance.events.on('change:size', (payload: TValuePayload<TComponentSize>) => {
+		emit?.('change:size', payload)
+		emit?.('update:size', payload)
 	})
 
-	instance.events.on('change:variant' as any, (value: TComponentVariant) => {
-		emit?.('change:variant', value)
-		emit?.('update:variant', value)
+	instance.events.on('change:variant', (payload: TValuePayload<TComponentVariant>) => {
+		emit?.('change:variant', payload)
+		emit?.('update:variant', payload)
 	})
 
 	watch<TComponentSize | undefined>(

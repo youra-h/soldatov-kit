@@ -8,6 +8,7 @@ import type { ISpinner } from '../spinner'
 import type { IIcon } from '../icon'
 
 export type TLoaderType = 'icon' | 'spinner' | 'skeleton'
+export type TLoaderTypeIndicator = ISpinner | IIcon | undefined
 
 export interface ILoaderProps extends IComponentViewProps {
 	/** Тип индикатора загрузки */
@@ -42,5 +43,5 @@ export interface ILoader extends IComponentView<ILoaderProps, TLoaderEvents> {
 	/** Показывать индикатор при загрузке */
 	indicator: boolean
 	/** Экземпляр индикатора (TSpinner, TIcon, ...) или undefined если не активен */
-	readonly loader: ISpinner | IIcon | undefined
+	readonly ctrl: TLoaderTypeIndicator
 }

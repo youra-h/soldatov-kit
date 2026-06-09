@@ -1,5 +1,5 @@
 import { type PropType, watch, type Ref } from 'vue'
-import { type IIconProps, TIcon, type TComponentSize, type IIcon } from '@core'
+import { type IIconProps, TIcon, type TComponentSize, type IIcon, type TValuePayload } from '@core'
 import {
 	ComponentView,
 	emitsComponentView,
@@ -64,11 +64,10 @@ export function syncIcon(options: ISyncComponentModelOptions<IIconProps, IIcon>)
 	const { instance, props, emit } = options
 
 	// Пробрасываем события core-инстанса наружу (Vue events).
-	instance.events.on('change:size' as any, (value: TComponentSize) => {
-		emit?.('change:size', value)
-		emit?.('update:size', value)
+	instance.events.on('change:size', (payload: TValuePayload<TComponentSize>) => {
+		emit?.('change:size', payload)
+		emit?.('update:size', payload)
 	})
-
 	instance.events.on('change:width' as any, (value: string | number | undefined) => {
 		emit?.('change:width', value)
 		emit?.('update:width', value)

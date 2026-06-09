@@ -1,8 +1,14 @@
 import { TComponentView, type IComponentViewOptions } from '../../base/component-view'
-import type { ILoader, ILoaderProps, TLoaderEvents, TLoaderType } from './types'
+import type {
+	ILoader,
+	ILoaderProps,
+	TLoaderEvents,
+	TLoaderType,
+	TLoaderTypeIndicator,
+} from './types'
 import type { TComponentSize, TComponentVariant } from '../../common/types'
-import { type ISpinner, TSpinner } from '../spinner'
-import { type IIcon, TIcon } from '../icon'
+import { TSpinner } from '../spinner'
+import { TIcon } from '../icon'
 
 export class TLoader extends TComponentView<ILoaderProps, TLoaderEvents> implements ILoader {
 	static override baseClass = 's-loader'
@@ -17,7 +23,7 @@ export class TLoader extends TComponentView<ILoaderProps, TLoaderEvents> impleme
 	protected _type!: TLoaderType
 	protected _block: boolean
 	protected _indicator: boolean
-	private _loader?: ISpinner | IIcon
+	private _ctrl?: TLoaderTypeIndicator
 
 	constructor(options: IComponentViewOptions<ILoaderProps> | Partial<ILoaderProps> = {}) {
 		super(options)
@@ -42,15 +48,15 @@ export class TLoader extends TComponentView<ILoaderProps, TLoaderEvents> impleme
 	 * Обновляет экземпляр индикатора в зависимости от текущего типа и состояния индикатора
 	 */
 	protected _updateLoader(): void {
-		if (this._loader) {
-			this._loader = undefined
+		if (this._ctrl) {
+			this._ctrl = undefined
 		}
 
 		if (this._indicator) {
 			if (this._type === 'spinner') {
-				this._loader = new TSpinner()
+				this._ctrl = new TSpinner()
 			} else if (this._type === 'icon') {
-				this._loader = new TIcon()
+				this._ctrl = new TIcon()
 			}
 		}
 	}
@@ -66,24 +72,24 @@ export class TLoader extends TComponentView<ILoaderProps, TLoaderEvents> impleme
 	}
 
 	get size(): TComponentSize | undefined {
-		return this._loader?.size
+		return this._ctrl?.size
 	}
 
 	set size(value: TComponentSize) {
-		if (this._loader && this.size !== value) {
-			this._loader.size = value
+		if (this._ctrl && this.size !== value) {
+			this._ctrl.size = value
 		}
 	}
 
 	get variant(): TComponentVariant | undefined {
-		return this._loader instanceof TSpinner ? this._loader.variant : undefined
+		return this._ctrl instanceof TSpinner ? this._ctrl.variant : undefined
 	}
 
 	set variant(value: TComponentVariant) {
-		if (!this._loader) return
+		if (!this._ctrl) return
 
-		if (this._loader instanceof TSpinner && this.variant !== value) {
-			this._loader.variant = value
+		if (this._ctrl instanceof TSpinner && this.variant !== value) {
+			this._ctrl.variant = value
 		}
 	}
 
@@ -114,7 +120,7 @@ export class TLoader extends TComponentView<ILoaderProps, TLoaderEvents> impleme
 		}
 	}
 
-	get loader(): ISpinner | IIcon | undefined {
-		return this._loader
+	get ctrl(): TLoaderTypeIndicator {
+		return this._ctrl
 	}
 }

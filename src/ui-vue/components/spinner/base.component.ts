@@ -5,6 +5,7 @@ import {
 	type TComponentSize,
 	type TComponentVariant,
 	type ISpinner,
+	type TValuePayload,
 } from '@core'
 import {
 	ComponentView,
@@ -72,15 +73,15 @@ export function syncSpinner(
 	const { instance, props, emit } = options
 
 	// Пробрасываем события core-инстанса наружу (Vue events).
-	instance.events.on('change:variant' as any, (value: TComponentVariant) => {
-		emit?.('change:variant', value)
-		emit?.('update:variant', value)
+	instance.events.on('change:size', (payload: TValuePayload<TComponentSize>) => {
+		emit?.('change:size', payload)
+		emit?.('update:size', payload)
 	})
-	instance.events.on('change:size' as any, (value: TComponentSize) => {
-		emit?.('change:size', value)
-		emit?.('update:size', value)
+	instance.events.on('change:variant', (payload: TValuePayload<TComponentVariant>) => {
+		emit?.('change:variant', payload)
+		emit?.('update:variant', payload)
 	})
-	instance.events.on('change:borderWidth' as any, (value: number | 'auto') => {
+	instance.events.on('change:borderWidth', (value: number | 'auto') => {
 		emit?.('change:borderWidth', value)
 		emit?.('update:borderWidth', value)
 	})

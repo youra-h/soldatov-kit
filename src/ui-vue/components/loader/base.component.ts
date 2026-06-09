@@ -1,35 +1,45 @@
-import { type PropType, watch } from 'vue'
+import { type PropType, watch, type Ref } from 'vue'
 import {
 	type ILoaderProps,
 	TLoader,
 	type TComponentSize,
 	type TComponentVariant,
-	type TLoaderIndicator,
+	type TLoaderType,
 	type ILoader,
+	type TValuePayload,
 } from '@core'
 import {
 	ComponentView,
 	emitsComponentView,
 	propsComponentView,
 	syncComponentView,
+	type IComponentViewState,
 } from '../component-view'
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types/common'
+import { useSyncProps } from '../../composables/useSyncProps'
+import { useProvideLoader } from '../../composables/useProvideLoader'
 
 export const emitsLoader: TEmits = [
 	...emitsComponentView,
+	'change:type',
+	'update:type',
+	'change:size',
+	'update:size',
+	'change:variant',
+	'update:variant',
 	'change:loader',
 	'update:loader',
-	'change:shouldDisable',
-	'update:shouldDisable',
-	'change:shouldIndicator',
-	'update:shouldIndicator',
+	'change:block',
+	'update:block',
+	'change:indicator',
+	'update:indicator',
 ] as const
 
 export const propsLoader: TProps = {
 	...propsComponentView,
-	loader: {
-		type: String as PropType<TLoaderIndicator>,
-		default: TLoader.defaultValues.loader,
+	type: {
+		type: String as PropType<TLoaderType>,
+		default: TLoader.defaultValues.type,
 	},
 	size: {
 		type: String as PropType<TComponentSize>,
@@ -39,13 +49,13 @@ export const propsLoader: TProps = {
 		type: String as PropType<TComponentVariant>,
 		default: TLoader.defaultValues.variant,
 	},
-	shouldDisable: {
+	block: {
 		type: Boolean,
-		default: TLoader.defaultValues.shouldDisable,
+		default: TLoader.defaultValues.block,
 	},
-	shouldIndicator: {
+	indicator: {
 		type: Boolean,
-		default: TLoader.defaultValues.shouldIndicator,
+		default: TLoader.defaultValues.indicator,
 	},
 }
 
@@ -56,33 +66,97 @@ export default {
 	props: propsLoader,
 }
 
-export function syncLoader(
-	options: ISyncComponentModelOptions<ILoaderProps, ILoader>,
-) {
+export interface ILoaderState extends IComponentViewState {
+	type: Ref<TLoaderType>
+	size: Ref<TComponentSize>
+	variant: Ref<TComponentVariant>
+	block: Ref<boolean>
+	indicator: Ref<boolean>
+}
+
+export function syncLoader(options: ISyncComponentModelOptions<ILoaderProps, ILoader>) {
 	const syncProps = syncComponentView(options)
+
 	const { instance, props, emit } = options
 
+	useProvideLoader(instance)
+
 	// События наружу
-	instance.events.on('change:loader', (value: TLoaderIndicator) => {
-		emit?.('change:loader', value)
-		emit?.('update:loader', value)
+	instance.events.on('change:type', (value: TLoaderType) => {
+		emit?.('change:type', value)
+		emit?.('update:type', value)
 	})
-	instance.events.on('change:shouldDisable', (value: boolean) => {
-		emit?.('change:shouldDisable', value)
-		emit?.('update:shouldDisable', value)
+	instance.events.on('change:size', (payload: TValuePayload<TComponentSize>) => {
+		emit?.('change:size', payload)
+		emit?.('update:size', payload)
 	})
-	instance.events.on('change:shouldIndicator', (value: boolean) => {
-		emit?.('change:shouldIndicator', value)
-		emit?.('update:shouldIndicator', value)
+	instance.events.on('change:variant', (payload: TValuePayload<TComponentVariant>) => {
+		emit?.('change:variant', payload)
+		emit?.('update:variant', payload)
+	})
+
+	instance.events.on('change:block', (value: boolean) => {
+		emit?.('change:block', value)
+		emit?.('update:block', value)
+	})
+	instance.events.on('change:indicator', (value: boolean) => {
+		emit?.('change:indicator', value)
+		emit?.('update:indicator', value)
 	})
 
 	// Props → instance
-	watch(() => props.loader, (v) => { if (v !== undefined) instance.loader = v })
-	watch(() => props.shouldDisable, (v) => { if (v !== undefined) instance.shouldDisable = v })
-	watch(() => props.shouldIndicator, (v) => { if (v !== undefined) instance.shouldIndicator = v })
+	watch<TLoaderType | undefined>(
+		() => props.type,
+		(value) => {
+			if (value !== undefined && value !== instance.type) {
+				instance.type = value
+			}
+		},
+	)
 
-	// size/variant не смотрятся из props — они синхронизируются из дочерних контролов (Button)
+	watch<TComponentVariant | undefined>(
+		() => props.variant,
+		(value) => {
+			if (value !== undefined && value !== instance.variant) {
+				instance.variant = value
+			}
+		},
+	)
 
-	return syncProps
+	watch<TComponentSize | undefined>(
+		() => props.size,
+		(value) => {
+			if (value !== undefined && value !== instance.size) {
+				instance.size = value
+			}
+		},
+	)
+
+	watch<boolean | undefined>(
+		() => props.block,
+		(value) => {
+			if (value !== undefined && value !== instance.block) {
+				instance.block = value
+			}
+		},
+	)
+	watch<boolean | undefined>(
+		() => props.indicator,
+		(value) => {
+			if (value !== undefined && value !== instance.indicator) {
+				instance.indicator = value
+			}
+		},
+	)
+
+	return {
+		...syncProps,
+		...useSyncProps(instance.events as any, {
+			type: () => instance.type,
+			size: () => instance.size,
+			variant: () => instance.variant,
+			block: () => instance.block,
+			indicator: () => instance.indicator,
+		}),
+	}
 }
-
