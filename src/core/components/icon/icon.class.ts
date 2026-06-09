@@ -51,7 +51,6 @@ export default class TIcon
 
 		this._classes.add(`--size-${this._sizeState.value}`, true)
 
-		this._tag = props.tag ?? ctor.defaultValues.tag!
 		this._width = props.width
 		this._height = props.height
 	}

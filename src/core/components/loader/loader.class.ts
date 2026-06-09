@@ -1,100 +1,109 @@
-import TComponentView from '../../base/component-view'
-import type {
-	ILoader,
-	ILoaderProps,
-	TLoaderEvents,
-	TLoaderIndicator,
-} from './types'
+import { TComponentView, type IComponentViewOptions } from '../../base/component-view'
+import type { ILoader, ILoaderProps, TLoaderEvents, TLoaderType } from './types'
 import type { TComponentSize, TComponentVariant } from '../../common/types'
+import { type ISpinner, TSpinner } from '../spinner'
+import { type IIcon, TIcon } from '../icon'
 
-export class TLoader
-	extends TComponentView<ILoaderProps, TLoaderEvents>
-	implements ILoader
-{
+export class TLoader extends TComponentView<ILoaderProps, TLoaderEvents> implements ILoader {
 	static override baseClass = 's-loader'
 
 	static defaultValues: Partial<ILoaderProps> = {
 		...TComponentView.defaultValues,
-		loader: 'spinner',
-		size: 'normal',
-		variant: 'normal',
-		shouldDisable: true,
-		shouldIndicator: true,
+		type: 'spinner',
+		block: true,
+		indicator: true,
 	}
 
-	protected _loader!: TLoaderIndicator
-	protected _size!: TComponentSize
-	protected _variant!: TComponentVariant
-	protected _shouldDisable!: boolean
-	protected _shouldIndicator!: boolean
+	protected _type!: TLoaderType
+	protected _block: boolean
+	protected _indicator: boolean
+	private _loader?: ISpinner | IIcon
 
-	constructor(
-		options: Partial<ILoaderProps> = {},
-	) {
+	constructor(options: IComponentViewOptions<ILoaderProps> | Partial<ILoaderProps> = {}) {
 		super(options)
 
 		const ctor = new.target as typeof TLoader
+
 		const { props = {} } = TComponentView.prepareOptions(options)
 
-		this._loader = props.loader ?? ctor.defaultValues.loader!
-		this._size = props.size ?? ctor.defaultValues.size!
-		this._variant = props.variant ?? ctor.defaultValues.variant!
-		this._shouldDisable = props.shouldDisable ?? ctor.defaultValues.shouldDisable!
-		this._shouldIndicator = props.shouldIndicator ?? ctor.defaultValues.shouldIndicator!
+		// this._type = props.type ?? ctor.defaultValues.type!
+		this._applyType(props.type ?? ctor.defaultValues.type!)
+
+		this._block = props.block ?? ctor.defaultValues.block!
+		this._indicator = props.indicator ?? ctor.defaultValues.indicator!
 	}
 
-	get loader(): TLoaderIndicator {
-		return this._loader
+	get type(): TLoaderType {
+		return this._type
 	}
 
-	set loader(value: TLoaderIndicator) {
-		if (this._loader !== value) {
-			this._loader = value
-			this.events.emit('change:loader', value)
+	protected _applyType(value: TLoaderType) {
+		this._type = value
+
+		if (this._loader) {
+			this._loader = undefined
+		}
+
+		if (this._indicator) {
+			if (this._type === 'spinner') {
+				this._loader = new TSpinner()
+			} else if (this._type === 'icon') {
+				this._loader = new TIcon()
+			}
 		}
 	}
 
-	get size(): TComponentSize {
-		return this._size
+	set type(value: TLoaderType) {
+		if (this._type !== value) {
+			this._applyType(value)
+
+			this.events.emit('change:type', value)
+		}
+	}
+
+	get size(): TComponentSize | undefined {
+		return this._loader?.size
 	}
 
 	set size(value: TComponentSize) {
-		if (this._size !== value) {
-			this._size = value
-			this.events.emit('change:size', value)
+		if (this._loader && this.size !== value) {
+			this._loader.size = value
 		}
 	}
 
-	get variant(): TComponentVariant {
-		return this._variant
+	get variant(): TComponentVariant | undefined {
+		return this._loader?.variant ?? undefined
 	}
 
 	set variant(value: TComponentVariant) {
-		if (this._variant !== value) {
-			this._variant = value
-			this.events.emit('change:variant', value)
+		if (this._loader && this.variant !== value) {
+			this._loader.variant = value
 		}
 	}
 
-	get shouldDisable(): boolean {
-		return this._shouldDisable
+	get block(): boolean {
+		return this._block
 	}
 
-	set shouldDisable(value: boolean) {
-		if (this._shouldDisable !== value) {
-			this._shouldDisable = value
-			this.events.emit('change:shouldDisable', value)
+	set block(value: boolean) {
+		if (this._block !== value) {
+			this._block = value
+			this.events.emit('change:block', value)
 		}
 	}
 
-	get shouldIndicator(): boolean {
-		return this._shouldIndicator
+	get indicator(): boolean {
+		return this._indicator
 	}
 
-	set shouldIndicator(value: boolean) {
-		if (this._shouldIndicator !== value) {
-			this._shouldIndicator = value
-			this.events.emit('change:shouldIndicator', value)
+	set indicator(value: boolean) {
+		if (this._indicator !== value) {
+			this._indicator = value
+			this.events.emit('change:indicator', value)
 		}
+	}
+
+	get loader(): ISpinner | IIcon | undefined {
+		return this._loader
 	}
 }

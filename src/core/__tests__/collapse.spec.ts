@@ -17,7 +17,7 @@ describe('TCollapseItemCustom', () => {
 			expect(item.value).toBe('')
 			expect(item.tag).toBe('button')
 			expect(item.variant).toBe('normal')
-			expect(item.arrowPlacement).toBe('end')
+			expect(item.arrowPlacement).toBe('start')
 		})
 
 		it('creates item with custom props', () => {
@@ -46,23 +46,23 @@ describe('TCollapseItemCustom', () => {
 	})
 
 	describe('arrowPlacement', () => {
-		it('defaults to end', () => {
-			expect(item.arrowPlacement).toBe('end')
+		it('defaults to start', () => {
+			expect(item.arrowPlacement).toBe('start')
 		})
 
-		it('can be set to start', () => {
-			item.arrowPlacement = 'start'
+		it('can be set to end', () => {
+			item.arrowPlacement = 'end'
 
-			expect(item.arrowPlacement).toBe('start')
+			expect(item.arrowPlacement).toBe('end')
 		})
 
 		it('emits change:arrowPlacement when changed', () => {
 			const spy = vi.fn()
 			item.events.on('change:arrowPlacement', spy)
 
-			item.arrowPlacement = 'start'
+			item.arrowPlacement = 'end'
 
-			expect(spy).toHaveBeenCalledWith('start')
+			expect(spy).toHaveBeenCalledWith('end')
 		})
 
 		it('does not add --arrow-end class (end is default, no modifier)', () => {

@@ -34,7 +34,6 @@ export default class TButton extends TTextable<IButtonProps, TButtonEvents> impl
 			TButtonStatesOptions
 		>(options)
 
-		this._tag = props.tag ?? ctor.defaultValues.tag!
 		this._applyAppearance(props.appearance ?? ctor.defaultValues.appearance!)
 	}
 

@@ -10,45 +10,47 @@ import type { TStateCtor } from '../../common/states'
 import type { ISpinner } from '../spinner'
 import type { IIcon } from '../icon'
 
-export type TLoaderIndicator = 'icon' | 'spinner' | 'skeleton'
+export type TLoaderType = 'icon' | 'spinner' | 'skeleton'
 
 export interface ILoaderProps extends IComponentViewProps {
 	/** Тип индикатора загрузки */
-	loader?: TLoaderIndicator
+	type?: TLoaderType
 	/** Размер индикатора */
 	size?: TComponentSize
 	/** Вариант индикатора */
 	variant?: TComponentVariant
-	/** При visible=true — дизейблить дочерние контролы */
-	shouldDisable?: boolean
-	/** При visible=true — показывать индикатор загрузки */
-	shouldIndicator?: boolean
+	/** Дизейблить дочерние контролы при загрузке */
+	block?: boolean
+	/** Показывать индикатор при загрузке */
+	indicator?: boolean
 }
 
 export type TLoaderStatesOptions = TComponentViewStatesOptions & {
 	size?: TStateCtor<IStateUnit<TComponentSize>, TComponentSize> | IStateUnit<TComponentSize>
-	variant?: TStateCtor<IStateUnit<TComponentVariant>, TComponentVariant> | IStateUnit<TComponentVariant>
+	variant?:
+		| TStateCtor<IStateUnit<TComponentVariant>, TComponentVariant>
+		| IStateUnit<TComponentVariant>
 }
 
 export type TLoaderEvents = TComponentViewEvents & {
-	'change:loader': (value: TLoaderIndicator) => void
+	'change:type': (value: TLoaderType) => void
 	'change:size': (payload: TValuePayload<TComponentSize>) => void
 	'change:variant': (payload: TValuePayload<TComponentVariant>) => void
-	'change:shouldDisable': (value: boolean) => void
-	'change:shouldIndicator': (value: boolean) => void
+	'change:block': (value: boolean) => void
+	'change:indicator': (value: boolean) => void
 }
 
 export interface ILoader extends IComponentView<ILoaderProps, TLoaderEvents> {
 	/** Тип индикатора */
-	loader: TLoaderIndicator
+	type: TLoaderType
 	/** Размер индикатора */
-	size: TComponentSize
+	size?: TComponentSize
 	/** Вариант индикатора */
-	variant: TComponentVariant
+	variant?: TComponentVariant
 	/** Дизейблить дочерние контролы при загрузке */
-	shouldDisable: boolean
+	block: boolean
 	/** Показывать индикатор при загрузке */
-	shouldIndicator: boolean
+	indicator: boolean
 	/** Экземпляр индикатора (TSpinner, TIcon, ...) или undefined если не активен */
-	readonly indicator: ISpinner | IIcon | undefined
+	readonly loader: ISpinner | IIcon | undefined
 }

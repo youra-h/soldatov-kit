@@ -70,7 +70,6 @@ export default class TSpinner
 
 		this._classes.add(`--${this._variantState.value}`)
 
-		this._tag = props.tag ?? ctor.defaultValues.tag!
 		this._borderWidth = props.borderWidth ?? ctor.defaultValues.borderWidth!
 	}
 
