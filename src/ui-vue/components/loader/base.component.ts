@@ -31,6 +31,10 @@ export const emitsLoader: TEmits = [
 
 export const propsLoader: TProps = {
 	...propsComponentModel,
+	visible: {
+		type: Boolean as PropType<ILoaderProps['visible']>,
+		default: TLoader.defaultValues.visible,
+	},
 	type: {
 		type: String as PropType<TLoaderType>,
 		default: TLoader.defaultValues.type,
@@ -44,11 +48,11 @@ export const propsLoader: TProps = {
 		default: TLoader.defaultValues.variant,
 	},
 	block: {
-		type: Boolean,
+		type: Boolean as PropType<ILoaderProps['block']>,
 		default: TLoader.defaultValues.block,
 	},
 	indicator: {
-		type: Boolean,
+		type: Boolean as PropType<ILoaderProps['indicator']>,
 		default: TLoader.defaultValues.indicator,
 	},
 }
@@ -74,6 +78,10 @@ export function syncLoader(options: ISyncComponentModelOptions<ILoaderProps, ILo
 	useProvideLoader(instance)
 
 	// События наружу
+	instance.events.on('change:visible', (value: boolean) => {
+		emit?.('change:visible', value)
+		emit?.('update:visible', value)
+	})
 	instance.events.on('change:type', (value: TLoaderType) => {
 		emit?.('change:type', value)
 		emit?.('update:type', value)
@@ -97,6 +105,15 @@ export function syncLoader(options: ISyncComponentModelOptions<ILoaderProps, ILo
 	})
 
 	// Props → instance
+	watch<boolean | undefined>(
+		() => props.visible,
+		(value) => {
+			if (value !== undefined && value !== instance.visible) {
+				instance.visible = value
+			}
+		},
+	)
+
 	watch<TLoaderType | undefined>(
 		() => props.type,
 		(value) => {
@@ -143,6 +160,7 @@ export function syncLoader(options: ISyncComponentModelOptions<ILoaderProps, ILo
 
 	return {
 		...useSyncProps(instance.events as any, {
+			visible: () => instance.visible,
 			type: () => instance.type,
 			size: () => instance.size,
 			variant: () => instance.variant,

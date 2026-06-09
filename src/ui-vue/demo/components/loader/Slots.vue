@@ -46,12 +46,12 @@ watch(() => props.indicator, (v) => { if (v !== undefined) loaderInstance.indica
 		</section>
 
 		<!-- Instance -->
-		<section class="loader-slots-demo__section">
+		<!-- <section class="loader-slots-demo__section">
 			<h3 class="loader-slots-demo__title">Instance (:ctrl)</h3>
 			<Loader :ctrl="loaderInstance">
 				<Button>Instance controlled</Button>
 			</Loader>
-		</section>
+		</section> -->
 	</div>
 </template>
 
