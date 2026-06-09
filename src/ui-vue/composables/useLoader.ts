@@ -34,6 +34,7 @@ export function useProvideLoader(loader: ILoader): void {
 			return loader.indicator
 		},
 		get visible() {
+			console.log('loader.visible', loader.visible)
 			return loader.visible
 		},
 		get component() {

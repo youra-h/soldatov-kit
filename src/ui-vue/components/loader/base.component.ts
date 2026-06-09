@@ -81,6 +81,7 @@ export function syncLoader(options: ISyncComponentModelOptions<ILoaderProps, ILo
 
 	// События наружу
 	instance.events.on('change:visible', (value: boolean) => {
+		console.log('change:visible', value)
 		emit?.('change:visible', value)
 		emit?.('update:visible', value)
 	})

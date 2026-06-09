@@ -57,6 +57,7 @@ export default {
 		<slot name="leading"> </slot>
 		<slot>{{ text }}</slot>
 		<slot name="trailing"> </slot>
+		{{ loader?.visible }}
 		<slot name="loader">
 			<Component
 				:is="loader?.component"
