@@ -9,7 +9,7 @@ import {
 	type TValuePayload,
 } from '@core'
 import { BaseComponentModel, emitsComponentModel, propsComponentModel } from '../component-model'
-import type { TEmits, TProps, ISyncComponentViewOptions } from '../../types/common'
+import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types/common'
 import { useSyncProps } from '../../composables/useSyncProps'
 import { useProvideLoader } from '../../composables/useLoader'
 
@@ -74,7 +74,7 @@ export interface ILoaderState {
 	indicator: Ref<boolean>
 }
 
-export function syncLoader(options: ISyncComponentViewOptions<ILoaderProps, ILoader>) {
+export function syncLoader(options: ISyncComponentModelOptions<ILoaderProps, ILoader>) {
 	const { instance, props, emit } = options
 
 	useProvideLoader(instance)
