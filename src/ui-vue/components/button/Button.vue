@@ -8,8 +8,8 @@ import { useInstanceBinding } from '../../composables/useInstanceBinding'
 import BaseButton, { syncButton } from './base.component'
 import { createComponentViewBundle } from '@plugins'
 import { Spinner } from '../spinner'
-import { useParentLoader } from '../loader'
 import type { TBaseComponentViewProps } from '../component-view'
+import { useInjectLoader } from '../../composables/useLoader'
 
 export default {
 	name: '_Button',
@@ -29,22 +29,9 @@ export default {
 		})
 
 		// --- Loader integration ---
-		const loader = useParentLoader()
+		const loader = useInjectLoader()
 
-		const mergedDisabled = computed(() =>
-			disabled.value || (loader?.shouldDisable && loader?.visible) || false,
-		)
-
-		// Two-way sync: Button size/variant → Loader
-		watch(
-			() => [instance.size, instance.variant] as const,
-			([size, variant]) => {
-				if (!loader) return
-				if (size) loader.size = size
-				if (variant) loader.variant = variant
-			},
-			{ immediate: true },
-		)
+		console.log('Injected loader in Button:', loader)
 
 		return {
 			instance,
@@ -54,7 +41,6 @@ export default {
 			rendered,
 			visible,
 			classes,
-			mergedDisabled,
 			text,
 			loader,
 		}
@@ -69,19 +55,19 @@ export default {
 		v-if="rendered"
 		v-show="visible"
 		:class="classes"
-		:disabled="mergedDisabled || undefined"
+		:disabled="disabled"
 		@click="instance.events.emit('click', $event)"
 	>
 		<slot name="leading"> </slot>
 		<slot>{{ text }}</slot>
+		<slot name="trailing"> </slot>
 		<slot name="loader">
-			<Spinner
+			<!-- <Spinner
 				v-if="loader?.shouldIndicator && loader?.visible"
 				:size="loader?.size"
 				:variant="loader?.variant"
-			/>
+			/> -->
 		</slot>
-		<slot name="trailing"> </slot>
 	</component>
 </template>
 </template>

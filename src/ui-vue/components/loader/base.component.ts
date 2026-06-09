@@ -17,7 +17,7 @@ import {
 } from '../component-view'
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types/common'
 import { useSyncProps } from '../../composables/useSyncProps'
-import { useProvideLoader } from '../../composables/useProvideLoader'
+import { useProvideLoader } from '../../composables/useLoader'
 
 export const emitsLoader: TEmits = [
 	...emitsComponentView,
