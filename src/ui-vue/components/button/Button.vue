@@ -58,7 +58,11 @@ export default {
 		<slot>{{ text }}</slot>
 		<slot name="trailing"> </slot>
 		<slot name="loader">
-			<Component :is="loader?.component" v-if="loader?.component" :ctrl="loader?.ctrl" />
+			<Component
+				:is="loader?.component"
+				v-if="loader?.visible && loader?.component"
+				:ctrl="loader?.ctrl"
+			/>
 		</slot>
 	</component>
 </template>
