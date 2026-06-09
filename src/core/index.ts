@@ -24,6 +24,7 @@ export * from './components/switch'
 export * from './components/tabs'
 export * from './components/tree'
 export * from './components/collapse'
+export * from './components/drag-and-drop'
 export * from './components/loader'
 
 // common (вспомогательные утилиты)

@@ -11,6 +11,6 @@ export interface ISyncComponentModelOptions<
 > {
 	props: TProps
 	instance: TInstance
-	plugins?: TPlugins
+	plugins: TPlugins
 	emit?: (...args: any[]) => void
 }
