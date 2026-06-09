@@ -1,16 +1,17 @@
 <script lang="ts">
 import { TLoader, type ILoader, type ILoaderProps } from '@core'
 import { useInstance } from '../../composables/useInstance'
-import BaseLoader from './base.component'
+import BaseLoader, { syncLoader } from './base.component'
 import type { TBaseComponentViewProps } from '../component-view'
-
 
 export default {
 	name: '_Loader',
 	extends: BaseLoader,
-	setup(props: TBaseComponentViewProps<ILoaderProps, ILoader>) {
+	setup(props: TBaseComponentViewProps<ILoaderProps, ILoader>, { emit }) {
 		const instance = useInstance(TLoader, props)
-		provide(LOADER_KEY, instance)
+
+		syncLoader({ props, instance, emit })
+
 		return { instance }
 	},
 }
@@ -19,4 +20,3 @@ export default {
 <template>
 	<slot />
 </template>
-
