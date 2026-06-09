@@ -1,4 +1,4 @@
-import { TComponentView, type IComponentViewOptions } from '../../base/component-view'
+import { TComponentModel, type IComponentModelOptions } from '../../base/component-model'
 import type {
 	ILoader,
 	ILoaderProps,
@@ -10,27 +10,27 @@ import type { TComponentSize, TComponentVariant } from '../../common/types'
 import { TSpinner } from '../spinner'
 import { TIcon } from '../icon'
 
-export class TLoader extends TComponentView<ILoaderProps, TLoaderEvents> implements ILoader {
-	static override baseClass = 's-loader'
-
+export class TLoader extends TComponentModel<ILoaderProps, TLoaderEvents> implements ILoader {
 	static defaultValues: Partial<ILoaderProps> = {
-		...TComponentView.defaultValues,
+		...TComponentModel.defaultValues,
 		type: 'spinner',
 		block: true,
 		indicator: true,
+		visible: true,
 	}
 
 	protected _type!: TLoaderType
 	protected _block: boolean
 	protected _indicator: boolean
+	protected _visible: boolean
 	private _ctrl?: TLoaderTypeIndicator
 
-	constructor(options: IComponentViewOptions<ILoaderProps> | Partial<ILoaderProps> = {}) {
+	constructor(options: IComponentModelOptions<ILoaderProps> | Partial<ILoaderProps> = {}) {
 		super(options)
 
 		const ctor = new.target as typeof TLoader
 
-		const { props = {} } = TComponentView.prepareOptions(options)
+		const { props = {} } = TComponentModel.prepareOptions(options)
 
 		this._type = props.type ?? ctor.defaultValues.type!
 
@@ -38,6 +38,7 @@ export class TLoader extends TComponentView<ILoaderProps, TLoaderEvents> impleme
 
 		this._block = props.block ?? ctor.defaultValues.block!
 		this._indicator = props.indicator ?? ctor.defaultValues.indicator!
+		this._visible = props.visible ?? ctor.defaultValues.visible!
 	}
 
 	get type(): TLoaderType {
@@ -117,6 +118,18 @@ export class TLoader extends TComponentView<ILoaderProps, TLoaderEvents> impleme
 			}
 
 			this.events.emit('change:indicator', value)
+		}
+	}
+
+	get visible(): boolean {
+		return this._visible
+	}
+
+	set visible(value: boolean) {
+		if (this._visible !== value) {
+			this._visible = value
+
+			this.events.emit('change:visible', value)
 		}
 	}
 
