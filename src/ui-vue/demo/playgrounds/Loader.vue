@@ -10,14 +10,20 @@ import type { TComponentSize, TComponentVariant } from '@core'
 const propertiesSchema: TPropertiesSchema = {
 	size: { type: 'select', default: 'normal', options: SIZES },
 	variant: { type: 'select', default: 'normal', options: VARIANTS },
+	block: { type: 'boolean', default: true },
+	indicator: { type: 'boolean', default: true },
 }
 
 const componentProps = ref<{
 	size: TComponentSize
 	variant: TComponentVariant
+	block: boolean
+	indicator: boolean
 }>({
 	size: 'normal',
 	variant: 'normal',
+	block: true,
+	indicator: true,
 })
 </script>
 
@@ -31,6 +37,8 @@ const componentProps = ref<{
 			<SlotsDemo
 				:size="componentProps.size"
 				:variant="componentProps.variant"
+				:block="componentProps.block"
+				:indicator="componentProps.indicator"
 			/>
 		</template>
 	</PlaygroundLayout>
