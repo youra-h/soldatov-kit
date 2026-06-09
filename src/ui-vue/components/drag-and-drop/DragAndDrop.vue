@@ -1,5 +1,5 @@
 <script lang="ts">
-import { TComponentModel, type IComponentModelProps } from '@core'
+import { TDragAndDrop, type IDragAndDropProps } from '@core'
 import BaseDragAndDrop from './base.component'
 import { useInstance } from '../../composables/useInstance'
 import { useProvideDragContext } from '../../composables/useDragContext'
@@ -8,8 +8,8 @@ import type { TBaseComponentModelProps } from '../component-model'
 export default {
 	name: '_DragAndDrop',
 	extends: BaseDragAndDrop,
-	setup(props: TBaseComponentModelProps<IComponentModelProps>) {
-		const instance = useInstance(TComponentModel, props)
+	setup(props: TBaseComponentModelProps<IDragAndDropProps>) {
+		const instance = useInstance(TDragAndDrop, props)
 
 		useProvideDragContext()
 

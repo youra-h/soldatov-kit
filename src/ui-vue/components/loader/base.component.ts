@@ -8,19 +8,13 @@ import {
 	type ILoader,
 	type TValuePayload,
 } from '@core'
-import {
-	ComponentView,
-	emitsComponentView,
-	propsComponentView,
-	syncComponentView,
-	type IComponentViewState,
-} from '../component-view'
+import { BaseComponentModel, emitsComponentModel, propsComponentModel } from '../component-model'
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types/common'
 import { useSyncProps } from '../../composables/useSyncProps'
 import { useProvideLoader } from '../../composables/useLoader'
 
 export const emitsLoader: TEmits = [
-	...emitsComponentView,
+	...emitsComponentModel,
 	'change:type',
 	'update:type',
 	'change:size',
@@ -36,7 +30,7 @@ export const emitsLoader: TEmits = [
 ] as const
 
 export const propsLoader: TProps = {
-	...propsComponentView,
+	...propsComponentModel,
 	type: {
 		type: String as PropType<TLoaderType>,
 		default: TLoader.defaultValues.type,
@@ -61,12 +55,12 @@ export const propsLoader: TProps = {
 
 export default {
 	name: 'BaseLoader',
-	extends: ComponentView,
+	extends: BaseComponentModel,
 	emits: emitsLoader,
 	props: propsLoader,
 }
 
-export interface ILoaderState extends IComponentViewState {
+export interface ILoaderState {
 	type: Ref<TLoaderType>
 	size: Ref<TComponentSize>
 	variant: Ref<TComponentVariant>
@@ -75,8 +69,6 @@ export interface ILoaderState extends IComponentViewState {
 }
 
 export function syncLoader(options: ISyncComponentModelOptions<ILoaderProps, ILoader>) {
-	const syncProps = syncComponentView(options)
-
 	const { instance, props, emit } = options
 
 	useProvideLoader(instance)
@@ -150,7 +142,6 @@ export function syncLoader(options: ISyncComponentModelOptions<ILoaderProps, ILo
 	)
 
 	return {
-		...syncProps,
 		...useSyncProps(instance.events as any, {
 			type: () => instance.type,
 			size: () => instance.size,

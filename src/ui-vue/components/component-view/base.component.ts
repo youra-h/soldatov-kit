@@ -4,10 +4,11 @@ import { useSyncProps } from '../../composables/useSyncProps'
 import { type IComponentViewProps, TComponentView } from '@core'
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types'
 import { type IPluginBundle, TElementPlugin } from '@plugins'
-import BaseComponentModel, {
+import {
+	BaseComponentModel,
 	emitsComponentModel,
 	propsComponentModel,
-} from '../component-model/base.component'
+} from '../component-model'
 
 export const emitsComponentView: TEmits = [
 	...emitsComponentModel,
