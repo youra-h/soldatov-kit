@@ -1,5 +1,4 @@
 <script lang="ts">
-import { computed, watch } from 'vue'
 import { TButton, type IButton, type IButtonProps } from '@core'
 import { useInstance } from '../../composables/useInstance'
 import { useBundle } from '../../composables/useBundle'
@@ -57,7 +56,6 @@ export default {
 		<slot name="leading"> </slot>
 		<slot>{{ text }}</slot>
 		<slot name="trailing"> </slot>
-		{{ loader?.visible }}
 		<slot name="loader">
 			<Component
 				:is="loader?.component"
