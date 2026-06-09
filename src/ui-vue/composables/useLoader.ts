@@ -20,6 +20,12 @@ function resolveIndicatorComponent(type: TLoaderType): Component | null {
 	return null
 }
 
+/**
+ * Провайдит в контекст данные для рендера индикатора загрузки и его состояния.
+ * Компоненты, которые хотят использовать эти данные, могут вызвать `useInjectLoader` и отрендерить индикатор по своему усмотрению.
+ * Провайдер должен быть выше по иерархии компонентов, чем компоненты, которые хотят использовать индикатор загрузки.
+ * @param loader
+ */
 export function useProvideLoader(loader: ILoader): void {
 	const { visible, indicator, type } = useSyncProps(loader.events, {
 		visible: () => loader.visible,
@@ -49,6 +55,12 @@ export function useProvideLoader(loader: ILoader): void {
 	})
 }
 
+/**
+ * Инжектит из контекста данные для рендера индикатора загрузки и его состояния.
+ * Компоненты могут использовать эти данные для рендера индикатора загрузки в своём шаблоне.
+ * Если провайдера нет, возвращает null. В этом случае компонент может не рендерить индикатор загрузки вообще или рендерить его в каком-то дефолтном виде.
+ * @returns Данные для рендера индикатора загрузки и его состояния, или null если провайдера нет в иерархии компонентов
+ */
 export function useInjectLoader(): ILoaderHost | null {
 	return inject(LOADER_KEY, null)
 }
