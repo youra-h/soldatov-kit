@@ -12,9 +12,5 @@ export function useProvideLoader(loader: ILoaderHost): void {
 }
 
 export function useInjectLoader(): ILoaderHost | null {
-	const loader = inject(LOADER_KEY, null)
-
-	if (!loader) return null
-
-	return loader
+	return inject(LOADER_KEY, null)
 }
