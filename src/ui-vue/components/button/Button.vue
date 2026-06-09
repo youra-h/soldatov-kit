@@ -59,7 +59,7 @@ export default {
 		<slot name="loader">
 			<Component
 				:is="loader?.component"
-				v-if="loader?.visible && loader?.component"
+				v-if="loader?.component"
 				:ctrl="loader?.ctrl"
 			/>
 		</slot>

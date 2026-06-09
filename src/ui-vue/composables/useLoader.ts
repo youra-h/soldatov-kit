@@ -1,6 +1,6 @@
 import { type TLoaderTypeIndicator, type TLoaderType, type ILoader } from '@/core'
 import { provide, inject, computed, type InjectionKey, type Component } from 'vue'
-import { useEventState } from './useEventState'
+import { useSyncProps } from './useSyncProps'
 import Spinner from '../components/spinner/Spinner.vue'
 import Icon from '../components/icon/Icon.vue'
 
@@ -21,21 +21,31 @@ function resolveIndicatorComponent(type: TLoaderType): Component | null {
 }
 
 export function useProvideLoader(loader: ILoader): void {
-	const visibleRef = useEventState(loader.events, () => loader.visible, ['change:visible'])
-	const indicatorRef = useEventState(loader.events, () => loader.indicator, ['change:indicator'])
-	const typeRef = useEventState(loader.events, () => loader.type, ['change:type'])
-	const ctrlRef = useEventState(loader.events, () => loader.ctrl, ['change:type', 'change:indicator'])
+	const { visible, indicator, type } = useSyncProps(loader.events, {
+		visible: () => loader.visible,
+		indicator: () => loader.indicator,
+		type: () => loader.type,
+		// ctrl: { value: () => loader.ctrl, events: ['change:type', 'change:indicator'] },
+	})
 
 	const component = computed(() => {
-		if (!indicatorRef.value || !visibleRef.value) return null
-		return resolveIndicatorComponent(typeRef.value)
+		if (!indicator.value || !visible.value) return null
+		return resolveIndicatorComponent(type.value)
 	})
 
 	provide(LOADER_KEY, {
-		get ctrl() { return ctrlRef.value },
-		get indicator() { return indicatorRef.value },
-		get visible() { return visibleRef.value },
-		get component() { return component.value },
+		get ctrl() {
+			return loader.ctrl
+		},
+		get indicator() {
+			return indicator.value
+		},
+		get visible() {
+			return visible.value
+		},
+		get component() {
+			return component.value
+		},
 	})
 }
 
