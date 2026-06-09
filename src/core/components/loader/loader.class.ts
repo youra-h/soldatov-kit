@@ -36,10 +36,10 @@ export class TLoader extends TComponentModel<ILoaderProps, TLoaderEvents> implem
 
 		this._type = props.type ?? ctor.defaultValues.type!
 
-		this._updateLoader()
-
 		this._block = props.block ?? ctor.defaultValues.block!
 		this._indicator = props.indicator ?? ctor.defaultValues.indicator!
+
+		this._updateLoader()
 
 		this._visibleState = resolveState<IStateUnit<boolean>, boolean>({
 			state: undefined,
@@ -124,9 +124,7 @@ export class TLoader extends TComponentModel<ILoaderProps, TLoaderEvents> implem
 		if (this._indicator !== value) {
 			this._indicator = value
 
-			if (this._indicator) {
-				this._updateLoader()
-			}
+			this._updateLoader()
 
 			this.events.emit('change:indicator', value)
 		}
@@ -144,5 +142,15 @@ export class TLoader extends TComponentModel<ILoaderProps, TLoaderEvents> implem
 
 	get ctrl(): TLoaderTypeIndicator {
 		return this._ctrl
+	}
+
+	getProps(): ILoaderProps {
+		return {
+			...super.getProps(),
+			type: this._type,
+			block: this._block,
+			indicator: this._indicator,
+			visible: this.visible,
+		}
 	}
 }
