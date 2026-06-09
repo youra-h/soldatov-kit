@@ -6,7 +6,9 @@ import type {
 	TLoaderType,
 	TLoaderTypeIndicator,
 } from './types'
-import type { TComponentSize, TComponentVariant } from '../../common/types'
+import type { TComponentSize, TComponentVariant, TValuePayload } from '../../common/types'
+import { resolveState } from '../../common/resolve-state'
+import { type IStateUnit, TStateUnit } from '../../common/state-unit'
 import { TSpinner } from '../spinner'
 import { TIcon } from '../icon'
 
@@ -22,7 +24,7 @@ export class TLoader extends TComponentModel<ILoaderProps, TLoaderEvents> implem
 	protected _type!: TLoaderType
 	protected _block: boolean
 	protected _indicator: boolean
-	protected _visible: boolean
+	protected _visibleState: IStateUnit<boolean>
 	private _ctrl?: TLoaderTypeIndicator
 
 	constructor(options: IComponentModelOptions<ILoaderProps> | Partial<ILoaderProps> = {}) {
@@ -38,7 +40,16 @@ export class TLoader extends TComponentModel<ILoaderProps, TLoaderEvents> implem
 
 		this._block = props.block ?? ctor.defaultValues.block!
 		this._indicator = props.indicator ?? ctor.defaultValues.indicator!
-		this._visible = props.visible ?? ctor.defaultValues.visible!
+
+		this._visibleState = resolveState<IStateUnit<boolean>, boolean>({
+			state: undefined,
+			ctor: TStateUnit,
+			initial: (props.visible ?? ctor.defaultValues.visible!) as boolean,
+		})
+
+		this._visibleState.events.on('change', (payload: TValuePayload<boolean>) => {
+			this.events.emit('change:visible', payload.newValue)
+		})
 	}
 
 	get type(): TLoaderType {
@@ -122,14 +133,12 @@ export class TLoader extends TComponentModel<ILoaderProps, TLoaderEvents> implem
 	}
 
 	get visible(): boolean {
-		return this._visible
+		return this._visibleState.value
 	}
 
 	set visible(value: boolean) {
-		if (this._visible !== value) {
-			this._visible = value
-
-			this.events.emit('change:visible', value)
+		if (this._visibleState.value !== value) {
+			this._visibleState.value = value
 		}
 	}
 
