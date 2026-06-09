@@ -94,5 +94,4 @@ const handleHide = () => {
 	@apply flex flex-col;
 	@apply gap-4;
 }
-}
 </style>

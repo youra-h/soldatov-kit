@@ -40,6 +40,7 @@ export default {
 			tag,
 			rendered,
 			visible,
+			disabled,
 			classes,
 			text,
 			loader,
@@ -69,7 +70,6 @@ export default {
 			/> -->
 		</slot>
 	</component>
-</template>
 </template>
 
 <style lang="scss">
