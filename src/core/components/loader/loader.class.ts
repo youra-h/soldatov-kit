@@ -26,8 +26,9 @@ export class TLoader extends TComponentView<ILoaderProps, TLoaderEvents> impleme
 
 		const { props = {} } = TComponentView.prepareOptions(options)
 
-		// this._type = props.type ?? ctor.defaultValues.type!
-		this._applyType(props.type ?? ctor.defaultValues.type!)
+		this._type = props.type ?? ctor.defaultValues.type!
+
+		this._updateLoader()
 
 		this._block = props.block ?? ctor.defaultValues.block!
 		this._indicator = props.indicator ?? ctor.defaultValues.indicator!
@@ -37,9 +38,10 @@ export class TLoader extends TComponentView<ILoaderProps, TLoaderEvents> impleme
 		return this._type
 	}
 
-	protected _applyType(value: TLoaderType) {
-		this._type = value
-
+	/**
+	 * Обновляет экземпляр индикатора в зависимости от текущего типа и состояния индикатора
+	 */
+	protected _updateLoader(): void {
 		if (this._loader) {
 			this._loader = undefined
 		}
@@ -55,7 +57,9 @@ export class TLoader extends TComponentView<ILoaderProps, TLoaderEvents> impleme
 
 	set type(value: TLoaderType) {
 		if (this._type !== value) {
-			this._applyType(value)
+			this._type = value
+
+			this._updateLoader()
 
 			this.events.emit('change:type', value)
 		}
@@ -72,11 +76,13 @@ export class TLoader extends TComponentView<ILoaderProps, TLoaderEvents> impleme
 	}
 
 	get variant(): TComponentVariant | undefined {
-		return this._loader?.variant ?? undefined
+		return this._loader instanceof TSpinner ? this._loader.variant : undefined
 	}
 
 	set variant(value: TComponentVariant) {
-		if (this._loader && this.variant !== value) {
+		if (!this._loader) return
+
+		if (this._loader instanceof TSpinner && this.variant !== value) {
 			this._loader.variant = value
 		}
 	}
@@ -99,6 +105,11 @@ export class TLoader extends TComponentView<ILoaderProps, TLoaderEvents> impleme
 	set indicator(value: boolean) {
 		if (this._indicator !== value) {
 			this._indicator = value
+
+			if (this._indicator) {
+				this._updateLoader()
+			}
+
 			this.events.emit('change:indicator', value)
 		}
 	}

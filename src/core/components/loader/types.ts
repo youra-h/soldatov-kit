@@ -2,11 +2,8 @@ import type {
 	IComponentView,
 	IComponentViewProps,
 	TComponentViewEvents,
-	TComponentViewStatesOptions,
 } from '../../base/component-view'
 import type { TComponentSize, TComponentVariant, TValuePayload } from '../../common/types'
-import type { IStateUnit } from '../../common/state-unit'
-import type { TStateCtor } from '../../common/states'
 import type { ISpinner } from '../spinner'
 import type { IIcon } from '../icon'
 
@@ -23,13 +20,6 @@ export interface ILoaderProps extends IComponentViewProps {
 	block?: boolean
 	/** Показывать индикатор при загрузке */
 	indicator?: boolean
-}
-
-export type TLoaderStatesOptions = TComponentViewStatesOptions & {
-	size?: TStateCtor<IStateUnit<TComponentSize>, TComponentSize> | IStateUnit<TComponentSize>
-	variant?:
-		| TStateCtor<IStateUnit<TComponentVariant>, TComponentVariant>
-		| IStateUnit<TComponentVariant>
 }
 
 export type TLoaderEvents = TComponentViewEvents & {
