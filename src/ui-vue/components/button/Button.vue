@@ -7,14 +7,12 @@ import { useElementBinding } from '../../composables/useElementBinding'
 import { useInstanceBinding } from '../../composables/useInstanceBinding'
 import BaseButton, { syncButton } from './base.component'
 import { createComponentViewBundle } from '@plugins'
-import { Spinner } from '../spinner'
 import type { TBaseComponentViewProps } from '../component-view'
 import { useInjectLoader } from '../../composables/useLoader'
 
 export default {
 	name: '_Button',
 	extends: BaseButton,
-	components: { Spinner },
 	setup(props: TBaseComponentViewProps<IButtonProps, IButton>, { emit }) {
 		const instance = useInstance(TButton, props)
 		const plugins = useBundle(createComponentViewBundle, props?.plugins)
@@ -28,10 +26,7 @@ export default {
 			emit,
 		})
 
-		// --- Loader integration ---
 		const loader = useInjectLoader()
-
-		console.log('Injected loader in Button:', loader)
 
 		return {
 			instance,
@@ -63,7 +58,7 @@ export default {
 		<slot>{{ text }}</slot>
 		<slot name="trailing"> </slot>
 		<slot name="loader">
-			<Component :is="loader.ctrl" v-if="loader?.indicator && loader?.visible" />
+			<Component :is="loader?.component" v-if="loader?.component" :ctrl="loader?.ctrl" />
 		</slot>
 	</component>
 </template>

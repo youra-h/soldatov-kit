@@ -15,6 +15,8 @@ import { useProvideLoader } from '../../composables/useLoader'
 
 export const emitsLoader: TEmits = [
 	...emitsComponentModel,
+	'change:visible',
+	'update:visible',
 	'change:type',
 	'update:type',
 	'change:size',
