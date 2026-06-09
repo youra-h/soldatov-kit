@@ -7,7 +7,7 @@ import {
 	syncInputControl,
 	type IInputControlState,
 } from '../input-control'
-import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types/common'
+import type { TEmits, TProps, ISyncComponentViewOptions } from '../../types/common'
 import { Icon } from '../icon'
 import { useSyncProps } from '../../composables/useSyncProps'
 
@@ -54,7 +54,7 @@ export interface ICheckBoxState extends IInputControlState<boolean | undefined> 
 }
 
 export function syncCheckBox(
-	options: ISyncComponentModelOptions<ICheckBoxProps, ICheckBox>,
+	options: ISyncComponentViewOptions<ICheckBoxProps, ICheckBox>,
 ): ICheckBoxState {
 	const syncProps = syncInputControl(options)
 

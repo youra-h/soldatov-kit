@@ -7,7 +7,7 @@ import {
 	syncInputControl,
 	type IInputControlState,
 } from '../input-control'
-import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types/common'
+import type { TEmits, TProps, ISyncComponentViewOptions } from '../../types/common'
 import { Spinner } from '../spinner'
 
 export const emitsSwitch: TEmits = [...emitsInputControl] as const
@@ -34,7 +34,7 @@ export default {
  * @param instance
  */
 export function syncSwitch(
-	options: ISyncComponentModelOptions<ISwitchProps, ISwitch>,
+	options: ISyncComponentViewOptions<ISwitchProps, ISwitch>,
 ): IInputControlState<boolean | undefined> {
 	const syncProps = syncInputControl(options)
 

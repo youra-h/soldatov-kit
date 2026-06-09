@@ -15,7 +15,7 @@ import {
 	syncComponentView,
 	type IComponentViewState,
 } from '../component-view'
-import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types'
+import type { TEmits, TProps, ISyncComponentViewOptions } from '../../types'
 import { useSyncProps } from '../../composables/useSyncProps'
 
 export const emitsStylable: TEmits = [
@@ -56,7 +56,7 @@ export interface IStylableState extends IComponentViewState {
  * @param instance
  */
 export function syncStylable(
-	options: ISyncComponentModelOptions<IStylableProps, IStylable>,
+	options: ISyncComponentViewOptions<IStylableProps, IStylable>,
 ): IStylableState {
 	const syncProps = syncComponentView(options)
 

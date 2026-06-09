@@ -14,7 +14,7 @@ import {
 	syncComponentView,
 	type IComponentViewState,
 } from '../component-view'
-import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types/common'
+import type { TEmits, TProps, ISyncComponentViewOptions } from '../../types/common'
 import { useSyncProps } from '../../composables/useSyncProps'
 
 export const emitsSpinner: TEmits = [
@@ -66,7 +66,7 @@ export interface ISpinnerState extends IComponentViewState {
  * @param instance
  */
 export function syncSpinner(
-	options: ISyncComponentModelOptions<ISpinnerProps, ISpinner>,
+	options: ISyncComponentViewOptions<ISpinnerProps, ISpinner>,
 ): ISpinnerState {
 	const syncProps = syncComponentView(options)
 

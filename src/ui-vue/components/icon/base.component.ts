@@ -7,7 +7,7 @@ import {
 	syncComponentView,
 	type IComponentViewState,
 } from '../component-view'
-import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types/common'
+import type { TEmits, TProps, ISyncComponentViewOptions } from '../../types/common'
 import { useSyncProps } from '../../composables/useSyncProps'
 
 export const emitsIcon: TEmits = [
@@ -58,7 +58,7 @@ export interface IIconState extends IComponentViewState {
  * @param props
  * @param instance
  */
-export function syncIcon(options: ISyncComponentModelOptions<IIconProps, IIcon>): IIconState {
+export function syncIcon(options: ISyncComponentViewOptions<IIconProps, IIcon>): IIconState {
 	const syncProps = syncComponentView(options)
 
 	const { instance, props, emit } = options

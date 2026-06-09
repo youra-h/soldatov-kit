@@ -2,7 +2,7 @@ import type { PropType, Ref, UnwrapRef } from 'vue'
 import { watch } from 'vue'
 import { type IValueControl, type IValueControlProps, TValueControl } from '@core'
 import { BaseControl, emitsControl, propsControl, syncControl, type IControlState } from '../control'
-import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types'
+import type { TEmits, TProps, ISyncComponentViewOptions } from '../../types'
 import { useSyncProps } from '../../composables/useSyncProps'
 
 export const emitsValueControl: TEmits = [
@@ -45,7 +45,7 @@ export interface IValueControlState<TValue = any> extends IControlState {
  * @param instance
  */
 export function syncValueControl<TValue>(
-	options: ISyncComponentModelOptions<IValueControlProps<TValue>, IValueControl<TValue>>,
+	options: ISyncComponentViewOptions<IValueControlProps<TValue>, IValueControl<TValue>>,
 ): IValueControlState<TValue> {
 	const syncProps = syncControl(options)
 

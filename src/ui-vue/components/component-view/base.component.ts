@@ -2,7 +2,7 @@ import type { PropType, Ref } from 'vue'
 import { watch } from 'vue'
 import { useSyncProps } from '../../composables/useSyncProps'
 import { type IComponentViewProps, TComponentView } from '@core'
-import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types'
+import type { TEmits, TProps, ISyncComponentViewOptions } from '../../types'
 import { type IPluginBundle, TElementPlugin } from '@plugins'
 import {
 	BaseComponentModel,
@@ -61,7 +61,7 @@ export interface IComponentViewState {
 }
 
 export function syncComponentView(
-	options: ISyncComponentModelOptions<IComponentViewProps>,
+	options: ISyncComponentViewOptions<IComponentViewProps>,
 ): IComponentViewState {
 	const { props, instance, plugins, emit } = options
 

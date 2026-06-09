@@ -15,7 +15,7 @@ import {
 	syncValueControl,
 	type IValueControlState,
 } from '../../value-control'
-import type { TEmits, TProps, ISyncComponentModelOptions } from '../../../types'
+import type { TEmits, TProps, ISyncComponentViewOptions } from '../../../types'
 import { useSyncProps } from '../../../composables/useSyncProps'
 
 export const emitsCollapseItemCustom: TEmits = [
@@ -56,7 +56,7 @@ export interface ICollapseItemCustomState extends IValueControlState {
 }
 
 export function syncCollapseItemCustom(
-	options: ISyncComponentModelOptions<ICollapseItemCustomProps, ICollapseItemCustom>,
+	options: ISyncComponentViewOptions<ICollapseItemCustomProps, ICollapseItemCustom>,
 ): ICollapseItemCustomState {
 	const syncProps = syncValueControl(options)
 

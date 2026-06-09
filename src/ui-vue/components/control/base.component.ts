@@ -2,7 +2,7 @@ import type { PropType, Ref } from 'vue'
 import { watch } from 'vue'
 import { type IControl, type IControlProps, TControl } from '@core'
 import { BaseStylable, emitsStylable, propsStylable, syncStylable, type IStylableState } from '../stylable'
-import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types'
+import type { TEmits, TProps, ISyncComponentViewOptions } from '../../types'
 import { useSyncProps } from '../../composables/useSyncProps'
 
 export const emitsControl: TEmits = [
@@ -44,7 +44,7 @@ export interface IControlState extends IStylableState {
  * @param props
  * @param instance
  */
-export function syncControl(options: ISyncComponentModelOptions<IControlProps, IControl>): IControlState {
+export function syncControl(options: ISyncComponentViewOptions<IControlProps, IControl>): IControlState {
 	const syncProps = syncStylable(options)
 
 	const { instance, props, emit } = options

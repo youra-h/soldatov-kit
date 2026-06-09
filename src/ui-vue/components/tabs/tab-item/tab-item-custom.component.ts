@@ -13,7 +13,7 @@ import {
 	syncValueControl,
 	type IValueControlState,
 } from '../../value-control'
-import type { TEmits, TProps, ISyncComponentModelOptions } from '../../../types'
+import type { TEmits, TProps, ISyncComponentViewOptions } from '../../../types'
 import { useSyncProps } from '../../../composables/useSyncProps'
 
 export const emitsTabItemCustom: TEmits = [
@@ -57,7 +57,7 @@ export interface ITabItemCustomState extends IValueControlState {
  * Синхронизация props и событий для TabItemCustom
  */
 export function syncTabItemCustom(
-	options: ISyncComponentModelOptions<ITabItemCustomProps, ITabItemCustom>,
+	options: ISyncComponentViewOptions<ITabItemCustomProps, ITabItemCustom>,
 ) {
 	const syncProps = syncValueControl(options)
 

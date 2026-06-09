@@ -7,7 +7,7 @@ import {
 	syncTextable,
 	type ITextableState,
 } from '../textable'
-import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types'
+import type { TEmits, TProps, ISyncComponentViewOptions } from '../../types'
 import { useSyncProps } from '../../composables/useSyncProps'
 
 export const emitsButton: TEmits = [
@@ -40,7 +40,7 @@ export interface IButtonState extends ITextableState {
 }
 
 export function syncButton(
-	options: ISyncComponentModelOptions<IButtonProps, IButton>,
+	options: ISyncComponentViewOptions<IButtonProps, IButton>,
 ): IButtonState {
 	const syncProps = syncTextable(options)
 

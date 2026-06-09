@@ -13,7 +13,7 @@ import {
 	syncValueControl,
 	type IValueControlState,
 } from '../value-control'
-import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types'
+import type { TEmits, TProps, ISyncComponentViewOptions } from '../../types'
 import { useSyncProps } from '../../composables/useSyncProps'
 
 export const emitsInputControl: TEmits = [
@@ -68,7 +68,7 @@ export interface IInputControlState<TValue = any> extends IValueControlState<TVa
  * @param instance
  */
 export function syncInputControl<TValue = string>(
-	options: ISyncComponentModelOptions<IInputControlProps<TValue>, IInputControl<TValue>>,
+	options: ISyncComponentViewOptions<IInputControlProps<TValue>, IInputControl<TValue>>,
 ): IInputControlState<TValue> {
 	const syncProps = syncValueControl(options)
 

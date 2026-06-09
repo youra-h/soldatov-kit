@@ -22,7 +22,7 @@ import {
 	propsSelectableCollection,
 	type ISelectableCollectionState,
 } from '../collection/selectable'
-import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types'
+import type { TEmits, TProps, ISyncComponentViewOptions } from '../../types'
 import { useSyncProps } from '../../composables/useSyncProps'
 
 export const emitsCollapse: TEmits = [
@@ -59,7 +59,7 @@ export interface ICollapseState extends IControlState, ISelectableCollectionStat
 }
 
 export function syncCollapse(
-	options: ISyncComponentModelOptions<ICollapseProps & ICollectionProps, ICollapse>,
+	options: ISyncComponentViewOptions<ICollapseProps & ICollectionProps, ICollapse>,
 ): ICollapseState {
 	const syncPropsControl = syncControl(options)
 
