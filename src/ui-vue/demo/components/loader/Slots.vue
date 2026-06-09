@@ -6,6 +6,7 @@ import { Button } from '@ui/button'
 import type { TComponentSize, TComponentVariant } from '@core'
 
 type Props = {
+	visible?: boolean
 	size?: TComponentSize
 	variant?: TComponentVariant
 	block?: boolean
@@ -16,6 +17,7 @@ const props = defineProps<Props>()
 
 const loaderInstance = new TLoader({ visible: true, type: 'spinner' })
 
+watch(() => props.visible, (v) => { if (v !== undefined) loaderInstance.visible = v })
 watch(() => props.size, (v) => { if (v !== undefined) loaderInstance.size = v })
 watch(() => props.variant, (v) => { if (v !== undefined) loaderInstance.variant = v })
 watch(() => props.block, (v) => { if (v !== undefined) loaderInstance.block = v })
@@ -33,7 +35,7 @@ watch(() => props.indicator, (v) => { if (v !== undefined) loaderInstance.indica
 		<section class="loader-slots-demo__section">
 			<h3 class="loader-slots-demo__title">Default (spinner + block)</h3>
 			<Loader
-				:visible="true"
+				:visible="visible"
 				:size="size"
 				:variant="variant"
 				:block="block"

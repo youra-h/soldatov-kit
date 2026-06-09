@@ -98,10 +98,12 @@ export function syncComponentView(
 		emit?.('update:rendered', value)
 	})
 
-	plugins.get(TElementPlugin)!.events.on('ready', ({ element }: { element: HTMLElement }) => {
-		const payload = { element, instance, plugins }
-		emit?.('ready', payload)
-	})
+	if (plugins) {
+		plugins.get(TElementPlugin)!.events.on('ready', ({ element }: { element: HTMLElement }) => {
+			const payload = { element, instance, plugins }
+			emit?.('ready', payload)
+		})
+	}
 
 	watch<Object | string | undefined>(
 		() => props.tag,

@@ -8,6 +8,7 @@ import { SIZES, VARIANTS } from '../common/items'
 import type { TComponentSize, TComponentVariant } from '@core'
 
 const propertiesSchema: TPropertiesSchema = {
+	visible: { type: 'boolean', default: true },
 	size: { type: 'select', default: 'normal', options: SIZES },
 	variant: { type: 'select', default: 'normal', options: VARIANTS },
 	block: { type: 'boolean', default: true },
@@ -15,11 +16,13 @@ const propertiesSchema: TPropertiesSchema = {
 }
 
 const componentProps = ref<{
+	visible: boolean
 	size: TComponentSize
 	variant: TComponentVariant
 	block: boolean
 	indicator: boolean
 }>({
+	visible: true,
 	size: 'normal',
 	variant: 'normal',
 	block: true,
@@ -35,6 +38,7 @@ const componentProps = ref<{
 
 		<template #slots-demo>
 			<SlotsDemo
+				:visible="componentProps.visible"
 				:size="componentProps.size"
 				:variant="componentProps.variant"
 				:block="componentProps.block"
