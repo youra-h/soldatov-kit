@@ -63,11 +63,7 @@ export default {
 		<slot>{{ text }}</slot>
 		<slot name="trailing"> </slot>
 		<slot name="loader">
-			<!-- <Spinner
-				v-if="loader?.shouldIndicator && loader?.visible"
-				:size="loader?.size"
-				:variant="loader?.variant"
-			/> -->
+			<Component :is="loader.ctrl" v-if="loader?.indicator && loader?.visible" />
 		</slot>
 	</component>
 </template>
