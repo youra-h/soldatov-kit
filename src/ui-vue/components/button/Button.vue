@@ -7,7 +7,6 @@ import { useInstanceBinding } from '../../composables/useInstanceBinding'
 import BaseButton, { syncButton } from './base.component'
 import { createComponentViewBundle } from '@plugins'
 import type { TBaseComponentViewProps } from '../component-view'
-import { useInjectLoader } from '../../composables/useLoader'
 
 export default {
 	name: '_Button',
@@ -28,7 +27,7 @@ export default {
 			emit,
 		})
 
-		const loader = useInjectLoader()
+
 
 		return {
 			instance,
@@ -60,11 +59,7 @@ export default {
 		<slot>{{ text }}</slot>
 		<slot name="trailing"> </slot>
 		<slot name="loader">
-			<Component
-				:is="loader?.component"
-				v-if="loader?.component"
-				:ctrl="loader?.ctrl"
-			/>
+			<Component :is="loader?.component" v-if="loader?.component" :ctrl="loader?.ctrl" />
 		</slot>
 	</component>
 </template>
