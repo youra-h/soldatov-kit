@@ -1,4 +1,4 @@
-import { type TLoaderTypeIndicator, type TLoaderType, type ILoader } from '@/core'
+import { type TLoaderType, type ILoader } from '@/core'
 import { provide, inject, computed, type InjectionKey, type Component } from 'vue'
 import { useSyncProps } from './useSyncProps'
 import Spinner from '../components/spinner/Spinner.vue'
