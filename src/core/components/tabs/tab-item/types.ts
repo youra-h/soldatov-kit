@@ -53,7 +53,7 @@ export interface ITabItemCustom<
 	/** Закрыть таб (emit close event) */
 	close(): void
 	/** Инжектирует резолвер для наследования через TTabs */
-	setClosableParent(resolver: () => boolean): void
+	setClosableResolver(resolver: () => boolean): void
 }
 
 // ============ TTabItem (коллекционный элемент с композицией) ============

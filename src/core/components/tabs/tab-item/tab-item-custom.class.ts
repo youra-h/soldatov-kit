@@ -109,7 +109,7 @@ export default class TTabItemCustom<
 	}
 
 	/** Инжектируется из TTabs при добавлении таба в коллекцию */
-	setClosableParent(resolver: () => boolean): void {
+	setClosableResolver(resolver: () => boolean): void {
 		;(this._closableState as TStateUnit<boolean | undefined>).setResolver(
 			(current) => current ?? resolver() ?? false,
 		)

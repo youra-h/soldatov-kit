@@ -94,7 +94,7 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 					const { item } = payload as { collection: any; item: ITabItem }
 
 					item.events.on('close', () => this.closeTab(item))
-					item.setClosableParent(() => this._closable)
+					item.setClosableResolver(() => this._closable)
 
 					item.events.on('change:closable', (value: boolean | undefined) => {
 						;(this.events as TEvented<TTabsEvents>).emit('item:closable', item, !!value)
