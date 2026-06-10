@@ -22,7 +22,7 @@ export interface IComponentModel<
 >
 	extends IEntity<TProps>, IComponentModelMethods {
 	readonly events: TEvented<TEvents>
-	readonly states: Required<TStates>
+	readonly states: TStates
 }
 
 /**
@@ -36,5 +36,5 @@ export interface IComponentModelOptions<TProps, TStates = any> {
 	 * Инъекция state-реализаций.
 	 * Нужна, чтобы менять поведение state свойств без оверрайда геттеров/сеттеров.
 	 */
-	states?: TStates
+	states?: Partial<TStates>
 }

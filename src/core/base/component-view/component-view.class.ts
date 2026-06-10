@@ -4,8 +4,7 @@ import type {
 	IComponentViewOptions,
 	IComponentViewProps,
 	TComponentViewEvents,
-	TComponentViewStatesOptions,
-	TComponentViewPreparedOptions,
+	TComponentViewStates,
 } from './types'
 import { type IStateUnit, TStateUnit } from '../../common/state-unit'
 import { TClasses } from '../../common/classes'
@@ -22,7 +21,7 @@ import { TEvented } from '../../common/evented'
 export default class TComponentView<
 	TProps extends IComponentViewProps = IComponentViewProps,
 	TEvents extends TComponentViewEvents = TComponentViewEvents,
-	TStates extends TComponentViewStatesOptions = TComponentViewStatesOptions,
+	TStates extends TComponentViewStates = TComponentViewStates,
 > extends TComponentModel<TProps, TEvents, TStates> {
 	/** Базовый CSS-класс по умолчанию (можно переопределить в наследниках). */
 	static baseClass = 's-component-view'

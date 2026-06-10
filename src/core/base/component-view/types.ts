@@ -8,11 +8,11 @@ import type {
 import type { IStateUnit } from '../../common/state-unit'
 import type { IVisibilityState } from '../../common/states'
 
-export type TComponentViewStatesOptions = {
+export type TComponentViewStates = {
 	/** Класс state для `rendered`. */
-	rendered?: IStateUnit<boolean>
+	rendered: IStateUnit<boolean>
 	/** Класс state для `visible`. */
-	visible?: IVisibilityState
+	visible: IVisibilityState
 }
 
 export type TComponentViewEvents = TComponentModelEvents & {
@@ -54,7 +54,7 @@ export interface IComponentViewProps extends IComponentModelProps {
  */
 export interface IComponentViewOptions<
 	TProps extends IComponentViewProps = IComponentViewProps,
-	TStates extends TComponentViewStatesOptions = TComponentViewStatesOptions,
+	TStates extends TComponentViewStates = TComponentViewStates,
 > extends IComponentModelOptions<TProps, TStates> {}
 
 /**
@@ -62,16 +62,16 @@ export interface IComponentViewOptions<
  */
 export type TComponentViewPreparedOptions<
 	TProps extends IComponentViewProps = IComponentViewProps,
-	TStates extends TComponentViewStatesOptions = TComponentViewStatesOptions,
+	TStates extends TComponentViewStates = TComponentViewStates,
 > = {
 	props: Partial<TProps>
-	states?: TStates
+	states?: Partial<TStates>
 }
 
 export interface IComponentView<
 	TProps extends IComponentViewProps = IComponentViewProps,
 	TEvents extends Record<string, (...args: any) => any> = TComponentViewEvents,
-	TStates extends TComponentViewStatesOptions = TComponentViewStatesOptions,
+	TStates extends TComponentViewStates = TComponentViewStates,
 > extends IComponentModel<TProps, TEvents, TStates> {
 	/** HTML-тег или компонент */
 	tag: string | object

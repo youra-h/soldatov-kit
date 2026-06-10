@@ -27,13 +27,13 @@ export default class TComponentModel<
 	}
 
 	protected _id: string | number
-	protected _states = {} as Required<TStates>
+	protected _states = {} as TStates
 	public readonly events: TEvented<TEvents>
 
-	constructor(options: IComponentModelOptions<TProps> | Partial<TProps> = {}) {
+	constructor(options: IComponentModelOptions<TProps, TStates> | Partial<TProps> = {}) {
 		const ctor = new.target as typeof TComponentModel
 
-		const { props = {} as Partial<TProps> } = ctor.prepareOptions<TProps>(options)
+		const { props = {} as Partial<TProps> } = ctor.prepareOptions<TProps, TStates>(options)
 		super()
 
 		this.events = new TEvented<TEvents>()
@@ -47,7 +47,7 @@ export default class TComponentModel<
 		TStates = any,
 	>(
 		options: IComponentModelOptions<TProps, TStates> | Partial<TProps>,
-	): { props: Partial<TProps>; states?: TStates } {
+	): { props: Partial<TProps>; states?: Partial<TStates> } {
 		const raw = options as Record<string, unknown>
 		const hasPropsKey = Object.prototype.hasOwnProperty.call(raw, 'props')
 		const hasStatesKey = Object.prototype.hasOwnProperty.call(raw, 'states')
@@ -97,7 +97,7 @@ export default class TComponentModel<
 		return new this({ props: props ?? {} })
 	}
 
-	get states(): Required<TStates> {
+	get states(): TStates {
 		return this._states
 	}
 
