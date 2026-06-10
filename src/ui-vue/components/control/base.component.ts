@@ -1,6 +1,6 @@
 import type { PropType, Ref } from 'vue'
 import { watch } from 'vue'
-import { type IControl, type IControlProps, TControl } from '@core'
+import { type IControl, type IControlProps, TControl, type ILoader } from '@core'
 import {
 	BaseStylable,
 	emitsStylable,
@@ -45,6 +45,7 @@ export default {
 export interface IControlState extends IStylableState {
 	disabled: Ref<boolean>
 	focused: Ref<boolean>
+	loaderContext?: { loader: ILoader; component: any }
 }
 
 /**
@@ -106,5 +107,6 @@ export function syncControl(
 			disabled: () => instance.disabled,
 			focused: () => instance.focused,
 		}),
+		loaderContext: loader ? { loader, component } : undefined,
 	}
 }

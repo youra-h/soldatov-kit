@@ -5,7 +5,7 @@ import { useBundle } from '../../composables/useBundle'
 import { useElementBinding } from '../../composables/useElementBinding'
 import { useInstanceBinding } from '../../composables/useInstanceBinding'
 import BaseButton, { syncButton } from './base.component'
-import { createComponentViewBundle, TLoaderPlugin } from '@plugins'
+import { createComponentViewBundle } from '@plugins'
 import type { TBaseComponentViewProps } from '../component-view'
 
 export default {
@@ -20,14 +20,14 @@ export default {
 
 		const rootRef = useElementBinding(plugins)
 
-		const { tag, rendered, visible, classes, disabled, text } = syncButton({
+		const { tag, rendered, visible, classes, disabled, text, loaderContext } = syncButton({
 			props,
 			instance,
 			plugins,
 			emit,
 		})
 
-		const result = {
+		return {
 			instance,
 			plugins,
 			rootRef,
@@ -37,18 +37,8 @@ export default {
 			disabled,
 			classes,
 			text,
+			loaderContext,
 		}
-
-		const loaderPlugin = plugins.get(TLoaderPlugin)
-
-		if (loaderPlugin) {
-			result.loaderContext = {
-				loader: loaderPlugin.loader,
-				component: loaderPlugin.component,
-			}
-		}
-
-		return result
 	},
 }
 </script>
