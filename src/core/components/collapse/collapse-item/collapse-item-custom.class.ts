@@ -1,8 +1,7 @@
 import TValueControl from '../../../base/value-control/value-control.class'
 import type { IComponentViewOptions } from '../../../base/component-view'
 import { TComponentView } from '../../../base/component-view'
-import { resolveState } from '../../../common/resolve-state'
-import { TStateUnit, type IStateUnit } from '../../../common/state-unit'
+import { TStateUnit } from '../../../common/state-unit'
 import type { TValuePayload } from '../../../common/types'
 import type {
 	ICollapseItemCustom,
@@ -32,7 +31,6 @@ export default class TCollapseItemCustom<
 		arrowPlacement: 'start',
 	}
 
-	protected _textState: IStateUnit<string>
 	protected _arrowPlacement!: TCollapseArrowPlacement
 	private _appearanceResolver: (() => TCollapseAppearance) | undefined
 
@@ -52,13 +50,11 @@ export default class TCollapseItemCustom<
 
 		const customProps = props as Partial<ICollapseItemCustomProps>
 
-		this._textState = resolveState<IStateUnit<string>, string>({
-			state: states?.text,
-			ctor: TStateUnit,
-			initial: customProps.text ?? ctor.defaultValues.text!,
-		})
+		this._states.text =
+			states?.text ??
+			new TStateUnit<string>({ initial: customProps.text ?? ctor.defaultValues.text! })
 
-		this._textState.events.on('change', (payload: TValuePayload<string>) => {
+		this._states.text.events.on('change', (payload: TValuePayload<string>) => {
 			;(this.events as TEvented<TCollapseItemCustomEvents>).emit('change:text', payload)
 		})
 
@@ -66,11 +62,11 @@ export default class TCollapseItemCustom<
 	}
 
 	get text(): string {
-		return this._textState.value
+		return this._states.text.value
 	}
 
 	set text(value: string) {
-		this._textState.value = value
+		this._states.text.value = value
 	}
 
 	get arrowPlacement(): TCollapseArrowPlacement {

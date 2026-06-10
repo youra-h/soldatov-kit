@@ -1,7 +1,6 @@
 import TValueControl from '../../../base/value-control/value-control.class'
 import type { IComponentViewOptions } from '../../../base/component-view'
 import { TComponentView } from '../../../base/component-view'
-import { resolveState } from '../../../common/resolve-state'
 import { TStateUnit, type IStateUnit } from '../../../common/state-unit'
 import { type TValuePayload } from '../../../common/types'
 import type {
@@ -35,9 +34,6 @@ export default class TTabItemCustom<
 		tag: 'button',
 	}
 
-	protected _textState: IStateUnit<string>
-	protected _closableState: IStateUnit<boolean | undefined>
-
 	constructor(
 		options: IComponentViewOptions<TProps, TTabItemCustomStatesOptions> | Partial<TProps> = {},
 	) {
@@ -54,63 +50,65 @@ export default class TTabItemCustom<
 		const customProps = props as Partial<ITabItemCustomProps>
 
 		// Инициализация state-объектов
-		this._textState = resolveState<IStateUnit<string>, string>({
-			state: states?.text,
-			ctor: TStateUnit,
-			initial: customProps.text ?? ctor.defaultValues.text!,
-		})
+		this._states.text =
+			states?.text ??
+			new TStateUnit<string>({ initial: customProps.text ?? ctor.defaultValues.text! })
 
-		this._closableState = resolveState<IStateUnit<boolean | undefined>, boolean | undefined>({
-			state: states?.closable,
-			ctor: TStateUnit,
-			initial: customProps.closable ?? ctor.defaultValues.closable,
-		})
+		this._states.closable =
+			states?.closable ??
+			new TStateUnit<boolean | undefined>({
+				initial: customProps.closable ?? ctor.defaultValues.closable,
+			})
 
 		// Подписка на изменения state-объектов
-		this._textState.events.on('change', (payload: TValuePayload<string>) => {
+		this._states.text.events.on('change', (payload: TValuePayload<string>) => {
 			;(this.events as TEvented<TTabItemCustomEvents>).emit('change:text', payload)
 		})
 
-		this._closableState.events.on('change', (payload: TValuePayload<boolean | undefined>) => {
-			this._classes.toggle(`--closable`, !!payload.newValue)
+		this._states.closable.events.on(
+			'change',
+			(payload: TValuePayload<boolean | undefined>) => {
+				this._classes.toggle(`--closable`, !!payload.newValue)
 
-			this.notifyClosableChange(payload.newValue)
-		})
+				this.notifyClosableChange(payload.newValue)
+			},
+		)
 
-		this._classes.toggle(`--closable`, !!this._closableState.value)
+		this._classes.toggle(`--closable`, !!this._states.closable.value)
 
 		this.events.on('change:disabled', () => {
 			// Если таб стал disabled, убираем возможность закрывать его
 			if (this.disabled) {
-				this._closableState.value = false
+				this._states.closable.value = false
 			} else {
 				// Если таб стал enabled, восстанавливаем closable в исходное значение (или дефолтное)
-				this._closableState.value = customProps.closable ?? ctor.defaultValues.closable
+				this._states.closable.value =
+					customProps.closable ?? ctor.defaultValues.closable
 			}
 		})
 	}
 
 	get text(): string {
-		return this._textState.value
+		return this._states.text.value
 	}
 
 	set text(value: string) {
-		this._textState.value = value
+		this._states.text.value = value
 	}
 
 	get closable(): boolean | undefined {
-		return this._closableState.value
+		return this._states.closable.value
 	}
 
 	set closable(value: boolean | undefined) {
-		if (this._closableState.rawValue === value || this.disabled) return
+		if (this._states.closable.rawValue === value || this.disabled) return
 
-		this._closableState.value = value
+		this._states.closable.value = value
 	}
 
 	/** Инжектируется из TTabs при добавлении таба в коллекцию */
 	setClosableResolver(resolver: () => boolean): void {
-		;(this._closableState as TStateUnit<boolean | undefined>).setResolver(
+		;(this._states.closable as TStateUnit<boolean | undefined>).setResolver(
 			(current) => current ?? resolver() ?? false,
 		)
 	}

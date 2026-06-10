@@ -148,17 +148,5 @@ describe('TComponentView', () => {
 		expect(log).toContain('state:value=true')
 		expect(log).toContain('component-view:change:visible=true')
 
-		// 2) Передаём конструктор/класс — TComponentView создаст экземпляр сам
-		log.length = 0
-		const p2 = new TComponentView({
-			props: { visible: false },
-			states: { visible: TLoggedVisibilityState },
-		})
-		p2.events.on('change:visible', (value) => {
-			log.push(`component-view2:change:visible=${value}`)
-		})
-		p2.visible = true
-		expect(log).toContain('state:value=true')
-		expect(log).toContain('component-view2:change:visible=true')
 	})
 })

@@ -1,5 +1,6 @@
 import { TEntity } from '../entity'
 import { TEvented } from '../../common/evented'
+import type { IStateUnit } from '../../common/state-unit'
 import type {
 	IComponentModel,
 	IComponentModelOptions,
@@ -25,6 +26,7 @@ export default class TComponentModel<
 	}
 
 	protected _id: string | number
+	protected _states: Record<string, IStateUnit<any>> = {}
 	public readonly events: TEvented<TEvents>
 
 	constructor(options: IComponentModelOptions<TProps> | Partial<TProps> = {}) {
@@ -92,6 +94,10 @@ export default class TComponentModel<
 		props?: Partial<T extends TComponentModel<infer P> ? P : IComponentModelProps>,
 	): T {
 		return new this({ props: props ?? {} })
+	}
+
+	get states(): Record<string, IStateUnit<any>> {
+		return this._states
 	}
 
 	get id(): string | number {

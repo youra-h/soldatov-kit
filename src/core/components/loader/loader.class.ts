@@ -8,8 +8,7 @@ import type {
 	TLoaderTypeIndicator,
 } from './types'
 import type { TComponentSize, TComponentVariant, TValuePayload } from '../../common/types'
-import { resolveState } from '../../common/resolve-state'
-import { type IStateUnit, TStateUnit } from '../../common/state-unit'
+import { TStateUnit } from '../../common/state-unit'
 import { TSpinner } from '../spinner'
 import { TIcon } from '../icon'
 
@@ -26,9 +25,7 @@ export class TLoader<TStates extends TLoaderStatesOptions = TLoaderStatesOptions
 	}
 
 	protected _type!: TLoaderType
-	protected _disabledState: IStateUnit<boolean>
 	protected _indicator: boolean
-	protected _visibleState: IStateUnit<boolean>
 	private _ctrl?: TLoaderTypeIndicator
 
 	constructor(
@@ -49,23 +46,20 @@ export class TLoader<TStates extends TLoaderStatesOptions = TLoaderStatesOptions
 
 		this._updateLoader()
 
-		this._disabledState = resolveState<IStateUnit<boolean>, boolean>({
-			state: states?.disabled,
-			ctor: TStateUnit,
-			initial: disabled,
-		})
+		this._states.disabled =
+			states?.disabled ?? new TStateUnit<boolean>({ initial: disabled })
 
-		this._disabledState.events.on('change', (payload: TValuePayload<boolean>) => {
+		this._states.disabled.events.on('change', (payload: TValuePayload<boolean>) => {
 			this.events.emit('change:disabled', payload.newValue)
 		})
 
-		this._visibleState = resolveState<IStateUnit<boolean>, boolean>({
-			state: states?.visible,
-			ctor: TStateUnit,
-			initial: (props.visible ?? ctor.defaultValues.visible!) as boolean,
-		})
+		this._states.visible =
+			states?.visible ??
+			new TStateUnit<boolean>({
+				initial: (props.visible ?? ctor.defaultValues.visible!) as boolean,
+			})
 
-		this._visibleState.events.on('change', (payload: TValuePayload<boolean>) => {
+		this._states.visible.events.on('change', (payload: TValuePayload<boolean>) => {
 			this.events.emit('change:visible', payload.newValue)
 		})
 	}
@@ -124,12 +118,12 @@ export class TLoader<TStates extends TLoaderStatesOptions = TLoaderStatesOptions
 	}
 
 	get disabled(): boolean {
-		return this._disabledState.value
+		return this._states.disabled.value
 	}
 
 	set disabled(value: boolean) {
-		if (this._disabledState.value !== value) {
-			this._disabledState.value = value
+		if (this._states.disabled.value !== value) {
+			this._states.disabled.value = value
 		}
 	}
 
@@ -148,12 +142,12 @@ export class TLoader<TStates extends TLoaderStatesOptions = TLoaderStatesOptions
 	}
 
 	get visible(): boolean {
-		return this._visibleState.value
+		return this._states.visible.value
 	}
 
 	set visible(value: boolean) {
-		if (this._visibleState.value !== value) {
-			this._visibleState.value = value
+		if (this._states.visible.value !== value) {
+			this._states.visible.value = value
 		}
 	}
 

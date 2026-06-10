@@ -2,8 +2,7 @@ import { TComponentView } from '../../base/component-view'
 import type { IIcon, IIconProps, TIconEvents, TIconStatesOptions } from './types'
 import type { TComponentSize } from '../../common/types'
 import type { IComponentViewOptions } from '../../base/component-view'
-import { resolveState } from '../../common/resolve-state'
-import { type IStateUnit, TStateUnit } from '../../common/state-unit'
+import { TStateUnit } from '../../common/state-unit'
 import type { TValuePayload } from '../../common/types'
 import { TEvented } from '../../common/evented'
 
@@ -21,7 +20,6 @@ export default class TIcon
 
 	protected _width: string | number | undefined
 	protected _height: string | number | undefined
-	protected _sizeState: IStateUnit<TComponentSize>
 
 	constructor(
 		options: IComponentViewOptions<IIconProps, TIconStatesOptions> | Partial<IIconProps> = {},
@@ -35,13 +33,13 @@ export default class TIcon
 			TIconStatesOptions
 		>(options)
 
-		this._sizeState = resolveState<IStateUnit<TComponentSize>, TComponentSize>({
-			state: states?.size,
-			ctor: TStateUnit,
-			initial: (props.size ?? ctor.defaultValues.size!) as TComponentSize,
-		})
+		this._states.size =
+			states?.size ??
+			new TStateUnit<TComponentSize>({
+				initial: (props.size ?? ctor.defaultValues.size!) as TComponentSize,
+			})
 
-		this._sizeState.events.on('change', (payload: TValuePayload<TComponentSize>) => {
+		this._states.size.events.on('change', (payload: TValuePayload<TComponentSize>) => {
 			this._classes.swapClass({
 				oldClass: `--size-${payload.oldValue}`,
 				newClass: `--size-${payload.newValue}`,
@@ -49,7 +47,7 @@ export default class TIcon
 			;(this.events as TEvented<TIconEvents>).emit('change:size' as any, payload)
 		})
 
-		this._classes.add(`--size-${this._sizeState.value}`, true)
+		this._classes.add(`--size-${this._states.size.value}`, true)
 
 		this._width = props.width
 		this._height = props.height
@@ -78,13 +76,13 @@ export default class TIcon
 	}
 
 	get size(): TComponentSize {
-		return this._sizeState.value
+		return this._states.size.value
 	}
 
 	set size(value: TComponentSize) {
-		if (value === this._sizeState.value) return
+		if (value === this._states.size.value) return
 
-		this._sizeState.value = value
+		this._states.size.value = value
 	}
 
 	/**
@@ -109,7 +107,7 @@ export default class TIcon
 	getProps(): IIconProps {
 		return {
 			...super.getProps(),
-			size: this._sizeState.value,
+			size: this._states.size.value,
 			width: this._width,
 			height: this._height,
 		}

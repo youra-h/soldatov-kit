@@ -1,9 +1,8 @@
 import { TControl } from '../control'
 import type { IComponentViewOptions } from '../component-view'
 import { TComponentView } from '../component-view'
-import { resolveState } from '../../common/resolve-state'
 import type { IValueControlProps, TValueControlEvents, TValueControlStatesOptions } from './types'
-import { TStateUnit, type IStateUnit } from '../../common/state-unit'
+import { TStateUnit } from '../../common/state-unit'
 import { type TValuePayload } from '../../common/types'
 import { TEvented } from '../../common/evented'
 
@@ -28,7 +27,6 @@ export default class TValueControl<
 		value: undefined,
 	}
 
-	protected _valueState: IStateUnit<TValue>
 	protected _name: string
 
 	constructor(options: IComponentViewOptions<TProps, TStates> | Partial<TProps> = {}) {
@@ -45,13 +43,9 @@ export default class TValueControl<
 
 		const value = props.value ?? (ctor.defaultValues.value as TValue)
 
-		this._valueState = resolveState<IStateUnit<TValue>, TValue>({
-			state: states?.value,
-			ctor: TStateUnit,
-			initial: value,
-		})
+		this._states.value = states?.value ?? new TStateUnit<TValue>({ initial: value })
 
-		this._valueState.events.on('change', (payload: TValuePayload<TValue>) => {
+		this._states.value.events.on('change', (payload: TValuePayload<TValue>) => {
 			;(this.events as TEvented<TValueControlEvents<TValue>>).emit('change:value', payload)
 		})
 	}
@@ -67,17 +61,17 @@ export default class TValueControl<
 	}
 
 	get value(): TValue {
-		return this._valueState.value
+		return this._states.value.value
 	}
 	set value(value: TValue) {
-		this._valueState.value = value
+		this._states.value.value = value
 	}
 
 	getProps(): TProps {
 		return {
 			...super.getProps(),
 			name: this._name,
-			value: this._valueState.value,
+			value: this._states.value.value,
 		} as TProps
 	}
 }

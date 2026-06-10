@@ -20,4 +20,9 @@ export interface IStateUnit<
 	/** Текущий резольвер или undefined. */
 	readonly resolver: ((value: TValue) => TValue) | undefined
 	readonly events: TEvented<TEvents>
+	/**
+	 * Установить резольвер — функцию, которая преобразует хранимое значение при чтении.
+	 * Передайте `undefined` чтобы сбросить.
+	 */
+	setResolver(resolver: ((value: TValue) => TValue) | undefined): void
 }

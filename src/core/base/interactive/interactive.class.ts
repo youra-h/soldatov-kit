@@ -1,6 +1,5 @@
-import { TStateUnit, type IStateUnit } from '../../common/state-unit'
+import { TStateUnit } from '../../common/state-unit'
 import { TComponentView, type IComponentViewOptions } from '../component-view'
-import { resolveState } from '../../common/resolve-state'
 import type { IInteractiveProps, TInteractiveEvents, TInteractiveStatesOptions } from './types'
 import { type TValuePayload } from '../../common/types'
 import { TEvented } from '../../common/evented'
@@ -22,9 +21,6 @@ export default class TInteractive<
 		focused: false,
 	}
 
-	protected _disableState: IStateUnit<boolean>
-	protected _focusedState: IStateUnit<boolean>
-
 	constructor(options: IComponentViewOptions<TProps, TStates> | Partial<TProps> = {}) {
 		super(options)
 
@@ -38,39 +34,33 @@ export default class TInteractive<
 		const disabled = props.disabled ?? (ctor.defaultValues.disabled as boolean)
 		const focused = props.focused ?? (ctor.defaultValues.focused as boolean)
 
-		this._disableState = resolveState<IStateUnit<boolean>, boolean>({
-			state: states?.disableState,
-			ctor: TStateUnit,
-			initial: disabled,
-		})
+		this._states.disabled =
+			states?.disableState ?? new TStateUnit<boolean>({ initial: disabled })
 
-		this._disableState.events.on('change', (payload: TValuePayload<boolean>) => {
+		this._states.disabled.events.on('change', (payload: TValuePayload<boolean>) => {
 			;(this.events as TEvented<TInteractiveEvents>).emit('change:disabled', payload.newValue)
 		})
 
-		this._focusedState = resolveState<IStateUnit<boolean>, boolean>({
-			state: states?.focusedState,
-			ctor: TStateUnit,
-			initial: focused,
-		})
+		this._states.focused =
+			states?.focusedState ?? new TStateUnit<boolean>({ initial: focused })
 
-		this._focusedState.events.on('change', (payload: TValuePayload<boolean>) => {
+		this._states.focused.events.on('change', (payload: TValuePayload<boolean>) => {
 			;(this.events as TEvented<TInteractiveEvents>).emit('change:focused', payload.newValue)
 		})
 	}
 
 	get disabled(): boolean {
-		return this._disableState.value
+		return this._states.disabled.value
 	}
 	set disabled(value: boolean) {
-		this._disableState.value = value
+		this._states.disabled.value = value
 	}
 
 	get focused(): boolean {
-		return this._focusedState.value
+		return this._states.focused.value
 	}
 	set focused(value: boolean) {
-		this._focusedState.value = value
+		this._states.focused.value = value
 	}
 
 	click(event: Event): void {

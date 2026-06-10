@@ -1,8 +1,7 @@
-import { TStateUnit, type IStateUnit } from '../../common/state-unit'
+import { TStateUnit } from '../../common/state-unit'
 import { TControl } from '../control'
 import type { IComponentViewOptions } from '../component-view'
 import { TComponentView } from '../component-view'
-import { resolveState } from '../../common/resolve-state'
 import type { ITextableProps, TTextableEvents, TTextableStatesOptions } from './types'
 import { type TValuePayload } from '../../common/types'
 import { TEvented } from '../../common/evented'
@@ -24,8 +23,6 @@ export default class TTextable<
 		text: '',
 	}
 
-	protected _textState: IStateUnit<string>
-
 	constructor(options: IComponentViewOptions<TProps, TStates> | Partial<TProps> = {}) {
 		super(options)
 
@@ -38,23 +35,19 @@ export default class TTextable<
 
 		const text = props.text ?? (ctor.defaultValues.text as string)
 
-		this._textState = resolveState<IStateUnit<string>, string>({
-			state: states?.text,
-			ctor: TStateUnit,
-			initial: text,
-		})
+		this._states.text = states?.text ?? new TStateUnit<string>({ initial: text })
 
-		this._textState.events.on('change', (payload: TValuePayload<string>) => {
+		this._states.text.events.on('change', (payload: TValuePayload<string>) => {
 			;(this.events as TEvented<TTextableEvents>).emit('change:text', payload)
 		})
 	}
 
 	get text(): string {
-		return this._textState.value
+		return this._states.text.value
 	}
 
 	set text(value: string) {
-		this._textState.value = value
+		this._states.text.value = value
 	}
 
 	getProps(): TProps {

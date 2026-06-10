@@ -55,15 +55,5 @@ describe('TInteractive', () => {
 		i1.disabled = true
 		expect(log).toContain('disabled:true')
 
-		// 2) ctor
-		log.length = 0
-		class CtorLogged extends TLoggedDisableableState {
-			constructor(initial = false) {
-				super(initial, log)
-			}
-		}
-		const i2 = new TInteractive({ states: { disableState: CtorLogged } })
-		i2.disabled = true
-		expect(log).toContain('disabled:true')
 	})
 })

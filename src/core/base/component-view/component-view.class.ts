@@ -1,6 +1,5 @@
 import { TComponentModel } from '../component-model'
 import { TVisibilityState, type IVisibilityState } from '../../common/states'
-import { resolveState } from '../../common/resolve-state'
 import type {
 	IComponentViewOptions,
 	IComponentViewProps,
@@ -38,8 +37,6 @@ export default class TComponentView<
 	protected _tag: string | object
 	protected _classes: TClasses
 	protected _ready: boolean = false
-	protected _renderedState: IStateUnit<boolean>
-	protected _visibleState: IVisibilityState
 
 	constructor(options: IComponentViewOptions<TProps, TStates> | Partial<TProps> = {}) {
 		const ctor = new.target as typeof TComponentView
@@ -56,24 +53,17 @@ export default class TComponentView<
 		const rendered = props.rendered ?? (ctor.defaultValues.rendered as boolean)
 		const visible = props.visible ?? (ctor.defaultValues.visible as boolean)
 
-		this._renderedState = resolveState<IStateUnit<boolean>, boolean>({
-			state: states?.rendered,
-			ctor: TStateUnit,
-			initial: rendered,
-		})
-		this._visibleState = resolveState<IVisibilityState, boolean>({
-			state: states?.visible,
-			ctor: TVisibilityState,
-			initial: visible,
-		})
+		this._states.rendered = states?.rendered ?? new TStateUnit<boolean>({ initial: rendered })
+		this._states.visible =
+			states?.visible ?? new TVisibilityState({ initial: visible })
 
-		this._renderedState.events.on('change', (payload: TValuePayload<boolean>) =>
+		this._states.rendered.events.on('change', (payload: TValuePayload<boolean>) =>
 			(this.events as TEvented<TComponentViewEvents>).emit(
 				'change:rendered',
 				payload.newValue,
 			),
 		)
-		this._visibleState.events.on('change', (payload: TValuePayload<boolean>) =>
+		this._states.visible.events.on('change', (payload: TValuePayload<boolean>) =>
 			(this.events as TEvented<TComponentViewEvents>).emit(
 				'change:visible',
 				payload.newValue,
@@ -95,16 +85,16 @@ export default class TComponentView<
 	}
 
 	get rendered(): boolean {
-		return this._renderedState.value
+		return this._states.rendered.value
 	}
 	set rendered(value: boolean) {
-		if (value === this._renderedState.value) return
+		if (value === this._states.rendered.value) return
 
-		this._renderedState.value = value
+		this._states.rendered.value = value
 	}
 
 	get visible(): boolean {
-		return this._visibleState.value
+		return this._states.visible.value
 	}
 	set visible(value: boolean) {
 		if (value) {
@@ -121,7 +111,7 @@ export default class TComponentView<
 		if (!canShow) return
 
 		if (this.visible) return
-		this._visibleState.show()
+		;(this._states.visible as IVisibilityState).show()
 		;(this.events as TEvented<TComponentViewEvents>).emit('show')
 
 		this.afterShow()
@@ -135,7 +125,7 @@ export default class TComponentView<
 		if (!canHide) return
 
 		if (!this.visible) return
-		this._visibleState.hide()
+		;(this._states.visible as IVisibilityState).hide()
 		;(this.events as TEvented<TComponentViewEvents>).emit('hide')
 
 		this.afterHide()
