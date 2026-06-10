@@ -14,18 +14,20 @@ export class TLoaderPlugin extends TBasePlugin<TLoaderPluginEvents> {
 		return this._loader
 	}
 
-	setLoader(loader: ILoader): void {
-		this._loader = loader
+	set loader(value: ILoader) {
+		this._loader = value
 	}
 
 	override install(bundle: IPluginBundle): void {
 		const instancePlugin = bundle.get(TInstancePlugin) as TInstancePlugin<IControl> | undefined
 
-		const disableState = instancePlugin?.instance?.states?.disabled
+		if (!instancePlugin) return
+
+		const disableState = instancePlugin.instance!.states.disabled
 
 		if (disableState && this._loader) {
 			const loader = this._loader
-			disableState.setResolver((current) => current || loader.disabled)
+			disableState.setResolver((value) => value || loader.disabled)
 		}
 	}
 
