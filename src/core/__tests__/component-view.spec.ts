@@ -149,4 +149,29 @@ describe('TComponentView', () => {
 		expect(log).toContain('component-view:change:visible=true')
 
 	})
+
+	it('states.rendered доступен через instance.states и setResolver меняет возвращаемое значение', () => {
+		const c = new TComponentView({ rendered: true })
+
+		expect(c.states.rendered).toBeDefined()
+		expect(c.rendered).toBe(true)
+
+		// Резольвер всегда возвращает false, игнорируя реальное значение
+		c.states.rendered.setResolver(() => false)
+
+		expect(c.rendered).toBe(false) // резольвер переопределил
+		expect(c.states.rendered.rawValue).toBe(true) // сырое значение не изменилось
+	})
+
+	it('states.visible доступен через instance.states и setResolver меняет возвращаемое значение', () => {
+		const c = new TComponentView({ visible: true })
+
+		expect(c.states.visible).toBeDefined()
+		expect(c.visible).toBe(true)
+
+		c.states.visible.setResolver(() => false)
+
+		expect(c.visible).toBe(false)
+		expect(c.states.visible.rawValue).toBe(true)
+	})
 })

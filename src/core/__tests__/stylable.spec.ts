@@ -41,4 +41,28 @@ describe('TStylable', () => {
 		expect(stylable.size).toBe('sm')
 		expect(stylable.classes.toArray()).toContain('s-component-view--size-sm')
 	})
+
+	it('states.size доступен через instance.states и setResolver меняет size', () => {
+		const s = new TStylable<IStylableProps>({ size: 'normal' })
+
+		expect(s.states.size).toBeDefined()
+		expect(s.size).toBe('normal')
+
+		s.states.size.setResolver(() => 'xl' as TComponentSize)
+
+		expect(s.size).toBe('xl')
+		expect(s.states.size.rawValue).toBe('normal')
+	})
+
+	it('states.variant доступен через instance.states и setResolver меняет variant', () => {
+		const s = new TStylable<IStylableProps>({ variant: 'normal' })
+
+		expect(s.states.variant).toBeDefined()
+		expect(s.variant).toBe('normal')
+
+		s.states.variant.setResolver(() => 'accent')
+
+		expect(s.variant).toBe('accent')
+		expect(s.states.variant.rawValue).toBe('normal')
+	})
 })
