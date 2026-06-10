@@ -25,8 +25,8 @@ export default class TControl<
 		focused: false,
 	}
 
-	protected _disableable: IStateUnit<boolean>
-	protected _focusable: IStateUnit<boolean>
+	protected _disableState: IStateUnit<boolean>
+	protected _focusedState: IStateUnit<boolean>
 
 	constructor(options: IComponentViewOptions<TProps, TStates> | Partial<TProps> = {}) {
 		super(options)
@@ -41,39 +41,39 @@ export default class TControl<
 		const disabled = props.disabled ?? (ctor.defaultValues.disabled as boolean)
 		const focused = props.focused ?? (ctor.defaultValues.focused as boolean)
 
-		this._disableable = resolveState<IStateUnit<boolean>, boolean>({
-			state: states?.disableable,
+		this._disableState = resolveState<IStateUnit<boolean>, boolean>({
+			state: states?.disableState,
 			ctor: TStateUnit,
 			initial: disabled,
 		})
 
-		this._disableable.events.on('change', (payload: TValuePayload<boolean>) => {
+		this._disableState.events.on('change', (payload: TValuePayload<boolean>) => {
 			;(this.events as TEvented<TControlEvents>).emit('change:disabled', payload.newValue)
 		})
 
-		this._focusable = resolveState<IStateUnit<boolean>, boolean>({
-			state: states?.focusable,
+		this._focusedState = resolveState<IStateUnit<boolean>, boolean>({
+			state: states?.focusedState,
 			ctor: TStateUnit,
 			initial: focused,
 		})
 
-		this._focusable.events.on('change', (payload: TValuePayload<boolean>) => {
+		this._focusedState.events.on('change', (payload: TValuePayload<boolean>) => {
 			;(this.events as TEvented<TControlEvents>).emit('change:focused', payload.newValue)
 		})
 	}
 
 	get disabled(): boolean {
-		return this._disableable.value
+		return this._disableState.value
 	}
 	set disabled(value: boolean) {
-		this._disableable.value = value
+		this._disableState.value = value
 	}
 
 	get focused(): boolean {
-		return this._focusable.value
+		return this._focusedState.value
 	}
 	set focused(value: boolean) {
-		this._focusable.value = value
+		this._focusedState.value = value
 	}
 
 	click(event?: Event): void {

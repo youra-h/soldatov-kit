@@ -22,8 +22,8 @@ export interface IControlProps extends IStylableProps {
 }
 
 export type TControlStatesOptions = TStylableStatesOptions & {
-	disableable?: TStateCtor<IStateUnit<boolean>, boolean> | IStateUnit<boolean>
-	focusable?: TStateCtor<IStateUnit<boolean>, boolean> | IStateUnit<boolean>
+	disableState?: TStateCtor<IStateUnit<boolean>, boolean> | IStateUnit<boolean>
+	focusedState?: TStateCtor<IStateUnit<boolean>, boolean> | IStateUnit<boolean>
 }
 
 export interface IControl<

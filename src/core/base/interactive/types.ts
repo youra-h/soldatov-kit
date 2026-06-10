@@ -18,8 +18,8 @@ export interface IInteractiveProps extends IComponentViewProps {
 }
 
 export type TInteractiveStatesOptions = TComponentViewStatesOptions & {
-	disableable?: TStateCtor<IStateUnit<boolean>, boolean> | IStateUnit<boolean>
-	focusable?: TStateCtor<IStateUnit<boolean>, boolean> | IStateUnit<boolean>
+	disableState?: TStateCtor<IStateUnit<boolean>, boolean> | IStateUnit<boolean>
+	focusedState?: TStateCtor<IStateUnit<boolean>, boolean> | IStateUnit<boolean>
 }
 
 export interface IInteractive<

@@ -35,7 +35,7 @@ describe('TInteractive', () => {
 		expect(handler).toHaveBeenCalledWith(event)
 	})
 
-	it('states позволяет передать инстанс или класс для disableable-state', () => {
+	it('states позволяет передать инстанс или класс для disableState-state', () => {
 		const log: string[] = []
 
 		class TLoggedDisableableState extends TStateUnit<boolean> {
@@ -51,7 +51,7 @@ describe('TInteractive', () => {
 
 		// 1) instance
 		const instance = new TLoggedDisableableState(false, log)
-		const i1 = new TInteractive({ states: { disableable: instance } })
+		const i1 = new TInteractive({ states: { disableState: instance } })
 		i1.disabled = true
 		expect(log).toContain('disabled:true')
 
@@ -62,7 +62,7 @@ describe('TInteractive', () => {
 				super(initial, log)
 			}
 		}
-		const i2 = new TInteractive({ states: { disableable: CtorLogged } })
+		const i2 = new TInteractive({ states: { disableState: CtorLogged } })
 		i2.disabled = true
 		expect(log).toContain('disabled:true')
 	})
