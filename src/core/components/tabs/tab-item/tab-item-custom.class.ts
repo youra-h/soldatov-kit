@@ -11,7 +11,6 @@ import type {
 	TTabItemCustomStatesOptions,
 } from './types'
 import { TEvented } from '../../../common/evented'
-import { TTabClosableState } from './tab-closable.state'
 
 /**
  * Кастомная логика элемента таба (без коллекционной части).
@@ -37,7 +36,7 @@ export default class TTabItemCustom<
 	}
 
 	protected _textState: IStateUnit<string>
-	protected _closableState: TTabClosableState
+	protected _closableState: IStateUnit<boolean | undefined>
 
 	constructor(
 		options: IComponentViewOptions<TProps, TTabItemCustomStatesOptions> | Partial<TProps> = {},
@@ -61,9 +60,9 @@ export default class TTabItemCustom<
 			initial: customProps.text ?? ctor.defaultValues.text!,
 		})
 
-		this._closableState = resolveState<TTabClosableState, boolean | undefined>({
+		this._closableState = resolveState<IStateUnit<boolean | undefined>, boolean | undefined>({
 			state: states?.closable,
-			ctor: TTabClosableState,
+			ctor: TStateUnit,
 			initial: customProps.closable ?? ctor.defaultValues.closable,
 		})
 
@@ -100,7 +99,7 @@ export default class TTabItemCustom<
 	}
 
 	get closable(): boolean | undefined {
-		return this._closableState.resolved
+		return this._closableState.value
 	}
 
 	set closable(value: boolean | undefined) {
@@ -111,7 +110,9 @@ export default class TTabItemCustom<
 
 	/** Инжектируется из TTabs при добавлении таба в коллекцию */
 	setClosableParent(resolver: () => boolean): void {
-		this._closableState.setParentResolver(resolver)
+		;(this._closableState as TStateUnit<boolean | undefined>).setResolver(
+			(current) => current ?? resolver() ?? false,
+		)
 	}
 
 	/**
