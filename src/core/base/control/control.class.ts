@@ -66,14 +66,18 @@ export default class TControl<
 		return this._disableState.value
 	}
 	set disabled(value: boolean) {
-		this._disableState.value = value
+		if (this._disableState.value !== value) {
+			this._disableState.value = value
+		}
 	}
 
 	get focused(): boolean {
 		return this._focusedState.value
 	}
 	set focused(value: boolean) {
-		this._focusedState.value = value
+		if (this._focusedState.value !== value) {
+			this._focusedState.value = value
+		}
 	}
 
 	click(event?: Event): void {

@@ -13,9 +13,10 @@ import { type IStateUnit, TStateUnit } from '../../common/state-unit'
 import { TSpinner } from '../spinner'
 import { TIcon } from '../icon'
 
-export class TLoader<
-	TStates extends TLoaderStatesOptions = TLoaderStatesOptions,
-> extends TComponentModel<ILoaderProps, TLoaderEvents> implements ILoader {
+export class TLoader<TStates extends TLoaderStatesOptions = TLoaderStatesOptions>
+	extends TComponentModel<ILoaderProps, TLoaderEvents>
+	implements ILoader
+{
 	static defaultValues: Partial<ILoaderProps> = {
 		...TComponentModel.defaultValues,
 		type: 'spinner',
@@ -25,7 +26,7 @@ export class TLoader<
 	}
 
 	protected _type!: TLoaderType
-	protected _disabled: boolean
+	protected _disabledState: IStateUnit<boolean>
 	protected _indicator: boolean
 	protected _visibleState: IStateUnit<boolean>
 	private _ctrl?: TLoaderTypeIndicator
@@ -43,10 +44,20 @@ export class TLoader<
 
 		this._type = props.type ?? ctor.defaultValues.type!
 
-		this._disabled = props.disabled ?? ctor.defaultValues.disabled!
+		const disabled = props.disabled ?? ctor.defaultValues.disabled!
 		this._indicator = props.indicator ?? ctor.defaultValues.indicator!
 
 		this._updateLoader()
+
+		this._disabledState = resolveState<IStateUnit<boolean>, boolean>({
+			state: states?.disabled,
+			ctor: TStateUnit,
+			initial: disabled,
+		})
+
+		this._disabledState.events.on('change', (payload: TValuePayload<boolean>) => {
+			this.events.emit('change:disabled', payload.newValue)
+		})
 
 		this._visibleState = resolveState<IStateUnit<boolean>, boolean>({
 			state: states?.visible,
@@ -113,13 +124,12 @@ export class TLoader<
 	}
 
 	get disabled(): boolean {
-		return this._disabled
+		return this._disabledState.value
 	}
 
 	set disabled(value: boolean) {
-		if (this._disabled !== value) {
-			this._disabled = value
-			this.events.emit('change:disabled', value)
+		if (this._disabledState.value !== value) {
+			this._disabledState.value = value
 		}
 	}
 
@@ -155,7 +165,7 @@ export class TLoader<
 		return {
 			...super.getProps(),
 			type: this._type,
-			disabled: this._disabled,
+			disabled: this.disabled,
 			indicator: this._indicator,
 			visible: this.visible,
 		}

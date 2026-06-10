@@ -14,6 +14,7 @@ export type TLoaderTypeIndicator = ISpinner | IIcon | undefined
 
 export type TLoaderStatesOptions = {
 	visible?: TStateCtor<IStateUnit<boolean>, boolean> | IStateUnit<boolean>
+	disabled?: TStateCtor<IStateUnit<boolean>, boolean> | IStateUnit<boolean>
 }
 
 export interface ILoaderProps extends IComponentModelProps {
