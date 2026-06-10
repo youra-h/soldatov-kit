@@ -4,12 +4,12 @@ import { useSyncProps } from './useSyncProps'
 import Spinner from '../components/spinner/Spinner.vue'
 import Icon from '../components/icon/Icon.vue'
 
-export interface ILoaderHost extends Partial<ILoader> {
-	/** Vue-компонент для рендера. null — не нужно рендерить */
+export interface ILoaderContext {
+	loader: ILoader
 	component: Component | null
 }
 
-export const LOADER_KEY: InjectionKey<ILoaderHost> = Symbol('loader')
+export const LOADER_KEY: InjectionKey<ILoaderContext> = Symbol('loader')
 
 function resolveIndicatorComponent(type: TLoaderType): Component | null {
 	if (type === 'spinner') return Spinner
@@ -29,7 +29,6 @@ export function useProvideLoader(loader: ILoader): void {
 		disabled: () => loader.disabled,
 		indicator: () => loader.indicator,
 		type: () => loader.type,
-		// ctrl: { value: () => loader.ctrl, events: ['change:type', 'change:indicator'] },
 	})
 
 	const component = computed(() => {
@@ -38,21 +37,8 @@ export function useProvideLoader(loader: ILoader): void {
 	})
 
 	provide(LOADER_KEY, {
-		get ctrl() {
-			return loader.ctrl
-		},
-		get visible() {
-			return visible.value
-		},
-		get disabled() {
-			return loader.disabled
-		},
-		get indicator() {
-			return indicator.value
-		},
-		get component() {
-			return component.value
-		},
+		loader,
+		component: component.value,
 	})
 }
 
@@ -62,6 +48,6 @@ export function useProvideLoader(loader: ILoader): void {
  * Если провайдера нет, возвращает null. В этом случае компонент может не рендерить индикатор загрузки вообще или рендерить его в каком-то дефолтном виде.
  * @returns Данные для рендера индикатора загрузки и его состояния, или null если провайдера нет в иерархии компонентов
  */
-export function useInjectLoader(): ILoaderHost | null {
+export function useInjectLoader(): ILoaderContext | null {
 	return inject(LOADER_KEY, null)
 }

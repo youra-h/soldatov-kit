@@ -59,11 +59,11 @@ export function syncControl(
 
 	const { instance, props, emit, plugins } = options
 
-	const loader = useInjectLoader()
+	const { loader, component } = useInjectLoader() || {}
 
 	if (loader) {
 		plugins.use(TLoaderPlugin)
-		plugins.get(TLoaderPlugin)!.loader = loader
+		plugins.get(TLoaderPlugin)!.setContext(loader, component)
 	}
 
 	// Пробрасываем события core-инстанса наружу (Vue events).

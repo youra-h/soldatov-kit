@@ -5,7 +5,7 @@ import { useBundle } from '../../composables/useBundle'
 import { useElementBinding } from '../../composables/useElementBinding'
 import { useInstanceBinding } from '../../composables/useInstanceBinding'
 import BaseButton, { syncButton } from './base.component'
-import { createComponentViewBundle } from '@plugins'
+import { createComponentViewBundle, TLoaderPlugin } from '@plugins'
 import type { TBaseComponentViewProps } from '../component-view'
 
 export default {
@@ -27,9 +27,7 @@ export default {
 			emit,
 		})
 
-
-
-		return {
+		const result = {
 			instance,
 			plugins,
 			rootRef,
@@ -39,8 +37,18 @@ export default {
 			disabled,
 			classes,
 			text,
-			loader,
 		}
+
+		const loaderPlugin = plugins.get(TLoaderPlugin)
+
+		if (loaderPlugin) {
+			result.loader = {
+				ctrl: loaderPlugin.loader,
+				component: loaderPlugin.component,
+			}
+		}
+
+		return result
 	},
 }
 </script>
@@ -59,7 +67,12 @@ export default {
 		<slot>{{ text }}</slot>
 		<slot name="trailing"> </slot>
 		<slot name="loader">
-			<Component :is="loader?.component" v-if="loader?.component" :ctrl="loader?.ctrl" />
+			{{ console.log(loader) }}
+			<Component
+				:is="loader?.component"
+				v-if="loader?.component"
+				:ctrl="loader?.ctrl"
+			/>
 		</slot>
 	</component>
 </template>
