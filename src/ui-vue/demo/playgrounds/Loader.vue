@@ -11,7 +11,7 @@ const propertiesSchema: TPropertiesSchema = {
 	visible: { type: 'boolean', default: true },
 	size: { type: 'select', default: 'normal', options: SIZES },
 	variant: { type: 'select', default: 'normal', options: VARIANTS },
-	block: { type: 'boolean', default: true },
+	disabled: { type: 'boolean', default: true },
 	indicator: { type: 'boolean', default: true },
 }
 
@@ -19,13 +19,13 @@ const componentProps = ref<{
 	visible: boolean
 	size: TComponentSize
 	variant: TComponentVariant
-	block: boolean
+	disabled: boolean
 	indicator: boolean
 }>({
 	visible: true,
 	size: 'normal',
 	variant: 'normal',
-	block: true,
+	disabled: true,
 	indicator: true,
 })
 </script>
@@ -41,7 +41,7 @@ const componentProps = ref<{
 				:visible="componentProps.visible"
 				:size="componentProps.size"
 				:variant="componentProps.variant"
-				:block="componentProps.block"
+				:disabled="componentProps.disabled"
 				:indicator="componentProps.indicator"
 			/>
 		</template>

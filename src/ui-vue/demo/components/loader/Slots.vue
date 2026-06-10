@@ -9,7 +9,7 @@ type Props = {
 	visible?: boolean
 	size?: TComponentSize
 	variant?: TComponentVariant
-	block?: boolean
+	disabled?: boolean
 	indicator?: boolean
 }
 
@@ -20,7 +20,7 @@ const loaderInstance = new TLoader({ visible: true, type: 'spinner' })
 watch(() => props.visible, (v) => { if (v !== undefined) loaderInstance.visible = v })
 watch(() => props.size, (v) => { if (v !== undefined) loaderInstance.size = v })
 watch(() => props.variant, (v) => { if (v !== undefined) loaderInstance.variant = v })
-watch(() => props.block, (v) => { if (v !== undefined) loaderInstance.block = v })
+watch(() => props.disabled, (v) => { if (v !== undefined) loaderInstance.disabled = v })
 watch(() => props.indicator, (v) => { if (v !== undefined) loaderInstance.indicator = v })
 </script>
 
@@ -31,14 +31,14 @@ watch(() => props.indicator, (v) => { if (v !== undefined) loaderInstance.indica
 			дизейблится и показывает индикатор загрузки в слоте #loader.
 		</p>
 
-		<!-- Default: spinner + block -->
+		<!-- Default: spinner + disabled -->
 		<section class="loader-slots-demo__section">
-			<h3 class="loader-slots-demo__title">Default (spinner + block)</h3>
+			<h3 class="loader-slots-demo__title">Default (spinner + disabled)</h3>
 			<Loader
 				:visible="visible"
 				:size="size"
 				:variant="variant"
-				:block="block"
+				:disabled="disabled"
 				:indicator="indicator"
 			>
 				<Button>Processing...</Button>

@@ -14,8 +14,11 @@ export default {
 	extends: BaseButton,
 	setup(props: TBaseComponentViewProps<IButtonProps, IButton>, { emit }) {
 		const instance = useInstance(TButton, props)
+
 		const plugins = useBundle(createComponentViewBundle, props?.plugins)
+
 		useInstanceBinding(plugins, instance)
+
 		const rootRef = useElementBinding(plugins)
 
 		const { tag, rendered, visible, classes, disabled, text } = syncButton({

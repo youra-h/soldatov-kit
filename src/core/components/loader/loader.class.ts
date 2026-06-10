@@ -16,13 +16,13 @@ export class TLoader extends TComponentModel<ILoaderProps, TLoaderEvents> implem
 	static defaultValues: Partial<ILoaderProps> = {
 		...TComponentModel.defaultValues,
 		type: 'spinner',
-		block: true,
+		disabled: true,
 		indicator: true,
 		visible: true,
 	}
 
 	protected _type!: TLoaderType
-	protected _block: boolean
+	protected _disabled: boolean
 	protected _indicator: boolean
 	protected _visibleState: IStateUnit<boolean>
 	private _ctrl?: TLoaderTypeIndicator
@@ -36,7 +36,7 @@ export class TLoader extends TComponentModel<ILoaderProps, TLoaderEvents> implem
 
 		this._type = props.type ?? ctor.defaultValues.type!
 
-		this._block = props.block ?? ctor.defaultValues.block!
+		this._disabled = props.disabled ?? ctor.defaultValues.disabled!
 		this._indicator = props.indicator ?? ctor.defaultValues.indicator!
 
 		this._updateLoader()
@@ -105,14 +105,14 @@ export class TLoader extends TComponentModel<ILoaderProps, TLoaderEvents> implem
 		}
 	}
 
-	get block(): boolean {
-		return this._block
+	get disabled(): boolean {
+		return this._disabled
 	}
 
-	set block(value: boolean) {
-		if (this._block !== value) {
-			this._block = value
-			this.events.emit('change:block', value)
+	set disabled(value: boolean) {
+		if (this._disabled !== value) {
+			this._disabled = value
+			this.events.emit('change:disabled', value)
 		}
 	}
 
@@ -148,7 +148,7 @@ export class TLoader extends TComponentModel<ILoaderProps, TLoaderEvents> implem
 		return {
 			...super.getProps(),
 			type: this._type,
-			block: this._block,
+			disabled: this._disabled,
 			indicator: this._indicator,
 			visible: this.visible,
 		}

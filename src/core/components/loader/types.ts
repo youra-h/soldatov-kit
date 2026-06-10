@@ -18,7 +18,7 @@ export interface ILoaderProps extends IComponentModelProps {
 	/** Вариант индикатора */
 	variant?: TComponentVariant
 	/** Дизейблить дочерние контролы при загрузке */
-	block?: boolean
+	disabled?: boolean
 	/** Показывать индикатор при загрузке */
 	indicator?: boolean
 	/** Видим ли компонент */
@@ -30,7 +30,7 @@ export type TLoaderEvents = TComponentModelEvents & {
 	'change:type': (value: TLoaderType) => void
 	'change:size': (payload: TValuePayload<TComponentSize>) => void
 	'change:variant': (payload: TValuePayload<TComponentVariant>) => void
-	'change:block': (value: boolean) => void
+	'change:disabled': (value: boolean) => void
 	'change:indicator': (value: boolean) => void
 }
 
@@ -44,7 +44,7 @@ export interface ILoader extends IComponentModel<ILoaderProps, TLoaderEvents> {
 	/** Видим ли компонент */
 	visible: boolean
 	/** Дизейблить дочерние контролы при загрузке */
-	block: boolean
+	disabled: boolean
 	/** Показывать индикатор при загрузке */
 	indicator: boolean
 	/** Экземпляр индикатора (TSpinner, TIcon, ...) или undefined если не активен */

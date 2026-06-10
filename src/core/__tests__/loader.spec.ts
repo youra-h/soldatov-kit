@@ -9,7 +9,7 @@ describe('TLoader', () => {
 	it('создаётся с дефолтными значениями', () => {
 		const l = new TLoader()
 		expect(l.type).toBe('spinner')
-		expect(l.block).toBe(true)
+		expect(l.disabled).toBe(true)
 		expect(l.indicator).toBe(true)
 		expect(l.visible).toBe(true)
 		expect(l.ctrl).toBeInstanceOf(TSpinner)
@@ -17,19 +17,19 @@ describe('TLoader', () => {
 
 	it('создаётся через { props }', () => {
 		const l = new TLoader({
-			props: { type: 'icon', block: false, indicator: false, visible: false },
+			props: { type: 'icon', disabled: false, indicator: false, visible: false },
 		})
 		expect(l.type).toBe('icon')
-		expect(l.block).toBe(false)
+		expect(l.disabled).toBe(false)
 		expect(l.indicator).toBe(false)
 		expect(l.visible).toBe(false)
 		expect(l.ctrl).toBeUndefined()
 	})
 
 	it('создаётся через plain props', () => {
-		const l = new TLoader({ type: 'skeleton', block: false, visible: false })
+		const l = new TLoader({ type: 'skeleton', disabled: false, visible: false })
 		expect(l.type).toBe('skeleton')
-		expect(l.block).toBe(false)
+		expect(l.disabled).toBe(false)
 		expect(l.visible).toBe(false)
 	})
 
@@ -123,24 +123,24 @@ describe('TLoader', () => {
 		expect(l.variant).toBeUndefined()
 	})
 
-	// --- block ---
+	// --- disabled ---
 
-	it('block: геттер/сеттер и событие change:block', () => {
-		const l = new TLoader({ block: false })
+	it('disabled: геттер/сеттер и событие change:disabled', () => {
+		const l = new TLoader({ disabled: false })
 		const spy = vi.fn()
-		l.events.on('change:block', spy)
+		l.events.on('change:disabled', spy)
 
-		l.block = true
-		expect(l.block).toBe(true)
+		l.disabled = true
+		expect(l.disabled).toBe(true)
 		expect(spy).toHaveBeenCalledWith(true)
 	})
 
-	it('block: повторная установка того же значения не эмитит', () => {
-		const l = new TLoader({ block: true })
+	it('disabled: повторная установка того же значения не эмитит', () => {
+		const l = new TLoader({ disabled: true })
 		const spy = vi.fn()
-		l.events.on('change:block', spy)
+		l.events.on('change:disabled', spy)
 
-		l.block = true
+		l.disabled = true
 		expect(spy).not.toHaveBeenCalled()
 	})
 

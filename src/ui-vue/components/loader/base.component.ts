@@ -25,8 +25,8 @@ export const emitsLoader: TEmits = [
 	'update:variant',
 	'change:loader',
 	'update:loader',
-	'change:block',
-	'update:block',
+	'change:disabled',
+	'update:disabled',
 	'change:indicator',
 	'update:indicator',
 ] as const
@@ -49,9 +49,9 @@ export const propsLoader: TProps = {
 		type: String as PropType<TComponentVariant>,
 		default: TLoader.defaultValues.variant,
 	},
-	block: {
-		type: Boolean as PropType<ILoaderProps['block']>,
-		default: TLoader.defaultValues.block,
+	disabled: {
+		type: Boolean as PropType<ILoaderProps['disabled']>,
+		default: TLoader.defaultValues.disabled,
 	},
 	indicator: {
 		type: Boolean as PropType<ILoaderProps['indicator']>,
@@ -70,7 +70,7 @@ export interface ILoaderState {
 	type: Ref<TLoaderType>
 	size: Ref<TComponentSize>
 	variant: Ref<TComponentVariant>
-	block: Ref<boolean>
+	disabled: Ref<boolean>
 	indicator: Ref<boolean>
 }
 
@@ -97,9 +97,9 @@ export function syncLoader(options: ISyncComponentModelOptions<ILoaderProps, ILo
 		emit?.('update:variant', payload)
 	})
 
-	instance.events.on('change:block', (value: boolean) => {
-		emit?.('change:block', value)
-		emit?.('update:block', value)
+	instance.events.on('change:disabled', (value: boolean) => {
+		emit?.('change:disabled', value)
+		emit?.('update:disabled', value)
 	})
 	instance.events.on('change:indicator', (value: boolean) => {
 		emit?.('change:indicator', value)
@@ -144,10 +144,10 @@ export function syncLoader(options: ISyncComponentModelOptions<ILoaderProps, ILo
 	)
 
 	watch<boolean | undefined>(
-		() => props.block,
+		() => props.disabled,
 		(value) => {
-			if (value !== undefined && value !== instance.block) {
-				instance.block = value
+			if (value !== undefined && value !== instance.disabled) {
+				instance.disabled = value
 			}
 		},
 	)
@@ -166,7 +166,7 @@ export function syncLoader(options: ISyncComponentModelOptions<ILoaderProps, ILo
 			type: () => instance.type,
 			size: () => instance.size,
 			variant: () => instance.variant,
-			block: () => instance.block,
+			disabled: () => instance.disabled,
 			indicator: () => instance.indicator,
 		}),
 	}
