@@ -14,7 +14,7 @@ describe('TTabItemCustom', () => {
 		it('creates tab item with default values', () => {
 			expect(item.text).toBe('')
 			expect(item.value).toBe('')
-			expect(item.closable).toBe(false)
+			expect(item.closable).toBeUndefined()
 		})
 
 		it('creates tab item with custom props', () => {

@@ -103,7 +103,7 @@ export default class TTabItemCustom<
 	}
 
 	set closable(value: boolean | undefined) {
-		if (this._closableState.value === value || this.disabled) return
+		if (this._closableState.rawValue === value || this.disabled) return
 
 		this._closableState.value = value
 	}
