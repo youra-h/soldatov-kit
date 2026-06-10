@@ -1,5 +1,6 @@
 import type { IEntity } from '../entity'
 import { TEvented } from '../../common/evented'
+import type { IStateUnit } from '../../common/state-unit'
 
 export type TComponentModelEvents = {
 	/** Создан (после конструктора, async). */
@@ -17,9 +18,11 @@ export interface IComponentModelMethods {
 export interface IComponentModel<
 	TProps extends IComponentModelProps = IComponentModelProps,
 	TEvents extends Record<string, (...args: any) => any> = TComponentModelEvents,
+	TStates extends Record<string, IStateUnit<any>> = Record<string, IStateUnit<any>>,
 >
 	extends IEntity<TProps>, IComponentModelMethods {
 	readonly events: TEvented<TEvents>
+	readonly states: Required<TStates>
 }
 
 /**

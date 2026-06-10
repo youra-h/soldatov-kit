@@ -5,13 +5,14 @@ import type {
 	IComponentModelProps,
 	TComponentModelEvents,
 } from '../component-model'
-import type { IVisibilityState, TVisibilityStateCtor } from '../../common/states'
+import type { IStateUnit } from '../../common/state-unit'
+import type { IVisibilityState } from '../../common/states'
 
 export type TComponentViewStatesOptions = {
 	/** Класс state для `rendered`. */
-	rendered?: TVisibilityStateCtor | IVisibilityState
+	rendered?: IStateUnit<boolean>
 	/** Класс state для `visible`. */
-	visible?: TVisibilityStateCtor | IVisibilityState
+	visible?: IVisibilityState
 }
 
 export type TComponentViewEvents = TComponentModelEvents & {
@@ -54,8 +55,7 @@ export interface IComponentViewProps extends IComponentModelProps {
 export interface IComponentViewOptions<
 	TProps extends IComponentViewProps = IComponentViewProps,
 	TStates extends TComponentViewStatesOptions = TComponentViewStatesOptions,
-> extends IComponentModelOptions<TProps, TStates> {
-}
+> extends IComponentModelOptions<TProps, TStates> {}
 
 /**
  * Результат нормализации опций component-view-слоя.
@@ -71,7 +71,8 @@ export type TComponentViewPreparedOptions<
 export interface IComponentView<
 	TProps extends IComponentViewProps = IComponentViewProps,
 	TEvents extends Record<string, (...args: any) => any> = TComponentViewEvents,
-> extends IComponentModel<TProps, TEvents> {
+	TStates extends TComponentViewStatesOptions = TComponentViewStatesOptions,
+> extends IComponentModel<TProps, TEvents, TStates> {
 	/** HTML-тег или компонент */
 	tag: string | object
 	/** Отрисован в DOM */

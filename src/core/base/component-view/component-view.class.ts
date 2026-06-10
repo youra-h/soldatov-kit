@@ -23,7 +23,7 @@ export default class TComponentView<
 	TProps extends IComponentViewProps = IComponentViewProps,
 	TEvents extends TComponentViewEvents = TComponentViewEvents,
 	TStates extends TComponentViewStatesOptions = TComponentViewStatesOptions,
-> extends TComponentModel<TProps, TEvents> {
+> extends TComponentModel<TProps, TEvents, TStates> {
 	/** Базовый CSS-класс по умолчанию (можно переопределить в наследниках). */
 	static baseClass = 's-component-view'
 
@@ -54,8 +54,7 @@ export default class TComponentView<
 		const visible = props.visible ?? (ctor.defaultValues.visible as boolean)
 
 		this._states.rendered = states?.rendered ?? new TStateUnit<boolean>({ initial: rendered })
-		this._states.visible =
-			states?.visible ?? new TVisibilityState({ initial: visible })
+		this._states.visible = states?.visible ?? new TVisibilityState({ initial: visible })
 
 		this._states.rendered.events.on('change', (payload: TValuePayload<boolean>) =>
 			(this.events as TEvented<TComponentViewEvents>).emit(

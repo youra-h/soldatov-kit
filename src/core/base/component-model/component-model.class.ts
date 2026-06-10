@@ -17,16 +17,17 @@ import type {
 export default class TComponentModel<
 	TProps extends IComponentModelProps = IComponentModelProps,
 	TEvents extends TComponentModelEvents = TComponentModelEvents,
+	TStates extends Record<string, IStateUnit<any>> = Record<string, IStateUnit<any>>,
 >
 	extends TEntity<TProps>
-	implements IComponentModel<TProps, TEvents>
+	implements IComponentModel<TProps, TEvents, TStates>
 {
 	static defaultValues: Partial<IComponentModelProps> = {
 		id: '',
 	}
 
 	protected _id: string | number
-	protected _states: Record<string, IStateUnit<any>> = {}
+	protected _states = {} as Required<TStates>
 	public readonly events: TEvented<TEvents>
 
 	constructor(options: IComponentModelOptions<TProps> | Partial<TProps> = {}) {
@@ -96,7 +97,7 @@ export default class TComponentModel<
 		return new this({ props: props ?? {} })
 	}
 
-	get states(): Record<string, IStateUnit<any>> {
+	get states(): Required<TStates> {
 		return this._states
 	}
 
