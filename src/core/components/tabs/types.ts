@@ -2,7 +2,7 @@ import type {
 	IControl,
 	IControlProps,
 	TControlEvents,
-	TControlStatesOptions,
+	TControlStates,
 } from '../../base/control'
 import type {} from '../../common/types'
 import type {
@@ -51,7 +51,7 @@ export interface ITabsProps extends IControlProps {
 	closable?: boolean
 }
 
-export type TTabsStatesOptions = TControlStatesOptions
+export type TTabsStates = TControlStates
 
 export interface ITabs extends IControl<ITabsProps, TTabsEvents> {
 	/** Ориентация табов */

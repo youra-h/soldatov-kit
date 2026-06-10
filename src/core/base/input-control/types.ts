@@ -2,7 +2,7 @@ import type {
 	IValueControl,
 	IValueControlProps,
 	TValueControlEvents,
-	TValueControlStatesOptions,
+	TValueControlStates,
 } from '../value-control'
 
 export type TInputControlState = 'normal' | 'positive' | 'caution' | 'error'
@@ -21,7 +21,7 @@ export interface IInputControlProps<T = string> extends IValueControlProps<T> {
 	state?: TInputControlState
 }
 
-export type TInputControlStatesOptions<TValue = string> = TValueControlStatesOptions<TValue>
+export type TInputControlStates<TValue = string> = TValueControlStates<TValue>
 
 export interface IInputControl<
 	T,

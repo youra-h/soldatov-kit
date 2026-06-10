@@ -8,7 +8,7 @@ import type {
 	ICollapse,
 	ICollapseProps,
 	TCollapseEvents,
-	TCollapseStatesOptions,
+	TCollapseStates,
 	TCollapseAppearance,
 } from './types'
 import { TEvented } from '../../common/evented'
@@ -17,7 +17,7 @@ import { type TValuePayload } from '../../common/types'
 import type { TComponentSize, TComponentVariant } from '../../common/types'
 
 export class TCollapse
-	extends TControl<ICollapseProps, TCollapseEvents, TCollapseStatesOptions>
+	extends TControl<ICollapseProps, TCollapseEvents, TCollapseStates>
 	implements ICollapse
 {
 	static override baseClass = 's-collapse'
@@ -33,7 +33,7 @@ export class TCollapse
 
 	constructor(
 		options:
-			| IComponentViewOptions<ICollapseProps, TCollapseStatesOptions>
+			| IComponentViewOptions<ICollapseProps, TCollapseStates>
 			| Partial<ICollapseProps> = {},
 	) {
 		super(options)
@@ -42,7 +42,7 @@ export class TCollapse
 
 		const { props = {} } = TComponentView.prepareOptions<
 			ICollapseProps,
-			TCollapseStatesOptions
+			TCollapseStates
 		>(options)
 
 		this._collection = new TSelectableCollection<any, any, ICollapseItem>({

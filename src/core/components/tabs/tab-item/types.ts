@@ -2,10 +2,9 @@ import type {
 	IValueControl,
 	IValueControlProps,
 	TValueControlEvents,
-	TValueControlStatesOptions,
+	TValueControlStates,
 } from '../../../base/value-control'
 import type { IStateUnit } from '../../../common/state-unit'
-import type { TStateCtor } from '../../../common/states'
 import type {
 	IActivatableCollectionItemProps,
 	TActivatableItemEvents,
@@ -32,11 +31,9 @@ export interface ITabItemCustomProps extends IValueControlProps<string | number>
 	closable?: boolean
 }
 
-export type TTabItemCustomStatesOptions = TValueControlStatesOptions<string | number> & {
-	text?: TStateCtor<IStateUnit<string>, string> | IStateUnit<string>
-	closable?:
-		| TStateCtor<IStateUnit<boolean | undefined>, boolean | undefined>
-		| IStateUnit<boolean | undefined>
+export type TTabItemCustomStates = TValueControlStates<string | number> & {
+	text: IStateUnit<string>
+	closable: IStateUnit<boolean | undefined>
 }
 
 /**
@@ -59,7 +56,7 @@ export interface ITabItemCustom<
 // ============ TTabItem (коллекционный элемент с композицией) ============
 
 export type ITabItemOptions = TCollectableOptions<
-	IComponentViewOptions<ITabItemProps, TTabItemCustomStatesOptions>
+	IComponentViewOptions<ITabItemProps, TTabItemCustomStates>
 >
 
 export type TTabItemEvents = TActivatableItemEvents<ITabItem> & TTabItemCustomEvents<ITabItem>

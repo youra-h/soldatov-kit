@@ -1,6 +1,6 @@
 import type { TComponentSize, TComponentVariant } from '../../common/types'
 import { TComponentView, type IComponentViewOptions } from '../component-view'
-import type { IStylableProps, TStylableEvents, TStylableStatesOptions } from './types'
+import type { IStylableProps, TStylableEvents, TStylableStates } from './types'
 import { TStateUnit } from '../../common/state-unit'
 import { type TValuePayload } from '../../common/types'
 import { TEvented } from '../../common/evented'
@@ -14,7 +14,7 @@ import { TEvented } from '../../common/evented'
 export default class TStylable<
 	TProps extends IStylableProps = IStylableProps,
 	TEvents extends TStylableEvents = TStylableEvents,
-	TStates extends TStylableStatesOptions = TStylableStatesOptions,
+	TStates extends TStylableStates = TStylableStates,
 > extends TComponentView<TProps, TEvents, TStates> {
 	static defaultValues: Partial<IStylableProps> = {
 		...TComponentView.defaultValues,

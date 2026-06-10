@@ -2,11 +2,10 @@ import type {
 	IComponentView,
 	IComponentViewProps,
 	TComponentViewEvents,
-	TComponentViewStatesOptions,
+	TComponentViewStates,
 } from '../../base/component-view'
 import type { TComponentSize, TComponentVariant, TValuePayload } from '../../common/types'
 import type { IStateUnit } from '../../common/state-unit'
-import type { TStateCtor } from '../../common/states'
 
 export interface ISpinnerProps extends IComponentViewProps {
 	// Размер компонента
@@ -17,9 +16,9 @@ export interface ISpinnerProps extends IComponentViewProps {
 	borderWidth?: number | 'auto'
 }
 
-export type TSpinnerStatesOptions = TComponentViewStatesOptions & {
-	size?: TStateCtor<IStateUnit<TComponentSize>, TComponentSize> | IStateUnit<TComponentSize>
-	variant?: TStateCtor<IStateUnit<TComponentVariant>, TComponentVariant> | IStateUnit<TComponentVariant>
+export type TSpinnerStates = TComponentViewStates & {
+	size: IStateUnit<TComponentSize>
+	variant: IStateUnit<TComponentVariant>
 }
 
 export type TSpinnerEvents = TComponentViewEvents & {

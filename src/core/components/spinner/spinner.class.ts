@@ -1,12 +1,12 @@
 import { TComponentView, type IComponentViewOptions } from '../../base/component-view'
 import type { TComponentSize, TComponentVariant } from '../../common/types'
-import type { ISpinner, ISpinnerProps, TSpinnerEvents, TSpinnerStatesOptions } from './types'
+import type { ISpinner, ISpinnerProps, TSpinnerEvents, TSpinnerStates } from './types'
 import { TStateUnit } from '../../common/state-unit'
 import type { TValuePayload } from '../../common/types'
 import { TEvented } from '../../common/evented'
 
 export default class TSpinner
-	extends TComponentView<ISpinnerProps, TSpinnerEvents, TSpinnerStatesOptions>
+	extends TComponentView<ISpinnerProps, TSpinnerEvents, TSpinnerStates>
 	implements ISpinner
 {
 	static override baseClass = 's-spinner'
@@ -23,7 +23,7 @@ export default class TSpinner
 
 	constructor(
 		options:
-			| IComponentViewOptions<ISpinnerProps, TSpinnerStatesOptions>
+			| IComponentViewOptions<ISpinnerProps, TSpinnerStates>
 			| Partial<ISpinnerProps> = {},
 	) {
 		super(options)
@@ -32,7 +32,7 @@ export default class TSpinner
 
 		const { props = {} as Partial<ISpinnerProps>, states } = TComponentView.prepareOptions<
 			ISpinnerProps,
-			TSpinnerStatesOptions
+			TSpinnerStates
 		>(options)
 
 		this._states.size =

@@ -10,7 +10,7 @@ import type {
 	ITabs,
 	ITabsProps,
 	TTabsEvents,
-	TTabsStatesOptions,
+	TTabsStates,
 	TTabsOrientation,
 	TTabsAlignment,
 	TTabsPosition,
@@ -22,7 +22,7 @@ import { TEvented } from '../../common/evented'
  * Компонент табов (TTabs).
  * Управляет коллекцией табов с поддержкой активности.
  */
-export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions> implements ITabs {
+export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStates> implements ITabs {
 	static override baseClass = 's-tabs'
 
 	static defaultValues: Partial<ITabsProps> = {
@@ -46,13 +46,13 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStatesOptions>
 	protected _collection: TActivatableCollection<any, any, ITabItem>
 
 	constructor(
-		options: IComponentViewOptions<ITabsProps, TTabsStatesOptions> | Partial<ITabsProps> = {},
+		options: IComponentViewOptions<ITabsProps, TTabsStates> | Partial<ITabsProps> = {},
 	) {
 		super(options)
 
 		const ctor = new.target as typeof TTabs
 
-		const { props = {} } = TComponentView.prepareOptions<ITabsProps, TTabsStatesOptions>(
+		const { props = {} } = TComponentView.prepareOptions<ITabsProps, TTabsStates>(
 			options,
 		)
 

@@ -2,7 +2,7 @@ import type {
 	IControl,
 	IControlProps,
 	TControlEvents,
-	TControlStatesOptions,
+	TControlStates,
 } from '../../base/control'
 import type {
 	TSelectableCollection,
@@ -29,7 +29,7 @@ export interface ICollapseProps extends IControlProps {
 	mode?: TSelectionMode
 }
 
-export type TCollapseStatesOptions = TControlStatesOptions
+export type TCollapseStates = TControlStates
 
 export interface ICollapse extends IControl<ICollapseProps, TCollapseEvents> {
 	/** Внешний вид компонента */

@@ -3,7 +3,7 @@ import type {
 	ILoader,
 	ILoaderProps,
 	TLoaderEvents,
-	TLoaderStatesOptions,
+	TLoaderStates,
 	TLoaderType,
 	TLoaderTypeIndicator,
 } from './types'
@@ -12,7 +12,7 @@ import { TStateUnit } from '../../common/state-unit'
 import { TSpinner } from '../spinner'
 import { TIcon } from '../icon'
 
-export class TLoader<TStates extends TLoaderStatesOptions = TLoaderStatesOptions>
+export class TLoader<TStates extends TLoaderStates = TLoaderStates>
 	extends TComponentModel<ILoaderProps, TLoaderEvents>
 	implements ILoader
 {

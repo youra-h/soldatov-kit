@@ -1,6 +1,5 @@
-import type { IControl, IControlProps, TControlEvents, TControlStatesOptions } from '../control'
+import type { IControl, IControlProps, TControlEvents, TControlStates } from '../control'
 import type { IStateUnit } from '../../common/state-unit'
-import type { TStateCtor } from '../../common/states'
 import { type TValuePayload } from '../../common/types'
 
 export type TTextableEvents = TControlEvents & {
@@ -13,8 +12,8 @@ export interface ITextableProps extends IControlProps {
 	text?: string
 }
 
-export type TTextableStatesOptions = TControlStatesOptions & {
-	text?: TStateCtor<IStateUnit<string>, string> | IStateUnit<string>
+export type TTextableStates = TControlStates & {
+	text: IStateUnit<string>
 }
 
 export interface ITextable<

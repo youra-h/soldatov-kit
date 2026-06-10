@@ -2,10 +2,9 @@ import type {
 	IStylable,
 	IStylableProps,
 	TStylableEvents,
-	TStylableStatesOptions,
+	TStylableStates,
 } from '../stylable'
 import type { IStateUnit } from '../../common/state-unit'
-import type { TStateCtor } from '../../common/states'
 
 export type TControlEvents = TStylableEvents & {
 	/** change:disabled */
@@ -21,9 +20,9 @@ export interface IControlProps extends IStylableProps {
 	focused?: boolean
 }
 
-export type TControlStatesOptions = TStylableStatesOptions & {
-	disableState?: TStateCtor<IStateUnit<boolean>, boolean> | IStateUnit<boolean>
-	focusedState?: TStateCtor<IStateUnit<boolean>, boolean> | IStateUnit<boolean>
+export type TControlStates = TStylableStates & {
+	disabled: IStateUnit<boolean>
+	focused: IStateUnit<boolean>
 }
 
 export interface IControl<

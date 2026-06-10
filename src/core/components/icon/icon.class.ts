@@ -1,5 +1,5 @@
 import { TComponentView } from '../../base/component-view'
-import type { IIcon, IIconProps, TIconEvents, TIconStatesOptions } from './types'
+import type { IIcon, IIconProps, TIconEvents, TIconStates } from './types'
 import type { TComponentSize } from '../../common/types'
 import type { IComponentViewOptions } from '../../base/component-view'
 import { TStateUnit } from '../../common/state-unit'
@@ -7,7 +7,7 @@ import type { TValuePayload } from '../../common/types'
 import { TEvented } from '../../common/evented'
 
 export default class TIcon
-	extends TComponentView<IIconProps, TIconEvents, TIconStatesOptions>
+	extends TComponentView<IIconProps, TIconEvents, TIconStates>
 	implements IIcon
 {
 	static override baseClass = 's-icon'
@@ -22,7 +22,7 @@ export default class TIcon
 	protected _height: string | number | undefined
 
 	constructor(
-		options: IComponentViewOptions<IIconProps, TIconStatesOptions> | Partial<IIconProps> = {},
+		options: IComponentViewOptions<IIconProps, TIconStates> | Partial<IIconProps> = {},
 	) {
 		super(options)
 
@@ -30,7 +30,7 @@ export default class TIcon
 
 		const { props = {} as Partial<IIconProps>, states } = TComponentView.prepareOptions<
 			IIconProps,
-			TIconStatesOptions
+			TIconStates
 		>(options)
 
 		this._states.size =

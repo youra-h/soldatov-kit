@@ -7,14 +7,13 @@ import type { TComponentSize, TComponentVariant, TValuePayload } from '../../com
 import type { ISpinner } from '../spinner'
 import type { IIcon } from '../icon'
 import type { IStateUnit } from '../../common/state-unit'
-import type { TStateCtor } from '../../common/states'
 
 export type TLoaderType = 'icon' | 'spinner' | 'skeleton'
 export type TLoaderTypeIndicator = ISpinner | IIcon | undefined
 
-export type TLoaderStatesOptions = {
-	visible?: TStateCtor<IStateUnit<boolean>, boolean> | IStateUnit<boolean>
-	disabled?: TStateCtor<IStateUnit<boolean>, boolean> | IStateUnit<boolean>
+export type TLoaderStates = {
+	visible: IStateUnit<boolean>
+	disabled: IStateUnit<boolean>
 }
 
 export interface ILoaderProps extends IComponentModelProps {

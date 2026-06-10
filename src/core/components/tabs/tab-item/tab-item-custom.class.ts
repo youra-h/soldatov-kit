@@ -7,7 +7,7 @@ import type {
 	ITabItemCustom,
 	ITabItemCustomProps,
 	TTabItemCustomEvents,
-	TTabItemCustomStatesOptions,
+	TTabItemCustomStates,
 } from './types'
 import { TEvented } from '../../../common/evented'
 
@@ -20,7 +20,7 @@ export default class TTabItemCustom<
 	TProps extends ITabItemCustomProps = ITabItemCustomProps,
 	TEvents extends TTabItemCustomEvents<any> = TTabItemCustomEvents,
 >
-	extends TValueControl<string | number, TProps, TEvents, TTabItemCustomStatesOptions>
+	extends TValueControl<string | number, TProps, TEvents, TTabItemCustomStates>
 	implements ITabItemCustom<TProps>
 {
 	static override baseClass = 's-tab-item'
@@ -35,7 +35,7 @@ export default class TTabItemCustom<
 	}
 
 	constructor(
-		options: IComponentViewOptions<TProps, TTabItemCustomStatesOptions> | Partial<TProps> = {},
+		options: IComponentViewOptions<TProps, TTabItemCustomStates> | Partial<TProps> = {},
 	) {
 		super(options)
 
@@ -43,7 +43,7 @@ export default class TTabItemCustom<
 
 		const { props = {}, states } = TComponentView.prepareOptions<
 			TProps,
-			TTabItemCustomStatesOptions
+			TTabItemCustomStates
 		>(options)
 
 		// Type assertion: TProps extends ITabItemCustomProps, поэтому props содержит text и closable

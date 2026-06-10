@@ -2,7 +2,7 @@ import { TStateUnit } from '../../common/state-unit'
 import { TComponentView } from '../component-view'
 import type { IComponentViewOptions } from '../component-view'
 import { TStylable } from '../stylable'
-import type { IControlProps, TControlEvents, TControlStatesOptions } from './types'
+import type { IControlProps, TControlEvents, TControlStates } from './types'
 import { type TValuePayload } from '../../common/types'
 import { TEvented } from '../../common/evented'
 
@@ -16,8 +16,8 @@ import { TEvented } from '../../common/evented'
 export default class TControl<
 	TProps extends IControlProps = IControlProps,
 	TEvents extends TControlEvents = TControlEvents,
-	TStates extends TControlStatesOptions = TControlStatesOptions,
-> extends TStylable<TProps, TEvents> {
+	TStates extends TControlStates = TControlStates,
+> extends TStylable<TProps, TEvents, TStates> {
 	static defaultValues: Partial<IControlProps> = {
 		...TStylable.defaultValues,
 		disabled: false,
@@ -38,14 +38,14 @@ export default class TControl<
 		const focused = props.focused ?? (ctor.defaultValues.focused as boolean)
 
 		this._states.disabled =
-			states?.disableState ?? new TStateUnit<boolean>({ initial: disabled })
+			states?.disabled ?? new TStateUnit<boolean>({ initial: disabled })
 
 		this._states.disabled.events.on('change', (payload: TValuePayload<boolean>) => {
 			;(this.events as TEvented<TControlEvents>).emit('change:disabled', payload.newValue)
 		})
 
 		this._states.focused =
-			states?.focusedState ?? new TStateUnit<boolean>({ initial: focused })
+			states?.focused ?? new TStateUnit<boolean>({ initial: focused })
 
 		this._states.focused.events.on('change', (payload: TValuePayload<boolean>) => {
 			;(this.events as TEvented<TControlEvents>).emit('change:focused', payload.newValue)

@@ -2,7 +2,7 @@ import type {
 	IValueControl,
 	IValueControlProps,
 	TValueControlEvents,
-	TValueControlStatesOptions,
+	TValueControlStates,
 } from '../../../base/value-control'
 import type {
 	ISelectableCollectionItem,
@@ -12,7 +12,6 @@ import type {
 import type { TCollectableOptions } from '../../../base/collection/item/types'
 import type { IComponentViewOptions } from '../../../base/component-view'
 import type { IStateUnit } from '../../../common/state-unit'
-import type { TStateCtor } from '../../../common/states'
 import type { TValuePayload } from '../../../common/types'
 import type { TCollapseAppearance } from '../types'
 
@@ -36,8 +35,8 @@ export interface ICollapseItemCustomProps extends IValueControlProps<string | nu
 	arrowPlacement?: TCollapseArrowPlacement
 }
 
-export type TCollapseItemCustomStatesOptions = TValueControlStatesOptions<string | number> & {
-	text?: TStateCtor<IStateUnit<string>, string> | IStateUnit<string>
+export type TCollapseItemCustomStates = TValueControlStates<string | number> & {
+	text: IStateUnit<string>
 }
 
 export interface ICollapseItemCustom<
@@ -56,7 +55,7 @@ export interface ICollapseItemCustom<
 // ============ TCollapseItem (коллекционный элемент с композицией) ============
 
 export type ICollapseItemOptions = TCollectableOptions<
-	IComponentViewOptions<ICollapseItemProps, TCollapseItemCustomStatesOptions>
+	IComponentViewOptions<ICollapseItemProps, TCollapseItemCustomStates>
 >
 
 export type TCollapseItemEvents = TSelectableItemEvents<ICollapseItem> &

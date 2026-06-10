@@ -1,7 +1,7 @@
 import { TControl } from '../control'
 import type { IComponentViewOptions } from '../component-view'
 import { TComponentView } from '../component-view'
-import type { IValueControlProps, TValueControlEvents, TValueControlStatesOptions } from './types'
+import type { IValueControlProps, TValueControlEvents, TValueControlStates } from './types'
 import { TStateUnit } from '../../common/state-unit'
 import { type TValuePayload } from '../../common/types'
 import { TEvented } from '../../common/evented'
@@ -19,7 +19,7 @@ export default class TValueControl<
 	TValue,
 	TProps extends IValueControlProps<TValue> = IValueControlProps<TValue>,
 	TEvents extends TValueControlEvents<TValue> = TValueControlEvents<TValue>,
-	TStates extends TValueControlStatesOptions<TValue> = TValueControlStatesOptions<TValue>,
+	TStates extends TValueControlStates<TValue> = TValueControlStates<TValue>,
 > extends TControl<TProps, TEvents, TStates> {
 	static defaultValues: Partial<IValueControlProps<any>> = {
 		...TControl.defaultValues,

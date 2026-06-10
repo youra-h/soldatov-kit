@@ -1,8 +1,7 @@
-import type { IComponentView, IComponentViewProps, TComponentViewEvents, TComponentViewStatesOptions } from '../../base/component-view'
+import type { IComponentView, IComponentViewProps, TComponentViewEvents, TComponentViewStates } from '../../base/component-view'
 import type { TComponentSize } from '../../common/types'
 import type { TValuePayload } from '../../common/types'
 import type { IStateUnit } from '../../common/state-unit'
-import type { TStateCtor } from '../../common/states'
 
 export interface IIconProps extends IComponentViewProps {
 	// Размер иконки
@@ -13,8 +12,8 @@ export interface IIconProps extends IComponentViewProps {
 	height?: number | string
 }
 
-export type TIconStatesOptions = TComponentViewStatesOptions & {
-	size?: TStateCtor<IStateUnit<TComponentSize>, TComponentSize> | IStateUnit<TComponentSize>
+export type TIconStates = TComponentViewStates & {
+	size: IStateUnit<TComponentSize>
 }
 
 export type TIconEvents = TComponentViewEvents & {

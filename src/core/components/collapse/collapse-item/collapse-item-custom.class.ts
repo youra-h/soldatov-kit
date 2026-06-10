@@ -8,7 +8,7 @@ import type {
 	ICollapseItemCustomProps,
 	TCollapseArrowPlacement,
 	TCollapseItemCustomEvents,
-	TCollapseItemCustomStatesOptions,
+	TCollapseItemCustomStates,
 } from './types'
 import type { TCollapseAppearance } from '../types'
 import { TEvented } from '../../../common/evented'
@@ -17,7 +17,7 @@ export default class TCollapseItemCustom<
 	TProps extends ICollapseItemCustomProps = ICollapseItemCustomProps,
 	TEvents extends TCollapseItemCustomEvents<any> = TCollapseItemCustomEvents,
 >
-	extends TValueControl<string | number, TProps, TEvents, TCollapseItemCustomStatesOptions>
+	extends TValueControl<string | number, TProps, TEvents, TCollapseItemCustomStates>
 	implements ICollapseItemCustom<TProps>
 {
 	static override baseClass = 's-collapse-item'
@@ -36,7 +36,7 @@ export default class TCollapseItemCustom<
 
 	constructor(
 		options:
-			| IComponentViewOptions<TProps, TCollapseItemCustomStatesOptions>
+			| IComponentViewOptions<TProps, TCollapseItemCustomStates>
 			| Partial<TProps> = {},
 	) {
 		super(options)
@@ -45,7 +45,7 @@ export default class TCollapseItemCustom<
 
 		const { props = {}, states } = TComponentView.prepareOptions<
 			TProps,
-			TCollapseItemCustomStatesOptions
+			TCollapseItemCustomStates
 		>(options)
 
 		const customProps = props as Partial<ICollapseItemCustomProps>

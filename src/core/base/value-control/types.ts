@@ -1,6 +1,5 @@
-import type { IControl, IControlProps, TControlEvents, TControlStatesOptions } from '../control'
+import type { IControl, IControlProps, TControlEvents, TControlStates } from '../control'
 import type { IStateUnit } from '../../common/state-unit'
-import type { TStateCtor } from '../../common/states'
 import { type TValuePayload } from '../../common/types'
 
 export type TValueControlEvents<T> = TControlEvents & {
@@ -17,8 +16,8 @@ export interface IValueControlProps<TValue> extends IControlProps {
 	name?: string
 }
 
-export type TValueControlStatesOptions<TValue> = TControlStatesOptions & {
-	value?: TStateCtor<IStateUnit<TValue>, TValue> | IStateUnit<TValue>
+export type TValueControlStates<TValue> = TControlStates & {
+	value: IStateUnit<TValue>
 }
 
 export interface IValueControl<

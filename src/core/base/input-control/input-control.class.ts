@@ -2,7 +2,7 @@ import { TValueControl } from '../value-control'
 import type {
 	IInputControlProps,
 	TInputControlEvents,
-	TInputControlStatesOptions,
+	TInputControlStates,
 	TInputControlState,
 } from './types'
 import type { IComponentViewOptions } from '../component-view'
@@ -23,7 +23,7 @@ export default class TInputControl<
 	TValue = string,
 	TProps extends IInputControlProps<TValue> = IInputControlProps<TValue>,
 	TEvents extends TInputControlEvents<TValue> = TInputControlEvents<TValue>,
-	TStates extends TInputControlStatesOptions<TValue> = TInputControlStatesOptions<TValue>,
+	TStates extends TInputControlStates<TValue> = TInputControlStates<TValue>,
 > extends TValueControl<TValue, TProps, TEvents> {
 	static defaultValues: Partial<IInputControlProps<any>> = {
 		...TValueControl.defaultValues,

@@ -2,7 +2,7 @@ import { TStateUnit } from '../../common/state-unit'
 import { TControl } from '../control'
 import type { IComponentViewOptions } from '../component-view'
 import { TComponentView } from '../component-view'
-import type { ITextableProps, TTextableEvents, TTextableStatesOptions } from './types'
+import type { ITextableProps, TTextableEvents, TTextableStates } from './types'
 import { type TValuePayload } from '../../common/types'
 import { TEvented } from '../../common/evented'
 
@@ -16,7 +16,7 @@ import { TEvented } from '../../common/evented'
 export default class TTextable<
 	TProps extends ITextableProps = ITextableProps,
 	TEvents extends TTextableEvents = TTextableEvents,
-	TStates extends TTextableStatesOptions = TTextableStatesOptions,
+	TStates extends TTextableStates = TTextableStates,
 > extends TControl<TProps, TEvents, TStates> {
 	static defaultValues: Partial<ITextableProps> = {
 		...TControl.defaultValues,

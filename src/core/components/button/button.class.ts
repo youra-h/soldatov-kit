@@ -4,7 +4,7 @@ import type {
 	IButtonProps,
 	TButtonAppearance,
 	TButtonEvents,
-	TButtonStatesOptions,
+	TButtonStates,
 } from './types'
 import { TComponentView, type IComponentViewOptions } from '../../base/component-view'
 import { TEvented } from '../../common/evented'
@@ -23,7 +23,7 @@ export default class TButton extends TTextable<IButtonProps, TButtonEvents> impl
 
 	constructor(
 		options:
-			| IComponentViewOptions<IButtonProps, TButtonStatesOptions>
+			| IComponentViewOptions<IButtonProps, TButtonStates>
 			| Partial<IButtonProps> = {},
 	) {
 		super(options)
@@ -31,7 +31,7 @@ export default class TButton extends TTextable<IButtonProps, TButtonEvents> impl
 		const ctor = new.target as typeof TButton
 		const { props = {} } = TComponentView.prepareOptions<
 			IButtonProps,
-			TButtonStatesOptions
+			TButtonStates
 		>(options)
 
 		this._applyAppearance(props.appearance ?? ctor.defaultValues.appearance!)

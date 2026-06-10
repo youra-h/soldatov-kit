@@ -51,7 +51,7 @@ describe('TInteractive', () => {
 
 		// 1) instance
 		const instance = new TLoggedDisableableState(false, log)
-		const i1 = new TInteractive({ states: { disableState: instance } })
+		const i1 = new TInteractive({ states: { disabled: instance } })
 		i1.disabled = true
 		expect(log).toContain('disabled:true')
 
