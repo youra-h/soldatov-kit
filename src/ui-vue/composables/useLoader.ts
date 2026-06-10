@@ -1,6 +1,5 @@
 import { type TLoaderType, type ILoader } from '@/core'
-import { provide, inject, computed, type InjectionKey, type Component } from 'vue'
-import { useSyncProps } from './useSyncProps'
+import { provide, inject, type InjectionKey, type Component } from 'vue'
 import Spinner from '../components/spinner/Spinner.vue'
 import Icon from '../components/icon/Icon.vue'
 
@@ -11,7 +10,7 @@ export interface ILoaderContext {
 
 export const LOADER_KEY: InjectionKey<ILoaderContext> = Symbol('loader')
 
-function resolveIndicatorComponent(type: TLoaderType): Component | null {
+export function resolveIndicatorComponent(type: TLoaderType): Component | null {
 	if (type === 'spinner') return Spinner
 	if (type === 'icon') return Icon
 	return null
@@ -24,22 +23,9 @@ function resolveIndicatorComponent(type: TLoaderType): Component | null {
  * @param loader
  */
 export function useProvideLoader(loader: ILoader): void {
-	const { visible, indicator, type } = useSyncProps(loader.events, {
-		visible: () => loader.visible,
-		disabled: () => loader.disabled,
-		indicator: () => loader.indicator,
-		type: () => loader.type,
-	})
+	const component = resolveIndicatorComponent(loader.type)
 
-	const component = computed(() => {
-		if (!indicator.value || !visible.value) return null
-		return resolveIndicatorComponent(type.value)
-	})
-
-	provide(LOADER_KEY, {
-		loader,
-		component: component.value,
-	})
+	provide(LOADER_KEY, { loader, component })
 }
 
 /**
