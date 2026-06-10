@@ -42,8 +42,8 @@ export default {
 		const loaderPlugin = plugins.get(TLoaderPlugin)
 
 		if (loaderPlugin) {
-			result.loader = {
-				ctrl: loaderPlugin.loader,
+			result.loaderContext = {
+				loader: loaderPlugin.loader,
 				component: loaderPlugin.component,
 			}
 		}
@@ -67,11 +67,10 @@ export default {
 		<slot>{{ text }}</slot>
 		<slot name="trailing"> </slot>
 		<slot name="loader">
-			{{ console.log(loader) }}
 			<Component
-				:is="loader?.component"
-				v-if="loader?.component"
-				:ctrl="loader?.ctrl"
+				:is="loaderContext?.component"
+				v-if="loaderContext?.component"
+				:ctrl="loaderContext?.loader.ctrl"
 			/>
 		</slot>
 	</component>
