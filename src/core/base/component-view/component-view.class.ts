@@ -39,7 +39,7 @@ export default class TComponentView<
 	protected _classes: TClasses
 	protected _ready: boolean = false
 	protected _renderedState: IStateUnit<boolean>
-	protected _visibilityState: IVisibilityState
+	protected _visibleState: IVisibilityState
 
 	constructor(options: IComponentViewOptions<TProps, TStates> | Partial<TProps> = {}) {
 		const ctor = new.target as typeof TComponentView
@@ -61,7 +61,7 @@ export default class TComponentView<
 			ctor: TStateUnit,
 			initial: rendered,
 		})
-		this._visibilityState = resolveState<IVisibilityState, boolean>({
+		this._visibleState = resolveState<IVisibilityState, boolean>({
 			state: states?.visible,
 			ctor: TVisibilityState,
 			initial: visible,
@@ -73,7 +73,7 @@ export default class TComponentView<
 				payload.newValue,
 			),
 		)
-		this._visibilityState.events.on('change', (payload: TValuePayload<boolean>) =>
+		this._visibleState.events.on('change', (payload: TValuePayload<boolean>) =>
 			(this.events as TEvented<TComponentViewEvents>).emit(
 				'change:visible',
 				payload.newValue,
@@ -104,7 +104,7 @@ export default class TComponentView<
 	}
 
 	get visible(): boolean {
-		return this._visibilityState.value
+		return this._visibleState.value
 	}
 	set visible(value: boolean) {
 		if (value) {
@@ -121,7 +121,7 @@ export default class TComponentView<
 		if (!canShow) return
 
 		if (this.visible) return
-		this._visibilityState.show()
+		this._visibleState.show()
 		;(this.events as TEvented<TComponentViewEvents>).emit('show')
 
 		this.afterShow()
@@ -135,7 +135,7 @@ export default class TComponentView<
 		if (!canHide) return
 
 		if (!this.visible) return
-		this._visibilityState.hide()
+		this._visibleState.hide()
 		;(this.events as TEvented<TComponentViewEvents>).emit('hide')
 
 		this.afterHide()

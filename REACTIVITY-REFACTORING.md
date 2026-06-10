@@ -13,7 +13,7 @@ TTabItem
   ._sizeState: TStateUnit<TComponentSize>      → size
   ._variantState: TStateUnit<TComponentVariant> → variant
   ._renderedState: IStateUnit<boolean>          → rendered
-  ._visibilityState: IVisibilityState           → visible
+  ._visibleState: IVisibilityState           → visible
   ._collectionItem: TActivatableCollectionItem  → active, collection
 ```
 
