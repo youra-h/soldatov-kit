@@ -38,6 +38,16 @@ export class TStateUnit<
 		return this._resolver ? this._resolver(this._value) : this._value
 	}
 
+	/** Хранимое значение без применения резольвера. */
+	get rawValue(): TValue {
+		return this._value
+	}
+
+	/** Текущий резольвер или undefined, если не задан. */
+	get resolver(): ((value: TValue) => TValue) | undefined {
+		return this._resolver
+	}
+
 	set value(value: TValue) {
 		if (this._value === value) return
 
