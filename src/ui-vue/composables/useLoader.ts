@@ -4,10 +4,7 @@ import { useSyncProps } from './useSyncProps'
 import Spinner from '../components/spinner/Spinner.vue'
 import Icon from '../components/icon/Icon.vue'
 
-export interface ILoaderHost {
-	ctrl: TLoaderTypeIndicator
-	indicator: boolean
-	visible: boolean
+export interface ILoaderHost extends Partial<ILoader> {
 	/** Vue-компонент для рендера. null — не нужно рендерить */
 	component: Component | null
 }
@@ -29,6 +26,7 @@ function resolveIndicatorComponent(type: TLoaderType): Component | null {
 export function useProvideLoader(loader: ILoader): void {
 	const { visible, indicator, type } = useSyncProps(loader.events, {
 		visible: () => loader.visible,
+		disabled: () => loader.disabled,
 		indicator: () => loader.indicator,
 		type: () => loader.type,
 		// ctrl: { value: () => loader.ctrl, events: ['change:type', 'change:indicator'] },
@@ -43,11 +41,14 @@ export function useProvideLoader(loader: ILoader): void {
 		get ctrl() {
 			return loader.ctrl
 		},
-		get indicator() {
-			return indicator.value
-		},
 		get visible() {
 			return visible.value
+		},
+		get disabled() {
+			return loader.disabled
+		},
+		get indicator() {
+			return indicator.value
 		},
 		get component() {
 			return component.value
