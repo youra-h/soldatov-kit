@@ -3,6 +3,7 @@ import type {
 	ILoader,
 	ILoaderProps,
 	TLoaderEvents,
+	TLoaderStatesOptions,
 	TLoaderType,
 	TLoaderTypeIndicator,
 } from './types'
@@ -12,7 +13,9 @@ import { type IStateUnit, TStateUnit } from '../../common/state-unit'
 import { TSpinner } from '../spinner'
 import { TIcon } from '../icon'
 
-export class TLoader extends TComponentModel<ILoaderProps, TLoaderEvents> implements ILoader {
+export class TLoader<
+	TStates extends TLoaderStatesOptions = TLoaderStatesOptions,
+> extends TComponentModel<ILoaderProps, TLoaderEvents> implements ILoader {
 	static defaultValues: Partial<ILoaderProps> = {
 		...TComponentModel.defaultValues,
 		type: 'spinner',
@@ -27,12 +30,16 @@ export class TLoader extends TComponentModel<ILoaderProps, TLoaderEvents> implem
 	protected _visibleState: IStateUnit<boolean>
 	private _ctrl?: TLoaderTypeIndicator
 
-	constructor(options: IComponentModelOptions<ILoaderProps> | Partial<ILoaderProps> = {}) {
+	constructor(
+		options: IComponentModelOptions<ILoaderProps, TStates> | Partial<ILoaderProps> = {},
+	) {
 		super(options)
 
 		const ctor = new.target as typeof TLoader
 
-		const { props = {} } = TComponentModel.prepareOptions(options)
+		const { props = {}, states } = TComponentModel.prepareOptions<ILoaderProps, TStates>(
+			options,
+		)
 
 		this._type = props.type ?? ctor.defaultValues.type!
 
@@ -42,7 +49,7 @@ export class TLoader extends TComponentModel<ILoaderProps, TLoaderEvents> implem
 		this._updateLoader()
 
 		this._visibleState = resolveState<IStateUnit<boolean>, boolean>({
-			state: undefined,
+			state: states?.visible,
 			ctor: TStateUnit,
 			initial: (props.visible ?? ctor.defaultValues.visible!) as boolean,
 		})

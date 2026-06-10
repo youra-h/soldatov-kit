@@ -41,38 +41,6 @@ export default class TComponentView<
 	protected _renderedState: IStateUnit<boolean>
 	protected _visibilityState: IVisibilityState
 
-	static prepareOptions<
-		TProps extends IComponentViewProps = IComponentViewProps,
-		TStates extends TComponentViewStatesOptions = TComponentViewStatesOptions,
-	>(
-		options: IComponentViewOptions<TProps, TStates> | Partial<TProps>,
-	): TComponentViewPreparedOptions<TProps, TStates> {
-		const raw = options as Record<string, unknown>
-		const hasPropsKey = Object.prototype.hasOwnProperty.call(raw, 'props')
-		const hasStatesKey = Object.prototype.hasOwnProperty.call(raw, 'states')
-		const hasRenderConfigKey = Object.prototype.hasOwnProperty.call(raw, 'renderConfig')
-
-		// Если есть props/states/renderConfig — это точно options-объект
-		const isOptionsObject = hasPropsKey || hasStatesKey || hasRenderConfigKey
-
-		if (isOptionsObject) {
-			const opt = options as IComponentViewOptions<TProps, TStates>
-			const props = (opt.props ?? {}) as Partial<TProps>
-
-			return {
-				props,
-				states: opt.states,
-			}
-		}
-
-		// Иначе это plain props
-		const props = options as Partial<TProps>
-
-		return {
-			props,
-		}
-	}
-
 	constructor(options: IComponentViewOptions<TProps, TStates> | Partial<TProps> = {}) {
 		const ctor = new.target as typeof TComponentView
 

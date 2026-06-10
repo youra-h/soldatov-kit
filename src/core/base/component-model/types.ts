@@ -25,7 +25,13 @@ export interface IComponentModel<
 /**
  * Опции для создания компонента.
  * props — начальные свойства.
+ * states — инъекция state-реализаций.
  */
-export interface IComponentModelOptions<TProps> {
+export interface IComponentModelOptions<TProps, TStates = any> {
 	props?: Partial<TProps>
+	/**
+	 * Инъекция state-реализаций.
+	 * Нужна, чтобы менять поведение state свойств без оверрайда геттеров/сеттеров.
+	 */
+	states?: TStates
 }

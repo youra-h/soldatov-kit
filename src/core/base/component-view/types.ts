@@ -54,12 +54,7 @@ export interface IComponentViewProps extends IComponentModelProps {
 export interface IComponentViewOptions<
 	TProps extends IComponentViewProps = IComponentViewProps,
 	TStates extends TComponentViewStatesOptions = TComponentViewStatesOptions,
-> extends IComponentModelOptions<TProps> {
-	/**
-	 * Инъекция state-реализаций для rendered/visible.
-	 * Нужна, чтобы менять поведение state свойств без оверрайда геттеров/сеттеров.
-	 */
-	states?: TStates
+> extends IComponentModelOptions<TProps, TStates> {
 }
 
 /**

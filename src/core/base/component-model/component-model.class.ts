@@ -39,11 +39,36 @@ export default class TComponentModel<
 		setTimeout(() => (this.events as TEvented<TComponentModelEvents>).emit('created', this), 0)
 	}
 
-	static prepareOptions<TProps extends IComponentModelProps>(
-		options: IComponentModelOptions<TProps> | Partial<TProps>,
-	): IComponentModelOptions<TProps> {
-		if (options && typeof options === 'object' && 'props' in options) return options
-		return { props: options as Partial<TProps> }
+	static prepareOptions<
+		TProps extends IComponentModelProps = IComponentModelProps,
+		TStates = any,
+	>(
+		options: IComponentModelOptions<TProps, TStates> | Partial<TProps>,
+	): { props: Partial<TProps>; states?: TStates } {
+		const raw = options as Record<string, unknown>
+		const hasPropsKey = Object.prototype.hasOwnProperty.call(raw, 'props')
+		const hasStatesKey = Object.prototype.hasOwnProperty.call(raw, 'states')
+		const hasRenderConfigKey = Object.prototype.hasOwnProperty.call(raw, 'renderConfig')
+
+		// Если есть props/states/renderConfig — это точно options-объект
+		const isOptionsObject = hasPropsKey || hasStatesKey || hasRenderConfigKey
+
+		if (isOptionsObject) {
+			const opt = options as IComponentModelOptions<TProps, TStates>
+			const props = (opt.props ?? {}) as Partial<TProps>
+
+			return {
+				props,
+				states: opt.states,
+			}
+		}
+
+		// Иначе это plain props
+		const props = options as Partial<TProps>
+
+		return {
+			props,
+		}
 	}
 
 	/**
