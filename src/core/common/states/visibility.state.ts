@@ -22,10 +22,6 @@ export class TVisibilityState
 	extends TStateUnit<boolean, TStateUnitValueEvents<boolean>>
 	implements IVisibilityState
 {
-	constructor(initial: boolean = true) {
-		super(initial)
-	}
-
 	show(): void {
 		this.value = true
 	}

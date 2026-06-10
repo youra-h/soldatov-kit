@@ -5,9 +5,9 @@ import type { TValuePayload } from '../types'
 /**
  * Универсальная единица состояния со значением.
  *
- * По умолчанию сеттер `value` эмитит `change(value)`.
- * Если нужно расширить payload события (например change(new, old)) —
- * переопределяйте `emitChange`.
+ * Через `resolver` можно задать функцию-преобразователь,
+ * которая будет вызываться при чтении `value`.
+ * Если резольвер не задан — возвращается хранимое значение как есть.
  */
 export class TStateUnit<
 	TValue,
@@ -15,14 +15,27 @@ export class TStateUnit<
 > implements IStateUnit<TValue, TEvents> {
 	public readonly events: TEvented<TEvents>
 	protected _value: TValue
+	private _resolver?: (value: TValue) => TValue
 
-	constructor(initial: TValue) {
+	constructor({ initial, resolver }: { initial: TValue; resolver?: (value: TValue) => TValue }) {
 		this.events = new TEvented<TEvents>()
 		this._value = initial
+		this._resolver = resolver
+	}
+
+	/**
+	 * Установить резольвер — функцию, которая преобразует хранимое значение при чтении.
+	 * Передайте `undefined` чтобы сбросить.
+	 *
+	 * @example
+	 * state.setResolver((current) => current ?? getDefault() ?? false)
+	 */
+	setResolver(resolver: ((value: TValue) => TValue) | undefined): void {
+		this._resolver = resolver
 	}
 
 	get value(): TValue {
-		return this._value
+		return this._resolver ? this._resolver(this._value) : this._value
 	}
 
 	set value(value: TValue) {

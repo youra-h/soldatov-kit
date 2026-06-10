@@ -3,7 +3,7 @@ import { TVisibilityState } from '../common/states'
 
 describe('TVisibilityState', () => {
 	it('show/hide меняют visible и эмитят change', () => {
-		const s = new TVisibilityState(false)
+		const s = new TVisibilityState({ initial: false })
 		const handler = vi.fn()
 		s.events.on('change', handler)
 

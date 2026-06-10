@@ -110,28 +110,17 @@ describe('TComponentView', () => {
 	it('states позволяет передавать инстансы или конструкторы для visibility-state', () => {
 		const log: string[] = []
 
-		class TLoggedVisibilityState extends TStateUnit<boolean> implements IVisibilityState {
-			constructor(
-				initial: boolean,
-				private readonly _log: string[],
-			) {
-				super(initial)
-			}
-
-			get value(): boolean {
-				return this._value
-			}
-
-			set value(val: boolean) {
-				if (this._value === val) return
-
-				this._value = val
-
-				this.events.emit('change', { newValue: val, oldValue: !val })
-
-				if (val) {
-					this._log.push('state:value=true')
-				}
+		class TLoggedVisibilityState
+			extends TStateUnit<boolean>
+			implements IVisibilityState
+		{
+			constructor({ initial }: { initial: boolean }) {
+				super({ initial })
+				this.events.on('change', (payload: any) => {
+					if (payload.newValue) {
+						log.push('state:value=true')
+					}
+				})
 			}
 
 			show(): void {
@@ -144,8 +133,8 @@ describe('TComponentView', () => {
 		}
 
 		// 1) Передаём готовые инстансы
-		const instanceVisible = new TLoggedVisibilityState(false, log)
-		const instanceRendered = new TVisibilityState(true)
+		const instanceVisible = new TLoggedVisibilityState({ initial: false })
+		const instanceRendered = new TVisibilityState({ initial: true })
 
 		const p1 = new TComponentView({
 			props: { visible: false },
@@ -163,13 +152,7 @@ describe('TComponentView', () => {
 		log.length = 0
 		const p2 = new TComponentView({
 			props: { visible: false },
-			states: {
-				visible: class TLoggedCtor extends TLoggedVisibilityState {
-					constructor(initial = false) {
-						super(initial, log)
-					}
-				},
-			},
+			states: { visible: TLoggedVisibilityState },
 		})
 		p2.events.on('change:visible', (value) => {
 			log.push(`component-view2:change:visible=${value}`)

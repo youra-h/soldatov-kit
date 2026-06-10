@@ -2,6 +2,7 @@ import { describe, it, expect, vi } from 'vitest'
 import { TLoader } from '../components/loader'
 import { TSpinner } from '../components/spinner'
 import { TIcon } from '../components/icon'
+import { TStateUnit } from '../common/state-unit'
 
 describe('TLoader', () => {
 	// --- constructor & defaults ---
@@ -200,6 +201,124 @@ describe('TLoader', () => {
 
 		l.visible = false
 		expect(spy).not.toHaveBeenCalled()
+	})
+
+	// --- states ---
+
+	it('states.visible: принимает инстанс кастомного state', () => {
+		const log: string[] = []
+
+		const customVisible = new TStateUnit({ initial: false })
+		customVisible.events.on('change', (payload) => {
+			log.push(`custom-visible=${payload.newValue}`)
+		})
+
+		const l = new TLoader({
+			props: { visible: false },
+			states: { visible: customVisible },
+		})
+
+		l.visible = true
+		expect(l.visible).toBe(true)
+		expect(log).toContain('custom-visible=true')
+	})
+
+	it('states.visible: принимает конструктор кастомного state', () => {
+		const log: string[] = []
+
+		class TLoggedVisible extends TStateUnit<boolean> {
+			constructor({ initial }: { initial: boolean }) {
+				super({ initial })
+				this.events.on('change', (payload: any) => {
+					log.push(`ctor-visible=${payload.newValue}`)
+				})
+			}
+		}
+
+		const l = new TLoader({
+			props: { visible: false },
+			states: { visible: TLoggedVisible },
+		})
+
+		l.visible = true
+		expect(l.visible).toBe(true)
+		expect(log).toContain('ctor-visible=true')
+	})
+
+	it('states.visible: принимает state с resolver', () => {
+		const customVisible = new TStateUnit({
+			initial: false,
+			resolver: (value) => {
+				// резольвер может валидировать или трансформировать значение
+				return value
+			},
+		})
+
+		const l = new TLoader({
+			props: { visible: false },
+			states: { visible: customVisible },
+		})
+
+		l.visible = true
+		expect(l.visible).toBe(true)
+	})
+
+	it('states.disabled: принимает инстанс кастомного state', () => {
+		const log: string[] = []
+
+		const customDisabled = new TStateUnit({ initial: false })
+		customDisabled.events.on('change', (payload) => {
+			log.push(`custom-disabled=${payload.newValue}`)
+		})
+
+		const l = new TLoader({
+			props: { disabled: false },
+			states: { disabled: customDisabled },
+		})
+
+		l.disabled = true
+		expect(l.disabled).toBe(true)
+		expect(log).toContain('custom-disabled=true')
+	})
+
+	it('states.disabled: принимает конструктор кастомного state', () => {
+		const log: string[] = []
+
+		class TLoggedDisabled extends TStateUnit<boolean> {
+			constructor({ initial }: { initial: boolean }) {
+				super({ initial })
+				this.events.on('change', (payload: any) => {
+					log.push(`ctor-disabled=${payload.newValue}`)
+				})
+			}
+		}
+
+		const l = new TLoader({
+			props: { disabled: false },
+			states: { disabled: TLoggedDisabled },
+		})
+
+		l.disabled = true
+		expect(l.disabled).toBe(true)
+		expect(log).toContain('ctor-disabled=true')
+	})
+
+	it('states.disabled: принимает state с resolver', () => {
+		const customDisabled = new TStateUnit({
+			initial: false,
+			resolver: (value) => {
+				// резольвер может валидировать или трансформировать значение
+				return value
+			},
+		})
+
+		const l = new TLoader({
+			props: { disabled: false },
+			states: { disabled: customDisabled },
+		})
+
+		l.disabled = true
+		expect(l.disabled).toBe(true)
 	})
 
 	// --- ctrl ---

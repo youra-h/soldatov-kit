@@ -1,4 +1,4 @@
-export type TStateCtor<TState, TInitial> = new (initial: TInitial) => TState
+export type TStateCtor<TState, TInitial> = new (options: { initial: TInitial }) => TState
 
 export type TStateInput<TState, TInitial> = TStateCtor<TState, TInitial> | TState | undefined
 
@@ -13,9 +13,9 @@ export type TResolveStateOptions<TState, TInitial> = {
 
 /**
  * Инжектирует state-зависимость:
- * - конструктор → создаёт новый инстанс через `new state(initial)`
+ * - конструктор → создаёт новый инстанс через `new state({ initial })`
  * - готовый инстанс → возвращает его как есть
- * - undefined → создаёт инстанс через `new ctor(initial)`
+ * - undefined → создаёт инстанс через `new ctor({ initial })`
  */
 export function resolveState<TState, TInitial>({
 	state,
@@ -23,12 +23,12 @@ export function resolveState<TState, TInitial>({
 	initial,
 }: TResolveStateOptions<TState, TInitial>): TState {
 	if (typeof state === 'function') {
-		return new (state as TStateCtor<TState, TInitial>)(initial)
+		return new (state as TStateCtor<TState, TInitial>)({ initial })
 	}
 
 	if (state) {
 		return state
 	}
 
-	return new ctor(initial)
+	return new ctor({ initial })
 }
