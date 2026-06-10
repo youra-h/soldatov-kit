@@ -31,6 +31,10 @@ export class TLoaderPlugin extends TBasePlugin<TLoaderPluginEvents> {
 		}
 	}
 
+	private _setResolver(): void {
+		
+	}
+
 	destroy(): void {
 		this._loader = undefined
 		super.destroy()
