@@ -42,7 +42,8 @@ export type TTabItemCustomStates = TValueControlStates<string | number> & {
  */
 export interface ITabItemCustom<
 	TProps extends ITabItemCustomProps = ITabItemCustomProps,
-> extends IValueControl<string | number, TProps, TTabItemCustomEvents<any>> {
+	TStates extends TTabItemCustomStates = TTabItemCustomStates,
+> extends IValueControl<string | number, TProps, TTabItemCustomEvents<any>, TStates> {
 	/** Текст таба */
 	text: string
 	/** Можно ли закрыть таб (undefined = наследовать от родителя TTabs) */

@@ -1,9 +1,4 @@
-import type {
-	IStylable,
-	IStylableProps,
-	TStylableEvents,
-	TStylableStates,
-} from '../stylable'
+import type { IStylable, IStylableProps, TStylableEvents, TStylableStates } from '../stylable'
 import type { IStateUnit } from '../../common/state-unit'
 
 export type TControlEvents = TStylableEvents & {
@@ -28,7 +23,8 @@ export type TControlStates = TStylableStates & {
 export interface IControl<
 	TProps extends IControlProps = IControlProps,
 	TEvents extends Record<string, (...args: any) => any> = TControlEvents,
-> extends IStylable<TProps, TEvents> {
+	TStates extends TControlStates = TControlStates,
+> extends IStylable<TProps, TEvents, TStates> {
 	disabled: boolean
 	focused: boolean
 	click(event: Event): void

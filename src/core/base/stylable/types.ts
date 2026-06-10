@@ -24,7 +24,8 @@ export type TStylableStates = TComponentViewStates & {
 export interface IStylable<
 	TProps extends IStylableProps = IStylableProps,
 	TEvents extends Record<string, (...args: any) => any> = TStylableEvents,
-> extends IComponentView<TProps, TEvents> {
+	TStates extends TStylableStates = TStylableStates,
+> extends IComponentView<TProps, TEvents, TStates> {
 	size: TComponentSize
 	variant: TComponentVariant
 }

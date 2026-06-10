@@ -5,7 +5,6 @@ import type {
 	TValueControlStates,
 } from '../../../base/value-control'
 import type {
-	ISelectableCollectionItem,
 	ISelectableCollectionItemProps,
 	TSelectableItemEvents,
 } from '../../../base/collection/selectable/types'

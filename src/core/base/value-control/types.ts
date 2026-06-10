@@ -24,7 +24,8 @@ export interface IValueControl<
 	TValue,
 	TProps extends IValueControlProps<TValue> = IValueControlProps<TValue>,
 	TEvents extends Record<string, (...args: any) => any> = TValueControlEvents<TValue>,
-> extends IControl<TProps, TEvents> {
+	TStates extends TValueControlStates<TValue> = TValueControlStates<TValue>,
+> extends IControl<TProps, TEvents, TStates> {
 	value: TValue
 	name: string
 }

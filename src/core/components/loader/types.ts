@@ -40,7 +40,7 @@ export type TLoaderEvents = TComponentModelEvents & {
 	'change:indicator': (value: boolean) => void
 }
 
-export interface ILoader extends IComponentModel<ILoaderProps, TLoaderEvents> {
+export interface ILoader extends IComponentModel<ILoaderProps, TLoaderEvents, TLoaderStates> {
 	/** Тип индикатора */
 	type: TLoaderType
 	/** Размер индикатора */

@@ -19,6 +19,7 @@ export type TTextableStates = TControlStates & {
 export interface ITextable<
 	TProps extends ITextableProps = ITextableProps,
 	TEvents extends Record<string, (...args: any) => any> = TTextableEvents,
-> extends IControl<TProps, TEvents> {
+	TStates extends TTextableStates = TTextableStates,
+> extends IControl<TProps, TEvents, TStates> {
 	text: string
 }

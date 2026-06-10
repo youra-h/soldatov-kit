@@ -1,4 +1,9 @@
-import type { IComponentView, IComponentViewProps, TComponentViewEvents, TComponentViewStates } from '../../base/component-view'
+import type {
+	IComponentView,
+	IComponentViewProps,
+	TComponentViewEvents,
+	TComponentViewStates,
+} from '../../base/component-view'
 import type { TComponentSize } from '../../common/types'
 import type { TValuePayload } from '../../common/types'
 import type { IStateUnit } from '../../common/state-unit'
@@ -23,7 +28,7 @@ export type TIconEvents = TComponentViewEvents & {
 	'change:height': (value: number | string | undefined) => void
 }
 
-export interface IIcon extends IComponentView<IIconProps, TIconEvents> {
+export interface IIcon extends IComponentView<IIconProps, TIconEvents, TIconStates> {
 	/** Размер иконки */
 	size: TComponentSize
 	/** Ширина иконки */

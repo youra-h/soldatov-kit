@@ -24,7 +24,8 @@ export type TInteractiveStates = TComponentViewStates & {
 export interface IInteractive<
 	TProps extends IInteractiveProps = IInteractiveProps,
 	TEvents extends Record<string, (...args: any) => any> = TInteractiveEvents,
-> extends IComponentView<TProps, TEvents> {
+	TStates extends TInteractiveStates = TInteractiveStates,
+> extends IComponentView<TProps, TEvents, TStates> {
 	disabled: boolean
 	focused: boolean
 	click(event: Event): void
