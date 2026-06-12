@@ -13,7 +13,7 @@ import { TSpinner } from '../spinner'
 import { TIcon } from '../icon'
 
 export class TLoader<TStates extends TLoaderStates = TLoaderStates>
-	extends TComponentModel<ILoaderProps, TLoaderEvents>
+	extends TComponentModel<ILoaderProps, TLoaderEvents, TStates>
 	implements ILoader
 {
 	static defaultValues: Partial<ILoaderProps> = {
