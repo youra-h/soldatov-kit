@@ -46,8 +46,7 @@ export class TLoader<TStates extends TLoaderStates = TLoaderStates>
 
 		this._updateLoader()
 
-		this._states.disabled =
-			states?.disabled ?? new TStateUnit<boolean>({ initial: disabled })
+		this._states.disabled = states?.disabled ?? new TStateUnit<boolean>({ initial: disabled })
 
 		this._states.disabled.events.on('change', (payload: TValuePayload<boolean>) => {
 			this.events.emit('change:disabled', payload.newValue)
@@ -85,6 +84,26 @@ export class TLoader<TStates extends TLoaderStates = TLoaderStates>
 		}
 	}
 
+	get visible(): boolean {
+		return this._states.visible.value
+	}
+
+	set visible(value: boolean) {
+		if (this._states.visible.value !== value) {
+			this._states.visible.value = value
+		}
+	}
+
+	get disabled(): boolean {
+		return this._states.disabled.value
+	}
+
+	set disabled(value: boolean) {
+		if (this._states.disabled.value !== value) {
+			this._states.disabled.value = value
+		}
+	}
+
 	set type(value: TLoaderType) {
 		if (this._type !== value) {
 			this._type = value
@@ -117,16 +136,6 @@ export class TLoader<TStates extends TLoaderStates = TLoaderStates>
 		}
 	}
 
-	get disabled(): boolean {
-		return this._states.disabled.value
-	}
-
-	set disabled(value: boolean) {
-		if (this._states.disabled.value !== value) {
-			this._states.disabled.value = value
-		}
-	}
-
 	get indicator(): boolean {
 		return this._indicator
 	}
@@ -141,16 +150,6 @@ export class TLoader<TStates extends TLoaderStates = TLoaderStates>
 		}
 	}
 
-	get visible(): boolean {
-		return this._states.visible.value
-	}
-
-	set visible(value: boolean) {
-		if (this._states.visible.value !== value) {
-			this._states.visible.value = value
-		}
-	}
-
 	get ctrl(): TLoaderTypeIndicator {
 		return this._ctrl
 	}
@@ -158,10 +157,12 @@ export class TLoader<TStates extends TLoaderStates = TLoaderStates>
 	getProps(): ILoaderProps {
 		return {
 			...super.getProps(),
-			type: this._type,
-			disabled: this.disabled,
-			indicator: this._indicator,
 			visible: this.visible,
+			disabled: this.disabled,
+			type: this._type,
+			indicator: this._indicator,
+			size: this.size,
+			variant: this.variant,
 		}
 	}
 }

@@ -60,13 +60,6 @@ export function syncControl(
 
 	const { instance, props, emit, plugins } = options
 
-	const { loader, component } = useInjectLoader() || {}
-
-	if (loader) {
-		plugins.use(TLoaderPlugin)
-		plugins.get(TLoaderPlugin)!.setContext(loader, component)
-	}
-
 	// Пробрасываем события core-инстанса наружу (Vue events).
 	instance.events.on('change:disabled' as any, (value: boolean) => {
 		emit?.('change:disabled', value)
@@ -101,12 +94,41 @@ export function syncControl(
 		},
 	)
 
+	const { loader, component } = useInjectLoader() || {}
+
+	if (loader) {
+		plugins.use(TLoaderPlugin)
+		plugins.get(TLoaderPlugin)!.setContext(loader, component)
+	}
+
 	return {
 		...syncProps,
 		...useSyncProps(instance.events as any, {
 			disabled: () => instance.disabled,
 			focused: () => instance.focused,
 		}),
-		loaderContext: loader ? { loader, component } : undefined,
+		loaderContext: {
+			ctrl: loader?.ctrl,
+			component,
+			...useSyncProps(loader!.events as any, {
+				visible: () => loader!.visible,
+				type: () => loader!.type,
+				disabled: () => loader!.disabled,
+				size: () => loader!.size,
+				variant: () => loader!.variant,
+				indicator: () => loader!.indicator,
+				// component: {
+				// 	value: () => component,
+				// 	events: [
+				// 		'change:type',
+				// 		'change:size',
+				// 		'change:variant',
+				// 		'change:disabled',
+				// 		'change:indicator',
+				// 	] as const,
+				// },
+			}),
+			// ,
+		},
 	}
 }
