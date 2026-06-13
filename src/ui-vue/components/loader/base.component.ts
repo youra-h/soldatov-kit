@@ -220,7 +220,7 @@ export function syncLoaderContext(): TSyncLoaderContext {
 				triggers: ['change:visible', 'change:indicator'],
 			},
 		}),
-		ctrl: loader.ctrl,
+		ctrl: loader.ctrl ? markRaw(loader.ctrl) : null,
 		component: indicatorComponent ? markRaw(indicatorComponent) : null,
 	}) as ILoaderContextState
 
