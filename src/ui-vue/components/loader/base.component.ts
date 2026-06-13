@@ -1,4 +1,4 @@
-import { type PropType, reactive, watch, type Ref } from 'vue'
+import { type PropType, shallowReactive, markRaw, watch, type Ref } from 'vue'
 import {
 	type ILoaderProps,
 	TLoader,
@@ -205,7 +205,7 @@ export function syncLoaderContext(): TSyncLoaderContext {
 		return {}
 	}
 
-	const context = reactive({
+	const context = shallowReactive({
 		...useSyncProps(loader.events as any, {
 			visible: () => loader.visible,
 			type: () => loader.type,
