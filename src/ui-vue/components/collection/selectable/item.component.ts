@@ -72,7 +72,7 @@ export function syncSelectableCollectionItem(
 		...useSyncProps(instance.events as any, {
 			selected: {
 				value: () => instance.selected,
-				events: ['change:selection'],
+				triggers: ['change:selection'],
 			},
 		}),
 	}

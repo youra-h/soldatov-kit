@@ -80,7 +80,7 @@ export function syncActivatableCollectionItem(
 		...useSyncProps(instance.events as any, {
 			active: {
 				value: () => instance.active,
-				events: ['change:activation'],
+				triggers: ['change:activation'],
 			},
 		}),
 	}

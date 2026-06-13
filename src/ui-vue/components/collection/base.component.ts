@@ -153,11 +153,11 @@ export function syncCollection<TItem extends ICollectionItem = ICollectionItem>(
 	return useSyncProps(instance.events, {
 		items: {
 			value: () => instance.items,
-			events: ['item:added', 'cleared', 'item:afterMove', 'item:afterDelete'],
+			triggers: ['item:added', 'cleared', 'item:afterMove', 'item:afterDelete'],
 		},
 		count: {
 			value: () => instance.count,
-			events: ['item:added', 'cleared', 'item:afterMove', 'item:afterDelete'],
+			triggers: ['item:added', 'cleared', 'item:afterMove', 'item:afterDelete'],
 		},
 	})
 }

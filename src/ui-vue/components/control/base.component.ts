@@ -118,7 +118,7 @@ export function syncControl(
 				indicator: () => loader!.indicator,
 				ctrl: {
 					value: () => loader!.ctrl,
-					events: ['change:type', 'change:indicator'],
+					triggers: ['change:type', 'change:indicator'],
 				},
 				component: {
 					value: () => {
@@ -126,7 +126,7 @@ export function syncControl(
 
 						return useResolveIndicatorComponent(loader.type)
 					},
-					events: ['change:type', 'change:indicator', 'change:visible'],
+					triggers: ['change:type', 'change:indicator', 'change:visible'],
 				},
 			}),
 		}

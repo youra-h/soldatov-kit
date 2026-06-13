@@ -2,16 +2,16 @@ import { type Ref } from 'vue'
 import type { IEventSource } from '@core'
 import { useEventState } from './useEventState'
 
-/** Явная спецификация: кастомный геттер и список событий. */
+/** Явная спецификация: кастомный геттер и список событий-триггеров. */
 export type PropSpec<T> = {
 	value: () => T
-	events: string[]
+	triggers: string[]
 }
 
 /**
  * Ввод для одного свойства:
  * - функция `() => T` → событие выводится автоматически как `change:<key>`
- * - объект `{ value, events }` → используются явные события
+ * - объект `{ value, triggers }` → используются явные события
  */
 type PropSpecInput<T> = (() => T) | PropSpec<T>
 
@@ -39,7 +39,7 @@ type SyncPropsResult<TMap extends PropSpecMap> = {
  * @example
  * // Явная форма — кастомные события или нестандартные имена
  * return useSyncProps(instance.events, {
- *   active: { value: () => instance.active, events: ['change:activation'] },
+ *   active: { value: () => instance.active, triggers: ['change:activation'] },
  * })
  */
 export function useSyncProps<TMap extends PropSpecMap>(
@@ -53,7 +53,7 @@ export function useSyncProps<TMap extends PropSpecMap>(
 		if (typeof spec === 'function') {
 			result[key] = useEventState(events, spec, [`change:${key}`])
 		} else {
-			result[key] = useEventState(events, spec.value, spec.events)
+			result[key] = useEventState(events, spec.value, spec.triggers)
 		}
 	}
 

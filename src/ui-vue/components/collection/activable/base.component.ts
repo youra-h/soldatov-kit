@@ -69,7 +69,7 @@ export function syncActivatableCollection<
 		...useSyncProps(instance.events, {
 			activeItem: {
 				value: () => instance.activeItem,
-				events: ['item:activated', 'item:deactivated'],
+				triggers: ['item:activated', 'item:deactivated'],
 			},
 		}),
 	}
