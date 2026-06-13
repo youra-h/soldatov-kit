@@ -178,13 +178,13 @@ export function syncLoader(options: ISyncComponentModelOptions<ILoaderProps, ILo
 }
 
 export interface ILoaderContextState {
-	visible: Ref<boolean>
-	type: Ref<TLoaderType>
-	disabled: Ref<boolean>
-	size: Ref<TComponentSize>
-	variant: Ref<TComponentVariant>
-	indicator: Ref<boolean>
-	hasIndicator: Ref<boolean>
+	visible: boolean
+	type: TLoaderType
+	disabled: boolean
+	size: TComponentSize
+	variant: TComponentVariant
+	indicator: boolean
+	hasIndicator: boolean
 	ctrl: TLoaderTypeIndicator
 	component: any
 }
@@ -205,6 +205,8 @@ export function syncLoaderContext(): TSyncLoaderContext {
 		return {}
 	}
 
+	const indicatorComponent = useResolveIndicatorComponent(loader.type)
+
 	const context = reactive({
 		...useSyncProps(loader.events as any, {
 			visible: () => loader.visible,
@@ -219,7 +221,7 @@ export function syncLoaderContext(): TSyncLoaderContext {
 			},
 		}),
 		ctrl: loader.ctrl,
-		component: markRaw(useResolveIndicatorComponent(loader.type)),
+		component: indicatorComponent ? markRaw(indicatorComponent) : null,
 	})
 
 	return { loader, context }
