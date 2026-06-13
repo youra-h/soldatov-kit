@@ -10,7 +10,7 @@ import {
 } from '../stylable'
 import type { TEmits, TProps, ISyncComponentViewOptions } from '../../types'
 import { useSyncProps } from '../../composables/useSyncProps'
-import { useInjectLoader } from '../../composables/useLoader'
+import { useInjectLoader, useResolveIndicatorComponent } from '../../composables/useLoader'
 import { TLoaderPlugin } from '@plugins'
 
 export const emitsControl: TEmits = [
@@ -94,22 +94,21 @@ export function syncControl(
 		},
 	)
 
-	const { loader, component } = useInjectLoader() || {}
-
-	if (loader) {
-		plugins.use(TLoaderPlugin)
-		plugins.get(TLoaderPlugin)!.setContext(loader, component)
-	}
-
-	return {
+	const sync = {
 		...syncProps,
 		...useSyncProps(instance.events as any, {
 			disabled: () => instance.disabled,
 			focused: () => instance.focused,
 		}),
-		loaderContext: {
-			ctrl: loader?.ctrl,
-			component,
+	}
+
+	const { loader } = useInjectLoader() || {}
+
+	if (loader) {
+		plugins.use(TLoaderPlugin)
+		plugins.get(TLoaderPlugin)!.setContext(loader)
+
+		sync.loaderContext = {
 			...useSyncProps(loader!.events as any, {
 				visible: () => loader!.visible,
 				type: () => loader!.type,
@@ -117,18 +116,21 @@ export function syncControl(
 				size: () => loader!.size,
 				variant: () => loader!.variant,
 				indicator: () => loader!.indicator,
-				// component: {
-				// 	value: () => component,
-				// 	events: [
-				// 		'change:type',
-				// 		'change:size',
-				// 		'change:variant',
-				// 		'change:disabled',
-				// 		'change:indicator',
-				// 	] as const,
-				// },
+				ctrl: {
+					value: () => loader!.ctrl,
+					events: ['change:type', 'change:indicator'],
+				},
+				component: {
+					value: () => {
+						if (!loader.visible || !loader.indicator) return null
+
+						return useResolveIndicatorComponent(loader.type)
+					},
+					events: ['change:type', 'change:indicator', 'change:visible'],
+				},
 			}),
-			// ,
-		},
+		}
 	}
+
+	return sync
 }

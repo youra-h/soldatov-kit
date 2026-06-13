@@ -57,11 +57,11 @@ export default {
 		<slot>{{ text }}</slot>
 		<slot name="trailing"> </slot>
 		<slot name="loader">
-			{{ loaderContext.visible }}
+			{{ console.log(loaderContext.ctrl.value) }}
 			<Component
-				:is="loaderContext?.component"
-				v-if="loaderContext?.component"
-				:ctrl="loaderContext?.ctrl"
+				:is="loaderContext?.component.value"
+				v-if="loaderContext?.component.value"
+				:ctrl="loaderContext?.ctrl.value"
 			/>
 		</slot>
 	</component>

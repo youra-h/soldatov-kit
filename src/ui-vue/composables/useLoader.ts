@@ -5,12 +5,11 @@ import Icon from '../components/icon/Icon.vue'
 
 export interface ILoaderContext {
 	loader: ILoader
-	component: Component | null
 }
 
 export const LOADER_KEY: InjectionKey<ILoaderContext> = Symbol('loader')
 
-export function resolveIndicatorComponent(type: TLoaderType): Component | null {
+export function useResolveIndicatorComponent(type: TLoaderType): Component | null {
 	if (type === 'spinner') return Spinner
 	if (type === 'icon') return Icon
 	return null
@@ -23,9 +22,7 @@ export function resolveIndicatorComponent(type: TLoaderType): Component | null {
  * @param loader
  */
 export function useProvideLoader(loader: ILoader): void {
-	const component = resolveIndicatorComponent(loader.type)
-
-	provide(LOADER_KEY, { loader, component })
+	provide(LOADER_KEY, { loader })
 }
 
 /**

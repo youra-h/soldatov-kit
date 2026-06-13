@@ -14,20 +14,15 @@ export class TLoaderPlugin extends TBasePlugin<TLoaderPluginEvents> {
 	static readonly key = 'loader'
 
 	private _loader?: ILoader
-	private _component?: any
 	private _bundle?: IPluginBundle
-
-	get loader(): ILoader | undefined {
-		return this._loader
-	}
-
-	get component(): any {
-		return this._component
-	}
 
 	override install(bundle: IPluginBundle): void {
 		this._bundle = bundle
 		this._link()
+	}
+
+	get loader(): ILoader | undefined {
+		return this._loader
 	}
 
 	/**
@@ -49,12 +44,11 @@ export class TLoaderPlugin extends TBasePlugin<TLoaderPluginEvents> {
 		const loader = this._loader
 
 		// Устанавливаем резольвер для состояния disabled, который будет возвращать true, если загрузчик активен (disabled: true).
-		disableState.setResolver((value) => value || loader.disabled)
+		disableState.setResolver((value) => value || (loader.visible && loader.disabled))
 	}
 
-	setContext(loader: ILoader, component: any): void {
+	setContext(loader: ILoader): void {
 		this._loader = loader
-		this._component = component
 		this._link()
 	}
 
