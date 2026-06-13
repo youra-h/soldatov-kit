@@ -7,7 +7,7 @@ import {
 	type TLoaderType,
 	type ILoader,
 	type TValuePayload,
-	type TLoaderTypeIndicator
+	type TLoaderTypeIndicator,
 } from '@core'
 import { BaseComponentModel, emitsComponentModel, propsComponentModel } from '../component-model'
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types/common'
@@ -177,20 +177,21 @@ export function syncLoader(options: ISyncComponentModelOptions<ILoaderProps, ILo
 	}
 }
 
-export interface ILoaderContext {
-	visible: boolean
-	type: TLoaderType
-	disabled: boolean
-	size: TComponentSize
-	variant: TComponentVariant
-	indicator: boolean
+export interface ILoaderContextState {
+	visible: Ref<boolean>
+	type: Ref<TLoaderType>
+	disabled: Ref<boolean>
+	size: Ref<TComponentSize>
+	variant: Ref<TComponentVariant>
+	indicator: Ref<boolean>
+	hasIndicator: Ref<boolean>
 	ctrl: TLoaderTypeIndicator
 	component: any
 }
 
 export type TSyncLoaderContext = {
 	loader?: ILoader
-	context?: ILoaderContext
+	context?: ILoaderContextState
 }
 
 /**
@@ -219,7 +220,7 @@ export function syncLoaderContext(): TSyncLoaderContext {
 		}),
 		ctrl: loader.ctrl,
 		component: useResolveIndicatorComponent(loader.type),
-	}) as ILoaderContext
+	})
 
 	return { loader, context }
 }
