@@ -1,4 +1,4 @@
-import { type PropType, shallowReactive, markRaw, watch, type Ref } from 'vue'
+import { type PropType, markRaw, watch, type Ref, reactive } from 'vue'
 import {
 	type ILoaderProps,
 	TLoader,
@@ -205,7 +205,7 @@ export function syncLoaderContext(): TSyncLoaderContext {
 		return {}
 	}
 
-	const context = shallowReactive({
+	const context = reactive({
 		...useSyncProps(loader.events as any, {
 			visible: () => loader.visible,
 			type: () => loader.type,
@@ -219,7 +219,7 @@ export function syncLoaderContext(): TSyncLoaderContext {
 			},
 		}),
 		ctrl: loader.ctrl,
-		component: useResolveIndicatorComponent(loader.type),
+		component: markRaw(useResolveIndicatorComponent(loader.type)),
 	})
 
 	return { loader, context }
