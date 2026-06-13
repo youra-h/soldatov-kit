@@ -3,6 +3,7 @@ import { watch } from 'vue'
 import { TLoader } from '@core'
 import { Loader } from '@ui/loader'
 import { Button } from '@ui/button'
+import { CheckBox } from '@ui/check-box'
 import type { TComponentSize, TComponentVariant } from '@core'
 
 type Props = {
@@ -33,7 +34,7 @@ watch(() => props.indicator, (v) => { if (v !== undefined) loaderInstance.indica
 
 		<!-- Default: spinner + disabled -->
 		<section class="loader-slots-demo__section">
-			<h3 class="loader-slots-demo__title">Default (spinner + disabled)</h3>
+			<h3 class="loader-slots-demo__title">Button</h3>
 			<Loader
 				:visible="visible"
 				:size="size"
@@ -42,6 +43,19 @@ watch(() => props.indicator, (v) => { if (v !== undefined) loaderInstance.indica
 				:indicator="indicator"
 			>
 				<Button>Processing...</Button>
+			</Loader>
+		</section>
+
+		<section class="loader-slots-demo__section">
+			<h3 class="loader-slots-demo__title">CheckBox</h3>
+			<Loader
+				:visible="visible"
+				:size="size"
+				:variant="variant"
+				:disabled="disabled"
+				:indicator="indicator"
+			>
+				<CheckBox>Accept terms</CheckBox>
 			</Loader>
 		</section>
 

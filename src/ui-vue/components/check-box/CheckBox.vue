@@ -33,6 +33,7 @@ export default {
 			value,
 			readonly,
 			required,
+			loaderContext,
 		} = syncCheckBox({
 			props,
 			instance,
@@ -61,6 +62,7 @@ export default {
 			value,
 			readonly,
 			required,
+			loaderContext,
 		}
 	},
 }
@@ -99,6 +101,13 @@ export default {
 				<Icon :tag="defaultIndeterminateIconTag" :size="size" />
 			</slot>
 		</div>
+		<slot name="loader">
+			<Component
+				:is="loaderContext?.component"
+				v-if="loaderContext?.hasIndicator"
+				:ctrl="loaderContext?.ctrl"
+			/>
+		</slot>
 	</div>
 </template>
 
