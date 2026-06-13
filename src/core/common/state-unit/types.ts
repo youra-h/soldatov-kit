@@ -25,4 +25,8 @@ export interface IStateUnit<
 	 * Передайте `undefined` чтобы сбросить.
 	 */
 	setResolver(resolver: ((value: TValue) => TValue) | undefined): void
+	/**
+	 * Принудительно оповещает подписчиков, что resolved-значение могло измениться.
+	 */
+	notify(): void
 }

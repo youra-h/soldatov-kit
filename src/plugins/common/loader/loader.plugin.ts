@@ -15,6 +15,7 @@ export class TLoaderPlugin extends TBasePlugin<TLoaderPluginEvents> {
 
 	private _loader?: ILoader
 	private _bundle?: IPluginBundle
+	private _unwatch?: () => void
 
 	override install(bundle: IPluginBundle): void {
 		this._bundle = bundle
@@ -43,8 +44,20 @@ export class TLoaderPlugin extends TBasePlugin<TLoaderPluginEvents> {
 		const disableState = instancePlugin.instance.states.disabled
 		const loader = this._loader
 
-		// Устанавливаем резольвер для состояния disabled, который будет возвращать true, если загрузчик активен (disabled: true).
 		disableState.setResolver((value) => value || (loader.visible && loader.disabled))
+
+		// Отвязываем предыдущие подписки если есть
+		this._unwatch?.()
+
+		const refresh = () => disableState.notify()
+
+		loader.events.on('change:disabled', refresh)
+		loader.events.on('change:visible', refresh)
+
+		this._unwatch = () => {
+			loader.events.off('change:disabled', refresh)
+			loader.events.off('change:visible', refresh)
+		}
 	}
 
 	setContext(loader: ILoader): void {
@@ -53,6 +66,7 @@ export class TLoaderPlugin extends TBasePlugin<TLoaderPluginEvents> {
 	}
 
 	destroy(): void {
+		this._unwatch?.()
 		this._loader = undefined
 		this._bundle = undefined
 		super.destroy()

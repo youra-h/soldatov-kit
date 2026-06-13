@@ -34,6 +34,19 @@ export class TStateUnit<
 		this._resolver = resolver
 	}
 
+	/**
+	 * Принудительно оповещает подписчиков, что resolved-значение могло измениться,
+	 * даже если хранимое `_value` не менялось.
+	 * Полезно когда резольвер зависит от внешних данных, которые изменились без прямой записи в этот state-unit.
+	 */
+	notify(): void {
+		const resolved = this.value
+		;(this.events as TEvented<TStateUnitValueEvents<TValue>>).emit('change', {
+			newValue: resolved,
+			oldValue: resolved,
+		} as TValuePayload<TValue> as any)
+	}
+
 	get value(): TValue {
 		return this._resolver ? this._resolver(this._value) : this._value
 	}
