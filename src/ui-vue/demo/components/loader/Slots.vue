@@ -15,7 +15,7 @@ type Props = {
 
 const props = defineProps<Props>()
 
-const loaderInstance = new TLoader({ visible: true, type: 'spinner' })
+const loaderInstance = new TLoader({ visible: false, type: 'spinner' })
 
 watch(() => props.visible, (v) => { if (v !== undefined) loaderInstance.visible = v })
 watch(() => props.size, (v) => { if (v !== undefined) loaderInstance.size = v })

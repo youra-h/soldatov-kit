@@ -8,7 +8,7 @@ import { SIZES, VARIANTS } from '../common/items'
 import type { TComponentSize, TComponentVariant } from '@core'
 
 const propertiesSchema: TPropertiesSchema = {
-	visible: { type: 'boolean', default: true },
+	visible: { type: 'boolean', default: false },
 	size: { type: 'select', default: 'normal', options: SIZES },
 	variant: { type: 'select', default: 'normal', options: VARIANTS },
 	disabled: { type: 'boolean', default: true },
@@ -22,7 +22,7 @@ const componentProps = ref<{
 	disabled: boolean
 	indicator: boolean
 }>({
-	visible: true,
+	visible: false,
 	size: 'normal',
 	variant: 'normal',
 	disabled: true,

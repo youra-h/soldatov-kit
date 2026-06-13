@@ -21,7 +21,7 @@ export class TLoader<TStates extends TLoaderStates = TLoaderStates>
 		type: 'spinner',
 		disabled: true,
 		indicator: true,
-		visible: true,
+		visible: false,
 	}
 
 	protected _type!: TLoaderType
