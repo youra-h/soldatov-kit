@@ -222,7 +222,7 @@ export function syncLoaderContext(): TSyncLoaderContext {
 		}),
 		ctrl: loader.ctrl,
 		component: indicatorComponent ? markRaw(indicatorComponent) : null,
-	})
+	}) as ILoaderContextState
 
 	return { loader, context }
 }
