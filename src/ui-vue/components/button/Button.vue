@@ -58,9 +58,9 @@ export default {
 		<slot name="trailing"> </slot>
 		<slot name="loader">
 			<Component
-				:is="loaderContext?.component.value"
-				v-if="loaderContext?.component.value"
-				:ctrl="loaderContext?.ctrl.value"
+				:is="loaderContext?.component"
+				v-if="loaderContext?.hasIndicator"
+				:ctrl="loaderContext?.ctrl"
 			/>
 		</slot>
 	</component>

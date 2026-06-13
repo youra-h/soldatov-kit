@@ -1,6 +1,6 @@
 import type { PropType, Ref } from 'vue'
 import { watch } from 'vue'
-import { type IControl, type IControlProps, TControl, type ILoader } from '@core'
+import { type IControl, type IControlProps, TControl } from '@core'
 import {
 	BaseStylable,
 	emitsStylable,
@@ -10,8 +10,9 @@ import {
 } from '../stylable'
 import type { TEmits, TProps, ISyncComponentViewOptions } from '../../types'
 import { useSyncProps } from '../../composables/useSyncProps'
-import { useInjectLoader, useResolveIndicatorComponent } from '../../composables/useLoader'
+
 import { TLoaderPlugin } from '@plugins'
+import { syncLoaderContext, type ILoaderContext } from '../loader/base.component'
 
 export const emitsControl: TEmits = [
 	...emitsStylable,
@@ -45,7 +46,7 @@ export default {
 export interface IControlState extends IStylableState {
 	disabled: Ref<boolean>
 	focused: Ref<boolean>
-	loaderContext?: { loader: ILoader; component: any }
+	loaderContext?: ILoaderContext
 }
 
 /**
@@ -94,7 +95,7 @@ export function syncControl(
 		},
 	)
 
-	const sync = {
+	const sync: Record<string, any> = {
 		...syncProps,
 		...useSyncProps(instance.events as any, {
 			disabled: () => instance.disabled,
@@ -102,35 +103,14 @@ export function syncControl(
 		}),
 	}
 
-	const { loader } = useInjectLoader() || {}
+	const { loader, context } = syncLoaderContext()
 
 	if (loader) {
 		plugins.use(TLoaderPlugin)
 		plugins.get(TLoaderPlugin)!.setContext(loader)
 
-		sync.loaderContext = {
-			...useSyncProps(loader!.events as any, {
-				visible: () => loader!.visible,
-				type: () => loader!.type,
-				disabled: () => loader!.disabled,
-				size: () => loader!.size,
-				variant: () => loader!.variant,
-				indicator: () => loader!.indicator,
-				ctrl: {
-					value: () => loader!.ctrl,
-					triggers: ['change:type', 'change:indicator'],
-				},
-				component: {
-					value: () => {
-						if (!loader.visible || !loader.indicator) return null
-
-						return useResolveIndicatorComponent(loader.type)
-					},
-					triggers: ['change:type', 'change:indicator', 'change:visible'],
-				},
-			}),
-		}
+		sync.loaderContext = context
 	}
 
-	return sync
+	return sync as IControlState
 }

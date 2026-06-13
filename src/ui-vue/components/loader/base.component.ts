@@ -1,4 +1,4 @@
-import { type PropType, watch, type Ref } from 'vue'
+import { type PropType, reactive, watch, type Ref } from 'vue'
 import {
 	type ILoaderProps,
 	TLoader,
@@ -7,11 +7,16 @@ import {
 	type TLoaderType,
 	type ILoader,
 	type TValuePayload,
+	type TLoaderTypeIndicator
 } from '@core'
 import { BaseComponentModel, emitsComponentModel, propsComponentModel } from '../component-model'
 import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types/common'
 import { useSyncProps } from '../../composables/useSyncProps'
-import { useProvideLoader } from '../../composables/useLoader'
+import {
+	useProvideLoader,
+	useInjectLoader,
+	useResolveIndicatorComponent,
+} from '../../composables/useLoader'
 
 export const emitsLoader: TEmits = [
 	...emitsComponentModel,
@@ -170,4 +175,51 @@ export function syncLoader(options: ISyncComponentModelOptions<ILoaderProps, ILo
 			indicator: () => instance.indicator,
 		}),
 	}
+}
+
+export interface ILoaderContext {
+	visible: boolean
+	type: TLoaderType
+	disabled: boolean
+	size: TComponentSize
+	variant: TComponentVariant
+	indicator: boolean
+	ctrl: TLoaderTypeIndicator
+	component: any
+}
+
+export type TSyncLoaderContext = {
+	loader?: ILoader
+	context?: ILoaderContext
+}
+
+/**
+ * Синхронизация контекста загрузчика для компонентов, которые его поддерживают (например, Control).
+ * @returns Объект с текущим состоянием загрузчика и его инстансом (если он есть в иерархии компонентов)
+ */
+export function syncLoaderContext(): TSyncLoaderContext {
+	const { loader } = useInjectLoader() || {}
+
+	if (!loader) {
+		return {}
+	}
+
+	const context = reactive({
+		...useSyncProps(loader.events as any, {
+			visible: () => loader.visible,
+			type: () => loader.type,
+			disabled: () => loader.disabled,
+			size: () => loader.size,
+			variant: () => loader.variant,
+			indicator: () => loader.indicator,
+			hasIndicator: {
+				value: () => loader.visible && loader.indicator,
+				triggers: ['change:visible', 'change:indicator'],
+			},
+		}),
+		ctrl: loader.ctrl,
+		component: useResolveIndicatorComponent(loader.type),
+	}) as ILoaderContext
+
+	return { loader, context }
 }
