@@ -1,6 +1,6 @@
 import { TBasePlugin } from '../../base/plugin'
 import { TInstancePlugin } from '../instance'
-import type { ILoader, IControl } from '@core'
+import type { ILoader, IControl, TComponentSize, TComponentVariant, TValuePayload } from '@core'
 import type { IPluginBundle } from '../../base/types'
 
 export type TLoaderPluginEvents = {}
@@ -15,11 +15,32 @@ export class TLoaderPlugin extends TBasePlugin<TLoaderPluginEvents> {
 
 	private _loader?: ILoader
 	private _bundle?: IPluginBundle
-	private _unwatch?: () => void
+	private _unwatchInstance?: () => void
+	private _unwatchLoader?: () => void
 
 	override install(bundle: IPluginBundle): void {
 		this._bundle = bundle
-		this._link()
+
+		const instancePlugin = bundle.get(TInstancePlugin) as TInstancePlugin<IControl> | undefined
+
+		if (!instancePlugin?.instance) return
+
+		const instance = instancePlugin.instance
+
+		const onSizeChange = (payload: TValuePayload<TComponentSize>) => {
+			if (this._loader) this._loader.size = payload.newValue
+		}
+		const onVariantChange = (payload: TValuePayload<TComponentVariant>) => {
+			if (this._loader) this._loader.variant = payload.newValue
+		}
+
+		instance.events.on('change:size', onSizeChange)
+		instance.events.on('change:variant', onVariantChange)
+
+		this._unwatchInstance = () => {
+			instance.events.off('change:size', onSizeChange)
+			instance.events.off('change:variant', onVariantChange)
+		}
 	}
 
 	get loader(): ILoader | undefined {
@@ -46,15 +67,18 @@ export class TLoaderPlugin extends TBasePlugin<TLoaderPluginEvents> {
 
 		disableState.setResolver((value) => value || (loader.visible && loader.disabled))
 
-		// Отвязываем предыдущие подписки если есть
-		this._unwatch?.()
+		// Начальная установка size/variant
+		loader.size = instancePlugin.instance.size
+		loader.variant = instancePlugin.instance.variant
+
+		// Отвязываем предыдущие подписки на лоадер
+		this._unwatchLoader?.()
 
 		const refresh = () => disableState.notify()
-
 		loader.events.on('change:disabled', refresh)
 		loader.events.on('change:visible', refresh)
 
-		this._unwatch = () => {
+		this._unwatchLoader = () => {
 			loader.events.off('change:disabled', refresh)
 			loader.events.off('change:visible', refresh)
 		}
@@ -66,7 +90,8 @@ export class TLoaderPlugin extends TBasePlugin<TLoaderPluginEvents> {
 	}
 
 	destroy(): void {
-		this._unwatch?.()
+		this._unwatchLoader?.()
+		this._unwatchInstance?.()
 		this._loader = undefined
 		this._bundle = undefined
 		super.destroy()
