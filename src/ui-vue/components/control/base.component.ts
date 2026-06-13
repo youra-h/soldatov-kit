@@ -12,7 +12,7 @@ import type { TEmits, TProps, ISyncComponentViewOptions } from '../../types'
 import { useSyncProps } from '../../composables/useSyncProps'
 
 import { TLoaderPlugin } from '@plugins'
-import { syncLoaderContext, type ILoaderContext } from '../loader/base.component'
+import { syncLoaderContext, type ILoaderContextState } from '../loader/base.component'
 
 export const emitsControl: TEmits = [
 	...emitsStylable,
@@ -46,7 +46,7 @@ export default {
 export interface IControlState extends IStylableState {
 	disabled: Ref<boolean>
 	focused: Ref<boolean>
-	loaderContext?: ILoaderContext
+	loaderContext?: ILoaderContextState
 }
 
 /**
