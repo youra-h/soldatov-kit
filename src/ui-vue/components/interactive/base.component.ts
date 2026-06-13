@@ -10,6 +10,8 @@ import {
 } from '../component-view'
 import type { TEmits, TProps, ISyncComponentViewOptions } from '../../types'
 import { useSyncProps } from '../../composables/useSyncProps'
+import { TLoaderPlugin } from '@plugins'
+import { syncLoaderContext, type ILoaderContextState } from '../loader/base.component'
 
 export const emitsInteractive: TEmits = [
 	...emitsComponentView,
@@ -43,6 +45,7 @@ export default {
 export interface IInteractiveState extends IComponentViewState {
 	disabled: Ref<boolean>
 	focused: Ref<boolean>
+	loaderContext?: ILoaderContextState
 }
 
 /**
@@ -55,7 +58,7 @@ export function syncInteractive(
 ): IInteractiveState {
 	const syncProps = syncComponentView(options)
 
-	const { instance, props, emit } = options
+	const { instance, props, emit, plugins } = options
 
 	// Пробрасываем события core-инстанса наружу (Vue events).
 	instance.events.on('change:disabled' as any, (value: boolean) => {
@@ -91,11 +94,22 @@ export function syncInteractive(
 		},
 	)
 
-	return {
+	const sync: Record<string, any> = {
 		...syncProps,
 		...useSyncProps(instance.events as any, {
 			disabled: () => instance.disabled,
 			focused: () => instance.focused,
 		}),
 	}
+
+	const { loader, context } = syncLoaderContext()
+
+	if (loader) {
+		plugins.use(TLoaderPlugin)
+		plugins.get(TLoaderPlugin)!.setContext(loader)
+
+		sync.loaderContext = context
+	}
+
+	return sync as IInteractiveState
 }

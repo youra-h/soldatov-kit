@@ -21,25 +21,29 @@ export class TLoaderPlugin extends TBasePlugin<TLoaderPluginEvents> {
 	override install(bundle: IPluginBundle): void {
 		this._bundle = bundle
 
-		const instancePlugin = bundle.get(TInstancePlugin) as TInstancePlugin<IControl> | undefined
+		const instancePlugin = bundle.get(TInstancePlugin) as
+			| TInstancePlugin<IControl>
+			| undefined
 
 		if (!instancePlugin?.instance) return
 
 		const instance = instancePlugin.instance
 
-		const onSizeChange = (payload: TValuePayload<TComponentSize>) => {
-			if (this._loader) this._loader.size = payload.newValue
-		}
-		const onVariantChange = (payload: TValuePayload<TComponentVariant>) => {
-			if (this._loader) this._loader.variant = payload.newValue
-		}
+		if ('size' in instance && 'variant' in instance) {
+			const onSizeChange = (payload: TValuePayload<TComponentSize>) => {
+				if (this._loader) this._loader.size = payload.newValue
+			}
+			const onVariantChange = (payload: TValuePayload<TComponentVariant>) => {
+				if (this._loader) this._loader.variant = payload.newValue
+			}
 
-		instance.events.on('change:size', onSizeChange)
-		instance.events.on('change:variant', onVariantChange)
+			instance.events.on('change:size', onSizeChange)
+			instance.events.on('change:variant', onVariantChange)
 
-		this._unwatchInstance = () => {
-			instance.events.off('change:size', onSizeChange)
-			instance.events.off('change:variant', onVariantChange)
+			this._unwatchInstance = () => {
+				instance.events.off('change:size', onSizeChange)
+				instance.events.off('change:variant', onVariantChange)
+			}
 		}
 	}
 
@@ -67,9 +71,13 @@ export class TLoaderPlugin extends TBasePlugin<TLoaderPluginEvents> {
 
 		disableState.setResolver((value) => value || (loader.visible && loader.disabled))
 
-		// Начальная установка size/variant
-		loader.size = instancePlugin.instance.size
-		loader.variant = instancePlugin.instance.variant
+		// Начальная установка size/variant (только если есть)
+		if ('size' in instancePlugin.instance) {
+			loader.size = instancePlugin.instance.size as TComponentSize
+		}
+		if ('variant' in instancePlugin.instance) {
+			loader.variant = instancePlugin.instance.variant as TComponentVariant
+		}
 
 		// Отвязываем предыдущие подписки на лоадер
 		this._unwatchLoader?.()
