@@ -57,7 +57,6 @@ export default {
 		<slot>{{ text }}</slot>
 		<slot name="trailing"> </slot>
 		<slot name="loader">
-			{{ console.log(loaderContext.ctrl.value) }}
 			<Component
 				:is="loaderContext?.component.value"
 				v-if="loaderContext?.component.value"
