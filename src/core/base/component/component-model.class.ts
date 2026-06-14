@@ -2,10 +2,10 @@ import { TEntity } from '../entity'
 import { TEvented } from '../../common/evented'
 import type { IStateUnit } from '../../common/state-unit'
 import type {
-	IComponentModel,
-	IComponentModelOptions,
-	IComponentModelProps,
-	TComponentModelEvents,
+	IComponent,
+	IComponentOptions,
+	IComponentProps,
+	TComponentEvents,
 } from './types'
 
 /**
@@ -14,15 +14,15 @@ import type {
  * Это тонкая основа для будущих слоёв (`TComponentView`, `TInteractive`, ...).
  * Хранит `id` и единый emitter `events`.
  */
-export default class TComponentModel<
-	TProps extends IComponentModelProps = IComponentModelProps,
-	TEvents extends TComponentModelEvents = TComponentModelEvents,
+export default class TComponent<
+	TProps extends IComponentProps = IComponentProps,
+	TEvents extends TComponentEvents = TComponentEvents,
 	TStates extends Record<string, IStateUnit<any>> = Record<string, IStateUnit<any>>,
 >
 	extends TEntity<TProps>
-	implements IComponentModel<TProps, TEvents, TStates>
+	implements IComponent<TProps, TEvents, TStates>
 {
-	static defaultValues: Partial<IComponentModelProps> = {
+	static defaultValues: Partial<IComponentProps> = {
 		id: '',
 	}
 
@@ -30,8 +30,8 @@ export default class TComponentModel<
 	protected _states = {} as TStates
 	public readonly events: TEvented<TEvents>
 
-	constructor(options: IComponentModelOptions<TProps, TStates> | Partial<TProps> = {}) {
-		const ctor = new.target as typeof TComponentModel
+	constructor(options: IComponentOptions<TProps, TStates> | Partial<TProps> = {}) {
+		const ctor = new.target as typeof TComponent
 
 		const { props = {} as Partial<TProps> } = ctor.prepareOptions<TProps, TStates>(options)
 		super()
@@ -39,14 +39,14 @@ export default class TComponentModel<
 		this.events = new TEvented<TEvents>()
 		this._id = props.id ?? ctor.defaultValues.id!
 
-		setTimeout(() => (this.events as TEvented<TComponentModelEvents>).emit('created', this), 0)
+		setTimeout(() => (this.events as TEvented<TComponentEvents>).emit('created', this), 0)
 	}
 
 	static prepareOptions<
-		TProps extends IComponentModelProps = IComponentModelProps,
+		TProps extends IComponentProps = IComponentProps,
 		TStates = any,
 	>(
-		options: IComponentModelOptions<TProps, TStates> | Partial<TProps>,
+		options: IComponentOptions<TProps, TStates> | Partial<TProps>,
 	): { props: Partial<TProps>; states?: Partial<TStates> } {
 		const raw = options as Record<string, unknown>
 		const hasPropsKey = Object.prototype.hasOwnProperty.call(raw, 'props')
@@ -57,7 +57,7 @@ export default class TComponentModel<
 		const isOptionsObject = hasPropsKey || hasStatesKey || hasRenderConfigKey
 
 		if (isOptionsObject) {
-			const opt = options as IComponentModelOptions<TProps, TStates>
+			const opt = options as IComponentOptions<TProps, TStates>
 			const props = (opt.props ?? {}) as Partial<TProps>
 
 			return {
@@ -90,9 +90,9 @@ export default class TComponentModel<
 	 * TIcon.create({ tag: 'icon.svg', size: 'lg' })
 	 * TButton.create({ text: 'Click me', variant: 'accent' })
 	 */
-	static create<T extends TComponentModel>(
+	static create<T extends TComponent>(
 		this: new (options: any) => T,
-		props?: Partial<T extends TComponentModel<infer P> ? P : IComponentModelProps>,
+		props?: Partial<T extends TComponent<infer P> ? P : IComponentProps>,
 	): T {
 		return new this({ props: props ?? {} })
 	}

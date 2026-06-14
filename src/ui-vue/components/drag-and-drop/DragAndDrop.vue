@@ -3,12 +3,12 @@ import { TDragAndDrop, type IDragAndDropProps } from '@core'
 import BaseDragAndDrop from './base.component'
 import { useInstance } from '../../composables/useInstance'
 import { useProvideDragContext } from '../../composables/useDragContext'
-import type { TBaseComponentModelProps } from '../component-model'
+import type { TBaseComponentProps } from '../component'
 
 export default {
 	name: '_DragAndDrop',
 	extends: BaseDragAndDrop,
-	setup(props: TBaseComponentModelProps<IDragAndDropProps>) {
+	setup(props: TBaseComponentProps<IDragAndDropProps>) {
 		const instance = useInstance(TDragAndDrop, props)
 
 		useProvideDragContext()

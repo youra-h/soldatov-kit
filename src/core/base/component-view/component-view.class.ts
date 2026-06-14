@@ -1,4 +1,4 @@
-import { TComponentModel } from '../component-model'
+import { TComponent } from '../component'
 import { TVisibilityState, type IVisibilityState } from '../../common/states'
 import type {
 	IComponentViewOptions,
@@ -22,7 +22,7 @@ export default class TComponentView<
 	TProps extends IComponentViewProps = IComponentViewProps,
 	TEvents extends TComponentViewEvents = TComponentViewEvents,
 	TStates extends TComponentViewStates = TComponentViewStates,
-> extends TComponentModel<TProps, TEvents, TStates> {
+> extends TComponent<TProps, TEvents, TStates> {
 	/** Базовый CSS-класс по умолчанию (можно переопределить в наследниках). */
 	static baseClass = 's-component-view'
 

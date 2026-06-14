@@ -1,5 +1,5 @@
 import { toRaw } from 'vue'
-import type { IComponentModelOptions } from '@core'
+import type { IComponentOptions } from '@core'
 
 /**
  * Returns a raw (non-reactive) instance of a component.
@@ -10,7 +10,7 @@ import type { IComponentModelOptions } from '@core'
  * @returns The managed instance of the component.
  */
 export function useInstance<T extends object>(
-	Ctor: new (options: IComponentModelOptions<any>) => T,
+	Ctor: new (options: IComponentOptions<any>) => T,
 	props: any,
 ): T {
 	const provided = props.ctrl

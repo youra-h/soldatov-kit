@@ -1,6 +1,6 @@
 // base (слои/ядро)
 export * from './base/entity'
-export * from './base/component-model'
+export * from './base/component'
 export * from './base/component-view'
 export * from './base/interactive'
 export * from './base/stylable'

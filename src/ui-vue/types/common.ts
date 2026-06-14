@@ -1,10 +1,10 @@
 import { type IPluginBundle } from '@plugins'
-import type { IComponentView, IComponentModel } from '@core'
+import type { IComponentView, IComponent } from '@core'
 
 export type TEmits = readonly string[]
 export type TProps = Readonly<Record<string, any>>
 
-export interface ISyncComponentModelOptions<TProps, TInstance = IComponentModel> {
+export interface ISyncComponentOptions<TProps, TInstance = IComponent> {
 	props: TProps
 	instance: TInstance
 	emit?: (...args: any[]) => void
@@ -14,6 +14,6 @@ export interface ISyncComponentViewOptions<
 	TProps,
 	TInstance = IComponentView,
 	TPlugins = IPluginBundle,
-> extends ISyncComponentModelOptions<TProps, TInstance> {
+> extends ISyncComponentOptions<TProps, TInstance> {
 	plugins: TPlugins
 }

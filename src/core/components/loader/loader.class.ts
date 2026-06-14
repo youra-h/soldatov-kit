@@ -1,4 +1,4 @@
-import { TComponentModel, type IComponentModelOptions } from '../../base/component-model'
+import { TComponent, type IComponentOptions } from '../../base/component'
 import type {
 	ILoader,
 	ILoaderProps,
@@ -13,11 +13,11 @@ import { TSpinner } from '../spinner'
 import { TIcon } from '../icon'
 
 export class TLoader<TStates extends TLoaderStates = TLoaderStates>
-	extends TComponentModel<ILoaderProps, TLoaderEvents, TStates>
+	extends TComponent<ILoaderProps, TLoaderEvents, TStates>
 	implements ILoader
 {
 	static defaultValues: Partial<ILoaderProps> = {
-		...TComponentModel.defaultValues,
+		...TComponent.defaultValues,
 		type: 'spinner',
 		disabled: true,
 		indicator: true,
@@ -29,13 +29,13 @@ export class TLoader<TStates extends TLoaderStates = TLoaderStates>
 	private _ctrl?: TLoaderTypeIndicator
 
 	constructor(
-		options: IComponentModelOptions<ILoaderProps, TStates> | Partial<ILoaderProps> = {},
+		options: IComponentOptions<ILoaderProps, TStates> | Partial<ILoaderProps> = {},
 	) {
 		super(options)
 
 		const ctor = new.target as typeof TLoader
 
-		const { props = {}, states } = TComponentModel.prepareOptions<ILoaderProps, TStates>(
+		const { props = {}, states } = TComponent.prepareOptions<ILoaderProps, TStates>(
 			options,
 		)
 

@@ -1,8 +1,8 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
-import { TComponentModel } from '../base/component-model'
-import type { IComponentModelProps } from '../base/component-model'
+import { TComponent } from '../base/component'
+import type { IComponentProps } from '../base/component'
 
-describe('TComponentModel', () => {
+describe('TComponent', () => {
 	beforeEach(() => {
 		vi.useFakeTimers()
 	})
@@ -12,41 +12,41 @@ describe('TComponentModel', () => {
 	})
 
 	it('принимает props в формате { props }', () => {
-		const m = new TComponentModel<IComponentModelProps>({ props: { id: 'x' } })
+		const m = new TComponent<IComponentProps>({ props: { id: 'x' } })
 		expect(m.id).toBe('x')
 	})
 
 	it('принимает "голые" props без ключа props', () => {
-		const m = new TComponentModel<IComponentModelProps>({ id: 123 })
+		const m = new TComponent<IComponentProps>({ id: 123 })
 		expect(m.id).toBe(123)
 	})
 
 	it('create создаёт инстанс с переданными props', () => {
-		const m = TComponentModel.create({ id: 'created' })
-		expect(m).toBeInstanceOf(TComponentModel)
+		const m = TComponent.create({ id: 'created' })
+		expect(m).toBeInstanceOf(TComponent)
 		expect(m.id).toBe('created')
 	})
 
 	it('getProps возвращает актуальные свойства', () => {
-		const m = new TComponentModel<IComponentModelProps>({ id: 'a' })
+		const m = new TComponent<IComponentProps>({ id: 'a' })
 		expect(m.getProps()).toEqual({ id: 'a' })
 		m.id = 'b'
 		expect(m.getProps()).toEqual({ id: 'b' })
 	})
 
 	it('assign использует сеттеры и меняет состояние', () => {
-		const m = new TComponentModel<IComponentModelProps>({ id: 'a' })
+		const m = new TComponent<IComponentProps>({ id: 'a' })
 		m.assign({ id: 'b' })
 		expect(m.id).toBe('b')
 	})
 
 	it('toJSON сериализует getProps()', () => {
-		const m = new TComponentModel<IComponentModelProps>({ id: 'x' })
+		const m = new TComponent<IComponentProps>({ id: 'x' })
 		expect(m.toJSON()).toEqual({ id: 'x' })
 	})
 
 	it('эмитит created асинхронно после конструктора', () => {
-		const m = new TComponentModel<IComponentModelProps>({ id: 'x' })
+		const m = new TComponent<IComponentProps>({ id: 'x' })
 		const handler = vi.fn()
 		m.events.on('created', handler)
 

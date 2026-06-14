@@ -1,10 +1,10 @@
 import type { TClasses } from '@/core/common/classes'
 import type {
-	IComponentModel,
-	IComponentModelOptions,
-	IComponentModelProps,
-	TComponentModelEvents,
-} from '../component-model'
+	IComponent,
+	IComponentOptions,
+	IComponentProps,
+	TComponentEvents,
+} from '../component'
 import type { IStateUnit } from '../../common/state-unit'
 import type { IVisibilityState } from '../../common/states'
 
@@ -15,7 +15,7 @@ export type TComponentViewStates = {
 	visible: IVisibilityState
 }
 
-export type TComponentViewEvents = TComponentModelEvents & {
+export type TComponentViewEvents = TComponentEvents & {
 	/** beforeShow (можно отменить, вернув false) */
 	beforeShow: () => boolean
 	/** afterShow */
@@ -40,7 +40,7 @@ export type TComponentViewEvents = TComponentModelEvents & {
 	'change:ready': (value: boolean) => void
 }
 
-export interface IComponentViewProps extends IComponentModelProps {
+export interface IComponentViewProps extends IComponentProps {
 	tag?: string | object
 	/** Отрисован ли компонент в DOM (аналог v-if) */
 	rendered?: boolean
@@ -55,7 +55,7 @@ export interface IComponentViewProps extends IComponentModelProps {
 export interface IComponentViewOptions<
 	TProps extends IComponentViewProps = IComponentViewProps,
 	TStates extends TComponentViewStates = TComponentViewStates,
-> extends IComponentModelOptions<TProps, TStates> {}
+> extends IComponentOptions<TProps, TStates> {}
 
 /**
  * Результат нормализации опций component-view-слоя.
@@ -72,7 +72,7 @@ export interface IComponentView<
 	TProps extends IComponentViewProps = IComponentViewProps,
 	TEvents extends Record<string, (...args: any) => any> = TComponentViewEvents,
 	TStates extends TComponentViewStates = TComponentViewStates,
-> extends IComponentModel<TProps, TEvents, TStates> {
+> extends IComponent<TProps, TEvents, TStates> {
 	/** HTML-тег или компонент */
 	tag: string | object
 	/** Отрисован в DOM */

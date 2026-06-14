@@ -1,15 +1,15 @@
 import type { TEmits, TProps } from '../../types'
-import { BaseComponentModel, emitsComponentModel, propsComponentModel } from '../component-model'
+import { BaseComponent, emitsComponent, propsComponent } from '../component'
 
-export const emitsDragAndDrop: TEmits = [...emitsComponentModel] as const
+export const emitsDragAndDrop: TEmits = [...emitsComponent] as const
 
 export const propsDragAndDrop: TProps = {
-	...propsComponentModel,
+	...propsComponent,
 }
 
 export default {
 	name: 'BaseDragAndDrop',
-	extends: BaseComponentModel,
+	extends: BaseComponent,
 	emits: emitsDragAndDrop,
 	props: propsDragAndDrop,
 }

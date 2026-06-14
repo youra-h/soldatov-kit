@@ -1,16 +1,16 @@
-import { TComponentModel } from '../../base/component-model'
-import type { IComponentModelOptions } from '../../base/component-model'
+import { TComponent } from '../../base/component'
+import type { IComponentOptions } from '../../base/component'
 import type { IDragAndDrop, IDragAndDropProps, TDragAndDropEvents } from './types'
 
 export default class TDragAndDrop
-	extends TComponentModel<IDragAndDropProps, TDragAndDropEvents>
+	extends TComponent<IDragAndDropProps, TDragAndDropEvents>
 	implements IDragAndDrop
 {
 	static defaultValues: Partial<IDragAndDropProps> = {
-		...TComponentModel.defaultValues,
+		...TComponent.defaultValues,
 	}
 
-	constructor(options: IComponentModelOptions<IDragAndDropProps> | Partial<IDragAndDropProps> = {}) {
+	constructor(options: IComponentOptions<IDragAndDropProps> | Partial<IDragAndDropProps> = {}) {
 		super(options)
 	}
 }

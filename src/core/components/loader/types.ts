@@ -1,8 +1,8 @@
 import type {
-	IComponentModel,
-	IComponentModelProps,
-	TComponentModelEvents,
-} from '../../base/component-model'
+	IComponent,
+	IComponentProps,
+	TComponentEvents,
+} from '../../base/component'
 import type { TComponentSize, TComponentVariant, TValuePayload } from '../../common/types'
 import type { ISpinner } from '../spinner'
 import type { IIcon } from '../icon'
@@ -16,7 +16,7 @@ export type TLoaderStates = {
 	disabled: IStateUnit<boolean>
 }
 
-export interface ILoaderProps extends IComponentModelProps {
+export interface ILoaderProps extends IComponentProps {
 	/** Тип индикатора загрузки */
 	type?: TLoaderType
 	/** Размер индикатора */
@@ -31,7 +31,7 @@ export interface ILoaderProps extends IComponentModelProps {
 	visible?: boolean
 }
 
-export type TLoaderEvents = TComponentModelEvents & {
+export type TLoaderEvents = TComponentEvents & {
 	'change:visible': (value: boolean) => void
 	'change:type': (value: TLoaderType) => void
 	'change:size': (payload: TValuePayload<TComponentSize>) => void
@@ -40,7 +40,7 @@ export type TLoaderEvents = TComponentModelEvents & {
 	'change:indicator': (value: boolean) => void
 }
 
-export interface ILoader extends IComponentModel<ILoaderProps, TLoaderEvents, TLoaderStates> {
+export interface ILoader extends IComponent<ILoaderProps, TLoaderEvents, TLoaderStates> {
 	/** Тип индикатора */
 	type: TLoaderType
 	/** Размер индикатора */

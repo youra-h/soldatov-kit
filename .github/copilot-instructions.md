@@ -22,7 +22,7 @@ All logic lives here. No Vue, React, or Angular imports allowed.
 **Class hierarchy** (inheritance chain):
 ```
 TEntity
-└── TComponentModel          # id, events
+└── TComponent          # id, events
     └── TComponentView       # tag, classes, visible, rendered, show/hide
         ├── TStylable        # + variant, size
         │   └── TControl     # + disabled, focused

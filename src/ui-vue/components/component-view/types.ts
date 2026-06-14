@@ -1,10 +1,10 @@
 import type { IComponentView } from '@core'
 import type { IPluginBundle } from '@plugins'
-import type { TBaseComponentModelProps } from '../component-model'
+import type { TBaseComponentProps } from '../component'
 
 export type TBaseComponentViewProps<
 	TCoreProps,
 	TInstance extends IComponentView = IComponentView,
-> = TBaseComponentModelProps<TCoreProps, TInstance> & {
+> = TBaseComponentProps<TCoreProps, TInstance> & {
 	plugins?: IPluginBundle | undefined
 }

@@ -5,13 +5,13 @@ import { type IComponentViewProps, TComponentView } from '@core'
 import type { TEmits, TProps, ISyncComponentViewOptions } from '../../types'
 import { type IPluginBundle, TElementPlugin } from '@plugins'
 import {
-	BaseComponentModel,
-	emitsComponentModel,
-	propsComponentModel,
-} from '../component-model'
+	BaseComponent,
+	emitsComponent,
+	propsComponent,
+} from '../component'
 
 export const emitsComponentView: TEmits = [
-	...emitsComponentModel,
+	...emitsComponent,
 	'rendered',
 	'update:rendered',
 	'change:rendered',
@@ -28,7 +28,7 @@ export const emitsComponentView: TEmits = [
 ] as const
 
 export const propsComponentView: TProps = {
-	...propsComponentModel,
+	...propsComponent,
 	plugins: {
 		type: Object as PropType<IPluginBundle>,
 	},
@@ -48,7 +48,7 @@ export const propsComponentView: TProps = {
 
 export default {
 	name: 'BaseComponentView',
-	extends: BaseComponentModel,
+	extends: BaseComponent,
 	emits: emitsComponentView,
 	props: propsComponentView,
 }

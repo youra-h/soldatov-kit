@@ -9,8 +9,8 @@ import {
 	type TValuePayload,
 	type TLoaderTypeIndicator,
 } from '@core'
-import { BaseComponentModel, emitsComponentModel, propsComponentModel } from '../component-model'
-import type { TEmits, TProps, ISyncComponentModelOptions } from '../../types/common'
+import { BaseComponent, emitsComponent, propsComponent } from '../component'
+import type { TEmits, TProps, ISyncComponentOptions } from '../../types/common'
 import { useSyncProps } from '../../composables/useSyncProps'
 import {
 	useProvideLoader,
@@ -19,7 +19,7 @@ import {
 } from '../../composables/useLoader'
 
 export const emitsLoader: TEmits = [
-	...emitsComponentModel,
+	...emitsComponent,
 	'change:visible',
 	'update:visible',
 	'change:type',
@@ -37,7 +37,7 @@ export const emitsLoader: TEmits = [
 ] as const
 
 export const propsLoader: TProps = {
-	...propsComponentModel,
+	...propsComponent,
 	visible: {
 		type: Boolean as PropType<ILoaderProps['visible']>,
 		default: TLoader.defaultValues.visible,
@@ -66,7 +66,7 @@ export const propsLoader: TProps = {
 
 export default {
 	name: 'BaseLoader',
-	extends: BaseComponentModel,
+	extends: BaseComponent,
 	emits: emitsLoader,
 	props: propsLoader,
 }
@@ -79,7 +79,7 @@ export interface ILoaderState {
 	indicator: Ref<boolean>
 }
 
-export function syncLoader(options: ISyncComponentModelOptions<ILoaderProps, ILoader>) {
+export function syncLoader(options: ISyncComponentOptions<ILoaderProps, ILoader>) {
 	const { instance, props, emit } = options
 
 	useProvideLoader(instance)
