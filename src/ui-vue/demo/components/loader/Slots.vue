@@ -5,6 +5,7 @@ import { Loader } from '@ui/loader'
 import { Button } from '@ui/button'
 import { CheckBox } from '@ui/check-box'
 import { Switch } from '@ui/switch'
+import { Tabs, TabItem } from '@ui/tabs'
 import type { TComponentSize, TComponentVariant } from '@core'
 
 type Props = {
@@ -32,6 +33,9 @@ watch(() => props.indicator, (v) => { if (v !== undefined) loaderInstance.indica
 const buttonLoading = ref(false)
 const checkboxLoading = ref(false)
 const switchLoading = ref(false)
+const tabsLoading = ref(false)
+const tab1Loading = ref(false)
+const tab2Loading = ref(false)
 
 function simulateLoading(target: ReturnType<typeof ref<boolean>>) {
 	target.value = true
@@ -41,6 +45,9 @@ function simulateLoading(target: ReturnType<typeof ref<boolean>>) {
 const onButtonClick = () => simulateLoading(buttonLoading)
 const onCheckBoxClick = () => simulateLoading(checkboxLoading)
 const onSwitchClick = () => simulateLoading(switchLoading)
+const onTabsClick = () => simulateLoading(tabsLoading)
+const onTab1Click = () => simulateLoading(tab1Loading)
+const onTab2Click = () => simulateLoading(tab2Loading)
 </script>
 
 <template>
@@ -75,6 +82,16 @@ const onSwitchClick = () => simulateLoading(switchLoading)
 						<Switch />
 					</Loader>
 				</section>
+
+				<section class="loader-slots-demo__section">
+					<h4 class="loader-slots-demo__title">Tabs / TabItem</h4>
+					<Loader :visible="visible" :size="size" :variant="variant" :disabled="disabled" :indicator="indicator">
+						<Tabs>
+							<TabItem>Tab 1</TabItem>
+							<TabItem>Tab 2</TabItem>
+						</Tabs>
+					</Loader>
+				</section>
 			</div>
 
 			<!-- Правая колонка: клик → лоадер на 1.5с -->
@@ -100,6 +117,18 @@ const onSwitchClick = () => simulateLoading(switchLoading)
 					<Loader :visible="switchLoading" :size="size" :variant="variant" :disabled="disabled" :indicator="indicator">
 						<Switch @click="onSwitchClick" />
 					</Loader>
+				</section>
+
+				<section class="loader-slots-demo__section">
+					<h4 class="loader-slots-demo__title">Tabs / TabItem</h4>
+					<Tabs>
+						<Loader :visible="tab1Loading" :size="size" :variant="variant" :disabled="disabled" :indicator="indicator">
+							<TabItem @click="onTab1Click">Tab 1</TabItem>
+						</Loader>
+						<Loader :visible="tab2Loading" :size="size" :variant="variant" :disabled="disabled" :indicator="indicator">
+							<TabItem @click="onTab2Click">Tab 2</TabItem>
+						</Loader>
+					</Tabs>
 				</section>
 			</div>
 		</div>
