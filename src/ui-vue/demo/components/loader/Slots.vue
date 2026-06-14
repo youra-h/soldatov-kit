@@ -6,6 +6,7 @@ import { Button } from '@ui/button'
 import { CheckBox } from '@ui/check-box'
 import { Switch } from '@ui/switch'
 import { Tabs, TabItem } from '@ui/tabs'
+import { Collapse, CollapseItem } from '@ui/collapse'
 import type { TComponentSize, TComponentVariant } from '@core'
 
 type Props = {
@@ -23,11 +24,36 @@ const LOADING_DURATION = 1500
 // Глобальный лоадер (управляется через props панели)
 const loaderInstance = new TLoader({ visible: false, type: 'spinner' })
 
-watch(() => props.visible, (v) => { if (v !== undefined) loaderInstance.visible = v })
-watch(() => props.size, (v) => { if (v !== undefined) loaderInstance.size = v })
-watch(() => props.variant, (v) => { if (v !== undefined) loaderInstance.variant = v })
-watch(() => props.disabled, (v) => { if (v !== undefined) loaderInstance.disabled = v })
-watch(() => props.indicator, (v) => { if (v !== undefined) loaderInstance.indicator = v })
+watch(
+	() => props.visible,
+	(v) => {
+		if (v !== undefined) loaderInstance.visible = v
+	},
+)
+watch(
+	() => props.size,
+	(v) => {
+		if (v !== undefined) loaderInstance.size = v
+	},
+)
+watch(
+	() => props.variant,
+	(v) => {
+		if (v !== undefined) loaderInstance.variant = v
+	},
+)
+watch(
+	() => props.disabled,
+	(v) => {
+		if (v !== undefined) loaderInstance.disabled = v
+	},
+)
+watch(
+	() => props.indicator,
+	(v) => {
+		if (v !== undefined) loaderInstance.indicator = v
+	},
+)
 
 // Локальные лоадеры (клик → показ на 1.5с)
 const buttonLoading = ref(false)
@@ -36,10 +62,14 @@ const switchLoading = ref(false)
 const tabsLoading = ref(false)
 const tab1Loading = ref(false)
 const tab2Loading = ref(false)
+const collapse1Loading = ref(false)
+const collapse2Loading = ref(false)
 
 function simulateLoading(target: ReturnType<typeof ref<boolean>>) {
 	target.value = true
-	setTimeout(() => { target.value = false }, LOADING_DURATION)
+	setTimeout(() => {
+		target.value = false
+	}, LOADING_DURATION)
 }
 
 const onButtonClick = () => simulateLoading(buttonLoading)
@@ -48,13 +78,15 @@ const onSwitchClick = () => simulateLoading(switchLoading)
 const onTabsClick = () => simulateLoading(tabsLoading)
 const onTab1Click = () => simulateLoading(tab1Loading)
 const onTab2Click = () => simulateLoading(tab2Loading)
+const onCollapse1Click = () => simulateLoading(collapse1Loading)
+const onCollapse2Click = () => simulateLoading(collapse2Loading)
 </script>
 
 <template>
 	<div class="loader-slots-demo">
 		<p class="loader-slots-demo__hint">
-			Оберните Loader вокруг любого контрола. При visible=true контрол дизейблится и показывает
-			индикатор загрузки в слоте #loader.
+			Оберните Loader вокруг любого контрола. При visible=true контрол дизейблится и
+			показывает индикатор загрузки в слоте #loader.
 		</p>
 
 		<div class="loader-slots-demo__grid">
@@ -64,32 +96,72 @@ const onTab2Click = () => simulateLoading(tab2Loading)
 
 				<section class="loader-slots-demo__section">
 					<h4 class="loader-slots-demo__title">Button</h4>
-					<Loader :visible="visible" :size="size" :variant="variant" :disabled="disabled" :indicator="indicator">
+					<Loader
+						:visible="visible"
+						:size="size"
+						:variant="variant"
+						:disabled="disabled"
+						:indicator="indicator"
+					>
 						<Button>Processing...</Button>
 					</Loader>
 				</section>
 
 				<section class="loader-slots-demo__section">
 					<h4 class="loader-slots-demo__title">CheckBox</h4>
-					<Loader :visible="visible" :size="size" :variant="variant" :disabled="disabled" :indicator="indicator">
+					<Loader
+						:visible="visible"
+						:size="size"
+						:variant="variant"
+						:disabled="disabled"
+						:indicator="indicator"
+					>
 						<CheckBox>Accept terms</CheckBox>
 					</Loader>
 				</section>
 
 				<section class="loader-slots-demo__section">
 					<h4 class="loader-slots-demo__title">Switch</h4>
-					<Loader :visible="visible" :size="size" :variant="variant" :disabled="disabled" :indicator="indicator">
+					<Loader
+						:visible="visible"
+						:size="size"
+						:variant="variant"
+						:disabled="disabled"
+						:indicator="indicator"
+					>
 						<Switch />
 					</Loader>
 				</section>
 
 				<section class="loader-slots-demo__section">
 					<h4 class="loader-slots-demo__title">Tabs / TabItem</h4>
-					<Loader :visible="visible" :size="size" :variant="variant" :disabled="disabled" :indicator="indicator">
+					<Loader
+						:visible="visible"
+						:size="size"
+						:variant="variant"
+						:disabled="disabled"
+						:indicator="indicator"
+					>
 						<Tabs>
 							<TabItem>Tab 1</TabItem>
 							<TabItem>Tab 2</TabItem>
 						</Tabs>
+					</Loader>
+				</section>
+
+				<section class="loader-slots-demo__section">
+					<h4 class="loader-slots-demo__title">Collapse / CollapseItem</h4>
+					<Loader
+						:visible="visible"
+						:size="size"
+						:variant="variant"
+						:disabled="disabled"
+						:indicator="indicator"
+					>
+						<Collapse>
+							<CollapseItem text="Item 1">Lorem ipsum dolor sit amet.</CollapseItem>
+							<CollapseItem text="Item 2">Consectetur adipiscing elit.</CollapseItem>
+						</Collapse>
 					</Loader>
 				</section>
 			</div>
@@ -100,21 +172,39 @@ const onTab2Click = () => simulateLoading(tab2Loading)
 
 				<section class="loader-slots-demo__section">
 					<h4 class="loader-slots-demo__title">Button</h4>
-					<Loader :visible="buttonLoading" :size="size" :variant="variant" :disabled="disabled" :indicator="indicator">
+					<Loader
+						:visible="buttonLoading"
+						:size="size"
+						:variant="variant"
+						:disabled="disabled"
+						:indicator="indicator"
+					>
 						<Button @click="onButtonClick">Click me</Button>
 					</Loader>
 				</section>
 
 				<section class="loader-slots-demo__section">
 					<h4 class="loader-slots-demo__title">CheckBox</h4>
-					<Loader :visible="checkboxLoading" :size="size" :variant="variant" :disabled="disabled" :indicator="indicator">
+					<Loader
+						:visible="checkboxLoading"
+						:size="size"
+						:variant="variant"
+						:disabled="disabled"
+						:indicator="indicator"
+					>
 						<CheckBox @click="onCheckBoxClick">Accept terms</CheckBox>
 					</Loader>
 				</section>
 
 				<section class="loader-slots-demo__section">
 					<h4 class="loader-slots-demo__title">Switch</h4>
-					<Loader :visible="switchLoading" :size="size" :variant="variant" :disabled="disabled" :indicator="indicator">
+					<Loader
+						:visible="switchLoading"
+						:size="size"
+						:variant="variant"
+						:disabled="disabled"
+						:indicator="indicator"
+					>
 						<Switch @click="onSwitchClick" />
 					</Loader>
 				</section>
@@ -122,13 +212,53 @@ const onTab2Click = () => simulateLoading(tab2Loading)
 				<section class="loader-slots-demo__section">
 					<h4 class="loader-slots-demo__title">Tabs / TabItem</h4>
 					<Tabs>
-						<Loader :visible="tab1Loading" :size="size" :variant="variant" :disabled="disabled" :indicator="indicator">
+						<Loader
+							:visible="tab1Loading"
+							:size="size"
+							:variant="variant"
+							:disabled="disabled"
+							:indicator="indicator"
+						>
 							<TabItem @click="onTab1Click">Tab 1</TabItem>
 						</Loader>
-						<Loader :visible="tab2Loading" :size="size" :variant="variant" :disabled="disabled" :indicator="indicator">
+						<Loader
+							:visible="tab2Loading"
+							:size="size"
+							:variant="variant"
+							:disabled="disabled"
+							:indicator="indicator"
+						>
 							<TabItem @click="onTab2Click">Tab 2</TabItem>
 						</Loader>
 					</Tabs>
+				</section>
+
+				<section class="loader-slots-demo__section">
+					<h4 class="loader-slots-demo__title">Collapse / CollapseItem</h4>
+					<Collapse>
+						<Loader
+							:visible="collapse1Loading"
+							:size="size"
+							:variant="variant"
+							:disabled="disabled"
+							:indicator="indicator"
+						>
+							<CollapseItem text="Item 1" @click="onCollapse1Click"
+								>Lorem ipsum dolor sit amet.</CollapseItem
+							>
+						</Loader>
+						<Loader
+							:visible="collapse2Loading"
+							:size="size"
+							:variant="variant"
+							:disabled="disabled"
+							:indicator="indicator"
+						>
+							<CollapseItem text="Item 2" @click="onCollapse2Click"
+								>Consectetur adipiscing elit.</CollapseItem
+							>
+						</Loader>
+					</Collapse>
 				</section>
 			</div>
 		</div>
