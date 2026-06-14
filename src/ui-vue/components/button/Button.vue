@@ -51,7 +51,7 @@ export default {
 		v-show="visible"
 		:class="classes"
 		:disabled="disabled"
-		@click="instance.events.emit('click', $event)"
+		@click="instance.click($event)"
 	>
 		<slot name="leading"> </slot>
 		<slot>{{ text }}</slot>
