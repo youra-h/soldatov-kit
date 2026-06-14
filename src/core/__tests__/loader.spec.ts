@@ -12,7 +12,7 @@ describe('TLoader', () => {
 		expect(l.type).toBe('spinner')
 		expect(l.disabled).toBe(true)
 		expect(l.indicator).toBe(true)
-		expect(l.visible).toBe(true)
+		expect(l.visible).toBe(false)
 		expect(l.ctrl).toBeInstanceOf(TSpinner)
 	})
 
