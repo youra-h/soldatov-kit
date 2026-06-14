@@ -100,15 +100,15 @@ export default {
 			>
 				<Icon :tag="defaultIndeterminateIconTag" :size="size" />
 			</slot>
-		</div>
-		<div v-if="$slots.loader || loaderContext?.hasIndicator" class="s-check-box__loader">
-			<slot name="loader">
-				<Component
-					:is="loaderContext?.component"
-					v-if="loaderContext?.hasIndicator"
-					:ctrl="loaderContext?.ctrl"
-				/>
-			</slot>
+			<div v-if="$slots.loader || loaderContext?.hasIndicator" class="s-check-box__loader">
+				<slot name="loader">
+					<Component
+						:is="loaderContext?.component"
+						v-if="loaderContext?.hasIndicator"
+						:ctrl="loaderContext?.ctrl"
+					/>
+				</slot>
+			</div>
 		</div>
 	</div>
 </template>

@@ -124,12 +124,24 @@ const onSwitchClick = () => simulateLoading(switchLoading)
 		@apply text-xs text-gray-500;
 	}
 
+	&__grid {
+		@apply grid grid-cols-2 gap-20;
+	}
+
+	&__col {
+		@apply flex flex-col gap-4;
+	}
+
+	&__col-title {
+		@apply text-base font-semibold text-gray-700;
+	}
+
 	&__section {
-		@apply flex flex-col gap-3;
+		@apply flex flex-col gap-1.5;
 	}
 
 	&__title {
-		@apply text-sm font-medium text-gray-600;
+		@apply text-xs font-medium text-gray-500;
 	}
 }
 </style>

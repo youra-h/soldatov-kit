@@ -67,7 +67,7 @@ export default {
 			:disabled="disabled"
 			:required="required"
 			:aria-checked="Boolean(value)"
-			@click="readonly ? $event.preventDefault() : null"
+			@click="readonly ? $event.preventDefault() : instance.click($event)"
 			@change="instance.change($event)"
 		/>
 		<div class="s-switch__track">
