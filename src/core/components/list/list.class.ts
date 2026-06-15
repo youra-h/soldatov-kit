@@ -80,6 +80,8 @@ export class TList extends TControl<IListProps, TListEvents, TListStates> implem
 							payload.newValue,
 						)
 					})
+
+					item.setWordWrapResolver(() => this._wordWrap)
 				},
 			},
 			'item:beforeDelete',
