@@ -36,10 +36,6 @@ export interface ICollapse extends IControl<ICollapseProps, TCollapseEvents> {
 	appearance: TCollapseAppearance
 	/** Режим выбора */
 	mode: TSelectionMode
-	/** Выбранные элементы */
-	readonly selected: ICollapseItem[]
-	/** Количество выбранных элементов */
-	readonly selectedCount: number
 	/** Доступ к коллекции элементов */
 	readonly collection: TSelectableCollection<any, any, ICollapseItem>
 }

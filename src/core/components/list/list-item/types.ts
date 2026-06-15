@@ -18,15 +18,20 @@ import type { TValuePayload } from '../../../common/types'
 export type TListItemCustomEvents<TItem = any> = TValueControlEvents<string | number> & {
 	/** change:text */
 	'change:text': (payload: TValuePayload<string>) => void
+	/** change:wordWrap */
+	'change:wordWrap': (value: boolean) => void
 }
 
 export interface IListItemCustomProps extends IValueControlProps<string | number> {
 	/** Текст элемента */
 	text?: string
+	/** Перенос текста (undefined = наследовать от TList) */
+	wordWrap?: boolean
 }
 
 export type TListItemCustomStates = TValueControlStates<string | number> & {
 	text: IStateUnit<string>
+	wordWrap: IStateUnit<boolean | undefined>
 }
 
 export interface IListItemCustom<
@@ -34,6 +39,12 @@ export interface IListItemCustom<
 > extends IValueControl<string | number, TProps, TListItemCustomEvents<any>> {
 	/** Текст элемента */
 	text: string
+	/** Перенос текста (undefined = наследовать от TList) */
+	wordWrap: boolean | undefined
+	/** Инжектирует резолвер wordWrap из TList */
+	setWordWrapResolver(resolver: () => boolean): void
+	/** Оповещает что родительский wordWrap изменился */
+	notifyWordWrapChange(): void
 }
 
 // ============ TListItem (коллекционный элемент с композицией) ============

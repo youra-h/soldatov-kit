@@ -94,6 +94,7 @@ export default class TListItem
 			...super.getProps(),
 			selected: this.selected,
 			order: this.order,
+			wordWrap: this.wordWrap,
 		}
 	}
 

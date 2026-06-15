@@ -4,48 +4,46 @@ import { TComponentView } from '../../base/component-view'
 import { TSelectableCollection } from '../../base/collection'
 import TListItem from './list-item/list-item.class'
 import type { IListItem } from './list-item/types'
-import type {
-	IList,
-	IListProps,
-	TListEvents,
-	TListStates,
-} from './types'
+import type { IList, IListProps, TListEvents, TListStates } from './types'
 import { TEvented } from '../../common/evented'
 import type { TSelectionMode } from '../../base/collection'
 import { type TValuePayload } from '../../common/types'
 import type { TComponentSize, TComponentVariant } from '../../common/types'
 
-export class TList
-	extends TControl<IListProps, TListEvents, TListStates>
-	implements IList
-{
+export class TList extends TControl<IListProps, TListEvents, TListStates> implements IList {
 	static override baseClass = 's-list'
 
 	static defaultValues: Partial<IListProps> = {
 		...TControl.defaultValues,
 		mode: 'single',
+		maxRows: 0,
+		autoWidth: false,
+		wordWrap: false,
 	}
 
+	protected _maxRows!: number
+	protected _autoWidth!: boolean
+	protected _wordWrap!: boolean
 	protected _collection: TSelectableCollection<any, any, IListItem>
 
 	constructor(
-		options:
-			| IComponentViewOptions<IListProps, TListStates>
-			| Partial<IListProps> = {},
+		options: IComponentViewOptions<IListProps, TListStates> | Partial<IListProps> = {},
 	) {
 		super(options)
 
 		const ctor = new.target as typeof TList
 
-		const { props = {} } = TComponentView.prepareOptions<
-			IListProps,
-			TListStates
-		>(options)
+		const { props = {} } = TComponentView.prepareOptions<IListProps, TListStates>(options)
 
 		this._collection = new TSelectableCollection<any, any, IListItem>({
 			itemClass: TListItem,
 			mode: props.mode ?? ctor.defaultValues.mode!,
 		})
+
+		this._maxRows = props.maxRows ?? ctor.defaultValues.maxRows!
+
+		this._applyAutoWidth(props.autoWidth ?? ctor.defaultValues.autoWidth!)
+		this._applyWordWrap(props.wordWrap ?? ctor.defaultValues.wordWrap!)
 
 		this.events.on('change:size', (payload: TValuePayload<TComponentSize>) => {
 			this._collection.forEach((item) => {
@@ -72,11 +70,7 @@ export class TList
 					const { item } = payload as { collection: any; item: IListItem }
 
 					item.events.on('change:disabled', (value: boolean) => {
-						;(this.events as TEvented<TListEvents>).emit(
-							'item:disabled',
-							item,
-							value,
-						)
+						;(this.events as TEvented<TListEvents>).emit('item:disabled', item, value)
 					})
 
 					item.events.on('change:text', (payload: TValuePayload<string>) => {
@@ -112,12 +106,53 @@ export class TList
 		this._collection.mode = value
 	}
 
-	get selected(): IListItem[] {
-		return this._collection.selected as IListItem[]
+	get maxRows(): number {
+		return this._maxRows
 	}
 
-	get selectedCount(): number {
-		return this._collection.selectedCount
+	set maxRows(value: number) {
+		if (this._maxRows !== value) {
+			this._maxRows = value
+			;(this.events as TEvented<TListEvents>).emit('change:maxRows', value)
+		}
+	}
+
+	get autoWidth(): boolean {
+		return this._autoWidth
+	}
+
+	protected _applyAutoWidth(newValue: boolean, oldValue?: boolean) {
+		this._classes.toggle('--auto-width', newValue)
+
+		this._autoWidth = newValue
+	}
+
+	set autoWidth(value: boolean) {
+		if (this._autoWidth !== value) {
+			this._applyAutoWidth(value, this._autoWidth)
+			;(this.events as TEvented<TListEvents>).emit('change:autoWidth', value)
+		}
+	}
+
+	get wordWrap(): boolean {
+		return this._wordWrap
+	}
+
+	protected _applyWordWrap(newValue: boolean, oldValue?: boolean) {
+		this._classes.toggle('--word-wrap', newValue)
+
+		this._wordWrap = newValue
+	}
+
+	set wordWrap(value: boolean) {
+		if (this._wordWrap !== value) {
+			this._applyWordWrap(value, this._wordWrap)
+
+			this._collection.forEach((item) => {
+				item.notifyWordWrapChange()
+			})
+			;(this.events as TEvented<TListEvents>).emit('change:wordWrap', value)
+		}
 	}
 
 	get collection(): TSelectableCollection<any, any, IListItem> {
@@ -128,6 +163,9 @@ export class TList
 		return {
 			...super.getProps(),
 			mode: this._collection.mode,
+			maxRows: this._maxRows,
+			autoWidth: this._autoWidth,
+			wordWrap: this._wordWrap,
 		}
 	}
 }

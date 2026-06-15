@@ -27,6 +27,12 @@ import { useSyncProps } from '../../composables/useSyncProps'
 export const emitsList: TEmits = [
 	...emitsControl,
 	...emitsSelectableCollection,
+	'change:maxRows',
+	'update:maxRows',
+	'change:autoWidth',
+	'update:autoWidth',
+	'change:wordWrap',
+	'update:wordWrap',
 	'item:disabled',
 	'item:text',
 ] as const
@@ -37,6 +43,18 @@ export const propsList: TProps = {
 	mode: {
 		type: String as PropType<TSelectionMode>,
 		default: TList.defaultValues.mode,
+	},
+	maxRows: {
+		type: Number as PropType<IListProps['maxRows']>,
+		default: TList.defaultValues.maxRows,
+	},
+	autoWidth: {
+		type: Boolean as PropType<IListProps['autoWidth']>,
+		default: TList.defaultValues.autoWidth,
+	},
+	wordWrap: {
+		type: Boolean as PropType<IListProps['wordWrap']>,
+		default: TList.defaultValues.wordWrap,
 	},
 }
 
@@ -71,11 +89,53 @@ export function syncList(
 		emit?.('item:text', item, value)
 	})
 
+	instance.events.on('change:maxRows', (value: number) => {
+		emit?.('change:maxRows', value)
+		emit?.('update:maxRows', value)
+	})
+
+	instance.events.on('change:autoWidth', (value: boolean) => {
+		emit?.('change:autoWidth', value)
+		emit?.('update:autoWidth', value)
+	})
+
+	instance.events.on('change:wordWrap', (value: boolean) => {
+		emit?.('change:wordWrap', value)
+		emit?.('update:wordWrap', value)
+	})
+
 	watch<TSelectionMode | undefined>(
 		() => props.mode,
 		(value) => {
 			if (value !== undefined && value !== instance.mode) {
 				instance.mode = value
+			}
+		},
+	)
+
+	watch<number | undefined>(
+		() => props.maxRows,
+		(value) => {
+			if (value !== undefined && value !== instance.maxRows) {
+				instance.maxRows = value
+			}
+		},
+	)
+
+	watch<boolean | undefined>(
+		() => props.autoWidth,
+		(value) => {
+			if (value !== undefined && value !== instance.autoWidth) {
+				instance.autoWidth = value
+			}
+		},
+	)
+
+	watch<boolean | undefined>(
+		() => props.wordWrap,
+		(value) => {
+			if (value !== undefined && value !== instance.wordWrap) {
+				instance.wordWrap = value
 			}
 		},
 	)

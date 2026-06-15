@@ -20,6 +20,8 @@ export const emitsListItemCustom: TEmits = [
 	...emitsValueControl,
 	'change:text',
 	'update:text',
+	'change:wordWrap',
+	'update:wordWrap',
 ] as const
 
 export const propsListItemCustom: TProps = {
@@ -32,6 +34,10 @@ export const propsListItemCustom: TProps = {
 		type: String as PropType<IListItemCustomProps['text']>,
 		default: TListItemCustom.defaultValues.text,
 	},
+	wordWrap: {
+		type: Boolean as PropType<IListItemCustomProps['wordWrap']>,
+		default: TListItemCustom.defaultValues.wordWrap,
+	},
 }
 
 export default {
@@ -43,6 +49,7 @@ export default {
 
 export interface IListItemCustomState extends IValueControlState {
 	text: Ref<string>
+	wordWrap: Ref<boolean | undefined>
 }
 
 export function syncListItemCustom(
@@ -57,6 +64,11 @@ export function syncListItemCustom(
 		emit?.('update:text', payload.newValue)
 	})
 
+	instance.events.on('change:wordWrap', (value: boolean) => {
+		emit?.('change:wordWrap', value)
+		emit?.('update:wordWrap', value)
+	})
+
 	watch<string | undefined>(
 		() => props.text,
 		(value) => {
@@ -66,10 +78,20 @@ export function syncListItemCustom(
 		},
 	)
 
+	watch<boolean | undefined>(
+		() => props.wordWrap,
+		(value) => {
+			if (value !== undefined && value !== instance.wordWrap) {
+				instance.wordWrap = value
+			}
+		},
+	)
+
 	return {
 		...syncProps,
 		...useSyncProps(instance.events as any, {
 			text: () => instance.text,
+			wordWrap: () => instance.wordWrap,
 		}),
 	}
 }

@@ -143,14 +143,6 @@ export class TCollapse
 		this._collection.mode = value
 	}
 
-	get selected(): ICollapseItem[] {
-		return this._collection.selected as ICollapseItem[]
-	}
-
-	get selectedCount(): number {
-		return this._collection.selectedCount
-	}
-
 	get collection(): TSelectableCollection<any, any, ICollapseItem> {
 		return this._collection
 	}
