@@ -17,60 +17,35 @@ export class TCollapseHeightPlugin extends TBasePlugin<TCollapseHeightPluginEven
 	private readonly _itemHeights = new Map<string | number, number>()
 
 	override install(bundle: IPluginBundle): void {
-		bundle.get(TElementPlugin)?.events.on('ready', ({ element }) => {
-			this._rootObserver = new ResizeObserver(() => this.events.emit('height:change'))
-			this._rootObserver.observe(element)
-		})
+		// bundle.get(TElementPlugin)?.events.on('ready', ({ element }) => {
+		// 	this._rootObserver = new ResizeObserver(() => this.events.emit('height:change'))
+		// 	this._rootObserver.observe(element)
+		// })
 
-		bundle.get(TElementPlugin)?.events.on('removed', () => {
-			this._rootObserver?.disconnect()
-			this._rootObserver = null
-		})
+		// bundle.get(TElementPlugin)?.events.on('removed', () => {
+		// 	this._rootObserver?.disconnect()
+		// 	this._rootObserver = null
+		// })
 
-		const collectionPlugin = bundle.get(TCollectionElementsPlugin)
+		// const collectionPlugin = bundle.get(TCollectionElementsPlugin)
 
-		collectionPlugin?.events.on('element:added', ({ uid, element }) => {
-			// this._itemObservers.get(uid)?.disconnect()
 
-			// const observer = new ResizeObserver(() => {
-			// 	const body = element.querySelector<HTMLElement>('.s-collapse-item__body')
-
-			// 	if (body) {
-			// 		this._itemHeights.set(uid, body.scrollHeight)
-			// 		element.style.setProperty('--s-collapse-item-height', `${body.scrollHeight}px`)
-			// 	}
-
-			// 	this.events.emit('height:change')
-			// })
-
-			// observer.observe(element)
-
-			// // Измерить сразу при добавлении
-			// const body = element.querySelector<HTMLElement>('.s-collapse-item__body')
-
-			// if (body) {
-			// 	element.style.setProperty('--s-collapse-item-height', `${body.scrollHeight}px`)
-			// }
-
-			// this._itemObservers.set(uid, observer)
-		})
-
-		collectionPlugin?.events.on('element:removed', ({ uid }) => {
-			this._itemObservers.get(uid)?.disconnect()
-			this._itemObservers.delete(uid)
-			this._itemHeights.delete(uid)
-		})
+		// collectionPlugin?.events.on('element:removed', ({ uid }) => {
+		// 	this._itemObservers.get(uid)?.disconnect()
+		// 	this._itemObservers.delete(uid)
+		// 	this._itemHeights.delete(uid)
+		// })
 	}
 
 	override destroy(): void {
-		this._rootObserver?.disconnect()
-		this._rootObserver = null
+		// this._rootObserver?.disconnect()
+		// this._rootObserver = null
 
-		for (const observer of this._itemObservers.values()) {
-			observer.disconnect()
-		}
-		this._itemObservers.clear()
-		this._itemHeights.clear()
+		// for (const observer of this._itemObservers.values()) {
+		// 	observer.disconnect()
+		// }
+		// this._itemObservers.clear()
+		// this._itemHeights.clear()
 
 		super.destroy()
 	}
