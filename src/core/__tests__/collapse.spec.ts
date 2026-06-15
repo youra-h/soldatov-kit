@@ -336,8 +336,8 @@ describe('TCollapse', () => {
 		it('creates with default values', () => {
 			expect(collapse.appearance).toBe('plain')
 			expect(collapse.mode).toBe('multiple')
-			expect(collapse.selectedCount).toBe(0)
-			expect(collapse.selected).toEqual([])
+			expect(collapse.collection.selectedCount).toBe(0)
+			expect(collapse.collection.selected).toEqual([])
 		})
 
 		it('creates with custom props', () => {
@@ -512,9 +512,9 @@ describe('TCollapse', () => {
 
 			item1.selected = true
 
-			expect(collapse.selected).toContain(item1)
-			expect(collapse.selected).not.toContain(item2)
-			expect(collapse.selectedCount).toBe(1)
+			expect(collapse.collection.selected).toContain(item1)
+			expect(collapse.collection.selected).not.toContain(item2)
+			expect(collapse.collection.selectedCount).toBe(1)
 		})
 
 		it('multiple mode allows multiple open items', () => {
@@ -524,7 +524,7 @@ describe('TCollapse', () => {
 			item1.selected = true
 			item2.selected = true
 
-			expect(collapse.selectedCount).toBe(2)
+			expect(collapse.collection.selectedCount).toBe(2)
 		})
 
 		it('single mode closes previous when new opens', () => {
@@ -537,7 +537,7 @@ describe('TCollapse', () => {
 
 			expect(item1.selected).toBe(false)
 			expect(item2.selected).toBe(true)
-			expect(collapse.selectedCount).toBe(1)
+			expect(collapse.collection.selectedCount).toBe(1)
 		})
 	})
 
