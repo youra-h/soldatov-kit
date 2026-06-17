@@ -1,11 +1,7 @@
 import type { PropType, Ref } from 'vue'
+import { type IListBoxItem, type IListItemProps, type TListBoxAppearance } from '@core'
 import {
-	type IListBoxItem,
-	type IListItemProps,
-	type TListBoxAppearance,
-} from '@core'
-import {
-	default as BaseListItem,
+	BaseListItem,
 	emitsListItem,
 	propsListItem,
 	syncListItem,
@@ -14,9 +10,7 @@ import {
 import type { TEmits, TProps, ISyncComponentViewOptions } from '../../../types'
 import { useSyncProps } from '../../../composables/useSyncProps'
 
-export const emitsListBoxItem: TEmits = [
-	...emitsListItem,
-] as const
+export const emitsListBoxItem: TEmits = [...emitsListItem] as const
 
 export const propsListBoxItem: TProps = {
 	...propsListItem,
