@@ -3,20 +3,12 @@ import { watch } from 'vue'
 import {
 	type IListBox,
 	type IListBoxProps,
-	type IListBoxItem,
 	TListBox,
 	type TListBoxAppearance,
 	type ICollectionProps,
 } from '@core'
-import {
-	default as BaseList,
-	emitsList,
-	propsList,
-	syncList,
-	type IListState,
-} from '../list'
+import { BaseList, emitsList, propsList, syncList, type IListState } from '../list'
 import type { TEmits, TProps, ISyncComponentViewOptions } from '../../types'
-import { useSyncProps } from '../../composables/useSyncProps'
 
 export const emitsListBox: TEmits = [
 	...emitsList,
