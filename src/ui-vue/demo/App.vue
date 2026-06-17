@@ -8,6 +8,7 @@ import CheckBox from './playgrounds/CheckBox.vue'
 import Switch from './playgrounds/Switch.vue'
 import Tabs from './playgrounds/Tabs.vue'
 import Collapse from './playgrounds/Collapse.vue'
+import ListBox from './playgrounds/ListBox.vue'
 import DragAndDrop from './playgrounds/DragAndDrop.vue'
 import LoaderPlayground from './playgrounds/Loader.vue'
 import EventLog from './common/EventLog.vue'
@@ -32,6 +33,7 @@ const playgrounds = {
 	switch: { component: markRaw(Switch), label: 'Switch' },
 	tabs: { component: markRaw(Tabs), label: 'Tabs' },
 	collapse: { component: markRaw(Collapse), label: 'Collapse' },
+	'list-box': { component: markRaw(ListBox), label: 'ListBox' },
 	'drag-and-drop': { component: markRaw(DragAndDrop), label: 'DragAndDrop' },
 	loader: { component: markRaw(LoaderPlayground), label: 'Loader' },
 } as const
