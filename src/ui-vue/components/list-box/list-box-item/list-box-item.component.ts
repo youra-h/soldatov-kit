@@ -1,44 +1,53 @@
-import { type IListBoxItem, type IListBoxItemProps } from '@core'
+import type { PropType, Ref } from 'vue'
 import {
-	default as BaseListBoxItemCustom,
-	emitsListBoxItemCustom,
-	propsListBoxItemCustom,
-	syncListBoxItemCustom,
-	type IListBoxItemCustomState,
-} from './list-box-item-custom.component'
+	type IListBoxItem,
+	type IListBoxItemProps,
+	type TListBoxAppearance,
+} from '@core'
 import {
-	emitsSelectableCollectionItem,
-	syncSelectableCollectionItem,
-	propsSelectableCollectionItem,
-	type ISelectableCollectionItemState,
-} from '../../collection/selectable'
+	default as BaseListItem,
+	emitsListItem,
+	propsListItem,
+	syncListItem,
+	type IListItemState,
+} from '../../list/list-item'
 import type { TEmits, TProps, ISyncComponentViewOptions } from '../../../types'
+import { useSyncProps } from '../../../composables/useSyncProps'
 
 export const emitsListBoxItem: TEmits = [
-	...emitsListBoxItemCustom,
-	...emitsSelectableCollectionItem,
+	...emitsListItem,
 ] as const
 
 export const propsListBoxItem: TProps = {
-	...propsListBoxItemCustom,
-	...propsSelectableCollectionItem,
+	...propsListItem,
+	appearance: {
+		type: String as PropType<IListBoxItemProps['appearance']>,
+		default: 'plain',
+	},
 }
 
 export default {
 	name: 'BaseListBoxItem',
-	extends: BaseListBoxItemCustom,
+	extends: BaseListItem,
 	emits: emitsListBoxItem,
 	props: propsListBoxItem,
 }
 
-export interface IListBoxItemState
-	extends IListBoxItemCustomState, ISelectableCollectionItemState<IListBoxItem> {}
+export interface IListBoxItemState extends IListItemState {
+	appearance: Ref<TListBoxAppearance>
+}
 
 export function syncListBoxItem(
 	options: ISyncComponentViewOptions<IListBoxItemProps, IListBoxItem>,
 ): IListBoxItemState {
+	const syncProps = syncListItem(options)
+
+	const { instance } = options
+
 	return {
-		...syncListBoxItemCustom(options),
-		...syncSelectableCollectionItem(options),
+		...syncProps,
+		...useSyncProps(instance.events as any, {
+			appearance: () => instance.appearance,
+		}),
 	}
 }
