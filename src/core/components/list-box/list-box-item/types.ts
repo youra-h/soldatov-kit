@@ -4,11 +4,13 @@ import type {
 	TListItemCustomEvents,
 	TListItemCustomStates,
 } from '../../list/list-item/types'
-import type { TValuePayload } from '../../../common/types'
 import type { TListBoxAppearance } from '../types'
 import type { TCollectableOptions } from '../../../base/collection/item/types'
 import type { IComponentViewOptions } from '../../../base/component-view'
-import type { ISelectableCollectionItemProps, TSelectableItemEvents } from '../../../base/collection/selectable/types'
+import type {
+	ISelectableCollectionItemProps,
+	TSelectableItemEvents,
+} from '../../../base/collection/selectable/types'
 
 // ============ TListBoxItemCustom (UI-логика без коллекции) ============
 
@@ -40,8 +42,7 @@ export type TListBoxItemEvents = TSelectableItemEvents<IListBoxItem> &
 	TListBoxItemCustomEvents<IListBoxItem>
 
 export interface IListBoxItemProps
-	extends ISelectableCollectionItemProps,
-		IListBoxItemCustomProps {}
+	extends ISelectableCollectionItemProps, IListBoxItemCustomProps {}
 
 export interface IListBoxItem
 	extends IListBoxItemCustom<IListBoxItemProps>,
