@@ -25,6 +25,7 @@ export * from './components/tabs'
 export * from './components/tree'
 export * from './components/collapse'
 export * from './components/list'
+export * from './components/list-box'
 export * from './components/drag-and-drop'
 export * from './components/loader'
 

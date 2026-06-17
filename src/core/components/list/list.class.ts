@@ -10,7 +10,11 @@ import type { TSelectionMode } from '../../base/collection'
 import { type TValuePayload } from '../../common/types'
 import type { TComponentSize, TComponentVariant } from '../../common/types'
 
-export class TList extends TControl<IListProps, TListEvents, TListStates> implements IList {
+export class TList<
+	TProps extends IListProps = IListProps,
+	TEvents extends TListEvents = TListEvents,
+	TStates extends TListStates = TListStates,
+> extends TControl<TProps, TEvents, TStates> implements IList<TProps, TEvents> {
 	static override baseClass = 's-list'
 
 	static defaultValues: Partial<IListProps> = {
@@ -24,7 +28,14 @@ export class TList extends TControl<IListProps, TListEvents, TListStates> implem
 	protected _maxRows!: number
 	protected _autoWidth!: boolean
 	protected _wordWrap!: boolean
-	protected _collection: TSelectableCollection<any, any, IListItem>
+	protected _collection: TSelectableCollection<any, any, any>
+
+	protected _createCollection(mode: TSelectionMode): TSelectableCollection<any, any, any> {
+		return new TSelectableCollection<any, any, IListItem>({
+			itemClass: TListItem,
+			mode,
+		})
+	}
 
 	constructor(
 		options: IComponentViewOptions<IListProps, TListStates> | Partial<IListProps> = {},
@@ -35,10 +46,7 @@ export class TList extends TControl<IListProps, TListEvents, TListStates> implem
 
 		const { props = {} } = TComponentView.prepareOptions<IListProps, TListStates>(options)
 
-		this._collection = new TSelectableCollection<any, any, IListItem>({
-			itemClass: TListItem,
-			mode: props.mode ?? ctor.defaultValues.mode!,
-		})
+		this._collection = this._createCollection(props.mode ?? ctor.defaultValues.mode!)
 
 		this._maxRows = props.maxRows ?? ctor.defaultValues.maxRows!
 

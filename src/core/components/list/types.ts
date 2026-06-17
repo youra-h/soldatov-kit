@@ -37,7 +37,10 @@ export interface IListProps extends IControlProps {
 
 export type TListStates = TControlStates
 
-export interface IList extends IControl<IListProps, TListEvents> {
+export interface IList<
+	TProps extends IListProps = IListProps,
+	TEvents extends TListEvents = TListEvents,
+> extends IControl<TProps, TEvents> {
 	/** Режим выбора */
 	mode: TSelectionMode
 	/** Максимальное количество видимых строк (0 = без ограничений) */
