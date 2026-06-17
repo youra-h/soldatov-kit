@@ -38,13 +38,13 @@ export class TList<
 	}
 
 	constructor(
-		options: IComponentViewOptions<IListProps, TListStates> | Partial<IListProps> = {},
+		options: IComponentViewOptions<TProps, TStates> | Partial<TProps> = {},
 	) {
 		super(options)
 
 		const ctor = new.target as typeof TList
 
-		const { props = {} } = TComponentView.prepareOptions<IListProps, TListStates>(options)
+		const { props } = TComponentView.prepareOptions<TProps, TStates>(options)
 
 		this._collection = this._createCollection(props.mode ?? ctor.defaultValues.mode!)
 
@@ -169,13 +169,13 @@ export class TList<
 		return this._collection
 	}
 
-	override getProps(): IListProps {
+	override getProps(): TProps {
 		return {
 			...super.getProps(),
 			mode: this._collection.mode,
 			maxRows: this._maxRows,
 			autoWidth: this._autoWidth,
 			wordWrap: this._wordWrap,
-		}
+		} as TProps
 	}
 }
