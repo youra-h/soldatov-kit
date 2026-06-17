@@ -53,7 +53,7 @@ export interface ICollapseItemCustom<
 
 // ============ TCollapseItem (коллекционный элемент с композицией) ============
 
-export type ICollapseItemOptions = TCollectableOptions<
+export type TCollapseItemOptions = TCollectableOptions<
 	IComponentViewOptions<ICollapseItemProps, TCollapseItemCustomStates>
 >
 

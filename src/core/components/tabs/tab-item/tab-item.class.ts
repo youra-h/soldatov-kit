@@ -1,6 +1,6 @@
 import { TActivatableCollectionItem } from '../../../base/collection/activable/activable-collection-item.class'
 import TTabItemCustom from './tab-item-custom.class'
-import type { ITabItem, ITabItemOptions, ITabItemProps, TTabItemEvents } from './types'
+import type { ITabItem, TTabItemOptions, ITabItemProps, TTabItemEvents } from './types'
 import type { TCollection } from '../../../base/collection'
 import { TEvented } from '../../../common/evented'
 
@@ -19,8 +19,8 @@ export default class TTabItem
 {
 	protected _collectionItem: TActivatableCollectionItem
 
-	constructor(options: ITabItemOptions | Partial<ITabItemProps> = {}) {
-		const { collection, ...componentOptions } = options as ITabItemOptions
+	constructor(options: TTabItemOptions | Partial<ITabItemProps> = {}) {
+		const { collection, ...componentOptions } = options as TTabItemOptions
 		super(componentOptions)
 
 		// Создаем элемент коллекции (у него свои Props, а не ITabItemProps!)

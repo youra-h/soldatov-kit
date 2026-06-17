@@ -56,7 +56,7 @@ export interface ITabItemCustom<
 
 // ============ TTabItem (коллекционный элемент с композицией) ============
 
-export type ITabItemOptions = TCollectableOptions<
+export type TTabItemOptions = TCollectableOptions<
 	IComponentViewOptions<ITabItemProps, TTabItemCustomStates>
 >
 

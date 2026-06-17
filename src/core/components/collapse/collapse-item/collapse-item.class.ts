@@ -2,7 +2,7 @@ import { TSelectableCollectionItem } from '../../../base/collection'
 import TCollapseItemCustom from './collapse-item-custom.class'
 import type {
 	ICollapseItem,
-	ICollapseItemOptions,
+	TCollapseItemOptions,
 	ICollapseItemProps,
 	TCollapseItemEvents,
 } from './types'
@@ -15,8 +15,8 @@ export default class TCollapseItem
 {
 	protected _collectionItem: TSelectableCollectionItem
 
-	constructor(options: ICollapseItemOptions | Partial<ICollapseItemProps> = {}) {
-		const { collection, ...componentOptions } = options as ICollapseItemOptions
+	constructor(options: TCollapseItemOptions | Partial<ICollapseItemProps> = {}) {
+		const { collection, ...componentOptions } = options as TCollapseItemOptions
 		super(componentOptions)
 
 		this._collectionItem = new TSelectableCollectionItem({ collection })

@@ -2,7 +2,7 @@ import { TSelectableCollectionItem } from '../../../base/collection'
 import TListItemCustom from './list-item-custom.class'
 import type {
 	IListItem,
-	IListItemOptions,
+	TListItemOptions,
 	IListItemProps,
 	TListItemEvents,
 } from './types'
@@ -15,8 +15,8 @@ export default class TListItem
 {
 	protected _collectionItem: TSelectableCollectionItem
 
-	constructor(options: IListItemOptions | Partial<IListItemProps> = {}) {
-		const { collection, ...componentOptions } = options as IListItemOptions
+	constructor(options: TListItemOptions | Partial<IListItemProps> = {}) {
+		const { collection, ...componentOptions } = options as TListItemOptions
 		super(componentOptions)
 
 		this._collectionItem = new TSelectableCollectionItem({ collection })

@@ -1,34 +1,24 @@
 import type {
 	IListItem,
-	IListItemCustomProps,
-	TListItemCustomEvents,
+	TListItemOptions,
+	IListItemProps,
+	TListItemEvents,
+	TListItemCustomStates,
 } from '../../list/list-item/types'
 import type { TListBoxAppearance } from '../types'
-import type { TCollectableOptions } from '../../../base/collection/item/types'
-import type { IComponentViewOptions } from '../../../base/component-view'
-import type {
-	ISelectableCollectionItemProps,
-	TSelectableItemEvents,
-} from '../../../base/collection/selectable/types'
 
-export type TListBoxItemCustomEvents<TItem = any> = TListItemCustomEvents<TItem> & {
+export type TListBoxItemEvents = TListItemEvents & {
 	/** change:appearance */
 	'change:appearance': (value: TListBoxAppearance) => void
 }
 
-export interface IListBoxItemCustomProps extends IListItemCustomProps {}
+export type TListBoxItemStates = TListItemCustomStates
 
-export type IListBoxItemOptions = TCollectableOptions<
-	IComponentViewOptions<IListBoxItemProps, any>
->
+export interface IListBoxItemProps extends IListItemProps {}
 
-export type TListBoxItemEvents = TSelectableItemEvents<IListBoxItem> &
-	TListBoxItemCustomEvents<IListBoxItem>
+export type TListBoxItemOptions = TListItemOptions<IListBoxItemProps, TListBoxItemStates>
 
-export interface IListBoxItemProps
-	extends ISelectableCollectionItemProps, IListBoxItemCustomProps {}
-
-export interface IListBoxItem extends IListItem {
+export interface IListBoxItem extends IListItem<IListBoxItemProps, TListBoxItemEvents> {
 	/** Внешний вид (readonly, наследуется от TListBox) */
 	readonly appearance: TListBoxAppearance
 	/** Инжектирует резолвер appearance из TListBox */

@@ -36,7 +36,9 @@ export type TListItemCustomStates = TValueControlStates<string | number> & {
 
 export interface IListItemCustom<
 	TProps extends IListItemCustomProps = IListItemCustomProps,
-> extends IValueControl<string | number, TProps, TListItemCustomEvents<any>> {
+	TEvents extends TListItemCustomEvents<any> = TListItemCustomEvents,
+	TStates extends TListItemCustomStates = TListItemCustomStates,
+> extends IValueControl<string | number, TProps, TEvents, TStates> {
 	/** Текст элемента */
 	text: string
 	/** Перенос текста (undefined = наследовать от TList) */
@@ -49,20 +51,21 @@ export interface IListItemCustom<
 
 // ============ TListItem (коллекционный элемент с композицией) ============
 
-export type IListItemOptions = TCollectableOptions<
-	IComponentViewOptions<IListItemProps, TListItemCustomStates>
+export type TListItemOptions<
+	TProps extends IListItemProps = IListItemProps,
+	TStates extends TListItemCustomStates = TListItemCustomStates,
+> = TCollectableOptions<IComponentViewOptions<TProps, TStates>>
+
+export type TListItemEvents = TSelectableItemEvents<IListItem> & TListItemCustomEvents<IListItem>
+
+export interface IListItemProps extends ISelectableCollectionItemProps, IListItemCustomProps {}
+
+export interface IListItem<
+	TProps extends IListItemProps = IListItemProps,
+	TEvents extends TListItemEvents = TListItemEvents,
+	TStates extends TListItemCustomStates = TListItemCustomStates,
 >
-
-export type TListItemEvents = TSelectableItemEvents<IListItem> &
-	TListItemCustomEvents<IListItem>
-
-export interface IListItemProps
-	extends ISelectableCollectionItemProps,
-		IListItemCustomProps {}
-
-export interface IListItem
-	extends IListItemCustom<IListItemProps>,
-		ISelectableCollectionItemProps {
+	extends IListItemCustom<TProps, TEvents, TStates>, ISelectableCollectionItemProps {
 	collection: any | null
 	toggleSelected(): void
 	select(): void
