@@ -14,7 +14,10 @@ export class TList<
 	TProps extends IListProps = IListProps,
 	TEvents extends TListEvents = TListEvents,
 	TStates extends TListStates = TListStates,
-> extends TControl<TProps, TEvents, TStates> implements IList<TProps, TEvents> {
+>
+	extends TControl<TProps, TEvents, TStates>
+	implements IList<TProps, TEvents>
+{
 	static override baseClass = 's-list'
 
 	static defaultValues: Partial<IListProps> = {
@@ -30,6 +33,15 @@ export class TList<
 	protected _wordWrap!: boolean
 	protected _collection: TSelectableCollection<any, any, any>
 
+	/**
+	 * Создаёт коллекцию элементов списка.
+	 *
+	 * Переопределяется в потомках (например, {@link TListBox}) для подмены `itemClass`.
+	 *
+	 * @param mode - Режим выбора (`single` / `multiple` / `none`)
+	 * @returns Новая `TSelectableCollection`
+	 * @protected
+	 */
 	protected _createCollection(mode: TSelectionMode): TSelectableCollection<any, any, any> {
 		return new TSelectableCollection<any, any, IListItem>({
 			itemClass: TListItem,
@@ -37,9 +49,7 @@ export class TList<
 		})
 	}
 
-	constructor(
-		options: IComponentViewOptions<TProps, TStates> | Partial<TProps> = {},
-	) {
+	constructor(options: IComponentViewOptions<TProps, TStates> | Partial<TProps> = {}) {
 		super(options)
 
 		const ctor = new.target as typeof TList

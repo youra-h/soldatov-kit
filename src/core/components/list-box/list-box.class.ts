@@ -1,15 +1,15 @@
-import TList from '../list/list.class'
+import { TList } from '../list/list.class'
 import type { IComponentViewOptions } from '../../base/component-view'
 import { TComponentView } from '../../base/component-view'
 import { TSelectableCollection, type TSelectionMode } from '../../base/collection'
 import TListBoxItem from './list-box-item/list-box-item.class'
 import type { IListBoxItem } from './list-box-item/types'
 import type {
-	IListBox,
 	IListBoxProps,
 	TListBoxAppearance,
 	TListBoxEvents,
 	TListBoxStates,
+	IListBox,
 } from './types'
 import { TEvented } from '../../common/evented'
 
@@ -26,7 +26,9 @@ export class TListBox
 
 	protected _appearance!: TListBoxAppearance
 
-	protected override _createCollection(mode: TSelectionMode): TSelectableCollection<any, any, IListBoxItem> {
+	protected override _createCollection(
+		mode: TSelectionMode,
+	): TSelectableCollection<any, any, IListBoxItem> {
 		return new TSelectableCollection<any, any, IListBoxItem>({
 			itemClass: TListBoxItem,
 			mode,
@@ -34,18 +36,13 @@ export class TListBox
 	}
 
 	constructor(
-		options:
-			| IComponentViewOptions<IListBoxProps, TListBoxStates>
-			| Partial<IListBoxProps> = {},
+		options: IComponentViewOptions<IListBoxProps, TListBoxStates> | Partial<IListBoxProps> = {},
 	) {
 		super(options)
 
 		const ctor = new.target as typeof TListBox
 
-		const { props = {} } = TComponentView.prepareOptions<
-			IListBoxProps,
-			TListBoxStates
-		>(options)
+		const { props = {} } = TComponentView.prepareOptions<IListBoxProps, TListBoxStates>(options)
 
 		this._applyAppearance(props.appearance ?? ctor.defaultValues.appearance!)
 
@@ -89,6 +86,6 @@ export class TListBox
 		return {
 			...super.getProps(),
 			appearance: this._appearance,
-		}
+		} as IListBoxProps
 	}
 }
