@@ -3,35 +3,21 @@ import type { TCollection } from '../collection.class'
 import { TEvented } from '../../../common/evented'
 import type { TClasses } from '../../../common/classes'
 
-type Constructor<T = {}> = abstract new (...args: any[]) => T
+type Constructor<T = {}> = new (...args: any[]) => T
 
 /**
  * Миксин для компонентов-элементов активируемой коллекции (TTabItem, etc.).
  * Инкапсулирует композицию с TActivatableCollectionItem и проксирование свойств/событий.
- *
- * Использование:
- * ```ts
- * class TTabItem
- *   extends ActivatableComponentMixin(TTabItemCustom<ITabItemProps, TTabItemEvents>)
- *   implements ITabItem
- * {
- *   constructor(options) {
- *     const { collection, ...rest } = options
- *     super(rest)
- *     this._initActivatableComposition(collection)
- *   }
- * }
- * ```
  */
 export function ActivatableComponentMixin<
 	TBase extends Constructor<{
 		events: TEvented<any>
 		disabled: boolean
 		rendered: boolean
-		_classes: TClasses
+		classes: TClasses
 	}>,
 >(Base: TBase) {
-	abstract class ActivatableComponent extends Base {
+	class ActivatableComponent extends Base {
 		protected _collectionItem!: TActivatableCollectionItem
 
 		protected _initActivatableComposition(collection: TCollection | null | undefined): void {
@@ -67,7 +53,7 @@ export function ActivatableComponentMixin<
 		set active(value: boolean) {
 			if (value && this.disabled) return
 			this._collectionItem.active = value
-			this._classes.toggle('--active', value)
+			this.classes.toggle('--active', value)
 		}
 
 		get order(): number {

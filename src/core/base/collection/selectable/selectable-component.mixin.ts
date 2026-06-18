@@ -3,7 +3,7 @@ import type { TCollection } from '../collection.class'
 import { TEvented } from '../../../common/evented'
 import type { TClasses } from '../../../common/classes'
 
-type Constructor<T = {}> = abstract new (...args: any[]) => T
+type Constructor<T = {}> = new (...args: any[]) => T
 
 /**
  * Миксин для компонентов-элементов выбираемой коллекции (TCollapseItem, TListItem, etc.).
@@ -28,10 +28,10 @@ export function SelectableComponentMixin<
 		events: TEvented<any>
 		disabled: boolean
 		rendered: boolean
-		_classes: TClasses
+		classes: TClasses
 	}>,
 >(Base: TBase) {
-	abstract class SelectableComponent extends Base {
+	class SelectableComponent extends Base {
 		protected _collectionItem!: TSelectableCollectionItem
 
 		protected _initSelectableComposition(collection: TCollection | null | undefined): void {
@@ -67,7 +67,7 @@ export function SelectableComponentMixin<
 		set selected(value: boolean) {
 			if (value && this.disabled) return
 			this._collectionItem.selected = value
-			this._classes.toggle('--selected', value)
+			this.classes.toggle('--selected', value)
 		}
 
 		get order(): number {
