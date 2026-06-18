@@ -1,4 +1,4 @@
-import { SelectableComponentMixin } from '../../../base/collection/selectable/selectable-component.mixin'
+import { SelectableComponentMixin } from '../../../base/collection'
 import TListItemCustom from './list-item-custom.class'
 import type {
 	IListItem,
@@ -14,7 +14,7 @@ export default class TListItem
 	constructor(options: TListItemOptions | Partial<IListItemProps> = {}) {
 		const { collection, ...componentOptions } = options as TListItemOptions
 		super(componentOptions)
-		this._initSelectableComposition({ collection, selectedClass: '--selected' })
+		this._initSelectableComposition(collection)
 	}
 
 	override click(event?: Event): void {

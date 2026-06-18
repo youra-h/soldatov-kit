@@ -5,25 +5,20 @@ import type { TClasses } from '../../../common/classes'
 
 type Constructor<T = {}> = abstract new (...args: any[]) => T
 
-export interface ISelectableComponentMixinOptions {
-	collection?: TCollection | null
-	selectedClass: string
-}
-
 /**
- * Миксин для компонентов-элементов выбираемой коллекции (TCollapseItem, etc.).
+ * Миксин для компонентов-элементов выбираемой коллекции (TCollapseItem, TListItem, etc.).
  * Инкапсулирует композицию с TSelectableCollectionItem и проксирование свойств/событий.
  *
  * Использование:
  * ```ts
- * class TCollapseItem
- *   extends SelectableComponentMixin(TCollapseItemCustom<ICollapseItemProps, TCollapseItemEvents>)
- *   implements ICollapseItem
+ * class TListItem
+ *   extends SelectableComponentMixin(TListItemCustom<IListItemProps, TListItemEvents>)
+ *   implements IListItem
  * {
  *   constructor(options) {
  *     const { collection, ...rest } = options
  *     super(rest)
- *     this._initSelectableComposition({ collection, selectedClass: '--open' })
+ *     this._initSelectableComposition(collection)
  *   }
  * }
  * ```
@@ -39,13 +34,12 @@ export function SelectableComponentMixin<
 	abstract class SelectableComponent extends Base {
 		protected _collectionItem!: TSelectableCollectionItem
 
-		protected _initSelectableComposition(options: ISelectableComponentMixinOptions): void {
+		protected _initSelectableComposition(collection: TCollection | null | undefined): void {
 			this._collectionItem = new TSelectableCollectionItem({
-				collection: options.collection ?? undefined,
+				collection: collection ?? undefined,
 			})
 
 			this._collectionItem.events.on('change:selection', () => {
-				this._classes.toggle(options.selectedClass, this._collectionItem.selected)
 				;(this.events as TEvented<any>).emit('change:selection', this)
 			})
 
@@ -73,6 +67,7 @@ export function SelectableComponentMixin<
 		set selected(value: boolean) {
 			if (value && this.disabled) return
 			this._collectionItem.selected = value
+			this._classes.toggle('--selected', value)
 		}
 
 		get order(): number {

@@ -1,4 +1,4 @@
-import { SelectableComponentMixin } from '../../../base/collection/selectable/selectable-component.mixin'
+import { SelectableComponentMixin } from '../../../base/collection'
 import TCollapseItemCustom from './collapse-item-custom.class'
 import type {
 	ICollapseItem,
@@ -10,6 +10,7 @@ import type {
 /**
  * Элемент collapse для работы в коллекции.
  * Архитектура: наследование от TCollapseItemCustom (UI-компонент) + SelectableComponentMixin (логика коллекции).
+ * Переопределяет сеттер selected, чтобы использовать класс --open вместо стандартного --selected.
  */
 export default class TCollapseItem
 	extends SelectableComponentMixin(TCollapseItemCustom<ICollapseItemProps, TCollapseItemEvents>)
@@ -18,7 +19,17 @@ export default class TCollapseItem
 	constructor(options: TCollapseItemOptions | Partial<ICollapseItemProps> = {}) {
 		const { collection, ...componentOptions } = options as TCollapseItemOptions
 		super(componentOptions)
-		this._initSelectableComposition({ collection, selectedClass: '--open' })
+		this._initSelectableComposition(collection)
+	}
+
+	override get selected(): boolean {
+		return this._collectionItem.selected
+	}
+
+	override set selected(value: boolean) {
+		if (value && this.disabled) return
+		this._collectionItem.selected = value
+		this._classes.toggle('--open', value)
 	}
 
 	override click(event?: Event): void {

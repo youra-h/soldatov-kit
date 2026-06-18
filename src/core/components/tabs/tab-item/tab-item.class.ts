@@ -1,4 +1,4 @@
-import { ActivatableComponentMixin } from '../../../base/collection/activable/activable-component.mixin'
+import { ActivatableComponentMixin } from '../../../base/collection'
 import TTabItemCustom from './tab-item-custom.class'
 import type { ITabItem, TTabItemOptions, ITabItemProps, TTabItemEvents } from './types'
 
@@ -13,7 +13,7 @@ export default class TTabItem
 	constructor(options: TTabItemOptions | Partial<ITabItemProps> = {}) {
 		const { collection, ...componentOptions } = options as TTabItemOptions
 		super(componentOptions)
-		this._initActivatableComposition({ collection, activeClass: '--active' })
+		this._initActivatableComposition(collection)
 	}
 
 	override click(event?: Event): void {

@@ -5,11 +5,6 @@ import type { TClasses } from '../../../common/classes'
 
 type Constructor<T = {}> = abstract new (...args: any[]) => T
 
-export interface IActivatableComponentMixinOptions {
-	collection?: TCollection | null
-	activeClass: string
-}
-
 /**
  * Миксин для компонентов-элементов активируемой коллекции (TTabItem, etc.).
  * Инкапсулирует композицию с TActivatableCollectionItem и проксирование свойств/событий.
@@ -23,7 +18,7 @@ export interface IActivatableComponentMixinOptions {
  *   constructor(options) {
  *     const { collection, ...rest } = options
  *     super(rest)
- *     this._initActivatableComposition({ collection, activeClass: '--active' })
+ *     this._initActivatableComposition(collection)
  *   }
  * }
  * ```
@@ -39,13 +34,12 @@ export function ActivatableComponentMixin<
 	abstract class ActivatableComponent extends Base {
 		protected _collectionItem!: TActivatableCollectionItem
 
-		protected _initActivatableComposition(options: IActivatableComponentMixinOptions): void {
+		protected _initActivatableComposition(collection: TCollection | null | undefined): void {
 			this._collectionItem = new TActivatableCollectionItem({
-				collection: options.collection ?? undefined,
+				collection: collection ?? undefined,
 			})
 
 			this._collectionItem.events.on('change:activation', () => {
-				this._classes.toggle(options.activeClass, this._collectionItem.active)
 				;(this.events as TEvented<any>).emit('change:activation', this)
 			})
 
@@ -73,6 +67,7 @@ export function ActivatableComponentMixin<
 		set active(value: boolean) {
 			if (value && this.disabled) return
 			this._collectionItem.active = value
+			this._classes.toggle('--active', value)
 		}
 
 		get order(): number {
