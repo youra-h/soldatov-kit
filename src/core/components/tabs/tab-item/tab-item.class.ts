@@ -1,46 +1,21 @@
-import { TActivatableCollectionItem } from '../../../base/collection/activable/activable-collection-item.class'
+import { ActivatableComponentMixin } from '../../../base/collection/activable/activable-component.mixin'
 import TTabItemCustom from './tab-item-custom.class'
 import type { ITabItem, TTabItemOptions, ITabItemProps, TTabItemEvents } from './types'
-import type { TCollection } from '../../../base/collection'
-import { TEvented } from '../../../common/evented'
 
 /**
  * Элемент таба для работы в коллекции.
- * Архитектура: наследование от TTabItemCustom (UI-компонент) + композиция TActivatableCollectionItem (логика коллекции).
- *
- * Преимущества:
- * - Все UI-события автоматически доступны (change:visible, change:text и т.д.)
- * - Нужно проксировать только свойства/события коллекции (active, collection, change, free)
- * - Generic TProps=ITabItemProps обеспечивает правильные типы для getProps()/toJSON()
+ * Архитектура: наследование от TTabItemCustom (UI-компонент) + ActivatableComponentMixin (логика коллекции).
  */
 export default class TTabItem
-	extends TTabItemCustom<ITabItemProps, TTabItemEvents>
+	extends ActivatableComponentMixin(TTabItemCustom<ITabItemProps, TTabItemEvents>)
 	implements ITabItem
 {
-	protected _collectionItem: TActivatableCollectionItem
-
 	constructor(options: TTabItemOptions | Partial<ITabItemProps> = {}) {
 		const { collection, ...componentOptions } = options as TTabItemOptions
 		super(componentOptions)
-
-		// Создаем элемент коллекции (у него свои Props, а не ITabItemProps!)
-		this._collectionItem = new TActivatableCollectionItem({ collection })
-
-		// Проксируем события коллекции на this.events
-		this._collectionItem.events.on('change:activation', () => {
-			;(this.events as TEvented<TTabItemEvents>).emit('change:activation', this)
-		})
-
-		this._collectionItem.events.on('change:order', (value: number) => {
-			;(this.events as TEvented<TTabItemEvents>).emit('change:order', value)
-		})
-
-		this._collectionItem.events.on('free', () => {
-			;(this.events as TEvented<TTabItemEvents>).emit('free', this)
-		})
+		this._initActivatableComposition({ collection, activeClass: '--active' })
 	}
 
-	// При клике активируем таб и эмитим событие click с текущим элементом
 	override click(event?: Event): void {
 		if (!this.disabled) {
 			this.active = true
@@ -48,55 +23,16 @@ export default class TTabItem
 		super.click(event)
 	}
 
-	// Проксирование свойств коллекции
-	get collection(): TCollection | null {
-		return this._collectionItem.collection
-	}
-
-	set collection(value: TCollection | null) {
-		this._collectionItem.collection = value
-	}
-
-	get active(): boolean {
-		return this._collectionItem.active
-	}
-
-	set active(value: boolean) {
-		if (value && this.disabled) return
-
-		this._collectionItem.active = value
-
-		this._classes.toggle(`--active`, value)
-	}
-
-	get order(): number {
-		return this._collectionItem.order
-	}
-
-	set order(value: number) {
-		this._collectionItem.order = value
-	}
-
-	toggleActive(): void {
-		this._collectionItem.toggleActive()
-	}
-
 	override getProps(): ITabItemProps {
 		return {
-			...super.getProps(), // Все UI-свойства от TTabItemCustom
-			active: this.active, // Добавляем active из _collectionItem
-			order: this.order, // Добавляем order из _collectionItem
+			...super.getProps(),
+			active: this.active,
+			order: this.order,
 		}
 	}
 
 	override assign(source: Partial<ITabItem>): void {
 		super.assign(source)
-
 		if (source.active !== undefined) this.active = source.active
-	}
-
-	free(): void {
-		this.rendered = false
-		this._collectionItem.free()
 	}
 }
