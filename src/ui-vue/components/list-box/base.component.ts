@@ -2,6 +2,7 @@ import type { PropType } from 'vue'
 import { watch } from 'vue'
 import {
 	type IListBox,
+	type IListBoxItem,
 	type IListBoxProps,
 	TListBox,
 	type TListBoxAppearance,
@@ -33,8 +34,8 @@ export default {
 
 export function syncListBox(
 	options: ISyncComponentViewOptions<IListBoxProps & ICollectionProps, IListBox>,
-): IListState {
-	const syncProps = syncList(options)
+): IListState<IListBoxItem> {
+	const syncProps = syncList<IListBoxItem>(options)
 
 	const { props, instance, emit } = options
 

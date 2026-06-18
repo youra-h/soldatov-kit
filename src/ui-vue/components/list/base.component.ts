@@ -65,16 +65,17 @@ export default {
 	props: propsList,
 }
 
-export interface IListState extends IControlState, ISelectableCollectionState<IListItem> {}
+export interface IListState<TItem extends IListItem = IListItem>
+	extends IControlState, ISelectableCollectionState<TItem> {}
 
-export function syncList(
+export function syncList<TItem extends IListItem = IListItem>(
 	options: ISyncComponentViewOptions<IListProps & ICollectionProps, IList>,
-): IListState {
+): IListState<TItem> {
 	const syncPropsControl = syncControl(options)
 
 	const { props, instance, emit, plugins } = options
 
-	const syncPropsSelectableCollection = syncSelectableCollection<IListItem>({
+	const syncPropsSelectableCollection = syncSelectableCollection<TItem>({
 		props: { items: props.items, mode: props.mode! },
 		instance: instance.collection,
 		emit,
