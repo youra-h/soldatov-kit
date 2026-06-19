@@ -25,7 +25,8 @@ export function ActivatableComponentMixin<
 				collection: collection ?? undefined,
 			})
 
-			this._collectionItem.events.on('change:activation', () => {
+			this._collectionItem.events.on('change:activation', (item) => {
+				this.classes.toggle('--active', !!item.active)
 				;(this.events as TEvented<any>).emit('change:activation', this)
 			})
 
@@ -52,8 +53,8 @@ export function ActivatableComponentMixin<
 
 		set active(value: boolean) {
 			if (value && this.disabled) return
+
 			this._collectionItem.active = value
-			this.classes.toggle('--active', value)
 		}
 
 		get order(): number {

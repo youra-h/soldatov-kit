@@ -38,7 +38,8 @@ export function SelectableComponentMixin<
 				collection: collection ?? undefined,
 			})
 
-			this._collectionItem.events.on('change:selection', () => {
+			this._collectionItem.events.on('change:selection', (item) => {
+				this.classes.toggle('--selected', !!item.selected)
 				;(this.events as TEvented<any>).emit('change:selection', this)
 			})
 
@@ -67,8 +68,6 @@ export function SelectableComponentMixin<
 			if (value && this.disabled) return
 
 			this._collectionItem.selected = value
-
-			this.classes.toggle('--selected', value)
 		}
 
 		get order(): number {

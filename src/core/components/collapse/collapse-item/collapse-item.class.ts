@@ -10,7 +10,6 @@ import type {
 /**
  * Элемент collapse для работы в коллекции.
  * Архитектура: наследование от TCollapseItemCustom (UI-компонент) + SelectableComponentMixin (логика коллекции).
- * Переопределяет сеттер selected, чтобы использовать класс --open вместо стандартного --selected.
  */
 export default class TCollapseItem
 	extends SelectableComponentMixin(TCollapseItemCustom<ICollapseItemProps, TCollapseItemEvents>)
