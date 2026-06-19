@@ -22,6 +22,7 @@ export default {
 		const rootRef = useElementBinding(plugins)
 
 		const {
+			tag,
 			rendered,
 			visible,
 			classes,
@@ -38,6 +39,7 @@ export default {
 			instance,
 			plugins,
 			rootRef,
+			tag,
 			rendered,
 			visible,
 			classes,
@@ -56,6 +58,7 @@ export default {
 <template>
 	<div ref="rootRef" v-if="rendered" v-show="visible" :class="classes" :style="{ order }">
 		<Button
+			:tag="tag"
 			:appearance="appearance"
 			:disabled="disabled"
 			:size="size"
