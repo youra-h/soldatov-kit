@@ -50,6 +50,7 @@ export default class TCollapseItem
 
 	override assign(source: Partial<ICollapseItem>): void {
 		super.assign(source)
+
 		if (source.selected !== undefined) this.selected = source.selected
 	}
 }

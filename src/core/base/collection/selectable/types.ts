@@ -96,3 +96,15 @@ export interface ISelectableCollection<
 	/** Очистить выбор */
 	clear(): void
 }
+
+/** * Интерфейс, который SelectableComponentMixin добавляет к компоненту.
+ */
+export interface ISelectableComponentItem {
+	collection: any | null
+	order: number
+	selected: boolean
+	toggleSelected(): void
+	select(): void
+	deselect(): void
+	free(): void
+}

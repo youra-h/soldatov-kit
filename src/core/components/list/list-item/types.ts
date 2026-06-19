@@ -7,6 +7,7 @@ import type {
 import type {
 	ISelectableCollectionItemProps,
 	TSelectableItemEvents,
+	ISelectableComponentItem,
 } from '../../../base/collection/selectable/types'
 import type { TCollectableOptions } from '../../../base/collection/item/types'
 import type { IComponentViewOptions } from '../../../base/component-view'
@@ -65,10 +66,4 @@ export interface IListItem<
 	TEvents extends TListItemEvents = TListItemEvents,
 	TStates extends TListItemCustomStates = TListItemCustomStates,
 >
-	extends IListItemCustom<TProps, TEvents, TStates>, ISelectableCollectionItemProps {
-	collection: any | null
-	toggleSelected(): void
-	select(): void
-	deselect(): void
-	free(): void
-}
+	extends IListItemCustom<TProps, TEvents, TStates>, ISelectableComponentItem {}

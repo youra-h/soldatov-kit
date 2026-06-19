@@ -7,7 +7,8 @@ import type {
 import type {
 	ISelectableCollectionItemProps,
 	TSelectableItemEvents,
-} from '../../../base/collection/selectable/types'
+	ISelectableComponentItem,
+} from '../../../base/collection'
 import type { TCollectableOptions } from '../../../base/collection/item/types'
 import type { IComponentViewOptions } from '../../../base/component-view'
 import type { IStateUnit } from '../../../common/state-unit'
@@ -61,15 +62,10 @@ export type TCollapseItemEvents = TSelectableItemEvents<ICollapseItem> &
 	TCollapseItemCustomEvents<ICollapseItem>
 
 export interface ICollapseItemProps
-	extends ISelectableCollectionItemProps,
-		ICollapseItemCustomProps {}
+	extends ISelectableCollectionItemProps, ICollapseItemCustomProps {}
 
 export interface ICollapseItem
-	extends ICollapseItemCustom<ICollapseItemProps>,
-		ISelectableCollectionItemProps {
-	collection: any | null
-	toggleSelected(): void
+	extends ICollapseItemCustom<ICollapseItemProps>, ISelectableComponentItem {
 	open(): void
 	close(): void
-	free(): void
 }

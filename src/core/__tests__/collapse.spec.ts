@@ -199,17 +199,17 @@ describe('TCollapseItem', () => {
 			item = collection.add({})
 		})
 
-		it('adds --open class when selected', () => {
+		it('adds --selected class when selected', () => {
 			item.selected = true
 
-			expect(item.classes.toArray()).toContain('s-collapse-item--open')
+			expect(item.classes.toArray()).toContain('s-collapse-item--selected')
 		})
 
-		it('removes --open class when deselected', () => {
+		it('removes --selected class when deselected', () => {
 			item.selected = true
 			item.selected = false
 
-			expect(item.classes.toArray()).not.toContain('s-collapse-item--open')
+			expect(item.classes.toArray()).not.toContain('s-collapse-item--selected')
 		})
 	})
 

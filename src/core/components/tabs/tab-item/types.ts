@@ -8,7 +8,8 @@ import type { IStateUnit } from '../../../common/state-unit'
 import type {
 	IActivatableCollectionItemProps,
 	TActivatableItemEvents,
-} from '../../../base/collection/activable/types'
+	IActivatableComponentItem,
+} from '../../../base/collection'
 import type { IComponentViewOptions } from '../../../base/component-view'
 import type { TCollectableOptions } from '../../../base/collection/item/types'
 import { type TValuePayload } from '../../../common/types'
@@ -64,16 +65,4 @@ export type TTabItemEvents = TActivatableItemEvents<ITabItem> & TTabItemCustomEv
 
 export interface ITabItemProps extends IActivatableCollectionItemProps, ITabItemCustomProps {}
 
-/**
- * Интерфейс элемента таба для коллекции.
- * Наследует все UI-свойства от ITabItemCustom<ITabItemProps> + добавляет свойства коллекции.
- * Передаем ITabItemProps в generic, чтобы getProps()/toJSON() вернули правильный тип с active.
- */
-export interface ITabItem extends ITabItemCustom<ITabItemProps>, IActivatableCollectionItemProps {
-	/** Ссылка на коллекцию-владелец */
-	collection: any | null
-	/** Переключить активность */
-	toggleActive(): void
-	/** Освобождение ресурсов (из коллекции) */
-	free(): void
-}
+export interface ITabItem extends ITabItemCustom<ITabItemProps>, IActivatableComponentItem {}

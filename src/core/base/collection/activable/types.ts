@@ -27,8 +27,8 @@ export interface IActivatableCollectionItem<
 	TProps extends IActivatableCollectionItemProps = IActivatableCollectionItemProps,
 	// @ts-ignore
 	TEvents extends TActivatableItemEvents = TActivatableItemEvents,
-> extends ICollectionItem<TProps, TEvents>,
-		IActivatableCollectionItemProps {}
+>
+	extends ICollectionItem<TProps, TEvents>, IActivatableCollectionItemProps {}
 
 /**
  * Свойства коллекции с поддержкой активности.
@@ -60,7 +60,9 @@ export type TActivatableCollectionEvents = TCollectionEvents & {
 	 * Внутренний запрос предиката для поиска следующего активируемого элемента.
 	 * Обработчик возвращает функцию-предикат или undefined.
 	 */
-	'resolve:_activatablePredicate': () => ((item: IActivatableCollectionItem) => boolean) | undefined
+	'resolve:_activatablePredicate': () =>
+		| ((item: IActivatableCollectionItem) => boolean)
+		| undefined
 }
 
 /**
@@ -84,4 +86,15 @@ export interface IActivatableCollection<
 	 * @param fromItem  Элемент-ориентир, от которого начинается поиск (опционально)
 	 */
 	findActivatable(predicate?: (item: TItem) => boolean, fromItem?: TItem): TItem | undefined
+}
+
+/**
+ * Интерфейс, который ActivatableComponentMixin добавляет к компоненту.
+ */
+export interface IActivatableComponentItem {
+	collection: any | null
+	order: number
+	active: boolean
+	toggleActive(): void
+	free(): void
 }

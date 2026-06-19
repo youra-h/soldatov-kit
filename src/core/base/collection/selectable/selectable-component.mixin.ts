@@ -3,9 +3,9 @@ import type { TCollection } from '../collection.class'
 import { TEvented } from '../../../common/evented'
 import type { TClasses } from '../../../common/classes'
 import type { TConstructor } from '../../../common/types'
+import type { ISelectableComponentItem } from './types'
 
-/**
- * Миксин для компонентов-элементов выбираемой коллекции (TCollapseItem, TListItem, etc.).
+/** * Миксин для компонентов-элементов выбираемой коллекции (TCollapseItem, TListItem, etc.).
  * Инкапсулирует композицию с TSelectableCollectionItem и проксирование свойств/событий.
  *
  * Использование:
@@ -30,7 +30,7 @@ export function SelectableComponentMixin<
 		classes: TClasses
 	}>,
 >(Base: TBase) {
-	class SelectableComponent extends Base {
+	class SelectableComponent extends Base implements ISelectableComponentItem {
 		protected _collectionItem!: TSelectableCollectionItem
 
 		protected _initSelectableComposition(collection: TCollection | null | undefined): void {
