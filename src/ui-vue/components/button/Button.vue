@@ -50,7 +50,8 @@ export default {
 		v-if="rendered"
 		v-show="visible"
 		:class="classes"
-		:disabled="disabled"
+		:disabled="tag === 'button' ? disabled : undefined"
+		:aria-disabled="tag !== 'button' ? disabled : undefined"
 		@click="instance.click($event)"
 	>
 		<slot name="leading"> </slot>
@@ -80,8 +81,9 @@ export default {
 	@apply outline-transparent;
 	@apply text-s-component;
 
-	&[disabled] {
-		@apply opacity-s-component-disabled cursor-default;
+	&[disabled],
+	&[aria-disabled='true'] {
+		@apply opacity-s-component-disabled cursor-default pointer-events-none;
 	}
 
 	&:focus,
