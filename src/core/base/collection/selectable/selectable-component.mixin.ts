@@ -2,8 +2,7 @@ import { TSelectableCollectionItem } from './selectable-collection-item.class'
 import type { TCollection } from '../collection.class'
 import { TEvented } from '../../../common/evented'
 import type { TClasses } from '../../../common/classes'
-
-type Constructor<T = {}> = new (...args: any[]) => T
+import type { TConstructor } from '../../../common/types'
 
 /**
  * Миксин для компонентов-элементов выбираемой коллекции (TCollapseItem, TListItem, etc.).
@@ -24,7 +23,7 @@ type Constructor<T = {}> = new (...args: any[]) => T
  * ```
  */
 export function SelectableComponentMixin<
-	TBase extends Constructor<{
+	TBase extends TConstructor<{
 		events: TEvented<any>
 		disabled: boolean
 		rendered: boolean

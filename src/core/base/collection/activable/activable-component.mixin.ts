@@ -2,15 +2,14 @@ import { TActivatableCollectionItem } from './activable-collection-item.class'
 import type { TCollection } from '../collection.class'
 import { TEvented } from '../../../common/evented'
 import type { TClasses } from '../../../common/classes'
-
-type Constructor<T = {}> = new (...args: any[]) => T
+import type { TConstructor } from '../../../common/types'
 
 /**
  * Миксин для компонентов-элементов активируемой коллекции (TTabItem, etc.).
  * Инкапсулирует композицию с TActivatableCollectionItem и проксирование свойств/событий.
  */
 export function ActivatableComponentMixin<
-	TBase extends Constructor<{
+	TBase extends TConstructor<{
 		events: TEvented<any>
 		disabled: boolean
 		rendered: boolean
