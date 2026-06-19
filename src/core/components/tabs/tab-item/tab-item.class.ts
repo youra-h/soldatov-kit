@@ -12,7 +12,9 @@ export default class TTabItem
 {
 	constructor(options: TTabItemOptions | Partial<ITabItemProps> = {}) {
 		const { collection, ...componentOptions } = options as TTabItemOptions
+
 		super(componentOptions)
+
 		this._initActivatableComposition(collection)
 	}
 
@@ -20,6 +22,7 @@ export default class TTabItem
 		if (!this.disabled) {
 			this.active = true
 		}
+
 		super.click(event)
 	}
 
@@ -33,6 +36,7 @@ export default class TTabItem
 
 	override assign(source: Partial<ITabItem>): void {
 		super.assign(source)
+
 		if (source.active !== undefined) this.active = source.active
 	}
 }

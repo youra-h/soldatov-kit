@@ -65,7 +65,9 @@ export function SelectableComponentMixin<
 
 		set selected(value: boolean) {
 			if (value && this.disabled) return
+
 			this._collectionItem.selected = value
+
 			this.classes.toggle('--selected', value)
 		}
 
@@ -86,14 +88,6 @@ export function SelectableComponentMixin<
 		}
 
 		deselect(): void {
-			this.selected = false
-		}
-
-		open(): void {
-			this.selected = true
-		}
-
-		close(): void {
 			this.selected = false
 		}
 

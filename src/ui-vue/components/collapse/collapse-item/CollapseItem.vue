@@ -126,7 +126,7 @@ export default {
 		@apply shrink-0;
 	}
 
-	&--open &__arrow {
+	&--selected &__arrow {
 		@apply rotate-90;
 	}
 
@@ -135,7 +135,7 @@ export default {
 		transition: grid-template-rows 300ms ease;
 	}
 
-	&--open > &__body {
+	&--selected > &__body {
 		@apply grid-rows-[1fr];
 	}
 
@@ -144,7 +144,7 @@ export default {
 		transition: padding 300ms ease;
 	}
 
-	&--open &__content {
+	&--selected &__content {
 		@apply py-2;
 	}
 }

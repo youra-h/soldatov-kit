@@ -13,7 +13,9 @@ export default class TListItem
 {
 	constructor(options: TListItemOptions | Partial<IListItemProps> = {}) {
 		const { collection, ...componentOptions } = options as TListItemOptions
+
 		super(componentOptions)
+
 		this._initSelectableComposition(collection)
 	}
 
@@ -35,6 +37,7 @@ export default class TListItem
 
 	override assign(source: Partial<IListItem>): void {
 		super.assign(source)
+
 		if (source.selected !== undefined) this.selected = source.selected
 	}
 }
