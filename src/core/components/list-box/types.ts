@@ -18,10 +18,10 @@ export interface IListBoxProps extends IListProps {
 export type TListBoxStates = TListStates
 
 export interface IListBox extends IList<
+	IListBoxItem,
 	IListBoxProps,
 	TListBoxEvents,
-	TListBoxStates,
-	IListBoxItem
+	TListBoxStates
 > {
 	/** Внешний вид компонента */
 	appearance: TListBoxAppearance

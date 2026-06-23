@@ -11,13 +11,13 @@ import { type TValuePayload } from '../../common/types'
 import type { TComponentSize, TComponentVariant } from '../../common/types'
 
 export class TList<
+	TItem extends IListItem = IListItem,
 	TProps extends IListProps = IListProps,
 	TEvents extends TListEvents = TListEvents,
 	TStates extends TListStates = TListStates,
-	TItem extends IListItem = IListItem,
 >
 	extends TControl<TProps, TEvents, TStates>
-	implements IList<TProps, TEvents, TStates, TItem>
+	implements IList<TItem, TProps, TEvents, TStates>
 {
 	static override baseClass = 's-list'
 

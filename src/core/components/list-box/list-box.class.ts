@@ -14,7 +14,7 @@ import type {
 import { TEvented } from '../../common/evented'
 
 export class TListBox
-	extends TList<IListBoxProps, TListBoxEvents, TListBoxStates, IListBoxItem>
+	extends TList<IListBoxItem, IListBoxProps, TListBoxEvents, TListBoxStates>
 	implements IListBox
 {
 	static override baseClass = 's-list-box'
