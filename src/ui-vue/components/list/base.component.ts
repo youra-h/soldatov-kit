@@ -69,7 +69,7 @@ export interface IListState<TItem extends IListItem = IListItem>
 	extends IControlState, ISelectableCollectionState<TItem> {}
 
 export function syncList<TItem extends IListItem = IListItem>(
-	options: ISyncComponentViewOptions<IListProps & ICollectionProps, IList>,
+	options: ISyncComponentViewOptions<IListProps & ICollectionProps, IList<any, any, any, TItem>>,
 ): IListState<TItem> {
 	const syncPropsControl = syncControl(options)
 

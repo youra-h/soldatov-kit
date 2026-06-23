@@ -14,9 +14,10 @@ export class TList<
 	TProps extends IListProps = IListProps,
 	TEvents extends TListEvents = TListEvents,
 	TStates extends TListStates = TListStates,
+	TItem extends IListItem = IListItem,
 >
 	extends TControl<TProps, TEvents, TStates>
-	implements IList<TProps, TEvents>
+	implements IList<TProps, TEvents, TStates, TItem>
 {
 	static override baseClass = 's-list'
 
@@ -175,7 +176,7 @@ export class TList<
 		}
 	}
 
-	get collection(): TSelectableCollection<any, any, IListItem> {
+	get collection(): TSelectableCollection<any, any, TItem> {
 		return this._collection
 	}
 
