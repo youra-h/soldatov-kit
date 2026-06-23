@@ -50,7 +50,7 @@ const applyAll = computed(() => props.itemApplyTarget === 'all')
 			v-bind="handlers"
 		>
 			<ListBoxItem
-				text="Item 1"
+				text="Item 1 Item 1Item 1Item 1Item 1Item 1Item 1Item"
 				value="item1"
 				:disabled="itemDisabled"
 				:selected="true"
