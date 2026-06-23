@@ -1,9 +1,4 @@
-import type {
-	IControl,
-	IControlProps,
-	TControlEvents,
-	TControlStates,
-} from '../../base/control'
+import type { IControl, IControlProps, TControlEvents, TControlStates } from '../../base/control'
 import type {
 	TSelectableCollection,
 	TSelectableCollectionEvents,
@@ -40,7 +35,9 @@ export type TListStates = TControlStates
 export interface IList<
 	TProps extends IListProps = IListProps,
 	TEvents extends TListEvents = TListEvents,
-> extends IControl<TProps, TEvents> {
+	TStates extends TListStates = TListStates,
+	TItem extends IListItem = IListItem,
+> extends IControl<TProps, TEvents, TStates> {
 	/** Режим выбора */
 	mode: TSelectionMode
 	/** Максимальное количество видимых строк (0 = без ограничений) */
@@ -50,5 +47,5 @@ export interface IList<
 	/** Перенос текста на новую строку (false = троеточие) */
 	wordWrap: boolean
 	/** Доступ к коллекции элементов */
-	readonly collection: TSelectableCollection<any, any, IListItem>
+	readonly collection: TSelectableCollection<any, any, TItem>
 }

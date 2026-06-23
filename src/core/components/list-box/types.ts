@@ -1,12 +1,5 @@
-import type {
-	IList,
-	IListProps,
-	TListEvents,
-	TListStates,
-} from '../list/types'
-import type {
-	TItemProxyEvents,
-} from '../../base/collection'
+import type { IList, IListProps, TListEvents, TListStates } from '../list/types'
+import type { TItemProxyEvents } from '../../base/collection'
 import type { IListBoxItem } from './list-box-item/types'
 
 export type TListBoxAppearance = 'plain' | 'outlined' | 'filled'
@@ -24,7 +17,12 @@ export interface IListBoxProps extends IListProps {
 
 export type TListBoxStates = TListStates
 
-export interface IListBox extends IList<IListBoxProps, TListBoxEvents> {
+export interface IListBox extends IList<
+	IListBoxProps,
+	TListBoxEvents,
+	TListBoxStates,
+	IListBoxItem
+> {
 	/** Внешний вид компонента */
 	appearance: TListBoxAppearance
 }
