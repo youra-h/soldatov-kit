@@ -90,5 +90,9 @@ export default {
 
 .s-list-box-item {
 	@apply flex;
+
+	&__text {
+		@apply grow text-left;
+	}
 }
 </style>
