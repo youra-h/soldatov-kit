@@ -176,6 +176,19 @@ export class TList<
 		}
 	}
 
+	/**
+	 * Количество видимых элементов с учётом maxRows.
+	 * 0 = показать все элементы.
+	 * @returns Количество видимых элементов
+	 */
+	getVisibleItemCount(): number {
+		const total = this._collection.items.length
+
+		if (this._maxRows === 0) return total
+
+		return Math.min(this._maxRows, total)
+	}
+
 	get collection(): TSelectableCollection<any, any, TItem> {
 		return this._collection
 	}

@@ -5,7 +5,7 @@ import { useInstance } from '../../composables/useInstance'
 import { useBundle } from '../../composables/useBundle'
 import { useInstanceBinding } from '../../composables/useInstanceBinding'
 import { useElementBinding } from '../../composables/useElementBinding'
-import { createComponentViewBundle } from '@plugins'
+import { createListBundle } from '@plugins'
 import { ListBoxItem } from './list-box-item'
 import type { TBaseComponentViewProps } from '../component-view'
 
@@ -16,7 +16,7 @@ export default {
 	setup(props: TBaseComponentViewProps<IListBoxProps, IListBox>, { emit }) {
 		const instance = useInstance(TListBox, props)
 
-		const plugins = useBundle(createComponentViewBundle, props?.plugins)
+		const plugins = useBundle(createListBundle, props?.plugins)
 		useInstanceBinding(plugins, instance)
 
 		const rootRef = useElementBinding(plugins)

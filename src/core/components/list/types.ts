@@ -48,4 +48,6 @@ export interface IList<
 	wordWrap: boolean
 	/** Доступ к коллекции элементов */
 	readonly collection: TSelectableCollection<any, any, TItem>
+	/** Возвращает количество видимых элементов в списке */
+	getVisibleItemCount(): number
 }
