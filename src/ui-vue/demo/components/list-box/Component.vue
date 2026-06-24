@@ -19,6 +19,8 @@ type Props = {
 	variant?: TComponentVariant
 	appearance?: TListBoxAppearance
 	mode?: TSelectionMode
+	maxRows?: number
+	autoWidth?: boolean
 	wordWrap?: boolean
 	// Item props
 	itemDisabled?: boolean
@@ -49,6 +51,8 @@ const applyAll = computed(() => props.itemApplyTarget === 'all')
 			:variant="variant"
 			:appearance="appearance"
 			:mode="mode"
+			:max-rows="maxRows"
+			:auto-width="autoWidth"
 			:word-wrap="wordWrap"
 			v-bind="handlers"
 		>

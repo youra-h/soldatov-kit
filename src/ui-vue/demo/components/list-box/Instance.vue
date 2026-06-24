@@ -21,6 +21,8 @@ type Props = {
 	variant?: TComponentVariant
 	appearance?: TListBoxAppearance
 	mode?: TSelectionMode
+	maxRows?: number
+	autoWidth?: boolean
 	wordWrap?: boolean
 	itemDisabled?: boolean
 	itemWordWrap?: boolean
@@ -46,6 +48,8 @@ const instance = new TListBox({
 	variant: props.variant ?? 'normal',
 	appearance: props.appearance ?? 'plain',
 	mode: props.mode ?? 'single',
+	maxRows: props.maxRows ?? 0,
+	autoWidth: props.autoWidth ?? false,
 	wordWrap: props.wordWrap ?? false,
 })
 
@@ -64,6 +68,8 @@ useSyncPropsToInstance(props, instance, [
 	'variant',
 	'appearance',
 	'mode',
+	'maxRows',
+	'autoWidth',
 	'wordWrap',
 ])
 
