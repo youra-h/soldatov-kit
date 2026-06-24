@@ -82,6 +82,10 @@ export default {
 	@apply outline-transparent;
 	@apply text-s-component;
 
+	&__text {
+		@apply grow truncate text-center;
+	}
+
 	&[disabled],
 	&[aria-disabled='true'] {
 		@apply opacity-s-component-disabled cursor-default pointer-events-none;
@@ -97,10 +101,6 @@ export default {
 
 	svg {
 		fill: currentColor;
-	}
-
-	&__text {
-		@apply grow truncate text-center;
 	}
 
 	&--size-sm {
