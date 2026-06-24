@@ -30,6 +30,7 @@ const listBoxSchema: TPropertiesSchema = {
 	variant: { type: 'select', default: 'normal', options: VARIANTS },
 	appearance: { type: 'select', default: 'plain', options: LIST_BOX_APPEARANCES },
 	mode: { type: 'select', default: 'single', options: LIST_BOX_MODES },
+	wordWrap: { type: 'boolean', default: false },
 }
 
 const itemSchema: TPropertiesSchema = {
@@ -42,6 +43,7 @@ const itemSchema: TPropertiesSchema = {
 		],
 	},
 	itemDisabled: { type: 'boolean', default: false },
+	itemWordWrap: { type: 'boolean', default: false },
 }
 
 const componentProps = ref<{
@@ -52,8 +54,10 @@ const componentProps = ref<{
 	variant: TComponentVariant
 	appearance: TListBoxAppearance
 	mode: TSelectionMode
+	wordWrap: boolean
 	itemApplyTarget: 'all' | 'first'
 	itemDisabled: boolean
+	itemWordWrap: boolean
 }>({
 	visible: true,
 	rendered: true,
@@ -62,8 +66,10 @@ const componentProps = ref<{
 	variant: 'normal',
 	appearance: 'plain',
 	mode: 'single',
+	wordWrap: false,
 	itemApplyTarget: 'first',
 	itemDisabled: false,
+	itemWordWrap: false,
 })
 
 const instanceDemoRef = ref<InstanceType<typeof InstanceDemo>>()

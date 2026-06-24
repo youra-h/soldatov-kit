@@ -19,8 +19,10 @@ type Props = {
 	variant?: TComponentVariant
 	appearance?: TListBoxAppearance
 	mode?: TSelectionMode
+	wordWrap?: boolean
 	// Item props
 	itemDisabled?: boolean
+	itemWordWrap?: boolean
 	itemApplyTarget?: 'all' | 'first'
 }
 
@@ -47,23 +49,27 @@ const applyAll = computed(() => props.itemApplyTarget === 'all')
 			:variant="variant"
 			:appearance="appearance"
 			:mode="mode"
+			:word-wrap="wordWrap"
 			v-bind="handlers"
 		>
 			<ListBoxItem
 				text="Item 1 Item 1Item 1Item 1Item 1Item 1Item 1Item"
 				value="item1"
 				:disabled="itemDisabled"
+				:word-wrap="itemWordWrap"
 				:selected="true"
 			/>
 			<ListBoxItem
 				text="Item 2"
 				value="item2"
 				:disabled="applyAll ? itemDisabled : false"
+				:word-wrap="applyAll ? itemWordWrap : undefined"
 			/>
 			<ListBoxItem
 				text="Item 3"
 				value="item3"
 				:disabled="applyAll ? itemDisabled : false"
+				:word-wrap="applyAll ? itemWordWrap : undefined"
 			/>
 		</ListBox>
 	</PanelDemo>

@@ -21,7 +21,9 @@ type Props = {
 	variant?: TComponentVariant
 	appearance?: TListBoxAppearance
 	mode?: TSelectionMode
+	wordWrap?: boolean
 	itemDisabled?: boolean
+	itemWordWrap?: boolean
 	itemApplyTarget?: 'all' | 'first'
 }
 
@@ -44,6 +46,7 @@ const instance = new TListBox({
 	variant: props.variant ?? 'normal',
 	appearance: props.appearance ?? 'plain',
 	mode: props.mode ?? 'single',
+	wordWrap: props.wordWrap ?? false,
 })
 
 instance.collection.add({ text: 'Item 1', value: 'item1', selected: true })
@@ -61,14 +64,16 @@ useSyncPropsToInstance(props, instance, [
 	'variant',
 	'appearance',
 	'mode',
+	'wordWrap',
 ])
 
 watch(
-	[() => props.itemDisabled, () => props.itemApplyTarget],
+	[() => props.itemDisabled, () => props.itemWordWrap, () => props.itemApplyTarget],
 	() => {
 		instance.collection.items.forEach((item, index) => {
 			const apply = props.itemApplyTarget === 'all' || index === 0
 			item.disabled = apply ? !!props.itemDisabled : false
+			item.wordWrap = apply ? props.itemWordWrap : undefined
 		})
 	},
 	{ immediate: true },
