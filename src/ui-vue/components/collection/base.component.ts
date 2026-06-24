@@ -1,6 +1,11 @@
 import type { PropType, Ref } from 'vue'
 import { watch, provide } from 'vue'
-import { type ICollection, type ICollectionProps, type ICollectionItem, type TCollectionEvents } from '@core'
+import {
+	type ICollection,
+	type ICollectionProps,
+	type ICollectionItem,
+	type TCollectionEvents,
+} from '@core'
 import { TCollectionElementsPlugin, TCollectionInstancesPlugin, TDragPlugin } from '@plugins'
 import { useProvideCollection } from '../../composables/useProvideCollection'
 import { useProvideCollectionPlugins } from '../../composables/useProvideCollectionPlugins'

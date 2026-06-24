@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { TListBox } from '@core'
 import { ListBox, ListBoxItem } from '@ui/list-box'
 import { Loader } from '@ui/loader'
@@ -85,11 +85,20 @@ instance2.events.on('change:selected', (items: any[]) => {
 const items3 = ref<Partial<any>[]>([])
 const selected3 = ref<ICity[]>([])
 
-const filteredItems3 = computed(() => {
-	const q = filter3.value.toLowerCase()
-	if (!q) return items3.value
-	return items3.value.filter((item: any) => (item.text as string).toLowerCase().includes(q))
-})
+// Явный watch вместо computed — гарантирует новую ссылку массива для :items
+const items3ForProp = ref<Partial<any>[]>([])
+
+watch(
+	[items3, filter3],
+	() => {
+		const q = filter3.value.toLowerCase()
+
+		items3ForProp.value = q
+			? items3.value.filter((item: any) => (item.text as string).toLowerCase().includes(q))
+			: [...items3.value]
+	},
+	{ immediate: true, deep: true },
+)
 
 function handleSelected3(items: any[]) {
 	selected3.value = items.map((item: any) => ({
@@ -245,12 +254,12 @@ function selectRandomTwo() {
 
 				<ListBox
 					mode="multiple"
-					:items="filteredItems3"
+					:items="items3ForProp"
 					:max-rows="6"
 					@change:selected="handleSelected3"
 				/>
 
-				{{ console.log('filteredItems3', filteredItems3) }}
+				{{ console.log('items3ForProp', items3ForProp) }}
 
 				<div class="list-box-test__selected">
 					<strong>Выбрано:</strong>
