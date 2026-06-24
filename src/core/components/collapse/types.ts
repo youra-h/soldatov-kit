@@ -1,14 +1,10 @@
-import type {
-	IControl,
-	IControlProps,
-	TControlEvents,
-	TControlStates,
-} from '../../base/control'
+import type { IControl, IControlProps, TControlEvents, TControlStates } from '../../base/control'
 import type {
 	TSelectableCollection,
 	TSelectableCollectionEvents,
 	TSelectionMode,
 	TItemProxyEvents,
+	ISelectableCollectionProps,
 } from '../../base/collection'
 import type { ICollapseItem } from './collapse-item/types'
 
@@ -22,11 +18,9 @@ export type TCollapseEvents = TControlEvents &
 		'item:text': (item: ICollapseItem, value: string) => void
 	}
 
-export interface ICollapseProps extends IControlProps {
+export interface ICollapseProps extends IControlProps, ISelectableCollectionProps {
 	/** Внешний вид компонента */
 	appearance?: TCollapseAppearance
-	/** Режим выбора */
-	mode?: TSelectionMode
 }
 
 export type TCollapseStates = TControlStates

@@ -4,6 +4,7 @@ import type {
 	TSelectableCollectionEvents,
 	TSelectionMode,
 	TItemProxyEvents,
+	ISelectableCollectionProps,
 } from '../../base/collection'
 import type { IListItem } from './list-item/types'
 
@@ -19,9 +20,7 @@ export type TListEvents = TControlEvents &
 		'item:text': (item: IListItem, value: string) => void
 	}
 
-export interface IListProps extends IControlProps {
-	/** Режим выбора */
-	mode?: TSelectionMode
+export interface IListProps extends IControlProps, ISelectableCollectionProps {
 	/** Максимальное количество видимых строк (0 = без ограничений) */
 	maxRows?: number
 	/** Ширина бокса определяется по самому длинному тексту */
