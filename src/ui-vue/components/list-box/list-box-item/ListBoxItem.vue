@@ -90,7 +90,7 @@ export default {
 @reference "./../../../../foundation/tailwind";
 
 .s-list-box-item {
-	@apply flex;
+	@apply flex min-h-fit;
 
 	&__text {
 		@apply grow text-left truncate;
