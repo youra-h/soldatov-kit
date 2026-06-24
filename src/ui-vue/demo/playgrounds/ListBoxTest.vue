@@ -85,21 +85,6 @@ instance2.events.on('change:selected', (items: any[]) => {
 const items3 = ref<Partial<any>[]>([])
 const selected3 = ref<ICity[]>([])
 
-// Явный watch вместо computed — гарантирует новую ссылку массива для :items
-const items3ForProp = ref<Partial<any>[]>([])
-
-watch(
-	[items3, filter3],
-	() => {
-		const q = filter3.value.toLowerCase()
-
-		items3ForProp.value = q
-			? items3.value.filter((item: any) => (item.text as string).toLowerCase().includes(q))
-			: [...items3.value]
-	},
-	{ immediate: true, deep: true },
-)
-
 function handleSelected3(items: any[]) {
 	selected3.value = items.map((item: any) => ({
 		id: item.uid,
@@ -253,12 +238,10 @@ function selectRandomTwo() {
 
 				<ListBox
 					mode="multiple"
-					:items="items3ForProp"
+					:items="items3"
 					:max-rows="6"
 					@change:selected="handleSelected3"
 				/>
-
-				{{ console.log('items3ForProp', items3ForProp) }}
 
 				<div class="list-box-test__selected">
 					<strong>Выбрано:</strong>

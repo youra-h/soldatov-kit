@@ -75,6 +75,22 @@ export class TCollection<
 	}
 
 	/**
+	 * Обновляет поля существующих элементов без очистки коллекции.
+	 * Каждый source применяется к элементу с тем же индексом через assign.
+	 * Если source больше чем элементов — лишние игнорируются.
+	 * Если source меньше — оставшиеся элементы не трогаются.
+	 */
+	patchItems(sources: Partial<TItem>[]): void {
+		const len = Math.min(sources.length, this._items.length)
+
+		for (let i = 0; i < len; i++) {
+			this._items[i].assign(sources[i] as TItem)
+		}
+
+		this._notifyItems()
+	}
+
+	/**
 	 * Вспомогательный метод, собирает и эмитит общие события коллекции:
 	 * 'changed', 'change:items' и опционально 'change:count'.
 	 * @param item Опционально — элемент, связанный с изменением.

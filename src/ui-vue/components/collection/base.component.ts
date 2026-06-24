@@ -83,6 +83,17 @@ export function syncCollection<TItem extends ICollectionItem = ICollectionItem>(
 		{ immediate: true },
 	)
 
+	// Патч полей существующих элементов (без clear+add), когда массив не заменялся
+	watch(
+		() => props.items,
+		(items, oldItems) => {
+			if (items !== undefined && items === oldItems && items.length <= instance.count) {
+				instance.patchItems(items)
+			}
+		},
+		{ deep: true },
+	)
+
 	// Пробрасываем события core-инстанса наружу (Vue events)
 	instance.events.on(
 		'item:added',

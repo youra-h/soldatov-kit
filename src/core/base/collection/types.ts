@@ -192,6 +192,12 @@ export interface ICollectionMethods<TItem extends ICollectionItem = ICollectionI
 	clear(): void
 
 	/**
+	 * Обновляет поля существующих элементов без очистки коллекции.
+	 * Каждый source применяется к элементу с тем же индексом.
+	 */
+	patchItems(sources: Partial<ICollectionItem>[]): void
+
+	/**
 	 * Перемещает элемент в новую позицию
 	 * @param item Элемент
 	 * @param newIndex Новый индекс
@@ -235,8 +241,8 @@ export interface ICollection<
 	TProps extends ICollectionProps = ICollectionProps,
 	TEvents extends TCollectionEvents = TCollectionEvents,
 	TItem extends ICollectionItem = ICollectionItem,
->
-	extends IEntity<TProps>, ICollectionMethods<TItem> {
+> extends IEntity<TProps>,
+		ICollectionMethods<TItem> {
 	readonly events: TEvented<TEvents>
 	/** Количество элементов в коллекции */
 	readonly count: number
