@@ -171,11 +171,10 @@ function selectRandomTwo() {
 		if (item) item.selected = true
 	})
 
-	// Список 3: items — обновим массив с selected
-	items3.value = items3.value.map((item: any) => ({
-		...item,
-		selected: pickValues.includes(item.value),
-	}))
+	// Список 3: items — обновим selected на месте
+	items3.value.forEach((item: any) => {
+		item.selected = pickValues.includes(item.value)
+	})
 }
 </script>
 
