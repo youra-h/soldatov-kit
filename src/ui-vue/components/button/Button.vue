@@ -55,7 +55,9 @@ export default {
 		@click="instance.click($event)"
 	>
 		<slot name="leading"> </slot>
-		<slot>{{ text }}</slot>
+		<span class="s-button__text">
+			<slot :text="text">{{ text }}</slot>
+		</span>
 		<slot name="trailing"> </slot>
 		<slot name="loader">
 			<Component
@@ -77,7 +79,6 @@ export default {
 	@apply flex items-center justify-center gap-1.5;
 	@apply px-2.5 py-1 rounded-md cursor-pointer;
 	@apply relative transition-colors duration-200;
-	@apply truncate;
 	@apply outline-transparent;
 	@apply text-s-component;
 
@@ -96,6 +97,10 @@ export default {
 
 	svg {
 		fill: currentColor;
+	}
+
+	&__text {
+		@apply grow truncate text-center;
 	}
 
 	&--size-sm {

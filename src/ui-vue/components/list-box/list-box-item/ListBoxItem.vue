@@ -74,11 +74,9 @@ export default {
 			<slot name="leading" />
 		</template>
 
-		<span class="s-list-box-item__text">
-			<slot name="default" :text="text" :selected="selected">
-				{{ text }}
-			</slot>
-		</span>
+		<slot name="default" :text="text" :selected="selected">
+			{{ text }}
+		</slot>
 
 		<template #trailing>
 			<slot name="trailing" />
@@ -92,8 +90,10 @@ export default {
 .s-list-box-item {
 	@apply min-h-fit;
 
-	&__text {
-		@apply grow text-left truncate min-w-0;
+	.s-button {
+		&__text {
+			@apply text-left min-w-0;
+		}
 	}
 
 	&--word-wrap &__text {

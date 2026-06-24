@@ -79,11 +79,9 @@ export default {
 				/>
 			</template>
 
-			<span class="s-collapse-item__text">
-				<slot name="header" :text="text" :selected="selected">
-					{{ text }}
-				</slot>
-			</span>
+			<slot name="header" :text="text" :selected="selected">
+				{{ text }}
+			</slot>
 
 			<template #trailing>
 				<slot name="trailing" />
@@ -117,8 +115,10 @@ export default {
 		@apply py-2;
 	}
 
-	&__text {
-		@apply grow text-left;
+	.s-button {
+		&__text {
+			@apply text-left;
+		}
 	}
 
 	&__arrow {
