@@ -30,8 +30,6 @@ const listBoxSchema: TPropertiesSchema = {
 	variant: { type: 'select', default: 'normal', options: VARIANTS },
 	appearance: { type: 'select', default: 'plain', options: LIST_BOX_APPEARANCES },
 	mode: { type: 'select', default: 'single', options: LIST_BOX_MODES },
-	maxRows: { type: 'number', default: 0 },
-	autoWidth: { type: 'boolean', default: false },
 	wordWrap: { type: 'boolean', default: false },
 }
 
@@ -56,8 +54,6 @@ const componentProps = ref<{
 	variant: TComponentVariant
 	appearance: TListBoxAppearance
 	mode: TSelectionMode
-	maxRows: number
-	autoWidth: boolean
 	wordWrap: boolean
 	itemApplyTarget: 'all' | 'first'
 	itemDisabled: boolean
@@ -70,8 +66,6 @@ const componentProps = ref<{
 	variant: 'normal',
 	appearance: 'plain',
 	mode: 'single',
-	maxRows: 0,
-	autoWidth: false,
 	wordWrap: false,
 	itemApplyTarget: 'first',
 	itemDisabled: false,
@@ -111,7 +105,7 @@ const handleHide = () => instanceDemoRef.value?.hide()
 			<PropsDemo v-bind="componentProps" @log="emit('log', $event)" />
 		</template>
 
-		<!-- <template #instance-demo>
+		<template #instance-demo>
 			<InstanceDemo
 				ref="instanceDemoRef"
 				v-bind="componentProps"
@@ -121,7 +115,7 @@ const handleHide = () => instanceDemoRef.value?.hide()
 
 		<template #slots-demo>
 			<SlotsDemo :size="componentProps.size" :variant="componentProps.variant" />
-		</template> -->
+		</template>
 	</PlaygroundLayout>
 </template>
 
