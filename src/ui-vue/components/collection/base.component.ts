@@ -10,7 +10,6 @@ import { TCollectionElementsPlugin, TCollectionInstancesPlugin, TDragPlugin } fr
 import { useProvideCollection } from '../../composables/useProvideCollection'
 import { useProvideCollectionPlugins } from '../../composables/useProvideCollectionPlugins'
 import { useInjectDragContext } from '../../composables/useDragContext'
-import { useEventState } from '../../composables/useEventState'
 import type { TEmits, TProps, ISyncComponentViewOptions } from '../../types'
 import { useSyncProps } from '../../composables/useSyncProps'
 
