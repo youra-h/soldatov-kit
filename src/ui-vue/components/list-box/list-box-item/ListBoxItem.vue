@@ -67,6 +67,7 @@ export default {
 		:disabled="disabled"
 		:size="size"
 		:variant="variant"
+		:aria-selected="selected"
 		@click="instance.click()"
 	>
 		<template #leading>

@@ -7,7 +7,8 @@
 		@apply #{'bg-s-' + $color + '-' + $hover-bg};
 	}
 
-	&:active:not([disabled]) {
+	&:active:not([disabled]),
+	&[aria-selected='true']:not([disabled]) {
 		@apply #{'bg-s-' + $color + '-' + $active-bg};
 	}
 }
