@@ -16,10 +16,10 @@ import { TEntity } from '../../base/entity'
  * @fires afterMove - Элемент был перемещён
  */
 export class TCollection<
-	TProps extends ICollectionProps = ICollectionProps,
-	TEvents extends TCollectionEvents = TCollectionEvents,
-	TItem extends ICollectionItem = ICollectionItem,
->
+		TProps extends ICollectionProps = ICollectionProps,
+		TEvents extends TCollectionEvents = TCollectionEvents,
+		TItem extends ICollectionItem = ICollectionItem,
+	>
 	extends TEntity<TProps>
 	implements ICollection<TProps, TEvents, TItem>
 {

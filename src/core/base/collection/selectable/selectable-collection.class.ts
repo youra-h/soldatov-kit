@@ -15,10 +15,10 @@ import { TEvented } from '../../../common/evented'
  * Коллекция элементов с поддержкой выбора.
  */
 export class TSelectableCollection<
-	TProps extends ISelectableCollectionProps = ISelectableCollectionProps,
-	TEvents extends TSelectableCollectionEvents = TSelectableCollectionEvents,
-	TItem extends ISelectableCollectionItem = ISelectableCollectionItem,
->
+		TProps extends ISelectableCollectionProps = ISelectableCollectionProps,
+		TEvents extends TSelectableCollectionEvents = TSelectableCollectionEvents,
+		TItem extends ISelectableCollectionItem = ISelectableCollectionItem,
+	>
 	extends TCollection<TProps, TEvents, TItem>
 	implements ISelectableCollection<TProps, TEvents, TItem>
 {
@@ -160,5 +160,7 @@ export class TSelectableCollection<
 			'change:selectedCount',
 			this.selectedCount,
 		)
+
+		super.clear()
 	}
 }
