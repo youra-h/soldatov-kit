@@ -57,7 +57,7 @@ const applyAll = computed(() => props.itemApplyTarget === 'all')
 			v-bind="handlers"
 		>
 			<ListBoxItem
-				text="Item 1 Item 1Item 1Item 1Item 1Item 1Item 1Item"
+				text="Item 1 Item 1Item 1Item 1Item 1Item 1Item 1Item Item 1 Item 1 Item 1"
 				value="item1"
 				:disabled="itemDisabled"
 				:word-wrap="itemWordWrap"

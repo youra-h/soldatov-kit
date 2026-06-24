@@ -93,7 +93,11 @@ export default {
 	@apply flex;
 
 	&__text {
-		@apply grow text-left;
+		@apply grow text-left truncate;
+	}
+
+	&--word-wrap &__text {
+		@apply whitespace-normal overflow-visible;
 	}
 }
 </style>

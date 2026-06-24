@@ -44,11 +44,7 @@ export default {
 <template>
 	<div ref="rootRef" v-if="rendered" v-show="visible" :class="classes">
 		<slot>
-			<ListBoxItem
-				v-for="item in items"
-				:key="item.uid"
-				:ctrl="item"
-			>
+			<ListBoxItem v-for="item in items" :key="item.uid" :ctrl="item">
 				<slot :name="`item:${item.value}`" />
 			</ListBoxItem>
 		</slot>
@@ -60,5 +56,14 @@ export default {
 
 .s-list-box {
 	@apply flex flex-col gap-1;
+	@apply min-w-40 max-w-80;
+
+	&--auto-width {
+		@apply w-max min-w-0 max-w-none;
+	}
+
+	&--word-wrap .s-list-box-item__text {
+		@apply whitespace-normal overflow-visible;
+	}
 }
 </style>
