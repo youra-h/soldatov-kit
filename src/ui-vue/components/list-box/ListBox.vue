@@ -59,6 +59,6 @@ export default {
 @reference "./../../../foundation/tailwind";
 
 .s-list-box {
-	@apply flex flex-col;
+	@apply flex flex-col gap-1;
 }
 </style>
