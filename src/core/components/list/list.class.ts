@@ -79,7 +79,6 @@ export class TList<
 		this.events.relay(this._collection.events, [
 			'item:selected',
 			'item:unselected',
-			'selection:cleared',
 			'change:selected',
 			'change:selectedCount',
 			'change:mode',
@@ -109,7 +108,6 @@ export class TList<
 			'item:beforeMove',
 			'item:moved',
 			'item:afterMove',
-			'cleared',
 		])
 
 		this.events.on('change:disabled', (value) => {

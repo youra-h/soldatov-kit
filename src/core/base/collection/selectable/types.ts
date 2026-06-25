@@ -70,12 +70,6 @@ export type TSelectableCollectionEvents = TCollectionEvents<ISelectableCollectio
 	}) => void
 
 	/**
-	 * После очистки всех выбранных элементов.
-	 * @param payload.collection Коллекция, в которой очищен выбор
-	 */
-	'selection:cleared': (payload: { collection: ISelectableCollection }) => void
-
-	/**
 	 * После изменения набора выделенных элементов.
 	 */
 	'change:selected': (items: ISelectableCollectionItem[]) => void

@@ -83,7 +83,7 @@ describe('TSelectableCollection', () => {
 		expect(col.selectedCount).toBe(0)
 	})
 
-	it('clear deselects all and emits selection:cleared', () => {
+	it('clear deselects all and emits', () => {
 		const col = new TSelectableCollection({
 			itemClass: TSelectableCollectionItem,
 			mode: 'multiple',
@@ -97,15 +97,11 @@ describe('TSelectableCollection', () => {
 
 		expect(col.selectedCount).toBe(2)
 
-		const spy = vi.fn()
-		col.events.on('selection:cleared', spy)
-
 		col.clear()
 
 		expect(col.selectedCount).toBe(0)
 		expect(a.selected).toBe(false)
 		expect(b.selected).toBe(false)
-		expect(spy).toHaveBeenCalled()
 	})
 
 	it('addFromArray() subscribes to item events and maintains selection state', () => {

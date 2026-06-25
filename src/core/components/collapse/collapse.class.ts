@@ -40,10 +40,9 @@ export class TCollapse
 
 		const ctor = new.target as typeof TCollapse
 
-		const { props = {} } = TComponentView.prepareOptions<
-			ICollapseProps,
-			TCollapseStates
-		>(options)
+		const { props = {} } = TComponentView.prepareOptions<ICollapseProps, TCollapseStates>(
+			options,
+		)
 
 		this._collection = new TSelectableCollection<any, any, ICollapseItem>({
 			itemClass: TCollapseItem,
@@ -67,7 +66,6 @@ export class TCollapse
 		this.events.relay(this._collection.events, [
 			'item:selected',
 			'item:unselected',
-			'selection:cleared',
 			'change:selected',
 			'change:selectedCount',
 			'change:mode',
@@ -101,7 +99,6 @@ export class TCollapse
 			'item:beforeMove',
 			'item:moved',
 			'item:afterMove',
-			'cleared',
 		])
 
 		this.events.on('change:disabled', (value) => {

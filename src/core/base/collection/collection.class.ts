@@ -15,7 +15,6 @@ import { TEntity } from '../../base/entity'
  * @fires deleted - Элемент был удалён
  * @fires beforeDelete - Элемент будет удалён (можно отменить)
  * @fires afterDelete - Элемент был удалён
- * @fires cleared - Коллекция была очищена
  * @fires beforeMove - Элемент будет перемещён (можно отменить)
  * @fires afterMove - Элемент был перемещён
  */
@@ -78,7 +77,9 @@ export class TCollection<
 	 * Очищает коллекцию и заполняет из массива данных.
 	 * Вынесен в отдельный protected метод для оверрайда в наследниках.
 	 */
-	applyItems<TMeta extends ICollectionItemMeta = ICollectionItemMeta>(sources: TCollectionItemSource<TItem, TMeta>[]): void {
+	applyItems<TMeta extends ICollectionItemMeta = ICollectionItemMeta>(
+		sources: TCollectionItemSource<TItem, TMeta>[],
+	): void {
 		this.clear()
 
 		if (sources.length > 0) {
@@ -92,7 +93,9 @@ export class TCollection<
 	 * Если source больше чем элементов — лишние игнорируются.
 	 * Если source меньше — оставшиеся элементы не трогаются.
 	 */
-	patchItems<TMeta extends ICollectionItemMeta = ICollectionItemMeta>(sources: TCollectionItemSource<TItem, TMeta>[]): void {
+	patchItems<TMeta extends ICollectionItemMeta = ICollectionItemMeta>(
+		sources: TCollectionItemSource<TItem, TMeta>[],
+	): void {
 		// Удалить лишние элементы
 		while (this._items.length > sources.length) {
 			this.delete(this._items.length - 1)
@@ -315,7 +318,7 @@ export class TCollection<
 	clear(): void {
 		this._items.forEach((it) => it.free())
 		this._items = []
-		;(this.events as TEvented<TCollectionEvents>).emit('cleared', { collection: this })
+
 		// Общий сигнал об изменении коллекции
 		this._notifyItems()
 	}

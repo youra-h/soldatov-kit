@@ -22,7 +22,6 @@ export const emitsSelectableCollection: TEmits = [
 	...emitsCollection,
 	'item:selected',
 	'item:unselected',
-	'selection:cleared',
 	'change:selected',
 	'change:mode',
 	'update:mode',
@@ -44,8 +43,9 @@ export default {
 	props: propsSelectableCollection,
 }
 
-export interface ISelectableCollectionState<TItem = ISelectableCollectionItem>
-	extends ICollectionState<TItem> {
+export interface ISelectableCollectionState<
+	TItem = ISelectableCollectionItem,
+> extends ICollectionState<TItem> {
 	selected: Ref<TItem[]>
 	selectedCount: Ref<number>
 	mode: Ref<TSelectionMode>
@@ -80,10 +80,6 @@ export function syncSelectableCollection<
 			emit?.('item:unselected', payload)
 		},
 	)
-
-	instance.events.on('selection:cleared', (payload: { collection: ISelectableCollection }) => {
-		emit?.('selection:cleared', payload)
-	})
 
 	instance.events.on('change:selected' as any, (items: ISelectableCollectionItem[]) => {
 		emit?.('change:selected', items)

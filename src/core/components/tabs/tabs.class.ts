@@ -120,7 +120,6 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStates> implem
 			'item:beforeMove',
 			'item:moved',
 			'item:afterMove',
-			'cleared',
 		])
 
 		this.events.on('change:disabled', (value) => {

@@ -189,9 +189,7 @@ export class TSelectableCollection<
 		this._selected.forEach((it) => (it.selected = false))
 
 		this._selected.clear()
-		;(this.events as TEvented<TSelectableCollectionEvents>).emit('selection:cleared', {
-			collection: this,
-		})
+
 		;(this.events as TEvented<TSelectableCollectionEvents>).emit(
 			'change:selected',
 			this.selected,

@@ -45,13 +45,6 @@ export type TCollectionEvents<TItem extends ICollectionItem = ICollectionItem> =
 	'change:count': (count: number) => void
 
 	/**
-	 * После очистки коллекции.
-	 *
-	 * @param payload.collection  Коллекция, которая была очищена.
-	 */
-	cleared: (payload: { collection: ICollection }) => void
-
-	/**
 	 * После успешного добавления нового элемента.
 	 *
 	 * @param payload.collection  Коллекция, в которую добавлен элемент.

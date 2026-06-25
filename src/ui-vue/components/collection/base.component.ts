@@ -18,12 +18,10 @@ export const emitsCollection: TEmits = [
 	'change:items',
 	'update:items',
 	'change:count',
-	'cleared',
 	'item:added',
 	'item:beforeDelete',
 	'item:deleted',
 	'item:afterDelete',
-	'cleared',
 	'item:beforeMove',
 	'item:moved',
 	'item:afterMove',
@@ -119,10 +117,6 @@ export function syncCollection<TItem extends ICollectionItem = ICollectionItem>(
 		emit?.('change:count', count)
 	})
 
-	instance.events.on('cleared', (payload: { collection: ICollection }) => {
-		emit?.('cleared', payload)
-	})
-
 	// Пробрасываем события core-инстанса наружу (Vue events)
 	instance.events.on(
 		'item:added',
@@ -151,10 +145,6 @@ export function syncCollection<TItem extends ICollectionItem = ICollectionItem>(
 			emit?.('item:afterDelete', payload)
 		},
 	)
-
-	instance.events.on('cleared', (payload: { collection: ICollection }) => {
-		emit?.('cleared', payload)
-	})
 
 	instance.events.on(
 		'item:beforeMove',
@@ -191,25 +181,11 @@ export function syncCollection<TItem extends ICollectionItem = ICollectionItem>(
 	return useSyncProps(instance.events, {
 		items: {
 			value: () => instance.items,
-			triggers: [
-				'item:added',
-				'cleared',
-				'item:afterMove',
-				'item:afterDelete',
-				'item:moved',
-				'changed',
-			],
+			triggers: ['item:added', 'item:afterMove', 'item:afterDelete', 'item:moved', 'changed'],
 		},
 		count: {
 			value: () => instance.count,
-			triggers: [
-				'item:added',
-				'cleared',
-				'item:afterMove',
-				'item:afterDelete',
-				'item:moved',
-				'changed',
-			],
+			triggers: ['item:added', 'item:afterMove', 'item:afterDelete', 'item:moved', 'changed'],
 		},
 	})
 }
