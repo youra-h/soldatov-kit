@@ -48,7 +48,7 @@ export interface ICollectionItem<
  *
  * @example
  * ```ts
- * const items: TCollectionItemMeta<ISelectableCollectionItem>[] = [
+ * const items: TCollectionItemSource<ISelectableCollectionItem>[] = [
  *   { text: 'Text1', _: { selected: true } },
  *   { text: 'Text2' },
  * ]
@@ -57,7 +57,7 @@ export interface ICollectionItem<
 
 export interface ICollectionItemMeta {}
 
-export type TCollectionItemMeta<
+export type TCollectionItemSource<
 	TItem = ICollectionItem,
 	TMeta = ICollectionItemMeta,
 > = Partial<TItem> & {

@@ -6,7 +6,7 @@ import type {
 	IActivatableCollectionItem,
 	IActivatableCollectionItemMeta,
 } from './types'
-import type { TCollectionItemMeta } from '../item/types'
+import type { TCollectionItemSource } from '../item/types'
 import type { TConstructor } from '../../../common/types'
 import { TActivatableCollectionItem } from './activable-collection-item.class'
 import { isSame } from '../../../common/is-same'
@@ -104,7 +104,7 @@ export class TActivatableCollection<
 	 * после чего передаёт чистый массив в базовую реализацию.
 	 */
 	override applyItems<TMeta = IActivatableCollectionItemMeta>(
-		sources: TCollectionItemMeta<TItem, TMeta>[],
+		sources: TCollectionItemSource<TItem, TMeta>[],
 	): void {
 		this._extractMeta(sources)
 		super.applyItems(sources)
@@ -115,7 +115,7 @@ export class TActivatableCollection<
 	 * после чего передаёт чистый массив в базовую реализацию.
 	 */
 	override patchItems<TMeta = IActivatableCollectionItemMeta>(
-		sources: TCollectionItemMeta<TItem, TMeta>[],
+		sources: TCollectionItemSource<TItem, TMeta>[],
 	): void {
 		this._extractMeta(sources)
 		super.patchItems(sources)

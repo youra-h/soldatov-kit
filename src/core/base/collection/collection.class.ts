@@ -2,7 +2,7 @@ import { TEvented } from '../../common/evented'
 import type { TCollectionEvents, ICollection, ICollectionProps } from './types'
 import {
 	type ICollectionItem,
-	type TCollectionItemMeta,
+	type TCollectionItemSource,
 	type ICollectionItemMeta,
 } from './item/types'
 import type { TConstructor } from '../../common/types'
@@ -70,7 +70,7 @@ export class TCollection<
 	 * Заменяет содержимое коллекции: очищает и заполняет из массива данных.
 	 * @param sources Массив данных для создания элементов
 	 */
-	set items(sources: TCollectionItemMeta<TItem, ICollectionItemMeta>[]) {
+	set items(sources: TCollectionItemSource<TItem, ICollectionItemMeta>[]) {
 		this.applyItems(sources)
 	}
 
@@ -78,7 +78,7 @@ export class TCollection<
 	 * Очищает коллекцию и заполняет из массива данных.
 	 * Вынесен в отдельный protected метод для оверрайда в наследниках.
 	 */
-	applyItems<TMeta = ICollectionItemMeta>(sources: TCollectionItemMeta<TItem, TMeta>[]): void {
+	applyItems<TMeta = ICollectionItemMeta>(sources: TCollectionItemSource<TItem, TMeta>[]): void {
 		this.clear()
 
 		if (sources.length > 0) {
@@ -92,7 +92,7 @@ export class TCollection<
 	 * Если source больше чем элементов — лишние игнорируются.
 	 * Если source меньше — оставшиеся элементы не трогаются.
 	 */
-	patchItems<TMeta = ICollectionItemMeta>(sources: TCollectionItemMeta<TItem, TMeta>[]): void {
+	patchItems<TMeta = ICollectionItemMeta>(sources: TCollectionItemSource<TItem, TMeta>[]): void {
 		// Удалить лишние элементы
 		while (this._items.length > sources.length) {
 			this.delete(this._items.length - 1)

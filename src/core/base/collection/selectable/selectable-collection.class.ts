@@ -9,7 +9,7 @@ import type {
 	TSelectionMode,
 	TSelectableItemEvents,
 } from './types'
-import type { TCollectionItemMeta } from '../item/types'
+import type { TCollectionItemSource } from '../item/types'
 import type { TConstructor } from '../../../common/types'
 import { TEvented } from '../../../common/evented'
 
@@ -87,7 +87,7 @@ export class TSelectableCollection<
 	 * после чего передаёт чистый массив в базовую реализацию.
 	 */
 	override applyItems<TMeta = ISelectableCollectionItemMeta>(
-		sources: TCollectionItemMeta<TItem, TMeta>[],
+		sources: TCollectionItemSource<TItem, TMeta>[],
 	): void {
 		this._extractMeta(sources)
 		super.applyItems(sources)
@@ -98,7 +98,7 @@ export class TSelectableCollection<
 	 * после чего передаёт чистый массив в базовую реализацию.
 	 */
 	override patchItems<TMeta = ISelectableCollectionItemMeta>(
-		sources: TCollectionItemMeta<TItem, TMeta>[],
+		sources: TCollectionItemSource<TItem, TMeta>[],
 	): void {
 		this._extractMeta(sources)
 		super.patchItems(sources)
