@@ -32,10 +32,27 @@ export type TCollectionItemEvents<TItem = any> = {
 export interface ICollectionItem<
 	TProps extends ICollectionItemProps = ICollectionItemProps,
 	TEvents extends Record<string, (...args: any) => any> = TCollectionItemEvents,
->
-	extends IEntity<TProps>, ICollectionItemMethods, ICollectionItemOrderable {
+> extends IEntity<TProps>,
+		ICollectionItemMethods,
+		ICollectionItemOrderable {
 	// Ссылка на коллекцию-владелец.
 	collection: TCollection | null
 	// События компонента
 	readonly events: TEvented<TEvents>
 }
+
+/**
+ * Тип для массива items с опциональными состояниями в поле _.
+ *
+ * Состояния (selected, active) передаются через `_.{state}`, а не на верхнем уровне,
+ * чтобы не смешивать данные и состояние.
+ *
+ * @example
+ * ```ts
+ * const items: TMetaCollectionItem<ISelectableCollectionItem>[] = [
+ *   { text: 'Moscow', _: { selected: true } },
+ *   { text: 'SPb' },
+ * ]
+ * ```
+ */
+export type TMetaCollectionItem<T> = Partial<T> & { _?: Record<string, unknown> }

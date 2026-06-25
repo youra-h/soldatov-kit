@@ -195,7 +195,7 @@ export interface ICollectionMethods<TItem extends ICollectionItem = ICollectionI
 	 * Обновляет поля существующих элементов без очистки коллекции.
 	 * Каждый source применяется к элементу с тем же индексом.
 	 */
-	patchItems(sources: Partial<ICollectionItem>[]): void
+	patchItems(sources: Partial<TItem>[]): void
 
 	/**
 	 * Перемещает элемент в новую позицию
@@ -221,7 +221,7 @@ export interface ICollectionMethods<TItem extends ICollectionItem = ICollectionI
 	 * Setter очищает коллекцию и заполняет из нового массива данных.
 	 */
 	get items(): TItem[]
-	set items(sources: Partial<ICollectionItem>[])
+	set items(sources: Partial<TItem>[])
 
 	/**
 	 * Возвращает первый элемент, удовлетворяющий условию предиката.

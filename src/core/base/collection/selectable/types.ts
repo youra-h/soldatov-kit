@@ -24,8 +24,8 @@ export interface ISelectableCollectionItem<
 	TProps extends ISelectableCollectionItemProps = ISelectableCollectionItemProps,
 	// @ts-ignore
 	TEvents extends TSelectableItemEvents = TSelectableItemEvents,
->
-	extends ICollectionItem<TProps, TEvents>, ISelectableCollectionItemProps {}
+> extends ICollectionItem<TProps, TEvents>,
+		ISelectableCollectionItemProps {}
 
 export type TSelectionMode = 'none' | 'single' | 'multiple'
 
