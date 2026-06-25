@@ -8,7 +8,7 @@ import type {
 	TSelectionMode,
 	TSelectableItemEvents,
 } from './types'
-import type { TMetaCollectionItem } from '../../item/types'
+import type { TMetaCollectionItem } from '../item/types'
 import type { TConstructor } from '../../../common/types'
 import { TEvented } from '../../../common/evented'
 
@@ -16,10 +16,10 @@ import { TEvented } from '../../../common/evented'
  * Коллекция элементов с поддержкой выбора.
  */
 export class TSelectableCollection<
-		TProps extends ISelectableCollectionProps = ISelectableCollectionProps,
-		TEvents extends TSelectableCollectionEvents = TSelectableCollectionEvents,
-		TItem extends ISelectableCollectionItem = ISelectableCollectionItem,
-	>
+	TProps extends ISelectableCollectionProps = ISelectableCollectionProps,
+	TEvents extends TSelectableCollectionEvents = TSelectableCollectionEvents,
+	TItem extends ISelectableCollectionItem = ISelectableCollectionItem,
+>
 	extends TCollection<TProps, TEvents, TItem>
 	implements ISelectableCollection<TProps, TEvents, TItem>
 {
@@ -85,7 +85,9 @@ export class TSelectableCollection<
 	 * Перехватывает sources, извлекает _.selected из данных,
 	 * после чего передаёт чистый массив в базовую реализацию.
 	 */
-	override applyItems<TMeta = Record<string, unknown>>(sources: TMetaCollectionItem<TItem, TMeta>[]): void {
+	override applyItems<TMeta = Record<string, unknown>>(
+		sources: TMetaCollectionItem<TItem, TMeta>[],
+	): void {
 		this._extractMeta(sources)
 		super.applyItems(sources)
 	}

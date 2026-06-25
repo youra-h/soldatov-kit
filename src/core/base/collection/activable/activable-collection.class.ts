@@ -5,7 +5,7 @@ import type {
 	TActivatableCollectionEvents,
 	IActivatableCollectionItem,
 } from './types'
-import type { TMetaCollectionItem } from '../../item/types'
+import type { TMetaCollectionItem } from '../item/types'
 import type { TConstructor } from '../../../common/types'
 import { TActivatableCollectionItem } from './activable-collection-item.class'
 import { isSame } from '../../../common/is-same'
@@ -15,10 +15,10 @@ import { TEvented } from '../../../common/evented'
  * Коллекция элементов с поддержкой активности.
  */
 export class TActivatableCollection<
-		TProps extends IActivatableCollectionProps = IActivatableCollectionProps,
-		TEvents extends TActivatableCollectionEvents = TActivatableCollectionEvents,
-		TItem extends IActivatableCollectionItem = IActivatableCollectionItem,
-	>
+	TProps extends IActivatableCollectionProps = IActivatableCollectionProps,
+	TEvents extends TActivatableCollectionEvents = TActivatableCollectionEvents,
+	TItem extends IActivatableCollectionItem = IActivatableCollectionItem,
+>
 	extends TCollection<TProps, TEvents, TItem>
 	implements IActivatableCollection<TProps, TEvents, TItem>
 {
@@ -102,7 +102,9 @@ export class TActivatableCollection<
 	 * Перехватывает sources, извлекает _.active из данных,
 	 * после чего передаёт чистый массив в базовую реализацию.
 	 */
-	override applyItems<TMeta = Record<string, unknown>>(sources: TMetaCollectionItem<TItem, TMeta>[]): void {
+	override applyItems<TMeta = Record<string, unknown>>(
+		sources: TMetaCollectionItem<TItem, TMeta>[],
+	): void {
 		this._extractMeta(sources)
 		super.applyItems(sources)
 	}
