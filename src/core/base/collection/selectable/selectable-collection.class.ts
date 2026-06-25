@@ -19,10 +19,9 @@ export class TSelectableCollection<
 		TProps extends ISelectableCollectionProps = ISelectableCollectionProps,
 		TEvents extends TSelectableCollectionEvents = TSelectableCollectionEvents,
 		TItem extends ISelectableCollectionItem = ISelectableCollectionItem,
-		TMeta = Record<string, unknown>,
 	>
-	extends TCollection<TProps, TEvents, TItem, TMeta>
-	implements ISelectableCollection<TProps, TEvents, TItem, TMeta>
+	extends TCollection<TProps, TEvents, TItem>
+	implements ISelectableCollection<TProps, TEvents, TItem>
 {
 	static defaultValues: Partial<ISelectableCollectionProps> = {
 		mode: 'single',
@@ -86,7 +85,7 @@ export class TSelectableCollection<
 	 * Перехватывает sources, извлекает _.selected из данных,
 	 * после чего передаёт чистый массив в базовую реализацию.
 	 */
-	override applyItems(sources: TMetaCollectionItem<TItem, TMeta>[]): void {
+	override applyItems<TMeta = Record<string, unknown>>(sources: TMetaCollectionItem<TItem, TMeta>[]): void {
 		this._extractMeta(sources)
 		super.applyItems(sources)
 	}
@@ -95,7 +94,7 @@ export class TSelectableCollection<
 	 * Перехватывает sources, извлекает _.selected из данных,
 	 * после чего передаёт чистый массив в базовую реализацию.
 	 */
-	protected override _applyPatchItems(sources: TMetaCollectionItem<TItem, TMeta>[]): void {
+	protected override _applyPatchItems<TMeta>(sources: TMetaCollectionItem<TItem, TMeta>[]): void {
 		this._extractMeta(sources)
 		super._applyPatchItems(sources)
 	}

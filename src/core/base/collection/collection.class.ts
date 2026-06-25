@@ -19,10 +19,9 @@ export class TCollection<
 		TProps extends ICollectionProps = ICollectionProps,
 		TEvents extends TCollectionEvents = TCollectionEvents,
 		TItem extends ICollectionItem = ICollectionItem,
-		TMetaItem = Record<string, unknown>,
 	>
 	extends TEntity<TProps>
-	implements ICollection<TProps, TEvents, TItem, TMetaItem>
+	implements ICollection<TProps, TEvents, TItem>
 {
 	/**
 	 * Внутренний массив элементов.
@@ -67,7 +66,7 @@ export class TCollection<
 	 * Заменяет содержимое коллекции: очищает и заполняет из массива данных.
 	 * @param sources Массив данных для создания элементов
 	 */
-	set items(sources: TMetaCollectionItem<TItem, TMetaItem>[]) {
+	set items(sources: TMetaCollectionItem<TItem, Record<string, unknown>>[]) {
 		this.applyItems(sources)
 	}
 
@@ -75,7 +74,7 @@ export class TCollection<
 	 * Очищает коллекцию и заполняет из массива данных.
 	 * Вынесен в отдельный protected метод для оверрайда в наследниках.
 	 */
-	applyItems(sources: TMetaCollectionItem<TItem, TMetaItem>[]): void {
+	applyItems<TMeta = Record<string, unknown>>(sources: TMetaCollectionItem<TItem, TMeta>[]): void {
 		this.clear()
 
 		if (sources.length > 0) {
@@ -89,7 +88,7 @@ export class TCollection<
 	 * Если source больше чем элементов — лишние игнорируются.
 	 * Если source меньше — оставшиеся элементы не трогаются.
 	 */
-	patchItems(sources: TMetaCollectionItem<TItem, TMetaItem>[]): void {
+	patchItems<TMeta = Record<string, unknown>>(sources: TMetaCollectionItem<TItem, TMeta>[]): void {
 		this._applyPatchItems(sources)
 	}
 
@@ -97,7 +96,7 @@ export class TCollection<
 	 * Обновляет поля существующих элементов без очистки коллекции.
 	 * Вынесен в отдельный protected метод для оверрайда в наследниках.
 	 */
-	protected _applyPatchItems(sources: TMetaCollectionItem<TItem, TMetaItem>[]): void {
+	protected _applyPatchItems<TMeta>(sources: TMetaCollectionItem<TItem, TMeta>[]): void {
 		// Удалить лишние элементы
 		while (this._items.length > sources.length) {
 			this.delete(this._items.length - 1)

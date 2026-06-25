@@ -72,8 +72,7 @@ export interface IActivatableCollection<
 	TProps extends IActivatableCollectionProps = IActivatableCollectionProps,
 	TEvents extends TActivatableCollectionEvents = TActivatableCollectionEvents,
 	TItem extends IActivatableCollectionItem = IActivatableCollectionItem,
-	TMeta = Record<string, unknown>,
-> extends ICollection<TProps, TEvents, TItem, TMeta> {
+> extends ICollection<TProps, TEvents, TItem> {
 	/** Текущий активный элемент */
 	readonly activeItem?: TItem
 	/** Установить активный элемент */
