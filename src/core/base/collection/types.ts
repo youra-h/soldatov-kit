@@ -136,6 +136,12 @@ export type TItemProxyEvents<TItem> = {
 }
 
 export interface ICollectionMethods<TItem extends ICollectionItem = ICollectionItem> {
+	/** Применяет массив данных к коллекции, очищая её и создавая новые элементы */
+	applyItems(sources: Partial<TItem>[]): void
+
+	/** Обновляет поля существующих элементов без очистки коллекции */
+	patchItems(sources: Partial<TItem>[]): void
+
 	/** Добавляет новый элемент и возвращает его */
 	add(source?: Partial<TItem>): TItem
 
@@ -186,12 +192,6 @@ export interface ICollectionMethods<TItem extends ICollectionItem = ICollectionI
 
 	/** Полностью очищает коллекцию */
 	clear(): void
-
-	/**
-	 * Обновляет поля существующих элементов без очистки коллекции.
-	 * Каждый source применяется к элементу с тем же индексом.
-	 */
-	patchItems(sources: Partial<TItem>[]): void
 
 	/**
 	 * Перемещает элемент в новую позицию

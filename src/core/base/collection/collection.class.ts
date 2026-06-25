@@ -67,14 +67,14 @@ export class TCollection<
 	 * @param sources Массив данных для создания элементов
 	 */
 	set items(sources: Partial<TItem>[]) {
-		this._applyItems(sources)
+		this.applyItems(sources)
 	}
 
 	/**
 	 * Очищает коллекцию и заполняет из массива данных.
 	 * Вынесен в отдельный protected метод для оверрайда в наследниках.
 	 */
-	protected _applyItems(sources: Partial<TItem>[]): void {
+	applyItems(sources: Partial<TItem>[]): void {
 		/**
 		 * Очищает коллекцию и заполняет из массива данных.
 		 * Вынесен в protected-метод для оверрайда в наследниках.
