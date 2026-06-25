@@ -87,7 +87,8 @@ export interface ISelectableCollection<
 	TProps extends ISelectableCollectionProps = ISelectableCollectionProps,
 	TEvents extends TSelectableCollectionEvents = TSelectableCollectionEvents,
 	TItem extends ISelectableCollectionItem = ISelectableCollectionItem,
-> extends ICollection<TProps, TEvents, TItem> {
+	TMeta = Record<string, unknown>,
+> extends ICollection<TProps, TEvents, TItem, TMeta> {
 	/** Текущий режим выбора */
 	mode: TSelectionMode
 	readonly selected: TItem[]

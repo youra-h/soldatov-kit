@@ -1,6 +1,6 @@
 import { TEvented } from '../../common/evented'
 import type { TCollectionEvents, ICollection, ICollectionProps } from './types'
-import { type ICollectionItem } from './item/types'
+import { type ICollectionItem, type TMetaCollectionItem } from './item/types'
 import type { TConstructor } from '../../common/types'
 import { TEntity } from '../../base/entity'
 
@@ -19,9 +19,10 @@ export class TCollection<
 		TProps extends ICollectionProps = ICollectionProps,
 		TEvents extends TCollectionEvents = TCollectionEvents,
 		TItem extends ICollectionItem = ICollectionItem,
+		TMeta = Record<string, unknown>,
 	>
 	extends TEntity<TProps>
-	implements ICollection<TProps, TEvents, TItem>
+	implements ICollection<TProps, TEvents, TItem, TMeta>
 {
 	/**
 	 * Внутренний массив элементов.
@@ -66,7 +67,7 @@ export class TCollection<
 	 * Заменяет содержимое коллекции: очищает и заполняет из массива данных.
 	 * @param sources Массив данных для создания элементов
 	 */
-	set items(sources: Partial<TItem>[]) {
+	set items(sources: TMetaCollectionItem<TItem, TMeta>[]) {
 		this.applyItems(sources)
 	}
 
@@ -74,7 +75,7 @@ export class TCollection<
 	 * Очищает коллекцию и заполняет из массива данных.
 	 * Вынесен в отдельный protected метод для оверрайда в наследниках.
 	 */
-	applyItems(sources: Partial<TItem>[]): void {
+	applyItems(sources: TMetaCollectionItem<TItem, TMeta>[]): void {
 		/**
 		 * Очищает коллекцию и заполняет из массива данных.
 		 * Вынесен в protected-метод для оверрайда в наследниках.
@@ -93,7 +94,7 @@ export class TCollection<
 	 * Если source больше чем элементов — лишние игнорируются.
 	 * Если source меньше — оставшиеся элементы не трогаются.
 	 */
-	patchItems(sources: Partial<TItem>[]): void {
+	patchItems(sources: TMetaCollectionItem<TItem, TMeta>[]): void {
 		this._applyPatchItems(sources)
 	}
 
@@ -101,7 +102,7 @@ export class TCollection<
 	 * Обновляет поля существующих элементов без очистки коллекции.
 	 * Вынесен в отдельный protected метод для оверрайда в наследниках.
 	 */
-	protected _applyPatchItems(sources: Partial<TItem>[]): void {
+	protected _applyPatchItems(sources: TMetaCollectionItem<TItem, TMeta>[]): void {
 		// Удалить лишние элементы
 		while (this._items.length > sources.length) {
 			this.delete(this._items.length - 1)

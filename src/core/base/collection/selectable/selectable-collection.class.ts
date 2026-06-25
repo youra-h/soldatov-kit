@@ -8,6 +8,7 @@ import type {
 	TSelectionMode,
 	TSelectableItemEvents,
 } from './types'
+import type { TMetaCollectionItem } from '../../item/types'
 import type { TConstructor } from '../../../common/types'
 import { TEvented } from '../../../common/evented'
 
@@ -18,9 +19,10 @@ export class TSelectableCollection<
 		TProps extends ISelectableCollectionProps = ISelectableCollectionProps,
 		TEvents extends TSelectableCollectionEvents = TSelectableCollectionEvents,
 		TItem extends ISelectableCollectionItem = ISelectableCollectionItem,
+		TMeta = Record<string, unknown>,
 	>
-	extends TCollection<TProps, TEvents, TItem>
-	implements ISelectableCollection<TProps, TEvents, TItem>
+	extends TCollection<TProps, TEvents, TItem, TMeta>
+	implements ISelectableCollection<TProps, TEvents, TItem, TMeta>
 {
 	static defaultValues: Partial<ISelectableCollectionProps> = {
 		mode: 'single',
@@ -84,7 +86,7 @@ export class TSelectableCollection<
 	 * Перехватывает sources, извлекает _.selected из данных,
 	 * после чего передаёт чистый массив в базовую реализацию.
 	 */
-	override applyItems(sources: Partial<TItem>[]): void {
+	override applyItems(sources: TMetaCollectionItem<TItem, TMeta>[]): void {
 		this._extractMeta(sources)
 		super.applyItems(sources)
 	}
@@ -93,7 +95,7 @@ export class TSelectableCollection<
 	 * Перехватывает sources, извлекает _.selected из данных,
 	 * после чего передаёт чистый массив в базовую реализацию.
 	 */
-	protected override _applyPatchItems(sources: Partial<TItem>[]): void {
+	protected override _applyPatchItems(sources: TMetaCollectionItem<TItem, TMeta>[]): void {
 		this._extractMeta(sources)
 		super._applyPatchItems(sources)
 	}

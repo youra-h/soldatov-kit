@@ -5,6 +5,7 @@ import type {
 	TActivatableCollectionEvents,
 	IActivatableCollectionItem,
 } from './types'
+import type { TMetaCollectionItem } from '../../item/types'
 import type { TConstructor } from '../../../common/types'
 import { TActivatableCollectionItem } from './activable-collection-item.class'
 import { isSame } from '../../../common/is-same'
@@ -17,9 +18,10 @@ export class TActivatableCollection<
 		TProps extends IActivatableCollectionProps = IActivatableCollectionProps,
 		TEvents extends TActivatableCollectionEvents = TActivatableCollectionEvents,
 		TItem extends IActivatableCollectionItem = IActivatableCollectionItem,
+		TMeta = Record<string, unknown>,
 	>
-	extends TCollection<TProps, TEvents, TItem>
-	implements IActivatableCollection<TProps, TEvents, TItem>
+	extends TCollection<TProps, TEvents, TItem, TMeta>
+	implements IActivatableCollection<TProps, TEvents, TItem, TMeta>
 {
 	private _activeItem?: TItem
 
@@ -101,7 +103,7 @@ export class TActivatableCollection<
 	 * Перехватывает sources, извлекает _.active из данных,
 	 * после чего передаёт чистый массив в базовую реализацию.
 	 */
-	override applyItems(sources: Partial<TItem>[]): void {
+	override applyItems(sources: TMetaCollectionItem<TItem, TMeta>[]): void {
 		this._extractMeta(sources)
 		super.applyItems(sources)
 	}
@@ -110,7 +112,7 @@ export class TActivatableCollection<
 	 * Перехватывает sources, извлекает _.active из данных,
 	 * после чего передаёт чистый массив в базовую реализацию.
 	 */
-	protected override _applyPatchItems(sources: Partial<TItem>[]): void {
+	protected override _applyPatchItems(sources: TMetaCollectionItem<TItem, TMeta>[]): void {
 		this._extractMeta(sources)
 		super._applyPatchItems(sources)
 	}

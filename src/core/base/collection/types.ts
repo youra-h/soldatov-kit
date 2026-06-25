@@ -1,5 +1,5 @@
 import { TCollection } from './collection.class'
-import { type ICollectionItem } from './item/types'
+import { type ICollectionItem, type TMetaCollectionItem } from './item/types'
 import type { IEntity } from '../../base/entity'
 import { TEvented } from '../../common/evented'
 
@@ -135,12 +135,15 @@ export type TItemProxyEvents<TItem> = {
 	'item:disabled': (item: TItem, value: boolean) => void
 }
 
-export interface ICollectionMethods<TItem extends ICollectionItem = ICollectionItem> {
+export interface ICollectionMethods<
+	TItem extends ICollectionItem = ICollectionItem,
+	TMeta = Record<string, unknown>,
+> {
 	/** Применяет массив данных к коллекции, очищая её и создавая новые элементы */
-	applyItems(sources: Partial<TItem>[]): void
+	applyItems(sources: TMetaCollectionItem<TItem, TMeta>[]): void
 
 	/** Обновляет поля существующих элементов без очистки коллекции */
-	patchItems(sources: Partial<TItem>[]): void
+	patchItems(sources: TMetaCollectionItem<TItem, TMeta>[]): void
 
 	/** Добавляет новый элемент и возвращает его */
 	add(source?: Partial<TItem>): TItem
@@ -217,7 +220,7 @@ export interface ICollectionMethods<TItem extends ICollectionItem = ICollectionI
 	 * Setter очищает коллекцию и заполняет из нового массива данных.
 	 */
 	get items(): TItem[]
-	set items(sources: Partial<TItem>[])
+	set items(sources: TMetaCollectionItem<TItem, TMeta>[])
 
 	/**
 	 * Возвращает первый элемент, удовлетворяющий условию предиката.
@@ -237,8 +240,9 @@ export interface ICollection<
 	TProps extends ICollectionProps = ICollectionProps,
 	TEvents extends TCollectionEvents = TCollectionEvents,
 	TItem extends ICollectionItem = ICollectionItem,
+	TMeta = Record<string, unknown>,
 > extends IEntity<TProps>,
-		ICollectionMethods<TItem> {
+		ICollectionMethods<TItem, TMeta> {
 	readonly events: TEvented<TEvents>
 	/** Количество элементов в коллекции */
 	readonly count: number

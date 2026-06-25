@@ -55,6 +55,9 @@ export interface ICollectionItem<
  * ]
  * ```
  */
-export type TMetaCollectionItem<TItem = ICollectionItem> = Partial<TItem> & {
-	_?: Record<string, unknown>
+export type TMetaCollectionItem<
+	TItem = ICollectionItem,
+	TMeta = Record<string, unknown>,
+> = Partial<TItem> & {
+	_?: TMeta
 }
