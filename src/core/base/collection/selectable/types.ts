@@ -40,7 +40,7 @@ export interface ISelectableCollectionProps extends ICollectionProps<ISelectable
 /**
  * События коллекции с поддержкой выбора.
  */
-export type TSelectableCollectionEvents = TCollectionEvents & {
+export type TSelectableCollectionEvents = TCollectionEvents<ISelectableCollectionItem> & {
 	/**
 	 * После выбора элемента.
 	 * @param payload.collection Коллекция, в которой выбран элемент

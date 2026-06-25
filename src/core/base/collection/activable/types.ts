@@ -39,7 +39,7 @@ export interface IActivatableCollectionProps extends ICollectionProps<IActivatab
 /**
  * События коллекции с поддержкой активности.
  */
-export type TActivatableCollectionEvents = TCollectionEvents & {
+export type TActivatableCollectionEvents = TCollectionEvents<IActivatableCollectionItem> & {
 	/**
 	 * После активации элемента.
 	 * @param payload.collection Коллекция, в которой активирован элемент

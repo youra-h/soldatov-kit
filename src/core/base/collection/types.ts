@@ -18,7 +18,7 @@ export interface ICollectionProps<TItem extends ICollectionItem = ICollectionIte
 /**
  * События, которые эмитит коллекция TCollection.
  */
-export type TCollectionEvents = {
+export type TCollectionEvents<TItem extends ICollectionItem = ICollectionItem> = {
 	/**
 	 * После любой операции, изменившей коллекцию.
 	 *
@@ -29,12 +29,12 @@ export type TCollectionEvents = {
 	 * Устаревшее/общее событие изменения коллекции.
 	 * Вызывается после операций добавления/удаления/перемещения/очистки.
 	 */
-	changed: (payload: { collection: TCollection; item?: ICollectionItem }) => void
+	changed: (payload: { collection: TCollection; item?: TItem }) => void
 
 	/**
 	 * После изменения списка элементов (items). Передаётся актуальный массив элементов.
 	 */
-	'change:items': (items: ICollectionItem[]) => void
+	'change:items': (items: TItem[]) => void
 
 	/**
 	 * После изменения количества элементов в коллекции.
@@ -54,7 +54,7 @@ export type TCollectionEvents = {
 	 * @param payload.collection  Коллекция, в которую добавлен элемент.
 	 * @param payload.item        Добавленный элемент.
 	 */
-	'item:added': (payload: { collection: TCollection; item: ICollectionItem }) => void
+	'item:added': (payload: { collection: TCollection; item: TItem }) => void
 
 	/**
 	 * Перед удалением элемента.
@@ -68,7 +68,7 @@ export type TCollectionEvents = {
 	'item:beforeDelete': (payload: {
 		collection: TCollection
 		index: number
-		item: ICollectionItem
+		item: TItem
 	}) => boolean | void
 
 	/**
@@ -77,7 +77,7 @@ export type TCollectionEvents = {
 	 * @param payload.collection  Коллекция, из которой удалён элемент.
 	 * @param payload.item        Удалённый элемент.
 	 */
-	'item:deleted': (payload: { collection: TCollection; item: ICollectionItem }) => void
+	'item:deleted': (payload: { collection: TCollection; item: TItem }) => void
 
 	/**
 	 * После удаления элемента.
@@ -86,11 +86,7 @@ export type TCollectionEvents = {
 	 * @param payload.index       Индекс, с которого удалили элемент.
 	 * @param payload.item        Удалённый элемент.
 	 */
-	'item:afterDelete': (payload: {
-		collection: TCollection
-		index: number
-		item: ICollectionItem
-	}) => void
+	'item:afterDelete': (payload: { collection: TCollection; index: number; item: TItem }) => void
 
 	/**
 	 * Перед перемещением элемента.
@@ -109,7 +105,7 @@ export type TCollectionEvents = {
 
 	'item:moved': (payload: {
 		collection: TCollection
-		item: ICollectionItem
+		item: TItem
 		oldIndex: number
 		newIndex: number
 	}) => void
@@ -124,7 +120,7 @@ export type TCollectionEvents = {
 	 */
 	'item:afterMove': (payload: {
 		collection: TCollection
-		item: ICollectionItem
+		item: TItem
 		oldIndex: number
 		newIndex: number
 	}) => void
