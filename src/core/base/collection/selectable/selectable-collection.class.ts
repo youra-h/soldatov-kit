@@ -81,6 +81,36 @@ export class TSelectableCollection<
 	}
 
 	/**
+	 * Перехватывает sources, извлекает _.selected из данных,
+	 * после чего передаёт чистый массив в базовую реализацию.
+	 */
+	protected override _applyItems(sources: Partial<TItem>[]): void {
+		this._extractMeta(sources)
+		super._applyItems(sources)
+	}
+
+	/**
+	 * Перехватывает sources, извлекает _.selected из данных,
+	 * после чего передаёт чистый массив в базовую реализацию.
+	 */
+	protected override _applyPatchItems(sources: Partial<TItem>[]): void {
+		this._extractMeta(sources)
+		super._applyPatchItems(sources)
+	}
+
+	/** Извлекает состояния (selected) из поля _ и удаляет _ из source. */
+	private _extractMeta(sources: Partial<TItem>[]): void {
+		sources.forEach((s) => {
+			const meta = (s as any)._
+
+			if (meta && meta.selected !== undefined) {
+				;(s as any).selected = meta.selected
+				delete (s as any)._
+			}
+		})
+	}
+
+	/**
 	 * Переопределяем хук для подписки на события элемента перед assign
 	 * @param item Элемент коллекции
 	 * @protected

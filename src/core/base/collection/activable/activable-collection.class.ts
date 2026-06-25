@@ -14,10 +14,10 @@ import { TEvented } from '../../../common/evented'
  * Коллекция элементов с поддержкой активности.
  */
 export class TActivatableCollection<
-	TProps extends IActivatableCollectionProps = IActivatableCollectionProps,
-	TEvents extends TActivatableCollectionEvents = TActivatableCollectionEvents,
-	TItem extends IActivatableCollectionItem = IActivatableCollectionItem,
->
+		TProps extends IActivatableCollectionProps = IActivatableCollectionProps,
+		TEvents extends TActivatableCollectionEvents = TActivatableCollectionEvents,
+		TItem extends IActivatableCollectionItem = IActivatableCollectionItem,
+	>
 	extends TCollection<TProps, TEvents, TItem>
 	implements IActivatableCollection<TProps, TEvents, TItem>
 {
@@ -95,6 +95,36 @@ export class TActivatableCollection<
 		}
 
 		return undefined
+	}
+
+	/**
+	 * Перехватывает sources, извлекает _.active из данных,
+	 * после чего передаёт чистый массив в базовую реализацию.
+	 */
+	protected override _applyItems(sources: Partial<TItem>[]): void {
+		this._extractMeta(sources)
+		super._applyItems(sources)
+	}
+
+	/**
+	 * Перехватывает sources, извлекает _.active из данных,
+	 * после чего передаёт чистый массив в базовую реализацию.
+	 */
+	protected override _applyPatchItems(sources: Partial<TItem>[]): void {
+		this._extractMeta(sources)
+		super._applyPatchItems(sources)
+	}
+
+	/** Извлекает состояния (active) из поля _ и удаляет _ из source. */
+	private _extractMeta(sources: Partial<TItem>[]): void {
+		sources.forEach((s) => {
+			const meta = (s as any)._
+
+			if (meta && meta.active !== undefined) {
+				;(s as any).active = meta.active
+				delete (s as any)._
+			}
+		})
 	}
 
 	/**

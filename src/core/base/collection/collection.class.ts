@@ -67,7 +67,20 @@ export class TCollection<
 	 * @param sources Массив данных для создания элементов
 	 */
 	set items(sources: Partial<TItem>[]) {
-		this.clear()
+		this._applyItems(sources)
+	}
+
+	/**
+	 * Очищает коллекцию и заполняет из массива данных.
+	 * Вынесен в отдельный protected метод для оверрайда в наследниках.
+	 */
+	protected _applyItems(sources: Partial<TItem>[]): void {
+		/**
+		 * Очищает коллекцию и заполняет из массива данных.
+		 * Вынесен в protected-метод для оверрайда в наследниках.
+		 * Например, TSelectableCollection перехватывает sources,
+		 * извлекает _.selected из данных и передаёт чистый массив в super.
+		 */
 
 		if (sources.length > 0) {
 			this.addFromArray(sources)
@@ -81,6 +94,14 @@ export class TCollection<
 	 * Если source меньше — оставшиеся элементы не трогаются.
 	 */
 	patchItems(sources: Partial<TItem>[]): void {
+		this._applyPatchItems(sources)
+	}
+
+	/**
+	 * Обновляет поля существующих элементов без очистки коллекции.
+	 * Вынесен в отдельный protected метод для оверрайда в наследниках.
+	 */
+	protected _applyPatchItems(sources: Partial<TItem>[]): void {
 		// Удалить лишние элементы
 		while (this._items.length > sources.length) {
 			this.delete(this._items.length - 1)
