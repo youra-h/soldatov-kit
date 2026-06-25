@@ -27,14 +27,14 @@ export interface IActivatableCollectionItem<
 	TProps extends IActivatableCollectionItemProps = IActivatableCollectionItemProps,
 	// @ts-ignore
 	TEvents extends TActivatableItemEvents = TActivatableItemEvents,
->
-	extends ICollectionItem<TProps, TEvents>, IActivatableCollectionItemProps {}
+> extends ICollectionItem<TProps, TEvents>,
+		IActivatableCollectionItemProps {}
 
 /**
  * Свойства коллекции с поддержкой активности.
  * Пока нет специфичных настроек, но интерфейс оставляем для расширяемости.
  */
-export interface IActivatableCollectionProps extends ICollectionProps {}
+export interface IActivatableCollectionProps extends ICollectionProps<IActivatableCollectionItem> {}
 
 /**
  * События коллекции с поддержкой активности.

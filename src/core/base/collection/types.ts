@@ -7,12 +7,12 @@ import { TEvented } from '../../common/evented'
  * Базовый интерфейс коллекции элементов.
  * Определяет контракт, который должны реализовывать все коллекции.
  */
-export interface ICollectionProps {
+export interface ICollectionProps<TItem extends ICollectionItem = ICollectionItem> {
 	/**
 	 * Данные для наполнения коллекции через addFromArray.
 	 * При установке коллекция очищается и заполняется из этого массива.
 	 */
-	items?: Partial<ICollectionItem>[]
+	items?: Partial<TItem>[]
 }
 
 /**
