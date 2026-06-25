@@ -84,9 +84,9 @@ export class TSelectableCollection<
 	 * Перехватывает sources, извлекает _.selected из данных,
 	 * после чего передаёт чистый массив в базовую реализацию.
 	 */
-	protected override _applyItems(sources: Partial<TItem>[]): void {
+	override applyItems(sources: Partial<TItem>[]): void {
 		this._extractMeta(sources)
-		super._applyItems(sources)
+		super.applyItems(sources)
 	}
 
 	/**
