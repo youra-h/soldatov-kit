@@ -50,9 +50,11 @@ export interface ICollectionItem<
  * @example
  * ```ts
  * const items: TMetaCollectionItem<ISelectableCollectionItem>[] = [
- *   { text: 'Moscow', _: { selected: true } },
- *   { text: 'SPb' },
+ *   { text: 'Text1', _: { selected: true } },
+ *   { text: 'Text2' },
  * ]
  * ```
  */
-export type TMetaCollectionItem<T> = Partial<T> & { _?: Record<string, unknown> }
+export type TMetaCollectionItem<TItem = ICollectionItem> = Partial<TItem> & {
+	_?: Record<string, unknown>
+}
