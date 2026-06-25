@@ -76,12 +76,7 @@ export class TCollection<
 	 * Вынесен в отдельный protected метод для оверрайда в наследниках.
 	 */
 	applyItems(sources: TMetaCollectionItem<TItem, TMetaItem>[]): void {
-		/**
-		 * Очищает коллекцию и заполняет из массива данных.
-		 * Вынесен в protected-метод для оверрайда в наследниках.
-		 * Например, TSelectableCollection перехватывает sources,
-		 * извлекает _.selected из данных и передаёт чистый массив в super.
-		 */
+		this.clear()
 
 		if (sources.length > 0) {
 			this.addFromArray(sources)
