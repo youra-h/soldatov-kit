@@ -10,11 +10,15 @@ import { TCollectionElementsPlugin, TCollectionInstancesPlugin, TDragPlugin } fr
 import { useProvideCollection } from '../../composables/useProvideCollection'
 import { useProvideCollectionPlugins } from '../../composables/useProvideCollectionPlugins'
 import { useInjectDragContext } from '../../composables/useDragContext'
-import { useEventState } from '../../composables/useEventState'
 import type { TEmits, TProps, ISyncComponentViewOptions } from '../../types'
 import { useSyncProps } from '../../composables/useSyncProps'
 
 export const emitsCollection: TEmits = [
+	'changed',
+	'change:items',
+	'update:items',
+	'change:count',
+	'cleared',
 	'item:added',
 	'item:beforeDelete',
 	'item:deleted',
@@ -23,7 +27,6 @@ export const emitsCollection: TEmits = [
 	'item:beforeMove',
 	'item:moved',
 	'item:afterMove',
-	'changed',
 ] as const
 
 export const propsCollection: TProps = {
@@ -94,6 +97,26 @@ export function syncCollection<TItem extends ICollectionItem = ICollectionItem>(
 		{ deep: true },
 	)
 
+	instance.events.on(
+		'changed',
+		(payload: { collection: ICollection; item?: ICollectionItem }) => {
+			emit?.('changed', payload)
+		},
+	)
+
+	instance.events.on('change:items', (items: ICollectionItem[]) => {
+		emit?.('change:items', items)
+		emit?.('update:items', items)
+	})
+
+	instance.events.on('change:count', (count: number) => {
+		emit?.('change:count', count)
+	})
+
+	instance.events.on('cleared', (payload: { collection: ICollection }) => {
+		emit?.('cleared', payload)
+	})
+
 	// Пробрасываем события core-инстанса наружу (Vue events)
 	instance.events.on(
 		'item:added',
@@ -158,22 +181,29 @@ export function syncCollection<TItem extends ICollectionItem = ICollectionItem>(
 		},
 	)
 
-	instance.events.on(
-		'changed',
-		(payload: { collection: ICollection; item?: ICollectionItem }) => {
-			emit?.('changed', payload)
-		},
-	)
-
 	// Возвращаем реактивные Ref-ы для items и count
 	return useSyncProps(instance.events, {
 		items: {
 			value: () => instance.items,
-			triggers: ['item:added', 'cleared', 'item:afterMove', 'item:afterDelete'],
+			triggers: [
+				'item:added',
+				'cleared',
+				'item:afterMove',
+				'item:afterDelete',
+				'item:moved',
+				'changed',
+			],
 		},
 		count: {
 			value: () => instance.count,
-			triggers: ['item:added', 'cleared', 'item:afterMove', 'item:afterDelete'],
+			triggers: [
+				'item:added',
+				'cleared',
+				'item:afterMove',
+				'item:afterDelete',
+				'item:moved',
+				'changed',
+			],
 		},
 	})
 }
