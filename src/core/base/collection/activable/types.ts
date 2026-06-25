@@ -1,13 +1,20 @@
 import type { ICollection, TCollectionEvents, ICollectionProps } from '../types'
-import type { ICollectionItem, TCollectionItemEvents, ICollectionItemProps } from '../item/types'
+import type {
+	ICollectionItem,
+	TCollectionItemEvents,
+	ICollectionItemProps,
+	ICollectionItemMeta,
+} from '../item/types'
 
-/**
- * Свойства элемента коллекции с поддержкой активности.
- */
-export interface IActivatableCollectionItemProps extends ICollectionItemProps {
+export interface IActivatableCollectionItemMeta extends ICollectionItemMeta {
 	/** Признак активности элемента */
 	active?: boolean
 }
+/**
+ * Свойства элемента коллекции с поддержкой активности.
+ */
+export interface IActivatableCollectionItemProps
+	extends ICollectionItemProps, IActivatableCollectionItemMeta {}
 
 /**
  * События элемента коллекции с поддержкой активности.
@@ -27,8 +34,8 @@ export interface IActivatableCollectionItem<
 	TProps extends IActivatableCollectionItemProps = IActivatableCollectionItemProps,
 	// @ts-ignore
 	TEvents extends TActivatableItemEvents = TActivatableItemEvents,
-> extends ICollectionItem<TProps, TEvents>,
-		IActivatableCollectionItemProps {}
+>
+	extends ICollectionItem<TProps, TEvents>, IActivatableCollectionItemProps {}
 
 /**
  * Свойства коллекции с поддержкой активности.

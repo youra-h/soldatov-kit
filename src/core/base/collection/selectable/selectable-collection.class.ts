@@ -5,10 +5,11 @@ import type {
 	ISelectableCollectionProps,
 	TSelectableCollectionEvents,
 	ISelectableCollectionItem,
+	ISelectableCollectionItemMeta,
 	TSelectionMode,
 	TSelectableItemEvents,
 } from './types'
-import type { TMetaCollectionItem } from '../item/types'
+import type { TCollectionItemMeta } from '../item/types'
 import type { TConstructor } from '../../../common/types'
 import { TEvented } from '../../../common/evented'
 
@@ -85,8 +86,8 @@ export class TSelectableCollection<
 	 * Перехватывает sources, извлекает _.selected из данных,
 	 * после чего передаёт чистый массив в базовую реализацию.
 	 */
-	override applyItems<TMeta = Record<string, unknown>>(
-		sources: TMetaCollectionItem<TItem, TMeta>[],
+	override applyItems<TMeta = ISelectableCollectionItemMeta>(
+		sources: TCollectionItemMeta<TItem, TMeta>[],
 	): void {
 		this._extractMeta(sources)
 		super.applyItems(sources)
@@ -96,9 +97,11 @@ export class TSelectableCollection<
 	 * Перехватывает sources, извлекает _.selected из данных,
 	 * после чего передаёт чистый массив в базовую реализацию.
 	 */
-	protected override _applyPatchItems<TMeta>(sources: TMetaCollectionItem<TItem, TMeta>[]): void {
+	override patchItems<TMeta = ISelectableCollectionItemMeta>(
+		sources: TCollectionItemMeta<TItem, TMeta>[],
+	): void {
 		this._extractMeta(sources)
-		super._applyPatchItems(sources)
+		super.patchItems(sources)
 	}
 
 	/** Извлекает состояния (selected) из поля _ и удаляет _ из source. */

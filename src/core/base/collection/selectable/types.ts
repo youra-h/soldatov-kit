@@ -1,13 +1,21 @@
 import type { ICollection, TCollectionEvents, ICollectionProps } from '../types'
-import type { ICollectionItem, TCollectionItemEvents, ICollectionItemProps } from '../item/types'
+import type {
+	ICollectionItem,
+	TCollectionItemEvents,
+	ICollectionItemProps,
+	ICollectionItemMeta,
+} from '../item/types'
+
+export interface ISelectableCollectionItemMeta extends ICollectionItemMeta {
+	/** Признак выбранности элемента */
+	selected?: boolean
+}
 
 /**
  * Свойства элемента коллекции с поддержкой выбора.
  */
-export interface ISelectableCollectionItemProps extends ICollectionItemProps {
-	/** Признак выбранности элемента */
-	selected?: boolean
-}
+export interface ISelectableCollectionItemProps
+	extends ICollectionItemProps, ISelectableCollectionItemMeta {}
 
 /**
  * События элемента коллекции с поддержкой выбора.
@@ -24,8 +32,8 @@ export interface ISelectableCollectionItem<
 	TProps extends ISelectableCollectionItemProps = ISelectableCollectionItemProps,
 	// @ts-ignore
 	TEvents extends TSelectableItemEvents = TSelectableItemEvents,
-> extends ICollectionItem<TProps, TEvents>,
-		ISelectableCollectionItemProps {}
+>
+	extends ICollectionItem<TProps, TEvents>, ISelectableCollectionItemProps {}
 
 export type TSelectionMode = 'none' | 'single' | 'multiple'
 

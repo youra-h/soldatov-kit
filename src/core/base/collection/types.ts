@@ -1,4 +1,8 @@
-import { type ICollectionItem, type TMetaCollectionItem } from './item/types'
+import {
+	type ICollectionItem,
+	type TCollectionItemMeta,
+	type ICollectionItemMeta,
+} from './item/types'
 import type { IEntity } from '../../base/entity'
 import { TEvented } from '../../common/evented'
 
@@ -134,14 +138,12 @@ export type TItemProxyEvents<TItem> = {
 	'item:disabled': (item: TItem, value: boolean) => void
 }
 
-export interface ICollectionMethods<
-	TItem extends ICollectionItem = ICollectionItem,
-> {
+export interface ICollectionMethods<TItem extends ICollectionItem = ICollectionItem> {
 	/** Применяет массив данных к коллекции, очищая её и создавая новые элементы */
-	applyItems<TMeta = Record<string, unknown>>(sources: TMetaCollectionItem<TItem, TMeta>[]): void
+	applyItems<TMeta = ICollectionItemMeta>(sources: TCollectionItemMeta<TItem, TMeta>[]): void
 
 	/** Обновляет поля существующих элементов без очистки коллекции */
-	patchItems<TMeta = Record<string, unknown>>(sources: TMetaCollectionItem<TItem, TMeta>[]): void
+	patchItems<TMeta = ICollectionItemMeta>(sources: TCollectionItemMeta<TItem, TMeta>[]): void
 
 	/** Добавляет новый элемент и возвращает его */
 	add(source?: Partial<TItem>): TItem
@@ -218,7 +220,7 @@ export interface ICollectionMethods<
 	 * Setter очищает коллекцию и заполняет из нового массива данных.
 	 */
 	get items(): TItem[]
-	set items(sources: TMetaCollectionItem<TItem, Record<string, unknown>>[])
+	set items(sources: TCollectionItemMeta<TItem, ICollectionItemMeta>[])
 
 	/**
 	 * Возвращает первый элемент, удовлетворяющий условию предиката.
@@ -238,8 +240,8 @@ export interface ICollection<
 	TProps extends ICollectionProps = ICollectionProps,
 	TEvents extends TCollectionEvents = TCollectionEvents,
 	TItem extends ICollectionItem = ICollectionItem,
-> extends IEntity<TProps>,
-		ICollectionMethods<TItem> {
+>
+	extends IEntity<TProps>, ICollectionMethods<TItem> {
 	readonly events: TEvented<TEvents>
 	/** Количество элементов в коллекции */
 	readonly count: number

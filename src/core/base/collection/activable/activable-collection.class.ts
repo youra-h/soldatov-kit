@@ -4,8 +4,9 @@ import type {
 	IActivatableCollectionProps,
 	TActivatableCollectionEvents,
 	IActivatableCollectionItem,
+	IActivatableCollectionItemMeta,
 } from './types'
-import type { TMetaCollectionItem } from '../item/types'
+import type { TCollectionItemMeta } from '../item/types'
 import type { TConstructor } from '../../../common/types'
 import { TActivatableCollectionItem } from './activable-collection-item.class'
 import { isSame } from '../../../common/is-same'
@@ -102,8 +103,8 @@ export class TActivatableCollection<
 	 * Перехватывает sources, извлекает _.active из данных,
 	 * после чего передаёт чистый массив в базовую реализацию.
 	 */
-	override applyItems<TMeta = Record<string, unknown>>(
-		sources: TMetaCollectionItem<TItem, TMeta>[],
+	override applyItems<TMeta = IActivatableCollectionItemMeta>(
+		sources: TCollectionItemMeta<TItem, TMeta>[],
 	): void {
 		this._extractMeta(sources)
 		super.applyItems(sources)
@@ -113,9 +114,11 @@ export class TActivatableCollection<
 	 * Перехватывает sources, извлекает _.active из данных,
 	 * после чего передаёт чистый массив в базовую реализацию.
 	 */
-	protected override _applyPatchItems<TMeta>(sources: TMetaCollectionItem<TItem, TMeta>[]): void {
+	override patchItems<TMeta = IActivatableCollectionItemMeta>(
+		sources: TCollectionItemMeta<TItem, TMeta>[],
+	): void {
 		this._extractMeta(sources)
-		super._applyPatchItems(sources)
+		super.patchItems(sources)
 	}
 
 	/** Извлекает состояния (active) из поля _ и удаляет _ из source. */

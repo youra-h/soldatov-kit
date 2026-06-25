@@ -32,9 +32,8 @@ export type TCollectionItemEvents<TItem = any> = {
 export interface ICollectionItem<
 	TProps extends ICollectionItemProps = ICollectionItemProps,
 	TEvents extends Record<string, (...args: any) => any> = TCollectionItemEvents,
-> extends IEntity<TProps>,
-		ICollectionItemMethods,
-		ICollectionItemOrderable {
+>
+	extends IEntity<TProps>, ICollectionItemMethods, ICollectionItemOrderable {
 	// Ссылка на коллекцию-владелец.
 	collection: TCollection | null
 	// События компонента
@@ -49,15 +48,18 @@ export interface ICollectionItem<
  *
  * @example
  * ```ts
- * const items: TMetaCollectionItem<ISelectableCollectionItem>[] = [
+ * const items: TCollectionItemMeta<ISelectableCollectionItem>[] = [
  *   { text: 'Text1', _: { selected: true } },
  *   { text: 'Text2' },
  * ]
  * ```
  */
-export type TMetaCollectionItem<
+
+export interface ICollectionItemMeta {}
+
+export type TCollectionItemMeta<
 	TItem = ICollectionItem,
-	TMeta = Record<string, unknown>,
+	TMeta = ICollectionItemMeta,
 > = Partial<TItem> & {
 	_?: TMeta
 }

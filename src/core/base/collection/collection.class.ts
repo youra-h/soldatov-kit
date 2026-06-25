@@ -1,6 +1,10 @@
 import { TEvented } from '../../common/evented'
 import type { TCollectionEvents, ICollection, ICollectionProps } from './types'
-import { type ICollectionItem, type TMetaCollectionItem } from './item/types'
+import {
+	type ICollectionItem,
+	type TCollectionItemMeta,
+	type ICollectionItemMeta,
+} from './item/types'
 import type { TConstructor } from '../../common/types'
 import { TEntity } from '../../base/entity'
 
@@ -16,10 +20,10 @@ import { TEntity } from '../../base/entity'
  * @fires afterMove - Элемент был перемещён
  */
 export class TCollection<
-		TProps extends ICollectionProps = ICollectionProps,
-		TEvents extends TCollectionEvents = TCollectionEvents,
-		TItem extends ICollectionItem = ICollectionItem,
-	>
+	TProps extends ICollectionProps = ICollectionProps,
+	TEvents extends TCollectionEvents = TCollectionEvents,
+	TItem extends ICollectionItem = ICollectionItem,
+>
 	extends TEntity<TProps>
 	implements ICollection<TProps, TEvents, TItem>
 {
@@ -66,7 +70,7 @@ export class TCollection<
 	 * Заменяет содержимое коллекции: очищает и заполняет из массива данных.
 	 * @param sources Массив данных для создания элементов
 	 */
-	set items(sources: TMetaCollectionItem<TItem, Record<string, unknown>>[]) {
+	set items(sources: TCollectionItemMeta<TItem, ICollectionItemMeta>[]) {
 		this.applyItems(sources)
 	}
 
@@ -74,7 +78,7 @@ export class TCollection<
 	 * Очищает коллекцию и заполняет из массива данных.
 	 * Вынесен в отдельный protected метод для оверрайда в наследниках.
 	 */
-	applyItems<TMeta = Record<string, unknown>>(sources: TMetaCollectionItem<TItem, TMeta>[]): void {
+	applyItems<TMeta = ICollectionItemMeta>(sources: TCollectionItemMeta<TItem, TMeta>[]): void {
 		this.clear()
 
 		if (sources.length > 0) {
@@ -88,15 +92,7 @@ export class TCollection<
 	 * Если source больше чем элементов — лишние игнорируются.
 	 * Если source меньше — оставшиеся элементы не трогаются.
 	 */
-	patchItems<TMeta = Record<string, unknown>>(sources: TMetaCollectionItem<TItem, TMeta>[]): void {
-		this._applyPatchItems(sources)
-	}
-
-	/**
-	 * Обновляет поля существующих элементов без очистки коллекции.
-	 * Вынесен в отдельный protected метод для оверрайда в наследниках.
-	 */
-	protected _applyPatchItems<TMeta>(sources: TMetaCollectionItem<TItem, TMeta>[]): void {
+	patchItems<TMeta = ICollectionItemMeta>(sources: TCollectionItemMeta<TItem, TMeta>[]): void {
 		// Удалить лишние элементы
 		while (this._items.length > sources.length) {
 			this.delete(this._items.length - 1)
