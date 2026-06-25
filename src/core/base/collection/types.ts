@@ -1,4 +1,3 @@
-import { TCollection } from './collection.class'
 import { type ICollectionItem, type TMetaCollectionItem } from './item/types'
 import type { IEntity } from '../../base/entity'
 import { TEvented } from '../../common/evented'
@@ -29,7 +28,7 @@ export type TCollectionEvents<TItem extends ICollectionItem = ICollectionItem> =
 	 * Устаревшее/общее событие изменения коллекции.
 	 * Вызывается после операций добавления/удаления/перемещения/очистки.
 	 */
-	changed: (payload: { collection: TCollection; item?: TItem }) => void
+	changed: (payload: { collection: ICollection; item?: TItem }) => void
 
 	/**
 	 * После изменения списка элементов (items). Передаётся актуальный массив элементов.
@@ -46,7 +45,7 @@ export type TCollectionEvents<TItem extends ICollectionItem = ICollectionItem> =
 	 *
 	 * @param payload.collection  Коллекция, которая была очищена.
 	 */
-	cleared: (payload: { collection: TCollection }) => void
+	cleared: (payload: { collection: ICollection }) => void
 
 	/**
 	 * После успешного добавления нового элемента.
@@ -54,7 +53,7 @@ export type TCollectionEvents<TItem extends ICollectionItem = ICollectionItem> =
 	 * @param payload.collection  Коллекция, в которую добавлен элемент.
 	 * @param payload.item        Добавленный элемент.
 	 */
-	'item:added': (payload: { collection: TCollection; item: TItem }) => void
+	'item:added': (payload: { collection: ICollection; item: TItem }) => void
 
 	/**
 	 * Перед удалением элемента.
@@ -66,7 +65,7 @@ export type TCollectionEvents<TItem extends ICollectionItem = ICollectionItem> =
 	 * @returns                   false для отмены операции, иначе продолжить.
 	 */
 	'item:beforeDelete': (payload: {
-		collection: TCollection
+		collection: ICollection
 		index: number
 		item: TItem
 	}) => boolean | void
@@ -77,7 +76,7 @@ export type TCollectionEvents<TItem extends ICollectionItem = ICollectionItem> =
 	 * @param payload.collection  Коллекция, из которой удалён элемент.
 	 * @param payload.item        Удалённый элемент.
 	 */
-	'item:deleted': (payload: { collection: TCollection; item: TItem }) => void
+	'item:deleted': (payload: { collection: ICollection; item: TItem }) => void
 
 	/**
 	 * После удаления элемента.
@@ -86,7 +85,7 @@ export type TCollectionEvents<TItem extends ICollectionItem = ICollectionItem> =
 	 * @param payload.index       Индекс, с которого удалили элемент.
 	 * @param payload.item        Удалённый элемент.
 	 */
-	'item:afterDelete': (payload: { collection: TCollection; index: number; item: TItem }) => void
+	'item:afterDelete': (payload: { collection: ICollection; index: number; item: TItem }) => void
 
 	/**
 	 * Перед перемещением элемента.
@@ -98,13 +97,13 @@ export type TCollectionEvents<TItem extends ICollectionItem = ICollectionItem> =
 	 * @returns                   false для отмены операции, иначе продолжить.
 	 */
 	'item:beforeMove': (payload: {
-		collection: TCollection
+		collection: ICollection
 		oldIndex: number
 		newIndex: number
 	}) => boolean | void
 
 	'item:moved': (payload: {
-		collection: TCollection
+		collection: ICollection
 		item: TItem
 		oldIndex: number
 		newIndex: number
@@ -119,7 +118,7 @@ export type TCollectionEvents<TItem extends ICollectionItem = ICollectionItem> =
 	 * @param payload.newIndex    Индекс, на который элемент переместился.
 	 */
 	'item:afterMove': (payload: {
-		collection: TCollection
+		collection: ICollection
 		item: TItem
 		oldIndex: number
 		newIndex: number
