@@ -81,13 +81,20 @@ export class TCollection<
 	 * Если source меньше — оставшиеся элементы не трогаются.
 	 */
 	patchItems(sources: Partial<TItem>[]): void {
-		const len = Math.min(sources.length, this._items.length)
+		// Удалить лишние элементы
+		while (this._items.length > sources.length) {
+			this.delete(this._items.length - 1)
+		}
 
-		for (let i = 0; i < len; i++) {
+		// Обновить существующие
+		for (let i = 0; i < this._items.length; i++) {
 			this._items[i].assign(sources[i] as TItem)
 		}
 
-		this._notifyItems()
+		// Добавить новые
+		for (let i = this._items.length; i < sources.length; i++) {
+			this.add(sources[i])
+		}
 	}
 
 	/**

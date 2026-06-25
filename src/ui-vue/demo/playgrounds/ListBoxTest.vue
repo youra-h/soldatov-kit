@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue'
+import { ref, computed } from 'vue'
 import { TListBox } from '@core'
 import { ListBox, ListBoxItem } from '@ui/list-box'
 import { Loader } from '@ui/loader'
@@ -129,37 +129,25 @@ function loadData() {
 		// Список 3: items prop
 		items3.value = data.map((c) => ({ text: c.text, value: c.value }))
 
-		// Через 1 секунду — выбрать 2 случайных города
-		setTimeout(() => {
-			selectRandomTwo()
-		}, 1000)
-
 		isLoading.value = false
 		isLoaded.value = true
+
+		// Мутации для списка 3 (каждая через 1с)
+		setTimeout(() => {
+			console.log('=== Шаг 1: items3.push({ Волгоград }) — мутация, та же ссылка ===')
+			items3.value.push({ text: 'Волгоград', value: 'volgograd' })
+		}, 2000)
+
+		setTimeout(() => {
+			console.log('=== Шаг 2: splice(длина, 0, Оренбург) + splice(1, 1) ===')
+			items3.value.splice(items3.value.length, 0, { text: 'Оренбург', value: 'orenburg' })
+		}, 3000)
+
+		setTimeout(() => {
+			console.log('=== Шаг 3: splice(длина, 0, Орск) + slice(2) ===')
+			items3.value.splice(items3.value.length, 0, { text: 'Орск', value: 'orsk' })
+		}, 4000)
 	}, 1000)
-}
-
-function selectRandomTwo() {
-	const shuffled = [...CITIES].sort(() => Math.random() - 0.5)
-	const pick = shuffled.slice(0, 2)
-	const pickValues = pick.map((c) => c.value)
-
-	// Список 1: v-for — установим selected через данные
-	cities1.value = cities1.value.map((c) => ({
-		...c,
-		selected: pickValues.includes(c.value),
-	}))
-
-	// Список 2: instance
-	pickValues.forEach((v) => {
-		const item = instance2.collection.findBy('value', v)
-		if (item) item.selected = true
-	})
-
-	// Список 3: items — обновим selected на месте
-	items3.value.forEach((item: any) => {
-		item.selected = pickValues.includes(item.value)
-	})
 }
 </script>
 
@@ -175,6 +163,9 @@ function selectRandomTwo() {
 			</Loader>
 		</div>
 
+		<div v-if="isLoaded" class="list-box-test__timeline">
+			⏱️ 0s — загрузка | 2s — push | 3s — splice | 4s — slice (новая ссылка)
+		</div>
 		<div v-if="isLoaded" class="list-box-test__grid">
 			<!-- Список 1: v-for -->
 			<div class="list-box-test__column">
@@ -266,6 +257,10 @@ function selectRandomTwo() {
 
 	&__title {
 		@apply text-2xl font-bold;
+	}
+
+	&__timeline {
+		@apply text-sm text-gray-500 text-center py-2 px-4 bg-gray-100 rounded-md font-mono;
 	}
 
 	&__grid {

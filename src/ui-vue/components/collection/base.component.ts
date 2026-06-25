@@ -80,6 +80,7 @@ export function syncCollection<TItem extends ICollectionItem = ICollectionItem>(
 		() => props.items,
 		(items) => {
 			if (items !== undefined) {
+				console.log('syncCollection: props.items changed, updating instance.items')
 				instance.items = items
 			}
 		},
@@ -90,7 +91,12 @@ export function syncCollection<TItem extends ICollectionItem = ICollectionItem>(
 	watch(
 		() => props.items,
 		(items, oldItems) => {
-			if (items !== undefined && items === oldItems && items.length <= instance.count) {
+			console.log(
+				'syncCollection: props.items changed, checking for patchItems',
+				items,
+				oldItems,
+			)
+			if (items !== undefined && items === oldItems) {
 				instance.patchItems(items)
 			}
 		},
