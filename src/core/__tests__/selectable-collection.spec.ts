@@ -51,7 +51,10 @@ describe('TSelectableCollection', () => {
 	})
 
 	it('multiple mode: allows multiple selection', () => {
-		const col = new TSelectableCollection({ itemClass: TSelectableCollectionItem, mode: 'multiple' })
+		const col = new TSelectableCollection({
+			itemClass: TSelectableCollectionItem,
+			mode: 'multiple',
+		})
 
 		const a = col.add({})
 		const b = col.add({})
@@ -66,7 +69,10 @@ describe('TSelectableCollection', () => {
 	})
 
 	it('none mode: selection is ignored and immediately cleared', () => {
-		const col = new TSelectableCollection({ itemClass: TSelectableCollectionItem, mode: 'none' })
+		const col = new TSelectableCollection({
+			itemClass: TSelectableCollectionItem,
+			mode: 'none',
+		})
 
 		const a = col.add({})
 
@@ -105,7 +111,7 @@ describe('TSelectableCollection', () => {
 	it('addFromArray() subscribes to item events and maintains selection state', () => {
 		const col = new TSelectableCollection({
 			itemClass: TSelectableCollectionItem,
-			mode: 'multiple'
+			mode: 'multiple',
 		})
 
 		const selectedSpy = vi.fn()
@@ -128,7 +134,10 @@ describe('TSelectableCollection', () => {
 	})
 
 	it('changing mode from multiple to single keeps only first selected', () => {
-		const col = new TSelectableCollection({ itemClass: TSelectableCollectionItem, mode: 'multiple' })
+		const col = new TSelectableCollection({
+			itemClass: TSelectableCollectionItem,
+			mode: 'multiple',
+		})
 
 		const a = col.add({})
 		const b = col.add({})
@@ -145,5 +154,58 @@ describe('TSelectableCollection', () => {
 		expect(col.selectedCount).toBe(1)
 		const only = col.selected[0]
 		expect([a, b, c]).toContain(only)
+	})
+
+	describe('_ (underscore) meta data', () => {
+		it('set items extracts _.selected and applies it to elements', () => {
+			const col = new TSelectableCollection({
+				itemClass: TSelectableCollectionItem,
+				mode: 'multiple',
+			})
+
+			col.items = [
+				{ _: { selected: true } } as any,
+				{} as any,
+				{ _: { selected: true } } as any,
+			]
+
+			expect(col.count).toBe(3)
+			expect(col.selectedCount).toBe(2)
+			expect(col.getItem(0)!.selected).toBe(true)
+			expect(col.getItem(1)!.selected).toBe(false)
+			expect(col.getItem(2)!.selected).toBe(true)
+		})
+
+		it('set items removes _ from source after extraction', () => {
+			const col = new TSelectableCollection({
+				itemClass: TSelectableCollectionItem,
+			})
+
+			const source = { _: { selected: true } } as any
+			col.items = [source]
+
+			expect(source._).toBeUndefined()
+			expect(source.selected).toBe(true)
+		})
+
+		it('patchItems extracts _.selected and applies by index', () => {
+			const col = new TSelectableCollection({
+				itemClass: TSelectableCollectionItem,
+				mode: 'multiple',
+			})
+
+			col.items = [{}, {}, {}]
+
+			col.patchItems([
+				{ _: { selected: true } } as any,
+				{} as any,
+				{ _: { selected: true } } as any,
+			])
+
+			expect(col.selectedCount).toBe(2)
+			expect(col.getItem(0)!.selected).toBe(true)
+			expect(col.getItem(1)!.selected).toBe(false)
+			expect(col.getItem(2)!.selected).toBe(true)
+		})
 	})
 })

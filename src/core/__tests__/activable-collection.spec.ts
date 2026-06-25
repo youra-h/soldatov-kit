@@ -84,11 +84,7 @@ describe('TActivatableCollection', () => {
 		col.events.on('item:activated', activeSpy)
 
 		// добавляем элементы, один с active: true
-		const items = col.addFromArray([
-			{ active: false },
-			{ active: true },
-			{ active: false },
-		])
+		const items = col.addFromArray([{ active: false }, { active: true }, { active: false }])
 
 		expect(items).toHaveLength(3)
 		expect(col.count).toBe(3)
@@ -242,5 +238,51 @@ describe('TActivatableCollection', () => {
 
 		expect(result).toBe(false)
 		expect(col.count).toBe(1)
+	})
+
+	describe('_ (underscore) meta data', () => {
+		it('set items extracts _.active and applies it to elements', () => {
+			const col = new TActivatableCollection({ itemClass: TActivatableCollectionItem })
+
+			col.items = [{ _: { active: true } } as any, {} as any]
+
+			expect(col.count).toBe(2)
+			expect(col.activeItem).toBe(col.getItem(0))
+			expect(col.getItem(0)!.active).toBe(true)
+			expect(col.getItem(1)!.active).toBeFalsy()
+		})
+
+		it('set items with multiple _.active keeps only last active', () => {
+			const col = new TActivatableCollection({ itemClass: TActivatableCollectionItem })
+
+			col.items = [
+				{ _: { active: true } } as any,
+				{ _: { active: true } } as any,
+				{ _: { active: true } } as any,
+			]
+
+			expect(col.count).toBe(3)
+			expect(col.activeItem).toBe(col.getItem(2))
+		})
+
+		it('set items removes _ from source after extraction', () => {
+			const col = new TActivatableCollection({ itemClass: TActivatableCollectionItem })
+
+			const source = { _: { active: true } } as any
+			col.items = [source]
+
+			expect(source._).toBeUndefined()
+			expect(source.active).toBe(true)
+		})
+
+		it('patchItems extracts _.active and updates existing items by index', () => {
+			const col = new TActivatableCollection({ itemClass: TActivatableCollectionItem })
+
+			col.items = [{}, {}]
+
+			col.patchItems([{} as any, { _: { active: true } } as any])
+
+			expect(col.activeItem).toBe(col.getItem(1))
+		})
 	})
 })
