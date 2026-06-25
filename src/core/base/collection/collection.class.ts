@@ -19,10 +19,10 @@ export class TCollection<
 		TProps extends ICollectionProps = ICollectionProps,
 		TEvents extends TCollectionEvents = TCollectionEvents,
 		TItem extends ICollectionItem = ICollectionItem,
-		TMeta = Record<string, unknown>,
+		TMetaItem = Record<string, unknown>,
 	>
 	extends TEntity<TProps>
-	implements ICollection<TProps, TEvents, TItem, TMeta>
+	implements ICollection<TProps, TEvents, TItem, TMetaItem>
 {
 	/**
 	 * Внутренний массив элементов.
@@ -67,7 +67,7 @@ export class TCollection<
 	 * Заменяет содержимое коллекции: очищает и заполняет из массива данных.
 	 * @param sources Массив данных для создания элементов
 	 */
-	set items(sources: TMetaCollectionItem<TItem, TMeta>[]) {
+	set items(sources: TMetaCollectionItem<TItem, TMetaItem>[]) {
 		this.applyItems(sources)
 	}
 
@@ -75,7 +75,7 @@ export class TCollection<
 	 * Очищает коллекцию и заполняет из массива данных.
 	 * Вынесен в отдельный protected метод для оверрайда в наследниках.
 	 */
-	applyItems(sources: TMetaCollectionItem<TItem, TMeta>[]): void {
+	applyItems(sources: TMetaCollectionItem<TItem, TMetaItem>[]): void {
 		/**
 		 * Очищает коллекцию и заполняет из массива данных.
 		 * Вынесен в protected-метод для оверрайда в наследниках.
@@ -94,7 +94,7 @@ export class TCollection<
 	 * Если source больше чем элементов — лишние игнорируются.
 	 * Если source меньше — оставшиеся элементы не трогаются.
 	 */
-	patchItems(sources: TMetaCollectionItem<TItem, TMeta>[]): void {
+	patchItems(sources: TMetaCollectionItem<TItem, TMetaItem>[]): void {
 		this._applyPatchItems(sources)
 	}
 
@@ -102,7 +102,7 @@ export class TCollection<
 	 * Обновляет поля существующих элементов без очистки коллекции.
 	 * Вынесен в отдельный protected метод для оверрайда в наследниках.
 	 */
-	protected _applyPatchItems(sources: TMetaCollectionItem<TItem, TMeta>[]): void {
+	protected _applyPatchItems(sources: TMetaCollectionItem<TItem, TMetaItem>[]): void {
 		// Удалить лишние элементы
 		while (this._items.length > sources.length) {
 			this.delete(this._items.length - 1)
