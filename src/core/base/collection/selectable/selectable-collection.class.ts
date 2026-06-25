@@ -86,7 +86,9 @@ export class TSelectableCollection<
 	 * Перехватывает sources, извлекает _.selected из данных,
 	 * после чего передаёт чистый массив в базовую реализацию.
 	 */
-	override applyItems<TMeta = ISelectableCollectionItemMeta>(
+	override applyItems<
+		TMeta extends ISelectableCollectionItemMeta = ISelectableCollectionItemMeta,
+	>(
 		sources: TCollectionItemSource<TItem, TMeta>[],
 	): void {
 		this._extractMeta(sources)
@@ -97,7 +99,9 @@ export class TSelectableCollection<
 	 * Перехватывает sources, извлекает _.selected из данных,
 	 * после чего передаёт чистый массив в базовую реализацию.
 	 */
-	override patchItems<TMeta = ISelectableCollectionItemMeta>(
+	override patchItems<
+		TMeta extends ISelectableCollectionItemMeta = ISelectableCollectionItemMeta,
+	>(
 		sources: TCollectionItemSource<TItem, TMeta>[],
 	): void {
 		this._extractMeta(sources)
@@ -105,13 +109,13 @@ export class TSelectableCollection<
 	}
 
 	/** Извлекает состояния (selected) из поля _ и удаляет _ из source. */
-	private _extractMeta(sources: Partial<TItem>[]): void {
+	private _extractMeta<TMeta extends ISelectableCollectionItemMeta>(
+		sources: TCollectionItemSource<TItem, TMeta>[],
+	): void {
 		sources.forEach((s) => {
-			const meta = (s as any)._
-
-			if (meta && meta.selected !== undefined) {
-				;(s as any).selected = meta.selected
-				delete (s as any)._
+			if (s._?.selected !== undefined) {
+				;(s as any).selected = s._.selected
+				delete s._
 			}
 		})
 	}

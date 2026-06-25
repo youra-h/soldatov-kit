@@ -103,7 +103,9 @@ export class TActivatableCollection<
 	 * Перехватывает sources, извлекает _.active из данных,
 	 * после чего передаёт чистый массив в базовую реализацию.
 	 */
-	override applyItems<TMeta = IActivatableCollectionItemMeta>(
+	override applyItems<
+		TMeta extends IActivatableCollectionItemMeta = IActivatableCollectionItemMeta,
+	>(
 		sources: TCollectionItemSource<TItem, TMeta>[],
 	): void {
 		this._extractMeta(sources)
@@ -114,7 +116,9 @@ export class TActivatableCollection<
 	 * Перехватывает sources, извлекает _.active из данных,
 	 * после чего передаёт чистый массив в базовую реализацию.
 	 */
-	override patchItems<TMeta = IActivatableCollectionItemMeta>(
+	override patchItems<
+		TMeta extends IActivatableCollectionItemMeta = IActivatableCollectionItemMeta,
+	>(
 		sources: TCollectionItemSource<TItem, TMeta>[],
 	): void {
 		this._extractMeta(sources)
@@ -122,13 +126,13 @@ export class TActivatableCollection<
 	}
 
 	/** Извлекает состояния (active) из поля _ и удаляет _ из source. */
-	private _extractMeta(sources: Partial<TItem>[]): void {
+	private _extractMeta<TMeta extends IActivatableCollectionItemMeta>(
+		sources: TCollectionItemSource<TItem, TMeta>[],
+	): void {
 		sources.forEach((s) => {
-			const meta = (s as any)._
-
-			if (meta && meta.active !== undefined) {
-				;(s as any).active = meta.active
-				delete (s as any)._
+			if (s._?.active !== undefined) {
+				;(s as any).active = s._.active
+				delete s._
 			}
 		})
 	}

@@ -140,10 +140,10 @@ export type TItemProxyEvents<TItem> = {
 
 export interface ICollectionMethods<TItem extends ICollectionItem = ICollectionItem> {
 	/** Применяет массив данных к коллекции, очищая её и создавая новые элементы */
-	applyItems<TMeta = ICollectionItemMeta>(sources: TCollectionItemSource<TItem, TMeta>[]): void
+	applyItems<TMeta extends ICollectionItemMeta = ICollectionItemMeta>(sources: TCollectionItemSource<TItem, TMeta>[]): void
 
 	/** Обновляет поля существующих элементов без очистки коллекции */
-	patchItems<TMeta = ICollectionItemMeta>(sources: TCollectionItemSource<TItem, TMeta>[]): void
+	patchItems<TMeta extends ICollectionItemMeta = ICollectionItemMeta>(sources: TCollectionItemSource<TItem, TMeta>[]): void
 
 	/** Добавляет новый элемент и возвращает его */
 	add(source?: Partial<TItem>): TItem
