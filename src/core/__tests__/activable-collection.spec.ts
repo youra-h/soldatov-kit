@@ -268,6 +268,21 @@ describe('TActivatableCollection', () => {
 			expect(col.count).toBe(3)
 			expect(col.activeItem).toBe(col.getItem(2))
 		})
+
+		it('setItems does not emit item:activated or item:deactivated during init', () => {
+			const col = new TActivatableCollection({ itemClass: TActivatableCollectionItem })
+
+			const activatedSpy = vi.fn()
+			const deactivatedSpy = vi.fn()
+			col.events.on('item:activated', activatedSpy)
+			col.events.on('item:deactivated', deactivatedSpy)
+
+			col.setItems([{ _: { active: true } } as any, { _: { active: true } } as any])
+
+			expect(col.activeItem).toBe(col.getItem(1))
+			expect(activatedSpy).not.toHaveBeenCalled()
+			expect(deactivatedSpy).not.toHaveBeenCalled()
+		})
 	})
 
 	describe('patchItems with trackBy', () => {
@@ -290,6 +305,21 @@ describe('TActivatableCollection', () => {
 			expect(col.activeItem).toBe(b)
 			expect(a.active).toBe(false)
 			expect(b.active).toBe(true)
+		})
+
+		it('patchItems emits item:activated when activating existing item', () => {
+			const col = new TActivatableCollection({ itemClass: TActivatableCollectionItem })
+
+			const activatedSpy = vi.fn()
+			col.events.on('item:activated', activatedSpy)
+
+			const a = col.add({} as any)
+
+			col.patchItems([{ uid: (a as any).uid, _: { active: true } }], trackBy)
+
+			expect(col.activeItem).toBe(a)
+			expect(a.active).toBe(true)
+			expect(activatedSpy).toHaveBeenCalledTimes(1)
 		})
 
 		it('adds new item with active state via patchItems', () => {

@@ -188,6 +188,24 @@ describe('TSelectableCollection', () => {
 			expect(col.getItem(1)!.selected).toBe(false)
 			expect(col.getItem(2)!.selected).toBe(true)
 		})
+
+		it('setItems does not emit item:selected or change:selected during init', () => {
+			const col = new TSelectableCollection({
+				itemClass: TSelectableCollectionItem,
+				mode: 'multiple',
+			})
+
+			const selectedSpy = vi.fn()
+			const changeSpy = vi.fn()
+			col.events.on('item:selected', selectedSpy)
+			col.events.on('change:selected', changeSpy)
+
+			col.setItems([{ _: { selected: true } } as any, { _: { selected: true } } as any])
+
+			expect(col.selectedCount).toBe(2)
+			expect(selectedSpy).not.toHaveBeenCalled()
+			expect(changeSpy).not.toHaveBeenCalled()
+		})
 	})
 
 	describe('patchItems with trackBy', () => {
@@ -213,6 +231,27 @@ describe('TSelectableCollection', () => {
 			expect(col.selectedCount).toBe(1)
 			expect(a.selected).toBe(true)
 			expect(b.selected).toBe(false)
+		})
+
+		it('patchItems emits item:selected and change:selected when selecting existing item', () => {
+			const col = new TSelectableCollection({
+				itemClass: TestSelectableItem,
+				mode: 'multiple',
+			})
+
+			const selectedSpy = vi.fn()
+			const changeSpy = vi.fn()
+			col.events.on('item:selected', selectedSpy)
+			col.events.on('change:selected', changeSpy)
+
+			const a = col.add({ id: 1 } as any)
+
+			col.patchItems([{ id: 1, _: { selected: true } }], trackBy)
+
+			expect(a.selected).toBe(true)
+			expect(col.selectedCount).toBe(1)
+			expect(selectedSpy).toHaveBeenCalledTimes(1)
+			expect(changeSpy).toHaveBeenCalledTimes(1)
 		})
 
 		it('adds new items with selected state via patchItems', () => {

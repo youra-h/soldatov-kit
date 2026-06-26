@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { TListBox } from '@core'
 import { ListBox, ListBoxItem } from '@ui/list-box'
 import { Loader } from '@ui/loader'
@@ -11,7 +11,9 @@ interface ICity {
 	id: number
 	text: string
 	value: string
-	selected?: boolean
+	_?: {
+		selected?: boolean
+	}
 }
 
 const CITIES: ICity[] = [
@@ -85,7 +87,68 @@ instance2.events.on('change:selected', (items: any[]) => {
 const items3 = ref<Partial<any>[]>([])
 const selected3 = ref<ICity[]>([])
 
+// Вариант 1: подмена массива через filter (новая ссылка → patchItems/setItems)
+// Сохраняет выделение через _: { selected } в мета-данных
+// Реагирует только на изменения данных (items3, filter3), не на selected3,
+// чтобы не создавать цикл: selected → patchItems → change:selected → ...
+const filteredItems3 = ref<Partial<any>[]>([])
+
+watch(
+	[items3, filter3],
+	() => {
+		const q = filter3.value.toLowerCase()
+		const selectedValues = new Set(selected3.value.map((s) => s.value))
+
+		const result = q
+			? items3.value.filter((item: any) => item.text.toLowerCase().includes(q))
+			: items3.value
+
+		if (selectedValues.size === 0) {
+			filteredItems3.value = result
+			return
+		}
+
+		filteredItems3.value = result.map((item: any) => {
+			if (selectedValues.has(item.value)) {
+				return { ...item, _: { selected: true } }
+			}
+			return item
+		})
+	},
+	{ immediate: true },
+)
+
+// Вариант 2: мутации исходного массива (та же ссылка)
+// Требует хранения полного списка отдельно
+// const allItems3 = ref<Partial<any>[]>([])
+// watch(
+// 	filter3,
+// 	(q) => {
+// 		const lower = q.toLowerCase()
+// 		// Удаляем неподходящие
+// 		for (let i = items3.value.length - 1; i >= 0; i--) {
+// 			const item = items3.value[i] as any
+// 			if (!item.text.toLowerCase().includes(lower)) {
+// 				items3.value.splice(i, 1)
+// 			}
+// 		}
+// 		// Добавляем подходящие из полного списка
+// 		allItems3.value.forEach((item: any) => {
+// 			if (item.text.toLowerCase().includes(lower)) {
+// 				if (!items3.value.find((i: any) => i.value === item.value)) {
+// 					items3.value.push(item)
+// 				}
+// 			}
+// 		})
+// 	},
+// 	{ immediate: true },
+// )
+
+// // Для Варианта 2 computed просто возвращает items3 (ссылка не меняется)
+// const filteredItems3 = computed(() => items3.value)
+
 function handleSelected3(items: any[]) {
+	console.log('handleSelected3')
 	selected3.value = items.map((item: any) => ({
 		id: item.uid,
 		text: item.text,
@@ -128,6 +191,7 @@ function loadData() {
 
 		// Список 3: items prop
 		items3.value = data.map((c) => ({ text: c.text, value: c.value }))
+		// allItems3.value = data.map((c) => ({ text: c.text, value: c.value }))
 
 		isLoading.value = false
 		isLoaded.value = true
@@ -229,7 +293,7 @@ function loadData() {
 
 				<ListBox
 					mode="multiple"
-					:items="items3"
+					:items="filteredItems3"
 					:track-by="(item) => item.value"
 					:max-rows="6"
 					@change:selected="handleSelected3"
