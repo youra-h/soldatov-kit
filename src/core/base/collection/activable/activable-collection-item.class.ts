@@ -10,10 +10,10 @@ import { TEvented } from '../../../common/evented'
  * Элемент коллекции с поддержкой активности.
  */
 export class TActivatableCollectionItem<
-	TProps extends IActivatableCollectionItemProps = IActivatableCollectionItemProps,
-	TEvents extends TActivatableItemEvents<IActivatableCollectionItem> =
-		TActivatableItemEvents<IActivatableCollectionItem>,
->
+		TProps extends IActivatableCollectionItemProps = IActivatableCollectionItemProps,
+		TEvents extends
+			TActivatableItemEvents<IActivatableCollectionItem> = TActivatableItemEvents<IActivatableCollectionItem>,
+	>
 	extends TCollectionItem<TProps, TEvents>
 	implements IActivatableCollectionItem
 {
@@ -26,7 +26,6 @@ export class TActivatableCollectionItem<
 	getProps(): TProps {
 		return {
 			...super.getProps(),
-			active: this._active,
 		} as TProps
 	}
 

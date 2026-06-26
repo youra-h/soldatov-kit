@@ -115,9 +115,9 @@ describe('TSelectableCollection', () => {
 
 		// добавляем элементы с разным состоянием selected
 		const items = col.addItems([
-			{ selected: true },
-			{ selected: false },
-			{ selected: true },
+			{ _: { selected: true } },
+			{ _: { selected: false } },
+			{ _: { selected: true } },
 		])
 
 		expect(items).toHaveLength(3)
@@ -199,8 +199,8 @@ describe('TSelectableCollection', () => {
 
 			col.patchItems(
 				[
-					{ id: (a as any).uid, selected: true },
-					{ id: (b as any).uid, selected: false },
+					{ id: (a as any).uid, _: { selected: true } },
+					{ id: (b as any).uid, _: { selected: false } },
 				],
 				trackBy,
 			)
@@ -218,8 +218,8 @@ describe('TSelectableCollection', () => {
 
 			col.patchItems(
 				[
-					{ id: 1, selected: true },
-					{ id: 2, selected: true },
+					{ id: 1, _: { selected: true } },
+					{ id: 2, _: { selected: true } },
 				],
 				trackBy,
 			)
@@ -239,10 +239,7 @@ describe('TSelectableCollection', () => {
 			a.selected = true
 			b.selected = true
 
-			col.patchItems(
-				[{ id: (a as any).uid, selected: true }],
-				trackBy,
-			)
+			col.patchItems([{ id: (a as any).uid, _: { selected: true } }], trackBy)
 
 			expect(col.count).toBe(1)
 			expect(col.selectedCount).toBe(1)

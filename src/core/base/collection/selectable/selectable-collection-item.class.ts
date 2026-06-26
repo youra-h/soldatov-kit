@@ -15,10 +15,10 @@ import { TEvented } from '../../../common/evented'
  * @template TEvents Тип событий элемента
  */
 export class TSelectableCollectionItem<
-	TProps extends ISelectableCollectionItemProps = ISelectableCollectionItemProps,
-	TEvents extends TSelectableItemEvents<ISelectableCollectionItem> =
-		TSelectableItemEvents<ISelectableCollectionItem>,
->
+		TProps extends ISelectableCollectionItemProps = ISelectableCollectionItemProps,
+		TEvents extends
+			TSelectableItemEvents<ISelectableCollectionItem> = TSelectableItemEvents<ISelectableCollectionItem>,
+	>
 	extends TCollectionItem<TProps, TEvents>
 	implements ISelectableCollectionItem
 {
@@ -31,7 +31,6 @@ export class TSelectableCollectionItem<
 	getProps(): TProps {
 		return {
 			...super.getProps(),
-			selected: this._selected,
 		} as TProps
 	}
 

@@ -277,7 +277,7 @@ describe('TActivatableCollection', () => {
 	})
 
 	describe('patchItems with trackBy', () => {
-		const trackBy = (item: any) => item.id
+		const trackBy = (item: any) => item.uid
 
 		it('updates active state via patchItems', () => {
 			const col = new TActivatableCollection({ itemClass: TActivatableCollectionItem })
@@ -287,8 +287,8 @@ describe('TActivatableCollection', () => {
 
 			col.patchItems(
 				[
-					{ id: (a as any).uid, active: false },
-					{ id: (b as any).uid, active: true },
+					{ uid: (a as any).uid, _: { active: false } },
+					{ uid: (b as any).uid, _: { active: true } },
 				],
 				trackBy,
 			)
@@ -301,7 +301,7 @@ describe('TActivatableCollection', () => {
 		it('adds new item with active state via patchItems', () => {
 			const col = new TActivatableCollection({ itemClass: TActivatableCollectionItem })
 
-			col.patchItems([{ id: 1, active: true }], trackBy)
+			col.patchItems([{ uid: 1, _: { active: true } }], trackBy)
 
 			expect(col.count).toBe(1)
 			expect(col.activeItem).toBe(col.getItem(0))
