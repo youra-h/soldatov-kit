@@ -249,5 +249,86 @@ describe('TSelectableCollection', () => {
 			expect(col.count).toBe(1)
 			expect(col.selectedCount).toBe(1)
 		})
+
+		it('patchItems from change:selected handler does not cause infinite recursion', () => {
+			const col = new TSelectableCollection({
+				itemClass: TestSelectableItem,
+				mode: 'multiple',
+			})
+
+			// Добавляем 3 элемента через setItems
+			col.setItems([
+				{ id: 1, text: 'A' } as any,
+				{ id: 2, text: 'B' } as any,
+				{ id: 3, text: 'C' } as any,
+			])
+
+			expect(col.count).toBe(3)
+
+			// Счётчик вызовов change:selected
+			let selectedCalls = 0
+
+			col.events.on('change:selected', () => {
+				selectedCalls++
+
+				// Имитация UI: получаем items и через patchItems выделяем первый
+				col.patchItems(
+					[
+						{ id: 1, text: 'A', _: { selected: true } },
+						{ id: 2, text: 'B' },
+						{ id: 3, text: 'C' },
+					],
+					(item: any) => item.id,
+				)
+			})
+
+			// Выделяем первый элемент — триггерит change:selected
+			col.getItem(0)!.selected = true
+
+			// После первой итерации элемент уже selected,
+			// повторный patchItems с _: { selected: true } — noop,
+			// поэтому change:selected не должен вызываться рекурсивно
+			expect(col.selectedCount).toBe(1)
+			expect(col.getItem(0)!.selected).toBe(true)
+			expect(selectedCalls).toBe(1)
+		})
+
+		it('setItems from change:selected handler causes infinite recursion', () => {
+			const col = new TSelectableCollection({
+				itemClass: TestSelectableItem,
+				mode: 'multiple',
+			})
+
+			col.setItems([
+				{ id: 1, text: 'A' } as any,
+				{ id: 2, text: 'B' } as any,
+				{ id: 3, text: 'C' } as any,
+			])
+
+			expect(col.count).toBe(3)
+
+			let selectedCalls = 0
+
+			col.events.on('change:selected', () => {
+				selectedCalls++
+
+				if (selectedCalls > 10) {
+					throw new Error('Infinite recursion detected')
+				}
+
+				// setItems полностью пересоздаёт коллекцию с выделенным первым элементом
+				col.setItems([
+					{ id: 1, text: 'A', _: { selected: true } },
+					{ id: 2, text: 'B' },
+					{ id: 3, text: 'C' },
+				])
+			})
+
+			// Выделяем первый элемент
+			col.getItem(0)!.selected = true
+
+			// Из-за рекурсии этот код не должен выполниться
+			expect(selectedCalls).toBeLessThanOrEqual(10)
+		})
 	})
 })
