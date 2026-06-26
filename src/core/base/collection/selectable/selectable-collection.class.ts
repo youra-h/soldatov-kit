@@ -180,12 +180,11 @@ export class TSelectableCollection<
 		})
 	}
 
-	reset(notify: boolean = true): void {
-		this._selected.forEach((it) => (it.selected = false))
+	reset(): void {
+		if (this._selected.size > 0) {
+			this._selected.forEach((it) => (it.selected = false))
 
-		this._selected.clear()
-
-		if (notify) {
+			this._selected.clear()
 			;(this.events as TEvented<TSelectableCollectionEvents>).emit(
 				'change:selected',
 				this.selected,
@@ -196,6 +195,6 @@ export class TSelectableCollection<
 			)
 		}
 
-		super.reset(notify)
+		super.reset()
 	}
 }

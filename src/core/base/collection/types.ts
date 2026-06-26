@@ -191,7 +191,7 @@ export interface ICollectionMethods<TItem extends ICollectionItem = ICollectionI
 	deleteItem(item: TItem): boolean
 
 	/** Полностью очищает коллекцию */
-	reset(notify?: boolean): void
+	reset(): void
 
 	/**
 	 * Перемещает элемент в новую позицию
