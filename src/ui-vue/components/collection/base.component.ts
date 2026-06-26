@@ -18,6 +18,7 @@ export const emitsCollection: TEmits = [
 	'change:items',
 	'update:items',
 	'change:count',
+	'reset',
 	'item:added',
 	'item:beforeDelete',
 	'item:deleted',
@@ -102,6 +103,10 @@ export function syncCollection<TItem extends ICollectionItem = ICollectionItem>(
 
 	instance.events.on('change:count', (count: number) => {
 		emit?.('change:count', count)
+	})
+
+	instance.events.on('reset', () => {
+		emit?.('reset')
 	})
 
 	// Пробрасываем события core-инстанса наружу (Vue events)
