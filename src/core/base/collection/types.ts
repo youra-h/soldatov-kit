@@ -44,6 +44,9 @@ export type TCollectionEvents<TItem extends ICollectionItem = ICollectionItem> =
 	 */
 	'change:count': (count: number) => void
 
+	/** Сброс состояния коллекции (очистка, удаление всех элементов) */
+	reset: () => void
+
 	/**
 	 * После успешного добавления нового элемента.
 	 *

@@ -308,6 +308,8 @@ export class TCollection<
 		if (!!notify) {
 			this._notifyItems()
 		}
+
+		;(this.events as TEvented<TCollectionEvents>).emit('reset')
 	}
 
 	/**
