@@ -1,5 +1,6 @@
 import type { Ref } from 'vue'
 import {
+	type ICollectionSource,
 	type IActivatableCollection,
 	type IActivatableCollectionProps,
 	type IActivatableCollectionItem,
@@ -44,7 +45,7 @@ export function syncActivatableCollection<
 	TItem extends IActivatableCollectionItem = IActivatableCollectionItem,
 >(
 	options: ISyncComponentViewOptions<
-		IActivatableCollectionProps,
+		IActivatableCollectionProps & ICollectionSource<TItem>,
 		IActivatableCollection<IActivatableCollectionProps, TActivatableCollectionEvents, TItem>
 	>,
 ): IActivatableCollectionState<TItem> {
