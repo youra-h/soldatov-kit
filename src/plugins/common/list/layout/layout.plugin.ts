@@ -44,6 +44,8 @@ export class TListLayoutPlugin extends TBasePlugin<TListLayoutPluginEvents> {
 			instance.events.on('change:maxRows', () => this._updateHeight())
 			instance.events.on('item:added', () => this._updateHeight())
 			instance.events.on('item:afterDelete', () => this._updateHeight())
+			instance.events.on('item:rendered', () => this._updateHeight())
+			instance.events.on('item:visible', () => this._updateHeight())
 		})
 
 		this._collectionElements = bundle.get(TCollectionElementsPlugin) ?? null

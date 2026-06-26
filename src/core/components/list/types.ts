@@ -18,6 +18,8 @@ export type TListEvents = TControlEvents &
 		/** change:wordWrap */
 		'change:wordWrap': (value: boolean) => void
 		'item:text': (item: IListItem, value: string) => void
+		'item:rendered': (item: IListItem, value: boolean) => void
+		'item:visible': (item: IListItem, value: boolean) => void
 	}
 
 export interface IListProps extends IControlProps, ISelectableCollectionProps {

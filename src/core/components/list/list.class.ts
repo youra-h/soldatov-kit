@@ -99,6 +99,14 @@ export class TList<
 						)
 					})
 
+					item.events.on('change:rendered', (value: boolean) => {
+						;(this.events as TEvented<TListEvents>).emit('item:rendered', item, value)
+					})
+
+					item.events.on('change:visible', (value: boolean) => {
+						;(this.events as TEvented<TListEvents>).emit('item:visible', item, value)
+					})
+
 					item.setWordWrapResolver(() => this._wordWrap)
 				},
 			},
