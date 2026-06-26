@@ -66,10 +66,13 @@ const selected2 = ref<ICity[]>([])
 
 function updateInstance2() {
 	instance2.collection.reset()
+
 	const q = filter2.value.toLowerCase()
+
 	const source = q
 		? citiesSource2.value.filter((c) => c.text.toLowerCase().includes(q))
 		: citiesSource2.value
+
 	source.forEach((c) => {
 		instance2.collection.add({ text: c.text, value: c.value })
 	})
