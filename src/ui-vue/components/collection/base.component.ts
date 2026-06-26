@@ -5,6 +5,7 @@ import {
 	type ICollectionSource,
 	type ICollectionProps,
 	type ICollectionItem,
+	type TCollectionItemSource,
 	type TCollectionEvents,
 } from '@core'
 import { TCollectionElementsPlugin, TCollectionInstancesPlugin, TDragPlugin } from '@plugins'
@@ -31,7 +32,7 @@ export const emitsCollection: TEmits = [
 
 export const propsCollection: TProps = {
 	items: {
-		type: Array as PropType<Partial<ICollectionItem>[]>,
+		type: Array as PropType<TCollectionItemSource<ICollectionItem>[]>,
 		default: undefined,
 	},
 	trackBy: {
@@ -56,7 +57,7 @@ export interface ICollectionState<TItem = any> {
  */
 export function syncCollection<TItem extends ICollectionItem = ICollectionItem>(
 	options: ISyncComponentViewOptions<
-		ICollectionSource,
+		ICollectionSource<TItem>,
 		ICollection<ICollectionProps, TCollectionEvents, TItem>
 	>,
 ): ICollectionState<TItem> {
