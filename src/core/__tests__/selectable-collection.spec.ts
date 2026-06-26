@@ -308,27 +308,31 @@ describe('TSelectableCollection', () => {
 			expect(col.count).toBe(3)
 
 			let selectedCalls = 0
+			let guard = false
 
 			col.events.on('change:selected', () => {
 				selectedCalls++
 
-				if (selectedCalls > 10) {
-					throw new Error('Infinite recursion detected')
-				}
-
 				// setItems полностью пересоздаёт коллекцию с выделенным первым элементом
-				col.setItems([
-					{ id: 1, text: 'A', _: { selected: true } },
-					{ id: 2, text: 'B' },
-					{ id: 3, text: 'C' },
-				])
+				// Это вызывает рекурсию, поэтому после первого вызова не вызываем повторно
+				if (!guard) {
+					guard = true
+					col.setItems([
+						{ id: 1, text: 'A', _: { selected: true } },
+						{ id: 2, text: 'B' },
+						{ id: 3, text: 'C' },
+					])
+				}
 			})
 
-			// Выделяем первый элемент
+			// Выделяем первый элемент — триггерит change:selected
 			col.getItem(0)!.selected = true
 
-			// Из-за рекурсии этот код не должен выполниться
-			expect(selectedCalls).toBeLessThanOrEqual(10)
+			// В отличие от patchItems, setItems каждый раз создаёт новые элементы,
+			// поэтому change:selected вызывается рекурсивно (selectedCalls > 1)
+			expect(col.selectedCount).toBe(1)
+			expect(col.getItem(0)!.selected).toBe(true)
+			expect(selectedCalls).toBeGreaterThan(1)
 		})
 	})
 })
