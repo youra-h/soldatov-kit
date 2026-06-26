@@ -16,10 +16,10 @@ import { TEvented } from '../../../common/evented'
  * Коллекция элементов с поддержкой выбора.
  */
 export class TSelectableCollection<
-	TProps extends ISelectableCollectionProps = ISelectableCollectionProps,
-	TEvents extends TSelectableCollectionEvents = TSelectableCollectionEvents,
-	TItem extends ISelectableCollectionItem = ISelectableCollectionItem,
->
+		TProps extends ISelectableCollectionProps = ISelectableCollectionProps,
+		TEvents extends TSelectableCollectionEvents = TSelectableCollectionEvents,
+		TItem extends ISelectableCollectionItem = ISelectableCollectionItem,
+	>
 	extends TCollection<TProps, TEvents, TItem>
 	implements ISelectableCollection<TProps, TEvents, TItem>
 {
@@ -30,10 +30,7 @@ export class TSelectableCollection<
 	protected _mode: TSelectionMode
 	private _selected: Set<TItem> = new Set()
 
-	constructor(options?: {
-		itemClass?: TConstructor<TItem>
-		mode?: TSelectionMode
-	}) {
+	constructor(options?: { itemClass?: TConstructor<TItem>; mode?: TSelectionMode }) {
 		super({
 			itemClass: (options?.itemClass ?? TSelectableCollectionItem) as TConstructor<TItem>,
 		})
@@ -87,11 +84,8 @@ export class TSelectableCollection<
 	/**
 	 * Применяет meta-данные (selected) к элементу.
 	 */
-	protected override _assignItemMeta(
-		item: TItem,
-		meta: ISelectableCollectionItemMeta,
-	): void {
-		if (meta.selected !== undefined) {
+	protected override _assignItemMeta(item: TItem, meta: ISelectableCollectionItemMeta): void {
+		if (meta?.selected !== undefined) {
 			item.selected = meta.selected
 		}
 	}

@@ -13,11 +13,19 @@ class TestRichItem extends TCollectionItem<TestRichItemProps> {
 	private _name: string = ''
 	private _value: number = 0
 
-	get name() { return this._name }
-	set name(v: string) { this._name = v }
+	get name() {
+		return this._name
+	}
+	set name(v: string) {
+		this._name = v
+	}
 
-	get value() { return this._value }
-	set value(v: number) { this._value = v }
+	get value() {
+		return this._value
+	}
+	set value(v: number) {
+		this._value = v
+	}
 
 	getProps(): Readonly<TestRichItemProps> {
 		return { name: this._name, value: this._value }
@@ -42,22 +50,22 @@ describe('TCollectionItem', () => {
 
 describe('TCollection', () => {
 	it('add() creates item, increments count and emits "item:added"', () => {
-        const col = new TCollection({ itemClass: TestItem })
-        const spy = vi.fn()
+		const col = new TCollection({ itemClass: TestItem })
+		const spy = vi.fn()
 
-        col.events.on('item:added', spy)
+		col.events.on('item:added', spy)
 
-        const item = col.add({})
+		const item = col.add({})
 
-        expect(col.count).toBe(1)
-        expect(col.getItem(0)).toBe(item)
-        expect(spy).toHaveBeenCalled()
+		expect(col.count).toBe(1)
+		expect(col.getItem(0)).toBe(item)
+		expect(spy).toHaveBeenCalled()
 
-        // безопасный доступ — non-null assertion
-        const payload = spy.mock.calls[0]![0]
-        expect(payload.collection).toBe(col)
-        expect(payload.item).toBe(item)
-    })
+		// безопасный доступ — non-null assertion
+		const payload = spy.mock.calls[0]![0]
+		expect(payload.collection).toBe(col)
+		expect(payload.item).toBe(item)
+	})
 
 	it('addItems() creates multiple items from array and emits "item:added" for each', () => {
 		const col = new TCollection({ itemClass: TestItem })
@@ -135,14 +143,14 @@ describe('TCollection', () => {
 		expect(afterSpy).toHaveBeenCalled()
 	})
 
-	it('clear() frees items and emits "cleared"', () => {
+	it('clear() frees items and emits "reset"', () => {
 		const col = new TCollection({ itemClass: TestItem })
 
 		const i1 = col.add({})
 		const i2 = col.add({})
 
 		const spyCleared = vi.fn()
-		col.events.on('cleared', spyCleared)
+		col.events.on('reset', spyCleared)
 
 		const spyFree1 = vi.spyOn(i1, 'free')
 		const spyFree2 = vi.spyOn(i2, 'free')
@@ -274,10 +282,7 @@ describe('TCollection — patchItems', () => {
 
 		const freeSpy = vi.spyOn(b, 'free')
 
-		col.patchItems(
-			[{ name: 'Alice', value: 1 }],
-			(item: any) => item.name,
-		)
+		col.patchItems([{ name: 'Alice', value: 1 }], (item: any) => item.name)
 
 		expect(col.count).toBe(1)
 		expect(col.getItem(0)).toBe(a)
@@ -288,7 +293,7 @@ describe('TCollection — patchItems', () => {
 		const col = new TCollection({ itemClass: TestRichItem })
 
 		const a = col.add({ name: 'Alice', value: 1 } as any) // будет обновлён
-		const b = col.add({ name: 'Bob', value: 2 } as any)   // будет удалён
+		const b = col.add({ name: 'Bob', value: 2 } as any) // будет удалён
 		// Charlie — будет добавлен
 
 		col.patchItems(
@@ -336,10 +341,7 @@ describe('TCollection — patchItems', () => {
 		const spy = vi.fn()
 		col.events.on('change:items', spy)
 
-		col.patchItems(
-			[{ name: 'Bob', value: 2 }],
-			(item: any) => item.name,
-		)
+		col.patchItems([{ name: 'Bob', value: 2 }], (item: any) => item.name)
 
 		// Должен сработать change:items
 		expect(spy).toHaveBeenCalled()

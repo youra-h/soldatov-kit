@@ -15,18 +15,16 @@ import { TEvented } from '../../../common/evented'
  * Коллекция элементов с поддержкой активности.
  */
 export class TActivatableCollection<
-	TProps extends IActivatableCollectionProps = IActivatableCollectionProps,
-	TEvents extends TActivatableCollectionEvents = TActivatableCollectionEvents,
-	TItem extends IActivatableCollectionItem = IActivatableCollectionItem,
->
+		TProps extends IActivatableCollectionProps = IActivatableCollectionProps,
+		TEvents extends TActivatableCollectionEvents = TActivatableCollectionEvents,
+		TItem extends IActivatableCollectionItem = IActivatableCollectionItem,
+	>
 	extends TCollection<TProps, TEvents, TItem>
 	implements IActivatableCollection<TProps, TEvents, TItem>
 {
 	private _activeItem?: TItem
 
-	constructor(options?: {
-		itemClass?: TConstructor<TItem>
-	}) {
+	constructor(options?: { itemClass?: TConstructor<TItem> }) {
 		super({
 			itemClass: (options?.itemClass ?? TActivatableCollectionItem) as TConstructor<TItem>,
 		})
@@ -105,11 +103,8 @@ export class TActivatableCollection<
 	/**
 	 * Применяет meta-данные (active) к элементу.
 	 */
-	protected override _assignItemMeta(
-		item: TItem,
-		meta: IActivatableCollectionItemMeta,
-	): void {
-		if (meta.active !== undefined) {
+	protected override _assignItemMeta(item: TItem, meta: IActivatableCollectionItemMeta): void {
+		if (meta?.active !== undefined) {
 			item.active = meta.active
 		}
 	}
