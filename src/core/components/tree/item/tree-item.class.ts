@@ -8,9 +8,9 @@ import type { TConstructor } from '../../../common/types'
  * Базовый элемент дерева.
  */
 export class TTreeItem<
-	TProps extends ITreeItemProps = ITreeItemProps,
-	TEvents extends TTreeItemEvents = TTreeItemEvents,
->
+		TProps extends ITreeItemProps = ITreeItemProps,
+		TEvents extends TTreeItemEvents = TTreeItemEvents,
+	>
 	extends TCollectionItem<TProps, TEvents>
 	implements ITreeItem
 {
@@ -32,13 +32,14 @@ export class TTreeItem<
 	 */
 	createChild(): ITreeCollection<this>
 	createChild<TChild extends ITreeItem>(itemClass: TConstructor<TChild>): ITreeCollection<TChild>
-	createChild<TChild extends ITreeItem>(itemClass?: TConstructor<TChild>): ITreeCollection<TChild> {
+	createChild<TChild extends ITreeItem>(
+		itemClass?: TConstructor<TChild>,
+	): ITreeCollection<TChild> {
 		if (this._child) {
-			this._child.clear()
+			this._child.reset()
 		}
 
-		const resolvedItemClass =
-			(itemClass ?? (this.constructor as unknown as TConstructor<TChild>))
+		const resolvedItemClass = itemClass ?? (this.constructor as unknown as TConstructor<TChild>)
 
 		// Создаем коллекцию и приводим её к нужному типу
 		const childCollection = new TTreeCollection<TChild>({
@@ -54,7 +55,7 @@ export class TTreeItem<
 
 	removeChild(): void {
 		if (this._child) {
-			this._child.clear()
+			this._child.reset()
 			this._child = null
 		}
 	}
