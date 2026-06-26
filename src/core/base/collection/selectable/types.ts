@@ -15,7 +15,8 @@ export interface ISelectableCollectionItemMeta extends ICollectionItemMeta {
  * Свойства элемента коллекции с поддержкой выбора.
  */
 export interface ISelectableCollectionItemProps
-	extends ICollectionItemProps, ISelectableCollectionItemMeta {}
+	extends ICollectionItemProps,
+		ISelectableCollectionItemMeta {}
 
 /**
  * События элемента коллекции с поддержкой выбора.
@@ -32,15 +33,16 @@ export interface ISelectableCollectionItem<
 	TProps extends ISelectableCollectionItemProps = ISelectableCollectionItemProps,
 	// @ts-ignore
 	TEvents extends TSelectableItemEvents = TSelectableItemEvents,
->
-	extends ICollectionItem<TProps, TEvents>, ISelectableCollectionItemProps {}
+> extends ICollectionItem<TProps, TEvents>,
+		ISelectableCollectionItemProps {}
 
 export type TSelectionMode = 'none' | 'single' | 'multiple'
 
 /**
  * Свойства коллекции с поддержкой выбора.
  */
-export interface ISelectableCollectionProps extends ICollectionProps<ISelectableCollectionItem> {
+export interface ISelectableCollectionProps
+	extends ICollectionProps<ISelectableCollectionItem, ISelectableCollectionItemMeta> {
 	/** Признак множественного выбора */
 	mode: TSelectionMode
 }

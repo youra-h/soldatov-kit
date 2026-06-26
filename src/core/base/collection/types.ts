@@ -10,12 +10,16 @@ import { TEvented } from '../../common/evented'
  * Базовый интерфейс коллекции элементов.
  * Определяет контракт, который должны реализовывать все коллекции.
  */
-export interface ICollectionProps<TItem extends ICollectionItem = ICollectionItem> {
+export interface ICollectionProps<
+	TItem extends ICollectionItem = ICollectionItem,
+	TMeta extends ICollectionItemMeta = ICollectionItemMeta,
+> {
 	/**
-	 * Данные для наполнения коллекции через addItems.
+	 * Данные для наполнения коллекции через addItems/patchItems.
 	 * При установке коллекция очищается и заполняется из этого массива.
+	 * Поддерживает мета-поле _ для передачи состояний (selected, active и т.д.).
 	 */
-	items?: Partial<TItem>[]
+	items?: TCollectionItemSource<TItem, TMeta>[]
 }
 
 /**
@@ -23,8 +27,10 @@ export interface ICollectionProps<TItem extends ICollectionItem = ICollectionIte
  * и опциональная функция идентификации для умного обновления (patchItems).
  * Не является частью TCollection — используется только на уровне представления.
  */
-export interface ICollectionSource<TItem extends ICollectionItem = ICollectionItem>
-	extends ICollectionProps<TItem> {
+export interface ICollectionSource<
+	TItem extends ICollectionItem = ICollectionItem,
+	TMeta extends ICollectionItemMeta = ICollectionItemMeta,
+> extends ICollectionProps<TItem, TMeta> {
 	/** Функция идентификации: (item) => ключ. Используется внутри patchItems. */
 	trackBy?: (item: Partial<TItem>) => unknown
 }
