@@ -1,7 +1,8 @@
 import type { PropType, Ref } from 'vue'
-import { watch, provide } from 'vue'
+import { watch } from 'vue'
 import {
 	type ICollection,
+	type ICollectionSource,
 	type ICollectionProps,
 	type ICollectionItem,
 	type TCollectionEvents,
@@ -55,7 +56,7 @@ export interface ICollectionState<TItem = any> {
  */
 export function syncCollection<TItem extends ICollectionItem = ICollectionItem>(
 	options: ISyncComponentViewOptions<
-		ICollectionProps,
+		ICollectionSource,
 		ICollection<ICollectionProps, TCollectionEvents, TItem>
 	>,
 ): ICollectionState<TItem> {

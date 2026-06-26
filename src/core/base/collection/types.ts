@@ -19,6 +19,17 @@ export interface ICollectionProps<TItem extends ICollectionItem = ICollectionIte
 }
 
 /**
+ * Внешний контракт синхронизации: данные для наполнения коллекции
+ * и опциональная функция идентификации для умного обновления (patchItems).
+ * Не является частью TCollection — используется только на уровне представления.
+ */
+export interface ICollectionSource<TItem extends ICollectionItem = ICollectionItem>
+	extends ICollectionProps<TItem> {
+	/** Функция идентификации: (item) => ключ. Используется внутри patchItems. */
+	trackBy?: (item: Partial<TItem>) => unknown
+}
+
+/**
  * События, которые эмитит коллекция TCollection.
  */
 export type TCollectionEvents<TItem extends ICollectionItem = ICollectionItem> = {
@@ -245,8 +256,8 @@ export interface ICollection<
 	TProps extends ICollectionProps = ICollectionProps,
 	TEvents extends TCollectionEvents = TCollectionEvents,
 	TItem extends ICollectionItem = ICollectionItem,
->
-	extends IEntity<TProps>, ICollectionMethods<TItem> {
+> extends IEntity<TProps>,
+		ICollectionMethods<TItem> {
 	readonly events: TEvented<TEvents>
 	/** Текущие элементы коллекции */
 	readonly items: TItem[]
