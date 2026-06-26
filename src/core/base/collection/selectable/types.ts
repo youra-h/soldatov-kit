@@ -96,7 +96,7 @@ export interface ISelectableCollection<
 	/** Количество выбранных элементов */
 	readonly selectedCount: number
 	/** Очистить выбор */
-	reset(): void
+	reset(notify?: boolean): void
 }
 
 /** * Интерфейс, который SelectableComponentMixin добавляет к компоненту.

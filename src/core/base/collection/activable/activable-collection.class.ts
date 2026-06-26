@@ -63,15 +63,20 @@ export class TActivatableCollection<
 	}
 
 	/** Очистить активный элемент */
-	reset(): void {
+	reset(notify: boolean = true): void {
 		if (this._activeItem) {
 			this._activeItem.active = false
 
 			this._activeItem = undefined
-			;(this.events as TEvented<TActivatableCollectionEvents>).emit('item:deactivated', {
-				collection: this,
-			})
+
+			if (notify) {
+				;(this.events as TEvented<TActivatableCollectionEvents>).emit('item:deactivated', {
+					collection: this,
+				})
+			}
 		}
+
+		super.reset(notify)
 	}
 
 	/**

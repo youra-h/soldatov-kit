@@ -85,7 +85,7 @@ export interface IActivatableCollection<
 	/** Установить активный элемент */
 	setActive(item: TItem): void
 	/** Очистить активный элемент */
-	reset(): void
+	reset(notify?: boolean): void
 	/**
 	 * Найти первый подходящий элемент для активации.
 	 * Поиск начинается с соседних от fromItem позиций (сначала следующий, потом предыдущий).

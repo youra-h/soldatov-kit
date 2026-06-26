@@ -71,11 +71,13 @@ export class TCollection<
 	setItems<TMeta extends ICollectionItemMeta = ICollectionItemMeta>(
 		sources: TCollectionItemSource<TItem, TMeta>[],
 	): void {
-		this.reset()
+		this.reset(false)
 
 		if (sources.length > 0) {
 			this.addItems(sources)
 		}
+
+		this._notifyItems()
 	}
 
 	/**
@@ -111,7 +113,10 @@ export class TCollection<
 	protected _notifyItems(item?: TItem, emitCount = true): void {
 		const ev = this.events as TEvented<TCollectionEvents>
 
-		ev.emit('changed', { collection: this, item })
+		if (item) {
+			ev.emit('changed', { collection: this, item })
+		}
+
 		ev.emit('change:items', this._items)
 
 		if (emitCount) {
@@ -292,13 +297,17 @@ export class TCollection<
 
 	/**
 	 * Полностью очищает коллекцию. Все элементы будут отсоединены.
+	 * Если notify=true, будет вызвано событие 'changed' и 'change:items'.
+	 * @param notify По умолчанию true — эмитить события изменения коллекции.
 	 */
-	reset(): void {
+	reset(notify: boolean = true): void {
 		this._items.forEach((it) => it.free())
 		this._items = []
 
 		// Общий сигнал об изменении коллекции
-		this._notifyItems()
+		if (!!notify) {
+			this._notifyItems()
+		}
 	}
 
 	/**

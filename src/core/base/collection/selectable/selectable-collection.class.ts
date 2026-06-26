@@ -86,9 +86,9 @@ export class TSelectableCollection<
 	 * Перехватывает sources, извлекает _.selected из данных,
 	 * после чего передаёт чистый массив в базовую реализацию.
 	 */
-	override setItems<
-		TMeta extends ISelectableCollectionItemMeta = ISelectableCollectionItemMeta,
-	>(sources: TCollectionItemSource<TItem, TMeta>[]): void {
+	override setItems<TMeta extends ISelectableCollectionItemMeta = ISelectableCollectionItemMeta>(
+		sources: TCollectionItemSource<TItem, TMeta>[],
+	): void {
 		this._extractMeta(sources)
 		super.setItems(sources)
 	}
@@ -180,19 +180,22 @@ export class TSelectableCollection<
 		})
 	}
 
-	reset(): void {
+	reset(notify: boolean = true): void {
 		this._selected.forEach((it) => (it.selected = false))
 
 		this._selected.clear()
-		;(this.events as TEvented<TSelectableCollectionEvents>).emit(
-			'change:selected',
-			this.selected,
-		)
-		;(this.events as TEvented<TSelectableCollectionEvents>).emit(
-			'change:selectedCount',
-			this.selectedCount,
-		)
 
-		super.reset()
+		if (notify) {
+			;(this.events as TEvented<TSelectableCollectionEvents>).emit(
+				'change:selected',
+				this.selected,
+			)
+			;(this.events as TEvented<TSelectableCollectionEvents>).emit(
+				'change:selectedCount',
+				this.selectedCount,
+			)
+		}
+
+		super.reset(notify)
 	}
 }
