@@ -58,8 +58,8 @@ export default {
 <template>
 	<Button
 		ref="rootRef"
-		v-if="rendered"
-		v-show="visible"
+		:visible="visible"
+		:rendered="rendered"
 		:class="classes"
 		:style="{ order }"
 		:tag="tag"
