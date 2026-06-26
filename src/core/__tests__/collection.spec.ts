@@ -240,17 +240,17 @@ describe('TCollection — patchItems', () => {
 
 		col.patchItems(
 			[
-				{ id: (a as any).uid, name: 'Alice Updated', value: 10 },
-				{ id: (b as any).uid, name: 'Bob Updated', value: 20 },
+				{ name: 'Alice Updated', value: 1 },
+				{ name: 'Bob Updated', value: 2 },
 			],
-			(item: any) => item.id,
+			(item: any) => item.value,
 		)
 
 		expect(col.count).toBe(2)
 		expect(a.name).toBe('Alice Updated')
-		expect(a.value).toBe(10)
+		expect(a.value).toBe(1)
 		expect(b.name).toBe('Bob Updated')
-		expect(b.value).toBe(20)
+		expect(b.value).toBe(2)
 		// Сохранились те же инстансы
 		expect(col.getItem(0)).toBe(a)
 		expect(col.getItem(1)).toBe(b)

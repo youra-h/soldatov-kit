@@ -19,10 +19,10 @@ import { TEntity } from '../../base/entity'
  * @fires afterMove - Элемент был перемещён
  */
 export class TCollection<
-	TProps extends ICollectionProps = ICollectionProps,
-	TEvents extends TCollectionEvents = TCollectionEvents,
-	TItem extends ICollectionItem = ICollectionItem,
->
+		TProps extends ICollectionProps = ICollectionProps,
+		TEvents extends TCollectionEvents = TCollectionEvents,
+		TItem extends ICollectionItem = ICollectionItem,
+	>
 	extends TEntity<TProps>
 	implements ICollection<TProps, TEvents, TItem>
 {
@@ -87,6 +87,7 @@ export class TCollection<
 	 * @param trackBy  Функция идентификации: (item) => ключ.
 	 *                 Элементы с одинаковым ключом обновляются (assign),
 	 *                 новые добавляются (add), отсутствующие удаляются (delete).
+	 *                 При дублирующихся ключах в source побеждает последний.
 	 */
 	patchItems<TMeta extends ICollectionItemMeta = ICollectionItemMeta>(
 		sources: TCollectionItemSource<TItem, TMeta>[],
@@ -94,41 +95,43 @@ export class TCollection<
 	): void {
 		if (!trackBy) return
 
-		const assignMap = new Map<unknown, TItem>()
-		const addMap = new Map<unknown, Partial<TItem>>()
-		const deleteMap = new Map<unknown, TItem>()
+		// Сопоставляем ключи существующим элементам
+		const itemByKey = new Map<unknown, TItem>()
 
-		// Создаем карты assignMap, addMap и deleteMap для отслеживания элементов по ключу
 		this._items.forEach((item) => {
 			const key = trackBy(item)
-			deleteMap.set(key, item)
-		})
-
-		sources.forEach((source) => {
-			const key = trackBy(source)
-
-			if (deleteMap.has(key)) {
-				assignMap.set(key, deleteMap.get(key)!)
-				deleteMap.delete(key)
-			} else {
-				addMap.set(key, source)
+			if (!itemByKey.has(key)) {
+				itemByKey.set(key, item)
 			}
 		})
 
-		// Удаляем элементы, которых нет в новых данных
-		deleteMap.forEach((item) => this.deleteItem(item))
+		// Какие ключи были найдены в source
+		const matchedKeys = new Set<unknown>()
 
-		// Обновляем существующие элементы
-		assignMap.forEach((item, key) => {
-			const source = sources.find((s) => trackBy(s) === key)!
+		sources.forEach((source) => {
+			const key = trackBy(source)
+			const existing = itemByKey.get(key)
 
-			this._assignItem(item, source)
+			if (existing) {
+				// Обновляем существующий элемент (последний source побеждает)
+				this._assignItem(existing, source)
+				matchedKeys.add(key)
+			} else {
+				// Добавляем новый элемент
+				this.add(source)
+			}
 		})
 
-		// Добавляем новые элементы
-		addMap.forEach((source) => {
-			this.add(source)
+		// Удаляем элементы, чьи ключи не были найдены в source
+		const toDelete: TItem[] = []
+
+		itemByKey.forEach((item, key) => {
+			if (!matchedKeys.has(key)) {
+				toDelete.push(item)
+			}
 		})
+
+		toDelete.forEach((item) => this.deleteItem(item))
 
 		this._notifyItems()
 	}

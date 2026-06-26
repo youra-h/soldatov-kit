@@ -44,15 +44,18 @@ export class TActivatableCollection<
 			return
 		}
 
-		if (this._activeItem) {
-			this._activeItem.active = false
-		}
-
+		const prev = this._activeItem
 		this._activeItem = item
 
 		// Устанавливаем active только если он еще не установлен
 		if (!item.active) {
 			item.active = true
+		}
+
+		// Деактивируем предыдущий ПОСЛЕ установки нового _activeItem,
+		// чтобы change:activation от prev.active = false не вызвал reset()
+		if (prev) {
+			prev.active = false
 		}
 
 		;(this.events as TEvented<TActivatableCollectionEvents>).emit('item:activated', {

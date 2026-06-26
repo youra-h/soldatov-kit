@@ -103,11 +103,11 @@ describe('TActivatableCollection', () => {
 
 		// добавляем элементы, несколько с active: true
 		const items = col.addItems([
-			{ active: true },
-			{ active: false },
-			{ active: true },
-			{ active: true },
-			{ active: false },
+			{ _: { active: true } },
+			{ _: { active: false } },
+			{ _: { active: true } },
+			{ _: { active: true } },
+			{ _: { active: false } },
 		])
 
 		expect(items).toHaveLength(5)
@@ -259,7 +259,7 @@ describe('TActivatableCollection', () => {
 				{ _: { active: true } } as any,
 				{ _: { active: true } } as any,
 				{ _: { active: true } } as any,
-			]
+			])
 
 			expect(col.count).toBe(3)
 			expect(col.activeItem).toBe(col.getItem(2))
@@ -301,10 +301,7 @@ describe('TActivatableCollection', () => {
 		it('adds new item with active state via patchItems', () => {
 			const col = new TActivatableCollection({ itemClass: TActivatableCollectionItem })
 
-			col.patchItems(
-				[{ id: 1, active: true }],
-				trackBy,
-			)
+			col.patchItems([{ id: 1, active: true }], trackBy)
 
 			expect(col.count).toBe(1)
 			expect(col.activeItem).toBe(col.getItem(0))
