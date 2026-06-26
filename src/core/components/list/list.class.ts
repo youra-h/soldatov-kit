@@ -175,16 +175,20 @@ export class TList<
 	}
 
 	/**
-	 * Количество видимых элементов с учётом maxRows.
-	 * 0 = показать все элементы.
+	 * Количество видимых (rendered) элементов с учётом maxRows.
+	 * 0 = показать все видимые элементы.
 	 * @returns Количество видимых элементов
 	 */
 	getVisibleItemCount(): number {
-		const total = this._collection.items.length
+		let visible = 0
 
-		if (this._maxRows === 0) return total
+		for (const item of this._collection) {
+			if (item.rendered && item.visible) visible++
+		}
 
-		return Math.min(this._maxRows, total)
+		if (this._maxRows === 0) return visible
+
+		return Math.min(this._maxRows, visible)
 	}
 
 	get collection(): TSelectableCollection<any, any, TItem> {
