@@ -66,14 +66,6 @@ export class TCollection<
 	}
 
 	/**
-	 * Заменяет содержимое коллекции: очищает и заполняет из массива данных.
-	 * @param sources Массив данных для создания элементов
-	 */
-	set items(sources: TCollectionItemSource<TItem, ICollectionItemMeta>[]) {
-		this.applyItems(sources)
-	}
-
-	/**
 	 * Очищает коллекцию и заполняет из массива данных.
 	 * Вынесен в отдельный protected метод для оверрайда в наследниках.
 	 */
@@ -95,22 +87,7 @@ export class TCollection<
 	 */
 	patchItems<TMeta extends ICollectionItemMeta = ICollectionItemMeta>(
 		sources: TCollectionItemSource<TItem, TMeta>[],
-	): void {
-		// Удалить лишние элементы
-		while (this._items.length > sources.length) {
-			this.delete(this._items.length - 1)
-		}
-
-		// Обновить существующие
-		for (let i = 0; i < this._items.length; i++) {
-			this._items[i].assign(sources[i] as TItem)
-		}
-
-		// Добавить новые
-		for (let i = this._items.length; i < sources.length; i++) {
-			this.add(sources[i])
-		}
-	}
+	): void {}
 
 	/**
 	 * Вспомогательный метод, собирает и эмитит общие события коллекции:

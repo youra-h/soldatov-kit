@@ -88,9 +88,7 @@ export class TSelectableCollection<
 	 */
 	override applyItems<
 		TMeta extends ISelectableCollectionItemMeta = ISelectableCollectionItemMeta,
-	>(
-		sources: TCollectionItemSource<TItem, TMeta>[],
-	): void {
+	>(sources: TCollectionItemSource<TItem, TMeta>[]): void {
 		this._extractMeta(sources)
 		super.applyItems(sources)
 	}
@@ -101,10 +99,7 @@ export class TSelectableCollection<
 	 */
 	override patchItems<
 		TMeta extends ISelectableCollectionItemMeta = ISelectableCollectionItemMeta,
-	>(
-		sources: TCollectionItemSource<TItem, TMeta>[],
-	): void {
-		this._extractMeta(sources)
+	>(sources: TCollectionItemSource<TItem, TMeta>[]): void {
 		super.patchItems(sources)
 	}
 
@@ -189,7 +184,6 @@ export class TSelectableCollection<
 		this._selected.forEach((it) => (it.selected = false))
 
 		this._selected.clear()
-
 		;(this.events as TEvented<TSelectableCollectionEvents>).emit(
 			'change:selected',
 			this.selected,

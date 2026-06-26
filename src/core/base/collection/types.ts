@@ -133,10 +133,9 @@ export type TItemProxyEvents<TItem> = {
 
 export interface ICollectionMethods<TItem extends ICollectionItem = ICollectionItem> {
 	/** Применяет массив данных к коллекции, очищая её и создавая новые элементы */
-	applyItems<TMeta extends ICollectionItemMeta = ICollectionItemMeta>(sources: TCollectionItemSource<TItem, TMeta>[]): void
-
-	/** Обновляет поля существующих элементов без очистки коллекции */
-	patchItems<TMeta extends ICollectionItemMeta = ICollectionItemMeta>(sources: TCollectionItemSource<TItem, TMeta>[]): void
+	applyItems<TMeta extends ICollectionItemMeta = ICollectionItemMeta>(
+		sources: TCollectionItemSource<TItem, TMeta>[],
+	): void
 
 	/** Добавляет новый элемент и возвращает его */
 	add(source?: Partial<TItem>): TItem
@@ -213,7 +212,6 @@ export interface ICollectionMethods<TItem extends ICollectionItem = ICollectionI
 	 * Setter очищает коллекцию и заполняет из нового массива данных.
 	 */
 	get items(): TItem[]
-	set items(sources: TCollectionItemSource<TItem, ICollectionItemMeta>[])
 
 	/**
 	 * Возвращает первый элемент, удовлетворяющий условию предиката.
@@ -236,6 +234,8 @@ export interface ICollection<
 >
 	extends IEntity<TProps>, ICollectionMethods<TItem> {
 	readonly events: TEvented<TEvents>
+	/** Текущие элементы коллекции */
+	readonly items: TItem[]
 	/** Количество элементов в коллекции */
 	readonly count: number
 }

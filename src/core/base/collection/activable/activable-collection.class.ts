@@ -105,9 +105,7 @@ export class TActivatableCollection<
 	 */
 	override applyItems<
 		TMeta extends IActivatableCollectionItemMeta = IActivatableCollectionItemMeta,
-	>(
-		sources: TCollectionItemSource<TItem, TMeta>[],
-	): void {
+	>(sources: TCollectionItemSource<TItem, TMeta>[]): void {
 		this._extractMeta(sources)
 		super.applyItems(sources)
 	}
@@ -118,10 +116,7 @@ export class TActivatableCollection<
 	 */
 	override patchItems<
 		TMeta extends IActivatableCollectionItemMeta = IActivatableCollectionItemMeta,
-	>(
-		sources: TCollectionItemSource<TItem, TMeta>[],
-	): void {
-		this._extractMeta(sources)
+	>(sources: TCollectionItemSource<TItem, TMeta>[]): void {
 		super.patchItems(sources)
 	}
 
