@@ -97,14 +97,14 @@ describe('TSelectableCollection', () => {
 
 		expect(col.selectedCount).toBe(2)
 
-		col.clear()
+		col.reset()
 
 		expect(col.selectedCount).toBe(0)
 		expect(a.selected).toBe(false)
 		expect(b.selected).toBe(false)
 	})
 
-	it('addFromArray() subscribes to item events and maintains selection state', () => {
+	it('addItems() subscribes to item events and maintains selection state', () => {
 		const col = new TSelectableCollection({
 			itemClass: TSelectableCollectionItem,
 			mode: 'multiple',
@@ -114,7 +114,7 @@ describe('TSelectableCollection', () => {
 		col.events.on('item:selected', selectedSpy)
 
 		// добавляем элементы с разным состоянием selected
-		const items = col.addFromArray([
+		const items = col.addItems([
 			{ selected: true },
 			{ selected: false },
 			{ selected: true },
@@ -153,17 +153,17 @@ describe('TSelectableCollection', () => {
 	})
 
 	describe('_ (underscore) meta data', () => {
-		it('set items extracts _.selected and applies it to elements', () => {
+		it('setItems extracts _.selected and applies it to elements', () => {
 			const col = new TSelectableCollection({
 				itemClass: TSelectableCollectionItem,
 				mode: 'multiple',
 			})
 
-			col.items = [
+			col.setItems([
 				{ _: { selected: true } } as any,
 				{} as any,
 				{ _: { selected: true } } as any,
-			]
+			])
 
 			expect(col.count).toBe(3)
 			expect(col.selectedCount).toBe(2)
@@ -172,13 +172,13 @@ describe('TSelectableCollection', () => {
 			expect(col.getItem(2)!.selected).toBe(true)
 		})
 
-		it('set items removes _ from source after extraction', () => {
+		it('setItems removes _ from source after extraction', () => {
 			const col = new TSelectableCollection({
 				itemClass: TSelectableCollectionItem,
 			})
 
 			const source = { _: { selected: true } } as any
-			col.items = [source]
+			col.setItems([source])
 
 			expect(source._).toBeUndefined()
 			expect(source.selected).toBe(true)
@@ -190,7 +190,7 @@ describe('TSelectableCollection', () => {
 				mode: 'multiple',
 			})
 
-			col.items = [{}, {}, {}]
+			col.setItems([{}, {}, {}])
 
 			col.patchItems([
 				{ _: { selected: true } } as any,

@@ -60,7 +60,7 @@ export class TSelectableCollection<
 
 		if (value === 'none') {
 			// полностью очистить выбор
-			this.clear()
+			this.reset()
 		}
 
 		this._mode = value
@@ -86,11 +86,11 @@ export class TSelectableCollection<
 	 * Перехватывает sources, извлекает _.selected из данных,
 	 * после чего передаёт чистый массив в базовую реализацию.
 	 */
-	override applyItems<
+	override setItems<
 		TMeta extends ISelectableCollectionItemMeta = ISelectableCollectionItemMeta,
 	>(sources: TCollectionItemSource<TItem, TMeta>[]): void {
 		this._extractMeta(sources)
-		super.applyItems(sources)
+		super.setItems(sources)
 	}
 
 	/**
@@ -180,7 +180,7 @@ export class TSelectableCollection<
 		})
 	}
 
-	clear(): void {
+	reset(): void {
 		this._selected.forEach((it) => (it.selected = false))
 
 		this._selected.clear()
@@ -193,6 +193,6 @@ export class TSelectableCollection<
 			this.selectedCount,
 		)
 
-		super.clear()
+		super.reset()
 	}
 }

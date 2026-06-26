@@ -63,7 +63,7 @@ export class TActivatableCollection<
 	}
 
 	/** Очистить активный элемент */
-	clear(): void {
+	reset(): void {
 		if (this._activeItem) {
 			this._activeItem.active = false
 
@@ -103,11 +103,11 @@ export class TActivatableCollection<
 	 * Перехватывает sources, извлекает _.active из данных,
 	 * после чего передаёт чистый массив в базовую реализацию.
 	 */
-	override applyItems<
+	override setItems<
 		TMeta extends IActivatableCollectionItemMeta = IActivatableCollectionItemMeta,
 	>(sources: TCollectionItemSource<TItem, TMeta>[]): void {
 		this._extractMeta(sources)
-		super.applyItems(sources)
+		super.setItems(sources)
 	}
 
 	/**
@@ -155,7 +155,7 @@ export class TActivatableCollection<
 			if (changedItem.active && !isSame(this._activeItem, changedItem)) {
 				this.setActive(changedItem)
 			} else if (!changedItem.active && isSame(this._activeItem, changedItem)) {
-				this.clear()
+				this.reset()
 			}
 		})
 	}

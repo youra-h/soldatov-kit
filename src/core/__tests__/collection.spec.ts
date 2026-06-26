@@ -59,14 +59,14 @@ describe('TCollection', () => {
         expect(payload.item).toBe(item)
     })
 
-	it('addFromArray() creates multiple items from array and emits "item:added" for each', () => {
+	it('addItems() creates multiple items from array and emits "item:added" for each', () => {
 		const col = new TCollection({ itemClass: TestItem })
 		const spy = vi.fn()
 
 		col.events.on('item:added', spy)
 
 		const sources = [{}, {}, {}]
-		const items = col.addFromArray(sources)
+		const items = col.addItems(sources)
 
 		expect(items).toHaveLength(3)
 		expect(col.count).toBe(3)
@@ -78,13 +78,13 @@ describe('TCollection', () => {
 		})
 	})
 
-	it('addFromArray() returns empty array when called with empty array', () => {
+	it('addItems() returns empty array when called with empty array', () => {
 		const col = new TCollection({ itemClass: TestItem })
 		const spy = vi.fn()
 
 		col.events.on('item:added', spy)
 
-		const items = col.addFromArray([])
+		const items = col.addItems([])
 
 		expect(items).toHaveLength(0)
 		expect(col.count).toBe(0)
@@ -147,7 +147,7 @@ describe('TCollection', () => {
 		const spyFree1 = vi.spyOn(i1, 'free')
 		const spyFree2 = vi.spyOn(i2, 'free')
 
-		col.clear()
+		col.reset()
 
 		expect(col.count).toBe(0)
 		expect(spyCleared).toHaveBeenCalled()

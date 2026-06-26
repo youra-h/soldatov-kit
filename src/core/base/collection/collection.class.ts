@@ -66,16 +66,15 @@ export class TCollection<
 	}
 
 	/**
-	 * Очищает коллекцию и заполняет из массива данных.
-	 * Вынесен в отдельный protected метод для оверрайда в наследниках.
+	 * Заменяет содержимое коллекции: очищает и заполняет из массива данных.
 	 */
-	applyItems<TMeta extends ICollectionItemMeta = ICollectionItemMeta>(
+	setItems<TMeta extends ICollectionItemMeta = ICollectionItemMeta>(
 		sources: TCollectionItemSource<TItem, TMeta>[],
 	): void {
-		this.clear()
+		this.reset()
 
 		if (sources.length > 0) {
-			this.addFromArray(sources)
+			this.addItems(sources)
 		}
 	}
 
@@ -90,13 +89,15 @@ export class TCollection<
 	): void {}
 
 	/**
-	 * Создаёт и добавляет элементы из массива в конец коллекции.
+	 * Создаёт и добавляет элементы в конец коллекции.
 	 * Каждый элемент массива обрабатывается через метод add(),
 	 * что гарантирует корректную работу событий и подписок.
 	 * @param sources Массив данных для создания элементов
 	 * @returns Массив созданных элементов
 	 */
-	addFromArray(sources: Partial<TItem>[]): TItem[] {
+	addItems<TMeta extends ICollectionItemMeta = ICollectionItemMeta>(
+		sources: TCollectionItemSource<TItem, TMeta>[],
+	): TItem[] {
 		return sources.map((source) => this.add(source))
 	}
 
@@ -292,7 +293,7 @@ export class TCollection<
 	/**
 	 * Полностью очищает коллекцию. Все элементы будут отсоединены.
 	 */
-	clear(): void {
+	reset(): void {
 		this._items.forEach((it) => it.free())
 		this._items = []
 

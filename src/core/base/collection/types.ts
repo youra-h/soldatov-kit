@@ -12,7 +12,7 @@ import { TEvented } from '../../common/evented'
  */
 export interface ICollectionProps<TItem extends ICollectionItem = ICollectionItem> {
 	/**
-	 * Данные для наполнения коллекции через addFromArray.
+	 * Данные для наполнения коллекции через addItems.
 	 * При установке коллекция очищается и заполняется из этого массива.
 	 */
 	items?: Partial<TItem>[]
@@ -132,8 +132,8 @@ export type TItemProxyEvents<TItem> = {
 }
 
 export interface ICollectionMethods<TItem extends ICollectionItem = ICollectionItem> {
-	/** Применяет массив данных к коллекции, очищая её и создавая новые элементы */
-	applyItems<TMeta extends ICollectionItemMeta = ICollectionItemMeta>(
+	/** Заменяет содержимое коллекции: очищает и заполняет из массива данных */
+	setItems<TMeta extends ICollectionItemMeta = ICollectionItemMeta>(
 		sources: TCollectionItemSource<TItem, TMeta>[],
 	): void
 
@@ -141,10 +141,12 @@ export interface ICollectionMethods<TItem extends ICollectionItem = ICollectionI
 	add(source?: Partial<TItem>): TItem
 
 	/**
-	 * Добавляет элементы из массива и возвращает массив созданных элементов
+	 * Добавляет элементы в конец коллекции и возвращает массив созданных элементов
 	 * @param sources Массив данных для создания элементов
 	 */
-	addFromArray(sources: Partial<TItem>[]): TItem[]
+	addItems<TMeta extends ICollectionItemMeta = ICollectionItemMeta>(
+		sources: TCollectionItemSource<TItem, TMeta>[],
+	): TItem[]
 
 	/**
 	 * Вернуть индекс элемента
@@ -186,7 +188,7 @@ export interface ICollectionMethods<TItem extends ICollectionItem = ICollectionI
 	deleteItem(item: TItem): boolean
 
 	/** Полностью очищает коллекцию */
-	clear(): void
+	reset(): void
 
 	/**
 	 * Перемещает элемент в новую позицию

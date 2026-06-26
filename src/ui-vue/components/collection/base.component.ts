@@ -73,16 +73,16 @@ export function syncCollection<TItem extends ICollectionItem = ICollectionItem>(
 		plugins.get(TDragPlugin)?.activate(instance)
 	}
 
-	// Наполняем коллекцию из prop items через сеттер instance.items.
+	// Наполняем коллекцию из prop items через setItems.
 	// immediate — начальное заполнение, deep — реакция на мутации (push, splice и т.д.).
-	// В обоих случаях делаем полный clear + addFromArray, потому что
+	// В обоих случаях делаем полный reset + addItems, потому что
 	// без идентификаторов в source-объектах невозможно сопоставить их с instance'ами
 	// для частичного обновления (patchItems по индексу ломается при любых мутациях).
 	watch(
 		() => props.items,
 		(items) => {
 			if (items !== undefined) {
-				instance.items = items
+				instance.setItems(items)
 			}
 		},
 		{ immediate: true, deep: true },
