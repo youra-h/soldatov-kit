@@ -90,6 +90,17 @@ export class TCollection<
 	): void {}
 
 	/**
+	 * Создаёт и добавляет элементы из массива в конец коллекции.
+	 * Каждый элемент массива обрабатывается через метод add(),
+	 * что гарантирует корректную работу событий и подписок.
+	 * @param sources Массив данных для создания элементов
+	 * @returns Массив созданных элементов
+	 */
+	addFromArray(sources: Partial<TItem>[]): TItem[] {
+		return sources.map((source) => this.add(source))
+	}
+
+	/**
 	 * Вспомогательный метод, собирает и эмитит общие события коллекции:
 	 * 'changed', 'change:items' и опционально 'change:count'.
 	 * @param item Опционально — элемент, связанный с изменением.
@@ -147,17 +158,6 @@ export class TCollection<
 	 * @protected
 	 */
 	protected _onAfterItemAdd(item: TItem): void {}
-
-	/**
-	 * Создаёт и добавляет элементы из массива в конец коллекции.
-	 * Каждый элемент массива обрабатывается через метод add(),
-	 * что гарантирует корректную работу событий и подписок.
-	 * @param sources Массив данных для создания элементов
-	 * @returns Массив созданных элементов
-	 */
-	addFromArray(sources: Partial<TItem>[]): TItem[] {
-		return sources.map((source) => this.add(source))
-	}
 
 	/**
 	 * Возвращает элемент по индексу или undefined, если индекс вне диапазона.
