@@ -24,7 +24,7 @@ export class TCollection<
 		TItem extends ICollectionItem = ICollectionItem,
 	>
 	extends TEntity<TProps>
-	implements ICollection<TProps, TEvents, TItem>
+	implements ICollection<TProps, TEvents, TItem>, Iterable<TItem>
 {
 	/**
 	 * Внутренний массив элементов.
@@ -484,6 +484,10 @@ export class TCollection<
 	 */
 	getItems<T extends TItem>(): T[] {
 		return this._items as T[]
+	}
+
+	[Symbol.iterator](): Iterator<TItem> {
+		return this._items[Symbol.iterator]()
 	}
 
 	/**

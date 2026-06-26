@@ -229,6 +229,69 @@ describe('TCollection — getItems', () => {
 	})
 })
 
+describe('TCollection — iterable', () => {
+	it('поддерживает for...of', () => {
+		const col = new TCollection({ itemClass: TestRichItem })
+		col.add({ name: 'Alice', value: 1 })
+		col.add({ name: 'Bob', value: 2 })
+		col.add({ name: 'Charlie', value: 3 })
+
+		const names: string[] = []
+		for (const item of col) {
+			names.push(item.name)
+		}
+
+		expect(names).toEqual(['Alice', 'Bob', 'Charlie'])
+	})
+
+	it('поддерживает spread operator [...collection]', () => {
+		const col = new TCollection({ itemClass: TestRichItem })
+		col.add({ name: 'Alice', value: 1 })
+		col.add({ name: 'Bob', value: 2 })
+
+		const arr = [...col]
+
+		expect(arr).toHaveLength(2)
+		expect(arr[0]!.name).toBe('Alice')
+		expect(arr[1]!.name).toBe('Bob')
+	})
+
+	it('поддерживает Array.from(collection)', () => {
+		const col = new TCollection({ itemClass: TestRichItem })
+		col.add({ name: 'Alice', value: 1 })
+		col.add({ name: 'Bob', value: 2 })
+
+		const arr = Array.from(col)
+
+		expect(arr).toHaveLength(2)
+		expect(arr[0]!.name).toBe('Alice')
+	})
+
+	it('поддерживает деструктуризацию', () => {
+		const col = new TCollection({ itemClass: TestRichItem })
+		col.add({ name: 'Alice', value: 1 })
+		col.add({ name: 'Bob', value: 2 })
+		col.add({ name: 'Charlie', value: 3 })
+
+		const [first, second, third] = col
+
+		expect(first!.name).toBe('Alice')
+		expect(second!.name).toBe('Bob')
+		expect(third!.name).toBe('Charlie')
+	})
+
+	it('пустая коллекция — for...of не делает итераций', () => {
+		const col = new TCollection({ itemClass: TestRichItem })
+		let count = 0
+
+		for (const _ of col) {
+			count++
+		}
+
+		expect(count).toBe(0)
+	})
+})
+
 describe('TCollection — patchItems', () => {
 	const trackBy = (item: any) => item.id
 
