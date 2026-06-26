@@ -118,6 +118,12 @@ watch(
 	{ immediate: true },
 )
 
+// const filteredItems3 = computed(() => {
+// 	const q = filter3.value.toLowerCase()
+// 	if (!q) return items3.value
+// 	return items3.value.filter((item: any) => item.text.toLowerCase().includes(q))
+// })
+
 // Вариант 2: мутации исходного массива (та же ссылка)
 // Требует хранения полного списка отдельно
 // const allItems3 = ref<Partial<any>[]>([])
@@ -148,7 +154,7 @@ watch(
 // const filteredItems3 = computed(() => items3.value)
 
 function handleSelected3(items: any[]) {
-	console.log('handleSelected3')
+	console.log('handleSelected3', items)
 	selected3.value = items.map((item: any) => ({
 		id: item.uid,
 		text: item.text,
@@ -195,22 +201,6 @@ function loadData() {
 
 		isLoading.value = false
 		isLoaded.value = true
-
-		// Мутации для списка 3 (каждая через 1с)
-		setTimeout(() => {
-			console.log('=== Шаг 1: items3.push({ Волгоград }) — мутация, та же ссылка ===')
-			items3.value.push({ text: 'Волгоград', value: 'volgograd' })
-		}, 2000)
-
-		setTimeout(() => {
-			console.log('=== Шаг 2: splice(длина, 0, Оренбург) + splice(1, 1) ===')
-			items3.value.splice(items3.value.length, 0, { text: 'Оренбург', value: 'orenburg' })
-		}, 3000)
-
-		setTimeout(() => {
-			console.log('=== Шаг 3: splice(длина, 0, Орск) + slice(2) ===')
-			items3.value.splice(items3.value.length, 0, { text: 'Орск', value: 'orsk' })
-		}, 4000)
 	}, 1000)
 }
 </script>
@@ -230,6 +220,7 @@ function loadData() {
 		<div v-if="isLoaded" class="list-box-test__timeline">
 			⏱️ 0s — загрузка | 2s — push | 3s — splice | 4s — slice (новая ссылка)
 		</div>
+
 		<div v-if="isLoaded" class="list-box-test__grid">
 			<!-- Список 1: v-for -->
 			<div class="list-box-test__column">
