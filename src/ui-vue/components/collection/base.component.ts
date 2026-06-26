@@ -87,6 +87,16 @@ export function syncCollection<TItem extends ICollectionItem = ICollectionItem>(
 		() => props.items,
 		(items) => {
 			if (items !== undefined) {
+				instance.setItems(items)
+			}
+		},
+		{ immediate: true },
+	)
+
+	watch(
+		() => props.items,
+		(items) => {
+			if (items !== undefined) {
 				if (props.trackBy) {
 					instance.patchItems(items, props.trackBy)
 				} else {
@@ -94,7 +104,7 @@ export function syncCollection<TItem extends ICollectionItem = ICollectionItem>(
 				}
 			}
 		},
-		{ immediate: true },
+		{ deep: true },
 	)
 
 	instance.events.on(

@@ -63,7 +63,7 @@ const citiesSource2 = ref<ICity[]>([])
 const selected2 = ref<ICity[]>([])
 
 function updateInstance2() {
-	instance2.collection.clear()
+	instance2.collection.reset()
 	const q = filter2.value.toLowerCase()
 	const source = q
 		? citiesSource2.value.filter((c) => c.text.toLowerCase().includes(q))
@@ -104,7 +104,7 @@ function loadData() {
 	// Сброс
 	cities1.value = []
 	citiesSource2.value = []
-	instance2.collection.clear()
+	instance2.collection.reset()
 	items3.value = []
 	selected1.value = []
 	selected2.value = []
@@ -230,6 +230,7 @@ function loadData() {
 				<ListBox
 					mode="multiple"
 					:items="items3"
+					:track-by="(item) => item.value"
 					:max-rows="6"
 					@change:selected="handleSelected3"
 				/>
