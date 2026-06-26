@@ -274,15 +274,53 @@ describe('TActivatableCollection', () => {
 			expect(source._).toBeUndefined()
 			expect(source.active).toBe(true)
 		})
+	})
 
-		it('patchItems extracts _.active and updates existing items by index', () => {
+	describe('patchItems with trackBy', () => {
+		const trackBy = (item: any) => item.id
+
+		it('updates active state via patchItems', () => {
 			const col = new TActivatableCollection({ itemClass: TActivatableCollectionItem })
 
-			col.setItems([{}, {}])
+			const a = col.add({} as any)
+			const b = col.add({} as any)
 
-			col.patchItems([{} as any, { _: { active: true } } as any])
+			col.patchItems(
+				[
+					{ id: (a as any).uid, active: false },
+					{ id: (b as any).uid, active: true },
+				],
+				trackBy,
+			)
 
-			expect(col.activeItem).toBe(col.getItem(1))
+			expect(col.activeItem).toBe(b)
+			expect(a.active).toBe(false)
+			expect(b.active).toBe(true)
+		})
+
+		it('adds new item with active state via patchItems', () => {
+			const col = new TActivatableCollection({ itemClass: TActivatableCollectionItem })
+
+			col.patchItems(
+				[{ id: 1, active: true }],
+				trackBy,
+			)
+
+			expect(col.count).toBe(1)
+			expect(col.activeItem).toBe(col.getItem(0))
+			expect(col.getItem(0)!.active).toBe(true)
+		})
+
+		it('clears active when active item is deleted via patchItems', () => {
+			const col = new TActivatableCollection({ itemClass: TActivatableCollectionItem })
+
+			const a = col.add({} as any)
+			col.setActive(a)
+
+			col.patchItems([], trackBy)
+
+			expect(col.count).toBe(0)
+			expect(col.activeItem).toBeUndefined()
 		})
 	})
 })

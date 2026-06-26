@@ -183,25 +183,69 @@ describe('TSelectableCollection', () => {
 			expect(source._).toBeUndefined()
 			expect(source.selected).toBe(true)
 		})
+	})
 
-		it('patchItems extracts _.selected and applies by index', () => {
+	describe('patchItems with trackBy', () => {
+		const trackBy = (item: any) => item.id
+
+		it('updates selection state via patchItems', () => {
 			const col = new TSelectableCollection({
 				itemClass: TSelectableCollectionItem,
 				mode: 'multiple',
 			})
 
-			col.setItems([{}, {}, {}])
+			const a = col.add({} as any)
+			const b = col.add({} as any)
 
-			col.patchItems([
-				{ _: { selected: true } } as any,
-				{} as any,
-				{ _: { selected: true } } as any,
-			])
+			col.patchItems(
+				[
+					{ id: (a as any).uid, selected: true },
+					{ id: (b as any).uid, selected: false },
+				],
+				trackBy,
+			)
 
+			expect(col.selectedCount).toBe(1)
+			expect(a.selected).toBe(true)
+			expect(b.selected).toBe(false)
+		})
+
+		it('adds new items with selected state via patchItems', () => {
+			const col = new TSelectableCollection({
+				itemClass: TSelectableCollectionItem,
+				mode: 'multiple',
+			})
+
+			col.patchItems(
+				[
+					{ id: 1, selected: true },
+					{ id: 2, selected: true },
+				],
+				trackBy,
+			)
+
+			expect(col.count).toBe(2)
 			expect(col.selectedCount).toBe(2)
-			expect(col.getItem(0)!.selected).toBe(true)
-			expect(col.getItem(1)!.selected).toBe(false)
-			expect(col.getItem(2)!.selected).toBe(true)
+		})
+
+		it('deletes items and updates selected count', () => {
+			const col = new TSelectableCollection({
+				itemClass: TSelectableCollectionItem,
+				mode: 'multiple',
+			})
+
+			const a = col.add({} as any)
+			const b = col.add({} as any)
+			a.selected = true
+			b.selected = true
+
+			col.patchItems(
+				[{ id: (a as any).uid, selected: true }],
+				trackBy,
+			)
+
+			expect(col.count).toBe(1)
+			expect(col.selectedCount).toBe(1)
 		})
 	})
 })

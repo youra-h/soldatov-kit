@@ -220,3 +220,145 @@ describe('TCollection — getItems', () => {
 		expect(item.value).toBe(42)
 	})
 })
+
+describe('TCollection — patchItems', () => {
+	const trackBy = (item: any) => item.id
+
+	it('updates existing items by key (assign)', () => {
+		const col = new TCollection({ itemClass: TestRichItem })
+
+		const a = col.add({ name: 'Alice', value: 1 } as any)
+		const b = col.add({ name: 'Bob', value: 2 } as any)
+
+		col.patchItems(
+			[
+				{ id: (a as any).uid, name: 'Alice Updated', value: 10 },
+				{ id: (b as any).uid, name: 'Bob Updated', value: 20 },
+			],
+			(item: any) => item.id,
+		)
+
+		expect(col.count).toBe(2)
+		expect(a.name).toBe('Alice Updated')
+		expect(a.value).toBe(10)
+		expect(b.name).toBe('Bob Updated')
+		expect(b.value).toBe(20)
+		// Сохранились те же инстансы
+		expect(col.getItem(0)).toBe(a)
+		expect(col.getItem(1)).toBe(b)
+	})
+
+	it('adds new items (add)', () => {
+		const col = new TCollection({ itemClass: TestRichItem })
+
+		col.add({ name: 'Alice', value: 1 } as any)
+
+		col.patchItems(
+			[
+				{ name: 'Alice', value: 1 },
+				{ name: 'Bob', value: 2 },
+			],
+			(item: any) => item.name,
+		)
+
+		expect(col.count).toBe(2)
+		expect(col.getItem(0)!.name).toBe('Alice')
+		expect(col.getItem(1)!.name).toBe('Bob')
+	})
+
+	it('deletes removed items (delete)', () => {
+		const col = new TCollection({ itemClass: TestRichItem })
+
+		const a = col.add({ name: 'Alice', value: 1 } as any)
+		const b = col.add({ name: 'Bob', value: 2 } as any)
+
+		const freeSpy = vi.spyOn(b, 'free')
+
+		col.patchItems(
+			[{ name: 'Alice', value: 1 }],
+			(item: any) => item.name,
+		)
+
+		expect(col.count).toBe(1)
+		expect(col.getItem(0)).toBe(a)
+		expect(freeSpy).toHaveBeenCalled()
+	})
+
+	it('combined add, update and delete', () => {
+		const col = new TCollection({ itemClass: TestRichItem })
+
+		const a = col.add({ name: 'Alice', value: 1 } as any) // будет обновлён
+		const b = col.add({ name: 'Bob', value: 2 } as any)   // будет удалён
+		// Charlie — будет добавлен
+
+		col.patchItems(
+			[
+				{ name: 'Alice', value: 100 },
+				{ name: 'Charlie', value: 3 },
+			],
+			(item: any) => item.name,
+		)
+
+		expect(col.count).toBe(2)
+		expect(col.getItem(0)!.name).toBe('Alice')
+		expect((col.getItem(0) as TestRichItem).value).toBe(100)
+		expect(col.getItem(1)!.name).toBe('Charlie')
+		expect((col.getItem(1) as TestRichItem).value).toBe(3)
+	})
+
+	it('does nothing without trackBy', () => {
+		const col = new TCollection({ itemClass: TestRichItem })
+
+		col.add({ name: 'Alice', value: 1 } as any)
+
+		col.patchItems([{ name: 'Bob', value: 2 }])
+
+		expect(col.count).toBe(1)
+		expect(col.getItem(0)!.name).toBe('Alice')
+	})
+
+	it('handles empty sources (clears all)', () => {
+		const col = new TCollection({ itemClass: TestRichItem })
+
+		col.add({ name: 'Alice', value: 1 } as any)
+		col.add({ name: 'Bob', value: 2 } as any)
+
+		col.patchItems([], (item: any) => item.name)
+
+		expect(col.count).toBe(0)
+	})
+
+	it('preserves event subscriptions after patchItems', () => {
+		const col = new TCollection({ itemClass: TestRichItem })
+
+		col.add({ name: 'Alice', value: 1 } as any)
+
+		const spy = vi.fn()
+		col.events.on('change:items', spy)
+
+		col.patchItems(
+			[{ name: 'Bob', value: 2 }],
+			(item: any) => item.name,
+		)
+
+		// Должен сработать change:items
+		expect(spy).toHaveBeenCalled()
+	})
+
+	it('handles duplicate keys (last source wins)', () => {
+		const col = new TCollection({ itemClass: TestRichItem })
+
+		col.add({ name: 'Alice', value: 1 } as any)
+
+		col.patchItems(
+			[
+				{ name: 'Alice', value: 10 },
+				{ name: 'Alice', value: 20 },
+			],
+			(item: any) => item.name,
+		)
+
+		expect(col.count).toBe(1)
+		expect((col.getItem(0) as TestRichItem).value).toBe(20)
+	})
+})

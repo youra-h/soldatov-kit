@@ -86,7 +86,7 @@ export class TCollection<
 	 * @param sources  Массив source-объектов
 	 * @param trackBy  Функция идентификации: (item) => ключ.
 	 *                 Элементы с одинаковым ключом обновляются (assign),
-	 *                 новые добавляются, отсутствующие удаляются.
+	 *                 новые добавляются (add), отсутствующие удаляются (delete).
 	 */
 	patchItems<TMeta extends ICollectionItemMeta = ICollectionItemMeta>(
 		sources: TCollectionItemSource<TItem, TMeta>[],
@@ -94,33 +94,41 @@ export class TCollection<
 	): void {
 		if (!trackBy) return
 
-		const oldMap = new Map<unknown, TItem>()
+		const assignMap = new Map<unknown, TItem>()
+		const addMap = new Map<unknown, Partial<TItem>>()
+		const deleteMap = new Map<unknown, TItem>()
 
-		for (const item of this._items) {
-			oldMap.set(trackBy(item), item)
-		}
+		// Создаем карты assignMap, addMap и deleteMap для отслеживания элементов по ключу
+		this._items.forEach((item) => {
+			const key = trackBy(item)
+			deleteMap.set(key, item)
+		})
 
-		const newItems: TItem[] = []
+		sources.forEach((source) => {
+			const key = trackBy(source)
 
-		for (const source of sources) {
-			const key = trackBy(source as Partial<TItem>)
-			const existing = key !== undefined ? oldMap.get(key) : undefined
-
-			if (existing) {
-				existing.assign(source as TItem)
-				newItems.push(existing)
-				oldMap.delete(key)
+			if (deleteMap.has(key)) {
+				assignMap.set(key, deleteMap.get(key)!)
+				deleteMap.delete(key)
 			} else {
-				newItems.push(this._createItem(source))
+				addMap.set(key, source)
 			}
-		}
+		})
 
-		for (const [, item] of oldMap) {
-			item.free()
-		}
+		// Удаляем элементы, которых нет в новых данных
+		deleteMap.forEach((item) => this.deleteItem(item))
 
-		this._items = newItems
-		this._recalculateOrder()
+		// Обновляем существующие элементы
+		assignMap.forEach((item, key) => {
+			const source = sources.find((s) => trackBy(s) === key)!
+			item.assign(source as TItem)
+		})
+
+		// Добавляем новые элементы
+		addMap.forEach((source) => {
+			this.add(source)
+		})
+
 		this._notifyItems()
 	}
 
