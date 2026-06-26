@@ -120,12 +120,17 @@ export class TActivatableCollection<
 	protected override _onAfterItemAdd(item: TItem): void {
 		this._subscribeItem(item)
 
-		// assign() установил active:true до подписки — обрабатываем начальное состояние явно
+		// assign() установил active:true до подписки — запоминаем без эмита событий,
+		// но деактивируем предыдущий, чтобы не было двух активных
 		if (item.active) {
-			this.setActive(item)
+			const prev = this._activeItem
+			this._activeItem = item
+
+			if (prev && !isSame(prev, item)) {
+				prev.active = false
+			}
 		}
 	}
-
 	/**
 	 * Подписываемся на события элемента
 	 * @param item Элемент коллекции

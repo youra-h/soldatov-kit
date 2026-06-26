@@ -91,16 +91,21 @@ export class TSelectableCollection<
 	}
 
 	/**
-	 * Переопределяем хук для подписки на события элемента перед assign
+	 * Переопределяем хук для подписки на события элемента.
+	 * Если элемент уже помечен как selected (из _assignItemMeta),
+	 * добавляем в _selected без эмита событий — это инициализация, не изменение выделения.
 	 * @param item Элемент коллекции
 	 * @protected
 	 */
 	protected override _onAfterItemAdd(item: TItem): void {
 		this._subscribeItem(item)
 
-		// assign() мог установить selected:true до подписки — обрабатываем начальное состояние явно
 		if (item.selected) {
-			;(item.events as TEvented<TSelectableItemEvents<TItem>>).emit('change:selection', item)
+			if (!this.multiple) {
+				this._selected.clear()
+			}
+
+			this._selected.add(item)
 		}
 	}
 
