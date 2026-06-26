@@ -76,6 +76,14 @@ export class TCollapse
 
 					item.setAppearanceResolver(() => this._appearance)
 
+					item.events.on('change:rendered', (value: boolean) => {
+						;(this.events as TEvented<TCollapseEvents>).emit('item:rendered', item, value)
+					})
+
+					item.events.on('change:visible', (value: boolean) => {
+						;(this.events as TEvented<TCollapseEvents>).emit('item:visible', item, value)
+					})
+
 					item.events.on('change:disabled', (value: boolean) => {
 						;(this.events as TEvented<TCollapseEvents>).emit(
 							'item:disabled',

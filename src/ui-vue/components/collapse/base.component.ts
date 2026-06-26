@@ -32,6 +32,8 @@ export const emitsCollapse: TEmits = [
 	'update:appearance',
 	'item:disabled',
 	'item:text',
+	'item:rendered',
+	'item:visible',
 ] as const
 
 export const propsCollapse: TProps = {
@@ -83,6 +85,14 @@ export function syncCollapse(
 
 	instance.events.on('item:text', (item: ICollapseItem, value: string) => {
 		emit?.('item:text', item, value)
+	})
+
+	instance.events.on('item:rendered', (item: ICollapseItem, value: boolean) => {
+		emit?.('item:rendered', item, value)
+	})
+
+	instance.events.on('item:visible', (item: ICollapseItem, value: boolean) => {
+		emit?.('item:visible', item, value)
 	})
 
 	watch<TCollapseAppearance | undefined>(

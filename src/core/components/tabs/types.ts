@@ -36,6 +36,10 @@ export type TTabsEvents = TControlEvents &
 		'item:closable': (item: ITabItem, value: boolean) => void
 		/** item:text — эмитится при изменении текста таба */
 		'item:text': (item: ITabItem, value: string) => void
+		/** item:rendered — эмитится при изменении rendered у таба */
+		'item:rendered': (item: ITabItem, value: boolean) => void
+		/** item:visible — эмитится при изменении visible у таба */
+		'item:visible': (item: ITabItem, value: boolean) => void
 	}
 
 export interface ITabsProps extends IControlProps {

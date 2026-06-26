@@ -108,6 +108,14 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStates> implem
 						;(this.events as TEvented<TTabsEvents>).emit('item:text', item, payload.newValue)
 					})
 
+					item.events.on('change:rendered', (value: boolean) => {
+						;(this.events as TEvented<TTabsEvents>).emit('item:rendered', item, value)
+					})
+
+					item.events.on('change:visible', (value: boolean) => {
+						;(this.events as TEvented<TTabsEvents>).emit('item:visible', item, value)
+					})
+
 					item.size = this.size
 					item.variant = this.variant
 				},

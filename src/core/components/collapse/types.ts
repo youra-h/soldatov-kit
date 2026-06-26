@@ -16,6 +16,8 @@ export type TCollapseEvents = TControlEvents &
 		/** change:appearance */
 		'change:appearance': (value: TCollapseAppearance) => void
 		'item:text': (item: ICollapseItem, value: string) => void
+		'item:rendered': (item: ICollapseItem, value: boolean) => void
+		'item:visible': (item: ICollapseItem, value: boolean) => void
 	}
 
 export interface ICollapseProps extends IControlProps, ISelectableCollectionProps {
