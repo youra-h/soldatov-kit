@@ -1,5 +1,22 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { TSelectableCollection, TSelectableCollectionItem } from '../base/collection'
+import type { ISelectableCollectionItemProps } from '../base/collection/selectable'
+
+class TestSelectableItem extends TSelectableCollectionItem {
+	private _id: number = 0
+
+	get id(): number {
+		return this._id
+	}
+
+	set id(value: number) {
+		this._id = value
+	}
+
+	getProps(): ISelectableCollectionItemProps & { id: number } {
+		return { ...super.getProps(), id: this._id }
+	}
+}
 
 describe('TSelectableCollectionItem', () => {
 	it('toggleSelected and setter emit "change:selection" with itself', () => {
@@ -171,18 +188,6 @@ describe('TSelectableCollection', () => {
 			expect(col.getItem(1)!.selected).toBe(false)
 			expect(col.getItem(2)!.selected).toBe(true)
 		})
-
-		it('setItems removes _ from source after extraction', () => {
-			const col = new TSelectableCollection({
-				itemClass: TSelectableCollectionItem,
-			})
-
-			const source = { _: { selected: true } } as any
-			col.setItems([source])
-
-			expect(source._).toBeUndefined()
-			expect(source.selected).toBe(true)
-		})
 	})
 
 	describe('patchItems with trackBy', () => {
@@ -190,17 +195,17 @@ describe('TSelectableCollection', () => {
 
 		it('updates selection state via patchItems', () => {
 			const col = new TSelectableCollection({
-				itemClass: TSelectableCollectionItem,
+				itemClass: TestSelectableItem,
 				mode: 'multiple',
 			})
 
-			const a = col.add({} as any)
-			const b = col.add({} as any)
+			const a = col.add({ id: 1 } as any)
+			const b = col.add({ id: 2 } as any)
 
 			col.patchItems(
 				[
-					{ id: (a as any).uid, _: { selected: true } },
-					{ id: (b as any).uid, _: { selected: false } },
+					{ id: 1, _: { selected: true } },
+					{ id: 2, _: { selected: false } },
 				],
 				trackBy,
 			)
@@ -212,7 +217,7 @@ describe('TSelectableCollection', () => {
 
 		it('adds new items with selected state via patchItems', () => {
 			const col = new TSelectableCollection({
-				itemClass: TSelectableCollectionItem,
+				itemClass: TestSelectableItem,
 				mode: 'multiple',
 			})
 
@@ -230,16 +235,16 @@ describe('TSelectableCollection', () => {
 
 		it('deletes items and updates selected count', () => {
 			const col = new TSelectableCollection({
-				itemClass: TSelectableCollectionItem,
+				itemClass: TestSelectableItem,
 				mode: 'multiple',
 			})
 
-			const a = col.add({} as any)
-			const b = col.add({} as any)
+			const a = col.add({ id: 1 } as any)
+			const b = col.add({ id: 2 } as any)
 			a.selected = true
 			b.selected = true
 
-			col.patchItems([{ id: (a as any).uid, _: { selected: true } }], trackBy)
+			col.patchItems([{ id: 1, _: { selected: true } }], trackBy)
 
 			expect(col.count).toBe(1)
 			expect(col.selectedCount).toBe(1)

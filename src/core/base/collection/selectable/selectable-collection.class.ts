@@ -155,6 +155,19 @@ export class TSelectableCollection<
 		})
 	}
 
+	/**
+	 * Переопределяем delete, чтобы очищать _selected при удалении элемента.
+	 */
+	override delete(index: number): boolean {
+		const item = this.getItem(index)
+
+		if (item && this._selected.has(item)) {
+			item.selected = false
+		}
+
+		return super.delete(index)
+	}
+
 	reset(): void {
 		if (this._selected.size > 0) {
 			this._selected.forEach((it) => (it.selected = false))

@@ -100,6 +100,11 @@ export class TCollection<
 
 		this._items.forEach((item) => {
 			const key = trackBy(item)
+
+			if (key === undefined) {
+				throw new Error('patchItems: trackBy вернул undefined для элемента коллекции')
+			}
+
 			if (!itemByKey.has(key)) {
 				itemByKey.set(key, item)
 			}
@@ -110,6 +115,11 @@ export class TCollection<
 
 		sources.forEach((source) => {
 			const key = trackBy(source)
+
+			if (key === undefined) {
+				throw new Error('patchItems: trackBy вернул undefined для source')
+			}
+
 			const existing = itemByKey.get(key)
 
 			if (existing) {

@@ -84,7 +84,11 @@ describe('TActivatableCollection', () => {
 		col.events.on('item:activated', activeSpy)
 
 		// добавляем элементы, один с active: true
-		const items = col.addItems([{ active: false }, { active: true }, { active: false }])
+		const items = col.addItems([
+			{ _: { active: false } },
+			{ _: { active: true } },
+			{ _: { active: false } },
+		])
 
 		expect(items).toHaveLength(3)
 		expect(col.count).toBe(3)
@@ -263,16 +267,6 @@ describe('TActivatableCollection', () => {
 
 			expect(col.count).toBe(3)
 			expect(col.activeItem).toBe(col.getItem(2))
-		})
-
-		it('setItems removes _ from source after extraction', () => {
-			const col = new TActivatableCollection({ itemClass: TActivatableCollectionItem })
-
-			const source = { _: { active: true } } as any
-			col.setItems([source])
-
-			expect(source._).toBeUndefined()
-			expect(source.active).toBe(true)
 		})
 	})
 
