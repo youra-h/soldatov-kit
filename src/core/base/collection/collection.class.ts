@@ -37,6 +37,7 @@ export class TCollection<
 	 * @protected
 	 */
 	protected _itemClass: TConstructor<TItem>
+
 	// События
 	public readonly events: TEvented<TEvents>
 
@@ -81,14 +82,47 @@ export class TCollection<
 	}
 
 	/**
-	 * Обновляет поля существующих элементов без очистки коллекции.
-	 * Каждый source применяется к элементу с тем же индексом через assign.
-	 * Если source больше чем элементов — лишние игнорируются.
-	 * Если source меньше — оставшиеся элементы не трогаются.
+	 * Обновляет элементы по ключу (без очистки коллекции).
+	 * @param sources  Массив source-объектов
+	 * @param trackBy  Функция идентификации: (item) => ключ.
+	 *                 Элементы с одинаковым ключом обновляются (assign),
+	 *                 новые добавляются, отсутствующие удаляются.
 	 */
 	patchItems<TMeta extends ICollectionItemMeta = ICollectionItemMeta>(
 		sources: TCollectionItemSource<TItem, TMeta>[],
-	): void {}
+		trackBy?: (item: Partial<TItem>) => unknown,
+	): void {
+		if (!trackBy) return
+
+		const oldMap = new Map<unknown, TItem>()
+
+		for (const item of this._items) {
+			oldMap.set(trackBy(item), item)
+		}
+
+		const newItems: TItem[] = []
+
+		for (const source of sources) {
+			const key = trackBy(source as Partial<TItem>)
+			const existing = key !== undefined ? oldMap.get(key) : undefined
+
+			if (existing) {
+				existing.assign(source as TItem)
+				newItems.push(existing)
+				oldMap.delete(key)
+			} else {
+				newItems.push(this._createItem(source))
+			}
+		}
+
+		for (const [, item] of oldMap) {
+			item.free()
+		}
+
+		this._items = newItems
+		this._recalculateOrder()
+		this._notifyItems()
+	}
 
 	/**
 	 * Создаёт и добавляет элементы в конец коллекции.
@@ -135,13 +169,24 @@ export class TCollection<
 	}
 
 	/**
+	 * Создаёт новый элемент без добавления в коллекцию.
+	 * Используется в patchItems для унификации создания.
+	 * @protected
+	 */
+	protected _createItem(source: Partial<TItem>): TItem {
+		const item = new this._itemClass({ collection: this })
+
+		item.assign(source as TItem)
+
+		return item
+	}
+
+	/**
 	 * Создаёт и добавляет новый элемент в конец коллекции.
 	 * Возвращает созданный элемент.
 	 */
 	add(source: Partial<TItem> = {}): TItem {
-		const item = new this._itemClass({ collection: this })
-
-		item.assign(source as TItem)
+		const item = this._createItem(source)
 
 		this.insertAt(item)
 

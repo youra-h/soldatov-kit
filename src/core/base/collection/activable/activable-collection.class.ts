@@ -25,7 +25,9 @@ export class TActivatableCollection<
 {
 	private _activeItem?: TItem
 
-	constructor(options?: { itemClass?: TConstructor<TItem> }) {
+	constructor(options?: {
+		itemClass?: TConstructor<TItem>
+	}) {
 		super({
 			itemClass: (options?.itemClass ?? TActivatableCollectionItem) as TConstructor<TItem>,
 		})
@@ -118,8 +120,11 @@ export class TActivatableCollection<
 	 */
 	override patchItems<
 		TMeta extends IActivatableCollectionItemMeta = IActivatableCollectionItemMeta,
-	>(sources: TCollectionItemSource<TItem, TMeta>[]): void {
-		super.patchItems(sources)
+	>(
+		sources: TCollectionItemSource<TItem, TMeta>[],
+		trackBy?: (item: Partial<TItem>) => unknown,
+	): void {
+		super.patchItems(sources, trackBy)
 	}
 
 	/** Извлекает состояния (active) из поля _ и удаляет _ из source. */

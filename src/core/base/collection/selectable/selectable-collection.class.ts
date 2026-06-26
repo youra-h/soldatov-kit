@@ -31,7 +31,10 @@ export class TSelectableCollection<
 	protected _mode: TSelectionMode
 	private _selected: Set<TItem> = new Set()
 
-	constructor(options?: { itemClass?: TConstructor<TItem>; mode?: TSelectionMode }) {
+	constructor(options?: {
+		itemClass?: TConstructor<TItem>
+		mode?: TSelectionMode
+	}) {
 		super({
 			itemClass: (options?.itemClass ?? TSelectableCollectionItem) as TConstructor<TItem>,
 		})
@@ -99,8 +102,11 @@ export class TSelectableCollection<
 	 */
 	override patchItems<
 		TMeta extends ISelectableCollectionItemMeta = ISelectableCollectionItemMeta,
-	>(sources: TCollectionItemSource<TItem, TMeta>[]): void {
-		super.patchItems(sources)
+	>(
+		sources: TCollectionItemSource<TItem, TMeta>[],
+		trackBy?: (item: Partial<TItem>) => unknown,
+	): void {
+		super.patchItems(sources, trackBy)
 	}
 
 	/** Извлекает состояния (selected) из поля _ и удаляет _ из source. */

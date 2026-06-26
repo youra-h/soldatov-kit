@@ -33,6 +33,10 @@ export const propsCollection: TProps = {
 		type: Array as PropType<Partial<ICollectionItem>[]>,
 		default: undefined,
 	},
+	trackBy: {
+		type: Function as PropType<(item: any) => unknown>,
+		default: undefined,
+	},
 }
 
 export default {
@@ -74,24 +78,21 @@ export function syncCollection<TItem extends ICollectionItem = ICollectionItem>(
 		plugins.get(TDragPlugin)?.activate(instance)
 	}
 
+	// Если задан trackBy — умное обновление через patchItems, иначе полная замена setItems.
+	// Без deep: true — мутации массива (push, splice) не отслеживаются.
+	// Для мутаций используйте :ctrl="instance" и ООП-методы коллекции.
 	watch(
 		() => props.items,
 		(items) => {
 			if (items !== undefined) {
-				instance.setItems(items)
+				if (props.trackBy) {
+					instance.patchItems(items, props.trackBy)
+				} else {
+					instance.setItems(items)
+				}
 			}
 		},
-		{ immediate: true, deep: true },
-	)
-
-	watch(
-		() => props.items,
-		(items, oldItems) => {
-			if (items !== undefined && items === oldItems) {
-				// instance.p atchItems(items)
-			}
-		},
-		{ deep: true },
+		{ immediate: true },
 	)
 
 	instance.events.on(

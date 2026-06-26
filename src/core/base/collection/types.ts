@@ -140,6 +140,15 @@ export interface ICollectionMethods<TItem extends ICollectionItem = ICollectionI
 		sources: TCollectionItemSource<TItem, TMeta>[],
 	): void
 
+	/**
+	 * Обновляет элементы по ключу (без очистки коллекции).
+	 * @param trackBy Функция идентификации: (item) => ключ
+	 */
+	patchItems<TMeta extends ICollectionItemMeta = ICollectionItemMeta>(
+		sources: TCollectionItemSource<TItem, TMeta>[],
+		trackBy?: (item: Partial<TItem>) => unknown,
+	): void
+
 	/** Добавляет новый элемент и возвращает его */
 	add(source?: Partial<TItem>): TItem
 
