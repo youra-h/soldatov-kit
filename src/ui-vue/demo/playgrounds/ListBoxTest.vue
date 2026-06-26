@@ -61,21 +61,14 @@ function handleSelected1(items: any[]) {
 // --- Список 2: :instance ---
 const instance2 = new TListBox({ maxRows: 6, mode: 'multiple' })
 
-const citiesSource2 = ref<ICity[]>([])
 const selected2 = ref<ICity[]>([])
 
 function updateInstance2() {
-	instance2.collection.reset()
-
 	const q = filter2.value.toLowerCase()
 
-	const source = q
-		? citiesSource2.value.filter((c) => c.text.toLowerCase().includes(q))
-		: citiesSource2.value
-
-	source.forEach((c) => {
-		instance2.collection.add({ text: c.text, value: c.value })
-	})
+	for (const item of instance2.collection) {
+		item.rendered = q ? item.text.toLowerCase().includes(q) : true
+	}
 }
 
 instance2.events.on('change:selected', (items: any[]) => {
@@ -175,7 +168,6 @@ function loadData() {
 
 	// Сброс
 	cities1.value = []
-	citiesSource2.value = []
 	instance2.collection.reset()
 	items3.value = []
 	selected1.value = []
@@ -193,10 +185,9 @@ function loadData() {
 		cities1.value = data
 
 		// Список 2: instance
-		citiesSource2.value = data.map((c) => ({ ...c }))
-		data.forEach((c) => {
-			instance2.collection.add({ text: c.text, value: c.value })
-		})
+		instance2.collection.setItems(
+			data.map((c) => ({ text: c.text, value: c.value })),
+		)
 
 		// Список 3: items prop
 		items3.value = data.map((c) => ({ text: c.text, value: c.value }))
