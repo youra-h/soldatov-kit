@@ -121,7 +121,8 @@ export class TCollection<
 		// Обновляем существующие элементы
 		assignMap.forEach((item, key) => {
 			const source = sources.find((s) => trackBy(s) === key)!
-			item.assign(source as TItem)
+
+			this._assignItem(item, source)
 		})
 
 		// Добавляем новые элементы
@@ -178,16 +179,36 @@ export class TCollection<
 
 	/**
 	 * Создаёт новый элемент без добавления в коллекцию.
-	 * Используется в patchItems для унификации создания.
+	 * Используется в add() и patchItems для унификации создания.
 	 * @protected
 	 */
 	protected _createItem(source: Partial<TItem>): TItem {
 		const item = new this._itemClass({ collection: this })
 
-		item.assign(source as TItem)
+		this._assignItem(item, source)
 
 		return item
 	}
+
+	/**
+	 * Присваивает данные из source элементу.
+	 * Разделяет source на props и meta, вызывает assign и хук _assignItemMeta.
+	 * @protected
+	 */
+	protected _assignItem(item: TItem, source: Partial<TItem>): void {
+		const { _, ...props } = source as any
+
+		item.assign(props as TItem)
+
+		this._assignItemMeta(item, _ as ICollectionItemMeta)
+	}
+
+	/**
+	 * Хук для применения meta-данных к элементу.
+	 * Переопределяется в TSelectableCollection (selected) и TActivatableCollection (active).
+	 * @protected
+	 */
+	protected _assignItemMeta(item: TItem, meta: ICollectionItemMeta): void {}
 
 	/**
 	 * Создаёт и добавляет новый элемент в конец коллекции.

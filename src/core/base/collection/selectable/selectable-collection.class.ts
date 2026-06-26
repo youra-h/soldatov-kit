@@ -9,7 +9,6 @@ import type {
 	TSelectionMode,
 	TSelectableItemEvents,
 } from './types'
-import type { TCollectionItemSource } from '../item/types'
 import type { TConstructor } from '../../../common/types'
 import { TEvented } from '../../../common/evented'
 
@@ -86,39 +85,15 @@ export class TSelectableCollection<
 	}
 
 	/**
-	 * Перехватывает sources, извлекает _.selected из данных,
-	 * после чего передаёт чистый массив в базовую реализацию.
+	 * Применяет meta-данные (selected) к элементу.
 	 */
-	override setItems<TMeta extends ISelectableCollectionItemMeta = ISelectableCollectionItemMeta>(
-		sources: TCollectionItemSource<TItem, TMeta>[],
+	protected override _assignItemMeta(
+		item: TItem,
+		meta: ISelectableCollectionItemMeta,
 	): void {
-		this._extractMeta(sources)
-		super.setItems(sources)
-	}
-
-	/**
-	 * Перехватывает sources, извлекает _.selected из данных,
-	 * после чего передаёт чистый массив в базовую реализацию.
-	 */
-	override patchItems<
-		TMeta extends ISelectableCollectionItemMeta = ISelectableCollectionItemMeta,
-	>(
-		sources: TCollectionItemSource<TItem, TMeta>[],
-		trackBy?: (item: Partial<TItem>) => unknown,
-	): void {
-		super.patchItems(sources, trackBy)
-	}
-
-	/** Извлекает состояния (selected) из поля _ и удаляет _ из source. */
-	private _extractMeta<TMeta extends ISelectableCollectionItemMeta>(
-		sources: TCollectionItemSource<TItem, TMeta>[],
-	): void {
-		sources.forEach((s) => {
-			if (s._?.selected !== undefined) {
-				;(s as any).selected = s._.selected
-				delete s._
-			}
-		})
+		if (meta.selected !== undefined) {
+			item.selected = meta.selected
+		}
 	}
 
 	/**

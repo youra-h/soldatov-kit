@@ -6,7 +6,6 @@ import type {
 	IActivatableCollectionItem,
 	IActivatableCollectionItemMeta,
 } from './types'
-import type { TCollectionItemSource } from '../item/types'
 import type { TConstructor } from '../../../common/types'
 import { TActivatableCollectionItem } from './activable-collection-item.class'
 import { isSame } from '../../../common/is-same'
@@ -104,39 +103,15 @@ export class TActivatableCollection<
 	}
 
 	/**
-	 * Перехватывает sources, извлекает _.active из данных,
-	 * после чего передаёт чистый массив в базовую реализацию.
+	 * Применяет meta-данные (active) к элементу.
 	 */
-	override setItems<
-		TMeta extends IActivatableCollectionItemMeta = IActivatableCollectionItemMeta,
-	>(sources: TCollectionItemSource<TItem, TMeta>[]): void {
-		this._extractMeta(sources)
-		super.setItems(sources)
-	}
-
-	/**
-	 * Перехватывает sources, извлекает _.active из данных,
-	 * после чего передаёт чистый массив в базовую реализацию.
-	 */
-	override patchItems<
-		TMeta extends IActivatableCollectionItemMeta = IActivatableCollectionItemMeta,
-	>(
-		sources: TCollectionItemSource<TItem, TMeta>[],
-		trackBy?: (item: Partial<TItem>) => unknown,
+	protected override _assignItemMeta(
+		item: TItem,
+		meta: IActivatableCollectionItemMeta,
 	): void {
-		super.patchItems(sources, trackBy)
-	}
-
-	/** Извлекает состояния (active) из поля _ и удаляет _ из source. */
-	private _extractMeta<TMeta extends IActivatableCollectionItemMeta>(
-		sources: TCollectionItemSource<TItem, TMeta>[],
-	): void {
-		sources.forEach((s) => {
-			if (s._?.active !== undefined) {
-				;(s as any).active = s._.active
-				delete s._
-			}
-		})
+		if (meta.active !== undefined) {
+			item.active = meta.active
+		}
 	}
 
 	/**
