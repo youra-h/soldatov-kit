@@ -27,8 +27,6 @@ export class TListScrollPlugin extends TBasePlugin<TListScrollPluginEvents> {
 	private _element: HTMLElement | null = null
 	private _list: IList | null = null
 	private _collectionElements: TCollectionElementsPlugin | null = null
-	private _firstSelectedUid: string | number | null = null
-	private _lastSelectedUid: string | number | null = null
 	private readonly _scheduleScroll: (uid: string | number) => void
 
 	constructor() {
@@ -58,7 +56,7 @@ export class TListScrollPlugin extends TBasePlugin<TListScrollPluginEvents> {
 			}
 
 			instance.events.on('item:selected', ({ item }: { item: IListItem }) => {
-				this._onItemSelected(item.uid)
+				this._scheduleScroll(item.uid)
 			})
 		})
 
@@ -69,25 +67,8 @@ export class TListScrollPlugin extends TBasePlugin<TListScrollPluginEvents> {
 		this._element = null
 		this._list = null
 		this._collectionElements = null
-		this._firstSelectedUid = null
-		this._lastSelectedUid = null
 
 		super.destroy()
-	}
-
-	/**
-	 * Обрабатывает событие выбора элемента.
-	 * Запоминает первый и последний uid в текущей «пачке» выделений
-	 * и запускает отложенный через frameDebounce скролл к первому из них.
-	 */
-	private _onItemSelected(uid: string | number): void {
-		if (this._firstSelectedUid === null) {
-			this._firstSelectedUid = uid
-		}
-
-		this._lastSelectedUid = uid
-
-		this._scheduleScroll(this._firstSelectedUid)
 	}
 
 	/**
@@ -107,11 +88,7 @@ export class TListScrollPlugin extends TBasePlugin<TListScrollPluginEvents> {
 
 		targetElement.scrollIntoView({
 			behavior,
-			block: 'nearest',
+			block: 'center',
 		})
-
-		// Сбрасываем накопленные uid после выполнения скролла
-		this._firstSelectedUid = null
-		this._lastSelectedUid = null
 	}
 }

@@ -27,6 +27,21 @@ const CITIES: ICity[] = [
 	{ id: 8, text: 'Самара', value: 'samara' },
 	{ id: 9, text: 'Омск', value: 'omsk' },
 	{ id: 10, text: 'Ростов-на-Дону', value: 'rostov' },
+	{ id: 11, text: 'Уфа', value: 'ufa' },
+	{ id: 12, text: 'Красноярск', value: 'krasnoyarsk' },
+	{ id: 13, text: 'Воронеж', value: 'voronezh' },
+	{ id: 14, text: 'Пермь', value: 'perm' },
+	{ id: 15, text: 'Волгоград', value: 'volgograd' },
+	{ id: 16, text: 'Краснодар', value: 'krasnodar' },
+	{ id: 17, text: 'Саратов', value: 'saratov' },
+	{ id: 18, text: 'Тюмень', value: 'tyumen' },
+	{ id: 19, text: 'Тольятти', value: 'tolyatti' },
+	{ id: 20, text: 'Ижевск', value: 'izhevsk' },
+	{ id: 21, text: 'Барнаул', value: 'barnaul' },
+	{ id: 22, text: 'Ульяновск', value: 'ulyanovsk' },
+	{ id: 23, text: 'Иркутск', value: 'irkutsk' },
+	{ id: 24, text: 'Хабаровск', value: 'khabarovsk' },
+	{ id: 25, text: 'Ярославль', value: 'yaroslavl' },
 ]
 
 // --- Состояние ---
@@ -189,9 +204,14 @@ function loadData() {
 		cities1.value = data
 
 		// Список 2: instance
-		instance2.collection.setItems(
-			data.map((c) => ({ text: c.text, value: c.value })),
-		)
+		instance2.collection.setItems(data.map((c) => ({ text: c.text, value: c.value })))
+
+		setTimeout(() => {
+			console.log('Выбираем 9-й элемент в списке 2 (instance)...')
+			instance2.collection.getItem(5)?.select()
+			instance2.collection.getItem(15)?.select()
+			// instance2.collection.getItem(8)?.select()
+		}, 2000)
 
 		// Список 3: items prop
 		items3.value = data.map((c) => ({ text: c.text, value: c.value }))
@@ -201,7 +221,6 @@ function loadData() {
 		isLoaded.value = true
 	}, 1000)
 }
-
 </script>
 
 <template>
