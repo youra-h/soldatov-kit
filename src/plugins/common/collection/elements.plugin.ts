@@ -19,7 +19,7 @@ export class TCollectionElementsPlugin extends TBasePlugin<TCollectionElementsPl
 	 * и отслеживает появление/исчезновение элемента.
 	 * Вызывается из Vue-компонента при получении события ready дочернего компонента.
 	 */
-	register(uid: string | number, bundle: IPluginBundle): void {
+	async register(uid: string | number, bundle: IPluginBundle): Promise<void> {
 		const elementPlugin = bundle.get(TElementPlugin)
 
 		if (!elementPlugin) return
@@ -44,12 +44,16 @@ export class TCollectionElementsPlugin extends TBasePlugin<TCollectionElementsPl
 		// Отслеживаем present (rendered && visible) через инстанс
 		const instancePlugin = bundle.get(TInstancePlugin)
 
-		instancePlugin?.events.on('ready', ({ instance }) => {
+		if (instancePlugin) {
+			const instance = await instancePlugin.whenReady()
+
+			this._present.set(uid, instance.present)
+
 			instance.events.on('change:present', (value: boolean) => {
 				this._present.set(uid, value)
 				this.events.emit('element:present', { uid, present: value })
 			})
-		})
+		}
 	}
 
 	/**
@@ -90,7 +94,7 @@ export class TCollectionElementsPlugin extends TBasePlugin<TCollectionElementsPl
 		const result: HTMLElement[] = []
 
 		for (const [uid, element] of this._elements) {
-			if (this._present.get(uid) !== false) {
+			if (this._present.get(uid) === true) {
 				result.push(element)
 			}
 		}

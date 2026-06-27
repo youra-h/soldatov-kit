@@ -56,14 +56,14 @@ export default class TComponentView<
 		this._states.visible = states?.visible ?? new TVisibilityState({ initial: visible })
 
 		this._states.rendered.events.on('change', (payload: TValuePayload<boolean>) => {
-			(this.events as TEvented<TComponentViewEvents>).emit(
+			;(this.events as TEvented<TComponentViewEvents>).emit(
 				'change:rendered',
 				payload.newValue,
 			)
 			this._emitPresent()
 		})
 		this._states.visible.events.on('change', (payload: TValuePayload<boolean>) => {
-			(this.events as TEvented<TComponentViewEvents>).emit(
+			;(this.events as TEvented<TComponentViewEvents>).emit(
 				'change:visible',
 				payload.newValue,
 			)

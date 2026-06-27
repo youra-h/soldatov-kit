@@ -9,6 +9,7 @@ export class TInstancePlugin<T extends IComponentView = IComponentView> extends 
 	static readonly key = 'instance'
 
 	private _instance: T | null = null
+	private _readyResolve: ((instance: T) => void) | null = null
 
 	get instance(): T | null {
 		return this._instance
@@ -20,10 +21,26 @@ export class TInstancePlugin<T extends IComponentView = IComponentView> extends 
 		this._instance = value
 
 		if (value) {
+			this._readyResolve?.(value)
+			this._readyResolve = null
 			;(this.events as TEvented<TInstancePluginEvents<T>>).emit('ready', { instance: value })
 		} else {
 			;(this.events as TEvented<TInstancePluginEvents<T>>).emit('removed')
 		}
+	}
+
+	/**
+	 * Возвращает Promise, который резолвится когда instance готов.
+	 * Если instance уже установлен — резолвится немедленно.
+	 */
+	whenReady(): Promise<T> {
+		if (this._instance) {
+			return Promise.resolve(this._instance)
+		}
+
+		return new Promise<T>((resolve) => {
+			this._readyResolve = resolve
+		})
 	}
 
 	getContext() {
