@@ -8,9 +8,35 @@ export class TCollectionInstancesPlugin extends TBasePlugin<TCollectionInstances
 	static readonly key = 'collection-instances'
 
 	private readonly _instances = new Map<string | number, IComponentView>()
+	private _collection: any = null
 
 	get instances(): ReadonlyMap<string | number, IComponentView> {
 		return this._instances
+	}
+
+	override install(bundle: IPluginBundle): void {
+		const instancePlugin = bundle.get(TInstancePlugin)
+
+		instancePlugin?.events.on('ready', ({ instance }: { instance: any }) => {
+			this._collection = instance.collection ?? instance
+
+			this._collection.events.on('item:moved', () => this._reorder())
+		})
+	}
+
+	private _reorder(): void {
+		if (!this._collection) return
+
+		const oldInstances = new Map(this._instances)
+
+		this._instances.clear()
+
+		for (const item of this._collection.items) {
+			const uid = (item as any).uid
+			if (oldInstances.has(uid)) {
+				this._instances.set(uid, oldInstances.get(uid)!)
+			}
+		}
 	}
 
 	/**

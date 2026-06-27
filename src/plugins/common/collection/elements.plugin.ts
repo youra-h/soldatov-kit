@@ -9,9 +9,38 @@ export class TCollectionElementsPlugin extends TBasePlugin<TCollectionElementsPl
 
 	private readonly _elements = new Map<string | number, HTMLElement>()
 	private readonly _present = new Map<string | number, boolean>()
+	private _collection: any = null
 
 	get elements(): ReadonlyMap<string | number, HTMLElement> {
 		return this._elements
+	}
+
+	override install(bundle: IPluginBundle): void {
+		const instancePlugin = bundle.get(TInstancePlugin)
+
+		instancePlugin?.events.on('ready', ({ instance }: { instance: any }) => {
+			// У List/ListBox instance — контрол, коллекция в .collection
+			// У Collection instance — сама коллекция
+			this._collection = instance.collection ?? instance
+
+			this._collection.events.on('item:moved', () => this._reorder())
+		})
+	}
+
+	private _reorder(): void {
+		if (!this._collection) return
+
+		const oldElements = new Map(this._elements)
+
+		this._elements.clear()
+
+		for (const item of this._collection.items) {
+			const uid = (item as any).uid
+
+			if (oldElements.has(uid)) {
+				this._elements.set(uid, oldElements.get(uid)!)
+			}
+		}
 	}
 
 	/**
