@@ -68,4 +68,19 @@ export class TCollectionInstancesPlugin extends TBasePlugin<TCollectionInstances
 	getAll(): IComponentView[] {
 		return Array.from(this._instances.values())
 	}
+
+	/**
+	 * Возвращает только видимые instance (present === true).
+	 */
+	getVisible(): IComponentView[] {
+		const result: IComponentView[] = []
+
+		for (const instance of this._instances.values()) {
+			if (instance.present) {
+				result.push(instance)
+			}
+		}
+
+		return result
+	}
 }

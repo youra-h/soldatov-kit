@@ -1,5 +1,6 @@
 import { TBasePlugin } from '../../base/plugin'
 import { TElementPlugin } from '../element'
+import { TInstancePlugin } from '../instance'
 import type { IPluginBundle } from '../../base/types'
 import type { TCollectionElementsPluginEvents } from './types'
 
@@ -7,6 +8,7 @@ export class TCollectionElementsPlugin extends TBasePlugin<TCollectionElementsPl
 	static readonly key = 'collection-elements'
 
 	private readonly _elements = new Map<string | number, HTMLElement>()
+	private readonly _present = new Map<string | number, boolean>()
 
 	get elements(): ReadonlyMap<string | number, HTMLElement> {
 		return this._elements
@@ -35,7 +37,18 @@ export class TCollectionElementsPlugin extends TBasePlugin<TCollectionElementsPl
 
 		elementPlugin.events.on('removed', () => {
 			this._elements.delete(uid)
+			this._present.delete(uid)
 			this.events.emit('element:removed', { uid })
+		})
+
+		// Отслеживаем present (rendered && visible) через инстанс
+		const instancePlugin = bundle.get(TInstancePlugin)
+
+		instancePlugin?.events.on('ready', ({ instance }) => {
+			instance.events.on('change:present', (value: boolean) => {
+				this._present.set(uid, value)
+				this.events.emit('element:present', { uid, present: value })
+			})
 		})
 	}
 
@@ -68,5 +81,20 @@ export class TCollectionElementsPlugin extends TBasePlugin<TCollectionElementsPl
 	 */
 	getAll(): HTMLElement[] {
 		return Array.from(this._elements.values())
+	}
+
+	/**
+	 * Возвращает только видимые HTML-элементы (present === true).
+	 */
+	getVisible(): HTMLElement[] {
+		const result: HTMLElement[] = []
+
+		for (const [uid, element] of this._elements) {
+			if (this._present.get(uid) !== false) {
+				result.push(element)
+			}
+		}
+
+		return result
 	}
 }

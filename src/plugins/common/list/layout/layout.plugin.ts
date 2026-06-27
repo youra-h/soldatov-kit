@@ -89,18 +89,7 @@ export class TListLayoutPlugin extends TBasePlugin<TListLayoutPluginEvents> {
 	private _updateHeight(): void {
 		if (!this._element || !this._list || !this._collectionElements) return
 
-		console.log('TListLayoutPlugin: _updateHeight called')
-
-		const elementsMap = this._collectionElements.elements
-		const visibleElements: HTMLElement[] = []
-
-		for (const item of this._list.collection) {
-			if (item.present) {
-				const el = elementsMap.get(item.uid)
-				if (el) visibleElements.push(el)
-			}
-		}
-
+		const visibleElements = this._collectionElements.getVisible()
 		const visibleCount = this._list.getVisibleItemCount()
 
 		// Если все элементы видны — сбрасываем стили, скролл не нужен
