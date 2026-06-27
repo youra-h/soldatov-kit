@@ -84,6 +84,10 @@ export class TCollapse
 						;(this.events as TEvented<TCollapseEvents>).emit('item:visible', item, value)
 					})
 
+					item.events.on('change:present', (value: boolean) => {
+						;(this.events as TEvented<TCollapseEvents>).emit('item:present', item, value)
+					})
+
 					item.events.on('change:disabled', (value: boolean) => {
 						;(this.events as TEvented<TCollapseEvents>).emit(
 							'item:disabled',

@@ -84,7 +84,7 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStates> implem
 		// Условие для поиска следующего активного таба при удалении
 		this._collection.events.on(
 			'resolve:_activatablePredicate',
-			() => (tab: ITabItem) => !tab.disabled && tab.visible && tab.rendered,
+			() => (tab: ITabItem) => !tab.disabled && tab.present,
 		)
 
 		this.events.relay(this._collection.events, [
@@ -114,6 +114,10 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStates> implem
 
 					item.events.on('change:visible', (value: boolean) => {
 						;(this.events as TEvented<TTabsEvents>).emit('item:visible', item, value)
+					})
+
+					item.events.on('change:present', (value: boolean) => {
+						;(this.events as TEvented<TTabsEvents>).emit('item:present', item, value)
 					})
 
 					item.size = this.size

@@ -227,7 +227,7 @@ function loadData() {
 					placeholder="Фильтр..."
 				/>
 
-				<ListBox mode="multiple" :max-rows="6" @change:selected="handleSelected1">
+				<!-- <ListBox mode="multiple" :max-rows="6" @change:selected="handleSelected1">
 					<ListBoxItem
 						v-for="city in filteredCities1"
 						:key="city.id"
@@ -235,7 +235,7 @@ function loadData() {
 						:value="city.value"
 						:selected="city.selected"
 					/>
-				</ListBox>
+				</ListBox> -->
 
 				<div class="list-box-test__selected">
 					<strong>Выбрано:</strong>
@@ -276,13 +276,13 @@ function loadData() {
 					placeholder="Фильтр..."
 				/>
 
-				<ListBox
+				<!-- <ListBox
 					mode="multiple"
 					:items="filteredItems3"
 					:track-by="(item) => item.value"
 					:max-rows="6"
 					@change:selected="handleSelected3"
-				/>
+				/> -->
 
 				<div class="list-box-test__selected">
 					<strong>Выбрано:</strong>

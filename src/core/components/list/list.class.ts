@@ -107,6 +107,10 @@ export class TList<
 						;(this.events as TEvented<TListEvents>).emit('item:visible', item, value)
 					})
 
+					item.events.on('change:present', (value: boolean) => {
+						;(this.events as TEvented<TListEvents>).emit('item:present', item, value)
+					})
+
 					item.setWordWrapResolver(() => this._wordWrap)
 				},
 			},
@@ -191,7 +195,7 @@ export class TList<
 		let visible = 0
 
 		for (const item of this._collection) {
-			if (item.rendered && item.visible) visible++
+			if (item.present) visible++
 		}
 
 		if (this._maxRows === 0) return visible

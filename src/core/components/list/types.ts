@@ -20,6 +20,7 @@ export type TListEvents = TControlEvents &
 		'item:text': (item: IListItem, value: string) => void
 		'item:rendered': (item: IListItem, value: boolean) => void
 		'item:visible': (item: IListItem, value: boolean) => void
+		'item:present': (item: IListItem, value: boolean) => void
 	}
 
 export interface IListProps extends IControlProps, ISelectableCollectionProps {

@@ -46,6 +46,7 @@ export const emitsTabs: TEmits = [
 	'item:text',
 	'item:rendered',
 	'item:visible',
+	'item:present',
 ] as const
 
 export const propsTabs: TProps = {
@@ -154,6 +155,10 @@ export function syncTabs(
 
 	instance.events.on('item:visible', (item: ITabItem, value: boolean) => {
 		emit?.('item:visible', item, value)
+	})
+
+	instance.events.on('item:present', (item: ITabItem, value: boolean) => {
+		emit?.('item:present', item, value)
 	})
 
 	// Watch props

@@ -32,6 +32,8 @@ export type TComponentViewEvents = TComponentEvents & {
 	'change:visible': (value: boolean) => void
 	/** change:rendered */
 	'change:rendered': (value: boolean) => void
+	/** change:present — rendered && visible, компонент реально на экране */
+	'change:present': (value: boolean) => void
 	/** change:tag */
 	'change:tag': (value: string | object) => void
 	/** change:classes (без baseClass) */
@@ -79,6 +81,8 @@ export interface IComponentView<
 	rendered: boolean
 	/** Логическая видимость */
 	visible: boolean
+	/** Компонент на экране: rendered && visible */
+	readonly present: boolean
 	/** CSS-классы (включая baseClass и динамические) */
 	readonly classes: TClasses
 	/** Компонент смонтирован в DOM и готов (устанавливается плагин-слоем) */

@@ -40,6 +40,7 @@ export type TTabsEvents = TControlEvents &
 		'item:rendered': (item: ITabItem, value: boolean) => void
 		/** item:visible — эмитится при изменении visible у таба */
 		'item:visible': (item: ITabItem, value: boolean) => void
+		'item:present': (item: ITabItem, value: boolean) => void
 	}
 
 export interface ITabsProps extends IControlProps {

@@ -44,8 +44,7 @@ export class TListLayoutPlugin extends TBasePlugin<TListLayoutPluginEvents> {
 			instance.events.on('change:maxRows', () => this._updateHeight())
 			instance.events.on('item:added', () => this._updateHeight())
 			instance.events.on('item:afterDelete', () => this._updateHeight())
-			instance.events.on('item:rendered', () => this._updateHeight())
-			instance.events.on('item:visible', () => this._updateHeight())
+			instance.events.on('item:present', () => this._updateHeight())
 		})
 
 		this._collectionElements = bundle.get(TCollectionElementsPlugin) ?? null
@@ -90,11 +89,13 @@ export class TListLayoutPlugin extends TBasePlugin<TListLayoutPluginEvents> {
 	private _updateHeight(): void {
 		if (!this._element || !this._list || !this._collectionElements) return
 
+		console.log('TListLayoutPlugin: _updateHeight called')
+
 		const elementsMap = this._collectionElements.elements
 		const visibleElements: HTMLElement[] = []
 
 		for (const item of this._list.collection) {
-			if (item.rendered) {
+			if (item.present) {
 				const el = elementsMap.get(item.uid)
 				if (el) visibleElements.push(el)
 			}

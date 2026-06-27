@@ -37,6 +37,7 @@ export const emitsList: TEmits = [
 	'item:text',
 	'item:rendered',
 	'item:visible',
+	'item:present',
 ] as const
 
 export const propsList: TProps = {
@@ -99,6 +100,10 @@ export function syncList<TItem extends IListItem = IListItem>(
 
 	instance.events.on('item:visible', (item: IListItem, value: boolean) => {
 		emit?.('item:visible', item, value)
+	})
+
+	instance.events.on('item:present', (item: IListItem, value: boolean) => {
+		emit?.('item:present', item, value)
 	})
 
 	instance.events.on('change:maxRows', (value: number) => {
