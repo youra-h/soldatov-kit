@@ -35,4 +35,9 @@ export * from './common/evented'
 export * from './common/event-emitter'
 export * from './common/classes'
 export * from './common/frame-debounce'
-export type { TComponentSize, TComponentVariant, TValuePayload } from './common/types'
+export type {
+	TComponentSize,
+	TComponentVariant,
+	TValuePayload,
+	TScrollBehavior,
+} from './common/types'

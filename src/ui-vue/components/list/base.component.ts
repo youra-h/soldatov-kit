@@ -6,6 +6,7 @@ import {
 	type IListItem,
 	TList,
 	type TSelectionMode,
+	type TScrollBehavior,
 	type ICollectionProps,
 } from '@core'
 import {
@@ -33,6 +34,8 @@ export const emitsList: TEmits = [
 	'update:autoWidth',
 	'change:wordWrap',
 	'update:wordWrap',
+	'change:scrollBehavior',
+	'update:scrollBehavior',
 	'item:disabled',
 	'item:text',
 	'item:rendered',
@@ -58,6 +61,10 @@ export const propsList: TProps = {
 	wordWrap: {
 		type: Boolean as PropType<IListProps['wordWrap']>,
 		default: TList.defaultValues.wordWrap,
+	},
+	scrollBehavior: {
+		type: String as PropType<TScrollBehavior>,
+		default: TList.defaultValues.scrollBehavior,
 	},
 }
 
@@ -121,6 +128,11 @@ export function syncList<TItem extends IListItem = IListItem>(
 		emit?.('update:wordWrap', value)
 	})
 
+	instance.events.on('change:scrollBehavior', (value: TScrollBehavior) => {
+		emit?.('change:scrollBehavior', value)
+		emit?.('update:scrollBehavior', value)
+	})
+
 	watch<TSelectionMode | undefined>(
 		() => props.mode,
 		(value) => {
@@ -153,6 +165,15 @@ export function syncList<TItem extends IListItem = IListItem>(
 		(value) => {
 			if (value !== undefined && value !== instance.wordWrap) {
 				instance.wordWrap = value
+			}
+		},
+	)
+
+	watch<TScrollBehavior | undefined>(
+		() => props.scrollBehavior,
+		(value) => {
+			if (value !== undefined && value !== instance.scrollBehavior) {
+				instance.scrollBehavior = value
 			}
 		},
 	)

@@ -7,6 +7,7 @@ import type {
 	ISelectableCollectionProps,
 } from '../../base/collection'
 import type { IListItem } from './list-item/types'
+import type { TScrollBehavior } from '../../common/types'
 
 export type TListEvents = TControlEvents &
 	TSelectableCollectionEvents &
@@ -17,6 +18,8 @@ export type TListEvents = TControlEvents &
 		'change:autoWidth': (value: boolean) => void
 		/** change:wordWrap */
 		'change:wordWrap': (value: boolean) => void
+		/** change:scrollBehavior */
+		'change:scrollBehavior': (value: TScrollBehavior) => void
 		'item:text': (item: IListItem, value: string) => void
 		'item:rendered': (item: IListItem, value: boolean) => void
 		'item:visible': (item: IListItem, value: boolean) => void
@@ -30,6 +33,8 @@ export interface IListProps extends IControlProps, ISelectableCollectionProps {
 	autoWidth?: boolean
 	/** Перенос текста на новую строку (false = троеточие) */
 	wordWrap?: boolean
+	/** Поведение скролла при выделении элемента */
+	scrollBehavior?: TScrollBehavior
 }
 
 export type TListStates = TControlStates
@@ -48,6 +53,8 @@ export interface IList<
 	autoWidth: boolean
 	/** Перенос текста на новую строку (false = троеточие) */
 	wordWrap: boolean
+	/** Поведение скролла при выделении элемента */
+	scrollBehavior: TScrollBehavior
 	/** Доступ к коллекции элементов */
 	readonly collection: TSelectableCollection<any, any, TItem>
 	/** Возвращает количество видимых элементов в списке */

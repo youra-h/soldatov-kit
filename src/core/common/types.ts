@@ -10,3 +10,5 @@ export type TValuePayload<TValue> = {
 	newValue: TValue
 	oldValue: TValue
 }
+
+export type TScrollBehavior = 'none' | 'instant' | 'smooth'

@@ -8,14 +8,14 @@ import type { IList, IListProps, TListEvents, TListStates } from './types'
 import { TEvented } from '../../common/evented'
 import type { TSelectionMode } from '../../base/collection'
 import { type TValuePayload } from '../../common/types'
-import type { TComponentSize, TComponentVariant } from '../../common/types'
+import type { TComponentSize, TComponentVariant, TScrollBehavior } from '../../common/types'
 
 export class TList<
-	TItem extends IListItem = IListItem,
-	TProps extends IListProps = IListProps,
-	TEvents extends TListEvents = TListEvents,
-	TStates extends TListStates = TListStates,
->
+		TItem extends IListItem = IListItem,
+		TProps extends IListProps = IListProps,
+		TEvents extends TListEvents = TListEvents,
+		TStates extends TListStates = TListStates,
+	>
 	extends TControl<TProps, TEvents, TStates>
 	implements IList<TItem, TProps, TEvents, TStates>
 {
@@ -27,11 +27,13 @@ export class TList<
 		maxRows: 0,
 		autoWidth: false,
 		wordWrap: false,
+		scrollBehavior: 'smooth',
 	}
 
-	protected _maxRows!: number
+	protected _maxRows: number
 	protected _autoWidth!: boolean
 	protected _wordWrap!: boolean
+	protected _scrollBehavior: TScrollBehavior
 	protected _collection: TSelectableCollection<any, any, any>
 
 	/**
@@ -63,6 +65,7 @@ export class TList<
 
 		this._applyAutoWidth(props.autoWidth ?? ctor.defaultValues.autoWidth!)
 		this._applyWordWrap(props.wordWrap ?? ctor.defaultValues.wordWrap!)
+		this._scrollBehavior = props.scrollBehavior ?? ctor.defaultValues.scrollBehavior!
 
 		this.events.on('change:size', (payload: TValuePayload<TComponentSize>) => {
 			this._collection.forEach((item) => {
@@ -186,6 +189,17 @@ export class TList<
 		}
 	}
 
+	get scrollBehavior(): TScrollBehavior {
+		return this._scrollBehavior
+	}
+
+	set scrollBehavior(value: TScrollBehavior) {
+		if (this._scrollBehavior !== value) {
+			this._scrollBehavior = value
+			;(this.events as TEvented<TListEvents>).emit('change:scrollBehavior', value)
+		}
+	}
+
 	/**
 	 * Количество видимых (rendered) элементов с учётом maxRows.
 	 * 0 = показать все видимые элементы.
@@ -214,6 +228,7 @@ export class TList<
 			maxRows: this._maxRows,
 			autoWidth: this._autoWidth,
 			wordWrap: this._wordWrap,
+			scrollBehavior: this._scrollBehavior,
 		} as TProps
 	}
 }
