@@ -1,4 +1,5 @@
 import type { IList } from '@core'
+import { frameDebounce } from '@core'
 import type { IPluginBundle } from '../../../base/types'
 import { TBasePlugin } from '../../../base/plugin'
 import { TElementPlugin } from '../../element'
@@ -21,13 +22,19 @@ export class TListLayoutPlugin extends TBasePlugin<TListLayoutPluginEvents> {
 	private _collectionElements: TCollectionElementsPlugin | null = null
 	private _rootObserver: ResizeObserver | null = null
 	private readonly _itemObservers = new Map<string | number, ResizeObserver>()
+	private readonly _scheduleUpdate: () => void
+
+	constructor() {
+		super()
+		this._scheduleUpdate = frameDebounce(() => this._updateHeight())
+	}
 
 	override install(bundle: IPluginBundle): void {
 		bundle.get(TElementPlugin)?.events.on('ready', ({ element }) => {
 			this._element = element
-			this._rootObserver = new ResizeObserver(() => this._updateHeight())
+			this._rootObserver = new ResizeObserver(() => this._scheduleUpdate())
 			this._rootObserver.observe(element)
-			this._updateHeight()
+			this._scheduleUpdate()
 		})
 
 		bundle.get(TElementPlugin)?.events.on('removed', () => {
@@ -41,10 +48,9 @@ export class TListLayoutPlugin extends TBasePlugin<TListLayoutPluginEvents> {
 		instancePlugin?.events.on('ready', ({ instance }) => {
 			this._list = instance
 
-			instance.events.on('change:maxRows', () => this._updateHeight())
-			instance.events.on('item:added', () => this._updateHeight())
-			instance.events.on('item:afterDelete', () => this._updateHeight())
-			// instance.events.on('item:present', () => this._updateHeight())
+			instance.events.on('change:maxRows', () => this._scheduleUpdate())
+			instance.events.on('item:added', () => this._scheduleUpdate())
+			instance.events.on('item:afterDelete', () => this._scheduleUpdate())
 		})
 
 		this._collectionElements = bundle.get(TCollectionElementsPlugin) ?? null
@@ -52,7 +58,7 @@ export class TListLayoutPlugin extends TBasePlugin<TListLayoutPluginEvents> {
 		this._collectionElements?.events.on('element:added', ({ uid, element }) => {
 			this._itemObservers.get(uid)?.disconnect()
 
-			const observer = new ResizeObserver(() => this._updateHeight())
+			const observer = new ResizeObserver(() => this._scheduleUpdate())
 			observer.observe(element)
 
 			this._itemObservers.set(uid, observer)
@@ -61,7 +67,7 @@ export class TListLayoutPlugin extends TBasePlugin<TListLayoutPluginEvents> {
 		this._collectionElements?.events.on('element:removed', ({ uid }) => {
 			this._itemObservers.get(uid)?.disconnect()
 			this._itemObservers.delete(uid)
-			this._updateHeight()
+			this._scheduleUpdate()
 		})
 	}
 
