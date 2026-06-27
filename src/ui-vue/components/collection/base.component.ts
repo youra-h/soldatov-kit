@@ -65,12 +65,12 @@ export function syncCollection<TItem extends ICollectionItem = ICollectionItem>(
 
 	useProvideCollection(instance)
 
-	const collectionPlugin = plugins.get(TCollectionElementsPlugin)
+	const collectionElementsPlugin = plugins.get(TCollectionElementsPlugin)
 	const collectionInstancesPlugin = plugins.get(TCollectionInstancesPlugin)
 
-	if (collectionPlugin || collectionInstancesPlugin) {
+	if (collectionElementsPlugin || collectionInstancesPlugin) {
 		useProvideCollectionPlugins((uid, bundle) => {
-			collectionPlugin?.register(uid, bundle)
+			collectionElementsPlugin?.register(uid, bundle)
 			collectionInstancesPlugin?.register(uid, bundle)
 		})
 	}
