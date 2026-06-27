@@ -26,6 +26,10 @@ export class TListLayoutPlugin extends TBasePlugin<TListLayoutPluginEvents> {
 
 	constructor() {
 		super()
+		/**
+		 * Дебаунс обновления высоты через requestAnimationFrame
+		 * Используется для оптимизации производительности при изменении размеров элементов списка.
+		 */
 		this._scheduleUpdate = frameDebounce(() => this._updateHeight())
 	}
 
