@@ -56,32 +56,29 @@ export default {
 </script>
 
 <template>
-	<Button
-		ref="rootRef"
-		:visible="visible"
-		:rendered="rendered"
-		:class="classes"
-		:style="{ order }"
-		:tag="tag"
-		:appearance="appearance"
-		:disabled="disabled"
-		:size="size"
-		:variant="variant"
-		:aria-selected="selected"
-		@click="instance.click()"
-	>
-		<template #leading>
-			<slot name="leading" />
-		</template>
+	<div ref="rootRef" v-if="rendered" v-show="visible" :class="classes" :style="{ order }">
+		<Button
+			:tag="tag"
+			:appearance="appearance"
+			:disabled="disabled"
+			:size="size"
+			:variant="variant"
+			:aria-selected="selected"
+			@click="instance.click()"
+		>
+			<template #leading>
+				<slot name="leading" />
+			</template>
 
-		<slot name="default" :text="text" :selected="selected">
-			{{ text }}
-		</slot>
+			<slot name="default" :text="text" :selected="selected">
+				{{ text }}
+			</slot>
 
-		<template #trailing>
-			<slot name="trailing" />
-		</template>
-	</Button>
+			<template #trailing>
+				<slot name="trailing" />
+			</template>
+		</Button>
+	</div>
 </template>
 
 <style lang="scss">

@@ -64,41 +64,38 @@ export default {
 </script>
 
 <template>
-	<Button
-		ref="rootRef"
-		:visible="visible"
-		:rendered="rendered"
-		:disabled="disabled"
-		appearance="none"
-		:size="size"
-		:variant="variant"
-		:class="classes"
-		:style="{ order }"
-		@click="instance.click()"
-		role="tab"
-	>
-		<template #leading>
-			<slot name="leading" />
-		</template>
+	<div ref="rootRef" v-if="rendered" v-show="visible" :class="classes" :style="{ order }">
+		<Button
+			:disabled="disabled"
+			appearance="none"
+			:size="size"
+			:variant="variant"
+			@click="instance.click()"
+			role="tab"
+		>
+			<template #leading>
+				<slot name="leading" />
+			</template>
 
-		<slot :text="text" :active="active">
-			{{ text }}
-		</slot>
+			<slot :text="text" :active="active">
+				{{ text }}
+			</slot>
 
-		<template #trailing>
-			<slot name="trailing" />
-			<Button
-				:rendered="!!closable"
-				class="s-tab-item__close"
-				@click.stop="instance.close()"
-				appearance="plain"
-			>
-				<slot name="close-icon">
-					<Icon :tag="closeIconTag" :size="size" />
-				</slot>
-			</Button>
-		</template>
-	</Button>
+			<template #trailing>
+				<slot name="trailing" />
+				<Button
+					:rendered="!!closable"
+					class="s-tab-item__close"
+					@click.stop="instance.close()"
+					appearance="plain"
+				>
+					<slot name="close-icon">
+						<Icon :tag="closeIconTag" :size="size" />
+					</slot>
+				</Button>
+			</template>
+		</Button>
+	</div>
 </template>
 
 <style lang="scss">
