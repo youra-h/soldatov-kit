@@ -90,12 +90,6 @@ function updateInstance2() {
 	}
 }
 
-function onInstance2Ready(payload) {
-	const elements = payload.plugins.get('collection-elements')
-	console.log('instance2 is ready', elements.getAll())
-	// updateInstance2()
-}
-
 instance2.events.on('change:selected', (items: any[]) => {
 	selected2.value = items.map((item: any) => ({
 		id: item.uid,
@@ -107,13 +101,6 @@ instance2.events.on('change:selected', (items: any[]) => {
 function moveItems() {
 	instance2.collection.move(0, 10)
 	// instance2.collection.move(2, 0)
-}
-
-function swapItems() {
-	const items = (instance2.collection as any)._items
-	if (items.length < 10) return
-	;[items[0], items[9]] = [items[9], items[0]]
-	items.forEach((it: any, i: number) => (it.order = i))
 }
 
 // --- Список 3: :items ---
@@ -303,12 +290,10 @@ function loadData() {
 					mode="multiple"
 					:max-rows="6"
 					:word-wrap="true"
-					@ready="onInstance2Ready"
 				/>
 
 				<div class="flex gap-2">
-					<button @click="moveItems">move(0↔9)</button>
-					<button @click="swapItems">swap(0↔9)</button>
+					<Button @click="moveItems">move(0↔9)</Button>
 				</div>
 
 				<div class="list-box-test__selected">
