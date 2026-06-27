@@ -1,4 +1,4 @@
-import { ref, onMounted, onUnmounted, type Ref } from 'vue'
+import { ref, onUnmounted, type Ref, watch } from 'vue'
 import type { ComponentPublicInstance } from 'vue'
 import type { IPluginBundle } from '@plugins/base'
 import { TElementPlugin } from '@plugins/common/element'
@@ -13,15 +13,16 @@ export function useElementBinding(
 	bundle: IPluginBundle,
 ): Ref<Element | ComponentPublicInstance | null> {
 	const rootRef = ref<Element | ComponentPublicInstance | null>(null)
+	const elementPlugin = bundle.get(TElementPlugin)!
 
-	onMounted(() => {
-		const el = rootRef.value
-		bundle.get(TElementPlugin)!.element =
-			(el as ComponentPublicInstance)?.$el ?? (el as Element) ?? null
-	})
+	function syncElement(el: Element | ComponentPublicInstance | null) {
+		elementPlugin.element = (el as ComponentPublicInstance)?.$el ?? (el as Element) ?? null
+	}
+
+	watch(rootRef, syncElement, { flush: 'post' })
 
 	onUnmounted(() => {
-		bundle.get(TElementPlugin)!.element = null
+		elementPlugin.element = null
 	})
 
 	return rootRef
