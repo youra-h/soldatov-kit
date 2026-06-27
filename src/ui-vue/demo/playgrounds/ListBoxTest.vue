@@ -256,15 +256,15 @@ function loadData() {
 					placeholder="Фильтр..."
 				/>
 
-				<!-- <ListBox mode="multiple" :max-rows="6" @change:selected="handleSelected1">
+				<ListBox mode="multiple" :max-rows="6" @change:selected="handleSelected1">
 					<ListBoxItem
 						v-for="city in filteredCities1"
 						:key="city.id"
 						:text="city.text"
 						:value="city.value"
-						:selected="city.selected"
+						:selected="city._?.selected"
 					/>
-				</ListBox> -->
+				</ListBox>
 
 				<div class="list-box-test__selected">
 					<strong>Выбрано:</strong>
@@ -285,12 +285,7 @@ function loadData() {
 					@input="updateInstance2"
 				/>
 
-				<ListBox
-					:ctrl="instance2"
-					mode="multiple"
-					:max-rows="6"
-					:word-wrap="true"
-				/>
+				<ListBox :ctrl="instance2" mode="multiple" :max-rows="6" :word-wrap="true" />
 
 				<div class="flex gap-2">
 					<Button @click="moveItems">move(0↔9)</Button>
