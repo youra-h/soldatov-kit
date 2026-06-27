@@ -66,6 +66,10 @@ const selected2 = ref<ICity[]>([])
 function updateInstance2() {
 	const q = filter2.value.toLowerCase()
 
+	// for (const item of instance2.collection) {
+	// 	item.visible = q ? item.text.toLowerCase().includes(q) : true
+	// }
+
 	for (const item of instance2.collection) {
 		item.rendered = q ? item.text.toLowerCase().includes(q) : true
 	}
@@ -197,6 +201,7 @@ function loadData() {
 		isLoaded.value = true
 	}, 1000)
 }
+
 </script>
 
 <template>

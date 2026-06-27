@@ -24,15 +24,18 @@ export class TCollectionElementsPlugin extends TBasePlugin<TCollectionElementsPl
 
 		if (!elementPlugin) return
 
+		const addElement = (uid: string | number, el: HTMLElement) => {
+			this._elements.set(uid, el)
+			this.events.emit('element:added', { uid, element: el })
+		}
+
 		// Элемент уже доступен в момент вызова (register вызывается из @ready)
 		if (elementPlugin.element) {
-			this._elements.set(uid, elementPlugin.element)
-			this.events.emit('element:added', { uid, element: elementPlugin.element })
+			addElement(uid, elementPlugin.element)
 		}
 
 		elementPlugin.events.on('ready', ({ element }) => {
-			this._elements.set(uid, element)
-			this.events.emit('element:added', { uid, element })
+			addElement(uid, element)
 		})
 
 		elementPlugin.events.on('removed', () => {
