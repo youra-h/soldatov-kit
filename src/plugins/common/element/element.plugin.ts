@@ -35,7 +35,7 @@ export class TElementPlugin extends TBasePlugin<TElementPluginEvents> {
 	 * Возвращает Promise, который резолвится когда элемент готов (в DOM после requestAnimationFrame).
 	 * Если элемент уже установлен — резолвится немедленно.
 	 */
-	whenReady(): Promise<HTMLElement> {
+	ready(): Promise<HTMLElement> {
 		if (this._element) {
 			return Promise.resolve(this._element)
 		}

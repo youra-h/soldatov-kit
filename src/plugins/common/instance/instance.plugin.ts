@@ -33,7 +33,7 @@ export class TInstancePlugin<T extends IComponentView = IComponentView> extends 
 	 * Возвращает Promise, который резолвится когда instance готов.
 	 * Если instance уже установлен — резолвится немедленно.
 	 */
-	whenReady(): Promise<T> {
+	ready(): Promise<T> {
 		if (this._instance) {
 			return Promise.resolve(this._instance)
 		}

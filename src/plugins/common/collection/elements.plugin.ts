@@ -45,7 +45,7 @@ export class TCollectionElementsPlugin extends TBasePlugin<TCollectionElementsPl
 		const instancePlugin = bundle.get(TInstancePlugin)
 
 		if (instancePlugin) {
-			const instance = await instancePlugin.whenReady()
+			const instance = await instancePlugin.ready()
 
 			this._present.set(uid, instance.present)
 
