@@ -133,49 +133,54 @@ export function syncList<TItem extends IListItem = IListItem>(
 		emit?.('update:scrollBehavior', value)
 	})
 
-	watch<TSelectionMode | undefined>(
+	watch(
 		() => props.mode,
 		(value) => {
 			if (value !== undefined && value !== instance.mode) {
 				instance.mode = value
 			}
 		},
+		{ immediate: true },
 	)
 
-	watch<number | undefined>(
+	watch(
 		() => props.maxRows,
 		(value) => {
 			if (value !== undefined && value !== instance.maxRows) {
 				instance.maxRows = value
 			}
 		},
+		{ immediate: true },
 	)
 
-	watch<boolean | undefined>(
+	watch(
 		() => props.autoWidth,
 		(value) => {
 			if (value !== undefined && value !== instance.autoWidth) {
 				instance.autoWidth = value
 			}
 		},
+		{ immediate: true },
 	)
 
-	watch<boolean | undefined>(
+	watch(
 		() => props.wordWrap,
 		(value) => {
 			if (value !== undefined && value !== instance.wordWrap) {
 				instance.wordWrap = value
 			}
 		},
+		{ immediate: true },
 	)
 
-	watch<TScrollBehavior | undefined>(
+	watch(
 		() => props.scrollBehavior,
 		(value) => {
 			if (value !== undefined && value !== instance.scrollBehavior) {
 				instance.scrollBehavior = value
 			}
 		},
+		{ immediate: true },
 	)
 
 	return {

@@ -155,7 +155,7 @@ export class TList<
 		return this._autoWidth
 	}
 
-	protected _applyAutoWidth(newValue: boolean, oldValue?: boolean) {
+	protected _applyAutoWidth(newValue: boolean) {
 		this._classes.toggle('--auto-width', newValue)
 
 		this._autoWidth = newValue
@@ -163,7 +163,7 @@ export class TList<
 
 	set autoWidth(value: boolean) {
 		if (this._autoWidth !== value) {
-			this._applyAutoWidth(value, this._autoWidth)
+			this._applyAutoWidth(value)
 			;(this.events as TEvented<TListEvents>).emit('change:autoWidth', value)
 		}
 	}
@@ -172,7 +172,7 @@ export class TList<
 		return this._wordWrap
 	}
 
-	protected _applyWordWrap(newValue: boolean, oldValue?: boolean) {
+	protected _applyWordWrap(newValue: boolean) {
 		this._classes.toggle('--word-wrap', newValue)
 
 		this._wordWrap = newValue
@@ -180,7 +180,7 @@ export class TList<
 
 	set wordWrap(value: boolean) {
 		if (this._wordWrap !== value) {
-			this._applyWordWrap(value, this._wordWrap)
+			this._applyWordWrap(value)
 
 			this._collection.forEach((item) => {
 				item.notifyWordWrapChange()

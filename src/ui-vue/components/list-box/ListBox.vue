@@ -62,7 +62,7 @@ export default {
 		@apply w-max min-w-0 max-w-none;
 	}
 
-	&--word-wrap .s-list-box-item__text {
+	&--word-wrap .s-button__text {
 		@apply whitespace-normal overflow-visible;
 	}
 }

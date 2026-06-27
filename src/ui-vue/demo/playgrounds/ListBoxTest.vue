@@ -17,7 +17,7 @@ interface ICity {
 }
 
 const CITIES: ICity[] = [
-	{ id: 1, text: 'Москва', value: 'moscow' },
+	{ id: 1, text: 'Москва Москва Москва Москва Москва Москва Москва Москва', value: 'moscow' },
 	{ id: 2, text: 'Санкт-Петербург', value: 'spb' },
 	{ id: 3, text: 'Новосибирск', value: 'novosibirsk' },
 	{ id: 4, text: 'Екатеринбург', value: 'ekaterinburg' },
@@ -280,7 +280,7 @@ function loadData() {
 					@input="updateInstance2"
 				/>
 
-				<ListBox :ctrl="instance2" mode="multiple" :max-rows="6" />
+				<ListBox :ctrl="instance2" mode="multiple" :max-rows="6" :word-wrap="true" />
 
 				<div class="list-box-test__selected">
 					<strong>Выбрано:</strong>

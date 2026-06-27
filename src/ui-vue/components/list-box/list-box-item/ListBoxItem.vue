@@ -93,8 +93,12 @@ export default {
 		}
 	}
 
-	&--word-wrap &__text {
-		@apply whitespace-normal overflow-visible;
+	&--word-wrap {
+		.s-button {
+			&__text {
+				@apply whitespace-normal overflow-visible;
+			}
+		}
 	}
 }
 </style>
