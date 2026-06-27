@@ -20,28 +20,28 @@ const CITIES: ICity[] = [
 	{ id: 1, text: 'Москва Москва Москва Москва Москва Москва Москва Москва', value: 'moscow' },
 	{ id: 2, text: 'Санкт-Петербург', value: 'spb' },
 	{ id: 3, text: 'Новосибирск', value: 'novosibirsk' },
-	// { id: 4, text: 'Екатеринбург', value: 'ekaterinburg' },
-	// { id: 5, text: 'Казань', value: 'kazan' },
-	// { id: 6, text: 'Нижний Новгород', value: 'nnovgorod' },
-	// { id: 7, text: 'Челябинск', value: 'chelyabinsk' },
-	// { id: 8, text: 'Самара', value: 'samara' },
-	// { id: 9, text: 'Омск', value: 'omsk' },
-	// { id: 10, text: 'Ростов-на-Дону', value: 'rostov' },
-	// { id: 11, text: 'Уфа', value: 'ufa' },
-	// { id: 12, text: 'Красноярск', value: 'krasnoyarsk' },
-	// { id: 13, text: 'Воронеж', value: 'voronezh' },
-	// { id: 14, text: 'Пермь', value: 'perm' },
-	// { id: 15, text: 'Волгоград', value: 'volgograd' },
-	// { id: 16, text: 'Краснодар', value: 'krasnodar' },
-	// { id: 17, text: 'Саратов', value: 'saratov' },
-	// { id: 18, text: 'Тюмень', value: 'tyumen' },
-	// { id: 19, text: 'Тольятти', value: 'tolyatti' },
-	// { id: 20, text: 'Ижевск', value: 'izhevsk' },
-	// { id: 21, text: 'Барнаул', value: 'barnaul' },
-	// { id: 22, text: 'Ульяновск', value: 'ulyanovsk' },
-	// { id: 23, text: 'Иркутск', value: 'irkutsk' },
-	// { id: 24, text: 'Хабаровск', value: 'khabarovsk' },
-	// { id: 25, text: 'Ярославль', value: 'yaroslavl' },
+	{ id: 4, text: 'Екатеринбург', value: 'ekaterinburg' },
+	{ id: 5, text: 'Казань', value: 'kazan' },
+	{ id: 6, text: 'Нижний Новгород', value: 'nnovgorod' },
+	{ id: 7, text: 'Челябинск', value: 'chelyabinsk' },
+	{ id: 8, text: 'Самара', value: 'samara' },
+	{ id: 9, text: 'Омск', value: 'omsk' },
+	{ id: 10, text: 'Ростов-на-Дону', value: 'rostov' },
+	{ id: 11, text: 'Уфа', value: 'ufa' },
+	{ id: 12, text: 'Красноярск', value: 'krasnoyarsk' },
+	{ id: 13, text: 'Воронеж', value: 'voronezh' },
+	{ id: 14, text: 'Пермь', value: 'perm' },
+	{ id: 15, text: 'Волгоград', value: 'volgograd' },
+	{ id: 16, text: 'Краснодар', value: 'krasnodar' },
+	{ id: 17, text: 'Саратов', value: 'saratov' },
+	{ id: 18, text: 'Тюмень', value: 'tyumen' },
+	{ id: 19, text: 'Тольятти', value: 'tolyatti' },
+	{ id: 20, text: 'Ижевск', value: 'izhevsk' },
+	{ id: 21, text: 'Барнаул', value: 'barnaul' },
+	{ id: 22, text: 'Ульяновск', value: 'ulyanovsk' },
+	{ id: 23, text: 'Иркутск', value: 'irkutsk' },
+	{ id: 24, text: 'Хабаровск', value: 'khabarovsk' },
+	{ id: 25, text: 'Ярославль', value: 'yaroslavl' },
 ]
 
 // --- Состояние ---
@@ -105,7 +105,7 @@ instance2.events.on('change:selected', (items: any[]) => {
 })
 
 function moveItems() {
-	instance2.collection.move(0, 1)
+	instance2.collection.move(0, 10)
 	// instance2.collection.move(2, 0)
 }
 
