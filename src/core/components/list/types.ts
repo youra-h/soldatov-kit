@@ -10,7 +10,7 @@ import type { IListItem } from './list-item/types'
 import type { TScrollBehavior } from '../../common/types'
 
 export type TListEvents = TControlEvents &
-	TSelectableCollectionEvents &
+	TSelectableCollectionEvents<IListItem> &
 	TItemProxyEvents<IListItem> & {
 		/** change:maxRows */
 		'change:maxRows': (value: number) => void

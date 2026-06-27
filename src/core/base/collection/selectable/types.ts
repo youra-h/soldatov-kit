@@ -50,31 +50,27 @@ export interface ISelectableCollectionProps
 /**
  * События коллекции с поддержкой выбора.
  */
-export type TSelectableCollectionEvents = TCollectionEvents<ISelectableCollectionItem> & {
+export type TSelectableCollectionEvents<
+	TItem extends ISelectableCollectionItem = ISelectableCollectionItem,
+> = TCollectionEvents<TItem> & {
 	/**
 	 * После выбора элемента.
 	 * @param payload.collection Коллекция, в которой выбран элемент
 	 * @param payload.item       Выбранный элемент
 	 */
-	'item:selected': (payload: {
-		collection: ISelectableCollection
-		item: ISelectableCollectionItem
-	}) => void
+	'item:selected': (payload: { collection: ISelectableCollection; item: TItem }) => void
 
 	/**
 	 * После отмены выбора элемента.
 	 * @param payload.collection Коллекция, в которой отменен выбор
 	 * @param payload.item       Элемент, с которого снят выбор
 	 */
-	'item:unselected': (payload: {
-		collection: ISelectableCollection
-		item: ISelectableCollectionItem
-	}) => void
+	'item:unselected': (payload: { collection: ISelectableCollection; item: TItem }) => void
 
 	/**
 	 * После изменения набора выделенных элементов.
 	 */
-	'change:selected': (items: ISelectableCollectionItem[]) => void
+	'change:selected': (items: TItem[]) => void
 
 	/**
 	 * После изменения счётчика выделенных элементов.
