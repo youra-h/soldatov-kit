@@ -103,13 +103,6 @@ export class TListLayoutPlugin extends TBasePlugin<TListLayoutPluginEvents> {
 		const visibleElements = this._collectionElements.getVisible()
 		const visibleCount = this._list.getVisibleItemCount()
 
-		// Если все элементы видны — сбрасываем стили, скролл не нужен
-		if (visibleCount === 0 || visibleCount >= visibleElements.length) {
-			this._element.style.maxHeight = ''
-			this._element.style.overflowY = ''
-			return
-		}
-
 		const gap = parseFloat(getComputedStyle(this._element).rowGap) || 0
 
 		let totalHeight = 0
@@ -124,6 +117,7 @@ export class TListLayoutPlugin extends TBasePlugin<TListLayoutPluginEvents> {
 		}
 
 		this._element.style.maxHeight = `${totalHeight}px`
-		this._element.style.overflowY = 'auto'
+		this._element.style.overflowY =
+			visibleCount === 0 || visibleCount >= visibleElements.length ? 'hidden' : 'auto'
 	}
 }
