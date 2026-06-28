@@ -90,9 +90,17 @@ export class TListScrollPlugin extends TBasePlugin<TListScrollPluginEvents> {
 		// Элемент уже полностью виден — не трогаем скролл (пользовательский клик)
 		if (this._isFullyVisible(targetElement)) return
 
-		targetElement.scrollIntoView({
-			behavior,
-			block: 'center',
+		const container = this._element
+		const containerRect = container.getBoundingClientRect()
+		const targetRect = targetElement.getBoundingClientRect()
+
+		// Вычисляем позицию элемента относительно контейнера и скроллим
+		const scrollTop =
+			container.scrollTop + (targetRect.top - containerRect.top) - container.clientHeight / 2
+
+		container.scrollTo({
+			top: scrollTop,
+			behavior: behavior === 'instant' ? 'instant' : 'smooth',
 		})
 	}
 
@@ -102,9 +110,9 @@ export class TListScrollPlugin extends TBasePlugin<TListScrollPluginEvents> {
 	private _isFullyVisible(el: HTMLElement): boolean {
 		if (!this._element) return false
 
-		const c = this._element.getBoundingClientRect()
-		const e = el.getBoundingClientRect()
+		const containerRect = this._element.getBoundingClientRect()
+		const targetRect = el.getBoundingClientRect()
 
-		return e.top >= c.top && e.bottom <= c.bottom
+		return targetRect.top >= containerRect.top && targetRect.bottom <= containerRect.bottom
 	}
 }
