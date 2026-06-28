@@ -55,20 +55,20 @@ const handleHide = () => {
 
 <template>
 	<PlaygroundLayout title="Skeleton Playground">
-		<template #properties>
+		<!-- <template #properties>
 			<Properties
 				v-model="componentProps"
 				:schema="propertiesSchema"
 				@show="handleShow"
 				@hide="handleHide"
 			/>
-		</template>
+		</template> -->
 
 		<template #props-demo>
 			<PropsDemo v-bind="componentProps" @log="emit('log', $event)" />
 		</template>
 
-		<template #instance-demo>
+		<!-- <template #instance-demo>
 			<InstanceDemo
 				ref="instanceDemoRef"
 				v-bind="componentProps"
@@ -78,6 +78,6 @@ const handleHide = () => {
 
 		<template #slots-demo>
 			<SlotsDemo v-bind="componentProps" />
-		</template>
+		</template> -->
 	</PlaygroundLayout>
 </template>

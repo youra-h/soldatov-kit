@@ -79,7 +79,7 @@ export function syncStylable(
 			if (value !== undefined && value !== instance.size) {
 				instance.size = value
 			}
-		},
+		}
 	)
 
 	watch<TComponentVariant | undefined>(

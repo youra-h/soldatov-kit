@@ -50,6 +50,7 @@ export default {
 </script>
 
 <template>
+	{{ classes }}
 	<component ref="rootRef" :is="tag" :class="classes">
 		<div class="s-skeleton__placeholder" v-if="present" :style="styles" />
 		<slot />
