@@ -9,7 +9,7 @@ import {
 	type TTabsOrientation,
 	type TTabsAlignment,
 	type TTabsPosition,
-	type TTabsAppearance,
+	type TTabsView,
 	type ITabItem,
 } from '@core'
 import {
@@ -36,8 +36,8 @@ export const emitsTabs: TEmits = [
 	'update:alignment',
 	'change:position',
 	'update:position',
-	'change:appearance',
-	'update:appearance',
+	'change:view',
+	'update:view',
 	'change:closable',
 	'update:closable',
 	'item:close',
@@ -64,9 +64,9 @@ export const propsTabs: TProps = {
 		type: String as PropType<TTabsPosition>,
 		default: TTabs.defaultValues.position,
 	},
-	appearance: {
-		type: String as PropType<TTabsAppearance>,
-		default: TTabs.defaultValues.appearance,
+	view: {
+		type: String as PropType<TTabsView>,
+		default: TTabs.defaultValues.view,
 	},
 	closable: {
 		type: Boolean as PropType<ITabsProps['closable']>,
@@ -85,7 +85,7 @@ export interface ITabsState extends IControlState, IActivatableCollectionState<I
 	orientation: Ref<TTabsOrientation>
 	alignment: Ref<TTabsAlignment>
 	position: Ref<TTabsPosition>
-	appearance: Ref<TTabsAppearance>
+	view: Ref<TTabsView>
 	closable: Ref<boolean>
 }
 
@@ -123,9 +123,9 @@ export function syncTabs(
 		emit?.('update:position', value)
 	})
 
-	instance.events.on('change:appearance', (value: TTabsAppearance) => {
-		emit?.('change:appearance', value)
-		emit?.('update:appearance', value)
+	instance.events.on('change:view', (value: TTabsView) => {
+		emit?.('change:view', value)
+		emit?.('update:view', value)
 	})
 
 	instance.events.on('change:closable', (value: boolean) => {
@@ -189,11 +189,11 @@ export function syncTabs(
 		},
 	)
 
-	watch<TTabsAppearance | undefined>(
-		() => props.appearance,
+	watch<TTabsView | undefined>(
+		() => props.view,
 		(value) => {
-			if (value !== undefined && value !== instance.appearance) {
-				instance.appearance = value
+			if (value !== undefined && value !== instance.view) {
+				instance.view = value
 			}
 		},
 	)
@@ -215,7 +215,7 @@ export function syncTabs(
 			orientation: () => instance.orientation,
 			alignment: () => instance.alignment,
 			position: () => instance.position,
-			appearance: () => instance.appearance,
+			view: () => instance.view,
 			closable: () => instance.closable,
 		}),
 	}

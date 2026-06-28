@@ -9,7 +9,7 @@ import type {
 	ICollapseProps,
 	TCollapseEvents,
 	TCollapseStates,
-	TCollapseAppearance,
+	TCollapseView,
 } from './types'
 import { TEvented } from '../../common/evented'
 import type { TSelectionMode } from '../../base/collection'
@@ -24,11 +24,11 @@ export class TCollapse
 
 	static defaultValues: Partial<ICollapseProps> = {
 		...TControl.defaultValues,
-		appearance: 'plain',
+		view: 'plain',
 		mode: 'multiple',
 	}
 
-	protected _appearance!: TCollapseAppearance
+	protected _view!: TCollapseView
 	protected _collection: TSelectableCollection<any, any, ICollapseItem>
 
 	constructor(
@@ -49,7 +49,7 @@ export class TCollapse
 			mode: props.mode ?? ctor.defaultValues.mode!,
 		})
 
-		this._applyAppearance(props.appearance ?? ctor.defaultValues.appearance!)
+		this._applyView(props.view ?? ctor.defaultValues.view!)
 
 		this.events.on('change:size', (payload: TValuePayload<TComponentSize>) => {
 			this._collection.forEach((item) => {
@@ -74,7 +74,7 @@ export class TCollapse
 				then: (payload: any) => {
 					const { item } = payload as { collection: any; item: ICollapseItem }
 
-					item.setAppearanceResolver(() => this._appearance)
+					item.setViewResolver(() => this._view)
 
 					item.events.on('change:rendered', (value: boolean) => {
 						;(this.events as TEvented<TCollapseEvents>).emit('item:rendered', item, value)
@@ -120,27 +120,27 @@ export class TCollapse
 		})
 	}
 
-	get appearance(): TCollapseAppearance {
-		return this._appearance
+	get view(): TCollapseView {
+		return this._view
 	}
 
-	protected _applyAppearance(newValue: TCollapseAppearance, oldValue?: TCollapseAppearance) {
+	protected _applyView(newValue: TCollapseView, oldValue?: TCollapseView) {
 		this._classes.swapClass({
 			oldClass: `--${oldValue}`,
 			newClass: `--${newValue}`,
 		})
 
-		this._appearance = newValue
+		this._view = newValue
 	}
 
-	set appearance(value: TCollapseAppearance) {
-		if (this._appearance !== value) {
-			this._applyAppearance(value, this._appearance)
+	set view(value: TCollapseView) {
+		if (this._view !== value) {
+			this._applyView(value, this._view)
 
 			this._collection.forEach((item) => {
-				item.events.emit('change:appearance', value)
+				item.events.emit('change:view', value)
 			})
-			;(this.events as TEvented<TCollapseEvents>).emit('change:appearance', value)
+			;(this.events as TEvented<TCollapseEvents>).emit('change:view', value)
 		}
 	}
 
@@ -159,7 +159,7 @@ export class TCollapse
 	override getProps(): ICollapseProps {
 		return {
 			...super.getProps(),
-			appearance: this._appearance,
+			view: this._view,
 			mode: this._collection.mode,
 		}
 	}

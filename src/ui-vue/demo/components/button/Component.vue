@@ -3,14 +3,14 @@ import { Button, emitsButton } from '@ui/button'
 import PanelDemo from '../../common/PanelDemo.vue'
 import { useEventLogger } from '../../common/useEventLogger'
 import type { EventLogEntry } from '../../common/EventLog.vue'
-import type { TComponentSize, TComponentVariant, TButtonAppearance } from '@core'
+import type { TComponentSize, TComponentVariant, TButtonView } from '@core'
 
 type Props = {
 	visible?: boolean
 	rendered?: boolean
 	size?: TComponentSize
 	variant?: TComponentVariant
-	appearance?: TButtonAppearance
+	view?: TButtonView
 	disabled?: boolean
 	text?: string
 }
@@ -32,7 +32,7 @@ const { handlers } = useEventLogger(emit, emitsButton)
 			:rendered="rendered"
 			:size="size"
 			:variant="variant"
-			:appearance="appearance"
+			:view="view"
 			:disabled="disabled"
 			:text="text"
 			v-bind="handlers"

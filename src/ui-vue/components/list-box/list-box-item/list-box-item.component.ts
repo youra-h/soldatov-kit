@@ -1,5 +1,5 @@
 import type { PropType, Ref } from 'vue'
-import { type IListBoxItem, type IListItemProps, type TListBoxAppearance } from '@core'
+import { type IListBoxItem, type IListItemProps, type TListBoxView } from '@core'
 import {
 	BaseListItem,
 	emitsListItem,
@@ -14,8 +14,8 @@ export const emitsListBoxItem: TEmits = [...emitsListItem] as const
 
 export const propsListBoxItem: TProps = {
 	...propsListItem,
-	appearance: {
-		type: String as PropType<TListBoxAppearance>,
+	view: {
+		type: String as PropType<TListBoxView>,
 		default: 'plain',
 	},
 }
@@ -28,7 +28,7 @@ export default {
 }
 
 export interface IListBoxItemState extends IListItemState {
-	appearance: Ref<TListBoxAppearance>
+	view: Ref<TListBoxView>
 }
 
 export function syncListBoxItem(
@@ -41,7 +41,7 @@ export function syncListBoxItem(
 	return {
 		...syncProps,
 		...useSyncProps(instance.events as any, {
-			appearance: () => instance.appearance,
+			view: () => instance.view,
 		}),
 	}
 }

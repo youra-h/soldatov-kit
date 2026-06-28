@@ -14,13 +14,13 @@ const APPEARANCES = ['plain', 'outlined', 'filled'] as const
 
 <template>
 	<div class="collapse-slots-demo">
-		<!-- Appearances -->
-		<div v-for="appearance in APPEARANCES" :key="appearance" class="collapse-slots-demo__section">
-			<h4 class="collapse-slots-demo__subtitle">{{ appearance }}</h4>
+		<!-- Views -->
+		<div v-for="view in APPEARANCES" :key="view" class="collapse-slots-demo__section">
+			<h4 class="collapse-slots-demo__subtitle">{{ view }}</h4>
 
-			<Collapse :appearance="appearance" :size="size" :variant="variant" mode="multiple">
+			<Collapse :view="view" :size="size" :variant="variant" mode="multiple">
 				<CollapseItem text="Section 1" value="s1" :selected="true">
-					<p>Content for section 1 — {{ appearance }} appearance</p>
+					<p>Content for section 1 — {{ view }} view</p>
 				</CollapseItem>
 				<CollapseItem text="Section 2" value="s2">
 					<p>Content for section 2</p>
@@ -34,7 +34,7 @@ const APPEARANCES = ['plain', 'outlined', 'filled'] as const
 		<!-- Single mode -->
 		<div class="collapse-slots-demo__section">
 			<h4 class="collapse-slots-demo__subtitle">mode: single</h4>
-			<Collapse appearance="outlined" :size="size" :variant="variant" mode="single">
+			<Collapse view="outlined" :size="size" :variant="variant" mode="single">
 				<CollapseItem text="Single mode — only one open" value="s1" :selected="true">
 					<p>Only one section can be open at a time</p>
 				</CollapseItem>
@@ -52,7 +52,7 @@ const APPEARANCES = ['plain', 'outlined', 'filled'] as const
 			<h4 class="collapse-slots-demo__subtitle">Arrow placement</h4>
 			<div class="collapse-slots-demo__group">
 				<span class="collapse-slots-demo__label">start (default: end)</span>
-				<Collapse appearance="plain" :size="size" :variant="variant" mode="multiple">
+				<Collapse view="plain" :size="size" :variant="variant" mode="multiple">
 					<CollapseItem text="Arrow start" value="s1" arrow-placement="start">
 						<p>Arrow is on the left</p>
 					</CollapseItem>
@@ -66,7 +66,7 @@ const APPEARANCES = ['plain', 'outlined', 'filled'] as const
 		<!-- Custom leading/trailing slots -->
 		<div class="collapse-slots-demo__section">
 			<h4 class="collapse-slots-demo__subtitle">Custom leading/trailing slots</h4>
-			<Collapse appearance="outlined" :size="size" :variant="variant" mode="multiple">
+			<Collapse view="outlined" :size="size" :variant="variant" mode="multiple">
 				<CollapseItem text="With icon leading" value="s1">
 					<template #leading>
 						<span class="collapse-slots-demo__badge">⭐</span>

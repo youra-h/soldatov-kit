@@ -18,7 +18,7 @@ defineProps<Props>()
 
 const tabs = new TTabs()
 tabs.variant = 'accent'
-tabs.appearance = 'contained'
+tabs.view = 'contained'
 tabs.orientation = 'horizontal'
 
 tabs.collection.add({ text: 'Dashboard', value: 'dashboard', closable: true })
@@ -45,7 +45,7 @@ const tabItems = ref([
 
 const collapse = new TCollapse()
 collapse.variant = 'accent'
-collapse.appearance = 'outlined'
+collapse.view = 'outlined'
 collapse.mode = 'multiple'
 
 collapse.collection.add({ text: 'Getting Started', value: 'getting-started' })
@@ -79,7 +79,7 @@ const collapseItems = ref([
 		<section class="drag-slots-demo__section">
 			<h3 class="drag-slots-demo__title">Declarative (TabItem slots)</h3>
 			<DragAndDrop>
-				<Tabs :orientation="orientation" :size="size" :variant="variant" appearance="line">
+				<Tabs :orientation="orientation" :size="size" :variant="variant" view="line">
 					<TabItem text="Overview" value="overview" active />
 					<TabItem text="Details" value="details" />
 					<TabItem text="Analytics" value="analytics" />
@@ -116,7 +116,7 @@ const collapseItems = ref([
 		<section class="drag-slots-demo__section">
 			<h3 class="drag-slots-demo__title">Items prop (:items)</h3>
 			<DragAndDrop>
-				<Tabs :items="tabItems" appearance="outline">
+				<Tabs :items="tabItems" view="outline">
 					<template #panel:profile><p>Profile content</p></template>
 					<template #panel:notifications><p>Notifications content</p></template>
 					<template #panel:security><p>Security content</p></template>
@@ -132,7 +132,7 @@ const collapseItems = ref([
 		<section class="drag-slots-demo__section">
 			<h3 class="drag-slots-demo__title">Collapse — Declarative (CollapseItem slots)</h3>
 			<DragAndDrop>
-				<Collapse mode="multiple" appearance="plain">
+				<Collapse mode="multiple" view="plain">
 					<CollapseItem text="Introduction" value="intro" :selected="true">
 						<p>Introduction content</p>
 					</CollapseItem>
@@ -170,7 +170,7 @@ const collapseItems = ref([
 		<section class="drag-slots-demo__section">
 			<h3 class="drag-slots-demo__title">Collapse — Items prop (:items)</h3>
 			<DragAndDrop>
-				<Collapse :items="collapseItems" mode="multiple" appearance="outlined">
+				<Collapse :items="collapseItems" mode="multiple" view="outlined">
 					<template #panel:overview><p>Overview content</p></template>
 					<template #panel:quick-start><p>Quick Start content</p></template>
 					<template #panel:api-reference><p>API Reference content</p></template>

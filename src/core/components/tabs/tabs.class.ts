@@ -14,7 +14,7 @@ import type {
 	TTabsOrientation,
 	TTabsAlignment,
 	TTabsPosition,
-	TTabsAppearance,
+	TTabsView,
 } from './types'
 import { TEvented } from '../../common/evented'
 
@@ -30,7 +30,7 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStates> implem
 		orientation: 'horizontal',
 		alignment: 'start',
 		position: 'start',
-		appearance: 'line',
+		view: 'line',
 		closable: false,
 		variant: 'normal',
 	}
@@ -39,7 +39,7 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStates> implem
 	protected _orientation!: TTabsOrientation
 	protected _alignment!: TTabsAlignment
 	protected _position!: TTabsPosition
-	protected _appearance!: TTabsAppearance
+	protected _view!: TTabsView
 	protected _closable!: boolean
 
 	// Композиция: коллекция табов
@@ -65,7 +65,7 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStates> implem
 		this._applyOrientation(props.orientation ?? ctor.defaultValues.orientation!)
 		this._applyAlignment(props.alignment ?? ctor.defaultValues.alignment!)
 		this._applyPosition(props.position ?? ctor.defaultValues.position!)
-		this._applyAppearance(props.appearance ?? ctor.defaultValues.appearance!)
+		this._applyView(props.view ?? ctor.defaultValues.view!)
 		this._applyClosable(props.closable ?? ctor.defaultValues.closable!)
 
 		// Propagation: при изменении size/variant у контейнера — обновляем все существующие итемы
@@ -204,23 +204,23 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStates> implem
 		}
 	}
 
-	get appearance(): TTabsAppearance {
-		return this._appearance
+	get view(): TTabsView {
+		return this._view
 	}
 
-	protected _applyAppearance(newValue: TTabsAppearance, oldValue?: TTabsAppearance) {
+	protected _applyView(newValue: TTabsView, oldValue?: TTabsView) {
 		this._classes.swapClass({
 			oldClass: `--${oldValue}`,
 			newClass: `--${newValue}`,
 		})
 
-		this._appearance = newValue
+		this._view = newValue
 	}
 
-	set appearance(value: TTabsAppearance) {
-		if (this._appearance !== value) {
-			this._applyAppearance(value, this._appearance)
-			;(this.events as TEvented<TTabsEvents>).emit('change:appearance', value)
+	set view(value: TTabsView) {
+		if (this._view !== value) {
+			this._applyView(value, this._view)
+			;(this.events as TEvented<TTabsEvents>).emit('change:view', value)
 		}
 	}
 
@@ -289,7 +289,7 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStates> implem
 			orientation: this._orientation,
 			alignment: this._alignment,
 			position: this._position,
-			appearance: this._appearance,
+			view: this._view,
 			closable: this._closable,
 		}
 	}

@@ -7,7 +7,7 @@ import type { EventLogEntry } from '../../common/EventLog.vue'
 import type {
 	TComponentSize,
 	TComponentVariant,
-	TListBoxAppearance,
+	TListBoxView,
 	TSelectionMode,
 } from '@core'
 
@@ -17,7 +17,7 @@ type Props = {
 	disabled?: boolean
 	size?: TComponentSize
 	variant?: TComponentVariant
-	appearance?: TListBoxAppearance
+	view?: TListBoxView
 	mode?: TSelectionMode
 	maxRows?: number
 	autoWidth?: boolean
@@ -49,7 +49,7 @@ const applyAll = computed(() => props.itemApplyTarget === 'all')
 			:disabled="disabled"
 			:size="size"
 			:variant="variant"
-			:appearance="appearance"
+			:view="view"
 			:mode="mode"
 			:max-rows="maxRows"
 			:auto-width="autoWidth"

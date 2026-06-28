@@ -5,7 +5,7 @@ describe('TListBox — patchItems', () => {
 	const trackBy = (item: any) => item.value
 
 	it('patchItems with trackBy updates items in list-box', () => {
-		const listBox = new TListBox({ mode: 'single', appearance: 'plain' })
+		const listBox = new TListBox({ mode: 'single', view: 'plain' })
 
 		listBox.collection.addItems([
 			{ value: 'moscow', text: 'Москва' },

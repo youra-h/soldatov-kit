@@ -14,7 +14,7 @@ describe('TTabs', () => {
 			expect(tabs.orientation).toBe('horizontal')
 			expect(tabs.alignment).toBe('start')
 			expect(tabs.position).toBe('start')
-			expect(tabs.appearance).toBe('line')
+			expect(tabs.view).toBe('line')
 			expect(tabs.closable).toBe(false)
 			expect(tabs.count).toBe(0)
 			expect(tabs.activeItem).toBeUndefined()
@@ -26,7 +26,7 @@ describe('TTabs', () => {
 					orientation: 'vertical',
 					alignment: 'center',
 					position: 'end',
-					appearance: 'outline',
+					view: 'outline',
 					closable: true,
 				},
 			})
@@ -34,7 +34,7 @@ describe('TTabs', () => {
 			expect(customTabs.orientation).toBe('vertical')
 			expect(customTabs.alignment).toBe('center')
 			expect(customTabs.position).toBe('end')
-			expect(customTabs.appearance).toBe('outline')
+			expect(customTabs.view).toBe('outline')
 			expect(customTabs.closable).toBe(true)
 		})
 	})
@@ -220,11 +220,11 @@ describe('TTabs', () => {
 			expect(spy).toHaveBeenCalledWith('end')
 		})
 
-		it('emits change:appearance when appearance changes', () => {
+		it('emits change:view when view changes', () => {
 			const spy = vi.fn()
-			tabs.events.on('change:appearance', spy)
+			tabs.events.on('change:view', spy)
 
-			tabs.appearance = 'outline'
+			tabs.view = 'outline'
 
 			expect(spy).toHaveBeenCalledWith('outline')
 		})
@@ -243,7 +243,7 @@ describe('TTabs', () => {
 		it('generates base class with modifiers', () => {
 			tabs.orientation = 'vertical'
 			tabs.alignment = 'center'
-			tabs.appearance = 'outline'
+			tabs.view = 'outline'
 
 			const classes = tabs.classes.toArray()
 

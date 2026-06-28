@@ -5,7 +5,7 @@ import {
 	type ICollapseProps,
 	type ICollapseItem,
 	TCollapse,
-	type TCollapseAppearance,
+	type TCollapseView,
 	type TSelectionMode,
 	type ICollectionProps,
 } from '@core'
@@ -28,8 +28,8 @@ import { useSyncProps } from '../../composables/useSyncProps'
 export const emitsCollapse: TEmits = [
 	...emitsControl,
 	...emitsSelectableCollection,
-	'change:appearance',
-	'update:appearance',
+	'change:view',
+	'update:view',
 	'item:disabled',
 	'item:text',
 	'item:rendered',
@@ -40,9 +40,9 @@ export const emitsCollapse: TEmits = [
 export const propsCollapse: TProps = {
 	...propsControl,
 	...propsSelectableCollection,
-	appearance: {
-		type: String as PropType<TCollapseAppearance>,
-		default: TCollapse.defaultValues.appearance,
+	view: {
+		type: String as PropType<TCollapseView>,
+		default: TCollapse.defaultValues.view,
 	},
 	mode: {
 		type: String as PropType<TSelectionMode>,
@@ -58,7 +58,7 @@ export default {
 }
 
 export interface ICollapseState extends IControlState, ISelectableCollectionState<ICollapseItem> {
-	appearance: Ref<TCollapseAppearance>
+	view: Ref<TCollapseView>
 }
 
 export function syncCollapse(
@@ -75,9 +75,9 @@ export function syncCollapse(
 		plugins,
 	})
 
-	instance.events.on('change:appearance', (value: TCollapseAppearance) => {
-		emit?.('change:appearance', value)
-		emit?.('update:appearance', value)
+	instance.events.on('change:view', (value: TCollapseView) => {
+		emit?.('change:view', value)
+		emit?.('update:view', value)
 	})
 
 	instance.events.on('item:disabled', (item: ICollapseItem, value: boolean) => {
@@ -100,11 +100,11 @@ export function syncCollapse(
 		emit?.('item:present', item, value)
 	})
 
-	watch<TCollapseAppearance | undefined>(
-		() => props.appearance,
+	watch<TCollapseView | undefined>(
+		() => props.view,
 		(value) => {
-			if (value !== undefined && value !== instance.appearance) {
-				instance.appearance = value
+			if (value !== undefined && value !== instance.view) {
+				instance.view = value
 			}
 		},
 	)
@@ -122,7 +122,7 @@ export function syncCollapse(
 		...syncPropsControl,
 		...syncPropsSelectableCollection,
 		...useSyncProps(instance.events as any, {
-			appearance: () => instance.appearance,
+			view: () => instance.view,
 		}),
 	}
 }

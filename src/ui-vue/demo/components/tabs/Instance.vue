@@ -12,7 +12,7 @@ import type {
 	TTabsOrientation,
 	TTabsAlignment,
 	TTabsPosition,
-	TTabsAppearance,
+	TTabsView,
 } from '@core'
 
 type Props = {
@@ -24,7 +24,7 @@ type Props = {
 	orientation?: TTabsOrientation
 	alignment?: TTabsAlignment
 	position?: TTabsPosition
-	appearance?: TTabsAppearance
+	view?: TTabsView
 	closable?: boolean
 	// Tab item props
 	tabDisabled?: boolean
@@ -52,7 +52,7 @@ const instance = new TTabs({
 	orientation: props.orientation ?? 'horizontal',
 	alignment: props.alignment ?? 'start',
 	position: props.position ?? 'start',
-	appearance: props.appearance ?? 'line',
+	view: props.view ?? 'line',
 	closable: props.closable ?? false,
 })
 
@@ -72,7 +72,7 @@ useSyncPropsToInstance(props, instance, [
 	'orientation',
 	'alignment',
 	'position',
-	'appearance',
+	'view',
 	'closable',
 ])
 

@@ -32,7 +32,7 @@ export default {
 			text,
 			selected,
 			arrowPlacement,
-			appearance,
+			view,
 			order,
 		} = syncCollapseItem({ props, instance, plugins, emit })
 
@@ -52,7 +52,7 @@ export default {
 			text,
 			selected,
 			arrowPlacement,
-			appearance,
+			view,
 			order,
 		}
 	},
@@ -63,7 +63,7 @@ export default {
 	<div ref="rootRef" v-if="rendered" v-show="visible" :class="classes" :style="{ order }">
 		<Button
 			class="s-collapse-item__header"
-			:appearance="appearance"
+			:view="view"
 			:disabled="disabled"
 			:size="size"
 			:variant="variant"

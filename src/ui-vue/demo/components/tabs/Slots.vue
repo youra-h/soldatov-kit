@@ -14,12 +14,12 @@ const APPEARANCES = ['line', 'contained', 'outline'] as const
 
 <template>
 	<div class="tabs-slots-demo">
-		<!-- Appearances per variant -->
-		<div v-for="appearance in APPEARANCES" :key="appearance" class="tabs-slots-demo__section">
-			<h4 class="tabs-slots-demo__subtitle">{{ appearance }}</h4>
+		<!-- Views per variant -->
+		<div v-for="view in APPEARANCES" :key="view" class="tabs-slots-demo__section">
+			<h4 class="tabs-slots-demo__subtitle">{{ view }}</h4>
 
 			<div class="tabs-slots-demo__group">
-				<Tabs :appearance="appearance" :size="size" :variant="variant">
+				<Tabs :view="view" :size="size" :variant="variant">
 					<TabItem text="Tab 1" value="t1" active />
 					<TabItem text="Tab 2" value="t2" />
 					<TabItem text="Tab 3" value="t3" />
@@ -33,7 +33,7 @@ const APPEARANCES = ['line', 'contained', 'outline'] as const
 		<!-- Leading / Trailing slots -->
 		<div class="tabs-slots-demo__section">
 			<h4 class="tabs-slots-demo__subtitle">Leading & Trailing slots</h4>
-			<Tabs appearance="line" :size="size" :variant="variant">
+			<Tabs view="line" :size="size" :variant="variant">
 				<template #leading>
 					<span class="tabs-slots-demo__badge">leading</span>
 				</template>
@@ -52,7 +52,7 @@ const APPEARANCES = ['line', 'contained', 'outline'] as const
 		<!-- Closable tabs -->
 		<div class="tabs-slots-demo__section">
 			<h4 class="tabs-slots-demo__subtitle">Closable tabs</h4>
-			<Tabs appearance="contained" :size="size" :variant="variant" :closable="true">
+			<Tabs view="contained" :size="size" :variant="variant" :closable="true">
 				<TabItem text="Tab 1" value="t1" active />
 				<TabItem text="Tab 2" value="t2" />
 				<TabItem text="Tab 3 (not closable)" value="t3" :closable="false" />
@@ -67,7 +67,7 @@ const APPEARANCES = ['line', 'contained', 'outline'] as const
 			<h4 class="tabs-slots-demo__subtitle">Alignment</h4>
 			<div class="tabs-slots-demo__group">
 				<span class="tabs-slots-demo__label">center</span>
-				<Tabs appearance="line" alignment="center" :size="size" :variant="variant">
+				<Tabs view="line" alignment="center" :size="size" :variant="variant">
 					<TabItem text="Tab 1" value="t1" active />
 					<TabItem text="Tab 2" value="t2" />
 					<TabItem text="Tab 3" value="t3" />
@@ -75,7 +75,7 @@ const APPEARANCES = ['line', 'contained', 'outline'] as const
 			</div>
 			<div class="tabs-slots-demo__group">
 				<span class="tabs-slots-demo__label">end</span>
-				<Tabs appearance="line" alignment="end" :size="size" :variant="variant">
+				<Tabs view="line" alignment="end" :size="size" :variant="variant">
 					<TabItem text="Tab 1" value="t1" active />
 					<TabItem text="Tab 2" value="t2" />
 					<TabItem text="Tab 3" value="t3" />
@@ -83,7 +83,7 @@ const APPEARANCES = ['line', 'contained', 'outline'] as const
 			</div>
 			<div class="tabs-slots-demo__group">
 				<span class="tabs-slots-demo__label">stretch</span>
-				<Tabs appearance="line" alignment="stretch" :size="size" :variant="variant">
+				<Tabs view="line" alignment="stretch" :size="size" :variant="variant">
 					<TabItem text="Tab 1" value="t1" active />
 					<TabItem text="Tab 2" value="t2" />
 					<TabItem text="Tab 3" value="t3" />
@@ -97,7 +97,7 @@ const APPEARANCES = ['line', 'contained', 'outline'] as const
 			<div class="tabs-slots-demo__row">
 				<div class="tabs-slots-demo__col">
 					<span class="tabs-slots-demo__label">position: start</span>
-					<Tabs appearance="contained" orientation="vertical" :size="size" :variant="variant">
+					<Tabs view="contained" orientation="vertical" :size="size" :variant="variant">
 						<TabItem text="Tab 1" value="t1" active />
 						<TabItem text="Tab 2" value="t2" />
 						<TabItem text="Tab 3" value="t3" />
@@ -108,7 +108,7 @@ const APPEARANCES = ['line', 'contained', 'outline'] as const
 				</div>
 				<div class="tabs-slots-demo__col">
 					<span class="tabs-slots-demo__label">position: end</span>
-					<Tabs appearance="contained" orientation="vertical" position="end" :size="size" :variant="variant">
+					<Tabs view="contained" orientation="vertical" position="end" :size="size" :variant="variant">
 						<TabItem text="Tab 1" value="t1" active />
 						<TabItem text="Tab 2" value="t2" />
 						<TabItem text="Tab 3" value="t3" />

@@ -3,7 +3,7 @@ import {
 	type ICollapse,
 	type ICollapseItem,
 	type ICollapseItemProps,
-	type TCollapseAppearance,
+	type TCollapseView,
 } from '@core'
 import {
 	default as BaseCollapseItemCustom,
@@ -28,8 +28,8 @@ export const emitsCollapseItem: TEmits = [
 export const propsCollapseItem: TProps = {
 	...propsCollapseItemCustom,
 	...propsSelectableCollectionItem,
-	appearance: {
-		type: String as PropType<ICollapse['appearance']>,
+	view: {
+		type: String as PropType<ICollapse['view']>,
 		default: 'plain',
 	},
 }
@@ -43,7 +43,7 @@ export default {
 
 export interface ICollapseItemState
 	extends ICollapseItemCustomState, ISelectableCollectionItemState<ICollapseItem> {
-	appearance: Ref<TCollapseAppearance>
+	view: Ref<TCollapseView>
 }
 
 export function syncCollapseItem(

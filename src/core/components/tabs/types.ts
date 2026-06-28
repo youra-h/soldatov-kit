@@ -15,7 +15,7 @@ import type { ITabItem } from './tab-item/types'
 export type TTabsOrientation = 'horizontal' | 'vertical'
 export type TTabsAlignment = 'start' | 'center' | 'end' | 'stretch'
 export type TTabsPosition = 'start' | 'end'
-export type TTabsAppearance = 'line' | 'contained' | 'outline'
+export type TTabsView = 'line' | 'contained' | 'outline'
 
 export type TTabsEvents = TControlEvents &
 	TActivatableCollectionEvents &
@@ -26,8 +26,8 @@ export type TTabsEvents = TControlEvents &
 		'change:alignment': (value: TTabsAlignment) => void
 		/** change:position */
 		'change:position': (value: TTabsPosition) => void
-		/** change:appearance */
-		'change:appearance': (value: TTabsAppearance) => void
+		/** change:view */
+		'change:view': (value: TTabsView) => void
 		/** change:closable */
 		'change:closable': (value: boolean) => void
 		/** item:close — эмитится перед удалением таба при закрытии */
@@ -51,7 +51,7 @@ export interface ITabsProps extends IControlProps {
 	/** Позиция табов (для vertical) */
 	position?: TTabsPosition
 	/** Стиль отображения */
-	appearance?: TTabsAppearance
+	view?: TTabsView
 	/** Разрешить закрытие табов (по умолчанию false) */
 	closable?: boolean
 }
@@ -66,7 +66,7 @@ export interface ITabs extends IControl<ITabsProps, TTabsEvents> {
 	/** Позиция табов (для vertical) */
 	position: TTabsPosition
 	/** Стиль отображения */
-	appearance: TTabsAppearance
+	view: TTabsView
 	/** Разрешить закрытие табов */
 	closable: boolean
 	/** Активный таб (из коллекции) */

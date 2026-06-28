@@ -14,11 +14,11 @@ const APPEARANCES = ['plain', 'outlined', 'filled'] as const
 
 <template>
 	<div class="list-box-slots-demo">
-		<!-- Appearances -->
-		<div v-for="appearance in APPEARANCES" :key="appearance" class="list-box-slots-demo__section">
-			<h4 class="list-box-slots-demo__subtitle">{{ appearance }}</h4>
+		<!-- Views -->
+		<div v-for="view in APPEARANCES" :key="view" class="list-box-slots-demo__section">
+			<h4 class="list-box-slots-demo__subtitle">{{ view }}</h4>
 
-			<ListBox :appearance="appearance" :size="size" :variant="variant">
+			<ListBox :view="view" :size="size" :variant="variant">
 				<ListBoxItem text="Item 1" value="i1" :selected="true" />
 				<ListBoxItem text="Item 2" value="i2" />
 				<ListBoxItem text="Item 3" value="i3" />
@@ -28,7 +28,7 @@ const APPEARANCES = ['plain', 'outlined', 'filled'] as const
 		<!-- Single / Multiple mode -->
 		<div class="list-box-slots-demo__section">
 			<h4 class="list-box-slots-demo__subtitle">mode: multiple</h4>
-			<ListBox appearance="outlined" :size="size" :variant="variant" mode="multiple">
+			<ListBox view="outlined" :size="size" :variant="variant" mode="multiple">
 				<ListBoxItem text="Multiple — several selected" value="i1" :selected="true" />
 				<ListBoxItem text="Item 2" value="i2" :selected="true" />
 				<ListBoxItem text="Item 3" value="i3" />
@@ -38,7 +38,7 @@ const APPEARANCES = ['plain', 'outlined', 'filled'] as const
 		<!-- Custom leading/trailing slots -->
 		<div class="list-box-slots-demo__section">
 			<h4 class="list-box-slots-demo__subtitle">Custom leading/trailing slots</h4>
-			<ListBox appearance="outlined" :size="size" :variant="variant">
+			<ListBox view="outlined" :size="size" :variant="variant">
 				<ListBoxItem text="With icon leading" value="i1">
 					<template #leading>
 						<span class="list-box-slots-demo__badge">⭐</span>

@@ -6,7 +6,7 @@ import TListBoxItem from './list-box-item/list-box-item.class'
 import type { IListBoxItem } from './list-box-item/types'
 import type {
 	IListBoxProps,
-	TListBoxAppearance,
+	TListBoxView,
 	TListBoxEvents,
 	TListBoxStates,
 	IListBox,
@@ -21,10 +21,10 @@ export class TListBox
 
 	static defaultValues: Partial<IListBoxProps> = {
 		...TList.defaultValues,
-		appearance: 'plain',
+		view: 'plain',
 	}
 
-	protected _appearance!: TListBoxAppearance
+	protected _view!: TListBoxView
 
 	protected override _createCollection(
 		mode: TSelectionMode,
@@ -44,7 +44,7 @@ export class TListBox
 
 		const { props = {} } = TComponentView.prepareOptions<IListBoxProps, TListBoxStates>(options)
 
-		this._applyAppearance(props.appearance ?? ctor.defaultValues.appearance!)
+		this._applyView(props.view ?? ctor.defaultValues.view!)
 
 		this.events.relay(this._collection.events, [
 			{
@@ -52,40 +52,40 @@ export class TListBox
 				then: (payload: any) => {
 					const { item } = payload as { collection: any; item: IListBoxItem }
 
-					item.setAppearanceResolver(() => this._appearance)
+					item.setViewResolver(() => this._view)
 				},
 			},
 		])
 	}
 
-	get appearance(): TListBoxAppearance {
-		return this._appearance
+	get view(): TListBoxView {
+		return this._view
 	}
 
-	protected _applyAppearance(newValue: TListBoxAppearance, oldValue?: TListBoxAppearance) {
+	protected _applyView(newValue: TListBoxView, oldValue?: TListBoxView) {
 		this._classes.swapClass({
 			oldClass: `--${oldValue}`,
 			newClass: `--${newValue}`,
 		})
 
-		this._appearance = newValue
+		this._view = newValue
 	}
 
-	set appearance(value: TListBoxAppearance) {
-		if (this._appearance !== value) {
-			this._applyAppearance(value, this._appearance)
+	set view(value: TListBoxView) {
+		if (this._view !== value) {
+			this._applyView(value, this._view)
 
 			this._collection.forEach((item) => {
-				item.events.emit('change:appearance', value)
+				item.events.emit('change:view', value)
 			})
-			;(this.events as TEvented<TListBoxEvents>).emit('change:appearance', value)
+			;(this.events as TEvented<TListBoxEvents>).emit('change:view', value)
 		}
 	}
 
 	override getProps(): IListBoxProps {
 		return {
 			...super.getProps(),
-			appearance: this._appearance,
+			view: this._view,
 		} as IListBoxProps
 	}
 }

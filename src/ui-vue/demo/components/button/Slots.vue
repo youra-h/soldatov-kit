@@ -18,24 +18,24 @@ const icon3 = useIconImport('/src/icons/close.svg')
 
 <template>
 	<div class="demo-container">
-		<h3 class="demo-title">Appearances & Slots</h3>
+		<h3 class="demo-title">Views & Slots</h3>
 
 		<div class="demo-grid">
-			<!-- Normal appearance -->
+			<!-- Normal view -->
 			<div class="demo-section">
 				<h4 class="demo-section-title">Normal</h4>
 				<div class="demo-section-content">
 					<Button
 						:size="size"
 						:variant="variant"
-					appearance="filled"
+					view="filled"
 						text="Default"
 						:disabled="disabled"
 					/>
 					<Button
 						:size="size"
 						:variant="variant"
-					appearance="filled"
+					view="filled"
 						text="With Icon"
 						:disabled="disabled"
 					>
@@ -46,7 +46,7 @@ const icon3 = useIconImport('/src/icons/close.svg')
 					<Button
 						:size="size"
 						:variant="variant"
-						appearance="filled"
+						view="filled"
 						:disabled="disabled"
 					>
 						<template #leading>
@@ -60,21 +60,21 @@ const icon3 = useIconImport('/src/icons/close.svg')
 				</div>
 			</div>
 
-			<!-- Plain appearance -->
+			<!-- Plain view -->
 			<div class="demo-section">
 				<h4 class="demo-section-title">Plain</h4>
 				<div class="demo-section-content">
 					<Button
 						:size="size"
 						:variant="variant"
-						appearance="plain"
+						view="plain"
 						text="Default"
 						:disabled="disabled"
 					/>
 					<Button
 						:size="size"
 						:variant="variant"
-						appearance="plain"
+						view="plain"
 						text="With Icon"
 						:disabled="disabled"
 					>
@@ -82,7 +82,7 @@ const icon3 = useIconImport('/src/icons/close.svg')
 							<Icon :tag="icon1" :size="size" />
 						</template>
 					</Button>
-					<Button :size="size" :variant="variant" appearance="plain" :disabled="disabled">
+					<Button :size="size" :variant="variant" view="plain" :disabled="disabled">
 						<template #leading>
 							<Icon :tag="icon2" :size="size" />
 						</template>
@@ -94,21 +94,21 @@ const icon3 = useIconImport('/src/icons/close.svg')
 				</div>
 			</div>
 
-			<!-- Outlined appearance -->
+			<!-- Outlined view -->
 			<div class="demo-section">
 				<h4 class="demo-section-title">Outlined</h4>
 				<div class="demo-section-content">
 					<Button
 						:size="size"
 						:variant="variant"
-						appearance="outlined"
+						view="outlined"
 						text="Default"
 						:disabled="disabled"
 					/>
 					<Button
 						:size="size"
 						:variant="variant"
-						appearance="outlined"
+						view="outlined"
 						text="With Icon"
 						:disabled="disabled"
 					>
@@ -119,7 +119,7 @@ const icon3 = useIconImport('/src/icons/close.svg')
 					<Button
 						:size="size"
 						:variant="variant"
-						appearance="outlined"
+						view="outlined"
 						:disabled="disabled"
 					>
 						<template #leading>
@@ -134,7 +134,7 @@ const icon3 = useIconImport('/src/icons/close.svg')
 			</div>
 		</div>
 
-		<div class="demo-info">Demonstrating different appearances with slot combinations</div>
+		<div class="demo-info">Demonstrating different views with slot combinations</div>
 	</div>
 </template>
 

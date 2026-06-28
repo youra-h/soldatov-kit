@@ -5,11 +5,11 @@ import type {
 	TListItemEvents,
 	TListItemCustomStates,
 } from '../../list/list-item/types'
-import type { TListBoxAppearance } from '../types'
+import type { TListBoxView } from '../types'
 
 export type TListBoxItemEvents = TListItemEvents & {
-	/** change:appearance */
-	'change:appearance': (value: TListBoxAppearance) => void
+	/** change:view */
+	'change:view': (value: TListBoxView) => void
 }
 
 export type TListBoxItemStates = TListItemCustomStates
@@ -20,7 +20,7 @@ export type TListBoxItemOptions = TListItemOptions<IListBoxItemProps, TListBoxIt
 
 export interface IListBoxItem extends IListItem<IListBoxItemProps, TListBoxItemEvents> {
 	/** Внешний вид (readonly, наследуется от TListBox) */
-	readonly appearance: TListBoxAppearance
-	/** Инжектирует резолвер appearance из TListBox */
-	setAppearanceResolver(resolver: () => TListBoxAppearance): void
+	readonly view: TListBoxView
+	/** Инжектирует резолвер view из TListBox */
+	setViewResolver(resolver: () => TListBoxView): void
 }

@@ -31,7 +31,7 @@ export default {
 			variant,
 			text,
 			selected,
-			appearance,
+			view,
 			order,
 		} = syncListBoxItem({ props, instance, plugins, emit })
 
@@ -48,7 +48,7 @@ export default {
 			variant,
 			text,
 			selected,
-			appearance,
+			view,
 			order,
 		}
 	},
@@ -59,7 +59,7 @@ export default {
 	<div ref="rootRef" v-if="rendered" v-show="visible" :class="classes" :style="{ order }">
 		<Button
 			:tag="tag"
-			:appearance="appearance"
+			:view="view"
 			:disabled="disabled"
 			:size="size"
 			:variant="variant"

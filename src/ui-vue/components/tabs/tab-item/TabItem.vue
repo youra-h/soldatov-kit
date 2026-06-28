@@ -67,7 +67,7 @@ export default {
 	<div ref="rootRef" v-if="rendered" v-show="visible" :class="classes" :style="{ order }">
 		<Button
 			:disabled="disabled"
-			appearance="none"
+			view="none"
 			:size="size"
 			:variant="variant"
 			@click="instance.click()"
@@ -87,7 +87,7 @@ export default {
 					:rendered="!!closable"
 					class="s-tab-item__close"
 					@click.stop="instance.close()"
-					appearance="plain"
+					view="plain"
 				>
 					<slot name="close-icon">
 						<Icon :tag="closeIconTag" :size="size" />

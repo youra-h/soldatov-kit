@@ -9,7 +9,7 @@ import type { EventLogEntry } from '../../common/EventLog.vue'
 import type {
 	TComponentSize,
 	TComponentVariant,
-	TCollapseAppearance,
+	TCollapseView,
 	TSelectionMode,
 	TCollapseArrowPlacement,
 } from '@core'
@@ -20,7 +20,7 @@ type Props = {
 	disabled?: boolean
 	size?: TComponentSize
 	variant?: TComponentVariant
-	appearance?: TCollapseAppearance
+	view?: TCollapseView
 	mode?: TSelectionMode
 	arrowPlacement?: TCollapseArrowPlacement
 	itemDisabled?: boolean
@@ -44,7 +44,7 @@ const instance = new TCollapse({
 	disabled: props.disabled ?? false,
 	size: props.size ?? 'normal',
 	variant: props.variant ?? 'normal',
-	appearance: props.appearance ?? 'plain',
+	view: props.view ?? 'plain',
 	mode: props.mode ?? 'multiple',
 })
 
@@ -62,7 +62,7 @@ useSyncPropsToInstance(props, instance, [
 	'disabled',
 	'size',
 	'variant',
-	'appearance',
+	'view',
 	'mode',
 ])
 

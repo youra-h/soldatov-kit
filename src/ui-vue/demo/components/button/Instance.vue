@@ -5,14 +5,14 @@ import PanelDemo from '../../common/PanelDemo.vue'
 import { useSyncPropsToInstance } from '../../common/useSyncPropsToInstance'
 import { useEventLogger, useCoreEventLogger } from '../../common/useEventLogger'
 import type { EventLogEntry } from '../../common/EventLog.vue'
-import type { TComponentSize, TComponentVariant, TButtonAppearance } from '@core'
+import type { TComponentSize, TComponentVariant, TButtonView } from '@core'
 
 type Props = {
 	visible?: boolean
 	rendered?: boolean
 	size?: TComponentSize
 	variant?: TComponentVariant
-	appearance?: TButtonAppearance
+	view?: TButtonView
 	disabled?: boolean
 	text?: string
 }
@@ -28,7 +28,7 @@ const instance = new TButton({
 	visible: props.visible ?? true,
 	size: props.size || 'normal',
 	variant: props.variant || 'normal',
-	appearance: props.appearance || 'filled',
+	view: props.view || 'filled',
 	disabled: props.disabled ?? false,
 	text: props.text || 'Button',
 })

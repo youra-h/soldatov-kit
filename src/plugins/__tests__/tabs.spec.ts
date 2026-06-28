@@ -3,7 +3,7 @@ import { TTabs } from '../../core/components/tabs'
 import { createTabsBundle } from '../bundles'
 import { TElementPlugin } from '../common/element'
 import { TInstancePlugin } from '../common/instance'
-import { TTabsAppearancePlugin } from '../common/tabs/appearance'
+import { TTabsViewPlugin } from '../common/tabs/view'
 import { type IPluginBundle } from '../base'
 
 function createTabsDom(): HTMLElement {
@@ -33,17 +33,17 @@ describe('TTabsBundle', () => {
 		tabs = new TTabs()
 	})
 
-	it('has TElementPlugin, TInstancePlugin, TTabsAppearancePlugin pre-installed', () => {
+	it('has TElementPlugin, TInstancePlugin, TTabsViewPlugin pre-installed', () => {
 		expect(bundle.get(TElementPlugin)).toBeInstanceOf(TElementPlugin)
 		expect(bundle.get(TInstancePlugin)).toBeInstanceOf(TInstancePlugin)
-		expect(bundle.get(TTabsAppearancePlugin)).toBeInstanceOf(TTabsAppearancePlugin)
+		expect(bundle.get(TTabsViewPlugin)).toBeInstanceOf(TTabsViewPlugin)
 	})
 
-	it('appearance plugin reacts to instance:ready', () => {
+	it('view plugin reacts to instance:ready', () => {
 		const instancePlugin = bundle.get(TInstancePlugin)!
 		instancePlugin.instance = tabs
 
-		expect(bundle.get(TTabsAppearancePlugin)).toBeInstanceOf(TTabsAppearancePlugin)
+		expect(bundle.get(TTabsViewPlugin)).toBeInstanceOf(TTabsViewPlugin)
 	})
 
 	it('full flow: delayed element + instance, no errors', async () => {
@@ -100,7 +100,7 @@ describe('TTabsBundle', () => {
 		expect(elementPlugin.element).toBeNull()
 	})
 
-	it('bundle.remove(TTabsAppearancePlugin) calls destroy without error', async () => {
+	it('bundle.remove(TTabsViewPlugin) calls destroy without error', async () => {
 		const elementPlugin = bundle.get(TElementPlugin)!
 		const instancePlugin = bundle.get(TInstancePlugin)!
 
@@ -113,9 +113,9 @@ describe('TTabsBundle', () => {
 		})
 
 		expect(() => {
-			bundle.remove(TTabsAppearancePlugin)
+			bundle.remove(TTabsViewPlugin)
 		}).not.toThrow()
 
-		expect(bundle.get(TTabsAppearancePlugin)).toBeUndefined()
+		expect(bundle.get(TTabsViewPlugin)).toBeUndefined()
 	})
 })

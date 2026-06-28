@@ -9,7 +9,7 @@ import type { EventLogEntry } from '../../common/EventLog.vue'
 import type {
 	TComponentSize,
 	TComponentVariant,
-	TListBoxAppearance,
+	TListBoxView,
 	TSelectionMode,
 } from '@core'
 
@@ -19,7 +19,7 @@ type Props = {
 	disabled?: boolean
 	size?: TComponentSize
 	variant?: TComponentVariant
-	appearance?: TListBoxAppearance
+	view?: TListBoxView
 	mode?: TSelectionMode
 	maxRows?: number
 	autoWidth?: boolean
@@ -46,7 +46,7 @@ const instance = new TListBox({
 	disabled: props.disabled ?? false,
 	size: props.size ?? 'normal',
 	variant: props.variant ?? 'normal',
-	appearance: props.appearance ?? 'plain',
+	view: props.view ?? 'plain',
 	mode: props.mode ?? 'single',
 	maxRows: props.maxRows ?? 0,
 	autoWidth: props.autoWidth ?? false,
@@ -66,7 +66,7 @@ useSyncPropsToInstance(props, instance, [
 	'disabled',
 	'size',
 	'variant',
-	'appearance',
+	'view',
 	'mode',
 	'maxRows',
 	'autoWidth',

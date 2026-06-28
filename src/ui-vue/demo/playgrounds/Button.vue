@@ -8,7 +8,7 @@ import PropsDemo from './../components/button/Component.vue'
 import InstanceDemo from './../components/button/Instance.vue'
 import SlotsDemo from './../components/button/Slots.vue'
 import { SIZES, VARIANTS, BUTTON_APPEARANCES } from '../common/items'
-import type { TComponentSize, TComponentVariant, TButtonAppearance } from '@core'
+import type { TComponentSize, TComponentVariant, TButtonView } from '@core'
 
 const emit = defineEmits<{
 	log: [entry: EventLogEntry]
@@ -21,7 +21,7 @@ const propertiesSchema: TPropertiesSchema = {
 	disabled: { type: 'boolean', default: false },
 	size: { type: 'select', default: 'normal', options: SIZES },
 	variant: { type: 'select', default: 'normal', options: VARIANTS },
-	appearance: { type: 'select', default: 'filled', options: BUTTON_APPEARANCES },
+	view: { type: 'select', default: 'filled', options: BUTTON_APPEARANCES },
 	text: { type: 'string', default: 'Button', placeholder: 'Button text' },
 }
 
@@ -32,7 +32,7 @@ const componentProps = ref<{
 	disabled: boolean
 	size: TComponentSize
 	variant: TComponentVariant
-	appearance: TButtonAppearance
+	view: TButtonView
 	text: string
 }>({
 	visible: true,
@@ -40,7 +40,7 @@ const componentProps = ref<{
 	disabled: false,
 	size: 'normal',
 	variant: 'normal',
-	appearance: 'filled',
+	view: 'filled',
 	text: 'Button',
 })
 

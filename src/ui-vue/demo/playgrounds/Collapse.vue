@@ -11,7 +11,7 @@ import { SIZES, VARIANTS } from '../common/items.ts'
 import type {
 	TComponentSize,
 	TComponentVariant,
-	TCollapseAppearance,
+	TCollapseView,
 	TSelectionMode,
 	TCollapseArrowPlacement,
 } from '@core'
@@ -20,7 +20,7 @@ const emit = defineEmits<{
 	log: [entry: EventLogEntry]
 }>()
 
-const COLLAPSE_APPEARANCES: TCollapseAppearance[] = ['plain', 'outlined', 'filled']
+const COLLAPSE_APPEARANCES: TCollapseView[] = ['plain', 'outlined', 'filled']
 const COLLAPSE_MODES: TSelectionMode[] = ['single', 'multiple', 'none']
 const ARROW_PLACEMENTS: TCollapseArrowPlacement[] = ['start', 'end']
 
@@ -30,7 +30,7 @@ const collapseSchema: TPropertiesSchema = {
 	disabled: { type: 'boolean', default: false },
 	size: { type: 'select', default: 'normal', options: SIZES },
 	variant: { type: 'select', default: 'normal', options: VARIANTS },
-	appearance: { type: 'select', default: 'plain', options: COLLAPSE_APPEARANCES },
+	view: { type: 'select', default: 'plain', options: COLLAPSE_APPEARANCES },
 	mode: { type: 'select', default: 'multiple', options: COLLAPSE_MODES },
 	arrowPlacement: { type: 'select', default: 'start', options: ARROW_PLACEMENTS },
 }
@@ -53,7 +53,7 @@ const componentProps = ref<{
 	disabled: boolean
 	size: TComponentSize
 	variant: TComponentVariant
-	appearance: TCollapseAppearance
+	view: TCollapseView
 	mode: TSelectionMode
 	arrowPlacement: TCollapseArrowPlacement
 	itemApplyTarget: 'all' | 'first'
@@ -64,7 +64,7 @@ const componentProps = ref<{
 	disabled: false,
 	size: 'normal',
 	variant: 'normal',
-	appearance: 'plain',
+	view: 'plain',
 	mode: 'multiple',
 	arrowPlacement: 'start',
 	itemApplyTarget: 'first',

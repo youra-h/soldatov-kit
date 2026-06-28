@@ -1,16 +1,16 @@
 import TListItem from '../../list/list-item/list-item.class'
-import type { TListBoxAppearance } from '../types'
+import type { TListBoxView } from '../types'
 
 export default class TListBoxItem extends TListItem {
 	static override baseClass = 's-list-box-item'
 
-	private _appearanceResolver: (() => TListBoxAppearance) | undefined
+	private _viewResolver: (() => TListBoxView) | undefined
 
-	setAppearanceResolver(resolver: () => TListBoxAppearance): void {
-		this._appearanceResolver = resolver
+	setViewResolver(resolver: () => TListBoxView): void {
+		this._viewResolver = resolver
 	}
 
-	get appearance(): TListBoxAppearance {
-		return this._appearanceResolver?.() ?? 'plain'
+	get view(): TListBoxView {
+		return this._viewResolver?.() ?? 'plain'
 	}
 }

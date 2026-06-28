@@ -8,7 +8,7 @@ import { DragAndDrop } from '@ui/drag-and-drop'
 
 const tabs = new TTabs()
 tabs.variant = 'accent'
-tabs.appearance = 'contained'
+tabs.view = 'contained'
 tabs.orientation = 'horizontal'
 
 tabs.collection.add({ text: 'Tab 1', value: 'tab1', closable: true })
@@ -69,7 +69,7 @@ const tabItems = ref([
 
 		<section>
 			<h2>Вариант 2: prop items</h2>
-			<Tabs :items="tabItems" appearance="outline" variant="normal">
+			<Tabs :items="tabItems" view="outline" variant="normal">
 				<template #leading>leading</template>
 				<template #panel:alpha><p>Содержимое Alpha</p></template>
 				<template #panel:beta><p>Содержимое Beta</p></template>
@@ -80,7 +80,7 @@ const tabItems = ref([
 
 		<section>
 			<h2>Вариант 3: декларативный (TabItem в слоте)</h2>
-			<Tabs appearance="contained">
+			<Tabs view="contained">
 				<template #leading>leading</template>
 				<TabItem text="Профиль" value="profile" />
 				<TabItem text="Настройки" value="settings" active />
@@ -94,7 +94,7 @@ const tabItems = ref([
 
 		<section>
 			<h2>Вариант 4: вертикальные табы (position: start — по умолчанию)</h2>
-			<Tabs appearance="contained" variant="positive" orientation="vertical">
+			<Tabs view="contained" variant="positive" orientation="vertical">
 				<TabItem text="Профиль" value="profile" active />
 				<TabItem text="Настройки" value="settings" />
 				<TabItem text="О проекте" value="about" />
@@ -106,7 +106,7 @@ const tabItems = ref([
 
 		<section>
 			<h2>Вариант 5: вертикальные табы (position: end — список справа)</h2>
-			<Tabs appearance="contained" variant="positive" orientation="vertical" position="end">
+			<Tabs view="contained" variant="positive" orientation="vertical" position="end">
 				<TabItem text="Профиль" value="profile" active />
 				<TabItem text="Настройки" value="settings" />
 				<TabItem text="О проекте" value="about" />
@@ -118,7 +118,7 @@ const tabItems = ref([
 
 		<section>
 			<h2>Вариант 6: alignment — center</h2>
-			<Tabs appearance="line" alignment="center">
+			<Tabs view="line" alignment="center">
 				<TabItem text="Tab 1" value="t1" active />
 				<TabItem text="Tab 2" value="t2" />
 				<TabItem text="Tab 3" value="t3" />
@@ -127,7 +127,7 @@ const tabItems = ref([
 
 		<section>
 			<h2>Вариант 7: alignment — end</h2>
-			<Tabs appearance="contained" alignment="end">
+			<Tabs view="contained" alignment="end">
 				<TabItem text="Tab 1" value="t1" active />
 				<TabItem text="Tab 2" value="t2" />
 				<TabItem text="Tab 3" value="t3" />
@@ -136,7 +136,7 @@ const tabItems = ref([
 
 		<section>
 			<h2>Вариант 8: alignment — stretch (justify-between)</h2>
-			<Tabs appearance="contained" alignment="stretch">
+			<Tabs view="contained" alignment="stretch">
 				<TabItem text="Tab 1" value="t1" active />
 				<TabItem text="Tab 2" value="t2" />
 				<TabItem text="Tab 3" value="t3" />

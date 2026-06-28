@@ -27,9 +27,9 @@
 
 ## Button
 
-Компонент управляется двумя prop-ами: `appearance` × `variant`.
+Компонент управляется двумя prop-ами: `view` × `variant`.
 
-### appearance="filled" (default)
+### view="filled" (default)
 
 | Состояние        | variant=normal (neutral) | variant=accent/positive/negative/caution |
 |-----------------|--------------------------|------------------------------------------|
@@ -39,7 +39,7 @@
 | disabled         | `opacity-35`             | `opacity-35`                             |
 | focus ring       | `--s-component-focus-ring` (`accent-400`) outline | ← то же |
 
-### appearance="plain"
+### view="plain"
 
 | Состояние     | variant=normal (neutral) | variant=accent/positive/negative/caution |
 |--------------|--------------------------|------------------------------------------|
@@ -47,7 +47,7 @@
 | hover / focus | `neutral-100` bg         | `{color}-100` bg                         |
 | active        | `neutral-200` bg         | `{color}-200` bg                         |
 
-### appearance="outlined"
+### view="outlined"
 
 | Состояние     | variant=normal (neutral) | variant=accent/positive/negative/caution |
 |--------------|--------------------------|------------------------------------------|
@@ -55,7 +55,7 @@
 | hover / focus | `neutral-100` bg, `neutral-500` border   | `{color}-100` bg, `{color}-500` border   |
 | active        | `neutral-200` bg         | `{color}-200` bg                         |
 
-### appearance="none"
+### view="none"
 
 Прозрачный фон, без hover-эффектов. Только `text-s-component` и outline при focus.
 

@@ -10,7 +10,7 @@ import type {
 	TTabsOrientation,
 	TTabsAlignment,
 	TTabsPosition,
-	TTabsAppearance,
+	TTabsView,
 } from '@core'
 
 type Props = {
@@ -22,7 +22,7 @@ type Props = {
 	orientation?: TTabsOrientation
 	alignment?: TTabsAlignment
 	position?: TTabsPosition
-	appearance?: TTabsAppearance
+	view?: TTabsView
 	closable?: boolean
 	// Tab item props
 	tabDisabled?: boolean
@@ -54,7 +54,7 @@ const applyAll = computed(() => props.tabApplyTarget === 'all')
 			:orientation="orientation"
 			:alignment="alignment"
 			:position="position"
-			:appearance="appearance"
+			:view="view"
 			:closable="closable"
 			v-bind="handlers"
 		>

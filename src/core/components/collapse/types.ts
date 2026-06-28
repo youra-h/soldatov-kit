@@ -8,13 +8,13 @@ import type {
 } from '../../base/collection'
 import type { ICollapseItem } from './collapse-item/types'
 
-export type TCollapseAppearance = 'plain' | 'outlined' | 'filled'
+export type TCollapseView = 'plain' | 'outlined' | 'filled'
 
 export type TCollapseEvents = TControlEvents &
 	TSelectableCollectionEvents &
 	TItemProxyEvents<ICollapseItem> & {
-		/** change:appearance */
-		'change:appearance': (value: TCollapseAppearance) => void
+		/** change:view */
+		'change:view': (value: TCollapseView) => void
 		'item:text': (item: ICollapseItem, value: string) => void
 		'item:rendered': (item: ICollapseItem, value: boolean) => void
 		'item:visible': (item: ICollapseItem, value: boolean) => void
@@ -23,14 +23,14 @@ export type TCollapseEvents = TControlEvents &
 
 export interface ICollapseProps extends IControlProps, ISelectableCollectionProps {
 	/** Внешний вид компонента */
-	appearance?: TCollapseAppearance
+	view?: TCollapseView
 }
 
 export type TCollapseStates = TControlStates
 
 export interface ICollapse extends IControl<ICollapseProps, TCollapseEvents> {
 	/** Внешний вид компонента */
-	appearance: TCollapseAppearance
+	view: TCollapseView
 	/** Режим выбора */
 	mode: TSelectionMode
 	/** Доступ к коллекции элементов */

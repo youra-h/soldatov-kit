@@ -2,7 +2,7 @@ import { TTextable } from '../../base/textable'
 import type {
 	IButton,
 	IButtonProps,
-	TButtonAppearance,
+	TButtonView,
 	TButtonEvents,
 	TButtonStates,
 } from './types'
@@ -15,11 +15,11 @@ export default class TButton extends TTextable<IButtonProps, TButtonEvents> impl
 	static defaultValues: Partial<IButtonProps> = {
 		...TTextable.defaultValues,
 		variant: 'normal',
-		appearance: 'filled',
+		view: 'filled',
 		tag: 'button',
 	}
 
-	protected _appearance!: TButtonAppearance
+	protected _view!: TButtonView
 
 	constructor(
 		options:
@@ -34,34 +34,34 @@ export default class TButton extends TTextable<IButtonProps, TButtonEvents> impl
 			TButtonStates
 		>(options)
 
-		this._applyAppearance(props.appearance ?? ctor.defaultValues.appearance!)
+		this._applyView(props.view ?? ctor.defaultValues.view!)
 	}
 
-	get appearance(): TButtonAppearance {
-		return this._appearance
+	get view(): TButtonView {
+		return this._view
 	}
 
-	protected _applyAppearance(newValue: TButtonAppearance, oldValue?: TButtonAppearance) {
+	protected _applyView(newValue: TButtonView, oldValue?: TButtonView) {
 		this._classes.swap({
 			prefix: '--a-',
 			oldValue,
 			newValue,
 		})
 
-		this._appearance = newValue
+		this._view = newValue
 	}
 
-	set appearance(value: TButtonAppearance) {
-		if (value && this._appearance !== value) {
-			this._applyAppearance(value, this._appearance)
-			;(this.events as TEvented<TButtonEvents>).emit('change:appearance', value)
+	set view(value: TButtonView) {
+		if (value && this._view !== value) {
+			this._applyView(value, this._view)
+			;(this.events as TEvented<TButtonEvents>).emit('change:view', value)
 		}
 	}
 
 	getProps(): IButtonProps {
 		return {
 			...super.getProps(),
-			appearance: this._appearance,
+			view: this._view,
 		}
 	}
 }

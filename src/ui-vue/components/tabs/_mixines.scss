@@ -1,4 +1,4 @@
-// Миксин для appearance="line"
+// Миксин для view="line"
 // $color       — название цвета (sky, emerald, rose, amber, neutral)
 // $text    — индекс цвета текста при hover/active (берётся из Button--outlined text)
 // $border  — индекс цвета линии под списком (берётся из Button--outlined border)
@@ -27,7 +27,7 @@
 	}
 }
 
-// Миксин для appearance="contained"
+// Миксин для view="contained"
 // Список обёрнут в контейнер. Активный таб — белая карточка с тенью внутри контейнера.
 @mixin tabs-contained-variant($color, $text: 800, $container-bg: 100) {
 	.s-tabs__list {
@@ -46,7 +46,7 @@
 	}
 }
 
-// Миксин для appearance="outline"
+// Миксин для view="outline"
 // Классический вид «папочных вкладок» с внешним бордером.
 // Неактивные: серый фон, бордер со всех сторон.
 // Активная: белый фон, бордер только сверху/слева/справа (нет снизу).

@@ -5,7 +5,7 @@ import {
 	type IListBoxItem,
 	type IListBoxProps,
 	TListBox,
-	type TListBoxAppearance,
+	type TListBoxView,
 	type ICollectionProps,
 } from '@core'
 import { BaseList, emitsList, propsList, syncList, type IListState } from '../list'
@@ -13,15 +13,15 @@ import type { TEmits, TProps, ISyncComponentViewOptions } from '../../types'
 
 export const emitsListBox: TEmits = [
 	...emitsList,
-	'change:appearance',
-	'update:appearance',
+	'change:view',
+	'update:view',
 ] as const
 
 export const propsListBox: TProps = {
 	...propsList,
-	appearance: {
-		type: String as PropType<TListBoxAppearance>,
-		default: TListBox.defaultValues.appearance,
+	view: {
+		type: String as PropType<TListBoxView>,
+		default: TListBox.defaultValues.view,
 	},
 }
 
@@ -39,16 +39,16 @@ export function syncListBox(
 
 	const { props, instance, emit } = options
 
-	instance.events.on('change:appearance', (value: TListBoxAppearance) => {
-		emit?.('change:appearance', value)
-		emit?.('update:appearance', value)
+	instance.events.on('change:view', (value: TListBoxView) => {
+		emit?.('change:view', value)
+		emit?.('update:view', value)
 	})
 
-	watch<TListBoxAppearance | undefined>(
-		() => props.appearance,
+	watch<TListBoxView | undefined>(
+		() => props.view,
 		(value) => {
-			if (value !== undefined && value !== instance.appearance) {
-				instance.appearance = value
+			if (value !== undefined && value !== instance.view) {
+				instance.view = value
 			}
 		},
 	)

@@ -1,5 +1,5 @@
 import { type PropType, watch, type Ref } from 'vue'
-import { type IButtonProps, type TButtonAppearance, TButton, type IButton } from '@core'
+import { type IButtonProps, type TButtonView, TButton, type IButton } from '@core'
 import {
 	BaseTextable,
 	emitsTextable,
@@ -12,8 +12,8 @@ import { useSyncProps } from '../../composables/useSyncProps'
 
 export const emitsButton: TEmits = [
 	...emitsTextable,
-	'change:appearance',
-	'update:appearance',
+	'change:view',
+	'update:view',
 ] as const
 
 export const propsButton: TProps = {
@@ -22,9 +22,9 @@ export const propsButton: TProps = {
 		type: [Object, String] as PropType<IButtonProps['tag']>,
 		default: TButton.defaultValues.tag,
 	},
-	appearance: {
-		type: String as PropType<IButtonProps['appearance']>,
-		default: TButton.defaultValues.appearance,
+	view: {
+		type: String as PropType<IButtonProps['view']>,
+		default: TButton.defaultValues.view,
 	},
 }
 
@@ -36,7 +36,7 @@ export default {
 }
 
 export interface IButtonState extends ITextableState {
-	appearance: Ref<TButtonAppearance>
+	view: Ref<TButtonView>
 }
 
 export function syncButton(
@@ -46,16 +46,16 @@ export function syncButton(
 
 	const { instance, props, emit } = options
 
-	instance.events.on('change:appearance' as any, (value: TButtonAppearance) => {
-		emit?.('change:appearance', value)
-		emit?.('update:appearance', value)
+	instance.events.on('change:view' as any, (value: TButtonView) => {
+		emit?.('change:view', value)
+		emit?.('update:view', value)
 	})
 
-	watch<TButtonAppearance | undefined>(
-		() => props.appearance,
+	watch<TButtonView | undefined>(
+		() => props.view,
 		(value) => {
-			if (value !== undefined && value !== instance.appearance) {
-				instance.appearance = value
+			if (value !== undefined && value !== instance.view) {
+				instance.view = value
 			}
 		},
 	)
@@ -63,7 +63,7 @@ export function syncButton(
 	return {
 		...syncProps,
 		...useSyncProps(instance.events as any, {
-			appearance: () => instance.appearance,
+			view: () => instance.view,
 		}),
 	}
 }

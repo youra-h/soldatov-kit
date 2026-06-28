@@ -78,26 +78,26 @@ describe('TCollapseItemCustom', () => {
 		})
 	})
 
-	describe('appearance', () => {
+	describe('view', () => {
 		it('returns plain when no resolver is set', () => {
-			expect(item.appearance).toBe('plain')
+			expect(item.view).toBe('plain')
 		})
 
 		it('returns value from resolver when set', () => {
-			item.setAppearanceResolver(() => 'outlined')
+			item.setViewResolver(() => 'outlined')
 
-			expect(item.appearance).toBe('outlined')
+			expect(item.view).toBe('outlined')
 		})
 
 		it('reflects dynamic changes via resolver closure', () => {
 			let current: string = 'plain'
-			item.setAppearanceResolver(() => current as 'plain')
+			item.setViewResolver(() => current as 'plain')
 
-			expect(item.appearance).toBe('plain')
+			expect(item.view).toBe('plain')
 
 			current = 'filled'
 
-			expect(item.appearance).toBe('filled')
+			expect(item.view).toBe('filled')
 		})
 	})
 
@@ -112,12 +112,12 @@ describe('TCollapseItemCustom', () => {
 			expect(props.value).toBe('sec1')
 		})
 
-		it('returns appearance from resolver', () => {
-			item.setAppearanceResolver(() => 'filled')
+		it('returns view from resolver', () => {
+			item.setViewResolver(() => 'filled')
 
 			const props = item.getProps()
 
-			expect(props.appearance).toBe('filled')
+			expect(props.view).toBe('filled')
 		})
 	})
 })
@@ -281,10 +281,10 @@ describe('TCollapseItem', () => {
 			expect(textSpy).toHaveBeenCalledWith({ newValue: 'Updated', oldValue: 'My Section' })
 		})
 
-		it('has appearance from TCollapseItemCustom', () => {
-			item.setAppearanceResolver(() => 'filled')
+		it('has view from TCollapseItemCustom', () => {
+			item.setViewResolver(() => 'filled')
 
-			expect(item.appearance).toBe('filled')
+			expect(item.view).toBe('filled')
 		})
 	})
 
@@ -334,7 +334,7 @@ describe('TCollapse', () => {
 
 	describe('initialization', () => {
 		it('creates with default values', () => {
-			expect(collapse.appearance).toBe('plain')
+			expect(collapse.view).toBe('plain')
 			expect(collapse.mode).toBe('multiple')
 			expect(collapse.collection.selectedCount).toBe(0)
 			expect(collapse.collection.selected).toEqual([])
@@ -342,81 +342,81 @@ describe('TCollapse', () => {
 
 		it('creates with custom props', () => {
 			const custom = new TCollapse({
-				props: { appearance: 'outlined', mode: 'single' },
+				props: { view: 'outlined', mode: 'single' },
 			})
 
-			expect(custom.appearance).toBe('outlined')
+			expect(custom.view).toBe('outlined')
 			expect(custom.mode).toBe('single')
 		})
 	})
 
-	describe('appearance', () => {
-		it('sets appearance and emits event', () => {
+	describe('view', () => {
+		it('sets view and emits event', () => {
 			const spy = vi.fn()
-			collapse.events.on('change:appearance', spy)
+			collapse.events.on('change:view', spy)
 
-			collapse.appearance = 'filled'
+			collapse.view = 'filled'
 
-			expect(collapse.appearance).toBe('filled')
+			expect(collapse.view).toBe('filled')
 			expect(spy).toHaveBeenCalledWith('filled')
 		})
 
-		it('applies CSS class for appearance', () => {
-			collapse.appearance = 'outlined'
+		it('applies CSS class for view', () => {
+			collapse.view = 'outlined'
 
 			expect(collapse.classes.toArray()).toContain('s-collapse--outlined')
 			expect(collapse.classes.toArray()).not.toContain('s-collapse--plain')
 		})
 
-		it('does not emit event when appearance does not change', () => {
+		it('does not emit event when view does not change', () => {
 			const spy = vi.fn()
-			collapse.events.on('change:appearance', spy)
+			collapse.events.on('change:view', spy)
 
-			collapse.appearance = 'plain'
+			collapse.view = 'plain'
 
 			expect(spy).not.toHaveBeenCalled()
 		})
 
-		it('propagates appearance to item via resolver when item is added', () => {
-			collapse.appearance = 'outlined'
+		it('propagates view to item via resolver when item is added', () => {
+			collapse.view = 'outlined'
 			const item = collapse.collection.add({})
 
-			expect(item.appearance).toBe('outlined')
+			expect(item.view).toBe('outlined')
 		})
 
-		it('updates item appearance when collapse appearance changes', () => {
-			collapse.appearance = 'outlined'
+		it('updates item view when collapse view changes', () => {
+			collapse.view = 'outlined'
 			const item = collapse.collection.add({})
 
-			collapse.appearance = 'filled'
+			collapse.view = 'filled'
 
-			expect(item.appearance).toBe('filled')
+			expect(item.view).toBe('filled')
 		})
 
-		it('emits change:appearance on each item when collapse appearance changes', () => {
+		it('emits change:view on each item when collapse view changes', () => {
 			const item1 = collapse.collection.add({})
 			const item2 = collapse.collection.add({})
 			const spy1 = vi.fn()
 			const spy2 = vi.fn()
 
-			item1.events.on('change:appearance', spy1)
-			item2.events.on('change:appearance', spy2)
+			item1.events.on('change:view', spy1)
+			item2.events.on('change:view', spy2)
 
-			collapse.appearance = 'filled'
+			collapse.view = 'filled'
 
 			expect(spy1).toHaveBeenCalledWith('filled')
 			expect(spy2).toHaveBeenCalledWith('filled')
 		})
 
-		it('new items get current appearance via resolver', () => {
-			collapse.appearance = 'filled'
+		it('new items get current view via resolver', () => {
+			collapse.view = 'filled'
 			const item1 = collapse.collection.add({})
 
-			collapse.appearance = 'outlined'
+			collapse.view = 'outlined'
 			const item2 = collapse.collection.add({})
 
-			expect(item1.appearance).toBe('outlined')
-			expect(item2.appearance).toBe('outlined')
+			expect(item1.view).toBe('outlined')
+			expect(item2.view).toBe('outlined')
 		})
 	})
 
@@ -557,7 +557,7 @@ describe('TCollapse', () => {
 		it('returns all props', () => {
 			const props = collapse.getProps()
 
-			expect(props.appearance).toBe('plain')
+			expect(props.view).toBe('plain')
 			expect(props.mode).toBe('multiple')
 		})
 	})

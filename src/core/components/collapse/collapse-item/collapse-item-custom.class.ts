@@ -10,7 +10,7 @@ import type {
 	TCollapseItemCustomEvents,
 	TCollapseItemCustomStates,
 } from './types'
-import type { TCollapseAppearance } from '../types'
+import type { TCollapseView } from '../types'
 import { TEvented } from '../../../common/evented'
 
 export default class TCollapseItemCustom<
@@ -32,7 +32,7 @@ export default class TCollapseItemCustom<
 	}
 
 	protected _arrowPlacement!: TCollapseArrowPlacement
-	private _appearanceResolver: (() => TCollapseAppearance) | undefined
+	private _viewResolver: (() => TCollapseView) | undefined
 
 	constructor(
 		options:
@@ -84,12 +84,12 @@ export default class TCollapseItemCustom<
 	}
 
 	/** Инжектируется из TCollapse при добавлении элемента в коллекцию */
-	setAppearanceResolver(resolver: () => TCollapseAppearance): void {
-		this._appearanceResolver = resolver
+	setViewResolver(resolver: () => TCollapseView): void {
+		this._viewResolver = resolver
 	}
 
-	get appearance(): TCollapseAppearance {
-		return this._appearanceResolver?.() ?? 'plain'
+	get view(): TCollapseView {
+		return this._viewResolver?.() ?? 'plain'
 	}
 
 	override getProps(): TProps {
@@ -97,7 +97,7 @@ export default class TCollapseItemCustom<
 			...super.getProps(),
 			text: this.text,
 			arrowPlacement: this._arrowPlacement,
-			appearance: this.appearance,
+			view: this.view,
 		} as TProps
 	}
 }

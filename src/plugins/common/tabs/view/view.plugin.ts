@@ -1,27 +1,27 @@
-import type { ITabs, TTabsAppearance } from '../../../../core/components/tabs'
+import type { ITabs, TTabsView } from '../../../../core/components/tabs'
 import type { IPluginBundle } from '../../../base/types'
 import { TBasePlugin } from '../../../base/plugin'
 import { TElementPlugin } from '../../element'
 import { TInstancePlugin } from '../../instance'
 import { TTabsActiveTabPlugin } from '../active-tab'
 import type { TActiveTabOffset } from '../active-tab'
-import type { TTabsAppearancePluginEvents } from './types'
+import type { TTabsViewPluginEvents } from './types'
 
-type TAppearanceHandler = (offset: TActiveTabOffset | null) => void
+type TViewHandler = (offset: TActiveTabOffset | null) => void
 
-export class TTabsAppearancePlugin extends TBasePlugin<TTabsAppearancePluginEvents> {
-	static readonly key = 'tabs-appearance'
+export class TTabsViewPlugin extends TBasePlugin<TTabsViewPluginEvents> {
+	static readonly key = 'tabs-view'
 
 	private _tabs: ITabs | null = null
 
-	private readonly _handlers: Partial<Record<TTabsAppearance, TAppearanceHandler>> = {
+	private readonly _handlers: Partial<Record<TTabsView, TViewHandler>> = {
 		line: (offset) => this._updateLine(offset),
 		outline: (offset) => this._updateOutline(offset),
 	}
 
 	override install(bundle: IPluginBundle): void {
 		bundle.get(TElementPlugin)?.events.on('ready', () => {
-			if (this._tabs?.appearance === 'line') {
+			if (this._tabs?.view === 'line') {
 				this._tabs.classes.add('--ready-animation')
 			}
 		})
@@ -34,7 +34,7 @@ export class TTabsAppearancePlugin extends TBasePlugin<TTabsAppearancePluginEven
 
 		bundle.get(TTabsActiveTabPlugin)?.events.on('active-tab:change', (offset) => {
 			if (!this._tabs) return
-			this._handlers[this._tabs.appearance]?.(offset)
+			this._handlers[this._tabs.view]?.(offset)
 		})
 	}
 

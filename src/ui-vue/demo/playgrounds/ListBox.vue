@@ -11,7 +11,7 @@ import { SIZES, VARIANTS } from '../common/items.ts'
 import type {
 	TComponentSize,
 	TComponentVariant,
-	TListBoxAppearance,
+	TListBoxView,
 	TSelectionMode,
 } from '@core'
 
@@ -19,7 +19,7 @@ const emit = defineEmits<{
 	log: [entry: EventLogEntry]
 }>()
 
-const LIST_BOX_APPEARANCES: TListBoxAppearance[] = ['plain', 'outlined', 'filled']
+const LIST_BOX_APPEARANCES: TListBoxView[] = ['plain', 'outlined', 'filled']
 const LIST_BOX_MODES: TSelectionMode[] = ['single', 'multiple', 'none']
 
 const listBoxSchema: TPropertiesSchema = {
@@ -28,7 +28,7 @@ const listBoxSchema: TPropertiesSchema = {
 	disabled: { type: 'boolean', default: false },
 	size: { type: 'select', default: 'normal', options: SIZES },
 	variant: { type: 'select', default: 'normal', options: VARIANTS },
-	appearance: { type: 'select', default: 'plain', options: LIST_BOX_APPEARANCES },
+	view: { type: 'select', default: 'plain', options: LIST_BOX_APPEARANCES },
 	mode: { type: 'select', default: 'single', options: LIST_BOX_MODES },
 	wordWrap: { type: 'boolean', default: false },
 }
@@ -52,7 +52,7 @@ const componentProps = ref<{
 	disabled: boolean
 	size: TComponentSize
 	variant: TComponentVariant
-	appearance: TListBoxAppearance
+	view: TListBoxView
 	mode: TSelectionMode
 	wordWrap: boolean
 	itemApplyTarget: 'all' | 'first'
@@ -64,7 +64,7 @@ const componentProps = ref<{
 	disabled: false,
 	size: 'normal',
 	variant: 'normal',
-	appearance: 'plain',
+	view: 'plain',
 	mode: 'single',
 	wordWrap: false,
 	itemApplyTarget: 'first',

@@ -1,7 +1,7 @@
 /**
  * Общие списки для селекторов в демо-компонентах
  */
-import type { TComponentSize, TComponentVariant, TButtonAppearance } from '@/core'
+import type { TComponentSize, TComponentVariant, TButtonView } from '@/core'
 
 /** Размеры компонентов */
 export const SIZES: TComponentSize[] = ['sm', 'normal', 'auto', 'lg', 'xl', '2xl']
@@ -13,7 +13,7 @@ export const VARIANTS: TComponentVariant[] = ['normal', 'accent', 'negative', 'c
 export const HTML_TAGS = ['div', 'span', 'section', 'article', 'header', 'footer', 'main', 'aside']
 
 /** Внешний вид кнопок */
-export const BUTTON_APPEARANCES: TButtonAppearance[] = ['filled', 'plain', 'outlined', 'none']
+export const BUTTON_APPEARANCES: TButtonView[] = ['filled', 'plain', 'outlined', 'none']
 
 /** Пути к иконкам (можно расширить) */
 export const ICON_PATHS = [

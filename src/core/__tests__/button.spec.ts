@@ -14,7 +14,7 @@ describe('TButton', () => {
 		expect(c.classes.toArray()).toContain('s-button')
 	})
 
-	it('classes меняются при смене variant/size/appearance', () => {
+	it('classes меняются при смене variant/size/view', () => {
 		const btn = new TButton()
 
 		btn.variant = 'accent'
@@ -23,7 +23,7 @@ describe('TButton', () => {
 		btn.size = 'xl'
 		expect(btn.classes.toArray()).toContain('s-button--size-xl')
 
-		btn.appearance = 'plain'
+		btn.view = 'plain'
 		expect(btn.classes.toArray()).toContain('s-button--a-plain')
 	})
 
@@ -33,7 +33,7 @@ describe('TButton', () => {
 				text: 't',
 				variant: 'accent',
 				size: 'lg',
-				appearance: 'outlined',
+				view: 'outlined',
 			},
 		})
 
@@ -42,7 +42,7 @@ describe('TButton', () => {
 			text: 't',
 			variant: 'accent',
 			size: 'lg',
-			appearance: 'outlined',
+			view: 'outlined',
 		})
 		expect(btn.toJSON()).toEqual(props)
 	})

@@ -21,7 +21,7 @@ export default {
 
 		const rootRef = useElementBinding(plugins)
 
-		const { rendered, visible, classes, items, appearance, mode, selected } = syncCollapse({
+		const { rendered, visible, classes, items, view, mode, selected } = syncCollapse({
 			props,
 			instance,
 			plugins,
@@ -36,7 +36,7 @@ export default {
 			visible,
 			classes,
 			items,
-			appearance,
+			view,
 			mode,
 			selected,
 		}
@@ -51,7 +51,7 @@ export default {
 				v-for="item in items"
 				:key="item.uid"
 				:ctrl="item"
-				:appearance="appearance"
+				:view="view"
 			>
 				<slot :name="`panel:${item.value}`" />
 			</CollapseItem>

@@ -14,14 +14,14 @@ import type {
 	TTabsOrientation,
 	TTabsAlignment,
 	TTabsPosition,
-	TTabsAppearance,
+	TTabsView,
 } from '@core'
 
 const emit = defineEmits<{
 	log: [entry: EventLogEntry]
 }>()
 
-const TABS_APPEARANCES: TTabsAppearance[] = ['line', 'contained', 'outline']
+const TABS_APPEARANCES: TTabsView[] = ['line', 'contained', 'outline']
 const TABS_ORIENTATIONS: TTabsOrientation[] = ['horizontal', 'vertical']
 const TABS_ALIGNMENTS: TTabsAlignment[] = ['start', 'center', 'end', 'stretch']
 const TABS_POSITIONS: TTabsPosition[] = ['start', 'end']
@@ -32,7 +32,7 @@ const tabsSchema: TPropertiesSchema = {
 	disabled: { type: 'boolean', default: false },
 	size: { type: 'select', default: 'normal', options: SIZES },
 	variant: { type: 'select', default: 'normal', options: VARIANTS },
-	appearance: { type: 'select', default: 'line', options: TABS_APPEARANCES },
+	view: { type: 'select', default: 'line', options: TABS_APPEARANCES },
 	orientation: { type: 'select', default: 'horizontal', options: TABS_ORIENTATIONS },
 	alignment: { type: 'select', default: 'start', options: TABS_ALIGNMENTS },
 	position: { type: 'select', default: 'start', options: TABS_POSITIONS },
@@ -58,7 +58,7 @@ const componentProps = ref<{
 	disabled: boolean
 	size: TComponentSize
 	variant: TComponentVariant
-	appearance: TTabsAppearance
+	view: TTabsView
 	orientation: TTabsOrientation
 	alignment: TTabsAlignment
 	position: TTabsPosition
@@ -72,7 +72,7 @@ const componentProps = ref<{
 	disabled: false,
 	size: 'normal',
 	variant: 'normal',
-	appearance: 'line',
+	view: 'line',
 	orientation: 'horizontal',
 	alignment: 'start',
 	position: 'start',

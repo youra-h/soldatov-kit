@@ -7,7 +7,7 @@ import type { EventLogEntry } from '../../common/EventLog.vue'
 import type {
 	TComponentSize,
 	TComponentVariant,
-	TCollapseAppearance,
+	TCollapseView,
 	TSelectionMode,
 	TCollapseArrowPlacement,
 } from '@core'
@@ -18,7 +18,7 @@ type Props = {
 	disabled?: boolean
 	size?: TComponentSize
 	variant?: TComponentVariant
-	appearance?: TCollapseAppearance
+	view?: TCollapseView
 	mode?: TSelectionMode
 	arrowPlacement?: TCollapseArrowPlacement
 	// Item props
@@ -47,7 +47,7 @@ const applyAll = computed(() => props.itemApplyTarget === 'all')
 			:disabled="disabled"
 			:size="size"
 			:variant="variant"
-			:appearance="appearance"
+			:view="view"
 			:mode="mode"
 			v-bind="handlers"
 		>

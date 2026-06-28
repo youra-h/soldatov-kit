@@ -6,19 +6,19 @@ import type {
 } from '../../base/textable'
 import type { TComponentVariant } from '../../common/types'
 
-export type TButtonAppearance = 'filled' | 'plain' | 'outlined' | 'none'
+export type TButtonView = 'filled' | 'plain' | 'outlined' | 'none'
 
 export interface IButtonProps extends ITextableProps {
 	variant?: TComponentVariant
-	appearance?: TButtonAppearance
+	view?: TButtonView
 }
 
 export type TButtonEvents = TTextableEvents & {
-	'change:appearance': (value: TButtonAppearance) => void
+	'change:view': (value: TButtonView) => void
 }
 
 export type TButtonStates = TTextableStates
 
 export interface IButton extends ITextable<IButtonProps, TButtonEvents> {
-	appearance: TButtonAppearance
+	view: TButtonView
 }
