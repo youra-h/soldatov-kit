@@ -73,6 +73,7 @@ export class TListScrollPlugin extends TBasePlugin<TListScrollPluginEvents> {
 
 	/**
 	 * Скроллит контейнер к элементу с указанным uid.
+	 * Если элемент уже полностью виден в контейнере — не скроллит (пользовательский клик).
 	 * Если scrollBehavior === 'none' — ничего не делает.
 	 */
 	private _scrollToItem(uid: string | number): void {
@@ -86,9 +87,24 @@ export class TListScrollPlugin extends TBasePlugin<TListScrollPluginEvents> {
 
 		if (!targetElement) return
 
+		// Элемент уже полностью виден — не трогаем скролл (пользовательский клик)
+		if (this._isFullyVisible(targetElement)) return
+
 		targetElement.scrollIntoView({
 			behavior,
 			block: 'center',
 		})
+	}
+
+	/**
+	 * Проверяет, что элемент полностью помещается в видимой области контейнера.
+	 */
+	private _isFullyVisible(el: HTMLElement): boolean {
+		if (!this._element) return false
+
+		const c = this._element.getBoundingClientRect()
+		const e = el.getBoundingClientRect()
+
+		return e.top >= c.top && e.bottom <= c.bottom
 	}
 }

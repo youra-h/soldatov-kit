@@ -213,7 +213,7 @@ function loadData() {
 
 		// setTimeout(() => {
 		// 	console.log('Выбираем 9-й элемент в списке 2 (instance)...')
-		// 	instance2.collection.getItem(5)?.select()
+		// 	// instance2.collection.getItem(5)?.select()
 		// 	instance2.collection.getItem(15)?.select()
 		// 	// instance2.collection.getItem(8)?.select()
 		// }, 2000)
