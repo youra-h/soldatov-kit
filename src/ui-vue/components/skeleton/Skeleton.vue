@@ -1,12 +1,11 @@
 <script lang="ts">
-import { computed } from 'vue'
 import { TSkeleton, type ISkeletonProps, type ISkeleton } from '@core'
 import { useInstance } from '../../composables/useInstance'
 import { useBundle } from '../../composables/useBundle'
 import { useElementBinding } from '../../composables/useElementBinding'
 import { useInstanceBinding } from '../../composables/useInstanceBinding'
 import BaseSkeleton, { syncSkeleton } from './base.component'
-import { createComponentViewBundle } from '@plugins'
+import { createComponentViewBundle, TSkeletonStylePlugin } from '@plugins'
 import type { TBaseComponentViewProps } from '../component-view'
 
 export default {
@@ -14,31 +13,22 @@ export default {
 	extends: BaseSkeleton,
 	setup(props: TBaseComponentViewProps<ISkeletonProps, ISkeleton>, { emit }) {
 		const instance = useInstance(TSkeleton, props)
-		const plugins = useBundle(createComponentViewBundle, props?.plugins)
+		const plugins = useBundle(createComponentViewBundle, props?.plugins).use(
+			TSkeletonStylePlugin,
+		)
+
+		const skeletonPlugin = plugins.get(TSkeletonStylePlugin)!
 
 		useInstanceBinding(plugins, instance)
 		const rootRef = useElementBinding(plugins)
 
-		const { tag, rendered, visible, present, classes, variant, size, shape, animation, width, height } =
+		const { tag, rendered, visible, present, classes, variant, size, shape, animation } =
 			syncSkeleton({
 				props,
 				instance,
 				plugins,
 				emit,
 			})
-
-		const placeholderStyles = computed(() => {
-			const styles: Record<string, string> = {}
-			const w = width.value
-			const h = height.value
-			if (w !== undefined && w !== null) {
-				styles.width = typeof w === 'number' ? `${w}px` : String(w)
-			}
-			if (h !== undefined && h !== null) {
-				styles.height = typeof h === 'number' ? `${h}px` : String(h)
-			}
-			return styles
-		})
 
 		return {
 			instance,
@@ -53,20 +43,16 @@ export default {
 			size,
 			shape,
 			animation,
-			placeholderStyles,
+			styles: skeletonPlugin.styles,
 		}
 	},
 }
 </script>
 
 <template>
-	<component ref="rootRef" :is="tag" v-if="rendered" :class="classes">
-		<div
-			v-if="present"
-			class="s-skeleton__placeholder"
-			:style="placeholderStyles"
-		/>
-		<slot v-else />
+	<component ref="rootRef" :is="tag" v-if="present" :class="classes">
+		<div class="s-skeleton__placeholder" :style="styles" />
+		<slot />
 	</component>
 </template>
 
@@ -75,10 +61,10 @@ export default {
 @reference './../../../foundation/tailwind';
 
 .s-skeleton {
-	@apply block;
+	@apply relative block;
 
 	&__placeholder {
-		@apply w-full h-full;
+		@apply absolute inset-0 z-10;
 
 		// shape
 		.s-skeleton--rect & {
