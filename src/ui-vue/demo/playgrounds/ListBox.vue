@@ -30,6 +30,7 @@ const listBoxSchema: TPropertiesSchema = {
 	variant: { type: 'select', default: 'normal', options: VARIANTS },
 	view: { type: 'select', default: 'plain', options: LIST_BOX_APPEARANCES },
 	mode: { type: 'select', default: 'single', options: LIST_BOX_MODES },
+	autoWidth: { type: 'boolean', default: false },
 	wordWrap: { type: 'boolean', default: false },
 }
 
@@ -54,6 +55,7 @@ const componentProps = ref<{
 	variant: TComponentVariant
 	view: TListBoxView
 	mode: TSelectionMode
+	autoWidth: boolean
 	wordWrap: boolean
 	itemApplyTarget: 'all' | 'first'
 	itemDisabled: boolean
@@ -66,6 +68,7 @@ const componentProps = ref<{
 	variant: 'normal',
 	view: 'plain',
 	mode: 'single',
+	autoWidth: false,
 	wordWrap: false,
 	itemApplyTarget: 'first',
 	itemDisabled: false,
