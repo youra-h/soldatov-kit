@@ -46,7 +46,6 @@ const animations: TSkeletonAnimation[] = ['pulse', 'wave', 'none']
 							:rendered="rendered"
 							:size="size"
 							:variant="variant"
-							size="lg"
 						/>
 					</div>
 				</div>
