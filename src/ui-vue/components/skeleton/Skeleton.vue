@@ -50,8 +50,8 @@ export default {
 </script>
 
 <template>
-	<component ref="rootRef" :is="tag" v-if="present" :class="classes">
-		<div class="s-skeleton__placeholder" :style="styles" />
+	<component ref="rootRef" :is="tag" :class="classes">
+		<div class="s-skeleton__placeholder" v-if="present" :style="styles" />
 		<slot />
 	</component>
 </template>
@@ -61,30 +61,62 @@ export default {
 @reference './../../../foundation/tailwind';
 
 .s-skeleton {
+	$this: &;
+
 	@apply relative block;
+
+	// скрываем содержимое slot, пока показывается placeholder
+	&:has(.s-skeleton__placeholder) > :last-child {
+		@apply opacity-0;
+	}
+
+	&:not(:has(.s-skeleton__placeholder)) > :last-child {
+		@apply opacity-100;
+	}
+
+	// size
+	&--size-sm {
+		@apply w-16 h-4;
+	}
+
+	&--size-normal {
+		@apply w-20 h-5;
+	}
+
+	&--size-lg {
+		@apply w-24 h-6;
+	}
+
+	&--size-xl {
+		@apply w-28 h-7;
+	}
+
+	&--size-2xl {
+		@apply w-32 h-8;
+	}
 
 	&__placeholder {
 		@apply absolute inset-0 z-10;
 
 		// shape
-		.s-skeleton--rect & {
+		#{$this}--rect & {
 			@apply rounded-none;
 		}
 
-		.s-skeleton--rounded & {
+		#{$this}--rounded & {
 			@apply rounded-md;
 		}
 
-		.s-skeleton--circle & {
+		#{$this}--circle & {
 			@apply rounded-full;
 		}
 
 		// animation
-		.s-skeleton--pulse & {
+		#{$this}--pulse & {
 			animation: skeleton-pulse 1.5s ease-in-out infinite;
 		}
 
-		.s-skeleton--wave & {
+		#{$this}--wave & {
 			@apply relative overflow-hidden;
 
 			&::after {
@@ -101,44 +133,44 @@ export default {
 		}
 
 		// variant colors
-		.s-skeleton--normal & {
+		#{$this}--normal & {
 			@include mixins.skeleton-variant('neutral');
 		}
 
-		.s-skeleton--accent & {
+		#{$this}--accent & {
 			@include mixins.skeleton-variant('accent');
 		}
 
-		.s-skeleton--positive & {
+		#{$this}--positive & {
 			@include mixins.skeleton-variant('positive');
 		}
 
-		.s-skeleton--negative & {
+		#{$this}--negative & {
 			@include mixins.skeleton-variant('negative');
 		}
 
-		.s-skeleton--caution & {
+		#{$this}--caution & {
 			@include mixins.skeleton-variant('caution');
 		}
 	}
-}
 
-@keyframes skeleton-pulse {
-	0%,
-	100% {
-		opacity: 1;
+	@keyframes skeleton-pulse {
+		0%,
+		100% {
+			opacity: 1;
+		}
+		50% {
+			opacity: 0.4;
+		}
 	}
-	50% {
-		opacity: 0.4;
-	}
-}
 
-@keyframes skeleton-wave {
-	0% {
-		transform: translateX(-100%);
-	}
-	100% {
-		transform: translateX(100%);
+	@keyframes skeleton-wave {
+		0% {
+			transform: translateX(-100%);
+		}
+		100% {
+			transform: translateX(100%);
+		}
 	}
 }
 </style>

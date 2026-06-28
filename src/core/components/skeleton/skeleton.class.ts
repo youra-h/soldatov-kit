@@ -19,7 +19,7 @@ export default class TSkeleton
 	static defaultValues: Partial<ISkeletonProps> = {
 		...TStylable.defaultValues,
 		size: 'auto',
-		shape: 'rect',
+		shape: 'rounded',
 		animation: 'pulse',
 		width: 'auto',
 		height: 'auto',

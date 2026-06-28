@@ -26,7 +26,9 @@ const animations: TSkeletonAnimation[] = ['pulse', 'wave', 'none']
 			<div class="sizes-demo__title">Sizes × Variants (rect, pulse)</div>
 			<div class="sizes-demo__grid">
 				<div class="sizes-demo__grid-header">
-					<div class="sizes-demo__grid-cell sizes-demo__grid-cell--header">Size / Variant</div>
+					<div class="sizes-demo__grid-cell sizes-demo__grid-cell--header">
+						Size / Variant
+					</div>
 					<div
 						v-for="variant in variants"
 						:key="variant"
@@ -44,10 +46,7 @@ const animations: TSkeletonAnimation[] = ['pulse', 'wave', 'none']
 							:rendered="rendered"
 							:size="size"
 							:variant="variant"
-							shape="rect"
-							animation="pulse"
-							width="80px"
-							height="32px"
+							size="lg"
 						/>
 					</div>
 				</div>
@@ -75,7 +74,9 @@ const animations: TSkeletonAnimation[] = ['pulse', 'wave', 'none']
 
 		<!-- Animations -->
 		<div class="sizes-demo__section">
-			<div class="sizes-demo__title">Animations (neutral, rect, width=200px, height=32px)</div>
+			<div class="sizes-demo__title">
+				Animations (neutral, rect, width=200px, height=32px)
+			</div>
 			<div class="sizes-demo__shapes">
 				<div v-for="anim in animations" :key="anim" class="sizes-demo__shape-item">
 					<div class="sizes-demo__shape-label">{{ anim }}</div>
@@ -94,7 +95,9 @@ const animations: TSkeletonAnimation[] = ['pulse', 'wave', 'none']
 
 		<!-- Slot demo: skeleton wraps real components -->
 		<div class="sizes-demo__section">
-			<div class="sizes-demo__title">Skeleton wraps real components (visible=true → skeleton shown)</div>
+			<div class="sizes-demo__title">
+				Skeleton wraps real components (visible=true → skeleton shown)
+			</div>
 			<div class="sizes-demo__slot-grid">
 				<div class="sizes-demo__slot-item">
 					<div class="sizes-demo__slot-label">Button</div>
