@@ -18,10 +18,11 @@ export default class TSkeleton
 
 	static defaultValues: Partial<ISkeletonProps> = {
 		...TStylable.defaultValues,
+		size: 'auto',
 		shape: 'rect',
 		animation: 'pulse',
-		width: '100%',
-		height: '100%',
+		width: 'auto',
+		height: 'auto',
 	}
 
 	protected _shape: TSkeletonShape
