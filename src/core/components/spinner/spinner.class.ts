@@ -1,20 +1,14 @@
+import { TStylable } from '../../base/stylable'
 import { TComponentView, type IComponentViewOptions } from '../../base/component-view'
-import type { TComponentSize, TComponentVariant } from '../../common/types'
+import { type TEvented } from '../../common/evented'
 import type { ISpinner, ISpinnerProps, TSpinnerEvents, TSpinnerStates } from './types'
-import { TStateUnit } from '../../common/state-unit'
-import type { TValuePayload } from '../../common/types'
-import { TEvented } from '../../common/evented'
 
-export default class TSpinner
-	extends TComponentView<ISpinnerProps, TSpinnerEvents, TSpinnerStates>
-	implements ISpinner
-{
+export default class TSpinner extends TStylable<ISpinnerProps, TSpinnerEvents> implements ISpinner {
 	static override baseClass = 's-spinner'
 
 	static defaultValues: Partial<ISpinnerProps> = {
-		...TComponentView.defaultValues,
+		...TStylable.defaultValues,
 		variant: 'accent',
-		size: 'normal',
 		tag: 'span',
 		borderWidth: 'auto',
 	}
@@ -22,72 +16,18 @@ export default class TSpinner
 	protected _borderWidth: number | 'auto'
 
 	constructor(
-		options:
-			| IComponentViewOptions<ISpinnerProps, TSpinnerStates>
-			| Partial<ISpinnerProps> = {},
+		options: IComponentViewOptions<ISpinnerProps, TSpinnerStates> | Partial<ISpinnerProps> = {},
 	) {
 		super(options)
 
 		const ctor = new.target as typeof TSpinner
 
-		const { props = {} as Partial<ISpinnerProps>, states } = TComponentView.prepareOptions<
+		const { props = {} as Partial<ISpinnerProps> } = TComponentView.prepareOptions<
 			ISpinnerProps,
 			TSpinnerStates
 		>(options)
 
-		this._states.size =
-			states?.size ??
-			new TStateUnit<TComponentSize>({
-				initial: (props.size ?? ctor.defaultValues.size!) as TComponentSize,
-			})
-
-		this._states.size.events.on('change', (payload: TValuePayload<TComponentSize>) => {
-			this._classes.swapClass({
-				oldClass: `--size-${payload.oldValue}`,
-				newClass: `--size-${payload.newValue}`,
-			})
-			;(this.events as TEvented<TSpinnerEvents>).emit('change:size', payload)
-		})
-
-		this._classes.add(`--size-${this._states.size.value}`)
-
-		this._states.variant =
-			states?.variant ??
-			new TStateUnit<TComponentVariant>({
-				initial: (props.variant ?? ctor.defaultValues.variant!) as TComponentVariant,
-			})
-
-		this._states.variant.events.on('change', (payload: TValuePayload<TComponentVariant>) => {
-			this._classes.swapClass({
-				oldClass: `--${payload.oldValue}`,
-				newClass: `--${payload.newValue}`,
-			})
-			;(this.events as TEvented<TSpinnerEvents>).emit('change:variant', payload)
-		})
-
-		this._classes.add(`--${this._states.variant.value}`)
-
 		this._borderWidth = props.borderWidth ?? ctor.defaultValues.borderWidth!
-	}
-
-	get variant(): TComponentVariant {
-		return this._states.variant.value
-	}
-
-	set variant(value: TComponentVariant) {
-		if (value === this._states.variant.value) return
-
-		this._states.variant.value = value
-	}
-
-	get size(): TComponentSize {
-		return this._states.size.value
-	}
-
-	set size(value: TComponentSize) {
-		if (value === this._states.size.value) return
-
-		this._states.size.value = value
 	}
 
 	get borderWidth(): number | 'auto' {
@@ -119,9 +59,7 @@ export default class TSpinner
 	getProps(): ISpinnerProps {
 		return {
 			...super.getProps(),
-			size: this.size,
-			variant: this.variant,
 			borderWidth: this._borderWidth,
-		}
+		} as ISpinnerProps
 	}
 }
