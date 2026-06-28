@@ -56,6 +56,7 @@ export default {
 export interface IComponentViewState {
 	rendered: Ref<boolean>
 	visible: Ref<boolean>
+	present: Ref<boolean>
 	tag: Ref<string | object>
 	classes: Ref<string[]>
 }
@@ -134,6 +135,7 @@ export function syncComponentView(
 	return useSyncProps(instance.events, {
 		rendered: () => instance.rendered,
 		visible: () => instance.visible,
+		present: () => instance.present,
 		tag: () => instance.tag,
 		classes: () => instance.classes.list,
 	})

@@ -19,15 +19,13 @@ export default {
 		useInstanceBinding(plugins, instance)
 		const rootRef = useElementBinding(plugins)
 
-		const { tag, rendered, visible, classes, variant, size, shape, animation, width, height } =
+		const { tag, rendered, visible, present, classes, variant, size, shape, animation, width, height } =
 			syncSkeleton({
 				props,
 				instance,
 				plugins,
 				emit,
 			})
-
-		const present = computed(() => rendered.value && visible.value)
 
 		const placeholderStyles = computed(() => {
 			const styles: Record<string, string> = {}
@@ -49,12 +47,12 @@ export default {
 			tag,
 			rendered,
 			visible,
+			present,
 			classes,
 			variant,
 			size,
 			shape,
 			animation,
-			present,
 			placeholderStyles,
 		}
 	},
