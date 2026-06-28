@@ -18,6 +18,7 @@ export * from './base/behaviors'
 // components (headless компоненты)
 export * from './components/icon'
 export * from './components/spinner'
+export * from './components/skeleton'
 export * from './components/button'
 export * from './components/check-box'
 export * from './components/switch'

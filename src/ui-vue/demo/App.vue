@@ -3,6 +3,7 @@ import { computed, markRaw, ref } from 'vue'
 import ComponentView from './playgrounds/ComponentView.vue'
 import Icon from './playgrounds/Icon.vue'
 import Spinner from './playgrounds/Spinner.vue'
+import Skeleton from './playgrounds/Skeleton.vue'
 import Button from './playgrounds/Button.vue'
 import CheckBox from './playgrounds/CheckBox.vue'
 import Switch from './playgrounds/Switch.vue'
@@ -29,6 +30,7 @@ const playgrounds = {
 	'component-view': { component: markRaw(ComponentView), label: 'ComponentView' },
 	icon: { component: markRaw(Icon), label: 'Icon' },
 	spinner: { component: markRaw(Spinner), label: 'Spinner' },
+	skeleton: { component: markRaw(Skeleton), label: 'Skeleton' },
 	button: { component: markRaw(Button), label: 'Button' },
 	'check-box': { component: markRaw(CheckBox), label: 'CheckBox' },
 	switch: { component: markRaw(Switch), label: 'Switch' },

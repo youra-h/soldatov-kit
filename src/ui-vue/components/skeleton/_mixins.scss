@@ -1,0 +1,3 @@
+@mixin skeleton-variant($color: 'neutral', $bg-idx: 100) {
+	@apply #{'bg-s-' + $color + '-' + $bg-idx};
+}

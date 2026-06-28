@@ -9,17 +9,17 @@
 
 ## Сводная таблица
 
-| Цвет / шейд          | Button | CheckBox | Switch | Spinner |
-|----------------------|:------:|:--------:|:------:|:-------:|
-| `{color}-50`         |        | ✓ bg disabled | |    |
-| `{color}-100`        | ✓ filled bg (neutral), plain hover bg | | ✓ bg track | ✓ border (3 стороны) |
-| `{color}-200`        | ✓ filled hover bg (neutral), outlined border | | ✓ bg track (default) | ✓ border (3 стороны) |
-| `{color}-300`        | ✓ filled active bg (neutral) | ✓ border hover | ✓ bg hover track |         |
-| `{color}-400`        |        | ✓ border основной | |         |
-| `{color}-500`        | ✓ filled bg (цветные) | | ✓ bg checked | |
-| `{color}-600`        | ✓ filled bg (цветные, default) | ✓ svg fill | | ✓ border-left (active) |
-| `{color}-700`        | ✓ filled hover bg (цветные), plain/outlined text | | ✓ bg hover track | |
-| `{color}-800`        | ✓ filled active bg (цветные), plain/outlined text (neutral) | | |  |
+| Цвет / шейд          | Button | CheckBox | Switch | Spinner | Skeleton |
+|----------------------|:------:|:--------:|:------:|:-------:|:--------:|
+| `{color}-50`         |        | ✓ bg disabled | |    |    |
+| `{color}-100`        | ✓ filled bg (neutral), plain hover bg | | ✓ bg track | ✓ border (3 стороны) | ✓ bg placeholder |
+| `{color}-200`        | ✓ filled hover bg (neutral), outlined border | | ✓ bg track (default) | ✓ border (3 стороны) |         |
+| `{color}-300`        | ✓ filled active bg (neutral) | ✓ border hover | ✓ bg hover track |         |         |
+| `{color}-400`        |        | ✓ border основной | |         |         |
+| `{color}-500`        | ✓ filled bg (цветные) | | ✓ bg checked | |         |
+| `{color}-600`        | ✓ filled bg (цветные, default) | ✓ svg fill | | ✓ border-left (active) | |
+| `{color}-700`        | ✓ filled hover bg (цветные), plain/outlined text | | ✓ bg hover track | |         |
+| `{color}-800`        | ✓ filled active bg (цветные), plain/outlined text (neutral) | | |  |         |
 
 > `{color}` — любая из палитр: `neutral`, `accent`, `positive`, `negative`, `caution`
 
@@ -107,6 +107,19 @@
 | border-left — «активная» дуга | `neutral-600`          | `{color}-600`                            |
 
 > Дефолты миксина: `border-idx: 200`, `border-idx-active: 600`
+
+---
+
+## Skeleton
+
+Компонент управляется prop-ом `variant`. Представляет собой плейсхолдер-заглушку, которая скрывается при загрузке контента (через `visible=false` → `present=false` → показывается `<slot>`).
+
+| Элемент                      | variant=normal (neutral) | variant=accent/positive/negative/caution |
+|-----------------------------|--------------------------|------------------------------------------|
+| background placeholder       | `neutral-100`            | `{color}-100`                            |
+
+> Дефолты миксина: `bg-idx: 100`
+> Дополнительные props: `shape` (rect/rounded/circle), `animation` (pulse/wave/none), `width`, `height`
 
 ---
 
