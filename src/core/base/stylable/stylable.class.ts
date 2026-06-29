@@ -48,8 +48,6 @@ export default class TStylable<
 
 		this._classes.add(`--size-${this._states.size.value}`)
 
-		console.log('TStylable.constructor: szie', this._states.size.value)
-
 		this._states.variant =
 			states?.variant ??
 			new TStateUnit<TComponentVariant>({
