@@ -8,6 +8,7 @@ import {
 	type TSelectionMode,
 	type TScrollBehavior,
 	type ICollectionProps,
+	type ICollectionSource,
 } from '@core'
 import {
 	BaseControl,
@@ -81,7 +82,7 @@ export interface IListState<TItem extends IListItem = IListItem>
 		ISelectableCollectionState<TItem> {}
 
 export function syncList<TItem extends IListItem = IListItem>(
-	options: ISyncComponentViewOptions<IListProps & ICollectionProps, IList<TItem>>,
+	options: ISyncComponentViewOptions<IListProps<TItem> & ICollectionSource<TItem>, IList<TItem>>,
 ): IListState<TItem> {
 	const syncPropsControl = syncControl(options)
 

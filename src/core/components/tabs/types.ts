@@ -44,7 +44,9 @@ export type TTabsEvents = TControlEvents &
 		'item:present': (item: ITabItem, value: boolean) => void
 	}
 
-export interface ITabsProps extends IControlProps, IActivatableCollectionProps {
+export interface ITabsProps<
+	TItem extends ITabItem = ITabItem,
+> extends IControlProps, IActivatableCollectionProps<TItem> {
 	/** Ориентация табов */
 	orientation?: TTabsOrientation
 	/** Выравнивание табов */

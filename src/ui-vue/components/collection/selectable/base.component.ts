@@ -58,7 +58,7 @@ export function syncSelectableCollection<
 	TItem extends ISelectableCollectionItem = ISelectableCollectionItem,
 >(
 	options: ISyncComponentViewOptions<
-		ISelectableCollectionProps & ICollectionSource<TItem>,
+		ISelectableCollectionProps<TItem> & ICollectionSource<TItem>,
 		ISelectableCollection<ISelectableCollectionProps, TSelectableCollectionEvents, TItem>
 	>,
 ): ISelectableCollectionState<TItem> {

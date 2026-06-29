@@ -26,7 +26,9 @@ export type TListEvents = TControlEvents &
 		'item:present': (item: IListItem, value: boolean) => void
 	}
 
-export interface IListProps extends IControlProps, ISelectableCollectionProps {
+export interface IListProps<
+	TItem extends IListItem = IListItem,
+> extends IControlProps, ISelectableCollectionProps<TItem> {
 	/** Максимальное количество видимых строк (0 = без ограничений) */
 	maxRows?: number
 	/** Ширина бокса определяется по самому длинному тексту */

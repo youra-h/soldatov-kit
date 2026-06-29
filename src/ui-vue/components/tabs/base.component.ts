@@ -94,7 +94,7 @@ export interface ITabsState extends IControlState, IActivatableCollectionState<I
  * Синхронизация props и событий для Tabs
  */
 export function syncTabs(
-	options: ISyncComponentViewOptions<ITabsProps & ICollectionProps, ITabs>,
+	options: ISyncComponentViewOptions<ITabsProps<ITabItem>, ITabs>,
 ): ITabsState {
 	const synPropsControl = syncControl(options)
 

@@ -63,7 +63,7 @@ export interface ICollapseState extends IControlState, ISelectableCollectionStat
 }
 
 export function syncCollapse(
-	options: ISyncComponentViewOptions<ICollapseProps & ICollectionProps, ICollapse>,
+	options: ISyncComponentViewOptions<ICollapseProps<ICollapseItem>, ICollapse>,
 ): ICollapseState {
 	const syncPropsControl = syncControl(options)
 

@@ -45,7 +45,7 @@ export function syncActivatableCollection<
 	TItem extends IActivatableCollectionItem = IActivatableCollectionItem,
 >(
 	options: ISyncComponentViewOptions<
-		IActivatableCollectionProps & ICollectionSource<TItem>,
+		IActivatableCollectionProps<TItem> & ICollectionSource<TItem>,
 		IActivatableCollection<IActivatableCollectionProps, TActivatableCollectionEvents, TItem>
 	>,
 ): IActivatableCollectionState<TItem> {

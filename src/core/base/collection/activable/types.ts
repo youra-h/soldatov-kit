@@ -42,8 +42,9 @@ export interface IActivatableCollectionItem<
  * Свойства коллекции с поддержкой активности.
  * Пока нет специфичных настроек, но интерфейс оставляем для расширяемости.
  */
-export interface IActivatableCollectionProps
-	extends ICollectionProps<IActivatableCollectionItem, IActivatableCollectionItemMeta> {}
+export interface IActivatableCollectionProps<
+	TItem extends IActivatableCollectionItem = IActivatableCollectionItem,
+> extends ICollectionProps<TItem, IActivatableCollectionItemMeta> {}
 
 /**
  * События коллекции с поддержкой активности.

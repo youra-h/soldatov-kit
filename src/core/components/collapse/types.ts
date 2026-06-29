@@ -21,7 +21,9 @@ export type TCollapseEvents = TControlEvents &
 		'item:present': (item: ICollapseItem, value: boolean) => void
 	}
 
-export interface ICollapseProps extends IControlProps, ISelectableCollectionProps {
+export interface ICollapseProps<
+	TItem extends ICollapseItem = ICollapseItem,
+> extends IControlProps, ISelectableCollectionProps<TItem> {
 	/** Внешний вид компонента */
 	view?: TCollapseView
 }

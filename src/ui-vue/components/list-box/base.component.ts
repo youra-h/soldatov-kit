@@ -34,7 +34,7 @@ export default {
 }
 
 export function syncListBox(
-	options: ISyncComponentViewOptions<IListBoxProps & ICollectionProps, IListBox>,
+	options: ISyncComponentViewOptions<IListBoxProps<IListBoxItem>, IListBox>,
 ): IListState<IListBoxItem> {
 	const syncProps = syncList<IListBoxItem>(options)
 

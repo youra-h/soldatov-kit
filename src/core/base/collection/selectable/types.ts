@@ -41,8 +41,9 @@ export type TSelectionMode = 'none' | 'single' | 'multiple'
 /**
  * Свойства коллекции с поддержкой выбора.
  */
-export interface ISelectableCollectionProps
-	extends ICollectionProps<ISelectableCollectionItem, ISelectableCollectionItemMeta> {
+export interface ISelectableCollectionProps<
+	TItem extends ISelectableCollectionItem = ISelectableCollectionItem,
+> extends ICollectionProps<TItem, ISelectableCollectionItemMeta> {
 	/** Признак множественного выбора */
 	mode: TSelectionMode
 }

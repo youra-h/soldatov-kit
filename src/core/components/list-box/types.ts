@@ -10,7 +10,9 @@ export type TListBoxEvents = TListEvents &
 		'change:view': (value: TListBoxView) => void
 	}
 
-export interface IListBoxProps extends IListProps {
+export interface IListBoxProps<
+	TItem extends IListBoxItem = IListBoxItem,
+> extends IListProps<TItem> {
 	/** Внешний вид компонента */
 	view?: TListBoxView
 }
