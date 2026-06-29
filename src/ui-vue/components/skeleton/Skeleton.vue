@@ -50,8 +50,8 @@ export default {
 </script>
 
 <template>
-	<component ref="rootRef" :is="tag" :class="classes">
-		<div class="s-skeleton__placeholder" v-if="present" :style="styles" />
+	<component ref="rootRef" :is="tag" :class="classes" :style="styles">
+		<div class="s-skeleton__placeholder" v-if="present" />
 		<slot />
 	</component>
 </template>
@@ -117,7 +117,7 @@ export default {
 		}
 
 		#{$this}--wave & {
-			@apply relative overflow-hidden;
+			@apply overflow-hidden;
 
 			&::after {
 				content: '';
