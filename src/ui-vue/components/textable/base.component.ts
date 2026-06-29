@@ -4,6 +4,7 @@ import { type ITextable, type ITextableProps, TTextable } from '@core'
 import { BaseControl, emitsControl, propsControl, syncControl, type IControlState } from '../control'
 import type { TEmits, TProps, ISyncComponentViewOptions } from '../../types'
 import { useSyncProps } from '../../composables/useSyncProps'
+import { useInheritProps } from '../../composables/useInheritProps'
 
 export const emitsTextable: TEmits = [
 	...emitsControl,
@@ -12,7 +13,7 @@ export const emitsTextable: TEmits = [
 ] as const
 
 export const propsTextable: TProps = {
-	...propsControl,
+	...useInheritProps(propsControl, TTextable),
 	text: {
 		type: String as PropType<ITextableProps['text']>,
 		default: TTextable.defaultValues.text,

@@ -15,6 +15,7 @@ import {
 } from '../value-control'
 import type { TEmits, TProps, ISyncComponentViewOptions } from '../../types'
 import { useSyncProps } from '../../composables/useSyncProps'
+import { useInheritProps } from '../../composables/useInheritProps'
 
 export const emitsInputControl: TEmits = [
 	...emitsValueControl,
@@ -29,7 +30,7 @@ export const emitsInputControl: TEmits = [
 ] as const
 
 export const propsInputControl: TProps = {
-	...propsValueControl,
+	...useInheritProps(propsValueControl, TInputControl),
 	readonly: {
 		type: Boolean as PropType<IInputControlProps<any>['readonly']>,
 		default: TInputControl.defaultValues.readonly,

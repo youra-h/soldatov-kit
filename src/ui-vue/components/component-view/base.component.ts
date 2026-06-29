@@ -9,6 +9,7 @@ import {
 	emitsComponent,
 	propsComponent,
 } from '../component'
+import { useInheritProps } from '../../composables/useInheritProps'
 
 export const emitsComponentView: TEmits = [
 	...emitsComponent,
@@ -28,7 +29,7 @@ export const emitsComponentView: TEmits = [
 ] as const
 
 export const propsComponentView: TProps = {
-	...propsComponent,
+	...useInheritProps(propsComponent, TComponentView),
 	plugins: {
 		type: Object as PropType<IPluginBundle>,
 	},

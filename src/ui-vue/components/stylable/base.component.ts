@@ -17,6 +17,7 @@ import {
 } from '../component-view'
 import type { TEmits, TProps, ISyncComponentViewOptions } from '../../types'
 import { useSyncProps } from '../../composables/useSyncProps'
+import { useInheritProps } from '../../composables/useInheritProps'
 
 export const emitsStylable: TEmits = [
 	...emitsComponentView,
@@ -27,7 +28,7 @@ export const emitsStylable: TEmits = [
 ] as const
 
 export const propsStylable: TProps = {
-	...propsComponentView,
+	...useInheritProps(propsComponentView, TStylable),
 	size: {
 		type: String as PropType<IStylableProps['size']>,
 		default: TStylable.defaultValues.size,

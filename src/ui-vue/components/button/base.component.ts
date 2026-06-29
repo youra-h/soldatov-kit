@@ -9,6 +9,7 @@ import {
 } from '../textable'
 import type { TEmits, TProps, ISyncComponentViewOptions } from '../../types'
 import { useSyncProps } from '../../composables/useSyncProps'
+import { useInheritProps } from '../../composables/useInheritProps'
 
 export const emitsButton: TEmits = [
 	...emitsTextable,
@@ -17,11 +18,7 @@ export const emitsButton: TEmits = [
 ] as const
 
 export const propsButton: TProps = {
-	...propsTextable,
-	tag: {
-		type: [Object, String] as PropType<IButtonProps['tag']>,
-		default: TButton.defaultValues.tag,
-	},
+	...useInheritProps(propsTextable, TButton),
 	view: {
 		type: String as PropType<IButtonProps['view']>,
 		default: TButton.defaultValues.view,

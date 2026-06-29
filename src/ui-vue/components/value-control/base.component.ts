@@ -4,6 +4,7 @@ import { type IValueControl, type IValueControlProps, TValueControl } from '@cor
 import { BaseControl, emitsControl, propsControl, syncControl, type IControlState } from '../control'
 import type { TEmits, TProps, ISyncComponentViewOptions } from '../../types'
 import { useSyncProps } from '../../composables/useSyncProps'
+import { useInheritProps } from '../../composables/useInheritProps'
 
 export const emitsValueControl: TEmits = [
 	...emitsControl,
@@ -16,10 +17,10 @@ export const emitsValueControl: TEmits = [
 ] as const
 
 export const propsValueControl: TProps = {
-	...propsControl,
+	...useInheritProps(propsControl, TValueControl),
 	value: {
 		type: [String, Number, Boolean, Object, Array] as PropType<any>,
-		default: undefined,
+		default: TValueControl.defaultValues.value,
 	},
 	name: {
 		type: String as PropType<IValueControlProps<any>['name']>,

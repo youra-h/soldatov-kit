@@ -26,6 +26,7 @@ import {
 	type IActivatableCollectionState,
 } from '../collection/activable'
 import type { TEmits, TProps, ISyncComponentViewOptions } from '../../types'
+import { useInheritProps } from '../../composables/useInheritProps'
 
 export const emitsTabs: TEmits = [
 	...emitsControl,
@@ -50,7 +51,7 @@ export const emitsTabs: TEmits = [
 ] as const
 
 export const propsTabs: TProps = {
-	...propsControl,
+	...useInheritProps(propsControl, TTabs),
 	...propsActivatableCollection,
 	orientation: {
 		type: String as PropType<TTabsOrientation>,

@@ -10,6 +10,7 @@ import {
 } from '../stylable'
 import type { TEmits, TProps, ISyncComponentViewOptions } from '../../types'
 import { useSyncProps } from '../../composables/useSyncProps'
+import { useInheritProps } from '../../composables/useInheritProps'
 
 import { TLoaderPlugin } from '@plugins'
 import { syncLoaderContext, type ILoaderContextState } from '../loader/base.component'
@@ -25,7 +26,7 @@ export const emitsControl: TEmits = [
 ] as const
 
 export const propsControl: TProps = {
-	...propsStylable,
+	...useInheritProps(propsStylable, TControl),
 	disabled: {
 		type: Boolean as PropType<IControlProps['disabled']>,
 		default: TControl.defaultValues.disabled,

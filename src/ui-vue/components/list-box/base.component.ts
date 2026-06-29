@@ -10,6 +10,7 @@ import {
 } from '@core'
 import { BaseList, emitsList, propsList, syncList, type IListState } from '../list'
 import type { TEmits, TProps, ISyncComponentViewOptions } from '../../types'
+import { useInheritProps } from '../../composables/useInheritProps'
 
 export const emitsListBox: TEmits = [
 	...emitsList,
@@ -18,7 +19,7 @@ export const emitsListBox: TEmits = [
 ] as const
 
 export const propsListBox: TProps = {
-	...propsList,
+	...useInheritProps(propsList, TListBox),
 	view: {
 		type: String as PropType<TListBoxView>,
 		default: TListBox.defaultValues.view,

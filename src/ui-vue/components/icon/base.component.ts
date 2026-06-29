@@ -9,6 +9,7 @@ import {
 } from '../component-view'
 import type { TEmits, TProps, ISyncComponentViewOptions } from '../../types/common'
 import { useSyncProps } from '../../composables/useSyncProps'
+import { useInheritProps } from '../../composables/useInheritProps'
 
 export const emitsIcon: TEmits = [
 	...emitsComponentView,
@@ -21,11 +22,7 @@ export const emitsIcon: TEmits = [
 ] as const
 
 export const propsIcon: TProps = {
-	...propsComponentView,
-	tag: {
-		type: [String, Object] as PropType<IIconProps['tag']>,
-		default: TIcon.defaultValues.tag,
-	},
+	...useInheritProps(propsComponentView, TIcon),
 	size: {
 		type: String as PropType<IIconProps['size']>,
 		default: TIcon.defaultValues.size,

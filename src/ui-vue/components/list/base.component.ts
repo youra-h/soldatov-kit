@@ -24,6 +24,7 @@ import {
 } from '../collection/selectable'
 import type { TEmits, TProps, ISyncComponentViewOptions } from '../../types'
 import { useSyncProps } from '../../composables/useSyncProps'
+import { useInheritProps } from '../../composables/useInheritProps'
 
 export const emitsList: TEmits = [
 	...emitsControl,
@@ -44,7 +45,7 @@ export const emitsList: TEmits = [
 ] as const
 
 export const propsList: TProps = {
-	...propsControl,
+	...useInheritProps(propsControl, TList),
 	...propsSelectableCollection,
 	mode: {
 		type: String as PropType<TSelectionMode>,

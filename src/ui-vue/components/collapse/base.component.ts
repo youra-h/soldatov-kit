@@ -24,6 +24,7 @@ import {
 } from '../collection/selectable'
 import type { TEmits, TProps, ISyncComponentViewOptions } from '../../types'
 import { useSyncProps } from '../../composables/useSyncProps'
+import { useInheritProps } from '../../composables/useInheritProps'
 
 export const emitsCollapse: TEmits = [
 	...emitsControl,
@@ -38,7 +39,7 @@ export const emitsCollapse: TEmits = [
 ] as const
 
 export const propsCollapse: TProps = {
-	...propsControl,
+	...useInheritProps(propsControl, TCollapse),
 	...propsSelectableCollection,
 	view: {
 		type: String as PropType<TCollapseView>,

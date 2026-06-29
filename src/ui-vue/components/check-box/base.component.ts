@@ -10,6 +10,7 @@ import {
 import type { TEmits, TProps, ISyncComponentViewOptions } from '../../types/common'
 import { Icon } from '../icon'
 import { useSyncProps } from '../../composables/useSyncProps'
+import { useInheritProps } from '../../composables/useInheritProps'
 
 export const emitsCheckBox: TEmits = [
 	...emitsInputControl,
@@ -20,11 +21,7 @@ export const emitsCheckBox: TEmits = [
 ] as const
 
 export const propsCheckBox: TProps = {
-	...propsInputControl,
-	value: {
-		type: [Boolean, Number] as PropType<ICheckBoxProps['value']>,
-		default: TCheckBox.defaultValues.value,
-	},
+	...useInheritProps(propsInputControl, TCheckBox),
 	indeterminate: {
 		type: Boolean as PropType<ICheckBoxProps['indeterminate']>,
 		default: TCheckBox.defaultValues.indeterminate,

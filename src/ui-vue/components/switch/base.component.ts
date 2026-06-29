@@ -1,5 +1,4 @@
-import { type PropType } from 'vue'
-import { type ISwitch, type ISwitchProps, TSwitch } from '@core'
+import { type ISwitchProps, type ISwitch, TSwitch } from '@core'
 import {
 	BaseInputControl,
 	emitsInputControl,
@@ -9,15 +8,12 @@ import {
 } from '../input-control'
 import type { TEmits, TProps, ISyncComponentViewOptions } from '../../types/common'
 import { Spinner } from '../spinner'
+import { useInheritProps } from '../../composables/useInheritProps'
 
 export const emitsSwitch: TEmits = [...emitsInputControl] as const
 
 export const propsSwitch: TProps = {
-	...propsInputControl,
-	value: {
-		type: [Boolean] as PropType<ISwitchProps['value']>,
-		default: TSwitch.defaultValues.value,
-	},
+	...useInheritProps(propsInputControl, TSwitch),
 }
 
 export default {
