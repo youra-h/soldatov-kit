@@ -15,6 +15,7 @@ import {
 } from '../stylable'
 import type { TEmits, TProps, ISyncComponentViewOptions } from '../../types/common'
 import { useSyncProps } from '../../composables/useSyncProps'
+import { useInheritProps } from '../../composables/useInheritProps'
 
 export const emitsSkeleton: TEmits = [
 	...emitsStylable,
@@ -29,7 +30,7 @@ export const emitsSkeleton: TEmits = [
 ] as const
 
 export const propsSkeleton: TProps = {
-	...propsStylable,
+	...useInheritProps(propsStylable, TSkeleton),
 	shape: {
 		type: String as PropType<ISkeletonProps['shape']>,
 		default: TSkeleton.defaultValues.shape,

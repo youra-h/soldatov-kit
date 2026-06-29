@@ -13,6 +13,7 @@ import {
 } from '../stylable'
 import type { TEmits, TProps, ISyncComponentViewOptions } from '../../types/common'
 import { useSyncProps } from '../../composables/useSyncProps'
+import { useInheritProps } from '../../composables/useInheritProps'
 
 export const emitsSpinner: TEmits = [
 	...emitsStylable,
@@ -21,11 +22,7 @@ export const emitsSpinner: TEmits = [
 ] as const
 
 export const propsSpinner: TProps = {
-	...propsStylable,
-	tag: {
-		type: [Object, String] as PropType<ISpinnerProps['tag']>,
-		default: TSpinner.defaultValues.tag,
-	},
+	...useInheritProps(propsStylable, TSpinner),
 	borderWidth: {
 		type: [String, Number] as PropType<ISpinnerProps['borderWidth']>,
 		default: TSpinner.defaultValues.borderWidth,
