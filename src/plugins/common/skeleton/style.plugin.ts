@@ -18,21 +18,24 @@ export class TSkeletonStylePlugin extends TBasePlugin {
 		instancePlugin?.events.on('ready', ({ instance }) => {
 			const skeleton = instance as unknown as ISkeleton
 
-			skeleton.events.on('change:width', (value) => {
-				if (value === 'auto') {
-					delete this._styles.width
-				} else {
-					this._styles.width = toCssValue(value)
-				}
-			})
+			this._bindDimension(skeleton, 'width')
+			this._bindDimension(skeleton, 'height')
+		})
+	}
 
-			skeleton.events.on('change:height', (value) => {
-				if (value === 'auto') {
-					delete this._styles.height
-				} else {
-					this._styles.height = toCssValue(value)
-				}
-			})
+	private _bindDimension(skeleton: ISkeleton, prop: 'width' | 'height'): void {
+		const eventName = `change:${prop}` as const
+
+		if (skeleton[prop] !== 'auto') {
+			this._styles[prop] = toCssValue(skeleton[prop])
+		}
+
+		skeleton.events.on(eventName, (value: number | string) => {
+			if (value === 'auto') {
+				delete this._styles[prop]
+			} else {
+				this._styles[prop] = toCssValue(value)
+			}
 		})
 	}
 
