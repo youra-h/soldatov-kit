@@ -7,7 +7,6 @@ import {
 	TCollapse,
 	type TCollapseView,
 	type TSelectionMode,
-	type ICollectionProps,
 } from '@core'
 import {
 	BaseControl,

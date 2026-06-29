@@ -7,7 +7,6 @@ import {
 	TList,
 	type TSelectionMode,
 	type TScrollBehavior,
-	type ICollectionProps,
 	type ICollectionSource,
 } from '@core'
 import {

@@ -4,7 +4,6 @@ import { useSyncProps } from '../../composables/useSyncProps'
 import {
 	type ITabs,
 	type ITabsProps,
-	type ICollectionProps,
 	TTabs,
 	type TTabsOrientation,
 	type TTabsAlignment,

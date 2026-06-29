@@ -6,7 +6,6 @@ import {
 	type IListBoxProps,
 	TListBox,
 	type TListBoxView,
-	type ICollectionProps,
 } from '@core'
 import { BaseList, emitsList, propsList, syncList, type IListState } from '../list'
 import type { TEmits, TProps, ISyncComponentViewOptions } from '../../types'
