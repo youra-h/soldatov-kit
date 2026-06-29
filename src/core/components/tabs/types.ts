@@ -9,6 +9,7 @@ import type {
 	TActivatableCollection,
 	TActivatableCollectionEvents,
 	TItemProxyEvents,
+	IActivatableCollectionProps,
 } from '../../base/collection'
 import type { ITabItem } from './tab-item/types'
 
@@ -43,7 +44,7 @@ export type TTabsEvents = TControlEvents &
 		'item:present': (item: ITabItem, value: boolean) => void
 	}
 
-export interface ITabsProps extends IControlProps {
+export interface ITabsProps extends IControlProps, IActivatableCollectionProps {
 	/** Ориентация табов */
 	orientation?: TTabsOrientation
 	/** Выравнивание табов */
