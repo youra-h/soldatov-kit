@@ -101,7 +101,7 @@ const animations: TSkeletonAnimation[] = ['pulse', 'wave', 'none']
 				<div class="sizes-demo__slot-item">
 					<div class="sizes-demo__slot-label">Button</div>
 					<Skeleton
-						:visible="true"
+						:visible="visible"
 						:rendered="rendered"
 						size="lg"
 						variant="accent"
@@ -116,13 +116,11 @@ const animations: TSkeletonAnimation[] = ['pulse', 'wave', 'none']
 				<div class="sizes-demo__slot-item">
 					<div class="sizes-demo__slot-label">CheckBox</div>
 					<Skeleton
-						:visible="true"
+						:visible="visible"
 						:rendered="rendered"
 						variant="positive"
-						shape="rect"
+						shape="circle"
 						animation="pulse"
-						width="160px"
-						height="32px"
 					>
 						<CheckBox>Accept terms</CheckBox>
 					</Skeleton>
@@ -130,13 +128,11 @@ const animations: TSkeletonAnimation[] = ['pulse', 'wave', 'none']
 				<div class="sizes-demo__slot-item">
 					<div class="sizes-demo__slot-label">Switch</div>
 					<Skeleton
-						:visible="true"
+						:visible="visible"
 						:rendered="rendered"
 						variant="caution"
 						shape="rounded"
 						animation="wave"
-						width="140px"
-						height="32px"
 					>
 						<Switch>Enable feature</Switch>
 					</Skeleton>
