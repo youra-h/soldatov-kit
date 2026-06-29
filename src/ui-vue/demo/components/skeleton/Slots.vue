@@ -74,7 +74,7 @@ const animations: TSkeletonAnimation[] = ['pulse', 'wave', 'none']
 		<!-- Animations -->
 		<div class="sizes-demo__section">
 			<div class="sizes-demo__title">
-				Animations (neutral, rect, width=200px, height=32px)
+				Animations (normal, rect, width=200px, height=32px)
 			</div>
 			<div class="sizes-demo__shapes">
 				<div v-for="anim in animations" :key="anim" class="sizes-demo__shape-item">
@@ -82,7 +82,7 @@ const animations: TSkeletonAnimation[] = ['pulse', 'wave', 'none']
 					<Skeleton
 						:visible="visible"
 						:rendered="rendered"
-						variant="neutral"
+						variant="normal"
 						shape="rect"
 						:animation="anim"
 						width="200px"

@@ -65,13 +65,9 @@ export default {
 
 	@apply relative block;
 
-	// скрываем содержимое slot, пока показывается placeholder
-	&:has(.s-skeleton__placeholder) > :last-child {
+	// скрываем всё содержимое slot, пока показывается placeholder
+	&:has(.s-skeleton__placeholder) > :not(.s-skeleton__placeholder) {
 		@apply opacity-0;
-	}
-
-	&:not(:has(.s-skeleton__placeholder)) > :last-child {
-		@apply opacity-100;
 	}
 
 	// size
