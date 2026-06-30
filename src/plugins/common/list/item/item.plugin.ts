@@ -35,4 +35,10 @@ export class TListItemPlugin extends TBasePlugin<TListItemPluginEvents> {
 		const instance = this._instancePlugin?.instance as IListItem | undefined
 		if (instance) instance.selected = false
 	}
+
+	toggleSelected(): void {
+		const instance = this._instancePlugin?.instance as IListItem | undefined
+
+		if (instance) instance.toggleSelected()
+	}
 }

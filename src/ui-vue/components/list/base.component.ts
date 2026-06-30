@@ -77,8 +77,7 @@ export default {
 }
 
 export interface IListState<TItem extends IListItem = IListItem>
-	extends IControlState,
-		ISelectableCollectionState<TItem> {}
+	extends IControlState, ISelectableCollectionState<TItem> {}
 
 export function syncList<TItem extends IListItem = IListItem>(
 	options: ISyncComponentViewOptions<IListProps<TItem> & ICollectionSource<TItem>, IList<TItem>>,

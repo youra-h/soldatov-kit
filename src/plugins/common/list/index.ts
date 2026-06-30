@@ -1,4 +1,4 @@
 export { TListLayoutPlugin, type TListLayoutPluginEvents } from './layout'
 export { TListScrollPlugin, type TListScrollPluginEvents } from './scroll'
-export { TListHighlightPlugin, type TListHighlightPluginEvents } from './highlight'
+export { TListKeyboardPlugin, type TListKeyboardPluginEvents } from './keyboard'
 export { TListItemPlugin, type TListItemPluginEvents } from './item'
