@@ -29,6 +29,7 @@ export function syncCollectionItem(
 
 	// Использовать inject для получения коллекции родителя и автоматической регистрации в ней (если декларативный режим)
 	useInjectCollectionItem(instance)
+	// Использовать inject для получения плагинов коллекции родителя и автоматической регистрации в них (если декларативный режим)
 	useInjectCollectionItemPlugins(instance.uid, plugins)
 
 	// Пробрасываем события core-инстанса наружу (Vue events)
