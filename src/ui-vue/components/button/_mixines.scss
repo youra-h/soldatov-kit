@@ -4,7 +4,7 @@
 	&:hover:not([disabled]),
 	&:focus:not([disabled]),
 	&:focus-visible:not([disabled]),
-	&[aria-current='true']:not([disabled]) {
+	&[data-highlighted='true']:not([disabled]) {
 		@apply #{'bg-s-' + $color + '-' + $hover-bg};
 	}
 

@@ -5,7 +5,8 @@ import { useInstance } from '../../../composables/useInstance'
 import { useBundle } from '../../../composables/useBundle'
 import { useInstanceBinding } from '../../../composables/useInstanceBinding'
 import { useElementBinding } from '../../../composables/useElementBinding'
-import { createComponentViewBundle } from '@plugins'
+import { createListItemBundle, TListItemPlugin } from '@plugins'
+import { useSyncProps } from '../../../composables/useSyncProps'
 import { Button } from '../../button'
 import type { TBaseComponentViewProps } from '../../component-view'
 
@@ -16,8 +17,10 @@ export default {
 	setup(props: TBaseComponentViewProps<IListItemProps, IListBoxItem>, { emit }) {
 		const instance = useInstance(TListBoxItem, props)
 
-		const plugins = useBundle(createComponentViewBundle, props?.plugins)
+		const plugins = useBundle(createListItemBundle, props?.plugins)
 		useInstanceBinding(plugins, instance)
+
+		const itemPlugin = plugins.get(TListItemPlugin)!
 
 		const rootRef = useElementBinding(plugins)
 
@@ -35,6 +38,10 @@ export default {
 			order,
 		} = syncListBoxItem({ props, instance, plugins, emit })
 
+		// const { highlighted } = useSyncProps(itemPlugin.events, {
+		// 	highlighted: () => itemPlugin.highlighted,
+		// })
+
 		return {
 			instance,
 			plugins,
@@ -48,6 +55,7 @@ export default {
 			variant,
 			text,
 			selected,
+			highlighted: itemPlugin.highlighted,
 			view,
 			order,
 		}
@@ -64,6 +72,7 @@ export default {
 			:size="size"
 			:variant="variant"
 			:aria-selected="selected"
+			:data-highlighted="highlighted"
 			@click="instance.click()"
 		>
 			<template #leading>
