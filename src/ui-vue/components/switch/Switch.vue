@@ -116,7 +116,6 @@ export default {
 			@apply opacity-s-component-disabled;
 		}
 
-		&:focus,
 		&:focus-visible {
 			+ #{$this}__track {
 				@apply outline-2 outline-offset-2 outline-s-component;

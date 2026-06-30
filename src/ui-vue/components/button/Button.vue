@@ -91,7 +91,6 @@ export default {
 		@apply opacity-s-component-disabled cursor-default pointer-events-none;
 	}
 
-	&:focus,
 	&:focus-visible {
 		&:not(#{$this}--a-none) {
 			@apply duration-100;

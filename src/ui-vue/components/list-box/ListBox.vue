@@ -68,7 +68,6 @@ export default {
 	@apply min-w-40 max-w-80;
 	@apply text-s-component;
 
-	&:focus,
 	&:focus-visible {
 		&:not([aria-disabled='true']) {
 			@apply outline-2 outline-offset-2 outline-s-component;
