@@ -20,10 +20,49 @@ export class TListKeyboardPlugin extends TBasePlugin<TListKeyboardPluginEvents> 
 	private readonly _items = new Map<string | number, TListItemPlugin>()
 	private _highlightedUid: string | number | null = null
 
+	override install(bundle: IPluginBundle): void {
+		bundle.get(TElementPlugin)?.events.on('ready', ({ element }) => {
+			this._element = element
+			element.addEventListener('keydown', this._onKeyDown)
+		})
+
+		bundle.get(TElementPlugin)?.events.on('removed', () => {
+			this._element?.removeEventListener('keydown', this._onKeyDown)
+			this._element = null
+		})
+
+		const instancePlugin = bundle.get(TInstancePlugin) as TInstancePlugin<IList> | undefined
+
+		instancePlugin?.events.on('ready', ({ instance }) => {
+			this._list = instance
+		})
+	}
+
+	/**
+	 * Регистрирует дочерний bundle — извлекает из него {@link TListItemPlugin}.
+	 */
+	register(uid: string | number, bundle: IPluginBundle): void {
+		const plugin = bundle.get(TListItemPlugin)
+
+		if (plugin) {
+			this._items.set(uid, plugin)
+		}
+	}
+
+	override destroy(): void {
+		this._element?.removeEventListener('keydown', this._onKeyDown)
+		this._clearHighlight()
+		this._element = null
+		this._list = null
+		this._items.clear()
+		super.destroy()
+	}
+
 	private readonly _onKeyDown = (e: KeyboardEvent) => {
 		if (!this._list) return
 
 		const items = this._list.collection.items as IListItem[]
+
 		if (items.length === 0) return
 
 		const currentIdx =
@@ -45,45 +84,6 @@ export class TListKeyboardPlugin extends TBasePlugin<TListKeyboardPluginEvents> 
 				const plugin = this._items.get(this._highlightedUid)
 				plugin?.toggleSelected()
 			}
-		}
-	}
-
-	override install(bundle: IPluginBundle): void {
-		bundle.get(TElementPlugin)?.events.on('ready', ({ element }) => {
-			this._element = element
-			element.addEventListener('keydown', this._onKeyDown)
-		})
-
-		bundle.get(TElementPlugin)?.events.on('removed', () => {
-			this._element?.removeEventListener('keydown', this._onKeyDown)
-			this._element = null
-		})
-
-		const instancePlugin = bundle.get(TInstancePlugin) as
-			| TInstancePlugin<{ collection: { items: IListItem[] } }>
-			| undefined
-
-		instancePlugin?.events.on('ready', ({ instance }) => {
-			this._list = instance as unknown as IList
-		})
-	}
-
-	override destroy(): void {
-		this._element?.removeEventListener('keydown', this._onKeyDown)
-		this._clearHighlight()
-		this._element = null
-		this._list = null
-		this._items.clear()
-		super.destroy()
-	}
-
-	/**
-	 * Регистрирует дочерний bundle — извлекает из него {@link TListItemPlugin}.
-	 */
-	register(uid: string | number, bundle: IPluginBundle): void {
-		const plugin = bundle.get(TListItemPlugin)
-		if (plugin) {
-			this._items.set(uid, plugin)
 		}
 	}
 
