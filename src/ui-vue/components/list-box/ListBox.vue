@@ -21,7 +21,7 @@ export default {
 
 		const rootRef = useElementBinding(plugins)
 
-		const { rendered, visible, classes, items } = syncListBox({
+		const { rendered, visible, disabled, classes, items } = syncListBox({
 			props,
 			instance,
 			plugins,
@@ -34,6 +34,7 @@ export default {
 			rootRef,
 			rendered,
 			visible,
+			disabled,
 			classes,
 			items,
 		}
@@ -42,7 +43,14 @@ export default {
 </script>
 
 <template>
-	<div ref="rootRef" v-if="rendered" v-show="visible" :class="classes">
+	<div
+		ref="rootRef"
+		v-if="rendered"
+		v-show="visible"
+		:class="classes"
+		:aria-disabled="disabled"
+		tabindex="0"
+	>
 		<slot>
 			<ListBoxItem v-for="item in items" :key="item.uid" :ctrl="item">
 				<slot :name="`item:${item.value}`" />
@@ -56,7 +64,16 @@ export default {
 
 .s-list-box {
 	@apply flex flex-col gap-1;
+	@apply rounded-md;
 	@apply min-w-40 max-w-80;
+	@apply text-s-component;
+
+	&:focus,
+	&:focus-visible {
+		&:not([aria-disabled='true']) {
+			@apply outline-2 outline-offset-2 outline-s-component;
+		}
+	}
 
 	&--auto-width {
 		@apply w-max min-w-0 max-w-none;
