@@ -1,12 +1,6 @@
 import { TBasePlugin } from '../../base/plugin'
-import type { IPlugin, IPluginBundle } from '../../base/types'
-
-export type TCollectionItemPluginsEvents = Record<string, never>
-
-interface IPluginCtor<T = any> {
-	readonly key: string
-	new (): T
-}
+import type { IPlugin, IPluginBundle, TPluginConstructor } from '../../base/types'
+import type { TCollectionItemPluginsEvents } from './types'
 
 /**
  * Единый регистратор плагинов элементов коллекции.
@@ -29,7 +23,7 @@ export class TCollectionItemPlugins extends TBasePlugin<TCollectionItemPluginsEv
 		return this._bundles.get(uid)
 	}
 
-	getPlugin<T extends IPlugin<any>>(uid: string | number, ctor: IPluginCtor<T>): T | undefined {
-		return this._bundles.get(uid)?.get(ctor) as T | undefined
+	getPlugin<T extends IPlugin<any>>(uid: string | number, ctor: TPluginConstructor<T>): T | undefined {
+		return this._bundles.get(uid)?.get(ctor)
 	}
 }

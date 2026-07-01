@@ -10,3 +10,5 @@ export type TCollectionInstancesPluginEvents = {
 	'instance:added': (payload: { uid: string | number; instance: IComponentView }) => void
 	'instance:removed': (payload: { uid: string | number }) => void
 }
+
+export type TCollectionItemPluginsEvents = Record<string, never>
