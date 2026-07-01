@@ -45,7 +45,7 @@ export interface ISelectableCollectionProps<
 	TItem extends ISelectableCollectionItem = ISelectableCollectionItem,
 > extends ICollectionProps<TItem, ISelectableCollectionItemMeta> {
 	/** Признак множественного выбора */
-	mode: TSelectionMode
+	mode?: TSelectionMode
 }
 
 /**
