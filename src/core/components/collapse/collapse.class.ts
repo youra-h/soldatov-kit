@@ -49,6 +49,10 @@ export class TCollapse
 			mode: props.mode ?? ctor.defaultValues.mode!,
 		})
 
+		if (props.items) {
+			this._collection.setItems(props.items)
+		}
+
 		this._applyView(props.view ?? ctor.defaultValues.view!)
 
 		this.events.on('change:size', (payload: TValuePayload<TComponentSize>) => {
@@ -77,15 +81,27 @@ export class TCollapse
 					item.setViewResolver(() => this._view)
 
 					item.events.on('change:rendered', (value: boolean) => {
-						;(this.events as TEvented<TCollapseEvents>).emit('item:rendered', item, value)
+						;(this.events as TEvented<TCollapseEvents>).emit(
+							'item:rendered',
+							item,
+							value,
+						)
 					})
 
 					item.events.on('change:visible', (value: boolean) => {
-						;(this.events as TEvented<TCollapseEvents>).emit('item:visible', item, value)
+						;(this.events as TEvented<TCollapseEvents>).emit(
+							'item:visible',
+							item,
+							value,
+						)
 					})
 
 					item.events.on('change:present', (value: boolean) => {
-						;(this.events as TEvented<TCollapseEvents>).emit('item:present', item, value)
+						;(this.events as TEvented<TCollapseEvents>).emit(
+							'item:present',
+							item,
+							value,
+						)
 					})
 
 					item.events.on('change:disabled', (value: boolean) => {

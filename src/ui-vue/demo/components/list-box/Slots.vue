@@ -83,6 +83,22 @@ const fruitInstance = new TListBox({
 				</ListBoxItem>
 			</ListBox>
 		</div>
+
+		<!-- Per-item slots via ListBox: item:value:leading / item:value:trailing / item:value -->
+		<div class="list-box-slots-demo__section">
+			<h4 class="list-box-slots-demo__subtitle">Per-item slots via ListBox</h4>
+			<ListBox :ctrl="fruitInstance">
+				<template #item:apple:leading>
+					<span class="list-box-slots-demo__badge">🍎</span>
+				</template>
+				<template #item:banana:trailing>
+					<span class="list-box-slots-demo__badge">🍌</span>
+				</template>
+				<template #item:cherry="{ item }">
+					<span :class="{ 'font-bold': item.selected }">{{ item.text }}</span>
+				</template>
+			</ListBox>
+		</div>
 	</div>
 </template>
 

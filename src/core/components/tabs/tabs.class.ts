@@ -61,6 +61,10 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStates> implem
 			itemClass: TTabItem,
 		})
 
+		if (props.items) {
+			this._collection.setItems(props.items)
+		}
+
 		// Инициализация простых свойств
 		this._applyOrientation(props.orientation ?? ctor.defaultValues.orientation!)
 		this._applyAlignment(props.alignment ?? ctor.defaultValues.alignment!)

@@ -11,11 +11,11 @@ import { type TValuePayload } from '../../common/types'
 import type { TComponentSize, TComponentVariant, TScrollBehavior } from '../../common/types'
 
 export class TList<
-		TItem extends IListItem = IListItem,
-		TProps extends IListProps = IListProps,
-		TEvents extends TListEvents = TListEvents,
-		TStates extends TListStates = TListStates,
-	>
+	TItem extends IListItem = IListItem,
+	TProps extends IListProps = IListProps,
+	TEvents extends TListEvents = TListEvents,
+	TStates extends TListStates = TListStates,
+>
 	extends TControl<TProps, TEvents, TStates>
 	implements IList<TItem, TProps, TEvents, TStates>
 {
@@ -60,6 +60,10 @@ export class TList<
 		const { props } = TComponentView.prepareOptions<TProps, TStates>(options)
 
 		this._collection = this._createCollection(props.mode ?? ctor.defaultValues.mode!)
+
+		if (props.items) {
+			this._collection.setItems(props.items)
+		}
 
 		this._maxRows = props.maxRows ?? ctor.defaultValues.maxRows!
 
