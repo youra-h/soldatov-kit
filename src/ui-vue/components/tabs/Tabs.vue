@@ -121,7 +121,7 @@ export default {
 	}
 
 	&--stretch #{$this}__list {
-		.s-tab-item {
+		> * {
 			@apply flex-1 justify-center;
 		}
 	}

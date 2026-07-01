@@ -104,23 +104,27 @@ export default {
 .s-tab-item {
 	$this: &;
 
-	@apply opacity-75 bg-transparent;
+	> * {
+		@apply opacity-75;
+		@apply w-full py-2;
 
-	.s-button {
-		@apply py-2;
+		#{$this}__close {
+			@apply px-1;
+		}
+
+		&:hover:not([disabled]) {
+			@apply opacity-100;
+		}
+
+		&:focus-visible {
+			@apply outline-2 -outline-offset-2 outline-s-component;
+		}
 	}
 
-	&__close {
-		@apply px-1;
-	}
-
-	&--active,
-	&:hover:not([disabled]) {
-		@apply opacity-100;
-	}
-
-	&:focus-visible {
-		@apply outline-2 -outline-offset-2 outline-s-component;
+	&--active {
+		> * {
+			@apply opacity-100;
+		}
 	}
 }
 </style>

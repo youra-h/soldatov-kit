@@ -16,12 +16,16 @@
 
 		// Цвет текста при hover и у активного таба
 		.s-tab-item {
-			&:hover:not([disabled]) {
-				@apply #{'text-s-' + $color + '-' + $text};
+			> * {
+				&:hover:not([disabled]) {
+					@apply #{'text-s-' + $color + '-' + $text};
+				}
 			}
 
 			&--active {
-				@apply #{'text-s-' + $color + '-' + $text};
+				> * {
+					@apply #{'text-s-' + $color + '-' + $text};
+				}
 			}
 		}
 	}
@@ -35,13 +39,17 @@
 	}
 
 	.s-tab-item {
-		&:hover:not([disabled]) {
-			@apply #{'text-s-' + $color + '-' + $text};
+		> * {
+			&:hover:not([disabled]) {
+				@apply #{'text-s-' + $color + '-' + $text};
+			}
 		}
 
 		&--active {
-			@apply bg-white shadow-sm;
-			@apply #{'text-s-' + $color + '-' + $text};
+			> * {
+				@apply bg-white shadow-sm;
+				@apply #{'text-s-' + $color + '-' + $text};
+			}
 		}
 	}
 }
@@ -63,13 +71,16 @@
 		@apply #{'border-s-' + $color + '-' + $border};
 
 		// @apply border-b-transparent;
-
-		&:hover:not([disabled]) {
-			@apply #{'text-s-' + $color + '-' + $text};
+		> * {
+			&:hover:not([disabled]) {
+				@apply #{'text-s-' + $color + '-' + $text};
+			}
 		}
 
 		&--active {
-			@apply #{'text-s-' + $color + '-' + $text};
+			> * {
+				@apply #{'text-s-' + $color + '-' + $text};
+			}
 		}
 	}
 }
