@@ -3,14 +3,13 @@ import type { IPluginBundle } from '../../../base/types'
 import { TBasePlugin } from '../../../base/plugin'
 import { TElementPlugin } from '../../element'
 import { TInstancePlugin } from '../../instance'
-import { TCollectionItemPlugins } from '../../collection'
-import { TListItemPlugin } from '../item'
+import { TListItemAccumulationPlugin } from '../accumulation'
 import type { TListKeyboardPluginEvents } from './types'
 
 /**
  * Плагин клавиатурной навигации по списку.
  *
- * Получает {@link TListItemPlugin} каждого элемента через {@link TCollectionItemPlugins},
+ * Получает {@link TListItemPlugin} каждого элемента через {@link TListItemAccumulationPlugin},
  * обрабатывает ArrowUp/Down для перемещения подсветки и Enter/Space для выбора.
  *
  * Подсветка синхронизируется с выделением:
@@ -25,11 +24,11 @@ export class TListKeyboardPlugin extends TBasePlugin<TListKeyboardPluginEvents> 
 
 	private _element: HTMLElement | null = null
 	private _list: IList | null = null
-	private _itemPlugins: TCollectionItemPlugins | null = null
+	private _itemPluginAccumulation: TListItemAccumulationPlugin | null = null
 	private _highlightedUid: string | number | null = null
 
 	override install(bundle: IPluginBundle): void {
-		this._itemPlugins = bundle.get(TCollectionItemPlugins)!
+		this._itemPluginAccumulation = bundle.get(TListItemAccumulationPlugin) ?? null
 
 		bundle.get(TElementPlugin)?.events.on('ready', ({ element }) => {
 			this._element = element
@@ -65,12 +64,8 @@ export class TListKeyboardPlugin extends TBasePlugin<TListKeyboardPluginEvents> 
 		this._clearHighlight()
 		this._element = null
 		this._list = null
-		this._itemPlugins = null
+		this._itemPluginAccumulation = null
 		super.destroy()
-	}
-
-	private _getItemPlugin(uid: string | number): TListItemPlugin | undefined {
-		return this._itemPlugins?.getPlugin(uid, TListItemPlugin)
 	}
 
 	private readonly _onKeyDown = (e: KeyboardEvent) => {
@@ -96,9 +91,13 @@ export class TListKeyboardPlugin extends TBasePlugin<TListKeyboardPluginEvents> 
 		} else if (e.key === 'Enter' || e.key === ' ') {
 			e.preventDefault()
 			if (this._highlightedUid != null) {
-				this._getItemPlugin(this._highlightedUid)?.toggleSelected()
+				this._itemPluginAccumulation?.getByUid(this._highlightedUid)?.toggleSelected()
 			}
 		}
+	}
+
+	private _getItemPlugin(uid: string | number) {
+		return this._itemPluginAccumulation?.getByUid(uid)
 	}
 
 	private _setHighlight(uid: string | number): void {
