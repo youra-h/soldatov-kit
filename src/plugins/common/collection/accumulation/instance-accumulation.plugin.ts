@@ -20,15 +20,12 @@ export class TInstanceAccumulationPlugin extends TAccumulationPlugin<
 > {
 	static readonly key = 'collection-instances'
 
-	protected _tryExtract(bundle: IPluginBundle): IComponentView | null {
-		return bundle.get(TInstancePlugin)?.instance ?? null
-	}
-
 	protected _track(uid: string | number, bundle: IPluginBundle): void {
 		const instancePlugin = bundle.get(TInstancePlugin)
 
 		if (!instancePlugin) return
 
+		// Если instance уже готов — добавляем сразу
 		if (instancePlugin.instance) {
 			this._add(uid, instancePlugin.instance)
 		}

@@ -26,15 +26,10 @@ export abstract class TAccumulationPlugin<
 	}
 
 	/**
-	 * Извлекает значение из бандла элемента, если оно уже готово.
-	 * Вызывается при `item:registered`. Если вернула non-null — значение
-	 * сразу попадает в реестр.
-	 */
-	protected abstract _tryExtract(bundle: IPluginBundle): TValue | null
-
-	/**
 	 * Подписывается на события готовности/удаления источника.
-	 * Должна вызывать `this._add(uid, value)` и `this._remove(uid)`.
+	 * Вызывается при `item:registered`. Должна вызывать
+	 * `this._add(uid, value)` (если значение уже готово) и
+	 * подписываться на будущие `ready`/`removed`.
 	 */
 	protected abstract _track(uid: string | number, bundle: IPluginBundle): void
 
@@ -59,10 +54,6 @@ export abstract class TAccumulationPlugin<
 		const itemPlugins = bundle.get(TCollectionItemPlugins)
 
 		itemPlugins?.events.on('item:registered', ({ uid, bundle: itemBundle }) => {
-			const value = this._tryExtract(itemBundle)
-
-			if (value != null) this._add(uid, value)
-
 			this._track(uid, itemBundle)
 		})
 

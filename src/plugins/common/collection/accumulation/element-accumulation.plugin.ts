@@ -24,14 +24,15 @@ export class TElementAccumulationPlugin extends TAccumulationPlugin<
 
 	private readonly _present = new Map<string | number, boolean>()
 
-	protected _tryExtract(bundle: IPluginBundle): HTMLElement | null {
-		return bundle.get(TElementPlugin)?.element ?? null
-	}
-
 	protected _track(uid: string | number, bundle: IPluginBundle): void {
 		const elementPlugin = bundle.get(TElementPlugin)
 
 		if (!elementPlugin) return
+
+		// Если элемент уже готов — добавляем сразу
+		if (elementPlugin.element) {
+			this._add(uid, elementPlugin.element)
+		}
 
 		elementPlugin.events.on('ready', ({ element }) => {
 			this._add(uid, element)
