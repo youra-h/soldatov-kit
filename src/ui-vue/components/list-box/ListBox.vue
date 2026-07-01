@@ -51,11 +51,13 @@ export default {
 		:aria-disabled="disabled"
 		tabindex="0"
 	>
+		<slot name="header" />
 		<slot>
 			<ListBoxItem v-for="item in items" :key="item.uid" :ctrl="item">
 				<slot :name="`item:${item.value}`" />
 			</ListBoxItem>
 		</slot>
+		<slot name="footer" />
 	</div>
 </template>
 

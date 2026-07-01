@@ -8,12 +8,7 @@ import PropsDemo from './../components/list-box/Component.vue'
 import InstanceDemo from './../components/list-box/Instance.vue'
 import SlotsDemo from './../components/list-box/Slots.vue'
 import { SIZES, VARIANTS } from '../common/items.ts'
-import type {
-	TComponentSize,
-	TComponentVariant,
-	TListBoxView,
-	TSelectionMode,
-} from '@core'
+import type { TComponentSize, TComponentVariant, TListBoxView, TSelectionMode } from '@core'
 
 const emit = defineEmits<{
 	log: [entry: EventLogEntry]
@@ -108,7 +103,7 @@ const handleHide = () => instanceDemoRef.value?.hide()
 			<PropsDemo v-bind="componentProps" @log="emit('log', $event)" />
 		</template>
 
-		<!-- <template #instance-demo>
+		<template #instance-demo>
 			<InstanceDemo
 				ref="instanceDemoRef"
 				v-bind="componentProps"
@@ -118,7 +113,7 @@ const handleHide = () => instanceDemoRef.value?.hide()
 
 		<template #slots-demo>
 			<SlotsDemo :size="componentProps.size" :variant="componentProps.variant" />
-		</template> -->
+		</template>
 	</PlaygroundLayout>
 </template>
 
