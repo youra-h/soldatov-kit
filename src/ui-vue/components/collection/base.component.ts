@@ -8,7 +8,7 @@ import {
 	type TCollectionItemSource,
 	type TCollectionEvents,
 } from '@core'
-import { TCollectionElementsPlugin, TCollectionInstancesPlugin, TDragPlugin } from '@plugins'
+import { TCollectionItemPlugins, TDragPlugin } from '@plugins'
 import { useProvideCollection } from '../../composables/useProvideCollection'
 import { useProvideCollectionPlugins } from '../../composables/useProvideCollectionPlugins'
 import { useInjectDragContext } from '../../composables/useDragContext'
@@ -65,13 +65,11 @@ export function syncCollection<TItem extends ICollectionItem = ICollectionItem>(
 
 	useProvideCollection(instance)
 
-	const collectionElementsPlugin = plugins.get(TCollectionElementsPlugin)
-	const collectionInstancesPlugin = plugins.get(TCollectionInstancesPlugin)
+	const collectionItemPlugins = plugins.get(TCollectionItemPlugins)
 
-	if (collectionElementsPlugin || collectionInstancesPlugin) {
+	if (collectionItemPlugins) {
 		useProvideCollectionPlugins((uid, bundle) => {
-			collectionElementsPlugin?.register(uid, bundle)
-			collectionInstancesPlugin?.register(uid, bundle)
+			collectionItemPlugins?.register(uid, bundle)
 		})
 	}
 
