@@ -41,18 +41,7 @@ export default {
 				<slot name="leading"></slot>
 			</div>
 			<slot>
-				<template v-for="(item, index) in items" :key="item.uid">
-					<slot
-						name="item"
-						:index="index"
-						:ctrl="item"
-						:value="item.value"
-						:text="item.text"
-						:active="item.active"
-					>
-						<TabItem :ctrl="item" />
-					</slot>
-				</template>
+				<TabItem v-for="item in items" :key="item.uid" :ctrl="item" />
 			</slot>
 			<div class="s-tabs__list--trailing" v-if="$slots.trailing">
 				<slot name="trailing"></slot>

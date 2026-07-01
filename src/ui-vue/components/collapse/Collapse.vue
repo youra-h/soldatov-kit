@@ -47,20 +47,9 @@ export default {
 <template>
 	<div ref="rootRef" v-if="rendered" v-show="visible" :class="classes">
 		<slot>
-			<template v-for="(item, index) in items" :key="item.uid">
-				<slot
-					name="item"
-					:ctrl="item"
-					:index="index"
-					:value="item.value"
-					:text="item.text"
-					:selected="item.selected"
-				>
-					<CollapseItem :ctrl="item" :view="view">
-						<slot :name="`panel:${item.value}`" />
-					</CollapseItem>
-				</slot>
-			</template>
+			<CollapseItem v-for="item in items" :key="item.uid" :ctrl="item" :view="view">
+				<slot :name="`panel:${item.value}`" />
+			</CollapseItem>
 		</slot>
 	</div>
 </template>

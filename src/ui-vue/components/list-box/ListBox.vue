@@ -53,20 +53,9 @@ export default {
 	>
 		<slot name="header" />
 		<slot>
-			<template v-for="(item, index) in items" :key="item.uid">
-				<slot
-					name="item"
-					:index="index"
-					:ctrl="item"
-					:value="item.value"
-					:text="item.text"
-					:selected="item.selected"
-				>
-					<ListBoxItem :ctrl="item">
-						<slot :name="`item:${item.value}`" />
-					</ListBoxItem>
-				</slot>
-			</template>
+			<ListBoxItem v-for="item in items" :key="item.uid" :ctrl="item">
+				<slot :name="`item:${item.value}`" />
+			</ListBoxItem>
 		</slot>
 		<slot name="footer" />
 	</div>
