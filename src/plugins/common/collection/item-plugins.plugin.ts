@@ -8,7 +8,7 @@ import type { TCollectionItemPluginsEvents } from './types'
  * Накапливает item-бандлы по uid. Любой плагин может получить
  * плагин конкретного item'а через getPlugin(uid, PluginClass).
  *
- * Заменяет TCollectionElementsPlugin + TCollectionInstancesPlugin.
+ * Заменяет TElementAccumulationPlugin + TInstanceAccumulationPlugin.
  */
 export class TCollectionItemPlugins extends TBasePlugin<TCollectionItemPluginsEvents> {
 	static readonly key = 'collection-item-plugins'

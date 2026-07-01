@@ -4,7 +4,7 @@ import type { IPluginBundle } from '../../../base/types'
 import { TBasePlugin } from '../../../base/plugin'
 import { TElementPlugin } from '../../element'
 import { TInstancePlugin } from '../../instance'
-import { TCollectionElementsPlugin } from '../../collection'
+import { TElementAccumulationPlugin } from '../../collection'
 import type { TListLayoutPluginEvents } from './types'
 
 /**
@@ -19,7 +19,7 @@ export class TListLayoutPlugin extends TBasePlugin<TListLayoutPluginEvents> {
 
 	private _element: HTMLElement | null = null
 	private _list: IList | null = null
-	private _collectionElements: TCollectionElementsPlugin | null = null
+	private _collectionElements: TElementAccumulationPlugin | null = null
 	private _rootObserver: ResizeObserver | null = null
 	private readonly _itemObservers = new Map<string | number, ResizeObserver>()
 	private readonly _scheduleUpdate: () => void
@@ -58,7 +58,7 @@ export class TListLayoutPlugin extends TBasePlugin<TListLayoutPluginEvents> {
 			instance.events.on('item:moved', () => this._scheduleUpdate())
 		})
 
-		this._collectionElements = bundle.get(TCollectionElementsPlugin) ?? null
+		this._collectionElements = bundle.get(TElementAccumulationPlugin) ?? null
 
 		this._collectionElements?.events.on('element:added', ({ uid, element }) => {
 			this._itemObservers.get(uid)?.disconnect()

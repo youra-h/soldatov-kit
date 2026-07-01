@@ -4,7 +4,7 @@ import type { IPluginBundle } from '../../../base/types'
 import { TBasePlugin } from '../../../base/plugin'
 import { TElementPlugin } from '../../element'
 import { TInstancePlugin } from '../../instance'
-import { TCollectionElementsPlugin } from '../../collection'
+import { TElementAccumulationPlugin } from '../../collection'
 import type { TListScrollPluginEvents } from './types'
 
 /**
@@ -26,7 +26,7 @@ export class TListScrollPlugin extends TBasePlugin<TListScrollPluginEvents> {
 
 	private _element: HTMLElement | null = null
 	private _list: IList | null = null
-	private _collectionElements: TCollectionElementsPlugin | null = null
+	private _collectionElements: TElementAccumulationPlugin | null = null
 	private readonly _scheduleScroll: (uid: string | number) => void
 
 	constructor() {
@@ -60,7 +60,7 @@ export class TListScrollPlugin extends TBasePlugin<TListScrollPluginEvents> {
 			})
 		})
 
-		this._collectionElements = bundle.get(TCollectionElementsPlugin) ?? null
+		this._collectionElements = bundle.get(TElementAccumulationPlugin) ?? null
 	}
 
 	override destroy(): void {

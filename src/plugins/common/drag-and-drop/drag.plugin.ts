@@ -1,7 +1,7 @@
 import type { ICollection } from '../../../core'
 import { TBasePlugin } from '../../base/plugin'
 import { TElementPlugin } from '../element'
-import { TCollectionElementsPlugin, TCollectionInstancesPlugin } from '../collection'
+import { TElementAccumulationPlugin, TInstanceAccumulationPlugin } from '../collection'
 import type { IPluginBundle } from '../../base/types'
 import type { TDragPluginEvents } from './types'
 import { TEvented } from '../../../core/common/evented'
@@ -15,14 +15,14 @@ import { TEvented } from '../../../core/common/evented'
  *
  * Зависит от двух других плагинов, которые должны присутствовать в том же бандле:
  * - {@link TElementPlugin} — предоставляет корневой DOM-элемент компонента.
- * - {@link TCollectionElementsPlugin} — отображает uid элементов коллекции на их DOM-узлы.
- * - {@link TCollectionInstancesPlugin} — отображает uid элементов коллекции на их instance.
+ * - {@link TElementAccumulationPlugin} — отображает uid элементов коллекции на их DOM-узлы.
+ * - {@link TInstanceAccumulationPlugin} — отображает uid элементов коллекции на их instance.
  *
  * @example
  * ```ts
  * const bundle = new TPluginBundle([
  *   new TElementPlugin(),
- *   new TCollectionElementsPlugin(),
+ *   new TElementAccumulationPlugin(),
  *   new TDragPlugin(),
  * ])
  *
@@ -55,10 +55,10 @@ export class TDragPlugin extends TBasePlugin<TDragPluginEvents> {
 	private _elementPlugin: TElementPlugin | null = null
 
 	/** Ссылка на плагин, отображающий uid ↔ DOM-узел для каждого элемента коллекции. */
-	private _collectionElementsPlugin: TCollectionElementsPlugin | null = null
+	private _collectionElementsPlugin: TElementAccumulationPlugin | null = null
 
 	/** Ссылка на плагин, отображающий uid ↔ instance для каждого элемента коллекции. */
-	private _collectionInstancesPlugin: TCollectionInstancesPlugin | null = null
+	private _collectionInstancesPlugin: TInstanceAccumulationPlugin | null = null
 
 	/** Функция очистки: снимает слушателей событий и атрибуты draggable. */
 	private _cleanup: (() => void) | null = null
@@ -73,8 +73,8 @@ export class TDragPlugin extends TBasePlugin<TDragPluginEvents> {
 	 */
 	override install(bundle: IPluginBundle): void {
 		this._elementPlugin = bundle.get(TElementPlugin) ?? null
-		this._collectionElementsPlugin = bundle.get(TCollectionElementsPlugin) ?? null
-		this._collectionInstancesPlugin = bundle.get(TCollectionInstancesPlugin) ?? null
+		this._collectionElementsPlugin = bundle.get(TElementAccumulationPlugin) ?? null
+		this._collectionInstancesPlugin = bundle.get(TInstanceAccumulationPlugin) ?? null
 
 		this._elementPlugin?.events.on('ready', ({ element }) => {
 			this._element = element

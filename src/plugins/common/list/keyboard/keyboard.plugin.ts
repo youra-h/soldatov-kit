@@ -12,6 +12,13 @@ import type { TListKeyboardPluginEvents } from './types'
  *
  * Получает {@link TListItemPlugin} каждого элемента через {@link TCollectionItemPlugins},
  * обрабатывает ArrowUp/Down для перемещения подсветки и Enter/Space для выбора.
+ *
+ * Подсветка синхронизируется с выделением:
+ * - при инициализации подсвечивается первый выбранный элемент (если есть)
+ * - при клике или программном изменении выделения (`item:selected`)
+ *   подсветка переходит на выбранный элемент
+ * - клавиши ArrowUp/ArrowDown перемещают подсветку относительно текущего
+ *   выделенного элемента
  */
 export class TListKeyboardPlugin extends TBasePlugin<TListKeyboardPluginEvents> {
 	static readonly key = 'list-keyboard'
@@ -38,6 +45,18 @@ export class TListKeyboardPlugin extends TBasePlugin<TListKeyboardPluginEvents> 
 
 		instancePlugin?.events.on('ready', ({ instance }) => {
 			this._list = instance
+
+			// При инициализации подсветить первый выбранный элемент (если есть)
+			const selected = instance.collection.selected
+
+			if (selected.length > 0) {
+				this._setHighlight(selected[0].uid)
+			}
+
+			// Синхронизировать подсветку с выделением
+			instance.events.on('item:selected', ({ item }: { item: IListItem }) => {
+				this._setHighlight(item.uid)
+			})
 		})
 	}
 

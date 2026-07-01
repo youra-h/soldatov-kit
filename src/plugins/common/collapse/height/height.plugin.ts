@@ -1,6 +1,6 @@
 import { TBasePlugin } from '../../../base/plugin'
 import { TElementPlugin } from '../../element'
-import { TCollectionElementsPlugin } from '../../collection'
+import { TElementAccumulationPlugin } from '../../collection'
 import type { IPluginBundle } from '../../../base/types'
 import type { TCollapseHeightPluginEvents } from './types'
 
@@ -27,7 +27,7 @@ export class TCollapseHeightPlugin extends TBasePlugin<TCollapseHeightPluginEven
 		// 	this._rootObserver = null
 		// })
 
-		// const collectionPlugin = bundle.get(TCollectionElementsPlugin)
+		// const collectionPlugin = bundle.get(TElementAccumulationPlugin)
 
 
 		// collectionPlugin?.events.on('element:removed', ({ uid }) => {

@@ -1,7 +1,7 @@
 import type { IPluginBundle } from '../../../base/types'
 import { TBasePlugin } from '../../../base/plugin'
 import { TElementPlugin } from '../../element'
-import { TCollectionElementsPlugin } from '../../collection'
+import { TElementAccumulationPlugin } from '../../collection'
 import type { TTabsLayoutPluginEvents } from './types'
 
 export class TTabsLayoutPlugin extends TBasePlugin<TTabsLayoutPluginEvents> {
@@ -21,8 +21,8 @@ export class TTabsLayoutPlugin extends TBasePlugin<TTabsLayoutPluginEvents> {
 			this._rootObserver = null
 		})
 
-		// Подписываемся на изменения элементов табов через TCollectionElementsPlugin, чтобы отслеживать изменения их размеров и эмитить событие layout:change для обновления внешнего вида при изменении размера табов (актуально для view: line, чтобы обновлять позицию и размер underline) и при изменении количества табов (для всех видов отображения, т.к. может влиять на перенос табов на другую строку)
-		const collectionPlugin = bundle.get(TCollectionElementsPlugin)
+		// Подписываемся на изменения элементов табов через TElementAccumulationPlugin, чтобы отслеживать изменения их размеров и эмитить событие layout:change для обновления внешнего вида при изменении размера табов (актуально для view: line, чтобы обновлять позицию и размер underline) и при изменении количества табов (для всех видов отображения, т.к. может влиять на перенос табов на другую строку)
+		const collectionPlugin = bundle.get(TElementAccumulationPlugin)
 
 		collectionPlugin?.events.on('element:added', ({ uid, element }) => {
 			this._itemObservers.get(uid)?.disconnect()

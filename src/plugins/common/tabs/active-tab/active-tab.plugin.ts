@@ -4,7 +4,7 @@ import { TBasePlugin } from '../../../base/plugin'
 import { TElementPlugin } from '../../element'
 import { TInstancePlugin } from '../../instance'
 import { TTabsLayoutPlugin } from '../layout'
-import { TCollectionElementsPlugin } from '../../collection'
+import { TElementAccumulationPlugin } from '../../collection'
 import type { TActiveTabOffset, TTabsActiveTabPluginEvents } from './types'
 
 export class TTabsActiveTabPlugin extends TBasePlugin<TTabsActiveTabPluginEvents> {
@@ -12,7 +12,7 @@ export class TTabsActiveTabPlugin extends TBasePlugin<TTabsActiveTabPluginEvents
 
 	private _element: HTMLElement | null = null
 	private _tabs: ITabs | null = null
-	private _collectionElements: TCollectionElementsPlugin | null = null
+	private _collectionElements: TElementAccumulationPlugin | null = null
 
 	override install(bundle: IPluginBundle): void {
 		bundle.get(TElementPlugin)?.events.on('ready', ({ element }) => {
@@ -26,7 +26,7 @@ export class TTabsActiveTabPlugin extends TBasePlugin<TTabsActiveTabPluginEvents
 
 		bundle.get(TTabsLayoutPlugin)?.events.on('layout:change', () => this._emitOffset())
 
-		this._collectionElements = bundle.get(TCollectionElementsPlugin) ?? null
+		this._collectionElements = bundle.get(TElementAccumulationPlugin) ?? null
 
 		const instancePlugin = bundle.get(TInstancePlugin) as TInstancePlugin<ITabs> | undefined
 
