@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { TTabs } from '@core'
 import { Tabs, TabItem } from '@ui/tabs'
 import type { TComponentSize, TComponentVariant } from '@core'
 
@@ -10,6 +11,14 @@ type Props = {
 defineProps<Props>()
 
 const APPEARANCES = ['line', 'contained', 'outline'] as const
+
+const tabsInstance = new TTabs({
+	items: [
+		{ text: 'Users', value: 'users', active: true },
+		{ text: 'Settings', value: 'settings' },
+		{ text: 'Profile', value: 'profile' },
+	],
+})
 </script>
 
 <template>
@@ -62,6 +71,25 @@ const APPEARANCES = ['line', 'contained', 'outline'] as const
 			</Tabs>
 		</div>
 
+		<!-- #item slot — кастомизация через scoped slot -->
+		<div class="tabs-slots-demo__section">
+			<h4 class="tabs-slots-demo__subtitle">Custom #item slot</h4>
+			<Tabs :instance="tabsInstance" view="line" :size="size" :variant="variant">
+				<template #item="{ ctrl, text, value }">
+					<TabItem :ctrl="ctrl">
+						<template #leading>
+							<span v-if="value === 'users'">👤</span>
+							<span v-else-if="value === 'settings'">⚙️</span>
+							<span v-else>📋</span>
+						</template>
+					</TabItem>
+				</template>
+				<template #panel:users><p>Users panel</p></template>
+				<template #panel:settings><p>Settings panel</p></template>
+				<template #panel:profile><p>Profile panel</p></template>
+			</Tabs>
+		</div>
+
 		<!-- Alignment -->
 		<div class="tabs-slots-demo__section">
 			<h4 class="tabs-slots-demo__subtitle">Alignment</h4>
@@ -108,7 +136,13 @@ const APPEARANCES = ['line', 'contained', 'outline'] as const
 				</div>
 				<div class="tabs-slots-demo__col">
 					<span class="tabs-slots-demo__label">position: end</span>
-					<Tabs view="contained" orientation="vertical" position="end" :size="size" :variant="variant">
+					<Tabs
+						view="contained"
+						orientation="vertical"
+						position="end"
+						:size="size"
+						:variant="variant"
+					>
 						<TabItem text="Tab 1" value="t1" active />
 						<TabItem text="Tab 2" value="t2" />
 						<TabItem text="Tab 3" value="t3" />

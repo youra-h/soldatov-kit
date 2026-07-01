@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { TCollapse } from '@core'
 import { Collapse, CollapseItem } from '@ui/collapse'
 import type { TComponentSize, TComponentVariant } from '@core'
 
@@ -10,6 +11,15 @@ type Props = {
 defineProps<Props>()
 
 const APPEARANCES = ['plain', 'outlined', 'filled'] as const
+
+const collapseInstance = new TCollapse({
+	items: [
+		{ text: 'Section A', value: 'sA', selected: true },
+		{ text: 'Section B', value: 'sB' },
+		{ text: 'Section C', value: 'sC' },
+	],
+	mode: 'multiple',
+})
 </script>
 
 <template>
@@ -61,6 +71,31 @@ const APPEARANCES = ['plain', 'outlined', 'filled'] as const
 					</CollapseItem>
 				</Collapse>
 			</div>
+		</div>
+
+		<!-- #item slot — кастомизация через scoped slot -->
+		<div class="collapse-slots-demo__section">
+			<h4 class="collapse-slots-demo__subtitle">Custom #item slot</h4>
+			<Collapse
+				:instance="collapseInstance"
+				view="outlined"
+				:size="size"
+				:variant="variant"
+				mode="multiple"
+			>
+				<template #item="{ ctrl, text, selected }">
+					<CollapseItem :ctrl="ctrl">
+						<template #leading>
+							<span class="collapse-slots-demo__badge">{{
+								selected ? '📂' : '📁'
+							}}</span>
+						</template>
+						<p>
+							Content for <strong>{{ text }}</strong>
+						</p>
+					</CollapseItem>
+				</template>
+			</Collapse>
 		</div>
 
 		<!-- Custom leading/trailing slots -->
