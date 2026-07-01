@@ -104,8 +104,11 @@ export default {
 .s-tab-item {
 	$this: &;
 
-	@apply opacity-75;
-	@apply py-2;
+	@apply opacity-75 bg-transparent;
+
+	.s-button {
+		@apply py-2;
+	}
 
 	&__close {
 		@apply px-1;

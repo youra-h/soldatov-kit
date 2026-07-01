@@ -46,6 +46,7 @@ export class TTabsViewPlugin extends TBasePlugin<TTabsViewPluginEvents> {
 
 	private _updateLine(offset: TActiveTabOffset | null): void {
 		if (!offset) return
+
 		if (!this._tabs!.activeItem && this._tabs!.hasEnabledTabs()) return
 
 		const { listEl, offsetLeft, offsetWidth, offsetTop, offsetHeight } = offset
