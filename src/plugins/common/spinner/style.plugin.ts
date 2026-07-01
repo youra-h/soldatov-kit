@@ -2,11 +2,12 @@ import type { ISpinner } from '../../../core'
 import type { IPluginBundle } from '../../base/types'
 import { TBasePlugin } from '../../base/plugin'
 import { TInstancePlugin } from '../instance'
+import type { TSpinnerStylePluginEvents } from './types'
 
 /**
  * Плагин для управления стилями спиннера.
  */
-export class TSpinnerStylePlugin extends TBasePlugin {
+export class TSpinnerStylePlugin extends TBasePlugin<TSpinnerStylePluginEvents> {
 	static readonly key = 'spinner-style'
 
 	protected _styles: Record<string, string | number> = {}
@@ -18,6 +19,8 @@ export class TSpinnerStylePlugin extends TBasePlugin {
 			;(instance as unknown as ISpinner).events.on('change:borderWidth', (value) => {
 				this._styles['--spinner-border-width'] =
 					typeof value === 'number' ? `${value}px` : 'auto'
+
+				this.events.emit('change:styles', { ...this._styles })
 			})
 		})
 	}

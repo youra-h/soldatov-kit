@@ -14,6 +14,7 @@ import {
 import type { TEmits, TProps, ISyncComponentViewOptions } from '../../types/common'
 import { useSyncProps } from '../../composables/useSyncProps'
 import { useInheritProps } from '../../composables/useInheritProps'
+import { TSpinnerStylePlugin } from '@plugins'
 
 export const emitsSpinner: TEmits = [
 	...emitsStylable,
@@ -38,6 +39,7 @@ export default {
 
 export interface ISpinnerState extends IStylableState {
 	borderWidth: Ref<number | 'auto'>
+	styles: Ref<Record<string, string | number>>
 }
 
 /**
@@ -48,7 +50,9 @@ export function syncSpinner(
 ): ISpinnerState {
 	const syncProps = syncStylable(options)
 
-	const { instance, props, emit } = options
+	const { instance, props, emit, plugins } = options
+
+	const stylePlugin = plugins.get(TSpinnerStylePlugin)!
 
 	instance.events.on('change:borderWidth', (value: number | 'auto') => {
 		emit?.('change:borderWidth', value)
@@ -68,6 +72,9 @@ export function syncSpinner(
 		...syncProps,
 		...useSyncProps(instance.events as any, {
 			borderWidth: () => instance.borderWidth,
+		}),
+		...useSyncProps(stylePlugin.events, {
+			styles: () => stylePlugin.styles,
 		}),
 	}
 }

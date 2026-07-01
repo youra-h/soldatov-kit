@@ -18,25 +18,24 @@ export default {
 			TSpinnerStylePlugin,
 		)
 
-		const spinnerPlugin = plugins.get(TSpinnerStylePlugin)!
-
 		// Привязка инстанса к плагинам
 		useInstanceBinding(plugins, instance)
 		// Привязка элемента и инстанса к плагинам
 		const rootRef = useElementBinding(plugins)
 
-		const { tag, rendered, visible, classes, size, variant, borderWidth } = syncSpinner({
-			props,
-			instance,
-			plugins,
-			emit,
-		})
+		const { tag, rendered, visible, classes, size, variant, borderWidth, styles } =
+			syncSpinner({
+				props,
+				instance,
+				plugins,
+				emit,
+			})
 
 		return {
 			instance,
 			plugins,
 			rootRef,
-			styles: spinnerPlugin.styles,
+			styles,
 			tag,
 			rendered,
 			visible,
