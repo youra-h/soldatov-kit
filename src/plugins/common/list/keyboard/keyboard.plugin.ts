@@ -45,16 +45,16 @@ export class TListKeyboardPlugin extends TBasePlugin<TListKeyboardPluginEvents> 
 		instancePlugin?.events.on('ready', ({ instance }) => {
 			this._list = instance
 
-			// При инициализации подсветить первый выбранный элемент (если есть)
+			// При инициализации запомнить позицию без визуальной подсветки
 			const selected = instance.collection.selected
 
 			if (selected.length > 0) {
-				this._setHighlight(selected[0].uid)
+				this._trackPosition(selected[0].uid)
 			}
 
-			// Синхронизировать подсветку с выделением
+			// Запомнить позицию при клике/программном выделении (визуал только от стрелок)
 			instance.events.on('item:selected', ({ item }: { item: IListItem }) => {
-				this._setHighlight(item.uid)
+				this._trackPosition(item.uid)
 			})
 		})
 	}
@@ -100,17 +100,33 @@ export class TListKeyboardPlugin extends TBasePlugin<TListKeyboardPluginEvents> 
 		return this._itemPluginAccumulation?.getByUid(uid)
 	}
 
-	private _setHighlight(uid: string | number): void {
+	/**
+	 * Установить подсветку на элемент с указанным uid.
+	 * Запоминает позицию подсветки и снимает визуал с предыдущей.
+	 * Визуально подсвечивает элемент (data-highlighted).
+	 * @param uid
+	 */
+	private _setHighlight(uid: string | number) {
+		this._trackPosition(uid)
+		this._applyVisualHighlight(uid)
+	}
+
+	/** Запомнить позицию подсветки и снять визуал с предыдущей. */
+	private _trackPosition(uid: string | number): void {
 		if (this._highlightedUid === uid) return
 
+		// Снять визуальную подсветку с предыдущего
 		const prev = this._highlightedUid != null ? this._getItemPlugin(this._highlightedUid) : null
-		const next = this._getItemPlugin(uid)
-
 		prev && (prev.highlighted = false)
-		next && (next.highlighted = true)
 
 		this._highlightedUid = uid
 		this.events.emit('highlight:change', uid)
+	}
+
+	/** Визуально подсветить элемент (data-highlighted). */
+	private _applyVisualHighlight(uid: string | number): void {
+		const plugin = this._getItemPlugin(uid)
+		plugin && (plugin.highlighted = true)
 	}
 
 	private _clearHighlight(): void {
