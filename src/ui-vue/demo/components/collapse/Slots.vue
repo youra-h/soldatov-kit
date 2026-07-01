@@ -84,7 +84,8 @@ const collapseInstance = new TCollapse({
 				mode="multiple"
 			>
 				<template #item="{ ctrl, text, selected }">
-					<CollapseItem :ctrl="ctrl">
+					{{ text }} — {{ selected ? 'selected' : 'not selected' }}
+					<!-- <CollapseItem :ctrl="ctrl">
 						<template #leading>
 							<span class="collapse-slots-demo__badge">{{
 								selected ? '📂' : '📁'
@@ -93,7 +94,7 @@ const collapseInstance = new TCollapse({
 						<p>
 							Content for <strong>{{ text }}</strong>
 						</p>
-					</CollapseItem>
+					</CollapseItem> -->
 				</template>
 			</Collapse>
 		</div>
