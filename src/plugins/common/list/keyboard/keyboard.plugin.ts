@@ -3,13 +3,14 @@ import type { IPluginBundle } from '../../../base/types'
 import { TBasePlugin } from '../../../base/plugin'
 import { TElementPlugin } from '../../element'
 import { TInstancePlugin } from '../../instance'
+import { TCollectionItemPlugins } from '../../collection'
 import { TListItemPlugin } from '../item'
 import type { TListKeyboardPluginEvents } from './types'
 
 /**
  * Плагин клавиатурной навигации по списку.
  *
- * Накапливает {@link TListItemPlugin} каждого элемента через `register(uid, bundle)`,
+ * Получает {@link TListItemPlugin} каждого элемента через {@link TCollectionItemPlugins},
  * обрабатывает ArrowUp/Down для перемещения подсветки и Enter/Space для выбора.
  */
 export class TListKeyboardPlugin extends TBasePlugin<TListKeyboardPluginEvents> {
@@ -17,10 +18,12 @@ export class TListKeyboardPlugin extends TBasePlugin<TListKeyboardPluginEvents> 
 
 	private _element: HTMLElement | null = null
 	private _list: IList | null = null
-	private readonly _items = new Map<string | number, TListItemPlugin>()
+	private _itemPlugins: TCollectionItemPlugins | null = null
 	private _highlightedUid: string | number | null = null
 
 	override install(bundle: IPluginBundle): void {
+		this._itemPlugins = bundle.get(TCollectionItemPlugins)!
+
 		bundle.get(TElementPlugin)?.events.on('ready', ({ element }) => {
 			this._element = element
 			element.addEventListener('keydown', this._onKeyDown)
@@ -38,24 +41,17 @@ export class TListKeyboardPlugin extends TBasePlugin<TListKeyboardPluginEvents> 
 		})
 	}
 
-	/**
-	 * Регистрирует дочерний bundle — извлекает из него {@link TListItemPlugin}.
-	 */
-	register(uid: string | number, bundle: IPluginBundle): void {
-		const plugin = bundle.get(TListItemPlugin)
-
-		if (plugin) {
-			this._items.set(uid, plugin)
-		}
-	}
-
 	override destroy(): void {
 		this._element?.removeEventListener('keydown', this._onKeyDown)
 		this._clearHighlight()
 		this._element = null
 		this._list = null
-		this._items.clear()
+		this._itemPlugins = null
 		super.destroy()
+	}
+
+	private _getItemPlugin(uid: string | number): TListItemPlugin | undefined {
+		return this._itemPlugins?.getPlugin(uid, TListItemPlugin)
 	}
 
 	private readonly _onKeyDown = (e: KeyboardEvent) => {
@@ -81,8 +77,7 @@ export class TListKeyboardPlugin extends TBasePlugin<TListKeyboardPluginEvents> 
 		} else if (e.key === 'Enter' || e.key === ' ') {
 			e.preventDefault()
 			if (this._highlightedUid != null) {
-				const plugin = this._items.get(this._highlightedUid)
-				plugin?.toggleSelected()
+				this._getItemPlugin(this._highlightedUid)?.toggleSelected()
 			}
 		}
 	}
@@ -90,8 +85,8 @@ export class TListKeyboardPlugin extends TBasePlugin<TListKeyboardPluginEvents> 
 	private _setHighlight(uid: string | number): void {
 		if (this._highlightedUid === uid) return
 
-		const prev = this._highlightedUid != null ? this._items.get(this._highlightedUid) : null
-		const next = this._items.get(uid)
+		const prev = this._highlightedUid != null ? this._getItemPlugin(this._highlightedUid) : null
+		const next = this._getItemPlugin(uid)
 
 		prev && (prev.highlighted = false)
 		next && (next.highlighted = true)
@@ -103,7 +98,7 @@ export class TListKeyboardPlugin extends TBasePlugin<TListKeyboardPluginEvents> 
 	private _clearHighlight(): void {
 		if (this._highlightedUid == null) return
 
-		const prev = this._items.get(this._highlightedUid)
+		const prev = this._getItemPlugin(this._highlightedUid)
 		prev && (prev.highlighted = false)
 
 		this._highlightedUid = null

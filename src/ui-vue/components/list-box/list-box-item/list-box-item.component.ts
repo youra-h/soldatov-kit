@@ -9,6 +9,7 @@ import {
 } from '../../list/list-item'
 import type { TEmits, TProps, ISyncComponentViewOptions } from '../../../types'
 import { useSyncProps } from '../../../composables/useSyncProps'
+import { TListItemPlugin } from '@plugins'
 
 export const emitsListBoxItem: TEmits = [...emitsListItem] as const
 
@@ -29,6 +30,7 @@ export default {
 
 export interface IListBoxItemState extends IListItemState {
 	view: Ref<TListBoxView>
+	highlighted: Ref<boolean>
 }
 
 export function syncListBoxItem(
@@ -36,12 +38,17 @@ export function syncListBoxItem(
 ): IListBoxItemState {
 	const syncProps = syncListItem(options)
 
-	const { instance } = options
+	const { instance, plugins } = options
+
+	const itemPlugin = plugins.get(TListItemPlugin)!
 
 	return {
 		...syncProps,
 		...useSyncProps(instance.events as any, {
 			view: () => instance.view,
+		}),
+		...useSyncProps(itemPlugin.events, {
+			highlighted: () => itemPlugin.highlighted,
 		}),
 	}
 }

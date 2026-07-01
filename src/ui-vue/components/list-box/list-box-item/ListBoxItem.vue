@@ -20,8 +20,6 @@ export default {
 		const plugins = useBundle(createListItemBundle, props?.plugins)
 		useInstanceBinding(plugins, instance)
 
-		const itemPlugin = plugins.get(TListItemPlugin)!
-
 		const rootRef = useElementBinding(plugins)
 
 		const {
@@ -36,11 +34,8 @@ export default {
 			selected,
 			view,
 			order,
+			highlighted,
 		} = syncListBoxItem({ props, instance, plugins, emit })
-
-		// const { highlighted } = useSyncProps(itemPlugin.events, {
-		// 	highlighted: () => itemPlugin.highlighted,
-		// })
 
 		return {
 			instance,
@@ -55,7 +50,7 @@ export default {
 			variant,
 			text,
 			selected,
-			highlighted: itemPlugin.highlighted,
+			highlighted,
 			view,
 			order,
 		}
