@@ -52,10 +52,10 @@ export class TElementAccumulationPlugin extends TAccumulationPlugin<
 
 				instance.events.on('change:present', (value: boolean) => {
 					this._present.set(uid, value)
-					;(this.events as TEvented<TElementAccumulationEvents>).emit('element:present', {
-						uid,
-						present: value,
-					})
+						; (this.events as TEvented<TElementAccumulationEvents>).emit('element:present', {
+							uid,
+							present: value,
+						})
 				})
 			})
 		}
@@ -63,15 +63,20 @@ export class TElementAccumulationPlugin extends TAccumulationPlugin<
 
 	protected override _add(uid: string | number, element: HTMLElement): void {
 		super._add(uid, element)
-		;(this.events as TEvented<TElementAccumulationEvents>).emit('element:added', {
-			uid,
-			element,
-		})
+			; (this.events as TEvented<TElementAccumulationEvents>).emit('element:added', {
+				uid,
+				element,
+			})
 	}
 
 	protected override _remove(uid: string | number): void {
 		super._remove(uid)
-		;(this.events as TEvented<TElementAccumulationEvents>).emit('element:removed', { uid })
+			; (this.events as TEvented<TElementAccumulationEvents>).emit('element:removed', { uid })
+	}
+
+	/** Найти uid по DOM-элементу. */
+	getUidByElement(element: HTMLElement): string | number | null {
+		return this.getUidByValue(element)
 	}
 
 	override getVisible(): HTMLElement[] {
