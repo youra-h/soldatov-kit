@@ -20,23 +20,13 @@ export default {
 		// Привязка элемента и инстанса к плагинам
 		const rootRef = useElementBinding(plugins)
 
-		const {
-			rendered,
-			visible,
-			classes,
-			disabled,
-			name,
-			size,
-			value,
-			readonly,
-			required,
-			loaderContext,
-		} = syncSwitch({
-			props,
-			instance,
-			plugins,
-			emit,
-		})
+		const { rendered, visible, classes, disabled, name, size, value, readonly, required } =
+			syncSwitch({
+				props,
+				instance,
+				plugins,
+				emit,
+			})
 
 		return {
 			instance,
@@ -51,7 +41,6 @@ export default {
 			value,
 			readonly,
 			required,
-			loaderContext,
 		}
 	},
 }
@@ -76,13 +65,6 @@ export default {
 					<slot v-if="!value" name="off" :value="value" :instance="instance"> </slot>
 					<slot v-else name="on" :value="value" :instance="instance"> </slot>
 				</transition>
-				<div v-if="$slots.loader || loaderContext?.hasIndicator" class="s-switch__loader">
-					<Component
-						:is="loaderContext?.component"
-						v-if="loaderContext?.hasIndicator"
-						:ctrl="loaderContext?.ctrl"
-					/>
-				</div>
 			</div>
 		</div>
 	</div>
@@ -144,10 +126,6 @@ export default {
 			@apply absolute top-0.5 left-0.5;
 			@apply transition-transform duration-200;
 		}
-	}
-
-	&__loader {
-		@apply absolute inset-0 flex items-center justify-center;
 	}
 
 	&--size-sm {

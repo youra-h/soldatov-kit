@@ -28,7 +28,6 @@ export * from './components/collapse'
 export * from './components/list'
 export * from './components/list-box'
 export * from './components/drag-and-drop'
-export * from './components/loader'
 
 // common (вспомогательные утилиты)
 export * from './common/is-same'

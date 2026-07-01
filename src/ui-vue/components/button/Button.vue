@@ -20,7 +20,7 @@ export default {
 
 		const rootRef = useElementBinding(plugins)
 
-		const { tag, rendered, visible, classes, disabled, text, loaderContext } = syncButton({
+		const { tag, rendered, visible, classes, disabled, text } = syncButton({
 			props,
 			instance,
 			plugins,
@@ -37,7 +37,6 @@ export default {
 			disabled,
 			classes,
 			text,
-			loaderContext,
 		}
 	},
 }
@@ -59,13 +58,6 @@ export default {
 			<slot :text="text">{{ text }}</slot>
 		</span>
 		<slot name="trailing"> </slot>
-		<slot name="loader">
-			<Component
-				:is="loaderContext?.component"
-				v-if="loaderContext?.hasIndicator"
-				:ctrl="loaderContext?.ctrl"
-			/>
-		</slot>
 	</component>
 </template>
 

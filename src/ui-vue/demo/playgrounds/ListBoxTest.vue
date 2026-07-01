@@ -2,7 +2,6 @@
 import { ref, computed, watch } from 'vue'
 import { TListBox } from '@core'
 import { ListBox, ListBoxItem } from '@ui/list-box'
-import { Loader } from '@ui/loader'
 import { Button } from '@ui/button'
 
 // --- Данные ---
@@ -233,11 +232,9 @@ function loadData() {
 		<div class="list-box-test__header">
 			<h2 class="list-box-test__title">ListBox — тест на реальных данных</h2>
 
-			<Loader :visible="isLoading" variant="normal" size="normal" :indicator="true">
-				<Button @click="loadData" :disabled="isLoading">
-					{{ isLoading ? 'Загрузка...' : isLoaded ? 'Загрузить снова' : 'Load Data' }}
-				</Button>
-			</Loader>
+			<Button @click="loadData" :disabled="isLoading">
+				{{ isLoading ? 'Загрузка...' : isLoaded ? 'Загрузить снова' : 'Load Data' }}
+			</Button>
 		</div>
 
 		<div v-if="isLoaded" class="list-box-test__timeline">
