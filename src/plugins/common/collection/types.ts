@@ -1,4 +1,5 @@
 import { type IComponentView } from '../../../core'
+import type { IPluginBundle } from '../../base/types'
 
 export type TCollectionElementsPluginEvents = {
 	'element:added': (payload: { uid: string | number; element: HTMLElement }) => void
@@ -11,4 +12,7 @@ export type TCollectionInstancesPluginEvents = {
 	'instance:removed': (payload: { uid: string | number }) => void
 }
 
-export type TCollectionItemPluginsEvents = Record<string, never>
+export type TCollectionItemPluginsEvents = {
+	'item:registered': (payload: { uid: string | number; bundle: IPluginBundle }) => void
+	'item:unregistered': (payload: { uid: string | number }) => void
+}
