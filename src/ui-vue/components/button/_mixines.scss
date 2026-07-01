@@ -12,6 +12,19 @@
 	&[aria-selected='true']:not([disabled]) {
 		@apply #{'bg-s-' + $color + '-' + $active-bg};
 	}
+
+	// Когда элемент выбран (aria-selected) и на нём клавиатурная подсветка (data-highlighted),
+	// показываем фон выбранного состояния + полупрозрачную маску сверху
+	&[aria-selected='true'][data-highlighted='true']:not([disabled]) {
+		@apply relative overflow-hidden;
+
+		&::after {
+			content: '';
+			@apply absolute inset-0 pointer-events-none;
+			@apply opacity-20 transition-colors duration-200;
+			@apply bg-s-neutral-50;
+		}
+	}
 }
 
 // Filled: сплошной фон, hover/active вычисляются из base
