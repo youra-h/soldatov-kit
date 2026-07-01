@@ -10,6 +10,7 @@ type Props = {
 	rendered?: boolean
 	size?: TComponentSize
 	variant?: TComponentVariant
+	borderWidth?: string | number
 }
 
 const props = defineProps<Props>()
@@ -29,6 +30,7 @@ const { handlers } = useEventLogger(emit, emitsSpinner)
 			:rendered="rendered"
 			:size="size"
 			:variant="variant"
+			:border-width="borderWidth"
 			v-bind="handlers"
 		/>
 	</PanelDemo>

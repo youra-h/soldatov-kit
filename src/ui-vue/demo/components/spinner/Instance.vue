@@ -13,6 +13,7 @@ type Props = {
 	rendered?: boolean
 	size?: TComponentSize
 	variant?: TComponentVariant
+	borderWidth?: string | number
 }
 
 const props = defineProps<Props>()
@@ -27,6 +28,7 @@ const instance = new TSpinner({
 	visible: props.visible ?? true,
 	size: props.size || 'normal',
 	variant: props.variant || 'normal',
+	borderWidth: props.borderWidth,
 })
 
 defineExpose({

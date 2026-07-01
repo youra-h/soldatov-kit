@@ -1,6 +1,7 @@
 import type { ISpinner } from '../../../core'
 import type { IPluginBundle } from '../../base/types'
 import { TBasePlugin } from '../../base/plugin'
+import { toCssValue } from '../../base/css-value'
 import { TInstancePlugin } from '../instance'
 import type { TSpinnerStylePluginEvents } from './types'
 
@@ -17,8 +18,7 @@ export class TSpinnerStylePlugin extends TBasePlugin<TSpinnerStylePluginEvents> 
 
 		instancePlugin?.events.on('ready', ({ instance }) => {
 			;(instance as unknown as ISpinner).events.on('change:borderWidth', (value) => {
-				this._styles['--spinner-border-width'] =
-					typeof value === 'number' ? `${value}px` : 'auto'
+				this._styles['--spinner-border-width'] = toCssValue(value)
 
 				this.events.emit('change:styles', { ...this._styles })
 			})

@@ -20,6 +20,7 @@ const propertiesSchema: TPropertiesSchema = {
 	rendered: { type: 'boolean', default: true },
 	size: { type: 'select', default: 'normal', options: SIZES },
 	variant: { type: 'select', default: 'normal', options: VARIANTS },
+	borderWidth: { type: 'string', default: '1' },
 }
 
 // Component properties state
@@ -28,11 +29,13 @@ const componentProps = ref<{
 	rendered: boolean
 	size: TComponentSize
 	variant: TComponentVariant
+	borderWidth: string | number
 }>({
 	visible: true,
 	rendered: true,
 	size: 'normal',
 	variant: 'normal',
+	borderWidth: 1,
 })
 
 // Ref для Instance demo
