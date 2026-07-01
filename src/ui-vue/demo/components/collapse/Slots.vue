@@ -117,6 +117,30 @@ const collapseInstance = new TCollapse({
 				</CollapseItem>
 			</Collapse>
 		</div>
+
+		<!-- Per-item slots via Collapse: item:value:leading / item:value:header / item:value:trailing -->
+		<div class="collapse-slots-demo__section">
+			<h4 class="collapse-slots-demo__subtitle">Per-item slots via Collapse</h4>
+			<Collapse
+				:ctrl="collapseInstance"
+				view="outlined"
+				:size="size"
+				:variant="variant"
+			>
+				<template #item:sA:leading>
+					<span class="collapse-slots-demo__badge">📂</span>
+				</template>
+				<template #item:sB:header="{ item, text, selected }">
+					<span :class="{ 'font-bold': selected }">{{ text }}</span>
+				</template>
+				<template #item:sC:trailing>
+					<span class="collapse-slots-demo__badge">🔒</span>
+				</template>
+				<template #panel:sA><p>Content A</p></template>
+				<template #panel:sB><p>Content B</p></template>
+				<template #panel:sC><p>Content C</p></template>
+			</Collapse>
+		</div>
 	</div>
 </template>
 

@@ -152,6 +152,24 @@ const tabsInstance = new TTabs({
 					</Tabs>
 				</div>
 			</div>
+			<!-- Per-item slots via Tabs: item:value:leading / item:value / item:value:trailing -->
+			<div class="tabs-slots-demo__section">
+				<h4 class="tabs-slots-demo__subtitle">Per-item slots via Tabs</h4>
+				<Tabs :ctrl="tabsInstance" view="line" :size="size" :variant="variant">
+					<template #item:users:leading>
+						<span>👤</span>
+					</template>
+					<template #item:settings="{ item }">
+						<span :class="{ 'font-bold': item.active }">{{ item.text }}</span>
+					</template>
+					<template #item:profile:trailing>
+						<span class="tabs-slots-demo__badge">new</span>
+					</template>
+					<template #panel:users><p>Users panel</p></template>
+					<template #panel:settings><p>Settings panel</p></template>
+					<template #panel:profile><p>Profile panel</p></template>
+				</Tabs>
+			</div>
 		</div>
 	</div>
 </template>

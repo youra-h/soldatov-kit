@@ -48,6 +48,13 @@ export default {
 	<div ref="rootRef" v-if="rendered" v-show="visible" :class="classes">
 		<slot>
 			<CollapseItem v-for="item in items" :key="item.uid" :ctrl="item" :view="view">
+				<template #leading>
+					<slot :name="`item:${item.value}:leading`" :item="item" />
+				</template>
+				<slot :name="`item:${item.value}:header`" :item="item" />
+				<template #trailing>
+					<slot :name="`item:${item.value}:trailing`" :item="item" />
+				</template>
 				<slot :name="`panel:${item.value}`" />
 			</CollapseItem>
 		</slot>
