@@ -99,6 +99,20 @@ const fruitInstance = new TListBox({
 				</template>
 			</ListBox>
 		</div>
+
+		<!-- #option slot — catch-all template для всех items -->
+		<div class="list-box-slots-demo__section">
+			<h4 class="list-box-slots-demo__subtitle">Custom #option slot (catch-all)</h4>
+			<ListBox :ctrl="fruitInstance" view="outlined" :size="size" :variant="variant">
+				<template #item="{ item }">
+					<div class="flex items-center gap-2">
+						<span>{{ item.selected ? '✅' : '⬜' }}</span>
+						<span>{{ item.text }}</span>
+						<span class="list-box-slots-demo__badge">{{ item.value }}</span>
+					</div>
+				</template>
+			</ListBox>
+		</div>
 	</div>
 </template>
 
