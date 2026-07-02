@@ -5,6 +5,7 @@ import { TBasePlugin } from '../../../base/plugin'
 import { TElementPlugin } from '../../element'
 import { TInstancePlugin } from '../../instance'
 import { TElementAccumulationPlugin } from '../../collection'
+import { TListKeyboardPlugin } from '../keyboard'
 import type { TListScrollPluginEvents } from './types'
 
 /**
@@ -61,6 +62,14 @@ export class TListScrollPlugin extends TBasePlugin<TListScrollPluginEvents> {
 		})
 
 		this._collectionElements = bundle.get(TElementAccumulationPlugin) ?? null
+
+		const keyboardPlugin = bundle.get(TListKeyboardPlugin) ?? null
+
+		keyboardPlugin?.events.on('change:highlight', ({ item }) => {
+			if (item) {
+				this._scheduleScroll(item.uid)
+			}
+		})
 	}
 
 	override destroy(): void {
@@ -73,7 +82,6 @@ export class TListScrollPlugin extends TBasePlugin<TListScrollPluginEvents> {
 
 	/**
 	 * Скроллит контейнер к элементу с указанным uid.
-	 * Если элемент уже полностью виден в контейнере — не скроллит (пользовательский клик).
 	 * Если scrollBehavior === 'none' — ничего не делает.
 	 */
 	private _scrollToItem(uid: string | number): void {

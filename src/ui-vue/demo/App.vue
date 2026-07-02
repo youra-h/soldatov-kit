@@ -41,7 +41,7 @@ const playgrounds = {
 } as const
 
 // Активный playground (можно управлять через меню)
-const active = ref<keyof typeof playgrounds>('collapse')
+const active = ref<keyof typeof playgrounds>('list-box-test')
 
 // View mode: 'sandbox' | 'logs'
 const activeView = ref<'sandbox' | 'logs'>('sandbox')
