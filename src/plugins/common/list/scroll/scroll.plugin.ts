@@ -102,6 +102,8 @@ export class TListScrollPlugin extends TBasePlugin<TListScrollPluginEvents> {
 
 		if (!targetElement) return
 
+		// Если mode === 'nearest', используем scrollIntoView с block: 'nearest'.
+		// В случае прокручивания блока, когда мы используем клавиши up/down, это предотвращает «прыгающий» скролл, когда элемент уже виден.
 		if (mode === 'nearest') {
 			targetElement.scrollIntoView({
 				block: 'nearest',
