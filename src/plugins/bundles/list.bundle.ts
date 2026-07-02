@@ -12,6 +12,6 @@ export function createListBundle(): IPluginBundle {
 	return createCollectionBundle(createComponentViewBundle())
 		.use(TListItemAccumulationPlugin)
 		.use(TListLayoutPlugin)
-		.use(TListScrollPlugin)
 		.use(TListKeyboardPlugin)
+		.use(TListScrollPlugin)
 }

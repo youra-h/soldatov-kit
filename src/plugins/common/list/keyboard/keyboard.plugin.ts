@@ -120,7 +120,7 @@ export class TListKeyboardPlugin extends TBasePlugin<TListKeyboardPluginEvents> 
 		prev && (prev.highlighted = false)
 
 		this._highlightedUid = uid
-		this.events.emit('highlight:change', uid)
+		this.events.emit('change:highlight', uid)
 	}
 
 	/** Визуально подсветить элемент (data-highlighted). */
@@ -136,7 +136,7 @@ export class TListKeyboardPlugin extends TBasePlugin<TListKeyboardPluginEvents> 
 		prev && (prev.highlighted = false)
 
 		this._highlightedUid = null
-		this.events.emit('highlight:change', null)
+		this.events.emit('change:highlight', null)
 	}
 
 	/** uid подсвеченного элемента или null */
