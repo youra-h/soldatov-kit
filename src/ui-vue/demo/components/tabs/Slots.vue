@@ -170,6 +170,22 @@ const tabsInstance = new TTabs({
 					<template #panel:profile><p>Profile panel</p></template>
 				</Tabs>
 			</div>
+
+			<!-- #item catch-all -->
+			<div class="tabs-slots-demo__section">
+				<h4 class="tabs-slots-demo__subtitle">Custom #item slot (catch-all)</h4>
+				<Tabs :ctrl="tabsInstance" view="line" :size="size" :variant="variant">
+					<template #item="{ item }">
+						<div class="flex items-center gap-2">
+							<span>{{ item.active ? '🔵' : '⚪' }}</span>
+							<span :class="{ 'font-bold': item.active }">{{ item.text }}</span>
+						</div>
+					</template>
+					<template #panel:users><p>Users panel</p></template>
+					<template #panel:settings><p>Settings panel</p></template>
+					<template #panel:profile><p>Profile panel</p></template>
+				</Tabs>
+			</div>
 		</div>
 	</div>
 </template>

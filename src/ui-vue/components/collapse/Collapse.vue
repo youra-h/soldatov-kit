@@ -51,7 +51,11 @@ export default {
 				<template #leading>
 					<slot :name="`item:${item.value}:leading`" :item="item" />
 				</template>
-				<slot :name="`item:${item.value}:header`" :item="item" />
+				<template #header>
+					<slot :name="`item:${item.value}:header`" :item="item">
+						<slot name="item" :item="item" />
+					</slot>
+				</template>
 				<template #trailing>
 					<slot :name="`item:${item.value}:trailing`" :item="item" />
 				</template>
