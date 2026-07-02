@@ -28,11 +28,17 @@ export class TListScrollPlugin extends TBasePlugin<TListScrollPluginEvents> {
 	private _element: HTMLElement | null = null
 	private _list: IList | null = null
 	private _collectionElements: TElementAccumulationPlugin | null = null
-	private readonly _scheduleScroll: (uid: string | number) => void
+	private readonly _scheduleScroll: (payload: {
+		uid: string | number
+		mode: 'center' | 'nearest'
+	}) => void
 
 	constructor() {
 		super()
-		this._scheduleScroll = frameDebounce((uid: string | number) => this._scrollToItem(uid))
+		this._scheduleScroll = frameDebounce(
+			({ uid, mode }: { uid: string | number; mode: 'center' | 'nearest' }) =>
+				this._scrollToItem(uid, mode),
+		)
 	}
 
 	override install(bundle: IPluginBundle): void {
@@ -49,15 +55,14 @@ export class TListScrollPlugin extends TBasePlugin<TListScrollPluginEvents> {
 		instancePlugin?.events.on('ready', ({ instance }) => {
 			this._list = instance
 
-			// Если при инициализации уже есть выделенные элементы — скроллим к первому
 			const selected = instance.collection.selected
 
 			if (selected.length > 0) {
-				this._scrollToItem(selected[0].uid)
+				this._scrollToItem(selected[0].uid, 'center')
 			}
 
 			instance.events.on('item:selected', ({ item }: { item: IListItem }) => {
-				this._scheduleScroll(item.uid)
+				this._scheduleScroll({ uid: item.uid, mode: 'center' })
 			})
 		})
 
@@ -67,7 +72,7 @@ export class TListScrollPlugin extends TBasePlugin<TListScrollPluginEvents> {
 
 		keyboardPlugin?.events.on('change:highlight', ({ item }) => {
 			if (item) {
-				this._scheduleScroll(item.uid)
+				this._scheduleScroll({ uid: item.uid, mode: 'nearest' })
 			}
 		})
 	}
@@ -82,9 +87,11 @@ export class TListScrollPlugin extends TBasePlugin<TListScrollPluginEvents> {
 
 	/**
 	 * Скроллит контейнер к элементу с указанным uid.
+	 * - `center` — центрирует элемент (для `item:selected`)
+	 * - `nearest` — минимальный скролл до видимости (для `change:highlight`)
 	 * Если scrollBehavior === 'none' — ничего не делает.
 	 */
-	private _scrollToItem(uid: string | number): void {
+	private _scrollToItem(uid: string | number, mode: 'center' | 'nearest'): void {
 		if (!this._element || !this._list) return
 
 		const behavior: TScrollBehavior = this._list.scrollBehavior
@@ -95,14 +102,20 @@ export class TListScrollPlugin extends TBasePlugin<TListScrollPluginEvents> {
 
 		if (!targetElement) return
 
-		// Элемент уже полностью виден — не трогаем скролл (пользовательский клик)
+		if (mode === 'nearest') {
+			targetElement.scrollIntoView({
+				block: 'nearest',
+				behavior: behavior === 'instant' ? 'instant' : 'smooth',
+			})
+			return
+		}
+
 		if (this._isFullyVisible(targetElement)) return
 
 		const container = this._element
 		const containerRect = container.getBoundingClientRect()
 		const targetRect = targetElement.getBoundingClientRect()
 
-		// Вычисляем позицию элемента относительно контейнера и скроллим
 		const scrollTop =
 			container.scrollTop + (targetRect.top - containerRect.top) - container.clientHeight / 2
 
