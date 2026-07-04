@@ -7,7 +7,7 @@ import type { IPluginBundle } from '../../base/types'
 interface ITextInput {
 	readonly readonly: boolean
 	readonly disabled: boolean
-	input(value: string): void
+	value: string
 }
 
 export class TInputPlugin extends TBasePlugin<TInputPluginEvents> {
@@ -63,7 +63,7 @@ export class TInputPlugin extends TBasePlugin<TInputPluginEvents> {
 		const target = event.target as HTMLInputElement | null
 		if (!target) return
 
-		this._instance.input(target.value)
+		this._instance.value = target.value
 	}
 
 	private _removeInputListener(): void {

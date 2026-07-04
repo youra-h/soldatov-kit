@@ -33,7 +33,7 @@ describe('TInput', () => {
 
 	})
 
-	it('наследует value и input-логику от TValueControl', () => {
+	it('value setter эмитит change:value и input:value', () => {
 		const input = new TInput({ value: 'a' })
 		const changeHandler = vi.fn()
 		const inputHandler = vi.fn()
@@ -42,10 +42,10 @@ describe('TInput', () => {
 
 		input.value = 'b'
 		expect(changeHandler).toHaveBeenCalledWith({ newValue: 'b', oldValue: 'a' })
-		expect(inputHandler).toHaveBeenNthCalledWith(1, { newValue: 'b', oldValue: 'a' })
+		expect(inputHandler).toHaveBeenCalledWith({ newValue: 'b', oldValue: 'a' })
 		expect(input.value).toBe('b')
 
-		input.input('c')
+		input.value = 'c'
 		expect(inputHandler).toHaveBeenNthCalledWith(2, { newValue: 'c', oldValue: 'b' })
 		expect(input.value).toBe('c')
 	})
