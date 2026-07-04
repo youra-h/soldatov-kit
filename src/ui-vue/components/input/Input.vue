@@ -87,7 +87,7 @@ export default {
 		@apply outline-none;
 
 		&::placeholder {
-			@apply text-s-component-placeholder;
+			// @apply text-s-component-placeholder;
 		}
 
 		&:focus-visible {
