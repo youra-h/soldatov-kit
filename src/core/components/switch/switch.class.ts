@@ -30,11 +30,6 @@ export default class TSwitch
 	 * Если было true, то станет false
 	 */
 	toggle(): void {
-		if (this.readonly) {
-			event?.preventDefault()
-			return
-		}
-
 		this.value = this.value === true ? false : true
 	}
 
