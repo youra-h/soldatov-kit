@@ -58,6 +58,7 @@ export default {
 
 <template>
 	<div ref="rootRef" v-if="rendered" v-show="visible" :class="classes">
+		<slot name="leading"> </slot>
 		<input
 			type="text"
 			:id="instance.id.toString()"
@@ -69,6 +70,7 @@ export default {
 			:required="required"
 			@input="instance.input(($event.target as HTMLInputElement).value)"
 		/>
+		<slot name="trailing"> </slot>
 	</div>
 </template>
 
@@ -78,7 +80,7 @@ export default {
 
 .s-input {
 	$this: &;
-	@apply inline-flex relative;
+	@apply inline-flex items-center gap-1.5;
 
 	input {
 		@apply w-full px-3 py-1.5;
