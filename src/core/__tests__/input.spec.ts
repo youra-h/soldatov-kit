@@ -42,10 +42,11 @@ describe('TInput', () => {
 
 		input.value = 'b'
 		expect(changeHandler).toHaveBeenCalledWith({ newValue: 'b', oldValue: 'a' })
+		expect(inputHandler).toHaveBeenNthCalledWith(1, { newValue: 'b', oldValue: 'a' })
 		expect(input.value).toBe('b')
 
 		input.input('c')
-		expect(inputHandler).toHaveBeenCalledWith('c')
+		expect(inputHandler).toHaveBeenNthCalledWith(2, { newValue: 'c', oldValue: 'b' })
 		expect(input.value).toBe('c')
 	})
 

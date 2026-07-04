@@ -10,7 +10,6 @@ export class TInput extends TInputControl<string, IInputProps, TInputEvents> imp
 	}
 
 	input(value: string): void {
-		this._states.value.value = value
-			; (this.events as TEvented<TInputEvents>).emit('input:value', value)
+		this.value = value
 	}
 }

@@ -8,4 +8,6 @@ export interface IInputProps extends IInputControlProps<string> { }
 
 export type TInputEvents = TInputControlEvents<string>
 
-export interface IInput extends IInputControl<string, IInputProps, TInputEvents> { }
+export interface IInput extends IInputControl<string, IInputProps, TInputEvents> {
+	input(value: string): void
+}
