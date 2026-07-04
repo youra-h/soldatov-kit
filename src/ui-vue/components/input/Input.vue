@@ -19,13 +19,23 @@ export default {
 
 		const rootRef = useElementBinding(plugins)
 
-		const { rendered, visible, classes, disabled, name, size, value, readonly, required, placeholder } =
-			syncInput({
-				props,
-				instance,
-				plugins,
-				emit,
-			})
+		const {
+			rendered,
+			visible,
+			classes,
+			disabled,
+			name,
+			size,
+			value,
+			readonly,
+			required,
+			placeholder,
+		} = syncInput({
+			props,
+			instance,
+			plugins,
+			emit,
+		})
 
 		return {
 			instance,
