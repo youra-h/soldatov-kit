@@ -1,3 +1,3 @@
 export type TInputBoolPluginEvents = {
-	change: (payload: { value: boolean | undefined }) => void
+	'change:value': (payload: { value: boolean | undefined }) => void
 }

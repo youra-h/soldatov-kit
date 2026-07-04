@@ -76,7 +76,6 @@ export default {
 			:disabled="disabled"
 			:required="required"
 			:aria-checked="instance.getAriaChecked()"
-			@click="readonly ? $event.preventDefault() : instance.click($event)"
 		/>
 		<div class="s-check-box__container">
 			<!-- Слот для checked иконки -->

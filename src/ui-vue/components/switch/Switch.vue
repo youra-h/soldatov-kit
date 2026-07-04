@@ -56,7 +56,6 @@ export default {
 			:disabled="disabled"
 			:required="required"
 			:aria-checked="Boolean(value)"
-			@click="readonly ? $event.preventDefault() : instance.click($event)"
 		/>
 		<div class="s-switch__track">
 			<div class="s-switch__track--thumb">
