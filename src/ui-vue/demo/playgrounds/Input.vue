@@ -23,7 +23,6 @@ const propertiesSchema: TPropertiesSchema = {
 	size: { type: 'select', default: 'normal', options: SIZES },
 	variant: { type: 'select', default: 'normal', options: VARIANTS },
 	value: { type: 'text', default: '' },
-	placeholder: { type: 'text', default: 'Enter text...' },
 }
 
 const componentProps = ref<{
@@ -35,7 +34,6 @@ const componentProps = ref<{
 	size: TComponentSize
 	variant: TComponentVariant
 	value: string
-	placeholder: string
 }>({
 	visible: true,
 	rendered: true,
@@ -45,7 +43,6 @@ const componentProps = ref<{
 	size: 'normal',
 	variant: 'normal',
 	value: '',
-	placeholder: 'Enter text...',
 })
 
 const instanceDemoRef = ref<InstanceType<typeof InstanceDemo>>()

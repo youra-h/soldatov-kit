@@ -4,14 +4,8 @@ import type {
 	TInputControlEvents,
 } from '../../base/input-control'
 
-export interface IInputProps extends IInputControlProps<string> {
-	placeholder?: string
-}
+export interface IInputProps extends IInputControlProps<string> { }
 
-export type TInputEvents = TInputControlEvents<string> & {
-	'change:placeholder': (value: string) => void
-}
+export type TInputEvents = TInputControlEvents<string>
 
-export interface IInput extends IInputControl<string, IInputProps, TInputEvents> {
-	placeholder: string
-}
+export interface IInput extends IInputControl<string, IInputProps, TInputEvents> { }

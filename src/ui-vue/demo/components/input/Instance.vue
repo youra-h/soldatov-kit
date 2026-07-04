@@ -16,7 +16,6 @@ type Props = {
 	readonly?: boolean
 	required?: boolean
 	value?: string
-	placeholder?: string
 }
 
 const props = defineProps<Props>()
@@ -34,7 +33,6 @@ const instance = new TInput({
 	readonly: props.readonly ?? false,
 	required: props.required ?? false,
 	value: props.value ?? '',
-	placeholder: props.placeholder ?? '',
 })
 
 defineExpose({

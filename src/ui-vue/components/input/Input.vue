@@ -10,8 +10,9 @@ import type { TBaseComponentViewProps } from '../component-view'
 
 export default {
 	name: '_Input',
+	inheritAttrs: false,
 	extends: BaseInput,
-	setup(props: TBaseComponentViewProps<IInputProps, IInput>, { emit }) {
+	setup(props: TBaseComponentViewProps<IInputProps, IInput>, { emit, attrs }) {
 		const instance = useInstance(TInput, props)
 
 		const plugins = useBundle(createComponentViewBundle, props?.plugins)
@@ -19,23 +20,13 @@ export default {
 
 		const rootRef = useElementBinding(plugins)
 
-		const {
-			rendered,
-			visible,
-			classes,
-			disabled,
-			name,
-			size,
-			value,
-			readonly,
-			required,
-			placeholder,
-		} = syncInput({
-			props,
-			instance,
-			plugins,
-			emit,
-		})
+		const { rendered, visible, classes, disabled, name, size, value, readonly, required } =
+			syncInput({
+				props,
+				instance,
+				plugins,
+				emit,
+			})
 
 		return {
 			instance,
@@ -50,7 +41,7 @@ export default {
 			value,
 			readonly,
 			required,
-			placeholder,
+			attrs,
 		}
 	},
 }
@@ -64,10 +55,10 @@ export default {
 			:id="instance.id.toString()"
 			:value="value"
 			:name="name"
-			:placeholder="placeholder"
 			:disabled="disabled"
 			:readonly="readonly"
 			:required="required"
+			v-bind="attrs"
 			@input="instance.input(($event.target as HTMLInputElement).value)"
 		/>
 		<slot name="trailing"> </slot>
