@@ -1,10 +1,5 @@
 import { TValueControl } from '../value-control'
-import type {
-	IInputControlProps,
-	TInputControlEvents,
-	TInputControlStates,
-	TInputControlState,
-} from './types'
+import type { IInputControlProps, TInputControlEvents, TInputControlStates } from './types'
 import type { IComponentViewOptions } from '../component-view'
 import { TComponentView } from '../component-view'
 import { TEvented } from '../../common/evented'
@@ -16,8 +11,6 @@ import { TEvented } from '../../common/evented'
  * - интерактивность (disabled/focused)
  * - значение `value` (commit + input)
  * - name
- *
- * Добавляет: readonly/required/invalid/state.
  */
 export default class TInputControl<
 	TValue = string,
@@ -29,14 +22,10 @@ export default class TInputControl<
 		...TValueControl.defaultValues,
 		readonly: false,
 		required: false,
-		invalid: false,
-		state: 'normal',
 	}
 
 	protected _readonly!: boolean
 	protected _required!: boolean
-	protected _invalid: boolean
-	protected _state: TInputControlState
 
 	constructor(options: IComponentViewOptions<TProps, TStates> | Partial<TProps> = {}) {
 		super(options)
@@ -51,13 +40,6 @@ export default class TInputControl<
 		// this._readonly = props.readonly ?? (ctor.defaultValues.readonly as boolean)
 		this._applyReadonly(props.readonly ?? (ctor.defaultValues.readonly as boolean))
 		this._applyRequired(props.required ?? (ctor.defaultValues.required as boolean))
-		this._invalid = props.invalid ?? (ctor.defaultValues.invalid as boolean)
-		this._state = props.state ?? (ctor.defaultValues.state as TInputControlState)
-
-		// Инвариант: invalid=true -> state='error'
-		if (this._invalid && this._state !== 'error') {
-			this._state = 'error'
-		}
 	}
 
 	get readonly(): boolean {
@@ -94,43 +76,11 @@ export default class TInputControl<
 		;(this.events as TEvented<TInputControlEvents<TValue>>).emit('change:required', value)
 	}
 
-	get invalid(): boolean {
-		return this._invalid
-	}
-	set invalid(value: boolean) {
-		if (this._invalid === value) return
-
-		this._invalid = value
-
-		// Автоматически устанавливаем state = 'error' при invalid = true
-		if (value && this._state !== 'error') {
-			this._state = 'error'
-			;(this.events as TEvented<TInputControlEvents<TValue>>).emit(
-				'change:state',
-				this._state,
-			)
-		}
-
-		;(this.events as TEvented<TInputControlEvents<TValue>>).emit('change:invalid', value)
-	}
-
-	get state(): TInputControlState {
-		return this._state
-	}
-	set state(value: TInputControlState) {
-		if (this._state === value) return
-
-		this._state = value
-		;(this.events as TEvented<TInputControlEvents<TValue>>).emit('change:state', value)
-	}
-
 	getProps(): TProps {
 		return {
 			...super.getProps(),
 			readonly: this._readonly,
 			required: this._required,
-			invalid: this._invalid,
-			state: this._state as any,
 		} as TProps
 	}
 }

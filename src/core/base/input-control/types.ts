@@ -5,20 +5,14 @@ import type {
 	TValueControlStates,
 } from '../value-control'
 
-export type TInputControlState = 'normal' | 'positive' | 'caution' | 'error'
-
 export type TInputControlEvents<T = string> = TValueControlEvents<T> & {
 	'change:readonly': (value: boolean) => void
 	'change:required': (value: boolean) => void
-	'change:invalid': (value: boolean) => void
-	'change:state': (value: TInputControlState) => void
 }
 
 export interface IInputControlProps<T = string> extends IValueControlProps<T> {
 	readonly?: boolean
 	required?: boolean
-	invalid?: boolean
-	state?: TInputControlState
 }
 
 export type TInputControlStates<TValue = string> = TValueControlStates<TValue>
@@ -30,8 +24,6 @@ export interface IInputControl<
 > extends IValueControl<T, TProps, TEvents> {
 	readonly: boolean
 	required: boolean
-	invalid: boolean
-	state: TInputControlState
 }
 
 // Backward-compatible aliases for the common text-input case

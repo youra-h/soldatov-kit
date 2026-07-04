@@ -8,13 +8,11 @@ import PropsDemo from './../components/check-box/Component.vue'
 import InstanceDemo from './../components/check-box/Instance.vue'
 import SlotsDemo from './../components/check-box/Slots.vue'
 import { SIZES, VARIANTS, ICON_PATHS } from '../common/items'
-import type { TComponentSize, TComponentVariant, TInputControlState } from '@core'
+import type { TComponentSize, TComponentVariant } from '@core'
 
 const emit = defineEmits<{
 	log: [entry: EventLogEntry]
 }>()
-
-const INPUT_STATES: TInputControlState[] = ['normal', 'positive', 'caution', 'error']
 
 // Схема свойств для CheckBox
 const propertiesSchema: TPropertiesSchema = {
@@ -23,10 +21,8 @@ const propertiesSchema: TPropertiesSchema = {
 	disabled: { type: 'boolean', default: false },
 	readonly: { type: 'boolean', default: false },
 	required: { type: 'boolean', default: false },
-	invalid: { type: 'boolean', default: false },
 	size: { type: 'select', default: 'normal', options: SIZES },
 	variant: { type: 'select', default: 'normal', options: VARIANTS },
-	state: { type: 'select', default: 'normal', options: INPUT_STATES },
 	value: { type: 'boolean', default: false },
 	indeterminate: { type: 'boolean', default: false },
 	plain: { type: 'boolean', default: false },
@@ -41,10 +37,8 @@ const componentProps = ref<{
 	disabled: boolean
 	readonly: boolean
 	required: boolean
-	invalid: boolean
 	size: TComponentSize
 	variant: TComponentVariant
-	state: TInputControlState
 	value: boolean
 	indeterminate: boolean
 	plain: boolean
@@ -56,10 +50,8 @@ const componentProps = ref<{
 	disabled: false,
 	readonly: false,
 	required: false,
-	invalid: false,
 	size: 'normal',
 	variant: 'normal',
-	state: 'normal',
 	value: false,
 	indeterminate: false,
 	plain: false,

@@ -7,7 +7,7 @@ import PanelDemo from '../../common/PanelDemo.vue'
 import { useSyncPropsToInstance } from '../../common/useSyncPropsToInstance'
 import { useEventLogger, useCoreEventLogger } from '../../common/useEventLogger'
 import type { EventLogEntry } from '../../common/EventLog.vue'
-import type { TComponentSize, TComponentVariant, TInputControlState } from '@core'
+import type { TComponentSize, TComponentVariant } from '@core'
 
 type Props = {
 	visible?: boolean
@@ -17,8 +17,6 @@ type Props = {
 	disabled?: boolean
 	readonly?: boolean
 	required?: boolean
-	invalid?: boolean
-	state?: TInputControlState
 	value?: boolean
 	iconBefore?: string
 	iconAfter?: string
@@ -39,8 +37,6 @@ const instance = new TSwitch({
 	disabled: props.disabled ?? false,
 	readonly: props.readonly ?? false,
 	required: props.required ?? false,
-	invalid: props.invalid ?? false,
-	state: props.state || 'normal',
 	value: props.value ?? false,
 })
 

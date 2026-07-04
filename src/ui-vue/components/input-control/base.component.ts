@@ -1,11 +1,6 @@
 import type { PropType, Ref } from 'vue'
 import { watch } from 'vue'
-import {
-	type IInputControl,
-	type IInputControlProps,
-	TInputControl,
-	type TInputControlState,
-} from '@core'
+import { type IInputControl, type IInputControlProps, TInputControl } from '@core'
 import {
 	BaseValueControl,
 	emitsValueControl,
@@ -23,10 +18,6 @@ export const emitsInputControl: TEmits = [
 	'update:readonly',
 	'change:required',
 	'update:required',
-	'change:invalid',
-	'update:invalid',
-	'change:state',
-	'update:state',
 ] as const
 
 export const propsInputControl: TProps = {
@@ -38,14 +29,6 @@ export const propsInputControl: TProps = {
 	required: {
 		type: Boolean as PropType<IInputControlProps<any>['required']>,
 		default: TInputControl.defaultValues.required,
-	},
-	invalid: {
-		type: Boolean as PropType<IInputControlProps<any>['invalid']>,
-		default: TInputControl.defaultValues.invalid,
-	},
-	state: {
-		type: String as PropType<IInputControlProps<any>['state']>,
-		default: TInputControl.defaultValues.state,
 	},
 }
 
@@ -59,8 +42,6 @@ export default {
 export interface IInputControlState<TValue = any> extends IValueControlState<TValue> {
 	readonly: Ref<boolean>
 	required: Ref<boolean>
-	invalid: Ref<boolean>
-	state: Ref<TInputControlState>
 }
 
 /**
@@ -86,16 +67,6 @@ export function syncInputControl<TValue = string>(
 		emit?.('update:required', value)
 	})
 
-	instance.events.on('change:invalid' as any, (value: boolean) => {
-		emit?.('change:invalid', value)
-		emit?.('update:invalid', value)
-	})
-
-	instance.events.on('change:state' as any, (value: TInputControlState) => {
-		emit?.('change:state', value)
-		emit?.('update:state', value)
-	})
-
 	watch<boolean | undefined>(
 		() => props.readonly,
 		(value) => {
@@ -114,31 +85,11 @@ export function syncInputControl<TValue = string>(
 		},
 	)
 
-	watch<boolean | undefined>(
-		() => props.invalid,
-		(value) => {
-			if (value !== undefined && value !== instance.invalid) {
-				instance.invalid = value
-			}
-		},
-	)
-
-	watch<TInputControlState | undefined>(
-		() => props.state,
-		(value) => {
-			if (value !== undefined && value !== instance.state) {
-				instance.state = value
-			}
-		},
-	)
-
 	return {
 		...syncProps,
 		...useSyncProps(instance.events as any, {
 			readonly: () => instance.readonly,
 			required: () => instance.required,
-			invalid: () => instance.invalid,
-			state: () => instance.state,
 		}),
 	}
 }

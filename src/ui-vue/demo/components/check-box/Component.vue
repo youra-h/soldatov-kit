@@ -4,7 +4,7 @@ import { Icon, useIconImport } from '@ui/icon'
 import PanelDemo from '../../common/PanelDemo.vue'
 import { useEventLogger } from '../../common/useEventLogger'
 import type { EventLogEntry } from '../../common/EventLog.vue'
-import type { TComponentSize, TComponentVariant, TInputControlState } from '@core'
+import type { TComponentSize, TComponentVariant } from '@core'
 
 type Props = {
 	visible?: boolean
@@ -14,8 +14,6 @@ type Props = {
 	disabled?: boolean
 	readonly?: boolean
 	required?: boolean
-	invalid?: boolean
-	state?: TInputControlState
 	value?: boolean
 	indeterminate?: boolean
 	plain?: boolean
@@ -43,8 +41,6 @@ const { handlers } = useEventLogger(emit, emitsCheckBox)
 			:disabled="disabled"
 			:readonly="readonly"
 			:required="required"
-			:invalid="invalid"
-			:state="state"
 			:value="value"
 			:indeterminate="indeterminate"
 			:plain="plain"
