@@ -1,5 +1,4 @@
 import { TInputControl } from '../../base/input-control'
-import { TEvented } from '../../common/evented'
 import type { IInput, IInputProps, TInputEvents } from './types'
 
 export class TInput extends TInputControl<string, IInputProps, TInputEvents> implements IInput {
@@ -9,12 +8,7 @@ export class TInput extends TInputControl<string, IInputProps, TInputEvents> imp
 		...TInputControl.defaultValues,
 	}
 
-	input(value: string, event?: Event): void {
-		if (this.readonly || this.disabled) {
-			event?.preventDefault()
-			return
-		}
-
+	input(value: string): void {
 		this.value = value
 	}
 }

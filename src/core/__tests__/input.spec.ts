@@ -134,35 +134,4 @@ describe('TInput', () => {
 		expect(input.readonly).toBe(true)
 	})
 
-	it('input() не меняет значение при readonly', () => {
-		const input = new TInput({ value: 'a', readonly: true })
-		input.input('b')
-		expect(input.value).toBe('a')
-	})
-
-	it('input() не меняет значение при disabled', () => {
-		const input = new TInput({ value: 'a', disabled: true })
-		input.input('b')
-		expect(input.value).toBe('a')
-	})
-
-	it('input() вызывает preventDefault на событии при readonly', () => {
-		const input = new TInput({ value: 'a', readonly: true })
-		const event = new Event('input')
-		const preventDefault = vi.spyOn(event, 'preventDefault')
-
-		input.input('b', event)
-		expect(preventDefault).toHaveBeenCalled()
-		expect(input.value).toBe('a')
-	})
-
-	it('input() вызывает preventDefault на событии при disabled', () => {
-		const input = new TInput({ value: 'a', disabled: true })
-		const event = new Event('input')
-		const preventDefault = vi.spyOn(event, 'preventDefault')
-
-		input.input('b', event)
-		expect(preventDefault).toHaveBeenCalled()
-		expect(input.value).toBe('a')
-	})
 })
