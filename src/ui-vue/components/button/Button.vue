@@ -51,7 +51,6 @@ export default {
 		:class="classes"
 		:disabled="tag === 'button' ? disabled : undefined"
 		:aria-disabled="tag !== 'button' ? disabled : undefined"
-		@click="instance.click($event)"
 	>
 		<slot name="leading"> </slot>
 		<span class="s-button__text">
