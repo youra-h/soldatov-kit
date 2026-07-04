@@ -5,7 +5,7 @@ import { useInstance } from '../../composables/useInstance'
 import { useBundle } from '../../composables/useBundle'
 import { useElementBinding } from '../../composables/useElementBinding'
 import { useInstanceBinding } from '../../composables/useInstanceBinding'
-import { createComponentViewBundle } from '@plugins'
+import { createInputControlBundle } from '@plugins'
 import type { TBaseComponentViewProps } from '../component-view'
 
 export default {
@@ -15,7 +15,7 @@ export default {
 	setup(props: TBaseComponentViewProps<IInputProps, IInput>, { emit, attrs }) {
 		const instance = useInstance(TInput, props)
 
-		const plugins = useBundle(createComponentViewBundle, props?.plugins)
+		const plugins = useBundle(createInputControlBundle, props?.plugins)
 		useInstanceBinding(plugins, instance)
 
 		const rootRef = useElementBinding(plugins)

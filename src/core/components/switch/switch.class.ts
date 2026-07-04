@@ -5,8 +5,7 @@ import { TEvented } from '../../common/evented'
 
 export default class TSwitch
 	extends TInputControl<boolean | undefined, ISwitchProps, TSwitchEvents>
-	implements ISwitch
-{
+	implements ISwitch {
 	static override baseClass = 's-switch'
 
 	static defaultValues: Partial<ISwitchProps> = {
@@ -30,22 +29,13 @@ export default class TSwitch
 	 * Переключает состояние компонента
 	 * Если было true, то станет false
 	 */
-	change(event?: Event) {
+	toggle(): void {
 		if (this.readonly) {
 			event?.preventDefault()
 			return
 		}
 
-		const oldValue = this.value
-
 		this.value = this.value === true ? false : true
-
-		if (oldValue !== this.value) {
-			;(this.events as TEvented<TSwitchEvents>).emit('change', {
-				event,
-				value: this.value,
-			})
-		}
 	}
 
 	getProps(): ISwitchProps {

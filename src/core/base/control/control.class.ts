@@ -70,10 +70,6 @@ export default class TControl<
 		}
 	}
 
-	click(event?: Event): void {
-		;(this.events as TEvented<TControlEvents>).emit('click' as any, event)
-	}
-
 	getProps(): TProps {
 		return {
 			...super.getProps(),

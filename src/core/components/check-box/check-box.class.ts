@@ -5,8 +5,7 @@ import { TEvented } from '../../common/evented'
 
 export default class TCheckBox
 	extends TInputControl<boolean | undefined, ICheckBoxProps, TCheckBoxEvents>
-	implements ICheckBox
-{
+	implements ICheckBox {
 	static override baseClass = 's-check-box'
 
 	static defaultValues: Partial<ICheckBoxProps> = {
@@ -32,6 +31,9 @@ export default class TCheckBox
 		this._applyIndeterminate(props.indeterminate ?? ctor.defaultValues.indeterminate!)
 		this._applyPlain(props.plain ?? ctor.defaultValues.plain!)
 	}
+	change(event?: Event): void {
+		throw new Error('Method not implemented.')
+	}
 
 	get indeterminate(): boolean {
 		return this._indeterminate
@@ -46,7 +48,7 @@ export default class TCheckBox
 	set indeterminate(value: boolean) {
 		if (this._indeterminate !== value) {
 			this._applyIndeterminate(value)
-			;(this.events as TEvented<TCheckBoxEvents>).emit('change:indeterminate', value)
+				; (this.events as TEvented<TCheckBoxEvents>).emit('change:indeterminate', value)
 		}
 	}
 
@@ -63,7 +65,7 @@ export default class TCheckBox
 	set plain(value: boolean) {
 		if (this._plain !== value) {
 			this._applyPlain(value)
-			;(this.events as TEvented<TCheckBoxEvents>).emit('change:plain', value)
+				; (this.events as TEvented<TCheckBoxEvents>).emit('change:plain', value)
 		}
 	}
 
@@ -72,26 +74,12 @@ export default class TCheckBox
 	 * Если был indeterminate, то станет true
 	 * Если было true, то станет false
 	 */
-	change(event?: Event) {
-		if (this.readonly) {
-			event?.preventDefault()
-			return
-		}
-
-		const oldValue = this.value
-
+	toggle(): void {
 		if (this.indeterminate) {
 			this.indeterminate = false
 			this.value = true
 		} else {
 			this.value = this.value === true ? false : true
-		}
-
-		if (oldValue !== this.value) {
-			;(this.events as TEvented<TCheckBoxEvents>).emit('change', {
-				event,
-				value: this.value,
-			})
 		}
 	}
 

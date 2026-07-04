@@ -57,7 +57,7 @@ export function syncControl(
 ): IControlState {
 	const syncProps = syncStylable(options)
 
-	const { instance, props, emit, plugins } = options
+	const { instance, props, emit } = options
 
 	// Пробрасываем события core-инстанса наружу (Vue events).
 	instance.events.on('change:disabled' as any, (value: boolean) => {
@@ -69,10 +69,6 @@ export function syncControl(
 		emit?.('change:focused', value)
 		emit?.('focused', value)
 		emit?.('update:focused', value)
-	})
-
-	instance.events.on('click' as any, (event: Event) => {
-		emit?.('click', event)
 	})
 
 	watch<boolean | undefined>(

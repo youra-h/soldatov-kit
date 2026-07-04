@@ -6,8 +6,6 @@ export type TControlEvents = TStylableEvents & {
 	'change:disabled': (value: boolean) => void
 	/** change:focused */
 	'change:focused': (value: boolean) => void
-	/** click proxy (-слой может дергать этот метод) */
-	click: (event: Event) => void
 }
 
 export interface IControlProps extends IStylableProps {
@@ -27,5 +25,4 @@ export interface IControl<
 > extends IStylable<TProps, TEvents, TStates> {
 	disabled: boolean
 	focused: boolean
-	click(event: Event): void
 }
