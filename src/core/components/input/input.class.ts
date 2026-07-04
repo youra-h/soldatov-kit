@@ -9,7 +9,12 @@ export class TInput extends TInputControl<string, IInputProps, TInputEvents> imp
 		...TInputControl.defaultValues,
 	}
 
-	input(value: string): void {
+	input(value: string, event?: Event): void {
+		if (this.readonly || this.disabled) {
+			event?.preventDefault()
+			return
+		}
+
 		this.value = value
 	}
 }
