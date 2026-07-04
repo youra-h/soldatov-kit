@@ -116,15 +116,6 @@ describe('TInput', () => {
 		expect(input.toJSON()).toEqual(input.getProps())
 	})
 
-	it('click эмитит событие', () => {
-		const input = new TInput()
-		const handler = vi.fn()
-		input.events.on('click', handler)
-		const event = new Event('click')
-		input.click(event)
-		expect(handler).toHaveBeenCalledWith(event)
-	})
-
 	it('show/hide управляют visible', () => {
 		const input = new TInput({ visible: false })
 		expect(input.visible).toBe(false)

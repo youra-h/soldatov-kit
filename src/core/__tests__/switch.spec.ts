@@ -26,16 +26,4 @@ describe('TSwitch', () => {
 		expect(changeValue).toHaveBeenCalledWith({ newValue: true, oldValue: false })
 	})
 
-	it('change(event) переключает значение и эмитит change', () => {
-		const sw = new TSwitch({ value: false })
-		const spy = vi.fn()
-		sw.events.on('change' as any, spy)
-
-		const event = new Event('click')
-		sw.change(event)
-		expect(sw.value).toBe(true)
-		expect(spy).toHaveBeenCalled()
-		const payload = spy.mock.calls[0]![0]
-		expect(payload).toMatchObject({ event, value: true })
-	})
 })

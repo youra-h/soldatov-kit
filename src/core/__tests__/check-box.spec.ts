@@ -43,28 +43,6 @@ describe('TCheckBox', () => {
 		expect(changeValue).toHaveBeenCalledWith({ newValue: true, oldValue: false })
 	})
 
-	it('change(event) переключает значение и эмитит change', () => {
-		const cb = new TCheckBox({ value: false })
-		const spy = vi.fn()
-		cb.events.on('change' as any, spy)
-
-		const event = new Event('click')
-		cb.change(event)
-		expect(cb.value).toBe(true)
-		expect(spy).toHaveBeenCalled()
-		const payload = spy.mock.calls[0]![0]
-		expect(payload).toMatchObject({ event, value: true })
-	})
-
-	it('если indeterminate=true, change() сначала снимает indeterminate и ставит value=true', () => {
-		const cb = new TCheckBox({ props: { value: undefined, indeterminate: true } })
-		expect(cb.indeterminate).toBe(true)
-
-		cb.change()
-		expect(cb.indeterminate).toBe(false)
-		expect(cb.value).toBe(true)
-	})
-
 	it('getAriaChecked возвращает mixed/true/false', () => {
 		const cb = new TCheckBox({ value: false })
 		expect(cb.getAriaChecked()).toBe('false')

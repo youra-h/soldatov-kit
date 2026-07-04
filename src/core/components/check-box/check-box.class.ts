@@ -31,10 +31,6 @@ export default class TCheckBox
 		this._applyIndeterminate(props.indeterminate ?? ctor.defaultValues.indeterminate!)
 		this._applyPlain(props.plain ?? ctor.defaultValues.plain!)
 	}
-	change(event?: Event): void {
-		throw new Error('Method not implemented.')
-	}
-
 	get indeterminate(): boolean {
 		return this._indeterminate
 	}

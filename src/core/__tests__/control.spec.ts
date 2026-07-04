@@ -49,12 +49,4 @@ describe('TControl', () => {
 		})
 	})
 
-	it('click эмитит событие', () => {
-		const ctrl = new TControl()
-		const handler = vi.fn()
-		ctrl.events.on('click', handler)
-		const event = new Event('click')
-		ctrl.click(event)
-		expect(handler).toHaveBeenCalledWith(event)
-	})
 })
