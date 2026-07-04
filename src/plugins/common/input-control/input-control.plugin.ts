@@ -9,7 +9,7 @@ export class TInputControlPlugin extends TBasePlugin<TInputControlPluginEvents> 
 	static readonly key = 'input-control'
 
 	private _input: HTMLInputElement | null = null
-	private _instance: IInputControl<string> | null = null
+	private _instance: IInputControl<any> | null = null
 	private _onClick = this._handleClick.bind(this)
 
 	override install(bundle: IPluginBundle): void {
@@ -31,7 +31,7 @@ export class TInputControlPlugin extends TBasePlugin<TInputControlPluginEvents> 
 		const instancePlugin = bundle.get(TInstancePlugin)
 
 		instancePlugin?.events.on('ready', ({ instance }) => {
-			this._instance = instance as unknown as IInputControl<string>
+			this._instance = instance as unknown as IInputControl<any>
 		})
 
 		instancePlugin?.events.on('removed', () => {
