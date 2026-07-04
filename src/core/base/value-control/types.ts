@@ -6,7 +6,7 @@ export type TValueControlEvents<T> = TControlEvents & {
 	/** change:value */
 	'change:value': (payload: TValuePayload<T>) => void
 	/** input:value (опционально) */
-	'input:value': (value: T) => void
+	'input:value': (payload: TValuePayload<T>) => void
 	/** change:name */
 	'change:name': (value: string) => void
 }

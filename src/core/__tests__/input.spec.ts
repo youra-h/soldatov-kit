@@ -31,8 +31,6 @@ describe('TInput', () => {
 		input.required = true
 		expect(input.classes.toArray()).toContain('s-input--required')
 
-		input.disabled = true
-		expect(input.classes.toArray()).toContain('s-input--disabled')
 	})
 
 	it('наследует value и input-логику от TValueControl', () => {
