@@ -10,8 +10,9 @@ import type { TBaseComponentViewProps } from '../component-view'
 
 export default {
 	name: '_Switch',
+	inheritAttrs: false,
 	extends: BaseSwitch,
-	setup(props: TBaseComponentViewProps<ISwitchProps, ISwitch>, { emit }) {
+	setup(props: TBaseComponentViewProps<ISwitchProps, ISwitch>, { emit, attrs }) {
 		const instance = useInstance(TSwitch, props)
 		// Инициализация плагинов
 		const plugins = useBundle(createInputBoolBundle, props?.plugins)
@@ -41,6 +42,7 @@ export default {
 			value,
 			readonly,
 			required,
+			attrs,
 		}
 	},
 }
@@ -56,6 +58,7 @@ export default {
 			:disabled="disabled"
 			:required="required"
 			:aria-checked="Boolean(value)"
+			v-bind="attrs"
 		/>
 		<div class="s-switch__track">
 			<div class="s-switch__track--thumb">

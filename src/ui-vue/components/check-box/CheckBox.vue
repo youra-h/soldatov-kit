@@ -11,8 +11,9 @@ import type { TBaseComponentViewProps } from '../component-view'
 
 export default {
 	name: '_CheckBox',
+	inheritAttrs: false,
 	extends: BaseCheckBox,
-	setup(props: TBaseComponentViewProps<ICheckBoxProps, ICheckBox>, { emit }) {
+	setup(props: TBaseComponentViewProps<ICheckBoxProps, ICheckBox>, { emit, attrs }) {
 		const instance = useInstance(TCheckBox, props)
 		// Инициализация плагинов
 		const plugins = useBundle(createInputBoolBundle, props?.plugins)
@@ -61,6 +62,7 @@ export default {
 			value,
 			readonly,
 			required,
+			attrs,
 		}
 	},
 }
@@ -76,6 +78,7 @@ export default {
 			:disabled="disabled"
 			:required="required"
 			:aria-checked="instance.getAriaChecked()"
+			v-bind="attrs"
 		/>
 		<div class="s-check-box__container">
 			<!-- Слот для checked иконки -->
