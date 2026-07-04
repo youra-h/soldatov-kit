@@ -1,18 +1,15 @@
+import type { IInputControl } from '@core'
 import { TBasePlugin } from '../../base'
 import { TElementPlugin } from '../element'
 import { TInstancePlugin } from '../instance'
 import type { TInputControlPluginEvents } from './types'
 import type { IPluginBundle } from '../../base/types'
 
-interface IReadonlyControl {
-	readonly readonly: boolean
-}
-
 export class TInputControlPlugin extends TBasePlugin<TInputControlPluginEvents> {
 	static readonly key = 'input-control'
 
 	private _input: HTMLInputElement | null = null
-	private _instance: IReadonlyControl | null = null
+	private _instance: IInputControl<string> | null = null
 	private _onClick = this._handleClick.bind(this)
 
 	override install(bundle: IPluginBundle): void {
@@ -34,7 +31,7 @@ export class TInputControlPlugin extends TBasePlugin<TInputControlPluginEvents> 
 		const instancePlugin = bundle.get(TInstancePlugin)
 
 		instancePlugin?.events.on('ready', ({ instance }) => {
-			this._instance = instance as unknown as IReadonlyControl
+			this._instance = instance as unknown as IInputControl<string>
 		})
 
 		instancePlugin?.events.on('removed', () => {

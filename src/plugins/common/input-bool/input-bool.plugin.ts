@@ -1,20 +1,15 @@
+import type { ICheckBox } from '@core'
 import { TBasePlugin } from '../../base'
 import { TElementPlugin } from '../element'
 import { TInstancePlugin } from '../instance'
 import type { TInputBoolPluginEvents } from './types'
 import type { IPluginBundle } from '../../base/types'
 
-interface IToggleInput {
-	readonly readonly: boolean
-	readonly value: boolean | undefined
-	toggle(): void
-}
-
 export class TInputBoolPlugin extends TBasePlugin<TInputBoolPluginEvents> {
 	static readonly key = 'input-bool'
 
 	private _input: HTMLInputElement | null = null
-	private _instance: IToggleInput | null = null
+	private _instance: ICheckBox | null = null
 	private _onChange = this._handleChange.bind(this)
 
 	override install(bundle: IPluginBundle): void {
@@ -36,7 +31,7 @@ export class TInputBoolPlugin extends TBasePlugin<TInputBoolPluginEvents> {
 		const instancePlugin = bundle.get(TInstancePlugin)
 
 		instancePlugin?.events.on('ready', ({ instance }) => {
-			this._instance = instance as unknown as IToggleInput
+			this._instance = instance as unknown as ICheckBox
 		})
 
 		instancePlugin?.events.on('removed', () => {
