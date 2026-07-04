@@ -73,10 +73,12 @@ export default {
 </template>
 
 <style lang="scss">
+@use './../../styles/required' as required;
 @reference "./../../../foundation/tailwind";
 
 .s-input {
-	@apply inline-flex;
+	$this: &;
+	@apply inline-flex relative;
 
 	input {
 		@apply w-full px-3 py-1.5;
@@ -99,6 +101,12 @@ export default {
 		&:disabled {
 			@apply opacity-s-component-disabled;
 			@apply cursor-default;
+		}
+	}
+
+	&--required {
+		&#{$this}::after {
+			@include required.required-indicator();
 		}
 	}
 

@@ -3,10 +3,7 @@ import { TComponentView, type IComponentViewOptions } from '../../base/component
 import type { IInput, IInputProps, TInputEvents } from './types'
 import { TEvented } from '../../common/evented'
 
-export class TInput
-	extends TInputControl<string, IInputProps, TInputEvents>
-	implements IInput
-{
+export class TInput extends TInputControl<string, IInputProps, TInputEvents> implements IInput {
 	static override baseClass = 's-input'
 
 	static defaultValues: Partial<IInputProps> = {
@@ -40,5 +37,12 @@ export class TInput
 
 		this._applyPlaceholder(value)
 		;(this.events as TEvented<TInputEvents>).emit('change:placeholder', value)
+	}
+
+	getProps(): IInputProps {
+		return {
+			...super.getProps(),
+			placeholder: this.placeholder,
+		}
 	}
 }

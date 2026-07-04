@@ -37,9 +37,7 @@ export interface IInputState extends IInputControlState<string> {
 	placeholder: Ref<string>
 }
 
-export function syncInput(
-	options: ISyncComponentViewOptions<IInputProps, IInput>,
-): IInputState {
+export function syncInput(options: ISyncComponentViewOptions<IInputProps, IInput>): IInputState {
 	const syncProps = syncInputControl(options)
 
 	const { instance, props, emit } = options
