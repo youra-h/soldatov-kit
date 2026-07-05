@@ -70,7 +70,7 @@ export default {
 			view="none"
 			:size="size"
 			:variant="variant"
-			@click="instance.click()"
+			@click="instance.active = true"
 			role="tab"
 		>
 			<template #leading>

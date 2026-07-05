@@ -19,13 +19,6 @@ export default class TListItem
 		this._initSelectableComposition(collection)
 	}
 
-	override click(event?: Event): void {
-		if (!this.disabled) {
-			this.toggleSelected()
-		}
-		super.click(event)
-	}
-
 	override getProps(): IListItemProps {
 		return {
 			...super.getProps(),

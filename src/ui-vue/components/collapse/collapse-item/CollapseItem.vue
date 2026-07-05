@@ -67,7 +67,7 @@ export default {
 			:disabled="disabled"
 			:size="size"
 			:variant="variant"
-			@click="instance.click()"
+			@click="instance.toggleSelected()"
 		>
 			<template #leading>
 				<slot name="leading" />

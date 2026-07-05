@@ -68,7 +68,7 @@ export default {
 			:variant="variant"
 			:aria-selected="selected"
 			:data-highlighted="highlighted"
-			@click="instance.click()"
+			@click="instance.toggleSelected()"
 		>
 			<template #leading>
 				<slot name="leading" />

@@ -18,14 +18,6 @@ export default class TTabItem
 		this._initActivatableComposition(collection)
 	}
 
-	override click(event?: Event): void {
-		if (!this.disabled) {
-			this.active = true
-		}
-
-		super.click(event)
-	}
-
 	override getProps(): ITabItemProps {
 		return {
 			...super.getProps(),

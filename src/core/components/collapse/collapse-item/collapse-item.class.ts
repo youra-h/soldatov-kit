@@ -23,14 +23,6 @@ export default class TCollapseItem
 		this._initSelectableComposition(collection)
 	}
 
-	override click(event?: Event): void {
-		if (!this.disabled) {
-			this.toggleSelected()
-		}
-
-		super.click(event)
-	}
-
 	open(): void {
 		this.selected = true
 	}
