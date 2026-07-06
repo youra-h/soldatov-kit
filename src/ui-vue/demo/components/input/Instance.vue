@@ -16,6 +16,7 @@ type Props = {
 	readonly?: boolean
 	required?: boolean
 	value?: string
+	placeholder?: string
 }
 
 const props = defineProps<Props>()
@@ -49,6 +50,6 @@ useSyncPropsToInstance(props, instance)
 
 <template>
 	<PanelDemo info="Instance-based demo">
-		<Input :ctrl="instance" v-bind="handlers" />
+		<Input :ctrl="instance" :placeholder="placeholder" v-bind="handlers" />
 	</PanelDemo>
 </template>

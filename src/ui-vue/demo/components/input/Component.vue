@@ -14,6 +14,7 @@ type Props = {
 	readonly?: boolean
 	required?: boolean
 	value?: string
+	placeholder?: string
 }
 
 const props = defineProps<Props>()
@@ -36,7 +37,7 @@ const { handlers } = useEventLogger(emit, emitsInput)
 			:readonly="readonly"
 			:required="required"
 			:value="value"
-			placeholder="Placeholder"
+			:placeholder="placeholder"
 			v-bind="handlers"
 		/>
 	</PanelDemo>
