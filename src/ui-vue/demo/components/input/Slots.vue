@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Input } from '@ui/input'
+import { Icon, useIconImport } from '@ui/icon'
 import { SIZES, VARIANTS } from '../../common/items'
 import type { TComponentSize, TComponentVariant } from '@core'
 
@@ -12,6 +13,9 @@ const props = defineProps<Props>()
 
 const sizes: TComponentSize[] = SIZES
 const variants: TComponentVariant[] = VARIANTS
+
+const searchIcon = useIconImport('/src/icons/check.svg')
+const closeIcon = useIconImport('/src/icons/close.svg')
 </script>
 
 <template>
@@ -48,29 +52,48 @@ const variants: TComponentVariant[] = VARIANTS
 			</div>
 		</div>
 
-		<!-- States -->
+		<!-- Leading / Trailing slots -->
 		<div class="sizes-demo__section">
-			<div class="sizes-demo__section-title">States</div>
-			<div class="sizes-demo__section-grid">
+			<div class="sizes-demo__section-title">Leading / Trailing slots</div>
+			<div class="flex gap-4 flex-wrap">
 				<div class="sizes-demo__section-item">
-					<div class="sizes-demo__section-label">Normal</div>
-					<Input :visible="visible" :rendered="rendered" value="Typing..." />
-				</div>
-				<div class="sizes-demo__section-item">
-					<div class="sizes-demo__section-label">Disabled</div>
-					<Input :visible="visible" :rendered="rendered" disabled value="Disabled" />
-				</div>
-				<div class="sizes-demo__section-item">
-					<div class="sizes-demo__section-label">Readonly</div>
-					<Input :visible="visible" :rendered="rendered" readonly value="Read only" />
-				</div>
-				<div class="sizes-demo__section-item">
-					<div class="sizes-demo__section-label">Placeholder</div>
+					<div class="sizes-demo__section-label">Leading icon</div>
 					<Input
 						:visible="visible"
 						:rendered="rendered"
-						placeholder="Enter text..."
-					/>
+						value="Search"
+					>
+						<template #leading>
+							<Icon :tag="searchIcon" />
+						</template>
+					</Input>
+				</div>
+				<div class="sizes-demo__section-item">
+					<div class="sizes-demo__section-label">Trailing icon</div>
+					<Input
+						:visible="visible"
+						:rendered="rendered"
+						value="Clear"
+					>
+						<template #trailing>
+							<Icon :tag="closeIcon" />
+						</template>
+					</Input>
+				</div>
+				<div class="sizes-demo__section-item">
+					<div class="sizes-demo__section-label">Both icons</div>
+					<Input
+						:visible="visible"
+						:rendered="rendered"
+						placeholder="Both sides..."
+					>
+						<template #leading>
+							<Icon :tag="searchIcon" />
+						</template>
+						<template #trailing>
+							<Icon :tag="closeIcon" />
+						</template>
+					</Input>
 				</div>
 			</div>
 		</div>
