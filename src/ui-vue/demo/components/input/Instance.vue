@@ -49,6 +49,6 @@ useSyncPropsToInstance(props, instance)
 
 <template>
 	<PanelDemo info="Instance-based demo">
-		<Input :instance="instance" v-bind="handlers" />
+		<Input :ctrl="instance" v-bind="handlers" />
 	</PanelDemo>
 </template>
