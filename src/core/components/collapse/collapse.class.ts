@@ -119,6 +119,10 @@ export class TCollapse
 							payload.newValue,
 						)
 					})
+
+					item.disabled = this.disabled
+					item.size = this.size
+					item.variant = this.variant
 				},
 			},
 			'item:beforeDelete',

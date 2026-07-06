@@ -119,6 +119,10 @@ export class TList<
 					})
 
 					item.setWordWrapResolver(() => this._wordWrap)
+
+					item.disabled = this.disabled
+					item.size = this.size
+					item.variant = this.variant
 				},
 			},
 			'item:beforeDelete',
