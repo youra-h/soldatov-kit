@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Input, emitsInput } from '@ui/input'
+import { Button } from '@ui/button'
 import PanelDemo from '../../common/PanelDemo.vue'
 import { useEventLogger } from '../../common/useEventLogger'
 import type { EventLogEntry } from '../../common/EventLog.vue'
@@ -28,6 +29,7 @@ const { handlers } = useEventLogger(emit, emitsInput)
 
 <template>
 	<PanelDemo info="Props-based demo">
+		<Button class="mr-2">Button</Button>
 		<Input
 			:visible="visible"
 			:rendered="rendered"
