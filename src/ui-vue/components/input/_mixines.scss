@@ -1,0 +1,11 @@
+@mixin input-variant($color: 'neutral', $border: 400) {
+	$border-hover: $border + 100;
+
+	input {
+		@apply #{'border-s-' + $color + '-' + $border};
+
+		&:hover:not(:disabled) {
+			@apply #{'border-s-' + $color + '-' + $border-hover};
+		}
+	}
+}

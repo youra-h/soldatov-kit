@@ -69,15 +69,17 @@ export default {
 </template>
 
 <style lang="scss">
+@use './mixines' as mixines;
 @use './../../styles/required' as required;
 @reference "./../../../foundation/tailwind";
 
 .s-input {
 	$this: &;
-	@apply inline-flex items-center gap-1.5;
+	@apply inline-flex items-center;
+	@apply relative;
 
 	input {
-		@apply w-full px-3 py-1.5;
+		@apply w-full;
 		@apply rounded-md border;
 		@apply bg-white;
 		@apply text-s-component;
@@ -85,7 +87,7 @@ export default {
 		@apply outline-none;
 
 		&::placeholder {
-			// @apply text-s-component-placeholder;
+			@apply text-s-component-placeholder;
 		}
 
 		&:focus-visible {
@@ -106,61 +108,63 @@ export default {
 		}
 	}
 
-	&--normal input {
-		@apply border-s-neutral-400;
+	&--normal {
+		@include mixines.input-variant('neutral');
+	}
 
-		&:hover:not(:disabled) {
-			@apply border-s-neutral-500;
+	&--accent {
+		@include mixines.input-variant('accent');
+	}
+
+	&--positive {
+		@include mixines.input-variant('positive');
+	}
+
+	&--negative {
+		@include mixines.input-variant('negative');
+	}
+
+	&--caution {
+		@include mixines.input-variant('caution');
+	}
+
+	&--size-sm {
+		input {
+			@apply text-sm;
+			@apply px-1.5 py-0.5;
 		}
+		@apply gap-1;
 	}
 
-	&--accent input {
-		@apply border-s-accent-400;
-
-		&:hover:not(:disabled) {
-			@apply border-s-accent-500;
+	&--size-normal {
+		input {
+			@apply px-2.5 py-1;
 		}
+		@apply gap-1.5;
 	}
 
-	&--positive input {
-		@apply border-s-positive-400;
-
-		&:hover:not(:disabled) {
-			@apply border-s-positive-500;
+	&--size-lg {
+		input {
+			@apply px-3.5 py-1.5;
+			@apply text-lg;
 		}
+		@apply gap-2;
 	}
 
-	&--negative input {
-		@apply border-s-negative-400;
-
-		&:hover:not(:disabled) {
-			@apply border-s-negative-500;
+	&--size-xl {
+		input {
+			@apply px-4 py-2;
+			@apply text-xl;
 		}
+		@apply gap-3;
 	}
 
-	&--caution input {
-		@apply border-s-caution-400;
-
-		&:hover:not(:disabled) {
-			@apply border-s-caution-500;
+	&--size-2xl {
+		input {
+			@apply px-5 py-3;
+			@apply text-2xl;
 		}
-	}
-
-	&--size-sm input {
-		@apply px-2 py-1;
-		@apply text-xs;
-	}
-
-	&--size-lg input {
-		@apply px-4 py-2;
-	}
-
-	&--size-xl input {
-		@apply px-5 py-2.5;
-	}
-
-	&--size-2xl input {
-		@apply px-6 py-3;
+		@apply gap-4;
 	}
 }
 </style>

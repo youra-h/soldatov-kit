@@ -36,6 +36,7 @@ const { handlers } = useEventLogger(emit, emitsInput)
 			:readonly="readonly"
 			:required="required"
 			:value="value"
+			placeholder="Placeholder"
 			v-bind="handlers"
 		/>
 	</PanelDemo>
