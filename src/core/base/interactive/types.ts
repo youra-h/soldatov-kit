@@ -7,8 +7,6 @@ export type TInteractiveEvents = TComponentViewEvents & {
 	'change:disabled': (value: boolean) => void
 	/** change:focused */
 	'change:focused': (value: boolean) => void
-	/** click proxy (UI-слой может дергать этот метод) */
-	click: (event: Event) => void
 }
 
 export interface IInteractiveProps extends IComponentViewProps {
@@ -28,5 +26,4 @@ export interface IInteractive<
 > extends IComponentView<TProps, TEvents, TStates> {
 	disabled: boolean
 	focused: boolean
-	click(event: Event): void
 }

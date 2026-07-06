@@ -24,17 +24,6 @@ describe('TInteractive', () => {
 		expect(focusedHandler).toHaveBeenCalledTimes(2)
 	})
 
-	it('click эмитит событие click', () => {
-		const interactive = new TInteractive()
-		const handler = vi.fn()
-		interactive.events.on('click', handler)
-
-		const event = new Event('test')
-		interactive.click(event)
-
-		expect(handler).toHaveBeenCalledWith(event)
-	})
-
 	it('states позволяет передать инстанс или класс для disableState-state', () => {
 		const log: string[] = []
 

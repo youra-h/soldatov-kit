@@ -18,7 +18,6 @@ export const emitsInteractive: TEmits = [
 	'change:focused',
 	'update:focused',
 	'focused',
-	'click',
 ] as const
 
 export const propsInteractive: TProps = {
@@ -43,7 +42,9 @@ export default {
 export interface IInteractiveState extends IComponentViewState {
 	disabled: Ref<boolean>
 	focused: Ref<boolean>
+}
 
+/**
  * Bind props to instance properties.
  * @param props
  * @param instance
@@ -65,10 +66,6 @@ export function syncInteractive(
 		emit?.('change:focused', value)
 		emit?.('focused', value)
 		emit?.('update:focused', value)
-	})
-
-	instance.events.on('click' as any, (event: Event) => {
-		emit?.('click', event)
 	})
 
 	watch<boolean | undefined>(

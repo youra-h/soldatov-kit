@@ -63,10 +63,6 @@ export default class TInteractive<
 		this._states.focused.value = value
 	}
 
-	click(event: Event): void {
-		;(this.events as TEvented<TInteractiveEvents>).emit('click' as any, event)
-	}
-
 	getProps(): TProps {
 		return {
 			...super.getProps(),

@@ -311,13 +311,6 @@ describe('TTabItem', () => {
 			expect(spy).not.toHaveBeenCalled()
 		})
 
-		it('does not activate on click when disabled', () => {
-			item.disabled = true
-			item.click()
-
-			expect(item.active).toBe(undefined)
-		})
-
 		it('allows deactivation even when disabled', () => {
 			item.active = true
 			item.disabled = true

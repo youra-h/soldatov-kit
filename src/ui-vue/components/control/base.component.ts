@@ -20,7 +20,6 @@ export const emitsControl: TEmits = [
 	'change:focused',
 	'update:focused',
 	'focused',
-	'click',
 ] as const
 
 export const propsControl: TProps = {
