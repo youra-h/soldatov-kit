@@ -5,6 +5,7 @@ import { useInstance } from '../../composables/useInstance'
 import { useBundle } from '../../composables/useBundle'
 import { useElementBinding } from '../../composables/useElementBinding'
 import { useInstanceBinding } from '../../composables/useInstanceBinding'
+import { useSplitAttrs } from '../../composables/useSplitAttrs'
 import { createInputBoolBundle } from '@plugins'
 import type { TBaseComponentViewProps } from '../component-view'
 
@@ -12,7 +13,7 @@ export default {
 	name: '_Switch',
 	inheritAttrs: false,
 	extends: BaseSwitch,
-	setup(props: TBaseComponentViewProps<ISwitchProps, ISwitch>, { emit, attrs }) {
+	setup(props: TBaseComponentViewProps<ISwitchProps, ISwitch>, { emit }) {
 		const instance = useInstance(TSwitch, props)
 		// Инициализация плагинов
 		const plugins = useBundle(createInputBoolBundle, props?.plugins)
@@ -29,7 +30,11 @@ export default {
 				emit,
 			})
 
+		const { containerAttrs, controlAttrs } = useSplitAttrs()
+
 		return {
+			containerAttrs,
+			controlAttrs,
 			instance,
 			plugins,
 			rootRef,
@@ -42,14 +47,13 @@ export default {
 			value,
 			readonly,
 			required,
-			attrs,
 		}
 	},
 }
 </script>
 
 <template>
-	<div ref="rootRef" v-if="rendered" v-show="visible" :class="classes">
+	<div ref="rootRef" v-if="rendered" v-show="visible" :class="classes" v-bind="containerAttrs">
 		<input
 			type="checkbox"
 			:id="instance.id.toString()"
@@ -58,7 +62,7 @@ export default {
 			:disabled="disabled"
 			:required="required"
 			:aria-checked="Boolean(value)"
-			v-bind="attrs"
+			v-bind="controlAttrs"
 		/>
 		<div class="s-switch__track">
 			<div class="s-switch__track--thumb">

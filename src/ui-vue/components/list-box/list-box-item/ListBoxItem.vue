@@ -5,13 +5,14 @@ import { useInstance } from '../../../composables/useInstance'
 import { useBundle } from '../../../composables/useBundle'
 import { useInstanceBinding } from '../../../composables/useInstanceBinding'
 import { useElementBinding } from '../../../composables/useElementBinding'
-import { createListItemBundle, TListItemPlugin } from '@plugins'
-import { useSyncProps } from '../../../composables/useSyncProps'
+import { useSplitAttrs } from '../../../composables/useSplitAttrs'
+import { createListItemBundle } from '@plugins'
 import { Button } from '../../button'
 import type { TBaseComponentViewProps } from '../../component-view'
 
 export default {
 	name: '_ListBoxItem',
+	inheritAttrs: false,
 	extends: BaseListBoxItem,
 	components: { Button },
 	setup(props: TBaseComponentViewProps<IListItemProps, IListBoxItem>, { emit }) {
@@ -37,7 +38,11 @@ export default {
 			highlighted,
 		} = syncListBoxItem({ props, instance, plugins, emit })
 
+		const { containerAttrs, controlAttrs } = useSplitAttrs()
+
 		return {
+			containerAttrs,
+			controlAttrs,
 			instance,
 			plugins,
 			rootRef,
@@ -59,7 +64,7 @@ export default {
 </script>
 
 <template>
-	<div ref="rootRef" v-if="rendered" v-show="visible" :class="classes" :style="{ order }">
+	<div ref="rootRef" v-if="rendered" v-show="visible" :class="classes" :style="{ order }" v-bind="containerAttrs">
 		<Button
 			:tag="tag"
 			:view="view"
@@ -69,6 +74,7 @@ export default {
 			:aria-selected="selected"
 			:data-highlighted="highlighted"
 			@click="instance.toggleSelected()"
+			v-bind="controlAttrs"
 		>
 			<template #leading>
 				<slot name="leading" />

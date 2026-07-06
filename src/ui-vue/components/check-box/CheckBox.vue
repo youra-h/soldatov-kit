@@ -5,6 +5,7 @@ import { useInstance } from '../../composables/useInstance'
 import { useBundle } from '../../composables/useBundle'
 import { useElementBinding } from '../../composables/useElementBinding'
 import { useInstanceBinding } from '../../composables/useInstanceBinding'
+import { useSplitAttrs } from '../../composables/useSplitAttrs'
 import { Icon, useIconImport } from '../icon'
 import { createInputBoolBundle } from '@plugins'
 import type { TBaseComponentViewProps } from '../component-view'
@@ -13,7 +14,7 @@ export default {
 	name: '_CheckBox',
 	inheritAttrs: false,
 	extends: BaseCheckBox,
-	setup(props: TBaseComponentViewProps<ICheckBoxProps, ICheckBox>, { emit, attrs }) {
+	setup(props: TBaseComponentViewProps<ICheckBoxProps, ICheckBox>, { emit }) {
 		const instance = useInstance(TCheckBox, props)
 		// Инициализация плагинов
 		const plugins = useBundle(createInputBoolBundle, props?.plugins)
@@ -45,7 +46,11 @@ export default {
 		const defaultIconTag = useIconImport('../../icons/check.svg')
 		const defaultIndeterminateIconTag = useIconImport('../../icons/check_indeterminate.svg')
 
+		const { containerAttrs, controlAttrs } = useSplitAttrs()
+
 		return {
+			containerAttrs,
+			controlAttrs,
 			instance,
 			defaultIconTag,
 			defaultIndeterminateIconTag,
@@ -62,14 +67,13 @@ export default {
 			value,
 			readonly,
 			required,
-			attrs,
 		}
 	},
 }
 </script>
 
 <template>
-	<div ref="rootRef" v-if="rendered" v-show="visible" :class="classes">
+	<div ref="rootRef" v-if="rendered" v-show="visible" :class="classes" v-bind="containerAttrs">
 		<input
 			type="checkbox"
 			:id="instance.id.toString()"
@@ -78,7 +82,7 @@ export default {
 			:disabled="disabled"
 			:required="required"
 			:aria-checked="instance.getAriaChecked()"
-			v-bind="attrs"
+			v-bind="controlAttrs"
 		/>
 		<div class="s-check-box__container">
 			<!-- Слот для checked иконки -->

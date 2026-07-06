@@ -5,6 +5,7 @@ import { useInstance } from '../../../composables/useInstance'
 import { useBundle } from '../../../composables/useBundle'
 import { useInstanceBinding } from '../../../composables/useInstanceBinding'
 import { useElementBinding } from '../../../composables/useElementBinding'
+import { useSplitAttrs } from '../../../composables/useSplitAttrs'
 import { createComponentViewBundle } from '@plugins'
 import { Icon, useIconImport } from '../../icon'
 import { Button } from '../../button'
@@ -12,6 +13,7 @@ import type { TBaseComponentViewProps } from '../../component-view'
 
 export default {
 	name: '_CollapseItem',
+	inheritAttrs: false,
 	extends: BaseCollapseItem,
 	components: { Icon, Button },
 	setup(props: TBaseComponentViewProps<ICollapseItemProps, ICollapseItem>, { emit }) {
@@ -38,7 +40,11 @@ export default {
 
 		const arrowIconTag = useIconImport('../../../icons/arrow_right.svg')
 
+		const { containerAttrs, controlAttrs } = useSplitAttrs()
+
 		return {
+			containerAttrs,
+			controlAttrs,
 			instance,
 			arrowIconTag,
 			plugins,
@@ -60,7 +66,7 @@ export default {
 </script>
 
 <template>
-	<div ref="rootRef" v-if="rendered" v-show="visible" :class="classes" :style="{ order }">
+	<div ref="rootRef" v-if="rendered" v-show="visible" :class="classes" :style="{ order }" v-bind="containerAttrs">
 		<Button
 			class="s-collapse-item__header"
 			:view="view"
@@ -68,6 +74,7 @@ export default {
 			:size="size"
 			:variant="variant"
 			@click="instance.toggleSelected()"
+			v-bind="controlAttrs"
 		>
 			<template #leading>
 				<slot name="leading" />

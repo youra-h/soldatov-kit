@@ -5,6 +5,7 @@ import { useInstance } from '../../composables/useInstance'
 import { useBundle } from '../../composables/useBundle'
 import { useElementBinding } from '../../composables/useElementBinding'
 import { useInstanceBinding } from '../../composables/useInstanceBinding'
+import { useSplitAttrs } from '../../composables/useSplitAttrs'
 import { createInputBundle } from '@plugins'
 import type { TBaseComponentViewProps } from '../component-view'
 
@@ -12,7 +13,7 @@ export default {
 	name: '_Input',
 	inheritAttrs: false,
 	extends: BaseInput,
-	setup(props: TBaseComponentViewProps<IInputProps, IInput>, { emit, attrs }) {
+	setup(props: TBaseComponentViewProps<IInputProps, IInput>, { emit }) {
 		const instance = useInstance(TInput, props)
 
 		const plugins = useBundle(createInputBundle, props?.plugins)
@@ -28,8 +29,11 @@ export default {
 				emit,
 			})
 
+		const { containerAttrs, controlAttrs } = useSplitAttrs()
+
 		return {
-			attrs,
+			containerAttrs,
+			controlAttrs,
 			instance,
 			plugins,
 			rootRef,
@@ -48,7 +52,7 @@ export default {
 </script>
 
 <template>
-	<div ref="rootRef" v-if="rendered" v-show="visible" :class="classes">
+	<div ref="rootRef" v-if="rendered" v-show="visible" :class="classes" v-bind="containerAttrs">
 		<slot name="leading"> </slot>
 		<input
 			type="text"
@@ -58,7 +62,7 @@ export default {
 			:disabled="disabled"
 			:readonly="readonly"
 			:required="required"
-			v-bind="attrs"
+			v-bind="controlAttrs"
 		/>
 		<slot name="trailing"> </slot>
 	</div>
