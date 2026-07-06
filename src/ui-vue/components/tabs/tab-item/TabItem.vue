@@ -5,6 +5,7 @@ import { useInstance } from '../../../composables/useInstance'
 import { useBundle } from '../../../composables/useBundle'
 import { useInstanceBinding } from '../../../composables/useInstanceBinding'
 import { useElementBinding } from '../../../composables/useElementBinding'
+import { useSplitAttrs } from '../../../composables/useSplitAttrs'
 import { createComponentViewBundle } from '@plugins'
 import { Icon, useIconImport } from '../../icon'
 import { Button } from '../../button'
@@ -15,7 +16,7 @@ export default {
 	inheritAttrs: false,
 	extends: BaseTabItem,
 	components: { Icon, Button },
-	setup(props: TBaseComponentViewProps<ITabItemProps, ITabItem>, { emit, attrs }) {
+	setup(props: TBaseComponentViewProps<ITabItemProps, ITabItem>, { emit }) {
 		const instance = useInstance(TTabItem, props)
 		// Инициализация плагинов
 		const plugins = useBundle(createComponentViewBundle, props?.plugins)
@@ -44,8 +45,11 @@ export default {
 
 		const closeIconTag = useIconImport('../../icons/close.svg')
 
+		const { containerAttrs, controlAttrs } = useSplitAttrs()
+
 		return {
-			attrs,
+			containerAttrs,
+			controlAttrs,
 			instance,
 			closeIconTag,
 			plugins,
@@ -66,7 +70,7 @@ export default {
 </script>
 
 <template>
-	<div ref="rootRef" v-if="rendered" v-show="visible" :class="classes" :style="{ order }">
+	<div ref="rootRef" v-if="rendered" v-show="visible" :class="classes" :style="{ order }" v-bind="containerAttrs">
 		<Button
 			:disabled="disabled"
 			view="none"
@@ -74,7 +78,7 @@ export default {
 			:variant="variant"
 			@click="instance.active = true"
 			role="tab"
-			v-bind="attrs"
+			v-bind="controlAttrs"
 		>
 			<template #leading>
 				<slot name="leading" />
