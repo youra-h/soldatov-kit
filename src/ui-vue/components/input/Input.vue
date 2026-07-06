@@ -29,6 +29,7 @@ export default {
 			})
 
 		return {
+			attrs,
 			instance,
 			plugins,
 			rootRef,
@@ -41,7 +42,6 @@ export default {
 			value,
 			readonly,
 			required,
-			attrs,
 		}
 	},
 }
