@@ -42,12 +42,12 @@ const tabsInstance = new TTabs({
 		<!-- Leading / Trailing slots -->
 		<div class="tabs-slots-demo__section">
 			<h4 class="tabs-slots-demo__subtitle">Leading & Trailing slots</h4>
-			<Tabs view="line" :size="size" :variant="variant">
+			<Tabs view="line" :size="size" :variant="variant" disabled>
 				<template #leading>
 					<span class="tabs-slots-demo__badge">leading</span>
 				</template>
 				<TabItem text="Tab 1" value="t1" active />
-				<TabItem text="Tab 2" value="t2" />
+				<TabItem text="Tab 2" value="t2" @click="console.log('click')" class="qwe"/>
 				<TabItem text="Tab 3" value="t3" />
 				<template #trailing>
 					<span class="tabs-slots-demo__badge">trailing</span>

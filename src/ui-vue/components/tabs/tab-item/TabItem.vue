@@ -12,9 +12,10 @@ import type { TBaseComponentViewProps } from '../../component-view'
 
 export default {
 	name: '_TabItem',
+	inheritAttrs: false,
 	extends: BaseTabItem,
 	components: { Icon, Button },
-	setup(props: TBaseComponentViewProps<ITabItemProps, ITabItem>, { emit }) {
+	setup(props: TBaseComponentViewProps<ITabItemProps, ITabItem>, { emit, attrs }) {
 		const instance = useInstance(TTabItem, props)
 		// Инициализация плагинов
 		const plugins = useBundle(createComponentViewBundle, props?.plugins)
@@ -44,6 +45,7 @@ export default {
 		const closeIconTag = useIconImport('../../icons/close.svg')
 
 		return {
+			attrs,
 			instance,
 			closeIconTag,
 			plugins,
@@ -72,6 +74,7 @@ export default {
 			:variant="variant"
 			@click="instance.active = true"
 			role="tab"
+			v-bind="attrs"
 		>
 			<template #leading>
 				<slot name="leading" />
