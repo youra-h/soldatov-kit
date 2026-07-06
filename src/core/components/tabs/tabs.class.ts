@@ -52,9 +52,7 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStates> implem
 
 		const ctor = new.target as typeof TTabs
 
-		const { props = {} } = TComponentView.prepareOptions<ITabsProps, TTabsStates>(
-			options,
-		)
+		const { props = {} } = TComponentView.prepareOptions<ITabsProps, TTabsStates>(options)
 
 		// Создаем коллекцию табов
 		this._collection = new TActivatableCollection<any, any, ITabItem>({
@@ -109,7 +107,11 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStates> implem
 					})
 
 					item.events.on('change:text', (payload: TValuePayload<string>) => {
-						;(this.events as TEvented<TTabsEvents>).emit('item:text', item, payload.newValue)
+						;(this.events as TEvented<TTabsEvents>).emit(
+							'item:text',
+							item,
+							payload.newValue,
+						)
 					})
 
 					item.events.on('change:rendered', (value: boolean) => {
@@ -124,6 +126,7 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStates> implem
 						;(this.events as TEvented<TTabsEvents>).emit('item:present', item, value)
 					})
 
+					item.disabled = this.disabled
 					item.size = this.size
 					item.variant = this.variant
 				},

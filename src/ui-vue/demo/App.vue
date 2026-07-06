@@ -43,7 +43,7 @@ const playgrounds = {
 } as const
 
 // Активный playground (можно управлять через меню)
-const active = ref<keyof typeof playgrounds>('check-box')
+const active = ref<keyof typeof playgrounds>('tabs')
 
 // View mode: 'sandbox' | 'logs'
 const activeView = ref<'sandbox' | 'logs'>('sandbox')

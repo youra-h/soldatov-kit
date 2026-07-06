@@ -12,7 +12,6 @@ import type { TEmits, TProps, ISyncComponentViewOptions } from '../../types'
 import { useSyncProps } from '../../composables/useSyncProps'
 import { useInheritProps } from '../../composables/useInheritProps'
 
-
 export const emitsControl: TEmits = [
 	...emitsStylable,
 	'change:disabled',
