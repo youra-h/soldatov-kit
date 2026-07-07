@@ -1,5 +1,5 @@
 import type { PropType, Ref } from 'vue'
-import { type IFrameProps, TFrame, type IFrame, type TFrameStrategy } from '@core'
+import { type IFrameProps, TFrame, type IFrame, type TFramePosition } from '@core'
 import { useSyncProps } from '../../composables/useSyncProps'
 import { useInheritProps } from '../../composables/useInheritProps'
 import {
@@ -24,8 +24,8 @@ export const emitsFrame: TEmits = [
 	'change:height',
 	'update:height',
 	'change:zIndex',
-	'change:strategy',
-	'update:strategy',
+	'change:position',
+	'update:position',
 	'beforeShow',
 	'beforeHide',
 	'show',
@@ -54,9 +54,9 @@ export const propsFrame: TProps = {
 		type: Boolean as PropType<IFrameProps['visible']>,
 		default: TFrame.defaultValues.visible,
 	},
-	strategy: {
-		type: String as PropType<IFrameProps['strategy']>,
-		default: TFrame.defaultValues.strategy,
+	position: {
+		type: String as PropType<IFrameProps['position']>,
+		default: TFrame.defaultValues.position,
 	},
 }
 
@@ -74,7 +74,7 @@ export interface IFrameState {
 	styles: Ref<Record<string, string | number>>
 	width: Ref<string | number | undefined>
 	height: Ref<string | number | undefined>
-	strategy: Ref<TFrameStrategy>
+	position: Ref<TFramePosition>
 }
 
 /**
@@ -122,9 +122,9 @@ export function syncFrame(
 	instance.events.on('change:zIndex' as any, (value: number) => {
 		emit?.('change:zIndex', value)
 	})
-	instance.events.on('change:strategy' as any, (value: TFrameStrategy) => {
-		emit?.('change:strategy', value)
-		emit?.('update:strategy', value)
+	instance.events.on('change:position' as any, (value: TFramePosition) => {
+		emit?.('change:position', value)
+		emit?.('update:position', value)
 	})
 
 	const stylePlugin = plugins.get(TFrameStylePlugin)!
@@ -136,7 +136,7 @@ export function syncFrame(
 			y: () => instance.y,
 			width: () => instance.width,
 			height: () => instance.height,
-			strategy: () => instance.strategy,
+			position: () => instance.position,
 		}),
 		...useSyncProps(stylePlugin.events as any, {
 			styles: () => stylePlugin.styles,

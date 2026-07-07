@@ -6,7 +6,7 @@ import type {
 import type { IStateUnit } from '../../common/state-unit'
 import type { IVisibilityState } from '../../common/states'
 
-export type TFrameStrategy = 'fixed' | 'absolute'
+export type TFramePosition = 'fixed' | 'absolute'
 
 export interface IFrameProps extends IComponentProps {
 	/** Позиция по оси X (px) */
@@ -19,8 +19,8 @@ export interface IFrameProps extends IComponentProps {
 	height?: number | string
 	/** Видимость */
 	visible?: boolean
-	/** Стратегия позиционирования: fixed (viewport) или absolute (родитель) */
-	strategy?: TFrameStrategy
+	/** CSS-позиционирование: fixed (viewport) или absolute (родитель) */
+	position?: TFramePosition
 }
 
 export type TFrameStates = {
@@ -44,8 +44,8 @@ export type TFrameEvents = TComponentEvents & {
 	'change:height': (value: number | string) => void
 	/** change:zIndex — срабатывает при изменении z-index */
 	'change:zIndex': (value: number) => void
-	/** change:strategy */
-	'change:strategy': (value: TFrameStrategy) => void
+	/** change:position */
+	'change:position': (value: TFramePosition) => void
 	/** beforeShow (можно отменить, вернув false) */
 	beforeShow: () => boolean
 	/** beforeHide (можно отменить, вернув false) */
@@ -69,8 +69,8 @@ export interface IFrame extends IComponent<IFrameProps, TFrameEvents> {
 	height: number | string
 	/** Текущий z-index (readonly) */
 	readonly zIndex: number
-	/** Стратегия позиционирования */
-	strategy: TFrameStrategy
+	/** CSS-позиционирование */
+	position: TFramePosition
 	/** Показать */
 	show(): void
 	/** Скрыть */

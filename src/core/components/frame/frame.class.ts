@@ -4,7 +4,7 @@ import { TVisibilityState, type IVisibilityState } from '../../common/states'
 import { TStateUnit } from '../../common/state-unit'
 import { TEvented } from '../../common/evented'
 import type { TValuePayload } from '../../common/types'
-import type { IFrame, IFrameProps, TFrameEvents, TFrameStates, TFrameStrategy } from './types'
+import type { IFrame, IFrameProps, TFrameEvents, TFrameStates, TFramePosition } from './types'
 
 /**
  * Headless-контейнер для всплывающего контента.
@@ -30,7 +30,7 @@ export default class TFrame
 		width: 100,
 		height: 100,
 		visible: false,
-		strategy: 'fixed',
+		position: 'fixed',
 	}
 
 	/** Базовый z-index для всех Frame. Можно переопределить статически. */
@@ -53,7 +53,7 @@ export default class TFrame
 	}
 
 	private _zIndex: number = 0
-	private _strategy: TFrameStrategy
+	private _position: TFramePosition
 
 	constructor(options: IComponentOptions<IFrameProps, TFrameStates> | Partial<IFrameProps> = {}) {
 		const ctor = new.target as typeof TFrame
@@ -68,7 +68,7 @@ export default class TFrame
 		const height = props.height ?? ctor.defaultValues.height!
 		const visible = props.visible ?? ctor.defaultValues.visible!
 
-		this._strategy = props.strategy ?? ctor.defaultValues.strategy!
+		this._position = props.position ?? ctor.defaultValues.position!
 
 		this._states.visible = states?.visible ?? new TVisibilityState({ initial: visible })
 		this._states.x = states?.x ?? new TStateUnit<number>({ initial: x })
@@ -132,13 +132,13 @@ export default class TFrame
 		this._states.height.value = value
 	}
 
-	get strategy(): TFrameStrategy {
-		return this._strategy
+	get position(): TFramePosition {
+		return this._position
 	}
-	set strategy(value: TFrameStrategy) {
-		if (this._strategy === value) return
-		this._strategy = value
-			; (this.events as TEvented<TFrameEvents>).emit('change:strategy', value)
+	set position(value: TFramePosition) {
+		if (this._position === value) return
+		this._position = value
+			; (this.events as TEvented<TFrameEvents>).emit('change:position', value)
 	}
 
 	get zIndex(): number {
@@ -176,7 +176,7 @@ export default class TFrame
 			width: this.width,
 			height: this.height,
 			visible: this.visible,
-			strategy: this.strategy,
+			position: this.position,
 		}
 	}
 }

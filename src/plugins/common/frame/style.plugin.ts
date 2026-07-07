@@ -1,4 +1,4 @@
-import type { IFrame, TFrameStrategy } from '@core'
+import type { IFrame, TFramePosition } from '@core'
 import type { IPluginBundle } from '../../base/types'
 import { TBasePlugin } from '../../base/plugin'
 import { TInstancePlugin } from '../instance'
@@ -9,7 +9,7 @@ import { TEvented } from '@core'
 /**
  * Плагин для управления CSS-стилями Frame (позиционирование + z-index + anchor).
  *
- * Подписывается на события TFrame (change:x, change:y, change:width, change:height, change:zIndex, change:strategy)
+ * Подписывается на события TFrame (change:x, change:y, change:width, change:height, change:zIndex, change:position)
  * и вычисляет объект стилей для применения к DOM-элементу.
  *
  * При установке anchor-элемента через {@link setAnchor} координаты x/y
@@ -85,7 +85,7 @@ export class TFrameStylePlugin extends TBasePlugin<TFrameStylePluginEvents> {
 			; (frame as any).events.on('change:width', update)
 			; (frame as any).events.on('change:height', update)
 			; (frame as any).events.on('change:zIndex', update)
-			; (frame as any).events.on('change:strategy', update)
+			; (frame as any).events.on('change:position', update)
 
 		this._update()
 	}
@@ -95,14 +95,14 @@ export class TFrameStylePlugin extends TBasePlugin<TFrameStylePluginEvents> {
 
 		const styles: Record<string, string | number> = {}
 
-		// Стратегия позиционирования
-		styles['position'] = this._frame.strategy
+		// CSS-позиционирование
+		styles['position'] = this._frame.position
 
 		// Координаты: с учётом anchor или напрямую из frame
 		let left = this._frame.x
 		let top = this._frame.y
 
-		if (this._anchor && this._frame.strategy === 'fixed') {
+		if (this._anchor && this._frame.position === 'fixed') {
 			const rect = this._anchor.getBoundingClientRect()
 			left = rect.left + this._anchorOffsets.x
 			top = rect.top + this._anchorOffsets.y

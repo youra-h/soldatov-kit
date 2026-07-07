@@ -210,7 +210,7 @@ describe('TFrame', () => {
 			width: 300,
 			height: 200,
 			visible: true,
-            strategy: 'absolute',
+            position: 'absolute',
         })
 
 		const props = frame.getProps()
@@ -220,7 +220,7 @@ describe('TFrame', () => {
 			width: 300,
 			height: 200,
 			visible: true,
-            strategy: 'absolute',
+            position: 'absolute',
 		})
 		expect(frame.toJSON()).toEqual(props)
 	})
@@ -264,28 +264,28 @@ describe('TFrame', () => {
 		expect(frame.y).toBe(50)
 	})
 
-    it('strategy по умолчанию fixed', () => {
+    it('position по умолчанию fixed', () => {
         const frame = new TFrame()
-        expect(frame.strategy).toBe('fixed')
+        expect(frame.position).toBe('fixed')
     })
 
-    it('strategy можно задать при создании', () => {
-        const frame = new TFrame({ strategy: 'absolute' })
-        expect(frame.strategy).toBe('absolute')
+    it('position можно задать при создании', () => {
+        const frame = new TFrame({ position: 'absolute' })
+        expect(frame.position).toBe('absolute')
     })
 
-    it('strategy можно изменить через сеттер', () => {
+    it('position можно изменить через сеттер', () => {
         const frame = new TFrame()
-        frame.strategy = 'absolute'
-        expect(frame.strategy).toBe('absolute')
+        frame.position = 'absolute'
+        expect(frame.position).toBe('absolute')
     })
 
-    it('change:strategy эмитится при изменении', () => {
+    it('change:position эмитится при изменении', () => {
         const frame = new TFrame()
         const values: string[] = []
-        frame.events.on('change:strategy' as any, (v: string) => values.push(v))
+        frame.events.on('change:position' as any, (v: string) => values.push(v))
 
-        frame.strategy = 'absolute'
+        frame.position = 'absolute'
         expect(values).toEqual(['absolute'])
     })
 })

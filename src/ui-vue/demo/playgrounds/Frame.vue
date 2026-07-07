@@ -11,7 +11,7 @@ const propertiesSchema: TPropertiesSchema = {
 	customY: { type: 'number', default: 50 },
 	width: { type: 'number', default: 280 },
 	height: { type: 'number', default: 180 },
-	strategy: {
+	position: {
 		type: 'select',
 		default: 'fixed',
 		options: ['fixed', 'absolute'],
@@ -24,13 +24,13 @@ const componentProps = ref<{
 	customY: number
 	width: number | string
 	height: number | string
-	strategy: string
+	position: string
 }>({
 	customX: 50,
 	customY: 50,
 	width: 280,
 	height: 180,
-	strategy: 'fixed',
+	position: 'fixed',
 })
 </script>
 

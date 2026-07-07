@@ -9,7 +9,7 @@ type Props = {
 	customY?: number
 	width?: number | string
 	height?: number | string
-	strategy?: 'fixed' | 'absolute'
+	position?: 'fixed' | 'absolute'
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -17,7 +17,7 @@ const props = withDefaults(defineProps<Props>(), {
 	customY: 50,
 	width: 280,
 	height: 180,
-	strategy: 'fixed',
+	position: 'fixed',
 })
 
 const positions = [
@@ -37,7 +37,7 @@ const frames = positions.map((pos) => ({
 		width: props.width,
 		height: props.height,
 		visible: false,
-		strategy: props.strategy as 'fixed' | 'absolute' | undefined,
+		position: props.position as 'fixed' | 'absolute' | undefined,
 	}),
 }))
 
