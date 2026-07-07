@@ -53,7 +53,9 @@ export default {
 
 <template>
 	<div ref="rootRef" v-if="rendered" v-show="visible" :class="classes" v-bind="containerAttrs">
-		<slot name="leading" :instance="instance"> </slot>
+		<div v-if="$slots.leading" class="s-input__leading">
+			<slot name="leading" :instance="instance"> </slot>
+		</div>
 		<input
 			type="text"
 			:id="instance.id.toString()"
@@ -64,7 +66,9 @@ export default {
 			:required="required"
 			v-bind="controlAttrs"
 		/>
-		<slot name="trailing" :instance="instance"> </slot>
+		<div v-if="$slots.trailing" class="s-input__trailing">
+			<slot name="trailing" :instance="instance"> </slot>
+		</div>
 	</div>
 </template>
 
@@ -86,6 +90,7 @@ export default {
 	input {
 		@apply w-full;
 		@apply outline-none;
+		@apply min-w-16;
 
 		&::placeholder {
 			@apply text-s-component-placeholder;
@@ -101,6 +106,20 @@ export default {
 			@apply opacity-s-component-disabled;
 			@apply cursor-default;
 		}
+	}
+
+	&__leading,
+	&__trailing {
+		@apply flex items-center justify-center gap-1;
+		height: calc(100% - 6px);
+	}
+
+	&__leading {
+		@apply pl-1;
+	}
+
+	&__trailing {
+		@apply pr-1;
 	}
 
 	&--required {
@@ -132,10 +151,9 @@ export default {
 	&--size-sm {
 		input {
 			@apply text-sm;
-			@apply leading-7;
+			@apply leading-7 indent-1.5;
 		}
 		@apply h-7;
-		@apply gap-1;
 	}
 
 	&--size-normal {
@@ -143,34 +161,30 @@ export default {
 			@apply leading-8 indent-2;
 		}
 		@apply h-8;
-		@apply gap-1.5;
 	}
 
 	&--size-lg {
 		input {
 			@apply text-lg;
-			@apply leading-9;
+			@apply leading-9 indent-2.5;
 		}
 		@apply h-9;
-		@apply gap-1.5;
 	}
 
 	&--size-xl {
 		input {
 			@apply text-xl;
-			@apply leading-10;
+			@apply leading-10 indent-3;
 		}
 		@apply h-10;
-		@apply gap-2.5;
 	}
 
 	&--size-2xl {
 		input {
 			@apply text-2xl;
-			@apply leading-11;
+			@apply leading-11 indent-3.5;
 		}
 		@apply h-11;
-		@apply gap-3;
 	}
 }
 </style>

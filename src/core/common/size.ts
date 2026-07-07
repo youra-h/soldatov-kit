@@ -1,6 +1,6 @@
 import type { TComponentSize } from './types'
 
-const SIZE_SCALE: readonly TComponentSize[] = ['xs', 'sm', 'normal', 'auto', 'lg', 'xl', '2xl']
+const SIZE_SCALE: readonly TComponentSize[] = ['sm', 'normal', 'lg', 'xl', '2xl']
 
 /**
  * Сдвигает размер на `delta` шагов по шкале.
@@ -12,5 +12,5 @@ const SIZE_SCALE: readonly TComponentSize[] = ['xs', 'sm', 'normal', 'auto', 'lg
  */
 export function shiftSize(size: TComponentSize, delta: number): TComponentSize {
 	const idx = SIZE_SCALE.indexOf(size)
-	return SIZE_SCALE[idx + delta] ?? SIZE_SCALE[2] // 'auto' is at index 2
+	return SIZE_SCALE[idx + delta] ?? 'auto'
 }
