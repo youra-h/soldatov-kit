@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Frame } from '@ui/frame'
+import { Button } from '@ui/button'
 import { TFrame } from '@core'
 import PanelDemo from '../../common/PanelDemo.vue'
 
@@ -49,7 +50,7 @@ const closeFrame = (frame: (typeof frames)[0]) => {
 <template>
 	<PanelDemo title="Frame Positions Demo">
 		<div class="frame-demo__toolbar">
-			<button
+			<Button
 				v-for="pos in positions"
 				:key="pos.label"
 				class="frame-demo__btn"
@@ -57,7 +58,7 @@ const closeFrame = (frame: (typeof frames)[0]) => {
 				@click="openFrame(frames[positions.indexOf(pos)])"
 			>
 				Open {{ pos.label }}
-			</button>
+			</Button>
 		</div>
 
 		<Frame v-for="f in frames" :key="f.label" :ctrl="f.instance">
@@ -68,16 +69,17 @@ const closeFrame = (frame: (typeof frames)[0]) => {
 				</div>
 				<p>Position: ({{ f.instance.x }}, {{ f.instance.y }})</p>
 				<p>Size: {{ f.instance.width }} × {{ f.instance.height }}</p>
-				<button class="frame-demo__close" @click="closeFrame(f)">Close</button>
+				<Button class="frame-demo__close" @click="closeFrame(f)">Close</Button>
 			</div>
 		</Frame>
 	</PanelDemo>
 </template>
 
 <style lang="scss" scoped>
+@reference "./../../../../foundation/tailwind/index.css";
 .frame-demo {
 	&__toolbar {
-		@apply flex flex-wrap gap-3 justify-center;
+		@apply flex flex-wrap justify-center gap-3;
 	}
 
 	&__btn {

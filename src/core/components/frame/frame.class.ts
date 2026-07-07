@@ -31,6 +31,7 @@ export default class TFrame
 		width: 100,
 		height: 100,
 		visible: false,
+		strategy: 'fixed',
 	}
 
 	/** Базовый z-index для всех Frame. Можно переопределить статически. */
