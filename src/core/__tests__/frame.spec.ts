@@ -210,8 +210,8 @@ describe('TFrame', () => {
 			width: 300,
 			height: 200,
 			visible: true,
-		})
-		frame.show() // чтобы z-index был записан, но visible и так true
+            strategy: 'absolute',
+        })
 
 		const props = frame.getProps()
 		expect(props).toMatchObject({
@@ -220,6 +220,7 @@ describe('TFrame', () => {
 			width: 300,
 			height: 200,
 			visible: true,
+            strategy: 'absolute',
 		})
 		expect(frame.toJSON()).toEqual(props)
 	})
@@ -262,4 +263,29 @@ describe('TFrame', () => {
 		expect(frame.x).toBe(50)
 		expect(frame.y).toBe(50)
 	})
+
+    it('strategy по умолчанию fixed', () => {
+        const frame = new TFrame()
+        expect(frame.strategy).toBe('fixed')
+    })
+
+    it('strategy можно задать при создании', () => {
+        const frame = new TFrame({ strategy: 'absolute' })
+        expect(frame.strategy).toBe('absolute')
+    })
+
+    it('strategy можно изменить через сеттер', () => {
+        const frame = new TFrame()
+        frame.strategy = 'absolute'
+        expect(frame.strategy).toBe('absolute')
+    })
+
+    it('change:strategy эмитится при изменении', () => {
+        const frame = new TFrame()
+        const values: string[] = []
+        frame.events.on('change:strategy' as any, (v: string) => values.push(v))
+
+        frame.strategy = 'absolute'
+        expect(values).toEqual(['absolute'])
+    })
 })

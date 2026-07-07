@@ -1,7 +1,6 @@
 import type { PropType, Ref } from 'vue'
-import { type IFrameProps, TFrame, type IFrame } from '@core'
+import { type IFrameProps, TFrame, type IFrame, type TFrameStrategy } from '@core'
 import { useSyncProps } from '../../composables/useSyncProps'
-import { useEventState } from '../../composables/useEventState'
 import { useInheritProps } from '../../composables/useInheritProps'
 import {
 	BaseComponent,
@@ -25,6 +24,8 @@ export const emitsFrame: TEmits = [
 	'change:height',
 	'update:height',
 	'change:zIndex',
+	'change:strategy',
+	'update:strategy',
 	'beforeShow',
 	'beforeHide',
 	'show',
@@ -53,6 +54,10 @@ export const propsFrame: TProps = {
 		type: Boolean as PropType<IFrameProps['visible']>,
 		default: TFrame.defaultValues.visible,
 	},
+	strategy: {
+		type: String as PropType<IFrameProps['strategy']>,
+		default: TFrame.defaultValues.strategy,
+	},
 }
 
 export default {
@@ -69,6 +74,7 @@ export interface IFrameState {
 	styles: Ref<Record<string, string | number>>
 	width: Ref<string | number | undefined>
 	height: Ref<string | number | undefined>
+	strategy: Ref<TFrameStrategy>
 }
 
 /**
@@ -116,6 +122,10 @@ export function syncFrame(
 	instance.events.on('change:zIndex' as any, (value: number) => {
 		emit?.('change:zIndex', value)
 	})
+	instance.events.on('change:strategy' as any, (value: TFrameStrategy) => {
+		emit?.('change:strategy', value)
+		emit?.('update:strategy', value)
+	})
 
 	const stylePlugin = plugins.get(TFrameStylePlugin)!
 
@@ -126,6 +136,7 @@ export function syncFrame(
 			y: () => instance.y,
 			width: () => instance.width,
 			height: () => instance.height,
+			strategy: () => instance.strategy,
 		}),
 		...useSyncProps(stylePlugin.events as any, {
 			styles: () => stylePlugin.styles,

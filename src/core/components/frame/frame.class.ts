@@ -4,7 +4,7 @@ import { TVisibilityState, type IVisibilityState } from '../../common/states'
 import { TStateUnit } from '../../common/state-unit'
 import { TEvented } from '../../common/evented'
 import type { TValuePayload } from '../../common/types'
-import type { IFrame, IFrameProps, TFrameEvents, TFrameStates } from './types'
+import type { IFrame, IFrameProps, TFrameEvents, TFrameStates, TFrameStrategy } from './types'
 
 /**
  * Headless-контейнер для всплывающего контента.
@@ -22,8 +22,7 @@ import type { IFrame, IFrameProps, TFrameEvents, TFrameStates } from './types'
  */
 export default class TFrame
 	extends TComponent<IFrameProps, TFrameEvents, TFrameStates>
-	implements IFrame
-{
+	implements IFrame {
 	static defaultValues: Partial<IFrameProps> = {
 		...TComponent.defaultValues,
 		x: 0,
@@ -54,6 +53,7 @@ export default class TFrame
 	}
 
 	private _zIndex: number = 0
+	private _strategy: TFrameStrategy
 
 	constructor(options: IComponentOptions<IFrameProps, TFrameStates> | Partial<IFrameProps> = {}) {
 		const ctor = new.target as typeof TFrame
@@ -68,6 +68,8 @@ export default class TFrame
 		const height = props.height ?? ctor.defaultValues.height!
 		const visible = props.visible ?? ctor.defaultValues.visible!
 
+		this._strategy = props.strategy ?? ctor.defaultValues.strategy!
+
 		this._states.visible = states?.visible ?? new TVisibilityState({ initial: visible })
 		this._states.x = states?.x ?? new TStateUnit<number>({ initial: x })
 		this._states.y = states?.y ?? new TStateUnit<number>({ initial: y })
@@ -75,19 +77,19 @@ export default class TFrame
 		this._states.height = states?.height ?? new TStateUnit<number | string>({ initial: height })
 
 		this._states.visible.events.on('change', (payload: TValuePayload<boolean>) => {
-			;(this.events as TEvented<TFrameEvents>).emit('change:visible', payload.newValue)
+			; (this.events as TEvented<TFrameEvents>).emit('change:visible', payload.newValue)
 		})
 		this._states.x.events.on('change', (payload: TValuePayload<number>) => {
-			;(this.events as TEvented<TFrameEvents>).emit('change:x', payload.newValue)
+			; (this.events as TEvented<TFrameEvents>).emit('change:x', payload.newValue)
 		})
 		this._states.y.events.on('change', (payload: TValuePayload<number>) => {
-			;(this.events as TEvented<TFrameEvents>).emit('change:y', payload.newValue)
+			; (this.events as TEvented<TFrameEvents>).emit('change:y', payload.newValue)
 		})
 		this._states.width.events.on('change', (payload: TValuePayload<number | string>) => {
-			;(this.events as TEvented<TFrameEvents>).emit('change:width', payload.newValue)
+			; (this.events as TEvented<TFrameEvents>).emit('change:width', payload.newValue)
 		})
 		this._states.height.events.on('change', (payload: TValuePayload<number | string>) => {
-			;(this.events as TEvented<TFrameEvents>).emit('change:height', payload.newValue)
+			; (this.events as TEvented<TFrameEvents>).emit('change:height', payload.newValue)
 		})
 	}
 
@@ -130,6 +132,15 @@ export default class TFrame
 		this._states.height.value = value
 	}
 
+	get strategy(): TFrameStrategy {
+		return this._strategy
+	}
+	set strategy(value: TFrameStrategy) {
+		if (this._strategy === value) return
+		this._strategy = value
+			; (this.events as TEvented<TFrameEvents>).emit('change:strategy', value)
+	}
+
 	get zIndex(): number {
 		return this._zIndex
 	}
@@ -141,10 +152,10 @@ export default class TFrame
 		if (!canShow) return
 
 		this._zIndex = (this.constructor as typeof TFrame).nextZIndex()
-		;(this.events as TEvented<TFrameEvents>).emit('change:zIndex', this._zIndex)
+			; (this.events as TEvented<TFrameEvents>).emit('change:zIndex', this._zIndex)
 
-		;(this._states.visible as IVisibilityState).show()
-		;(this.events as TEvented<TFrameEvents>).emit('show')
+			; (this._states.visible as IVisibilityState).show()
+			; (this.events as TEvented<TFrameEvents>).emit('show')
 	}
 
 	hide(): void {
@@ -153,8 +164,8 @@ export default class TFrame
 		const canHide = (this.events as TEvented<TFrameEvents>).emitWithResult('beforeHide')
 		if (!canHide) return
 
-		;(this._states.visible as IVisibilityState).hide()
-		;(this.events as TEvented<TFrameEvents>).emit('hide')
+			; (this._states.visible as IVisibilityState).hide()
+			; (this.events as TEvented<TFrameEvents>).emit('hide')
 	}
 
 	getProps(): IFrameProps {
@@ -165,6 +176,7 @@ export default class TFrame
 			width: this.width,
 			height: this.height,
 			visible: this.visible,
+			strategy: this.strategy,
 		}
 	}
 }

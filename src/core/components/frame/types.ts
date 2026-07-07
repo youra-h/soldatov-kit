@@ -29,7 +29,6 @@ export type TFrameStates = {
 	y: IStateUnit<number>
 	width: IStateUnit<number | string>
 	height: IStateUnit<number | string>
-	strategy: IStateUnit<TFrameStrategy>
 }
 
 export type TFrameEvents = TComponentEvents & {
@@ -57,7 +56,7 @@ export type TFrameEvents = TComponentEvents & {
 	hide: () => void
 }
 
-export interface IFrame extends IComponent<IFrameProps, TFrameEvents, TFrameStates> {
+export interface IFrame extends IComponent<IFrameProps, TFrameEvents> {
 	/** Видимость */
 	visible: boolean
 	/** Позиция по оси X */
