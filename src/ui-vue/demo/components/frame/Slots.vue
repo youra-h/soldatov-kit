@@ -83,6 +83,55 @@ watch(
 	},
 )
 
+// Каскадные фреймы — 3 шт со смещением
+const cascadeOffset = 40
+const cascadeBaseX = window.innerWidth / 2 - 140
+const cascadeBaseY = window.innerHeight / 2 - 90
+const cascadeFrames = [0, 1, 2].map((i) => ({
+	label: `Cascade #${i + 1}`,
+	instance: new TFrame({
+		x: cascadeBaseX + i * cascadeOffset,
+		y: cascadeBaseY + i * cascadeOffset,
+		width: props.width,
+		height: props.height,
+		visible: false,
+		position: props.position as 'fixed' | 'absolute' | undefined,
+	}),
+}))
+
+watch(
+	() => props.width,
+	(val) => {
+		cascadeFrames.forEach((f) => {
+			f.instance.width = val
+		})
+	},
+)
+watch(
+	() => props.height,
+	(val) => {
+		cascadeFrames.forEach((f) => {
+			f.instance.height = val
+		})
+	},
+)
+watch(
+	() => props.position,
+	(val) => {
+		cascadeFrames.forEach((f) => {
+			f.instance.position = val ?? 'fixed'
+		})
+	},
+)
+
+const openCascade = () => {
+	cascadeFrames.forEach((f) => f.instance.show())
+}
+
+const closeCascade = () => {
+	cascadeFrames.forEach((f) => f.instance.hide())
+}
+
 const openFrame = (frame: (typeof frames)[0]) => {
 	frame.instance.show()
 }
@@ -104,6 +153,10 @@ const closeFrame = (frame: (typeof frames)[0]) => {
 			>
 				Open {{ pos.label }}
 			</Button>
+
+			<Button class="frame-demo__btn frame-demo__btn--cascade" @click="openCascade">
+				Open Cascade
+			</Button>
 		</div>
 
 		<Frame v-for="f in frames" :key="f.label" :ctrl="f.instance">
@@ -115,6 +168,24 @@ const closeFrame = (frame: (typeof frames)[0]) => {
 				<p>Position: ({{ f.instance.x }}, {{ f.instance.y }})</p>
 				<p>Size: {{ f.instance.width }} × {{ f.instance.height }}</p>
 				<Button class="frame-demo__close" @click="closeFrame(f)">Close</Button>
+			</div>
+		</Frame>
+
+		<!-- Cascade frames — каскадное открытие -->
+		<Frame v-for="f in cascadeFrames" :key="f.label" :ctrl="f.instance">
+			<div class="frame-demo__card">
+				<div class="frame-demo__card-header">
+					<strong>{{ f.label }}</strong>
+					<span class="frame-demo__z">z: {{ f.instance.zIndex }}</span>
+				</div>
+				<p>Offset: +{{ cascadeOffset * (cascadeFrames.indexOf(f) + 1) }}px each</p>
+				<p>Size: {{ f.instance.width }} × {{ f.instance.height }}</p>
+				<div class="frame-demo__card-actions">
+					<Button class="frame-demo__close" @click="f.instance.hide()">Close</Button>
+					<Button class="frame-demo__close frame-demo__close--all" @click="closeCascade"
+						>Close All</Button
+					>
+				</div>
 			</div>
 		</Frame>
 	</PanelDemo>
@@ -135,6 +206,14 @@ const closeFrame = (frame: (typeof frames)[0]) => {
 		&:hover {
 			background-color: hsl(var(--hue, 200deg), 60%, 40%);
 		}
+
+		&--cascade {
+			background-color: hsl(280deg, 60%, 50%);
+
+			&:hover {
+				background-color: hsl(280deg, 60%, 40%);
+			}
+		}
 	}
 
 	&__card {
@@ -152,9 +231,17 @@ const closeFrame = (frame: (typeof frames)[0]) => {
 		@apply text-xs text-gray-400 font-mono;
 	}
 
+	&__card-actions {
+		@apply flex gap-2 self-end;
+	}
+
 	&__close {
-		@apply self-end px-3 py-1 text-xs font-medium text-white bg-red-500 rounded;
+		@apply px-3 py-1 text-xs font-medium text-white bg-red-500 rounded;
 		@apply hover:bg-red-600 transition-colors duration-150;
+
+		&--all {
+			@apply bg-orange-600 hover:bg-orange-700;
+		}
 	}
 }
 </style>
