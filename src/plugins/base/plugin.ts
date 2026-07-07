@@ -1,4 +1,4 @@
-import { TEvented } from '../../core/common/evented'
+import { TEvented } from '@core'
 import type { IPlugin, IPluginBundle, TPluginEvents, TBasePluginEvents } from './types'
 
 export abstract class TBasePlugin<

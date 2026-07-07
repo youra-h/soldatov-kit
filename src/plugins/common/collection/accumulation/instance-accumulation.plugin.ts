@@ -1,9 +1,9 @@
-import type { IComponentView } from '../../../../core'
+import type { IComponentView } from '@core'
 import { TInstancePlugin } from '../../instance'
 import type { IPluginBundle } from '../../../base/types'
 import { TAccumulationPlugin } from './accumulation.plugin'
 import type { TInstanceAccumulationEvents } from './types'
-import { TEvented } from '../../../../core/common/evented'
+import { TEvented } from '@core'
 
 /**
  * Накопление инстансов элементов коллекции.

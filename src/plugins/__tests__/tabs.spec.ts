@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest'
-import { TTabs } from '../../core/components/tabs'
+import { TTabs } from '@core'
 import { createTabsBundle } from '../bundles'
 import { TElementPlugin } from '../common/element'
 import { TInstancePlugin } from '../common/instance'

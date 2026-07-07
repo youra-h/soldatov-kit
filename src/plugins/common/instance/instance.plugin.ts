@@ -1,7 +1,6 @@
-import type { IComponentView } from '../../../core'
 import { TBasePlugin } from '../../base'
 import type { TInstancePluginEvents } from './types'
-import { TEvented } from '../../../core/common/evented'
+import { TEvented, type IComponentView } from '@core'
 
 export class TInstancePlugin<T extends IComponentView = IComponentView> extends TBasePlugin<
 	TInstancePluginEvents<T>
@@ -23,9 +22,9 @@ export class TInstancePlugin<T extends IComponentView = IComponentView> extends 
 		if (value) {
 			this._readyResolve?.(value)
 			this._readyResolve = null
-			;(this.events as TEvented<TInstancePluginEvents<T>>).emit('ready', { instance: value })
+				; (this.events as TEvented<TInstancePluginEvents<T>>).emit('ready', { instance: value })
 		} else {
-			;(this.events as TEvented<TInstancePluginEvents<T>>).emit('removed')
+			; (this.events as TEvented<TInstancePluginEvents<T>>).emit('removed')
 		}
 	}
 

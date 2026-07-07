@@ -1,4 +1,4 @@
-import type { ISpinner } from '../../../core'
+import type { ISpinner } from '@core'
 import type { IPluginBundle } from '../../base/types'
 import { TBasePlugin } from '../../base/plugin'
 import { toCssValue } from '../../base/css-value'

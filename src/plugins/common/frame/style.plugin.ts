@@ -1,4 +1,4 @@
-import type { IFrame } from '../../../core'
+import type { IFrame } from '@core'
 import type { IPluginBundle } from '../../base/types'
 import { TBasePlugin } from '../../base/plugin'
 import { TInstancePlugin } from '../instance'

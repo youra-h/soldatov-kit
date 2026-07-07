@@ -28,8 +28,8 @@ export default class TFrame
 		...TComponent.defaultValues,
 		x: 0,
 		y: 0,
-		width: undefined,
-		height: undefined,
+		width: 100,
+		height: 100,
 		visible: false,
 	}
 
@@ -63,8 +63,8 @@ export default class TFrame
 
 		const x = props.x ?? ctor.defaultValues.x!
 		const y = props.y ?? ctor.defaultValues.y!
-		const width = props.width ?? ctor.defaultValues.width
-		const height = props.height ?? ctor.defaultValues.height
+		const width = props.width ?? ctor.defaultValues.width!
+		const height = props.height ?? ctor.defaultValues.height!
 		const visible = props.visible ?? ctor.defaultValues.visible!
 
 		this._states.visible = states?.visible ?? new TVisibilityState({ initial: visible })

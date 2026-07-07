@@ -1,4 +1,4 @@
-import type { ISkeleton } from '../../../core'
+import type { ISkeleton } from '@core'
 import type { IPluginBundle } from '../../base/types'
 import { TBasePlugin, toCssValue } from '../../base'
 import { TInstancePlugin } from '../instance'

@@ -1,4 +1,4 @@
-import type { ITabs, TTabsView } from '../../../../core/components/tabs'
+import type { ITabs, TTabsView } from '@core'
 import type { IPluginBundle } from '../../../base/types'
 import { TBasePlugin } from '../../../base/plugin'
 import { TElementPlugin } from '../../element'

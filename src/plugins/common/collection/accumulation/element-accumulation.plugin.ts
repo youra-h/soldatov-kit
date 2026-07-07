@@ -3,7 +3,7 @@ import { TInstancePlugin } from '../../instance'
 import type { IPluginBundle } from '../../../base/types'
 import { TAccumulationPlugin } from './accumulation.plugin'
 import type { TElementAccumulationEvents } from './types'
-import { TEvented } from '../../../../core/common/evented'
+import { TEvented } from '@core'
 
 /**
  * Накопление DOM-элементов элементов коллекции.

@@ -1,4 +1,4 @@
-import type { IComponentView } from '../../../core'
+import type { IComponentView } from '@core'
 import type { IPluginBundle } from '../../base/types'
 import { TBasePlugin } from '../../base/plugin'
 import { TElementPlugin } from '../element'
