@@ -49,12 +49,20 @@ const closeIcon = useIconImport('/src/icons/close.svg')
 			v-bind="handlers"
 		>
 			<template #leading="{ instance }">
-				<Button :size="shiftSize(instance.size, -1)" view="filled"><Icon :tag="searchIcon" /></Button>
-				<Button :size="shiftSize(instance.size, -1)" view="filled">Text</Button>
+				<div class="h-[22px]">
+					<Button :size="shiftSize(instance.size, -1)" view="filled"
+						><Icon :tag="searchIcon"
+					/></Button>
+				</div>
+				<div class="h-[22px]">
+					<Button :size="shiftSize(instance.size, -1)" view="filled">Text</Button>
+				</div>
 			</template>
 			<template #trailing="{ instance }">
 				<Button :size="shiftSize(instance.size, -1)" view="filled">Text</Button>
-				<Button :size="shiftSize(instance.size, -1)" view="filled"><Icon :tag="closeIcon" /></Button>
+				<Button :size="shiftSize(instance.size, -1)" view="filled"
+					><Icon :tag="closeIcon"
+				/></Button>
 			</template>
 		</Input>
 	</PanelDemo>

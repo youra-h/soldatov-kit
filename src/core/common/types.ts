@@ -4,7 +4,7 @@ export type TAbstractConstructor<T = {}> = abstract new (...args: any[]) => T
 
 export type TComponentVariant = 'normal' | 'accent' | 'positive' | 'negative' | 'caution'
 
-export type TComponentSize = 'sm' | 'normal' | 'auto' | 'lg' | 'xl' | '2xl'
+export type TComponentSize = 'xs' | 'sm' | 'normal' | 'auto' | 'lg' | 'xl' | '2xl'
 
 export type TValuePayload<TValue> = {
 	newValue: TValue

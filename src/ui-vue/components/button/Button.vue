@@ -72,6 +72,7 @@ export default {
 	@apply relative transition-colors duration-200;
 	@apply outline-transparent;
 	@apply text-s-component;
+	@apply max-h-full;
 
 	&__text {
 		@apply grow truncate text-center;
