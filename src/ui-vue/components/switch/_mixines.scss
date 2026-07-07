@@ -1,5 +1,5 @@
 @mixin switch-size($this, $tw) {
-	$th: $tw / 2 + 1;
+	$th: $tw * 0.5 + 1;
 	$ts: $th - 1;
 	$tx: $tw - $th;
 
