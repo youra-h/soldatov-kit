@@ -13,6 +13,7 @@ import Collapse from './playgrounds/Collapse.vue'
 import ListBox from './playgrounds/ListBox.vue'
 import ListBoxTest from './playgrounds/ListBoxTest.vue'
 import DragAndDrop from './playgrounds/DragAndDrop.vue'
+import Frame from './playgrounds/Frame.vue'
 import EventLog from './common/EventLog.vue'
 import type { EventLogEntry } from './common/EventLog.vue'
 
@@ -40,6 +41,7 @@ const playgrounds = {
 	'list-box': { component: markRaw(ListBox), label: 'ListBox' },
 	'list-box-test': { component: markRaw(ListBoxTest), label: 'ListBox test' },
 	'drag-and-drop': { component: markRaw(DragAndDrop), label: 'DragAndDrop' },
+	frame: { component: markRaw(Frame), label: 'Frame' },
 } as const
 
 // Активный playground (можно управлять через меню)
