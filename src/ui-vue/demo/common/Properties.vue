@@ -89,7 +89,14 @@ const hasVisibilityActions = computed(() => {
 				<input
 					:type="def.type === 'number' ? 'number' : 'text'"
 					:value="getValue(key)"
-					@input="updateProperty(key, ($event.target as HTMLInputElement).value)"
+					@input="
+						updateProperty(
+							key,
+							def.type === 'number'
+								? ($event.target as HTMLInputElement).valueAsNumber
+								: ($event.target as HTMLInputElement).value,
+						)
+					"
 					:placeholder="def.placeholder"
 					class="properties-panel__input"
 				/>

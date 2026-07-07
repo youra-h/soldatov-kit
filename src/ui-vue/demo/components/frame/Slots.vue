@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { watch } from 'vue'
 import { Frame } from '@ui/frame'
 import { Button } from '@ui/button'
 import { TFrame } from '@core'
@@ -40,6 +41,47 @@ const frames = positions.map((pos) => ({
 		position: props.position as 'fixed' | 'absolute' | undefined,
 	}),
 }))
+
+// Синхронизация общих пропсов со всеми фреймами
+watch(
+	() => props.width,
+	(val) => {
+		frames.forEach((f) => {
+			f.instance.width = val
+		})
+	},
+)
+watch(
+	() => props.height,
+	(val) => {
+		frames.forEach((f) => {
+			f.instance.height = val
+		})
+	},
+)
+watch(
+	() => props.position,
+	(val) => {
+		frames.forEach((f) => {
+			f.instance.position = val ?? 'fixed'
+		})
+	},
+)
+// Синхронизация кастомных координат с Custom-фреймом
+watch(
+	() => props.customX,
+	(val) => {
+		const custom = frames.find((f) => f.label === 'Custom')
+		if (custom) custom.instance.x = val ?? 50
+	},
+)
+watch(
+	() => props.customY,
+	(val) => {
+		const custom = frames.find((f) => f.label === 'Custom')
+		if (custom) custom.instance.y = val ?? 50
+	},
+)
 
 const openFrame = (frame: (typeof frames)[0]) => {
 	frame.instance.show()
