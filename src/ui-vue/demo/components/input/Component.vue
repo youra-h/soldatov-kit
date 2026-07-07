@@ -5,6 +5,7 @@ import PanelDemo from '../../common/PanelDemo.vue'
 import { useEventLogger } from '../../common/useEventLogger'
 import type { EventLogEntry } from '../../common/EventLog.vue'
 import type { TComponentSize, TComponentVariant } from '@core'
+import { shiftSize } from '@core'
 import { Icon, useIconImport } from '@ui/icon'
 
 type Props = {
@@ -48,8 +49,8 @@ const closeIcon = useIconImport('/src/icons/close.svg')
 			v-bind="handlers"
 		>
 			<template #leading>
-				<Button size="sm" view="filled"><Icon :tag="searchIcon" /></Button>
-				<Button size="sm" view="filled">Text</Button>
+				<Button :size="shiftSize(size!, -1)" view="filled"><Icon :tag="searchIcon" /></Button>
+				<Button :size="shiftSize(size!, -1)" view="filled">Text</Button>
 			</template>
 			<template #trailing>
 				<Button :size="size" view="plain"><Icon :tag="closeIcon" /></Button>
