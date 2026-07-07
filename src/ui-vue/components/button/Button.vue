@@ -67,8 +67,8 @@ export default {
 .s-button {
 	$this: &;
 
-	@apply flex items-center justify-center gap-1.5;
-	@apply px-2.5 py-1 rounded-md cursor-pointer;
+	@apply flex items-center justify-center;
+	@apply rounded-md cursor-pointer;
 	@apply relative transition-colors duration-200;
 	@apply outline-transparent;
 	@apply text-s-component;
@@ -95,26 +95,31 @@ export default {
 
 	&--size-sm {
 		@apply text-sm;
-		@apply px-1.5 py-0.5;
+		@apply px-1.5 h-6;
 		@apply gap-1;
+	}
+
+	&--size-normal {
+		@apply px-2.5 h-8;
+		@apply gap-1.5;
 	}
 
 	&--size-lg {
 		@apply text-lg;
-		@apply px-3.5 py-1.5;
+		@apply px-3 h-9;
 		@apply gap-2;
 	}
 
 	&--size-xl {
 		@apply text-xl;
-		@apply px-4 py-2;
-		@apply gap-3;
+		@apply px-3.5 h-10;
+		@apply gap-2.5;
 	}
 
 	&--size-2xl {
 		@apply text-2xl;
-		@apply px-5 py-3;
-		@apply gap-4;
+		@apply px-4 h-11;
+		@apply gap-3;
 	}
 
 	&--a-filled {

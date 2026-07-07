@@ -78,12 +78,13 @@ export default {
 	@apply inline-flex items-center;
 	@apply relative;
 
+	@apply rounded-md border;
+	@apply bg-white;
+	@apply text-s-component;
+	@apply transition-colors duration-150;
+
 	input {
 		@apply w-full;
-		@apply rounded-md border;
-		@apply bg-white;
-		@apply text-s-component;
-		@apply transition-colors duration-150;
 		@apply outline-none;
 
 		&::placeholder {
@@ -131,40 +132,45 @@ export default {
 	&--size-sm {
 		input {
 			@apply text-sm;
-			@apply px-1.5 py-0.5;
+			@apply leading-5;
 		}
+		@apply px-1.5 h-5;
 		@apply gap-1;
 	}
 
 	&--size-normal {
 		input {
-			@apply px-2.5 py-1;
+			@apply leading-8;
 		}
+		@apply px-2 h-8;
 		@apply gap-1.5;
 	}
 
 	&--size-lg {
 		input {
-			@apply px-3.5 py-1.5;
 			@apply text-lg;
+			@apply leading-9;
 		}
+		@apply px-2.5 h-9;
 		@apply gap-2;
 	}
 
 	&--size-xl {
 		input {
-			@apply px-4 py-2;
 			@apply text-xl;
+			@apply leading-10;
 		}
-		@apply gap-3;
+		@apply px-3 h-10;
+		@apply gap-2.5;
 	}
 
 	&--size-2xl {
 		input {
-			@apply px-5 py-3;
 			@apply text-2xl;
+			@apply leading-11;
 		}
-		@apply gap-4;
+		@apply px-3.5 h-11;
+		@apply gap-3;
 	}
 }
 </style>

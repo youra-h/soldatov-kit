@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Input } from '@ui/input'
+import { Button } from '@ui/button'
 import { Icon, useIconImport } from '@ui/icon'
 import { SIZES, VARIANTS } from '../../common/items'
 import type { TComponentSize, TComponentVariant } from '@core'
@@ -89,9 +90,13 @@ const closeIcon = useIconImport('/src/icons/close.svg')
 					>
 						<template #leading>
 							<Icon :tag="searchIcon" />
+							<Icon :tag="searchIcon" />
+							<Button>Text</Button>
 						</template>
 						<template #trailing>
 							<Icon :tag="closeIcon" />
+							<Icon :tag="closeIcon" />
+							<Button>Text</Button>
 						</template>
 					</Input>
 				</div>

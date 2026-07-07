@@ -5,6 +5,7 @@ import PanelDemo from '../../common/PanelDemo.vue'
 import { useEventLogger } from '../../common/useEventLogger'
 import type { EventLogEntry } from '../../common/EventLog.vue'
 import type { TComponentSize, TComponentVariant } from '@core'
+import { Icon, useIconImport } from '@ui/icon'
 
 type Props = {
 	visible?: boolean
@@ -25,11 +26,15 @@ const emit = defineEmits<{
 }>()
 
 const { handlers } = useEventLogger(emit, emitsInput)
+
+const searchIcon = useIconImport('/src/icons/check.svg')
+const closeIcon = useIconImport('/src/icons/close.svg')
 </script>
 
 <template>
 	<PanelDemo info="Props-based demo">
-		<Button class="mr-2">Button</Button>
+		<Button class="mr-2" :size="size">Button</Button>
+		<Button class="mr-2" :size="size"><Icon :tag="searchIcon" /></Button>
 		<Input
 			:visible="visible"
 			:rendered="rendered"
@@ -41,6 +46,14 @@ const { handlers } = useEventLogger(emit, emitsInput)
 			:value="value"
 			:placeholder="placeholder"
 			v-bind="handlers"
-		/>
+		>
+			<template #leading>
+				<Button size="normal" view="plain"><Icon :tag="searchIcon" /></Button>
+				<Button size="normal" view="plain"></Button>
+			</template>
+			<template #trailing>
+				<Button size="normal" view="plain"><Icon :tag="closeIcon" /></Button>
+			</template>
+		</Input>
 	</PanelDemo>
 </template>
