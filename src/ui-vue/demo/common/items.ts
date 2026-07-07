@@ -4,7 +4,7 @@
 import type { TComponentSize, TComponentVariant, TButtonView } from '@/core'
 
 /** Размеры компонентов */
-export const SIZES: TComponentSize[] = ['sm', 'normal', 'auto', 'lg', 'xl', '2xl']
+export const SIZES: TComponentSize[] = ['sm', 'normal', 'lg', 'xl', '2xl']
 
 /** Варианты компонентов */
 export const VARIANTS: TComponentVariant[] = ['normal', 'accent', 'negative', 'caution', 'positive']

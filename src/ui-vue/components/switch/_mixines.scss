@@ -1,15 +1,19 @@
-@mixin switch-size($this, $track-width, $track-height, $thumb-size, $translate-x) {
+@mixin switch-size($this, $tw) {
+	$th: $tw / 2 + 1;
+	$ts: $th - 1;
+	$tx: $tw - $th;
+
 	#{$this}__track {
-		@apply w-#{$track-width} h-#{$track-height};
+		@apply w-#{$tw} h-#{$th};
 
 		&--thumb {
-			@apply w-#{$thumb-size} h-#{$thumb-size};
+			@apply w-#{$ts} h-#{$ts};
 			@apply top-0.5 left-0.5;
 		}
 	}
 
 	input:checked + #{$this}__track #{$this}__track--thumb {
-		@apply translate-x-#{$translate-x};
+		@apply translate-x-#{$tx};
 	}
 }
 

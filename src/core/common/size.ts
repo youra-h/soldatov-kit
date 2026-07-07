@@ -12,5 +12,5 @@ const SIZE_SCALE: readonly TComponentSize[] = ['sm', 'normal', 'lg', 'xl', '2xl'
  */
 export function shiftSize(size: TComponentSize, delta: number): TComponentSize {
 	const idx = SIZE_SCALE.indexOf(size)
-	return SIZE_SCALE[idx + delta] ?? 'auto'
+	return SIZE_SCALE[idx + delta] ?? size
 }

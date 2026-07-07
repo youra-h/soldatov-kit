@@ -117,13 +117,11 @@ export default {
 	}
 
 	&__track {
-		@apply w-10 h-6;
 		@apply relative;
 		@apply rounded-full;
 		@apply transition-colors duration-200;
 
 		&--thumb {
-			@apply w-5 h-5;
 			@apply relative;
 			@apply flex items-center justify-center;
 			@apply bg-white;
@@ -134,16 +132,19 @@ export default {
 	}
 
 	&--size-sm {
-		@include mixines.switch-size($this, 8, 5, 4, 3);
+		@include mixines.switch-size($this, 6);
+	}
+	&--size-normal {
+		@include mixines.switch-size($this, 8);
 	}
 	&--size-lg {
-		@include mixines.switch-size($this, 12, 7, 6, 5);
+		@include mixines.switch-size($this, 10);
 	}
 	&--size-xl {
-		@include mixines.switch-size($this, 14, 8, 7, 6);
+		@include mixines.switch-size($this, 12);
 	}
 	&--size-2xl {
-		@include mixines.switch-size($this, 16, 9, 8, 7);
+		@include mixines.switch-size($this, 14);
 	}
 
 	&--normal {
