@@ -95,7 +95,7 @@ export default {
 
 	&--size-sm {
 		@apply text-sm;
-		@apply px-1.5 h-6;
+		@apply px-1.5 h-7;
 		@apply gap-1;
 	}
 

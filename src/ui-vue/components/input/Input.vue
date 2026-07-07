@@ -132,17 +132,17 @@ export default {
 	&--size-sm {
 		input {
 			@apply text-sm;
-			@apply leading-5;
+			@apply leading-7;
 		}
-		@apply px-1.5 h-5;
+		@apply h-7;
 		@apply gap-1;
 	}
 
 	&--size-normal {
 		input {
-			@apply leading-8;
+			@apply leading-8 indent-2;
 		}
-		@apply px-2 h-8;
+		@apply h-8;
 		@apply gap-1.5;
 	}
 
@@ -151,8 +151,8 @@ export default {
 			@apply text-lg;
 			@apply leading-9;
 		}
-		@apply px-2.5 h-9;
-		@apply gap-2;
+		@apply h-9;
+		@apply gap-1.5;
 	}
 
 	&--size-xl {
@@ -160,7 +160,7 @@ export default {
 			@apply text-xl;
 			@apply leading-10;
 		}
-		@apply px-3 h-10;
+		@apply h-10;
 		@apply gap-2.5;
 	}
 
@@ -169,7 +169,7 @@ export default {
 			@apply text-2xl;
 			@apply leading-11;
 		}
-		@apply px-3.5 h-11;
+		@apply h-11;
 		@apply gap-3;
 	}
 }
