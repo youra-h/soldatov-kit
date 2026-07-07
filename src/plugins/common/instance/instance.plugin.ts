@@ -1,8 +1,8 @@
 import { TBasePlugin } from '../../base'
 import type { TInstancePluginEvents } from './types'
-import { TEvented, type IComponentView } from '@core'
+import { TEvented, type IComponent } from '@core'
 
-export class TInstancePlugin<T extends IComponentView = IComponentView> extends TBasePlugin<
+export class TInstancePlugin<T extends IComponent = IComponent> extends TBasePlugin<
 	TInstancePluginEvents<T>
 > {
 	static readonly key = 'instance'

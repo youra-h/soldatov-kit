@@ -1,6 +1,6 @@
-import type { IComponentView } from '@core'
+import type { IComponent } from '@core'
 
-export type TInstancePluginEvents<T extends IComponentView = IComponentView> = {
+export type TInstancePluginEvents<T extends IComponent = IComponent> = {
 	ready: (ctx: { instance: T }) => void
 	removed: () => void
 }
