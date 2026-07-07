@@ -9,7 +9,9 @@ import {
 } from '../component-view'
 import type { TEmits, TProps, ISyncComponentViewOptions } from '../../types/common'
 import { useSyncProps } from '../../composables/useSyncProps'
+import { useEventState } from '../../composables/useEventState'
 import { useInheritProps } from '../../composables/useInheritProps'
+import { TIconStylePlugin } from '@plugins'
 
 export const emitsIcon: TEmits = [
 	...emitsComponentView,
@@ -48,6 +50,7 @@ export interface IIconState extends IComponentViewState {
 	size: Ref<TComponentSize>
 	width: Ref<string | number | undefined>
 	height: Ref<string | number | undefined>
+	styles: Ref<Record<string, string | number>>
 }
 
 /**
@@ -58,7 +61,7 @@ export interface IIconState extends IComponentViewState {
 export function syncIcon(options: ISyncComponentViewOptions<IIconProps, IIcon>): IIconState {
 	const syncProps = syncComponentView(options)
 
-	const { instance, props, emit } = options
+	const { instance, props, emit, plugins } = options
 
 	// Пробрасываем события core-инстанса наружу (Vue events).
 	instance.events.on('change:size', (payload: TValuePayload<TComponentSize>) => {
@@ -102,12 +105,17 @@ export function syncIcon(options: ISyncComponentViewOptions<IIconProps, IIcon>):
 		},
 	)
 
+	const iconPlugin = plugins.get(TIconStylePlugin)!
+
 	return {
 		...syncProps,
 		...useSyncProps(instance.events as any, {
 			size: () => instance.size,
 			width: () => instance.width,
 			height: () => instance.height,
+		}),
+		...useSyncProps(iconPlugin.events as any, {
+			styles: () => iconPlugin.styles,
 		}),
 	}
 }

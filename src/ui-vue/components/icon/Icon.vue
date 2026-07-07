@@ -17,21 +17,17 @@ export default {
 		// Инициализация плагинов
 		const plugins = useBundle(createComponentViewBundle, props?.plugins).use(TIconStylePlugin)
 
-		const iconPlugin = plugins.get(TIconStylePlugin)!
-
 		// Привязка инстанса к плагинам
 		useInstanceBinding(plugins, instance)
 		// Привязка элемента и инстанса к плагинам
 		const rootRef = useElementBinding(plugins)
 
-		const { tag, rendered, visible, classes } = syncIcon({
+		const { tag, rendered, visible, classes, styles } = syncIcon({
 			props,
 			instance,
 			plugins,
 			emit,
 		})
-
-		const styles = useEventState(iconPlugin.events, () => iconPlugin.styles, ['change:styles'])
 
 		return {
 			instance,

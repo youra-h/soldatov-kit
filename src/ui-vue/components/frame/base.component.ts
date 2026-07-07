@@ -1,6 +1,7 @@
 import type { PropType, Ref } from 'vue'
 import { type IFrameProps, TFrame, type IFrame } from '@core'
 import { useSyncProps } from '../../composables/useSyncProps'
+import { useEventState } from '../../composables/useEventState'
 import { useInheritProps } from '../../composables/useInheritProps'
 import {
 	BaseComponent,
@@ -9,6 +10,7 @@ import {
 	type TBaseComponentProps,
 } from '../component'
 import type { TEmits, TProps, ISyncComponentViewOptions } from '../../types'
+import { TFrameStylePlugin } from '@plugins'
 
 export const emitsFrame: TEmits = [
 	...emitsComponent,
@@ -64,6 +66,7 @@ export interface IFrameState {
 	visible: Ref<boolean>
 	x: Ref<number>
 	y: Ref<number>
+	styles: Ref<Record<string, string | number>>
 	width: Ref<string | number | undefined>
 	height: Ref<string | number | undefined>
 }
@@ -75,7 +78,7 @@ export interface IFrameState {
 export function syncFrame(
 	options: ISyncComponentViewOptions<IFrameProps, IFrame>,
 ): IFrameState {
-	const { instance, emit } = options
+	const { instance, emit, plugins } = options
 
 	// Пробрасываем события core-инстанса наружу (Vue events)
 	instance.events.on('beforeShow' as any, () => {
@@ -114,6 +117,8 @@ export function syncFrame(
 		emit?.('change:zIndex', value)
 	})
 
+	const stylePlugin = plugins.get(TFrameStylePlugin)!
+
 	return {
 		...useSyncProps(instance.events as any, {
 			visible: () => instance.visible,
@@ -121,6 +126,9 @@ export function syncFrame(
 			y: () => instance.y,
 			width: () => instance.width,
 			height: () => instance.height,
+		}),
+		...useSyncProps(stylePlugin.events as any, {
+			styles: () => stylePlugin.styles,
 		}),
 	}
 }

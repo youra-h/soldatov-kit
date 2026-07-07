@@ -17,24 +17,18 @@ export default {
 
 		// Инициализация плагинов
 		const plugins = useBundle(createFrameBundle, props?.plugins)
-		const stylePlugin = plugins.get(TFrameStylePlugin)!
 
 		// Привязка инстанса к плагинам
 		useInstanceBinding(plugins, instance)
 		// Привязка элемента к плагинам
 		const rootRef = useElementBinding(plugins)
 
-		const { visible, x, y, width, height } = syncFrame({
+		const { visible, x, y, width, height, styles } = syncFrame({
 			props,
 			instance,
 			plugins,
 			emit,
 		})
-
-		// Стили от TFrameStylePlugin
-		const styles = useEventState(stylePlugin.events, () => stylePlugin.styles, [
-			'change:styles',
-		])
 
 		return {
 			instance,
