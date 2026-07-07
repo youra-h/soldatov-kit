@@ -1,92 +1,113 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import { Frame } from '@ui/frame'
 import { TFrame } from '@core'
 import PanelDemo from '../../common/PanelDemo.vue'
 
-const frame1 = new TFrame({ x: 50, y: 50, width: 250, height: 150 })
-const frame2 = new TFrame({ x: 200, y: 100, width: 250, height: 150 })
-const frame3 = new TFrame({ x: 350, y: 150, width: 250, height: 150 })
-const visible = ref(false)
+type Props = {
+	customX?: number
+	customY?: number
+	width?: number | string
+	height?: number | string
+}
 
-const toggleAll = () => {
-	visible.value = !visible.value
-	if (visible.value) {
-		frame1.show()
-		frame2.show()
-		frame3.show()
-	} else {
-		frame1.hide()
-		frame2.hide()
-		frame3.hide()
-	}
+const props = withDefaults(defineProps<Props>(), {
+	customX: 50,
+	customY: 50,
+	width: 280,
+	height: 180,
+})
+
+const positions = [
+	{ label: 'Top-Left', x: 0, y: 0 },
+	{ label: 'Top-Right', x: window.innerWidth - 320, y: 0 },
+	{ label: 'Bottom-Left', x: 0, y: window.innerHeight - 220 },
+	{ label: 'Bottom-Right', x: window.innerWidth - 320, y: window.innerHeight - 220 },
+	{ label: 'Center', x: window.innerWidth / 2 - 140, y: window.innerHeight / 2 - 90 },
+	{ label: 'Custom', x: props.customX, y: props.customY },
+]
+
+const frames = positions.map((pos) => ({
+	...pos,
+	instance: new TFrame({
+		x: pos.x,
+		y: pos.y,
+		width: props.width,
+		height: props.height,
+		visible: false,
+	}),
+}))
+
+const openFrame = (frame: (typeof frames)[0]) => {
+	frame.instance.show()
+}
+
+const closeFrame = (frame: (typeof frames)[0]) => {
+	frame.instance.hide()
 }
 </script>
 
 <template>
-	<PanelDemo title="Multiple Frames — z-index stacking">
-		<div class="frame-demo__container">
-			<button class="frame-demo__toggle" @click="toggleAll">
-				{{ visible ? 'Hide All' : 'Show All Frames' }}
+	<PanelDemo title="Frame Positions Demo">
+		<div class="frame-demo__toolbar">
+			<button
+				v-for="pos in positions"
+				:key="pos.label"
+				class="frame-demo__btn"
+				:style="{ '--hue': positions.indexOf(pos) * 45 + 'deg' }"
+				@click="openFrame(frames[positions.indexOf(pos)])"
+			>
+				Open {{ pos.label }}
 			</button>
-
-			<!-- Frame 1 — нижний слой -->
-			<Frame :ctrl="frame1">
-				<div class="frame-demo__card frame-demo__card--1">
-					<strong>Frame 1</strong>
-					<p>z-index: {{ frame1.zIndex }}</p>
-					<p>Shown first → lowest z-index</p>
-				</div>
-			</Frame>
-
-			<!-- Frame 2 — средний слой -->
-			<Frame :ctrl="frame2">
-				<div class="frame-demo__card frame-demo__card--2">
-					<strong>Frame 2</strong>
-					<p>z-index: {{ frame2.zIndex }}</p>
-					<p>Shown second → middle z-index</p>
-				</div>
-			</Frame>
-
-			<!-- Frame 3 — верхний слой (самый высокий z-index) -->
-			<Frame :ctrl="frame3">
-				<div class="frame-demo__card frame-demo__card--3">
-					<strong>Frame 3</strong>
-					<p>z-index: {{ frame3.zIndex }}</p>
-					<p>Shown last → highest z-index</p>
-				</div>
-			</Frame>
 		</div>
+
+		<Frame v-for="f in frames" :key="f.label" :ctrl="f.instance">
+			<div class="frame-demo__card">
+				<div class="frame-demo__card-header">
+					<strong>{{ f.label }}</strong>
+					<span class="frame-demo__z">z: {{ f.instance.zIndex }}</span>
+				</div>
+				<p>Position: ({{ f.instance.x }}, {{ f.instance.y }})</p>
+				<p>Size: {{ f.instance.width }} × {{ f.instance.height }}</p>
+				<button class="frame-demo__close" @click="closeFrame(f)">Close</button>
+			</div>
+		</Frame>
 	</PanelDemo>
 </template>
 
 <style lang="scss" scoped>
 .frame-demo {
-	&__container {
-		@apply relative w-full h-96 bg-gray-50 rounded border border-dashed border-gray-300;
-		@apply flex items-start justify-start p-4;
+	&__toolbar {
+		@apply flex flex-wrap gap-3 justify-center;
 	}
 
-	&__toggle {
-		@apply px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 z-50;
-		@apply absolute top-2 left-2;
+	&__btn {
+		@apply px-4 py-2 text-sm font-medium text-white rounded-md shadow-sm;
+		@apply transition-colors duration-150;
+		background-color: hsl(var(--hue, 200deg), 60%, 50%);
+
+		&:hover {
+			background-color: hsl(var(--hue, 200deg), 60%, 40%);
+		}
 	}
 
 	&__card {
-		@apply p-3 rounded shadow-md border;
-		@apply text-sm;
+		@apply p-4 bg-white rounded-lg shadow-lg border border-gray-200;
+		@apply text-sm text-gray-700;
+		@apply flex flex-col gap-2;
+		min-width: 200px;
+	}
 
-		&--1 {
-			@apply bg-blue-100 border-blue-300;
-		}
+	&__card-header {
+		@apply flex items-center justify-between;
+	}
 
-		&--2 {
-			@apply bg-green-100 border-green-300;
-		}
+	&__z {
+		@apply text-xs text-gray-400 font-mono;
+	}
 
-		&--3 {
-			@apply bg-orange-100 border-orange-300;
-		}
+	&__close {
+		@apply self-end px-3 py-1 text-xs font-medium text-white bg-red-500 rounded;
+		@apply hover:bg-red-600 transition-colors duration-150;
 	}
 }
 </style>
