@@ -10,6 +10,7 @@ export * from './base/value-control'
 export * from './base/input-control'
 export * from './common/state-unit'
 export * from './common/states'
+export * from './common/size'
 export * from './base/collection'
 
 // behaviors (пока используются деревом)
