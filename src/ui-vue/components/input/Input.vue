@@ -53,7 +53,7 @@ export default {
 
 <template>
 	<div ref="rootRef" v-if="rendered" v-show="visible" :class="classes" v-bind="containerAttrs">
-		<slot name="leading"> </slot>
+		<slot name="leading" :instance="instance"> </slot>
 		<input
 			type="text"
 			:id="instance.id.toString()"
@@ -64,7 +64,7 @@ export default {
 			:required="required"
 			v-bind="controlAttrs"
 		/>
-		<slot name="trailing"> </slot>
+		<slot name="trailing" :instance="instance"> </slot>
 	</div>
 </template>
 
