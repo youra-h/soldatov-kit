@@ -1,7 +1,7 @@
 import { TTree } from '../tree.class'
 import { TreeActivationController } from '../controllers/activation.controller'
 import { TActivatableTreeItem } from './activable-tree-item.class'
-import type { TConstructor } from '../../../../../common'
+import type { TConstructor } from '../../../../common'
 
 /**
  * Корневой класс Активируемого Дерева.
