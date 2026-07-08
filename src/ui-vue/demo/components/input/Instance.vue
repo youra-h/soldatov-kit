@@ -34,6 +34,7 @@ const instance = new TInput({
 	readonly: props.readonly ?? false,
 	required: props.required ?? false,
 	value: props.value ?? '',
+	placeholder: props.placeholder ?? '',
 })
 
 defineExpose({
@@ -50,6 +51,6 @@ useSyncPropsToInstance(props, instance)
 
 <template>
 	<PanelDemo info="Instance-based demo">
-		<Input :ctrl="instance" :placeholder="placeholder" v-bind="handlers" />
+		<Input :ctrl="instance" v-bind="handlers" />
 	</PanelDemo>
 </template>
