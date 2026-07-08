@@ -75,6 +75,7 @@ export interface IFrameState {
 	width: Ref<string | number | undefined>
 	height: Ref<string | number | undefined>
 	position: Ref<TFramePosition>
+	target: Ref<string>
 }
 
 /**
@@ -126,6 +127,10 @@ export function syncFrame(
 		emit?.('change:position', value)
 		emit?.('update:position', value)
 	})
+	instance.events.on('change:target' as any, (value: string) => {
+		emit?.('change:target', value)
+		emit?.('update:target', value)
+	})
 
 	const stylePlugin = plugins.get(TFrameStylePlugin)!
 
@@ -137,6 +142,7 @@ export function syncFrame(
 			width: () => instance.width,
 			height: () => instance.height,
 			position: () => instance.position,
+			target: () => instance.target,
 		}),
 		...useSyncProps(stylePlugin.events as any, {
 			styles: () => stylePlugin.styles,

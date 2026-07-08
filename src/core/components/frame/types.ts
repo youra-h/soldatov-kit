@@ -21,6 +21,8 @@ export interface IFrameProps extends IComponentProps {
 	visible?: boolean
 	/** CSS-позиционирование: fixed (viewport) или absolute (родитель) */
 	position?: TFramePosition
+	/** CSS-селектор для Teleport (по умолчанию body) */
+	target?: string
 }
 
 export type TFrameStates = {
@@ -46,6 +48,8 @@ export type TFrameEvents = TComponentEvents & {
 	'change:zIndex': (value: number) => void
 	/** change:position */
 	'change:position': (value: TFramePosition) => void
+	/** change:target */
+	'change:target': (value: string) => void
 	/** beforeShow (можно отменить, вернув false) */
 	beforeShow: () => boolean
 	/** beforeHide (можно отменить, вернув false) */
@@ -71,6 +75,8 @@ export interface IFrame extends IComponent<IFrameProps, TFrameEvents> {
 	readonly zIndex: number
 	/** CSS-позиционирование */
 	position: TFramePosition
+	/** Целевой элемент для Teleport */
+	target: string
 	/** Показать */
 	show(): void
 	/** Скрыть */

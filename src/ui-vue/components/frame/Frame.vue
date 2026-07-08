@@ -5,10 +5,8 @@ import { useBundle } from '../../composables/useBundle'
 import { useElementBinding } from '../../composables/useElementBinding'
 import { useInstanceBinding } from '../../composables/useInstanceBinding'
 import BaseFrame, { syncFrame } from './base.component'
-import { createFrameBundle, TFrameStylePlugin } from '@plugins'
-import { useEventState } from '../../composables/useEventState'
+import { createFrameBundle } from '@plugins'
 import type { TBaseComponentProps } from '../component'
-import { Teleport } from 'vue'
 
 export default {
 	name: '_Frame',
@@ -24,7 +22,7 @@ export default {
 		// Привязка элемента к плагинам
 		const rootRef = useElementBinding(plugins)
 
-		const { visible, x, y, width, height, styles } = syncFrame({
+		const { visible, x, y, width, height, styles, target } = syncFrame({
 			props,
 			instance,
 			plugins,
@@ -41,13 +39,14 @@ export default {
 			y,
 			width,
 			height,
+			target,
 		}
 	},
 }
 </script>
 
 <template>
-	<teleport to="body">
+	<teleport :to="target">
 		<div ref="rootRef" v-show="visible" :style="styles" class="s-frame">
 			<slot />
 		</div>

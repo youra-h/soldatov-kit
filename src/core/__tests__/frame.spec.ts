@@ -211,6 +211,7 @@ describe('TFrame', () => {
 			height: 200,
 			visible: true,
             position: 'absolute',
+            target: '#portal',
         })
 
 		const props = frame.getProps()
@@ -221,6 +222,7 @@ describe('TFrame', () => {
 			height: 200,
 			visible: true,
             position: 'absolute',
+            target: '#portal',
 		})
 		expect(frame.toJSON()).toEqual(props)
 	})
@@ -287,5 +289,30 @@ describe('TFrame', () => {
 
         frame.position = 'absolute'
         expect(values).toEqual(['absolute'])
+    })
+
+    it('target по умолчанию body', () => {
+        const frame = new TFrame()
+        expect(frame.target).toBe('body')
+    })
+
+    it('target можно задать при создании', () => {
+        const frame = new TFrame({ target: '#portal' })
+        expect(frame.target).toBe('#portal')
+    })
+
+    it('target можно изменить через сеттер', () => {
+        const frame = new TFrame()
+        frame.target = '#my-modal'
+        expect(frame.target).toBe('#my-modal')
+    })
+
+    it('change:target эмитится при изменении', () => {
+        const frame = new TFrame()
+        const values: string[] = []
+        frame.events.on('change:target' as any, (v: string) => values.push(v))
+
+        frame.target = '#portal'
+        expect(values).toEqual(['#portal'])
     })
 })

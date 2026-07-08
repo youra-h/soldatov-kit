@@ -31,6 +31,7 @@ export default class TFrame
 		height: 100,
 		visible: false,
 		position: 'fixed',
+		target: 'body',
 	}
 
 	/** Базовый z-index для всех Frame. Можно переопределить статически. */
@@ -54,6 +55,7 @@ export default class TFrame
 
 	private _zIndex: number = 0
 	private _position: TFramePosition
+	private _target: string
 
 	constructor(options: IComponentOptions<IFrameProps, TFrameStates> | Partial<IFrameProps> = {}) {
 		const ctor = new.target as typeof TFrame
@@ -69,8 +71,10 @@ export default class TFrame
 		const visible = props.visible ?? ctor.defaultValues.visible!
 
 		this._position = props.position ?? ctor.defaultValues.position!
+		this._target = props.target ?? ctor.defaultValues.target!
 
 		this._states.visible = states?.visible ?? new TVisibilityState({ initial: visible })
+
 		this._states.x = states?.x ?? new TStateUnit<number>({ initial: x })
 		this._states.y = states?.y ?? new TStateUnit<number>({ initial: y })
 		this._states.width = states?.width ?? new TStateUnit<number | string>({ initial: width })
@@ -141,6 +145,15 @@ export default class TFrame
 			; (this.events as TEvented<TFrameEvents>).emit('change:position', value)
 	}
 
+	get target(): string {
+		return this._target
+	}
+	set target(value: string) {
+		if (this._target === value) return
+		this._target = value
+			; (this.events as TEvented<TFrameEvents>).emit('change:target', value)
+	}
+
 	get zIndex(): number {
 		return this._zIndex
 	}
@@ -177,6 +190,7 @@ export default class TFrame
 			height: this.height,
 			visible: this.visible,
 			position: this.position,
+			target: this.target,
 		}
 	}
 }
