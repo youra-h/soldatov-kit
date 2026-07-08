@@ -24,7 +24,7 @@ import {
 	propsActivatableCollection,
 	type IActivatableCollectionState,
 } from '../collection/activable'
-import type { TEmits, TProps, ISyncComponentViewOptions } from '../../types'
+import type { TEmits, TProps, ISyncComponentOptions } from '../../types'
 import { useInheritProps } from '../../composables/useInheritProps'
 
 export const emitsTabs: TEmits = [
@@ -93,7 +93,7 @@ export interface ITabsState extends IControlState, IActivatableCollectionState<I
  * Синхронизация props и событий для Tabs
  */
 export function syncTabs(
-	options: ISyncComponentViewOptions<ITabsProps<ITabItem>, ITabs>,
+	options: ISyncComponentOptions<ITabsProps<ITabItem>, ITabs>,
 ): ITabsState {
 	const synPropsControl = syncControl(options)
 

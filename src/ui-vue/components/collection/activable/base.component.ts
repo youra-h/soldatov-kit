@@ -13,7 +13,7 @@ import {
 	syncCollection,
 	type ICollectionState,
 } from '../base.component'
-import type { TEmits, TProps, ISyncComponentViewOptions } from '../../../types'
+import type { TEmits, TProps, ISyncComponentOptions } from '../../../types'
 import { useSyncProps } from '../../../composables/useSyncProps'
 
 export const emitsActivatableCollection: TEmits = [
@@ -44,7 +44,7 @@ export interface IActivatableCollectionState<TItem = any> extends ICollectionSta
 export function syncActivatableCollection<
 	TItem extends IActivatableCollectionItem = IActivatableCollectionItem,
 >(
-	options: ISyncComponentViewOptions<
+	options: ISyncComponentOptions<
 		IActivatableCollectionProps<TItem> & ICollectionSource<TItem>,
 		IActivatableCollection<IActivatableCollectionProps, TActivatableCollectionEvents, TItem>
 	>,

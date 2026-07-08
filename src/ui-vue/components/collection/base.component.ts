@@ -12,7 +12,7 @@ import { TCollectionItemPlugins, TDragPlugin } from '@plugins'
 import { useProvideCollection } from '../../composables/useProvideCollection'
 import { useProvideCollectionPlugins } from '../../composables/useProvideCollectionPlugins'
 import { useInjectDragContext } from '../../composables/useDragContext'
-import type { TEmits, TProps, ISyncComponentViewOptions } from '../../types'
+import type { TEmits, TProps, ISyncComponentOptions } from '../../types'
 import { useSyncProps } from '../../composables/useSyncProps'
 
 export const emitsCollection: TEmits = [
@@ -56,7 +56,7 @@ export interface ICollectionState<TItem = any> {
  * Синхронизация props и событий для Collection
  */
 export function syncCollection<TItem extends ICollectionItem = ICollectionItem>(
-	options: ISyncComponentViewOptions<
+	options: ISyncComponentOptions<
 		ICollectionSource<TItem>,
 		ICollection<ICollectionProps, TCollectionEvents, TItem>
 	>,

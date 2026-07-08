@@ -11,7 +11,7 @@ import {
 	syncStylable,
 	type IStylableState,
 } from '../stylable'
-import type { TEmits, TProps, ISyncComponentViewOptions } from '../../types/common'
+import type { TEmits, TProps, ISyncComponentOptions } from '../../types/common'
 import { useSyncProps } from '../../composables/useSyncProps'
 import { useInheritProps } from '../../composables/useInheritProps'
 import { TSpinnerStylePlugin } from '@plugins'
@@ -46,7 +46,7 @@ export interface ISpinnerState extends IStylableState {
  * Bind props to instance properties.
  */
 export function syncSpinner(
-	options: ISyncComponentViewOptions<ISpinnerProps, ISpinner>,
+	options: ISyncComponentOptions<ISpinnerProps, ISpinner>,
 ): ISpinnerState {
 	const syncProps = syncStylable(options)
 

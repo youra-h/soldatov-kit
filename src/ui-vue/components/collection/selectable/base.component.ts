@@ -16,7 +16,7 @@ import {
 	syncCollection,
 	type ICollectionState,
 } from '../base.component'
-import type { TEmits, TProps, ISyncComponentViewOptions } from '../../../types'
+import type { TEmits, TProps, ISyncComponentOptions } from '../../../types'
 import { useSyncProps } from '../../../composables/useSyncProps'
 
 export const emitsSelectableCollection: TEmits = [
@@ -57,7 +57,7 @@ export interface ISelectableCollectionState<TItem = ISelectableCollectionItem>
 export function syncSelectableCollection<
 	TItem extends ISelectableCollectionItem = ISelectableCollectionItem,
 >(
-	options: ISyncComponentViewOptions<
+	options: ISyncComponentOptions<
 		ISelectableCollectionProps<TItem> & ICollectionSource<TItem>,
 		ISelectableCollection<ISelectableCollectionProps, TSelectableCollectionEvents, TItem>
 	>,

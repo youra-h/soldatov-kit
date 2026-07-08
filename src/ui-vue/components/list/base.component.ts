@@ -22,7 +22,7 @@ import {
 	propsSelectableCollection,
 	type ISelectableCollectionState,
 } from '../collection/selectable'
-import type { TEmits, TProps, ISyncComponentViewOptions } from '../../types'
+import type { TEmits, TProps, ISyncComponentOptions } from '../../types'
 import { useSyncProps } from '../../composables/useSyncProps'
 import { useInheritProps } from '../../composables/useInheritProps'
 
@@ -80,7 +80,7 @@ export interface IListState<TItem extends IListItem = IListItem>
 	extends IControlState, ISelectableCollectionState<TItem> {}
 
 export function syncList<TItem extends IListItem = IListItem>(
-	options: ISyncComponentViewOptions<IListProps<TItem> & ICollectionSource<TItem>, IList<TItem>>,
+	options: ISyncComponentOptions<IListProps<TItem> & ICollectionSource<TItem>, IList<TItem>>,
 ): IListState<TItem> {
 	const syncPropsControl = syncControl(options)
 

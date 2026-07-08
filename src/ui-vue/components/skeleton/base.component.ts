@@ -13,7 +13,7 @@ import {
 	syncStylable,
 	type IStylableState,
 } from '../stylable'
-import type { TEmits, TProps, ISyncComponentViewOptions } from '../../types/common'
+import type { TEmits, TProps, ISyncComponentOptions } from '../../types/common'
 import { useSyncProps } from '../../composables/useSyncProps'
 import { useInheritProps } from '../../composables/useInheritProps'
 
@@ -64,7 +64,7 @@ export interface ISkeletonState extends IStylableState {
 }
 
 export function syncSkeleton(
-	options: ISyncComponentViewOptions<ISkeletonProps, ISkeleton>,
+	options: ISyncComponentOptions<ISkeletonProps, ISkeleton>,
 ): ISkeletonState {
 	const syncProps = syncStylable(options)
 

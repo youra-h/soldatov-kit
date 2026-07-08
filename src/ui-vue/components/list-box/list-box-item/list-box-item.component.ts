@@ -7,7 +7,7 @@ import {
 	syncListItem,
 	type IListItemState,
 } from '../../list/list-item'
-import type { TEmits, TProps, ISyncComponentViewOptions } from '../../../types'
+import type { TEmits, TProps, ISyncComponentOptions } from '../../../types'
 import { useSyncProps } from '../../../composables/useSyncProps'
 import { TListItemPlugin } from '@plugins'
 
@@ -34,7 +34,7 @@ export interface IListBoxItemState extends IListItemState {
 }
 
 export function syncListBoxItem(
-	options: ISyncComponentViewOptions<IListItemProps, IListBoxItem>,
+	options: ISyncComponentOptions<IListItemProps, IListBoxItem>,
 ): IListBoxItemState {
 	const syncProps = syncListItem(options)
 

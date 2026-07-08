@@ -6,9 +6,10 @@ import {
 	BaseComponent,
 	emitsComponent,
 	propsComponent,
-	type TBaseComponentProps,
+	syncComponent,
+	type IComponentState,
 } from '../component'
-import type { TEmits, TProps, ISyncComponentViewOptions } from '../../types'
+import type { TEmits, TProps, ISyncComponentOptions } from '../../types'
 import { TFrameStylePlugin } from '@plugins'
 
 export const emitsFrame: TEmits = [
@@ -67,8 +68,7 @@ export default {
 	props: propsFrame,
 }
 
-export interface IFrameState {
-	visible: Ref<boolean>
+export interface IFrameState extends IComponentState {
 	x: Ref<number>
 	y: Ref<number>
 	styles: Ref<Record<string, string | number>>
@@ -83,27 +83,12 @@ export interface IFrameState {
  * @param options - sync options
  */
 export function syncFrame(
-	options: ISyncComponentViewOptions<IFrameProps, IFrame>,
+	options: ISyncComponentOptions<IFrameProps, IFrame>,
 ): IFrameState {
+	const syncProps = syncComponent(options)
+
 	const { instance, emit, plugins } = options
 
-	// Пробрасываем события core-инстанса наружу (Vue events)
-	instance.events.on('beforeShow' as any, () => {
-		emit?.('beforeShow')
-	})
-	instance.events.on('beforeHide' as any, () => {
-		emit?.('beforeHide')
-	})
-	instance.events.on('show' as any, () => {
-		emit?.('show', instance)
-	})
-	instance.events.on('hide' as any, () => {
-		emit?.('hide', instance)
-	})
-	instance.events.on('change:visible' as any, (value: boolean) => {
-		emit?.('change:visible', value)
-		emit?.('update:visible', value)
-	})
 	instance.events.on('change:x' as any, (value: number) => {
 		emit?.('change:x', value)
 		emit?.('update:x', value)
@@ -135,8 +120,8 @@ export function syncFrame(
 	const stylePlugin = plugins.get(TFrameStylePlugin)!
 
 	return {
+		...syncProps,
 		...useSyncProps(instance.events as any, {
-			visible: () => instance.visible,
 			x: () => instance.x,
 			y: () => instance.y,
 			width: () => instance.width,

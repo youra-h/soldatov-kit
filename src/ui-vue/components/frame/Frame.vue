@@ -22,7 +22,7 @@ export default {
 		// Привязка элемента к плагинам
 		const rootRef = useElementBinding(plugins)
 
-		const { visible, x, y, width, height, styles, target } = syncFrame({
+		const { visible, rendered, x, y, width, height, styles, target } = syncFrame({
 			props,
 			instance,
 			plugins,
@@ -35,6 +35,7 @@ export default {
 			rootRef,
 			styles,
 			visible,
+			rendered,
 			x,
 			y,
 			width,
@@ -47,7 +48,7 @@ export default {
 
 <template>
 	<teleport :to="target">
-		<div ref="rootRef" v-show="visible" :style="styles" class="s-frame">
+		<div ref="rootRef" v-show="visible" v-if="rendered" :style="styles" class="s-frame">
 			<slot />
 		</div>
 	</teleport>

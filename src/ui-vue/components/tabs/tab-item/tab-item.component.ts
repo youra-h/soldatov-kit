@@ -13,7 +13,7 @@ import {
 	propsActivatableCollectionItem,
 	type IActivatableCollectionItemState,
 } from '../../collection/activable'
-import type { TEmits, TProps, ISyncComponentViewOptions } from '../../../types'
+import type { TEmits, TProps, ISyncComponentOptions } from '../../../types'
 
 export const emitsTabItem: TEmits = [
 	...emitsTabItemCustom,
@@ -38,7 +38,7 @@ export interface ITabItemState
 /**
  * Синхронизация props и событий для TabItem
  */
-export function syncTabItem(options: ISyncComponentViewOptions<ITabItemProps, ITabItem>) {
+export function syncTabItem(options: ISyncComponentOptions<ITabItemProps, ITabItem>) {
 	return {
 		...syncTabItemCustom(options),
 		...syncActivatableCollectionItem(options),

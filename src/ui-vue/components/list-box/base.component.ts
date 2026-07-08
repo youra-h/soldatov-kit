@@ -8,7 +8,7 @@ import {
 	type TListBoxView,
 } from '@core'
 import { BaseList, emitsList, propsList, syncList, type IListState } from '../list'
-import type { TEmits, TProps, ISyncComponentViewOptions } from '../../types'
+import type { TEmits, TProps, ISyncComponentOptions } from '../../types'
 import { useInheritProps } from '../../composables/useInheritProps'
 
 export const emitsListBox: TEmits = [
@@ -33,7 +33,7 @@ export default {
 }
 
 export function syncListBox(
-	options: ISyncComponentViewOptions<IListBoxProps<IListBoxItem>, IListBox>,
+	options: ISyncComponentOptions<IListBoxProps<IListBoxItem>, IListBox>,
 ): IListState<IListBoxItem> {
 	const syncProps = syncList<IListBoxItem>(options)
 

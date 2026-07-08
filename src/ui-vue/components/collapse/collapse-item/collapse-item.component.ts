@@ -18,7 +18,7 @@ import {
 	propsSelectableCollectionItem,
 	type ISelectableCollectionItemState,
 } from '../../collection/selectable'
-import type { TEmits, TProps, ISyncComponentViewOptions } from '../../../types'
+import type { TEmits, TProps, ISyncComponentOptions } from '../../../types'
 
 export const emitsCollapseItem: TEmits = [
 	...emitsCollapseItemCustom,
@@ -47,7 +47,7 @@ export interface ICollapseItemState
 }
 
 export function syncCollapseItem(
-	options: ISyncComponentViewOptions<ICollapseItemProps, ICollapseItem>,
+	options: ISyncComponentOptions<ICollapseItemProps, ICollapseItem>,
 ): ICollapseItemState {
 	return {
 		...syncCollapseItemCustom(options),

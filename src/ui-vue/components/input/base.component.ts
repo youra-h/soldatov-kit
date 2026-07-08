@@ -6,7 +6,7 @@ import {
 	syncInputControl,
 	type IInputControlState,
 } from '../input-control'
-import type { TEmits, TProps, ISyncComponentViewOptions } from '../../types/common'
+import type { TEmits, TProps, ISyncComponentOptions } from '../../types/common'
 import { useInheritProps } from '../../composables/useInheritProps'
 
 export const emitsInput: TEmits = [
@@ -26,7 +26,7 @@ export default {
 
 export interface IInputState extends IInputControlState<string> { }
 
-export function syncInput(options: ISyncComponentViewOptions<IInputProps, IInput>): IInputState {
+export function syncInput(options: ISyncComponentOptions<IInputProps, IInput>): IInputState {
 	const syncProps = syncInputControl(options)
 
 	return {

@@ -12,7 +12,7 @@ import {
 	propsSelectableCollectionItem,
 	type ISelectableCollectionItemState,
 } from '../../collection/selectable'
-import type { TEmits, TProps, ISyncComponentViewOptions } from '../../../types'
+import type { TEmits, TProps, ISyncComponentOptions } from '../../../types'
 
 export const emitsListItem: TEmits = [
 	...emitsListItemCustom,
@@ -35,7 +35,7 @@ export interface IListItemState
 	extends IListItemCustomState, ISelectableCollectionItemState<IListItem> {}
 
 export function syncListItem(
-	options: ISyncComponentViewOptions<IListItemProps, IListItem>,
+	options: ISyncComponentOptions<IListItemProps, IListItem>,
 ): IListItemState {
 	return {
 		...syncListItemCustom(options),

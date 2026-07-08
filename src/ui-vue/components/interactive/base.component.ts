@@ -8,7 +8,7 @@ import {
 	syncComponentView,
 	type IComponentViewState,
 } from '../component-view'
-import type { TEmits, TProps, ISyncComponentViewOptions } from '../../types'
+import type { TEmits, TProps, ISyncComponentOptions } from '../../types'
 import { useSyncProps } from '../../composables/useSyncProps'
 
 export const emitsInteractive: TEmits = [
@@ -50,7 +50,7 @@ export interface IInteractiveState extends IComponentViewState {
  * @param instance
  */
 export function syncInteractive(
-	options: ISyncComponentViewOptions<IInteractiveProps, IInteractive>,
+	options: ISyncComponentOptions<IInteractiveProps, IInteractive>,
 ): IInteractiveState {
 	const syncProps = syncComponentView(options)
 

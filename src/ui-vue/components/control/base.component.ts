@@ -8,7 +8,7 @@ import {
 	syncStylable,
 	type IStylableState,
 } from '../stylable'
-import type { TEmits, TProps, ISyncComponentViewOptions } from '../../types'
+import type { TEmits, TProps, ISyncComponentOptions } from '../../types'
 import { useSyncProps } from '../../composables/useSyncProps'
 import { useInheritProps } from '../../composables/useInheritProps'
 
@@ -51,7 +51,7 @@ export interface IControlState extends IStylableState {
  * @param instance
  */
 export function syncControl(
-	options: ISyncComponentViewOptions<IControlProps, IControl>,
+	options: ISyncComponentOptions<IControlProps, IControl>,
 ): IControlState {
 	const syncProps = syncStylable(options)
 

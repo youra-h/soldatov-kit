@@ -3,7 +3,7 @@ import { useInjectCollectionItem } from '../../../composables/useInjectCollectio
 import { useInjectCollectionItemPlugins } from '../../../composables/useInjectCollectionItemPlugins'
 import { useSyncProps } from '../../../composables/useSyncProps'
 import type { Ref } from 'vue'
-import type { TEmits, TProps, ISyncComponentViewOptions } from '../../../types'
+import type { TEmits, TProps, ISyncComponentOptions } from '../../../types'
 
 export const emitsCollectionItem: TEmits = ['free', 'change:order'] as const
 
@@ -23,7 +23,7 @@ export interface ICollectionItemState<T extends ICollectionItem = ICollectionIte
  * Синхронизация props и событий для CollectionItem
  */
 export function syncCollectionItem(
-	options: ISyncComponentViewOptions<ICollectionItemProps, ICollectionItem>,
+	options: ISyncComponentOptions<ICollectionItemProps, ICollectionItem>,
 ): ICollectionItemState {
 	const { instance, emit, plugins } = options
 
