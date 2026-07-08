@@ -1,6 +1,6 @@
 import { TEvented } from '../event/evented'
 import type { TStateUnitValueEvents, IStateUnit } from './types'
-import type { TValuePayload } from '../types'
+import type { TValuePayload } from '../../bridge'
 
 /**
  * Универсальная единица состояния со значением.
