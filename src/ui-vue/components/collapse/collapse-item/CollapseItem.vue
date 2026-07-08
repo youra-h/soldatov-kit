@@ -66,7 +66,14 @@ export default {
 </script>
 
 <template>
-	<div ref="rootRef" v-if="rendered" v-show="visible" :class="classes" :style="{ order }" v-bind="containerAttrs">
+	<div
+		ref="rootRef"
+		v-if="rendered"
+		v-show="visible"
+		:class="classes"
+		:style="{ order }"
+		v-bind="containerAttrs"
+	>
 		<Button
 			class="s-collapse-item__header"
 			:view="view"
@@ -77,12 +84,14 @@ export default {
 			v-bind="controlAttrs"
 		>
 			<template #leading>
-				<Icon
-					v-if="arrowPlacement === 'start'"
-					:tag="arrowIconTag"
-					:size="size"
-					class="s-collapse-item__arrow"
-				/>
+				<slot name="leading-icon">
+					<Icon
+						v-if="arrowPlacement === 'start'"
+						:tag="arrowIconTag"
+						:size="size"
+						class="s-collapse-item__arrow"
+					/>
+				</slot>
 				<slot name="leading" />
 			</template>
 
@@ -92,12 +101,24 @@ export default {
 
 			<template #trailing>
 				<slot name="trailing" />
-				<Icon
-					v-if="arrowPlacement === 'end'"
-					:tag="arrowIconTag"
-					:size="size"
-					class="s-collapse-item__arrow"
-				/>
+				<slot name="trailing-icon">
+					<Icon
+						v-if="arrowPlacement === 'end'"
+						:tag="arrowIconTag"
+						:size="size"
+						class="s-collapse-item__arrow"
+					/>
+				</slot>
+			</template>
+		</Button>
+
+		<div class="s-collapse-item__body">
+			<div class="s-collapse-item__content">
+				<slot />
+			</div>
+		</div>
+	</div>
+</template>
 			</template>
 		</Button>
 
