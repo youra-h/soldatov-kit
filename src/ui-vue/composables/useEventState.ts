@@ -1,45 +1,25 @@
 import { customRef, onUnmounted, type Ref } from 'vue'
-import type { IEventSource } from '@core'
+import type { IReadableStore } from '@core'
 
 /**
- * Возвращает реактивный `Ref`, который обновляется при срабатывании указанных событий.
+ * Vue-адаптер для `IReadableStore<T>`.
+ * Превращает framework-agnostic store в реактивный Vue `Ref`.
  *
- * Решает проблему: мутации внутри классов происходят на raw-объекте, минуя Vue Proxy.
- * Вместо отслеживания через proxy используется ручной `track`/`trigger` через события.
- *
- * @param events        Источник событий (`TEvented`, `TEventEmitter` или любой `IEventSource`).
- * @param getter        Функция, возвращающая актуальное значение при каждом чтении.
- * @param triggerEvents Список имён событий, при которых `Ref` должен обновиться.
+ * @param store — read-only store с подпиской (созданный через `createEventStore`).
  * @returns Реактивный `Ref<T>`.
  */
-export function useEventState<T>(
-	events: IEventSource,
-	getter: () => T,
-	triggerEvents: string[],
-): Ref<T> {
-	let _trigger: () => void
+export function useEventState<T>(store: IReadableStore<T>): Ref<T> {
+	return customRef<T>((track, trigger) => {
+		const dispose = store.subscribe(trigger)
 
-	const ref = customRef<T>((track, trigger) => {
-		_trigger = trigger
+		onUnmounted(dispose)
 
 		return {
 			get() {
 				track()
-				return getter()
+				return store.getSnapshot()
 			},
 			set() {},
 		}
 	})
-
-	for (const event of triggerEvents) {
-		events.on(event, _trigger!)
-	}
-
-	onUnmounted(() => {
-		for (const event of triggerEvents) {
-			events.off(event, _trigger!)
-		}
-	})
-
-	return ref
 }

@@ -5,7 +5,6 @@ import { useBundle } from '../../composables/useBundle'
 import { useElementBinding } from '../../composables/useElementBinding'
 import { useInstanceBinding } from '../../composables/useInstanceBinding'
 import BaseIcon, { syncIcon } from './base.component'
-import { useEventState } from '../../composables/useEventState'
 import { createComponentViewBundle, TIconStylePlugin } from '@plugins'
 import type { TBaseComponentViewProps } from '../component-view'
 

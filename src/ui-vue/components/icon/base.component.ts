@@ -9,7 +9,6 @@ import {
 } from '../component-view'
 import type { TEmits, TProps, ISyncComponentOptions } from '../../types/common'
 import { useSyncProps } from '../../composables/useSyncProps'
-import { useEventState } from '../../composables/useEventState'
 import { useInheritProps } from '../../composables/useInheritProps'
 import { TIconStylePlugin } from '@plugins'
 

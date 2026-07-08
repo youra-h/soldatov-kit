@@ -38,6 +38,9 @@ export * from './common/evented'
 export * from './common/event-emitter'
 export * from './common/classes'
 export * from './common/frame-debounce'
+
+// bridge (мосты между core и UI-фреймворками)
+export * from './bridge'
 export type {
 	TComponentSize,
 	TComponentVariant,
