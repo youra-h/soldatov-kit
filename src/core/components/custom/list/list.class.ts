@@ -7,8 +7,8 @@ import type { IListItem } from './list-item/types'
 import type { IList, IListProps, TListEvents, TListStates } from './types'
 import { TEvented } from '../../../common/event/evented'
 import type { TSelectionMode } from '../../base/collection'
-import { type TValuePayload } from '../../../common/types'
-import type { TComponentSize, TComponentVariant, TScrollBehavior } from '../../../common/types'
+import { type TValuePayload } from '../../../../common'
+import type { TComponentSize, TComponentVariant, TScrollBehavior } from '../../../../common'
 
 export class TList<
 	TItem extends IListItem = IListItem,

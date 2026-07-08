@@ -1,7 +1,7 @@
 import type { IEntity } from '../entity'
-import { TEvented } from '../../common/evented'
-import type { IStateUnit } from '../../common/state-unit'
-import type { IVisibilityState } from '../../common/states'
+import { TEvented } from '../../../common'
+import type { IStateUnit } from '../../../common'
+import type { IVisibilityState } from '../../../common'
 
 export type TComponentEvents = {
 	/** Создан (после конструктора, async). */

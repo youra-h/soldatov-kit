@@ -4,7 +4,7 @@ import type {
 	TComponentEvents,
 	TComponentStates,
 } from '../../base/component'
-import type { IStateUnit } from '../../common/state-unit'
+import type { IStateUnit } from '../../../common'
 
 export type TFramePosition = 'fixed' | 'absolute'
 

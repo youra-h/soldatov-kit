@@ -6,7 +6,7 @@ import type {
 	TComponentViewStates,
 } from './types'
 import { TClasses } from '../../common/classes'
-import { TEvented } from '../../common/evented'
+import { TEvented } from '../../../common'
 
 /**
  * Web-component-view слой: tag/classes.

@@ -1,8 +1,8 @@
 import TValueControl from '../../../base/value-control/value-control.class'
 import type { IComponentViewOptions } from '../../../base/component-view'
 import { TComponentView } from '../../../base/component-view'
-import { TStateUnit } from '../../../../common/state-unit'
-import type { TValuePayload } from '../../../../common/types'
+import { TStateUnit } from '../../../../../common'
+import type { TValuePayload } from '../../../../../common'
 import type {
 	ICollapseItemCustom,
 	ICollapseItemCustomProps,

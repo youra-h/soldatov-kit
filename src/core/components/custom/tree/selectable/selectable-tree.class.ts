@@ -1,7 +1,7 @@
 import { TTree } from '../tree.class'
 import { TreeSelectionController } from '../controllers/selection.controller'
 import { TSelectableTreeItem } from './selectable-tree-item.class'
-import type { TConstructor } from '../../../../common/types'
+import type { TConstructor } from '../../../../../common'
 import type { TSelectionMode } from '../../../base/collection'
 
 /**

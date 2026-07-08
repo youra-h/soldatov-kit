@@ -5,8 +5,8 @@ import type {
 	ICollectionItemProps,
 	TCollectionItemEvents,
 } from './types'
-import { TEntity } from '../../base/entity'
-import { TEvented } from '../../../common/evented'
+import { TEntity } from '../../entity'
+import { TEvented } from '../../../../common'
 
 /**
  * Элемент коллекции.

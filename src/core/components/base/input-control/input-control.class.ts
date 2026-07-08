@@ -2,7 +2,7 @@ import { TValueControl } from '../value-control'
 import type { IInputControlProps, TInputControlEvents, TInputControlStates } from './types'
 import type { IComponentViewOptions } from '../component-view'
 import { TComponentView } from '../component-view'
-import { TEvented } from '../../common/evented'
+import { TEvented } from '../../../common'
 
 /**
  * База для input-элементов (текстовые поля, checkbox, switch и т.д.).

@@ -1,6 +1,6 @@
 import { TCollection } from './../collection.class'
 import type { IEntity } from '../../base/entity'
-import { TEvented } from '../../../common/evented'
+import { TEvented } from '../../../../common'
 
 export interface ICollectionItemOptions {
 	collection?: TCollection

@@ -1,9 +1,9 @@
-import type { TComponentSize, TComponentVariant } from '../../common/types'
+import type { TComponentSize, TComponentVariant } from '../../../common'
 import { TComponentView, type IComponentViewOptions } from '../component-view'
 import type { IStylableProps, TStylableEvents, TStylableStates } from './types'
-import { TStateUnit } from '../../common/state-unit'
-import { type TValuePayload } from '../../common/types'
-import { TEvented } from '../../common/evented'
+import { TStateUnit } from '../../../common'
+import { type TValuePayload } from '../../../common'
+import { TEvented } from '../../../common'
 
 /**
  * Слой "stylable": унифицированные `size` и `variant`.

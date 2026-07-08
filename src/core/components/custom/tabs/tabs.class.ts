@@ -4,8 +4,8 @@ import { TComponentView } from '../../base/component-view'
 import { TActivatableCollection } from '../../base/collection'
 import TTabItem from './tab-item/tab-item.class'
 import type { ITabItem } from './tab-item/types'
-import type { TComponentSize, TComponentVariant } from '../../../common/types'
-import { type TValuePayload } from '../../../common/types'
+import type { TComponentSize, TComponentVariant } from '../../../../common'
+import { type TValuePayload } from '../../../../common'
 import type {
 	ITabs,
 	ITabsProps,

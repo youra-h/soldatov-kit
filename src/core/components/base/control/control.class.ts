@@ -1,10 +1,10 @@
-import { TStateUnit } from '../../common/state-unit'
+import { TStateUnit } from '../../../common'
 import { TComponentView } from '../component-view'
 import type { IComponentViewOptions } from '../component-view'
 import { TStylable } from '../stylable'
 import type { IControlProps, TControlEvents, TControlStates } from './types'
-import { type TValuePayload } from '../../common/types'
-import { TEvented } from '../../common/evented'
+import { type TValuePayload } from '../../../common'
+import { TEvented } from '../../../common'
 
 /**
  * База для Ui-контролов: stylable (size/variant) + интерактивность (disabled/focused/click).

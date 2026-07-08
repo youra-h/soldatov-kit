@@ -4,7 +4,7 @@ import type {
 	IActivatableCollectionItemProps,
 	TActivatableItemEvents,
 } from './types'
-import { TEvented } from '../../../common/evented'
+import { TEvented } from '../../../../common'
 
 /**
  * Элемент коллекции с поддержкой активности.

@@ -1,7 +1,7 @@
 import { TTreeCollection } from './tree-collection.class'
 import type { ITree, TTreeEvents } from './types'
 import type { ITreeItem } from './item/types'
-import type { TConstructor } from '../../../common/types'
+import type { TConstructor } from '../../../../common'
 import { TEvented } from '../../../common/event/evented'
 
 export class TTree<TItem extends ITreeItem = ITreeItem, TEvents extends TTreeEvents = TTreeEvents>

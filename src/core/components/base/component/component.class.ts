@@ -1,8 +1,8 @@
 import { TEntity } from '../entity'
-import { TEvented } from '../../common/evented'
-import { type IStateUnit, TStateUnit } from '../../common/state-unit'
-import { TVisibilityState, type IVisibilityState } from '../../common/states'
-import type { TValuePayload } from '../../common/types'
+import { TEvented } from '../../../common'
+import { type IStateUnit, TStateUnit } from '../../../common'
+import { TVisibilityState, type IVisibilityState } from '../../../common'
+import type { TValuePayload } from '../../../bridge'
 import type {
 	IComponent,
 	IComponentOptions,

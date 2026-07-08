@@ -1,9 +1,9 @@
 import { TComponent } from '../../base/component'
 import type { IComponentOptions } from '../../base/component'
-import { TVisibilityState, type IVisibilityState } from '../../common/states'
-import { TStateUnit } from '../../common/state-unit'
-import { TEvented } from '../../common/evented'
-import type { TValuePayload } from '../../common/types'
+import { TVisibilityState, type IVisibilityState } from '../../../common'
+import { TStateUnit } from '../../../common'
+import { TEvented } from '../../../common'
+import type { TValuePayload } from '../../../bridge'
 import type { IFrame, IFrameProps, TFrameEvents, TFrameStates, TFramePosition } from './types'
 
 /**

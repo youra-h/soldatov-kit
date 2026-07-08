@@ -4,9 +4,9 @@ import type {
 	TComponentViewEvents,
 	TComponentViewStates,
 } from '../../base/component-view'
-import type { TComponentSize } from '../../common/types'
-import type { TValuePayload } from '../../common/types'
-import type { IStateUnit } from '../../common/state-unit'
+import type { TComponentSize } from '../../../common'
+import type { TValuePayload } from '../../../bridge'
+import type { IStateUnit } from '../../../common'
 
 export interface IIconProps extends IComponentViewProps {
 	// Размер иконки

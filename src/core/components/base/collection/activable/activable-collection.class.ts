@@ -6,10 +6,10 @@ import type {
 	IActivatableCollectionItem,
 	IActivatableCollectionItemMeta,
 } from './types'
-import type { TConstructor } from '../../../common/types'
+import type { TConstructor } from '../../../../common'
 import { TActivatableCollectionItem } from './activable-collection-item.class'
-import { isSame } from '../../../common/utility/is-same'
-import { TEvented } from '../../../common/evented'
+import { isSame } from '../../../../common'
+import { TEvented } from '../../../../common'
 
 /**
  * Коллекция элементов с поддержкой активности.

@@ -4,7 +4,7 @@ import type {
 	TControlEvents,
 	TControlStates,
 } from '../../base/control'
-import type {} from '../../../common/types'
+import type { } from '../../../../common'
 import type {
 	TActivatableCollection,
 	TActivatableCollectionEvents,

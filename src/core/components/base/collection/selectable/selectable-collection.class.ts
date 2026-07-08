@@ -9,8 +9,8 @@ import type {
 	TSelectionMode,
 	TSelectableItemEvents,
 } from './types'
-import type { TConstructor } from '../../../common/types'
-import { TEvented } from '../../../common/evented'
+import type { TConstructor } from '../../../../common'
+import { TEvented } from '../../../../common'
 
 /**
  * Коллекция элементов с поддержкой выбора.

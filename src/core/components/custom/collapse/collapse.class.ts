@@ -13,8 +13,8 @@ import type {
 } from './types'
 import { TEvented } from '../../../common/event/evented'
 import type { TSelectionMode } from '../../base/collection'
-import { type TValuePayload } from '../../../common/types'
-import type { TComponentSize, TComponentVariant } from '../../../common/types'
+import { type TValuePayload } from '../../../../common'
+import type { TComponentSize, TComponentVariant } from '../../../../common'
 
 export class TCollapse
 	extends TControl<ICollapseProps, TCollapseEvents, TCollapseStates>

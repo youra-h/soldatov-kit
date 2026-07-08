@@ -1,11 +1,11 @@
-import { TEvented } from '../../common/evented'
+import { TEvented } from '../../../common'
 import type { TCollectionEvents, ICollection, ICollectionProps } from './types'
 import {
 	type ICollectionItem,
 	type TCollectionItemSource,
 	type ICollectionItemMeta,
 } from './item/types'
-import type { TConstructor } from '../../common/types'
+import type { TConstructor } from '../../../common'
 import { TEntity } from '../../base/entity'
 
 /**

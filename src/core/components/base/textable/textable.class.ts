@@ -1,10 +1,10 @@
-import { TStateUnit } from '../../common/state-unit'
+import { TStateUnit } from '../../../common'
 import { TControl } from '../control'
 import type { IComponentViewOptions } from '../component-view'
 import { TComponentView } from '../component-view'
 import type { ITextableProps, TTextableEvents, TTextableStates } from './types'
-import { type TValuePayload } from '../../common/types'
-import { TEvented } from '../../common/evented'
+import { type TValuePayload } from '../../../common'
+import { TEvented } from '../../../common'
 
 /**
  * Слой "textable": добавляет отображаемое текстовое значение `text`.

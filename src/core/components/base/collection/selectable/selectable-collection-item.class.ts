@@ -4,7 +4,7 @@ import type {
 	ISelectableCollectionItemProps,
 	TSelectableItemEvents,
 } from './types'
-import { TEvented } from '../../../common/evented'
+import { TEvented } from '../../../../common'
 
 /**
  * Элемент коллекции с поддержкой выбранности.

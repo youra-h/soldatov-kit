@@ -2,9 +2,9 @@ import { TControl } from '../control'
 import type { IComponentViewOptions } from '../component-view'
 import { TComponentView } from '../component-view'
 import type { IValueControlProps, TValueControlEvents, TValueControlStates } from './types'
-import { TStateUnit } from '../../common/state-unit'
-import { type TValuePayload } from '../../common/types'
-import { TEvented } from '../../common/evented'
+import { TStateUnit } from '../../../common'
+import { type TValuePayload } from '../../../common'
+import { TEvented } from '../../../common'
 
 /**
  * База для контролов со значением.

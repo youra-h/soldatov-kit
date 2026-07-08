@@ -11,8 +11,8 @@ import type {
 } from '../../../base/collection/selectable/types'
 import type { TCollectableOptions } from '../../../base/collection/item/types'
 import type { IComponentViewOptions } from '../../../base/component-view'
-import type { IStateUnit } from '../../../../common/state-unit'
-import type { TValuePayload } from '../../../../common/types'
+import type { IStateUnit } from '../../../../../common'
+import type { TValuePayload } from '../../../../../common'
 
 // ============ TListItemCustom (UI-логика без коллекции) ============
 

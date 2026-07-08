@@ -1,5 +1,5 @@
 import type { IStylable, IStylableProps, TStylableEvents, TStylableStates } from '../stylable'
-import type { IStateUnit } from '../../common/state-unit'
+import type { IStateUnit } from '../../../common'
 
 export type TControlEvents = TStylableEvents & {
 	'change:disabled': (value: boolean) => void

@@ -4,7 +4,7 @@ import {
 	type ICollectionItemMeta,
 } from './item/types'
 import type { IEntity } from '../../base/entity'
-import { TEvented } from '../../common/evented'
+import { TEvented } from '../../../common'
 
 /**
  * Базовый интерфейс коллекции элементов.

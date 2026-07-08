@@ -3,7 +3,7 @@ import type {
 	ICollectionItemProps,
 	TCollectionItemEvents,
 } from '../../../base/collection'
-import type { TConstructor } from '../../../../common/types'
+import type { TConstructor } from '../../../../../common'
 import type { ITreeCollection, ITree } from '../types'
 
 /**

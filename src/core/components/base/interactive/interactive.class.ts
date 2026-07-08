@@ -1,8 +1,8 @@
-import { TStateUnit } from '../../common/state-unit'
+import { TStateUnit } from '../../../common'
 import { TComponentView, type IComponentViewOptions } from '../component-view'
 import type { IInteractiveProps, TInteractiveEvents, TInteractiveStates } from './types'
-import { type TValuePayload } from '../../common/types'
-import { TEvented } from '../../common/evented'
+import { type TValuePayload } from '../../../common'
+import { TEvented } from '../../../common'
 
 /**
  * База для интерактивных компонентов: disabled + focused.

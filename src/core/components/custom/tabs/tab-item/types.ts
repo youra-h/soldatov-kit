@@ -4,7 +4,7 @@ import type {
 	TValueControlEvents,
 	TValueControlStates,
 } from '../../../base/value-control'
-import type { IStateUnit } from '../../../../common/state-unit'
+import type { IStateUnit } from '../../../../../common'
 import type {
 	IActivatableCollectionItemProps,
 	TActivatableItemEvents,
@@ -12,7 +12,7 @@ import type {
 } from '../../../base/collection'
 import type { IComponentViewOptions } from '../../../base/component-view'
 import type { TCollectableOptions } from '../../../base/collection/item/types'
-import { type TValuePayload } from '../../../../common/types'
+import { type TValuePayload } from '../../../../../common'
 
 // ============ TTabItemCustom (логика таба без коллекции) ============
 

@@ -1,8 +1,8 @@
 import { TActivatableCollectionItem } from './activable-collection-item.class'
 import type { TCollection } from '../collection.class'
-import { TEvented } from '../../../common/evented'
-import type { TClasses } from '../../../common/classes'
-import type { TConstructor } from '../../../common/types'
+import { TEvented } from '../../../../common'
+import type { TClasses } from '../../../../common'
+import type { TConstructor } from '../../../../common'
 import type { IActivatableComponentItem } from './types'
 
 /**
