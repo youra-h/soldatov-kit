@@ -8,6 +8,7 @@ import BaseFrame, { syncFrame } from './base.component'
 import { createFrameBundle, TFrameStylePlugin } from '@plugins'
 import { useEventState } from '../../composables/useEventState'
 import type { TBaseComponentProps } from '../component'
+import { Teleport } from 'vue'
 
 export default {
 	name: '_Frame',
@@ -46,9 +47,11 @@ export default {
 </script>
 
 <template>
-	<div ref="rootRef" v-show="visible" :style="styles" class="s-frame">
-		<slot />
-	</div>
+	<teleport to="body">
+		<div ref="rootRef" v-show="visible" :style="styles" class="s-frame">
+			<slot />
+		</div>
+	</teleport>
 </template>
 
 <style lang="scss">
