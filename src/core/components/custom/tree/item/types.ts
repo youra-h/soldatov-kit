@@ -2,7 +2,7 @@ import type {
 	ICollectionItem,
 	ICollectionItemProps,
 	TCollectionItemEvents,
-} from '../../../../base/collection'
+} from '../../../base/collection'
 import type { TConstructor } from '../../../../common/types'
 import type { ITreeCollection, ITree } from '../types'
 

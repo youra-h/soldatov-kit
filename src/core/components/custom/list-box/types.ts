@@ -1,5 +1,5 @@
 import type { IList, IListProps, TListEvents, TListStates } from '../list/types'
-import type { TItemProxyEvents } from '../../../base/collection'
+import type { TItemProxyEvents } from '../../base/collection'
 import type { IListBoxItem } from './list-box-item/types'
 
 export type TListBoxView = 'plain' | 'outlined' | 'filled'

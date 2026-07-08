@@ -3,7 +3,7 @@ import type {
 	ITextableProps,
 	TTextableEvents,
 	TTextableStates,
-} from '../../../base/textable'
+} from '../../base/textable'
 import type { TComponentVariant } from '../../../common/types'
 
 export type TButtonView = 'filled' | 'plain' | 'outlined' | 'none'

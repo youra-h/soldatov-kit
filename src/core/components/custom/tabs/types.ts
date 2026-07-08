@@ -3,14 +3,14 @@ import type {
 	IControlProps,
 	TControlEvents,
 	TControlStates,
-} from '../../../base/control'
+} from '../../base/control'
 import type {} from '../../../common/types'
 import type {
 	TActivatableCollection,
 	TActivatableCollectionEvents,
 	TItemProxyEvents,
 	IActivatableCollectionProps,
-} from '../../../base/collection'
+} from '../../base/collection'
 import type { ITabItem } from './tab-item/types'
 
 export type TTabsOrientation = 'horizontal' | 'vertical'

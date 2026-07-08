@@ -1,7 +1,7 @@
 import type { TTree } from '../tree.class'
 import type { ITreeItem } from '../item/types'
-import type { TSelectionMode } from '../../../../base/collection'
-import type { TSelectableBehavior } from '../../../../base/behaviors'
+import type { TSelectionMode } from '../../../base/collection'
+import type { TSelectableBehavior } from '../../../base/behaviors'
 
 interface IItemWithSelectable {
 	behavior: TSelectableBehavior

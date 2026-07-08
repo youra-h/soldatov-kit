@@ -2,7 +2,7 @@ import type {
 	IInputControl,
 	IInputControlProps,
 	TInputControlEvents,
-} from '../../../base/input-control'
+} from '../../base/input-control'
 
 export interface ISwitchProps extends IInputControlProps<boolean | undefined> {
 }

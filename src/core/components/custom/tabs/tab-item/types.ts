@@ -3,15 +3,15 @@ import type {
 	IValueControlProps,
 	TValueControlEvents,
 	TValueControlStates,
-} from '../../../../base/value-control'
+} from '../../../base/value-control'
 import type { IStateUnit } from '../../../../common/state-unit'
 import type {
 	IActivatableCollectionItemProps,
 	TActivatableItemEvents,
 	IActivatableComponentItem,
-} from '../../../../base/collection'
-import type { IComponentViewOptions } from '../../../../base/component-view'
-import type { TCollectableOptions } from '../../../../base/collection/item/types'
+} from '../../../base/collection'
+import type { IComponentViewOptions } from '../../../base/component-view'
+import type { TCollectableOptions } from '../../../base/collection/item/types'
 import { type TValuePayload } from '../../../../common/types'
 
 // ============ TTabItemCustom (логика таба без коллекции) ============

@@ -1,7 +1,7 @@
-import { TInputControl } from '../../../base/input-control'
-import { TComponentView, type IComponentViewOptions } from '../../../base/component-view'
+import { TInputControl } from '../../base/input-control'
+import { TComponentView, type IComponentViewOptions } from '../../base/component-view'
 import type { ICheckBox, ICheckBoxProps, TCheckBoxEvents } from './types'
-import { TEvented } from '../../../common/evented'
+import { TEvented } from '../../../common/event/evented'
 
 export default class TCheckBox
 	extends TInputControl<boolean | undefined, ICheckBoxProps, TCheckBoxEvents>

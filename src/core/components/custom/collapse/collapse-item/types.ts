@@ -3,14 +3,14 @@ import type {
 	IValueControlProps,
 	TValueControlEvents,
 	TValueControlStates,
-} from '../../../../base/value-control'
+} from '../../../base/value-control'
 import type {
 	ISelectableCollectionItemProps,
 	TSelectableItemEvents,
 	ISelectableComponentItem,
-} from '../../../../base/collection'
-import type { TCollectableOptions } from '../../../../base/collection/item/types'
-import type { IComponentViewOptions } from '../../../../base/component-view'
+} from '../../../base/collection'
+import type { TCollectableOptions } from '../../../base/collection/item/types'
+import type { IComponentViewOptions } from '../../../base/component-view'
 import type { IStateUnit } from '../../../../common/state-unit'
 import type { TValuePayload } from '../../../../common/types'
 import type { TCollapseView } from '../types'

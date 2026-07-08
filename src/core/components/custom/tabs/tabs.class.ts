@@ -1,7 +1,7 @@
-import TControl from '../../../base/control/control.class'
-import type { IComponentViewOptions } from '../../../base/component-view'
-import { TComponentView } from '../../../base/component-view'
-import { TActivatableCollection } from '../../../base/collection'
+import TControl from '../../base/control/control.class'
+import type { IComponentViewOptions } from '../../base/component-view'
+import { TComponentView } from '../../base/component-view'
+import { TActivatableCollection } from '../../base/collection'
 import TTabItem from './tab-item/tab-item.class'
 import type { ITabItem } from './tab-item/types'
 import type { TComponentSize, TComponentVariant } from '../../../common/types'
@@ -16,7 +16,7 @@ import type {
 	TTabsPosition,
 	TTabsView,
 } from './types'
-import { TEvented } from '../../../common/evented'
+import { TEvented } from '../../../common/event/evented'
 
 /**
  * Компонент табов (TTabs).

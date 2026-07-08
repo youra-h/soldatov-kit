@@ -1,6 +1,6 @@
 import { TBehaviorTreeItem } from '../item/behavior-tree-item.class'
-import { TSelectableBehavior } from '../../../../base/behaviors'
-import { TCollection } from '../../../../base/collection'
+import { TSelectableBehavior } from '../../../base/behaviors'
+import { TCollection } from '../../../base/collection'
 
 /**
  * Элемент дерева с поддержкой выбранности.

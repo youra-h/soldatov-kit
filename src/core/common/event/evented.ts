@@ -1,5 +1,4 @@
 import { TEventEmitter, type TEventHandler } from './event-emitter'
-import { TEntity } from '../base/entity'
 
 /**
  * Описание правила проброса одного события из источника.
@@ -40,7 +39,7 @@ export type TRelayRule<
 	then?: (...args: any[]) => void
 }
 
-export class TEvented<TEvents extends Record<string, (...args: any) => any>> extends TEntity {
+export class TEvented<TEvents extends Record<string, (...args: any) => any>> {
 	private _items: TEventEmitter<TEvents> = new TEventEmitter()
 
 	/**

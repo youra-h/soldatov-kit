@@ -1,4 +1,4 @@
-import { TTextable } from '../../../base/textable'
+import { TTextable } from '../../base/textable'
 import type {
 	IButton,
 	IButtonProps,
@@ -6,8 +6,8 @@ import type {
 	TButtonEvents,
 	TButtonStates,
 } from './types'
-import { TComponentView, type IComponentViewOptions } from '../../../base/component-view'
-import { TEvented } from '../../../common/evented'
+import { TComponentView, type IComponentViewOptions } from '../../base/component-view'
+import { TEvented } from '../../../common/event/evented'
 
 export default class TButton extends TTextable<IButtonProps, TButtonEvents> implements IButton {
 	static override baseClass = 's-button'

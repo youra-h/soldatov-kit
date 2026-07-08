@@ -1,4 +1,4 @@
-import type { TComponentSize } from './types'
+import type { TComponentSize } from '../common/types'
 
 const SIZE_SCALE: readonly TComponentSize[] = ['sm', 'normal', 'lg', 'xl', '2xl']
 

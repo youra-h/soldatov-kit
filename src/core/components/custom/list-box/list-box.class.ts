@@ -1,7 +1,7 @@
 import { TList } from '../list/list.class'
-import type { IComponentViewOptions } from '../../../base/component-view'
-import { TComponentView } from '../../../base/component-view'
-import { TSelectableCollection, type TSelectionMode } from '../../../base/collection'
+import type { IComponentViewOptions } from '../../base/component-view'
+import { TComponentView } from '../../base/component-view'
+import { TSelectableCollection, type TSelectionMode } from '../../base/collection'
 import TListBoxItem from './list-box-item/list-box-item.class'
 import type { IListBoxItem } from './list-box-item/types'
 import type {
@@ -11,7 +11,7 @@ import type {
 	TListBoxStates,
 	IListBox,
 } from './types'
-import { TEvented } from '../../../common/evented'
+import { TEvented } from '../../../common/event/evented'
 
 export class TListBox
 	extends TList<IListBoxItem, IListBoxProps, TListBoxEvents, TListBoxStates>

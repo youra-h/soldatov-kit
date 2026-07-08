@@ -1,4 +1,4 @@
-import { ActivatableComponentMixin } from '../../../../base/collection'
+import { ActivatableComponentMixin } from '../../../base/collection'
 import TTabItemCustom from './tab-item-custom.class'
 import type { ITabItem, TTabItemOptions, ITabItemProps, TTabItemEvents } from './types'
 

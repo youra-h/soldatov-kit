@@ -1,4 +1,4 @@
-import { TEvented } from '../evented'
+import { TEvented } from '../event/evented'
 import type { TValuePayload } from '../types'
 
 export type TStateUnitValueEvents<TValue> = {

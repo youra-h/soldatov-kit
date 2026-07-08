@@ -3,7 +3,7 @@ import type {
 	IStylableProps,
 	TStylableEvents,
 	TStylableStates,
-} from '../../../base/stylable'
+} from '../../base/stylable'
 
 export type TSkeletonShape = 'rect' | 'rounded' | 'circle'
 

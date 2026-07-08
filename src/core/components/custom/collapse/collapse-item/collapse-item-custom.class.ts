@@ -1,6 +1,6 @@
-import TValueControl from '../../../../base/value-control/value-control.class'
-import type { IComponentViewOptions } from '../../../../base/component-view'
-import { TComponentView } from '../../../../base/component-view'
+import TValueControl from '../../../base/value-control/value-control.class'
+import type { IComponentViewOptions } from '../../../base/component-view'
+import { TComponentView } from '../../../base/component-view'
 import { TStateUnit } from '../../../../common/state-unit'
 import type { TValuePayload } from '../../../../common/types'
 import type {
@@ -11,7 +11,7 @@ import type {
 	TCollapseItemCustomStates,
 } from './types'
 import type { TCollapseView } from '../types'
-import { TEvented } from '../../../../common/evented'
+import { TEvented } from '../../../../common/event/evented'
 
 export default class TCollapseItemCustom<
 	TProps extends ICollapseItemCustomProps = ICollapseItemCustomProps,

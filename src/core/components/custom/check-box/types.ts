@@ -2,7 +2,7 @@ import type {
 	IInputControl,
 	IInputControlProps,
 	TInputControlEvents,
-} from '../../../base/input-control'
+} from '../../base/input-control'
 
 export interface ICheckBoxProps extends IInputControlProps<boolean | undefined> {
 	// value наследуется от IInputControlProps<boolean | undefined>

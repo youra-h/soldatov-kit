@@ -3,7 +3,7 @@ import type {
 	IStylableProps,
 	TStylableEvents,
 	TStylableStates,
-} from '../../../base/stylable'
+} from '../../base/stylable'
 
 export interface ISpinnerProps extends IStylableProps {
 	// Толщина бордера

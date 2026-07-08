@@ -1,5 +1,5 @@
 import { TTreeItem } from './tree-item.class'
-import { TCollection } from '../../../../base/collection'
+import { TCollection } from '../../../base/collection'
 
 /**
  * Базовый элемент дерева с подключаемым поведением.

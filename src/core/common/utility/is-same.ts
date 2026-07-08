@@ -1,4 +1,4 @@
-import type { IEntity } from '../base/entity'
+import type { IEntity } from '../../components/base/entity'
 
 /**
  * Сравнивает два объекта (компоненты, элементы коллекций и т.п.) по uid,
@@ -18,4 +18,3 @@ export function isSame(
 
 	return current.uid === candidate.uid
 }
-

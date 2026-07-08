@@ -1,4 +1,4 @@
-import type { ICollection, ICollectionProps, TCollectionEvents } from '../../../base/collection'
+import type { ICollection, ICollectionProps, TCollectionEvents } from '../../base/collection'
 import type { ITreeItem } from './item/types'
 
 /**

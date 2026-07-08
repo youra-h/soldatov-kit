@@ -8,7 +8,7 @@ import type {
 } from './types'
 import type { TConstructor } from '../../../common/types'
 import { TActivatableCollectionItem } from './activable-collection-item.class'
-import { isSame } from '../../../common/is-same'
+import { isSame } from '../../../common/utility/is-same'
 import { TEvented } from '../../../common/evented'
 
 /**

@@ -1,7 +1,7 @@
-import { TInputControl } from '../../../base/input-control'
-import { TComponentView, type IComponentViewOptions } from '../../../base/component-view'
+import { TInputControl } from '../../base/input-control'
+import { TComponentView, type IComponentViewOptions } from '../../base/component-view'
 import type { IInput, IInputProps, TInputEvents } from './types'
-import { TEvented } from '../../../common/evented'
+import { TEvented } from '../../../common/event/evented'
 
 export class TInput extends TInputControl<string, IInputProps, TInputEvents> implements IInput {
 	static override baseClass = 's-input'

@@ -1,6 +1,6 @@
-import { TStylable } from '../../../base/stylable'
-import { TComponentView, type IComponentViewOptions } from '../../../base/component-view'
-import { type TEvented } from '../../../common/evented'
+import { TStylable } from '../../base/stylable'
+import { TComponentView, type IComponentViewOptions } from '../../base/component-view'
+import { type TEvented } from '../../../common/event/evented'
 import type {
 	ISkeleton,
 	ISkeletonProps,

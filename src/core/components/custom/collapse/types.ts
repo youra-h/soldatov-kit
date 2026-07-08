@@ -1,11 +1,11 @@
-import type { IControl, IControlProps, TControlEvents, TControlStates } from '../../../base/control'
+import type { IControl, IControlProps, TControlEvents, TControlStates } from '../../base/control'
 import type {
 	TSelectableCollection,
 	TSelectableCollectionEvents,
 	TSelectionMode,
 	TItemProxyEvents,
 	ISelectableCollectionProps,
-} from '../../../base/collection'
+} from '../../base/collection'
 import type { ICollapseItem } from './collapse-item/types'
 
 export type TCollapseView = 'plain' | 'outlined' | 'filled'

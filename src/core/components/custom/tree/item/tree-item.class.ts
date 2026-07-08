@@ -1,4 +1,4 @@
-import { TCollectionItem } from '../../../../base/collection'
+import { TCollectionItem } from '../../../base/collection'
 import { TTreeCollection } from '../tree-collection.class'
 import type { ITreeCollection, ITree } from '../types'
 import type { ITreeItem, ITreeItemProps, TTreeItemEvents } from './types'

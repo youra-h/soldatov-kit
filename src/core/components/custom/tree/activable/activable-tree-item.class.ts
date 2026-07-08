@@ -1,6 +1,6 @@
 import { TBehaviorTreeItem } from '../item/behavior-tree-item.class'
-import { TActivatableBehavior } from '../../../../base/behaviors'
-import { TCollection } from '../../../../base/collection'
+import { TActivatableBehavior } from '../../../base/behaviors'
+import { TCollection } from '../../../base/collection'
 
 export class TActivatableTreeItem extends TBehaviorTreeItem<TActivatableBehavior> {
 	constructor(collection?: TCollection) {

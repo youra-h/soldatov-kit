@@ -1,4 +1,4 @@
-import { SelectableComponentMixin } from '../../../../base/collection'
+import { SelectableComponentMixin } from '../../../base/collection'
 import TCollapseItemCustom from './collapse-item-custom.class'
 import type {
 	ICollapseItem,

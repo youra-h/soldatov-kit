@@ -1,4 +1,4 @@
-import { TEvented } from '../evented'
+import { TEvented } from '../event/evented'
 import type { TClassEntry, TClassesEvents } from './types'
 
 /** Управляет набором CSS-классов компонента: базовым, статическими и динамическими. */
