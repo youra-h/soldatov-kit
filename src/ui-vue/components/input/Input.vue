@@ -21,7 +21,7 @@ export default {
 
 		const rootRef = useElementBinding(plugins)
 
-		const { rendered, visible, classes, disabled, name, size, value, readonly, required } =
+		const { rendered, visible, classes, disabled, name, size, value, readonly, required, placeholder } =
 			syncInput({
 				props,
 				instance,
@@ -46,6 +46,7 @@ export default {
 			value,
 			readonly,
 			required,
+			placeholder,
 		}
 	},
 }
@@ -64,6 +65,7 @@ export default {
 			:disabled="disabled"
 			:readonly="readonly"
 			:required="required"
+			:placeholder="placeholder"
 			v-bind="controlAttrs"
 		/>
 		<div v-if="$slots.trailing" class="s-input__trailing">
