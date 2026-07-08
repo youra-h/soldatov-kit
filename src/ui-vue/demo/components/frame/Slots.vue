@@ -142,7 +142,7 @@ const closeFrame = (frame: (typeof frames)[0]) => {
 </script>
 
 <template>
-	<PanelDemo title="Frame Positions Demo">
+	<PanelDemo title="Frame Positions Demo" style="position: relative">
 		<div class="frame-demo__toolbar">
 			<Button
 				v-for="pos in positions"
@@ -196,6 +196,7 @@ const closeFrame = (frame: (typeof frames)[0]) => {
 .frame-demo {
 	&__toolbar {
 		@apply flex flex-wrap justify-center gap-3;
+
 	}
 
 	&__btn {
