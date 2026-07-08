@@ -77,13 +77,13 @@ export default {
 			v-bind="controlAttrs"
 		>
 			<template #leading>
-				<slot name="leading" />
 				<Icon
 					v-if="arrowPlacement === 'start'"
 					:tag="arrowIconTag"
 					:size="size"
 					class="s-collapse-item__arrow"
 				/>
+				<slot name="leading" />
 			</template>
 
 			<slot name="header" :text="text" :selected="selected">
