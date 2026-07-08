@@ -132,7 +132,7 @@ export default {
 			}
 		}
 
-		&:focus + #{$this}__container {
+		&:focus-visible + #{$this}__container {
 			@apply outline-2 outline-offset-2 outline-s-component;
 		}
 	}
@@ -146,7 +146,7 @@ export default {
 
 	&--plain {
 		input {
-			&:focus + #{$this}__container {
+			&:focus-visible + #{$this}__container {
 				@apply outline-0;
 			}
 		}

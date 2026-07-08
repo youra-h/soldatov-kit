@@ -1,7 +1,7 @@
 /* ─── Semantic component tokens ─────────────────────────────── */
 :root {
 	--s-component-text: var(--color-s-neutral-800);
-	--s-component-focus-ring: var(--color-s-accent-400);
+	--s-component-focus-ring: var(--color-s-accent-300);
 	/* TODO: dark mode
 	[data-theme="dark"] {
 		--s-component-text: var(--color-s-neutral-100);
