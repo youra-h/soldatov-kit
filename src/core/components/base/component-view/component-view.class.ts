@@ -5,7 +5,7 @@ import type {
 	TComponentViewEvents,
 	TComponentViewStates,
 } from './types'
-import { TClasses } from '../../common/classes'
+import { TClasses } from '../../../common'
 import { TEvented } from '../../../common'
 
 /**

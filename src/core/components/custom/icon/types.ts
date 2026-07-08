@@ -4,8 +4,7 @@ import type {
 	TComponentViewEvents,
 	TComponentViewStates,
 } from '../../base/component-view'
-import type { TComponentSize } from '../../../common'
-import type { TValuePayload } from '../../../bridge'
+import type { TValuePayload, TComponentSize } from '../../../bridge'
 import type { IStateUnit } from '../../../common'
 
 export interface IIconProps extends IComponentViewProps {

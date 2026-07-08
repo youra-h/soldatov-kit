@@ -1,15 +1,14 @@
-import TValueControl from '../../../base/value-control/value-control.class'
+import { TValueControl } from '../../../base'
 import type { IComponentViewOptions } from '../../../base/component-view'
 import { TComponentView } from '../../../base/component-view'
-import { TStateUnit } from '../../../../../common'
-import type { TValuePayload } from '../../../../../common'
+import { TStateUnit, TEvented } from '../../../../common'
+import type { TValuePayload } from '../../../../bridge'
 import type {
 	IListItemCustom,
 	IListItemCustomProps,
 	TListItemCustomEvents,
 	TListItemCustomStates,
 } from './types'
-import { TEvented } from '../../../../common/event/evented'
 
 export default class TListItemCustom<
 	TProps extends IListItemCustomProps = IListItemCustomProps,

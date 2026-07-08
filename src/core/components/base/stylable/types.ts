@@ -1,8 +1,8 @@
-import type { TComponentSize, TComponentVariant } from '../../../common'
+import type { TComponentSize, TComponentVariant } from '../../../bridge'
 import type { IComponentView, IComponentViewProps, TComponentViewEvents } from '../component-view'
 import type { TComponentViewStates } from '../component-view'
 import type { IStateUnit } from '../../../common'
-import { type TValuePayload } from '../../../common'
+import type { TValuePayload } from '../../../bridge'
 
 export type TStylableEvents = TComponentViewEvents & {
 	/** change:size */

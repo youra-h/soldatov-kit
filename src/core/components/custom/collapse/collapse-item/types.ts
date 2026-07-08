@@ -9,10 +9,10 @@ import type {
 	TSelectableItemEvents,
 	ISelectableComponentItem,
 } from '../../../base/collection'
-import type { TCollectableOptions } from '../../../base/collection/item/types'
+import type { TCollectableOptions } from '../../../base/collection'
 import type { IComponentViewOptions } from '../../../base/component-view'
-import type { IStateUnit } from '../../../../../common'
-import type { TValuePayload } from '../../../../../common'
+import type { IStateUnit } from '../../../../common'
+import type { TValuePayload } from '../../../../bridge'
 import type { TCollapseView } from '../types'
 
 // ============ TCollapseItemCustom (UI-логика без коллекции) ============

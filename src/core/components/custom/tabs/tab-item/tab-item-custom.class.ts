@@ -1,15 +1,14 @@
-import TValueControl from '../../../base/value-control/value-control.class'
+import { TValueControl } from '../../../base/value-control'
 import type { IComponentViewOptions } from '../../../base/component-view'
 import { TComponentView } from '../../../base/component-view'
-import { TStateUnit, type IStateUnit } from '../../../../../common'
-import { type TValuePayload } from '../../../../../common'
+import { TStateUnit, TEvented } from '../../../../common'
+import type { TValuePayload } from '../../../../bridge'
 import type {
 	ITabItemCustom,
 	ITabItemCustomProps,
 	TTabItemCustomEvents,
 	TTabItemCustomStates,
 } from './types'
-import { TEvented } from '../../../../common/event/evented'
 
 /**
  * Кастомная логика элемента таба (без коллекционной части).

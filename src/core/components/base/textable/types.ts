@@ -1,6 +1,6 @@
 import type { IControl, IControlProps, TControlEvents, TControlStates } from '../control'
 import type { IStateUnit } from '../../../common'
-import { type TValuePayload } from '../../../common'
+import type { TValuePayload } from '../../../bridge'
 
 export type TTextableEvents = TControlEvents & {
 	/** change:text */

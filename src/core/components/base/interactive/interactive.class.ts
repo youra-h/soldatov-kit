@@ -1,7 +1,7 @@
 import { TStateUnit } from '../../../common'
 import { TComponentView, type IComponentViewOptions } from '../component-view'
 import type { IInteractiveProps, TInteractiveEvents, TInteractiveStates } from './types'
-import { type TValuePayload } from '../../../common'
+import type { TValuePayload } from '../../../bridge'
 import { TEvented } from '../../../common'
 
 /**

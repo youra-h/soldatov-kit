@@ -4,7 +4,7 @@ import type {
 	TTextableEvents,
 	TTextableStates,
 } from '../../base/textable'
-import type { TComponentVariant } from '../../../../common'
+import type { TComponentVariant } from '../../../bridge'
 
 export type TButtonView = 'filled' | 'plain' | 'outlined' | 'none'
 

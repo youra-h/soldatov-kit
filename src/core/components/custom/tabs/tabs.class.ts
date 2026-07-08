@@ -1,11 +1,10 @@
-import TControl from '../../base/control/control.class'
+import { TControl } from '../../base/control'
 import type { IComponentViewOptions } from '../../base/component-view'
 import { TComponentView } from '../../base/component-view'
 import { TActivatableCollection } from '../../base/collection'
 import TTabItem from './tab-item/tab-item.class'
 import type { ITabItem } from './tab-item/types'
-import type { TComponentSize, TComponentVariant } from '../../../../common'
-import { type TValuePayload } from '../../../../common'
+import type { TComponentSize, TComponentVariant, TValuePayload } from '../../../bridge'
 import type {
 	ITabs,
 	ITabsProps,
@@ -16,7 +15,7 @@ import type {
 	TTabsPosition,
 	TTabsView,
 } from './types'
-import { TEvented } from '../../../common/event/evented'
+import { TEvented } from '../../../common'
 
 /**
  * Компонент табов (TTabs).
@@ -99,15 +98,15 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStates> implem
 					item.setClosableResolver(() => this._closable)
 
 					item.events.on('change:closable', (value: boolean | undefined) => {
-						;(this.events as TEvented<TTabsEvents>).emit('item:closable', item, !!value)
+						; (this.events as TEvented<TTabsEvents>).emit('item:closable', item, !!value)
 					})
 
 					item.events.on('change:disabled', (value: boolean) => {
-						;(this.events as TEvented<TTabsEvents>).emit('item:disabled', item, value)
+						; (this.events as TEvented<TTabsEvents>).emit('item:disabled', item, value)
 					})
 
 					item.events.on('change:text', (payload: TValuePayload<string>) => {
-						;(this.events as TEvented<TTabsEvents>).emit(
+						; (this.events as TEvented<TTabsEvents>).emit(
 							'item:text',
 							item,
 							payload.newValue,
@@ -115,15 +114,15 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStates> implem
 					})
 
 					item.events.on('change:rendered', (value: boolean) => {
-						;(this.events as TEvented<TTabsEvents>).emit('item:rendered', item, value)
+						; (this.events as TEvented<TTabsEvents>).emit('item:rendered', item, value)
 					})
 
 					item.events.on('change:visible', (value: boolean) => {
-						;(this.events as TEvented<TTabsEvents>).emit('item:visible', item, value)
+						; (this.events as TEvented<TTabsEvents>).emit('item:visible', item, value)
 					})
 
 					item.events.on('change:present', (value: boolean) => {
-						;(this.events as TEvented<TTabsEvents>).emit('item:present', item, value)
+						; (this.events as TEvented<TTabsEvents>).emit('item:present', item, value)
 					})
 
 					item.disabled = this.disabled
@@ -166,7 +165,7 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStates> implem
 	set orientation(value: TTabsOrientation) {
 		if (this._orientation !== value) {
 			this._applyOrientation(value, this._orientation)
-			;(this.events as TEvented<TTabsEvents>).emit('change:orientation', value)
+				; (this.events as TEvented<TTabsEvents>).emit('change:orientation', value)
 		}
 	}
 
@@ -186,7 +185,7 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStates> implem
 	set alignment(value: TTabsAlignment) {
 		if (this._alignment !== value) {
 			this._applyAlignment(value, this._alignment)
-			;(this.events as TEvented<TTabsEvents>).emit('change:alignment', value)
+				; (this.events as TEvented<TTabsEvents>).emit('change:alignment', value)
 		}
 	}
 
@@ -207,7 +206,7 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStates> implem
 	set position(value: TTabsPosition) {
 		if (this._position !== value) {
 			this._applyPosition(value, this._position)
-			;(this.events as TEvented<TTabsEvents>).emit('change:position', value)
+				; (this.events as TEvented<TTabsEvents>).emit('change:position', value)
 		}
 	}
 
@@ -227,7 +226,7 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStates> implem
 	set view(value: TTabsView) {
 		if (this._view !== value) {
 			this._applyView(value, this._view)
-			;(this.events as TEvented<TTabsEvents>).emit('change:view', value)
+				; (this.events as TEvented<TTabsEvents>).emit('change:view', value)
 		}
 	}
 
@@ -248,7 +247,7 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStates> implem
 	set closable(value: boolean) {
 		if (this._closable !== value) {
 			this._applyClosable(value)
-			;(this.events as TEvented<TTabsEvents>).emit('change:closable', value)
+				; (this.events as TEvented<TTabsEvents>).emit('change:closable', value)
 		}
 	}
 
@@ -273,7 +272,7 @@ export class TTabs extends TControl<ITabsProps, TTabsEvents, TTabsStates> implem
 	 */
 	closeTab(item: ITabItem): boolean {
 		if (!item.closable) return false
-		;(this.events as TEvented<TTabsEvents>).emit('item:close', item)
+			; (this.events as TEvented<TTabsEvents>).emit('item:close', item)
 
 		return this._collection.deleteItem(item)
 	}

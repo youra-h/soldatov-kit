@@ -1,6 +1,6 @@
 import { TStylable } from '../../base/stylable'
 import { TComponentView, type IComponentViewOptions } from '../../base/component-view'
-import { type TEvented } from '../../../common/event/evented'
+import { type TEvented } from '../../../common'
 import type { ISpinner, ISpinnerProps, TSpinnerEvents, TSpinnerStates } from './types'
 
 export default class TSpinner extends TStylable<ISpinnerProps, TSpinnerEvents> implements ISpinner {

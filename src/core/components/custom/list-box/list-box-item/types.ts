@@ -4,7 +4,7 @@ import type {
 	IListItemProps,
 	TListItemEvents,
 	TListItemCustomStates,
-} from '../../list/list-item/types'
+} from '../../list'
 import type { TListBoxView } from '../types'
 
 export type TListBoxItemEvents = TListItemEvents & {

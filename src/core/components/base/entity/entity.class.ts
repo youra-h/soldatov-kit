@@ -1,5 +1,5 @@
 import type { TEntityProps, IEntity } from './types'
-import { createUid } from '../../common/utility/uid'
+import { createUid } from '../../../common'
 
 export abstract class TEntity<TProps extends TEntityProps = TEntityProps> implements IEntity<TProps> {
 	/** Уникальный идентификатор объекта в рамках текущей сессии */

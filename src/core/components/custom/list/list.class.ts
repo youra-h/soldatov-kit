@@ -1,4 +1,4 @@
-import TControl from '../../base/control/control.class'
+import { TControl } from '../../base/control'
 import type { IComponentViewOptions } from '../../base/component-view'
 import { TComponentView } from '../../base/component-view'
 import { TSelectableCollection } from '../../base/collection'
@@ -7,8 +7,7 @@ import type { IListItem } from './list-item/types'
 import type { IList, IListProps, TListEvents, TListStates } from './types'
 import { TEvented } from '../../../common/event/evented'
 import type { TSelectionMode } from '../../base/collection'
-import { type TValuePayload } from '../../../../common'
-import type { TComponentSize, TComponentVariant, TScrollBehavior } from '../../../../common'
+import type { TValuePayload, TComponentSize, TComponentVariant, TScrollBehavior } from '../../../bridge'
 
 export class TList<
 	TItem extends IListItem = IListItem,
@@ -17,8 +16,7 @@ export class TList<
 	TStates extends TListStates = TListStates,
 >
 	extends TControl<TProps, TEvents, TStates>
-	implements IList<TItem, TProps, TEvents, TStates>
-{
+	implements IList<TItem, TProps, TEvents, TStates> {
 	static override baseClass = 's-list'
 
 	static defaultValues: Partial<IListProps> = {
@@ -95,11 +93,11 @@ export class TList<
 					const { item } = payload as { collection: any; item: IListItem }
 
 					item.events.on('change:disabled', (value: boolean) => {
-						;(this.events as TEvented<TListEvents>).emit('item:disabled', item, value)
+						; (this.events as TEvented<TListEvents>).emit('item:disabled', item, value)
 					})
 
 					item.events.on('change:text', (payload: TValuePayload<string>) => {
-						;(this.events as TEvented<TListEvents>).emit(
+						; (this.events as TEvented<TListEvents>).emit(
 							'item:text',
 							item,
 							payload.newValue,
@@ -107,15 +105,15 @@ export class TList<
 					})
 
 					item.events.on('change:rendered', (value: boolean) => {
-						;(this.events as TEvented<TListEvents>).emit('item:rendered', item, value)
+						; (this.events as TEvented<TListEvents>).emit('item:rendered', item, value)
 					})
 
 					item.events.on('change:visible', (value: boolean) => {
-						;(this.events as TEvented<TListEvents>).emit('item:visible', item, value)
+						; (this.events as TEvented<TListEvents>).emit('item:visible', item, value)
 					})
 
 					item.events.on('change:present', (value: boolean) => {
-						;(this.events as TEvented<TListEvents>).emit('item:present', item, value)
+						; (this.events as TEvented<TListEvents>).emit('item:present', item, value)
 					})
 
 					item.setWordWrapResolver(() => this._wordWrap)
@@ -155,7 +153,7 @@ export class TList<
 	set maxRows(value: number) {
 		if (this._maxRows !== value) {
 			this._maxRows = value
-			;(this.events as TEvented<TListEvents>).emit('change:maxRows', value)
+				; (this.events as TEvented<TListEvents>).emit('change:maxRows', value)
 		}
 	}
 
@@ -172,7 +170,7 @@ export class TList<
 	set autoWidth(value: boolean) {
 		if (this._autoWidth !== value) {
 			this._applyAutoWidth(value)
-			;(this.events as TEvented<TListEvents>).emit('change:autoWidth', value)
+				; (this.events as TEvented<TListEvents>).emit('change:autoWidth', value)
 		}
 	}
 
@@ -193,7 +191,7 @@ export class TList<
 			this._collection.forEach((item) => {
 				item.notifyWordWrapChange()
 			})
-			;(this.events as TEvented<TListEvents>).emit('change:wordWrap', value)
+				; (this.events as TEvented<TListEvents>).emit('change:wordWrap', value)
 		}
 	}
 
@@ -204,7 +202,7 @@ export class TList<
 	set scrollBehavior(value: TScrollBehavior) {
 		if (this._scrollBehavior !== value) {
 			this._scrollBehavior = value
-			;(this.events as TEvented<TListEvents>).emit('change:scrollBehavior', value)
+				; (this.events as TEvented<TListEvents>).emit('change:scrollBehavior', value)
 		}
 	}
 

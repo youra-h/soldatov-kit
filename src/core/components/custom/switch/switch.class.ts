@@ -1,7 +1,6 @@
 import { TInputControl } from '../../base/input-control'
 import { TComponentView, type IComponentViewOptions } from '../../base/component-view'
 import type { ISwitch, ISwitchProps, TSwitchEvents } from './types'
-import { TEvented } from '../../../common/event/evented'
 
 export default class TSwitch
 	extends TInputControl<boolean | undefined, ISwitchProps, TSwitchEvents>

@@ -13,13 +13,11 @@ import type {
 } from './types'
 import { TEvented } from '../../../common/event/evented'
 import type { TSelectionMode } from '../../base/collection'
-import { type TValuePayload } from '../../../../common'
-import type { TComponentSize, TComponentVariant } from '../../../../common'
+import type { TValuePayload, TComponentSize, TComponentVariant } from '../../../bridge'
 
 export class TCollapse
 	extends TControl<ICollapseProps, TCollapseEvents, TCollapseStates>
-	implements ICollapse
-{
+	implements ICollapse {
 	static override baseClass = 's-collapse'
 
 	static defaultValues: Partial<ICollapseProps> = {
@@ -81,7 +79,7 @@ export class TCollapse
 					item.setViewResolver(() => this._view)
 
 					item.events.on('change:rendered', (value: boolean) => {
-						;(this.events as TEvented<TCollapseEvents>).emit(
+						; (this.events as TEvented<TCollapseEvents>).emit(
 							'item:rendered',
 							item,
 							value,
@@ -89,7 +87,7 @@ export class TCollapse
 					})
 
 					item.events.on('change:visible', (value: boolean) => {
-						;(this.events as TEvented<TCollapseEvents>).emit(
+						; (this.events as TEvented<TCollapseEvents>).emit(
 							'item:visible',
 							item,
 							value,
@@ -97,7 +95,7 @@ export class TCollapse
 					})
 
 					item.events.on('change:present', (value: boolean) => {
-						;(this.events as TEvented<TCollapseEvents>).emit(
+						; (this.events as TEvented<TCollapseEvents>).emit(
 							'item:present',
 							item,
 							value,
@@ -105,7 +103,7 @@ export class TCollapse
 					})
 
 					item.events.on('change:disabled', (value: boolean) => {
-						;(this.events as TEvented<TCollapseEvents>).emit(
+						; (this.events as TEvented<TCollapseEvents>).emit(
 							'item:disabled',
 							item,
 							value,
@@ -113,7 +111,7 @@ export class TCollapse
 					})
 
 					item.events.on('change:text', (payload: TValuePayload<string>) => {
-						;(this.events as TEvented<TCollapseEvents>).emit(
+						; (this.events as TEvented<TCollapseEvents>).emit(
 							'item:text',
 							item,
 							payload.newValue,
@@ -160,7 +158,7 @@ export class TCollapse
 			this._collection.forEach((item) => {
 				item.events.emit('change:view', value)
 			})
-			;(this.events as TEvented<TCollapseEvents>).emit('change:view', value)
+				; (this.events as TEvented<TCollapseEvents>).emit('change:view', value)
 		}
 	}
 

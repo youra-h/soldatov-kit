@@ -1,6 +1,6 @@
 import { TStylable } from '../../base/stylable'
 import { TComponentView, type IComponentViewOptions } from '../../base/component-view'
-import { type TEvented } from '../../../common/event/evented'
+import { type TEvented } from '../../../common'
 import type {
 	ISkeleton,
 	ISkeletonProps,
@@ -18,7 +18,7 @@ export default class TSkeleton
 
 	static defaultValues: Partial<ISkeletonProps> = {
 		...TStylable.defaultValues,
-		size: 'auto',
+		size: 'normal',
 		shape: 'rounded',
 		animation: 'pulse',
 		width: 'auto',

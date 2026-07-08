@@ -7,7 +7,7 @@ import type {
 	ISelectableCollectionProps,
 } from '../../base/collection'
 import type { IListItem } from './list-item/types'
-import type { TScrollBehavior } from '../../../../common'
+import type { TScrollBehavior } from '../../../bridge'
 
 export type TListEvents = TControlEvents &
 	TSelectableCollectionEvents<IListItem> &

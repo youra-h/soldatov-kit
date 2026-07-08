@@ -3,7 +3,7 @@ import type { IComponentViewOptions } from '../component-view'
 import { TComponentView } from '../component-view'
 import type { IValueControlProps, TValueControlEvents, TValueControlStates } from './types'
 import { TStateUnit } from '../../../common'
-import { type TValuePayload } from '../../../common'
+import type { TValuePayload } from '../../../bridge'
 import { TEvented } from '../../../common'
 
 /**
