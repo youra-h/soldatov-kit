@@ -59,30 +59,24 @@ export default class TFrame
 
 	constructor(options: IComponentOptions<IFrameProps, TFrameStates> | Partial<IFrameProps> = {}) {
 		const ctor = new.target as typeof TFrame
-		const { props = {} as Partial<IFrameProps>, states } =
+		const { props = {} as Partial<IFrameProps> } =
 			ctor.prepareOptions<IFrameProps, TFrameStates>(options)
 
-		super({ props })
+		super(options)
 
 		const x = props.x ?? ctor.defaultValues.x!
 		const y = props.y ?? ctor.defaultValues.y!
 		const width = props.width ?? ctor.defaultValues.width!
 		const height = props.height ?? ctor.defaultValues.height!
-		const visible = props.visible ?? ctor.defaultValues.visible!
 
 		this._position = props.position ?? ctor.defaultValues.position!
 		this._target = props.target ?? ctor.defaultValues.target!
 
-		this._states.visible = states?.visible ?? new TVisibilityState({ initial: visible })
+		this._states.x = new TStateUnit<number>({ initial: x }) as TFrameStates['x']
+		this._states.y = new TStateUnit<number>({ initial: y }) as TFrameStates['y']
+		this._states.width = new TStateUnit<number | string>({ initial: width }) as TFrameStates['width']
+		this._states.height = new TStateUnit<number | string>({ initial: height }) as TFrameStates['height']
 
-		this._states.x = states?.x ?? new TStateUnit<number>({ initial: x })
-		this._states.y = states?.y ?? new TStateUnit<number>({ initial: y })
-		this._states.width = states?.width ?? new TStateUnit<number | string>({ initial: width })
-		this._states.height = states?.height ?? new TStateUnit<number | string>({ initial: height })
-
-		this._states.visible.events.on('change', (payload: TValuePayload<boolean>) => {
-			; (this.events as TEvented<TFrameEvents>).emit('change:visible', payload.newValue)
-		})
 		this._states.x.events.on('change', (payload: TValuePayload<number>) => {
 			; (this.events as TEvented<TFrameEvents>).emit('change:x', payload.newValue)
 		})
@@ -95,17 +89,13 @@ export default class TFrame
 		this._states.height.events.on('change', (payload: TValuePayload<number | string>) => {
 			; (this.events as TEvented<TFrameEvents>).emit('change:height', payload.newValue)
 		})
-	}
 
-	get visible(): boolean {
-		return this._states.visible.value
-	}
-	set visible(value: boolean) {
-		if (value) {
-			this.show()
-		} else {
-			this.hide()
-		}
+			// При show() — присваиваем z-index
+			; (this.events as TEvented<TFrameEvents>).on('show' as any, () => {
+				this._zIndex = (this.constructor as typeof TFrame).nextZIndex()
+
+					; (this.events as TEvented<TFrameEvents>).emit('change:zIndex', this._zIndex)
+			})
 	}
 
 	get x(): number {
@@ -158,29 +148,6 @@ export default class TFrame
 		return this._zIndex
 	}
 
-	show(): void {
-		if (this.visible) return
-
-		const canShow = (this.events as TEvented<TFrameEvents>).emitWithResult('beforeShow')
-		if (!canShow) return
-
-		this._zIndex = (this.constructor as typeof TFrame).nextZIndex()
-			; (this.events as TEvented<TFrameEvents>).emit('change:zIndex', this._zIndex)
-
-			; (this._states.visible as IVisibilityState).show()
-			; (this.events as TEvented<TFrameEvents>).emit('show')
-	}
-
-	hide(): void {
-		if (!this.visible) return
-
-		const canHide = (this.events as TEvented<TFrameEvents>).emitWithResult('beforeHide')
-		if (!canHide) return
-
-			; (this._states.visible as IVisibilityState).hide()
-			; (this.events as TEvented<TFrameEvents>).emit('hide')
-	}
-
 	getProps(): IFrameProps {
 		return {
 			...super.getProps(),
@@ -188,7 +155,6 @@ export default class TFrame
 			y: this.y,
 			width: this.width,
 			height: this.height,
-			visible: this.visible,
 			position: this.position,
 			target: this.target,
 		}

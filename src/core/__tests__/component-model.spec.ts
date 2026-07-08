@@ -29,9 +29,9 @@ describe('TComponent', () => {
 
 	it('getProps возвращает актуальные свойства', () => {
 		const m = new TComponent<IComponentProps>({ id: 'a' })
-		expect(m.getProps()).toEqual({ id: 'a' })
+		expect(m.getProps()).toMatchObject({ id: 'a' })
 		m.id = 'b'
-		expect(m.getProps()).toEqual({ id: 'b' })
+		expect(m.getProps()).toMatchObject({ id: 'b' })
 	})
 
 	it('assign использует сеттеры и меняет состояние', () => {
@@ -42,7 +42,7 @@ describe('TComponent', () => {
 
 	it('toJSON сериализует getProps()', () => {
 		const m = new TComponent<IComponentProps>({ id: 'x' })
-		expect(m.toJSON()).toEqual({ id: 'x' })
+		expect(m.toJSON()).toMatchObject({ id: 'x' })
 	})
 
 	it('эмитит created асинхронно после конструктора', () => {

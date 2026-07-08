@@ -2,9 +2,9 @@ import type {
 	IComponent,
 	IComponentProps,
 	TComponentEvents,
+	TComponentStates,
 } from '../../base/component'
 import type { IStateUnit } from '../../common/state-unit'
-import type { IVisibilityState } from '../../common/states'
 
 export type TFramePosition = 'fixed' | 'absolute'
 
@@ -25,8 +25,7 @@ export interface IFrameProps extends IComponentProps {
 	target?: string
 }
 
-export type TFrameStates = {
-	visible: IVisibilityState
+export type TFrameStates = TComponentStates & {
 	x: IStateUnit<number>
 	y: IStateUnit<number>
 	width: IStateUnit<number | string>
@@ -34,8 +33,6 @@ export type TFrameStates = {
 }
 
 export type TFrameEvents = TComponentEvents & {
-	/** change:visible */
-	'change:visible': (value: boolean) => void
 	/** change:x */
 	'change:x': (value: number) => void
 	/** change:y */
@@ -50,19 +47,9 @@ export type TFrameEvents = TComponentEvents & {
 	'change:position': (value: TFramePosition) => void
 	/** change:target */
 	'change:target': (value: string) => void
-	/** beforeShow (можно отменить, вернув false) */
-	beforeShow: () => boolean
-	/** beforeHide (можно отменить, вернув false) */
-	beforeHide: () => boolean
-	/** show */
-	show: () => void
-	/** hide */
-	hide: () => void
 }
 
 export interface IFrame extends IComponent<IFrameProps, TFrameEvents> {
-	/** Видимость */
-	visible: boolean
 	/** Позиция по оси X */
 	x: number
 	/** Позиция по оси Y */
@@ -77,8 +64,4 @@ export interface IFrame extends IComponent<IFrameProps, TFrameEvents> {
 	position: TFramePosition
 	/** Целевой элемент для Teleport */
 	target: string
-	/** Показать */
-	show(): void
-	/** Скрыть */
-	hide(): void
 }

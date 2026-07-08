@@ -52,11 +52,3 @@ export default {
 		</div>
 	</teleport>
 </template>
-
-<style lang="scss">
-@reference "./../../../foundation/tailwind";
-
-.s-frame {
-	// Базовые стили для Frame — минимальны, всё управляется через style
-}
-</style>
