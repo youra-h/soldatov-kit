@@ -45,7 +45,7 @@ const playgrounds = {
 } as const
 
 // Активный playground (можно управлять через меню)
-const active = ref<keyof typeof playgrounds>('frame')
+const active = ref<keyof typeof playgrounds>('component-view')
 
 // View mode: 'sandbox' | 'logs'
 const activeView = ref<'sandbox' | 'logs'>('sandbox')
