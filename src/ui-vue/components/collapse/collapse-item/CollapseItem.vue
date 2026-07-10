@@ -119,16 +119,6 @@ export default {
 		</div>
 	</div>
 </template>
-			</template>
-		</Button>
-
-		<div class="s-collapse-item__body">
-			<div class="s-collapse-item__content">
-				<slot />
-			</div>
-		</div>
-	</div>
-</template>
 
 <style lang="scss">
 @reference "./../../../../foundation/tailwind";
